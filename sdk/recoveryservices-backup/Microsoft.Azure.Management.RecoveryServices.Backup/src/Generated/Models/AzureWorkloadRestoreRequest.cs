@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureWorkload-specific restore.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadRestoreRequest")]
     public partial class AzureWorkloadRestoreRequest : RestoreRequest
     {
         /// <summary>

@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Simple policy schedule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SimpleSchedulePolicy")]
     public partial class SimpleSchedulePolicy : SchedulePolicy
     {
         /// <summary>

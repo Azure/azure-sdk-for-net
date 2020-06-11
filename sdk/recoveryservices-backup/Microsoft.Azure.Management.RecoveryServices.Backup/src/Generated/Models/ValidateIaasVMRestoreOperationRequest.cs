@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// AzureRestoreValidation request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateIaasVMRestoreOperationRequest")]
     public partial class ValidateIaasVMRestoreOperationRequest : ValidateRestoreOperationRequest
     {
         /// <summary>

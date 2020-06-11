@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Long term retention policy.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("LongTermRetentionPolicy")]
     public partial class LongTermRetentionPolicy : RetentionPolicy
     {
         /// <summary>

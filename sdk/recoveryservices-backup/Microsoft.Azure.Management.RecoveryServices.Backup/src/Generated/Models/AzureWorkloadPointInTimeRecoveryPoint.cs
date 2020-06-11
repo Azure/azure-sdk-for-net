@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Recovery point specific to PointInTime
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureWorkloadPointInTimeRecoveryPoint")]
     public partial class AzureWorkloadPointInTimeRecoveryPoint : AzureWorkloadRecoveryPoint
     {
         /// <summary>

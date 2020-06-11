@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Defines workload agnostic properties for a job.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Job")]
     public partial class Job
     {
         /// <summary>

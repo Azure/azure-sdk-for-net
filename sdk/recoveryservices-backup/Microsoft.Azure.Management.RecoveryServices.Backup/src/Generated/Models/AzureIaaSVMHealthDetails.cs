@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure IaaS VM workload-specific Health Details.
     /// </summary>
-    public partial class AzureIaaSVMHealthDetails : HealthDetails
+    public partial class AzureIaaSVMHealthDetails
     {
         /// <summary>
         /// Initializes a new instance of the AzureIaaSVMHealthDetails class.
@@ -35,8 +36,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="message">Health Message</param>
         /// <param name="recommendations">Health Recommended Actions</param>
         public AzureIaaSVMHealthDetails(int? code = default(int?), string title = default(string), string message = default(string), IList<string> recommendations = default(IList<string>))
-            : base(code, title, message, recommendations)
         {
+            Code = code;
+            Title = title;
+            Message = message;
+            Recommendations = recommendations;
             CustomInit();
         }
 
@@ -44,6 +48,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets health Code
+        /// </summary>
+        [JsonProperty(PropertyName = "code")]
+        public int? Code { get; private set; }
+
+        /// <summary>
+        /// Gets health Title
+        /// </summary>
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; private set; }
+
+        /// <summary>
+        /// Gets health Message
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets health Recommended Actions
+        /// </summary>
+        [JsonProperty(PropertyName = "recommendations")]
+        public IList<string> Recommendations { get; private set; }
 
     }
 }

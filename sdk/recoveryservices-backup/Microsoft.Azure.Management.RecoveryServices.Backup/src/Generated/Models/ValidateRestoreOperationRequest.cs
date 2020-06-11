@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureRestoreValidation request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateRestoreOperationRequest")]
     public partial class ValidateRestoreOperationRequest : ValidateOperationRequest
     {
         /// <summary>

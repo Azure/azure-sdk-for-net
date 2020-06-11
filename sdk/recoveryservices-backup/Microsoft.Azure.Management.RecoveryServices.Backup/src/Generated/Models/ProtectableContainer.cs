@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Protectable Container Class.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ProtectableContainer")]
     public partial class ProtectableContainer
     {
         /// <summary>

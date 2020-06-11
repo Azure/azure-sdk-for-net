@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for validate operation request.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateOperationRequest")]
     public partial class ValidateOperationRequest
     {
         /// <summary>

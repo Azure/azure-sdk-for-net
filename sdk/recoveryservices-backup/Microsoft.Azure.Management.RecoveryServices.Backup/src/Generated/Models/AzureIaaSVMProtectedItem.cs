@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload-specific backup item.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureIaaSVMProtectedItem")]
     public partial class AzureIaaSVMProtectedItem : ProtectedItem
     {
         /// <summary>
@@ -74,9 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
         /// <param name="healthStatus">Health status of protected item.
         /// Possible values include: 'Passed', 'ActionRequired',
-        /// 'ActionSuggested', 'Healthy', 'TransientDegraded',
-        /// 'PersistentDegraded', 'TransientUnhealthy', 'PersistentUnhealthy',
-        /// 'Invalid'</param>
+        /// 'ActionSuggested', 'Invalid'</param>
         /// <param name="healthDetails">Health details on this backup
         /// item.</param>
         /// <param name="lastBackupStatus">Last backup operation
@@ -139,9 +136,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets health status of protected item. Possible values
-        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Healthy',
-        /// 'TransientDegraded', 'PersistentDegraded', 'TransientUnhealthy',
-        /// 'PersistentUnhealthy', 'Invalid'
+        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
         public string HealthStatus { get; set; }

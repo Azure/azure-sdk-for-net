@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload-specific container.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("IaaSVMContainer")]
     public partial class IaaSVMContainer : ProtectionContainer
     {
         /// <summary>

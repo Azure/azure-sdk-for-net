@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Parameters to Provision ILR API.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ILRRequest")]
     public partial class ILRRequest
     {
         /// <summary>

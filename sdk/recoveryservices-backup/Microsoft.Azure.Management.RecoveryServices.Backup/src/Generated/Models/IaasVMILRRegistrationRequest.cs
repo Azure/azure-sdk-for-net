@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Restore files/folders from a backup copy of IaaS VM.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("IaasVMILRRegistrationRequest")]
     public partial class IaasVMILRRegistrationRequest : ILRRequest
     {
         /// <summary>

@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Azure Sql workload-specific container.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureSqlContainer")]
     public partial class AzureSqlContainer : ProtectionContainer
     {
         /// <summary>

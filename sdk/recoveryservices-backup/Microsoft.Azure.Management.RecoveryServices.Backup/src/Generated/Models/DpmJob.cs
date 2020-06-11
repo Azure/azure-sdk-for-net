@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// DPM workload-specific job object.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DpmJob")]
     public partial class DpmJob : Job
     {
         /// <summary>
