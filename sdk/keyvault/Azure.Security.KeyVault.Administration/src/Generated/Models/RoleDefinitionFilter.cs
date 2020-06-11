@@ -23,6 +23,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Returns role definition with the specific name. </summary>
-        public string RoleName { get; set; }
+        public string RoleName { get; }
     }
 }
