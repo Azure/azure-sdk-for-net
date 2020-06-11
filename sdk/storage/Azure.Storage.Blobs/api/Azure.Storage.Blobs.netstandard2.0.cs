@@ -990,11 +990,6 @@ namespace Azure.Storage.Blobs.Models
         Locked = 0,
         Unlocked = 1,
     }
-    public enum ListContainersIncludeType
-    {
-        Metadata = 0,
-        Deleted = 1,
-    }
     public partial class PageBlobCreateOptions
     {
         public PageBlobCreateOptions() { }

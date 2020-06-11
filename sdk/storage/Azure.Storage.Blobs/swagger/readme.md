@@ -1128,7 +1128,6 @@ directive:
   where: $.parameters.ListContainersInclude
   transform: >
     $.items["x-az-public"] = false;
-    $["x-ms-enum"].name = "ListBlobContainersIncludeItem"
 ```
 
 ### Hide Error models

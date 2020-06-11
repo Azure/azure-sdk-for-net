@@ -21734,7 +21734,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// ListContainersIncludeType values
     /// </summary>
-    public enum ListContainersIncludeType
+    internal enum ListContainersIncludeType
     {
         /// <summary>
         /// metadata
