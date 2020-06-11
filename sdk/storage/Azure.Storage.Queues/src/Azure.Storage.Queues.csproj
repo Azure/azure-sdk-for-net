@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
     <Version>12.4.0-preview.1</Version>
+    <ApiCompatVersion>12.3.2</ApiCompatVersion>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>

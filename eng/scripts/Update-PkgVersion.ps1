@@ -53,7 +53,7 @@ $csprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" 
 $csproj = new-object xml
 $csproj.PreserveWhitespace = $true
 $csproj.Load($csprojPath)
-$propertyGroup = $csproj.Project.PropertyGroup
+$propertyGroup = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node.ParentNode
 $packageVersion = $propertyGroup.Version
 
 $packageSemVer = [AzureEngSemanticVersion]::new($packageVersion)
