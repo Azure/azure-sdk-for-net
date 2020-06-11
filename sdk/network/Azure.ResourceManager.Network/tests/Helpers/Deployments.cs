@@ -49,17 +49,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 "}";
             string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "DeploymentTemplate.json"));
 
-            JsonElement jsonTemplate = JsonSerializer.Deserialize<JsonElement>(templateString);
-            JsonElement jsonParameter = JsonSerializer.Deserialize<JsonElement>(deploymentParams);
-
-            object template = jsonTemplate.GetObject();
-            IDictionary<string, object> parameterDictionary = jsonParameter.GetObject() as IDictionary<string, object>;
-            object parameter = parameterDictionary;
-
             DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
             {
-                Template = template.ToString(),
-                Parameters = parameter.ToString(),
+                Template = templateString,
+                Parameters = deploymentParams
             };
             Deployment DeploymentModel = new Deployment(deploymentProperties);
 

@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Management.Resources;
 using Azure.Management.Resources.Models;
 
@@ -50,18 +47,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "DeploymentTemplate.json"));
 
-            JsonElement jsonTemplate = JsonSerializer.Deserialize<JsonElement>(templateString);
-            JsonElement jsonParameter = JsonSerializer.Deserialize<JsonElement>(deploymentParams);
-
-            object template = jsonTemplate.GetObject();
-            IDictionary<string, object> parameterDictionary = jsonParameter.GetObject() as IDictionary<string, object>;
-            object parameter = parameterDictionary;
-
             DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
             {
-                Template = template.ToString(),
-                Parameters = parameter.ToString()
+                Template = templateString,
+                Parameters = deploymentParams
             };
+
             Deployment DeploymentModel = new Deployment(deploymentProperties);
             Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, DeploymentModel);
             await deploymentWait.WaitForCompletionAsync();
@@ -69,13 +60,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public static async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
         {
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
-            JsonElement jsonTemplate = JsonSerializer.Deserialize<JsonElement>(templateString);
-            object template = jsonTemplate.GetObject();
+            string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
 
             DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
             {
-                Template = template.ToString()
+                Template = templateString
             };
             Deployment DeploymentModel = new Deployment(deploymentProperties);
             Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, DeploymentModel);
