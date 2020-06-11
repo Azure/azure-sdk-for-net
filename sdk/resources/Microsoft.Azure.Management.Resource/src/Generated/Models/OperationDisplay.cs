@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// performed: Profile, endpoint, etc.</param>
         /// <param name="operation">Operation type: Read, write, delete,
         /// etc.</param>
+        /// <param name="description">Description of the operation.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
