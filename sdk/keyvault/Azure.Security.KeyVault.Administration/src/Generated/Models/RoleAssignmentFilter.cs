@@ -23,6 +23,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Returns role assignment of the specific principal. </summary>
-        public string PrincipalId { get; set; }
+        public string PrincipalId { get; }
     }
 }
