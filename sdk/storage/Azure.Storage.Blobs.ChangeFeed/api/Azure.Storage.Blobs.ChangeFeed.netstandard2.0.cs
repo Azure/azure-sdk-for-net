@@ -58,8 +58,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BlobChangeFeedEventType(string value) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobAsyncOperationInitiated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobDeleted { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobPropertiesUpdated { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobSnapshotCreated { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType BlobTierChanged { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType Control { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType UnspecifiedEventType { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.Models.BlobChangeFeedEventType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -82,9 +87,18 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BlobOperationName(string value) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName AbortCopyBlob { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName ControlEvent { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName CopyBlob { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName DeleteBlob { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName PutBlob { get { throw null; } }
-        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName UnspecifiedEventType { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName PutBlockList { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName SetBlobMetadata { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName SetBlobProperties { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName SetBlobTier { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName SnapshotBlob { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName UndeleteBlob { get { throw null; } }
+        public static Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName UnspecifiedApi { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.Models.BlobOperationName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
