@@ -6,6 +6,8 @@ A `TableServiceClient` performs account-level operations like creating and delet
 
 You can set `accountName` and `storageAccountKey` based on an environment variable, configuration setting, or any way that works for your application.
 
+For the purpose of this test, we are going to use a Storage Resource.
+
 ```C# Snippet:TablesSample1CreateClient
 // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
 var serviceClient = new TableServiceClient(
@@ -14,17 +16,12 @@ var serviceClient = new TableServiceClient(
 ```
 
 ## Creating a Table
-To create a table, a `TableClient` must be created by the `TableServiceClient` by invoking `CreateTable`. A `TableClient` represents a single table and performs table-level operations like inserting and deleting entities within that table. `tableName` can be replaced with any string to be the name of the table. Tables must have unique names.
-
-To get a reference to the created table, invoke `GetTableClient` from the service client with the table name, which will return the `TableClient` object.
+To create a table, create a `TableClient` by invoking `CreateTable` from the `TableServiceClient`. A `TableClient` represents a single table and performs table-level operations like inserting and deleting entities within that table. `tableName` can be replaced with any string to be the name of the table. Tables must have unique names.
 
 ```C# Snippet:TablesSample1CreateTable
-// Create a new table. Getting response is not necessary to create; just gives more info.
-TableItem response = serviceClient.CreateTable(tableName);
-
-// Get a reference to a new instance of <see cref="TableClient" /> affinized to the table we created.
-var client = serviceClient.GetTableClient(tableName);
-Console.WriteLine($"The created table's name is {response.TableName}.");
+// Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+TableItem table = serviceClient.CreateTable(tableName);
+Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
 
 ## Deleting a Table

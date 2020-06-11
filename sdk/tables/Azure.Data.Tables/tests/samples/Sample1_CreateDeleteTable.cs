@@ -30,12 +30,9 @@ namespace Azure.Data.Tables.Samples
             try
             {
                 #region Snippet:TablesSample1CreateTable
-                // Create a new table. Getting response is not necessary to create; just gives more info.
-                TableItem response = serviceClient.CreateTable(tableName);
-
-                // Get a reference to a new instance of <see cref="TableClient" /> affinized to the table we created.
-                var client = serviceClient.GetTableClient(tableName);
-                Console.WriteLine($"The created table's name is {response.TableName}.");
+                // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+                TableItem table = serviceClient.CreateTable(tableName);
+                Console.WriteLine($"The created table's name is {table.TableName}.");
                 #endregion
             }
             finally
