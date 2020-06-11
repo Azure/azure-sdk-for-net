@@ -20,9 +20,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public BlobOperationName(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
 
         /// <summary>
-        /// Unspecified event type.
+        /// Unspecified Api.
         /// </summary>
-        public static BlobOperationName UnspecifiedEventType { get; } = new BlobOperationName("UnspecifiedEventType");
+        public static BlobOperationName UnspecifiedApi { get; } = new BlobOperationName("UnspecifiedApi");
 
         /// <summary>
         /// Put Blob.
@@ -30,9 +30,54 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public static BlobOperationName PutBlob { get; } = new BlobOperationName("PutBlob");
 
         /// <summary>
+        /// Put Block List.
+        /// </summary>
+        public static BlobOperationName PutBlockList { get; } = new BlobOperationName("PutBlockList");
+
+        /// <summary>
+        /// Copy Blob.
+        /// </summary>
+        public static BlobOperationName CopyBlob { get; } = new BlobOperationName("CopyBlob");
+
+        /// <summary>
         /// Delete Blob.
         /// </summary>
         public static BlobOperationName DeleteBlob { get; } = new BlobOperationName("DeleteBlob");
+
+        /// <summary>
+        /// Set Blob Metadata.
+        /// </summary>
+        public static BlobOperationName SetBlobMetadata { get; } = new BlobOperationName("SetBlobMetadata");
+
+        /// <summary>
+        /// Control Event.
+        /// </summary>
+        public static BlobOperationName ControlEvent { get; } = new BlobOperationName("ControlEvent");
+
+        /// <summary>
+        /// Undelete Blob.
+        /// </summary>
+        public static BlobOperationName UndeleteBlob { get; } = new BlobOperationName("UndeleteBlob");
+
+        /// <summary>
+        /// Set Blob Properties.
+        /// </summary>
+        public static BlobOperationName SetBlobProperties { get; } = new BlobOperationName("SetBlobProperties");
+
+        /// <summary>
+        /// Snapshot Blob.
+        /// </summary>
+        public static BlobOperationName SnapshotBlob { get; } = new BlobOperationName("SnapshotBlob");
+
+        /// <summary>
+        /// Set Blob Tier.
+        /// </summary>
+        public static BlobOperationName SetBlobTier { get; } = new BlobOperationName("SetBlobTier");
+
+        /// <summary>
+        /// Abort Copy Blob.
+        /// </summary>
+        public static BlobOperationName AbortCopyBlob { get; } = new BlobOperationName("AbortCopyBlob");
 
         ///<inheritdoc/>
         public static bool operator ==(BlobOperationName left, BlobOperationName right) => left.Equals(right);

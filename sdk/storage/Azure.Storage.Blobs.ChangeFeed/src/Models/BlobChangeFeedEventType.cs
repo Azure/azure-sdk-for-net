@@ -33,6 +33,31 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// </summary>
         public static BlobChangeFeedEventType BlobDeleted { get; } = new BlobChangeFeedEventType("BlobDeleted");
 
+        /// <summary>
+        /// Blob Properties Updated.
+        /// </summary>
+        public static BlobChangeFeedEventType BlobPropertiesUpdated { get; } = new BlobChangeFeedEventType("BlobPropertiesUpdated");
+
+        /// <summary>
+        /// Blob Snapshot Created.
+        /// </summary>
+        public static BlobChangeFeedEventType BlobSnapshotCreated { get; } = new BlobChangeFeedEventType("BlobSnapshotCreated");
+
+        /// <summary>
+        /// Control.
+        /// </summary>
+        public static BlobChangeFeedEventType Control { get; } = new BlobChangeFeedEventType("Control");
+
+        /// <summary>
+        /// Blob Tier Changed.
+        /// </summary>
+        public static BlobChangeFeedEventType BlobTierChanged { get; } = new BlobChangeFeedEventType("BlobTierChanged");
+
+        /// <summary>
+        /// Blob Async Operation Initiated.
+        /// </summary>
+        public static BlobChangeFeedEventType BlobAsyncOperationInitiated { get; } = new BlobChangeFeedEventType("BlobAsyncOperationInitiated");
+
         ///<inheritdoc/>
         public static bool operator ==(BlobChangeFeedEventType left, BlobChangeFeedEventType right) => left.Equals(right);
 
