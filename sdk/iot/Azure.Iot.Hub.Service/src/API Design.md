@@ -153,38 +153,29 @@ public class Jobs
     /// <summary>
     /// Creates a job to export device registrations to the container.
     /// </summary>
-    /// <param name="exportJobProperties">Job parameters to export devices.</param>
-    /// <param name="excludeKeys">If false, authorization keys are included in export output.  Keys are exported as null otherwise.</param>
+    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the results of the export job.</param>
+    /// <param name="excludeKeys">If false, authorization keys are included in export output.</param>
+    /// <param name="options">The optional settings for this request.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleExportDevicesAsync" language="csharp">
-    /// </code>
-    /// </example>
-    public virtual Task<Response<JobProperties>> ExportDevicesAsync(ExportJobProperties exportJobProperties, bool excludeKeys, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> CreateExportDevicesJobAsync(string outputBlobContainerUri, bool excludeKeys, JobRequestOptions options = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a job to import device registrations into the IoT Hub.
     /// </summary>
-    /// <param name="importJobProperties">Job parameters to import devices.</param>
+    /// <param name="importBlobContainerUri">URI containing SAS token to a blob container that contains registry data to sync.</param>
+    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the status of the job.</param>
+    /// <param name="options">The optional settings for this request.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleImportDevicesAsync" language="csharp">
-    /// </code>
-    /// </example>
-    public virtual Task<Response<JobProperties>> ImportDevicesAsync(ImportJobProperties importJobProperties, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> CreateImportDevicesJobAsync(string importBlobContainerUri, string outputBlobContainerUri, JobRequestOptions options = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List all import and export jobs for the IoT Hub.
     /// </summary>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>IEnumerable of JobProperties of all jobs for this IoT Hub.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleGetImportExportJobsAsync" language="csharp">
-    /// </code>
-    /// </example>
-    public virtual Task<Response<IReadOnlyList<JobProperties>>> GetImportExportJobsAsync(CancellationToken cancellationToken);
+    public virtual Task<Response<IEnumerable<JobProperties>>> GetImportExportJobsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the import or export job with the specified ID.
@@ -192,11 +183,7 @@ public class Jobs
     /// <param name="jobId">Id of the Job object to retrieve</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>JobProperties of the job specified by the provided jobId.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleGetImportExportJobAsync" language="csharp">
-    /// </code>
-    /// </example>
-    public virtual Task<Response<JobProperties>> GetImportExportJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<JobProperties>> GetImportExportJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels/Deletes the job with the specified ID.
@@ -204,12 +191,7 @@ public class Jobs
     /// <param name="jobId">Id of the job to cancel</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A response string object indicating result of the cancellation.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleCancelImportExportJobAsync" language="csharp">
-    /// </code>
-    /// </example>
-    public virtual Task<Response<string>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken);
-
+    public virtual Task<Response<string>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken = default);
 }
 
 ```
@@ -218,60 +200,48 @@ public class Jobs
 Scheduled jobs execute device twin updates and direct methods against a set of devices at a scheduled time. You can use scheduled jobs to update desired properties, update tags and invoke direct methods.
 
 ```csharp
-public class Jobs
+public class ScheduledJobs
 {
+    /// <summary>
+    /// Creates a new scheduled job to update twin tags and desired properties on one or multiple devices.
+    /// </summary>
+    /// <param name="jobId">Unique Job Id for this job</param>
+    /// <param name="query">Query condition to evaluate which devices to run the job on</param>
+    /// <param name="twin">Twin object to use for the update</param>
+    /// <param name="startTimeInUtc">Date time in Utc to start the job</param>
+    /// <param name="maxExecutionTime">Max execution time, i.e., ttl duration the job can run</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A JobResponse object</returns>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual Task<Response<JobResponse>> ScheduleTwinUpdateJobAsync(string jobId, string query, Twin twin, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates a new scheduled job to run a device method on one or multiple devices.
+    /// </summary>
+    /// <param name="jobId">Unique Job Id for this job</param>
+    /// <param name="query">Query condition to evaluate which devices to run the job on</param>
+    /// <param name="cloudToDeviceMethod">Method call parameters</param>
+    /// <param name="startTimeInUtc">Date time in Utc to start the job</param>
+    /// <param name="maxExecutionTime">Max execution time in seconds, i.e., ttl duration the job can run</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A JobResponse object</returns>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodJobAsync(string jobId, string query, CloudToDeviceMethod cloudToDeviceMethod, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Retrieves details of a scheduled job from the IoT Hub.
     /// </summary>
     /// <param name="jobId">Id of the Job to retrieve</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>The matching JobResponse object</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleGetScheduledJobJobAsync" language="csharp">
-    /// </code>
-    /// </example>
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual Task<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Creates a new scheduled job to update twin tags and desired properties on one or multiple devices.
-    /// </summary>
-    /// <param name="jobId">Unique Job Id for this job</param>
-    /// <param name="queryCondition">Query condition to evaluate which devices to run the job on</param>
-    /// <param name="twin">Twin object to use for the update</param>
-    /// <param name="startTimeUtc">Date time in Utc to start the job</param>
-    /// <param name="maxExecutionTimeInSeconds">Max execution time in seconds, i.e., ttl duration the job can run</param>
-    /// <param name="cancellationToken">Task cancellation token</param>
-    /// <returns>A JobResponse object</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleScheduleTwinUpdateJobAsync" language="csharp">
-    /// </code>
-    /// </example>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
-    public virtual Task<Response<JobResponse>> ScheduleTwinUpdateAsync(string jobId, string queryCondition, Twin twin, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Creates a new scheduled job to run a device method on one or multiple devices.
-    /// </summary>
-    /// <param name="jobId">Unique Job Id for this job</param>
-    /// <param name="queryCondition">Query condition to evaluate which devices to run the job on</param>
-    /// <param name="cloudToDeviceMethod">Method call parameters</param>
-    /// <param name="startTimeUtc">Date time in Utc to start the job</param>
-    /// <param name="maxExecutionTimeInSeconds">Max execution time in seconds, i.e., ttl duration the job can run</param>
-    /// <param name="cancellationToken">Task cancellation token</param>
-    /// <returns>A JobResponse object</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleScheduleDeviceMethodJobAsync" language="csharp">
-    /// </code>
-    /// </example>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
-    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodAsync(string jobId, string queryCondition, CloudToDeviceMethod cloudToDeviceMethod, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels/Deletes the job with the specified ID.
@@ -279,14 +249,10 @@ public class Jobs
     /// <param name="jobId">Id of the job to cancel</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleCancelScheduledJobAsync" language="csharp">
-    /// </code>
-    /// </example>
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Query the IoT hub to retrieve information regarding scheduled jobs.
@@ -295,14 +261,10 @@ public class Jobs
     /// <param name="jobStatus">The job status to query.</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>The pageable list of query results and the raw HTTP response.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleQueryScheduledJobsAsync" language="csharp">
-    /// </code>
-    /// </example>
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual AsyncPageable<string> QueryScheduledJobsAsync(JobType? jobType = null, JobStatus? jobStatus = null, CancellationToken cancellationToken = default);
+    public virtual AsyncPageable<string> QueryScheduledJobsAsync(ScheduledJobType? jobType = null, ScheduledJobStatus? jobStatus = null, CancellationToken cancellationToken = default);
 }
 ```
 
@@ -311,72 +273,96 @@ public class Jobs
 ```csharp
 
 /// <summary>
-/// An object representing the properties needed in the payload to an export devices job.
+/// 
 /// </summary>
-public class ExportJobProperties 
+public class JobRequestOptions
 {
     /// <summary>
-    /// URI containing SAS token to a blob container. This is used to output the status of the job and the results.
+    /// The name of the blob that will be created in the provided blob container. If not provided by the user, it will default to "devices.txt".
     /// </summary>
-    public string OutputBlobContainerUri { get; set; }
+    /// <remarks>
+    /// In the case of export, the blob will contain the export devices registry information for the IoT Hub. In the case of import, the blob will contain the status of importing devices.
+    /// </remarks>
+    public string BloblName { get; set; }
 
     /// <summary>
-    /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.
-    /// </summary>
-    public string OutputBlobName { get; set; }
-
-    /// <summary>
-    /// Specifies authentication type being used for connecting to storage account.
+    /// Specifies authentication type being used for connecting to storage account. If not provided by the user, it will default to KeyBased type.
     /// </summary>
     public StorageAuthenticationType AuthenticationType { get; set; }
 }
 
 /// <summary>
-/// An object representing the properties needed in the payload to an import devices job.
-/// </summary>
-public class ImportJobProperties : ExportJobProperties
-{
-    /// <summary>
-    /// URI containing SAS token to a blob container that contains registry data to sync.
-    /// </summary>
-    public string ImportBlobContainerUri { get; set; }
-
-    /// <summary>
-    /// The name of the blob that will be used when importing from the provided input blob container.
-    /// </summary>
-    public string ImportBlobName { get; set; }
-}
-
-/// <summary>
 /// The type of job to query for
 /// </summary>
-public static class JobType
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ScheduledJobType
 {
-    public const string ExportDevices = "export";
-    public const string ImportDevices = "import";
-    public const string ScheduleDeviceMethod = "scheduleDeviceMethod";
-    public const string ScheduleUpdateTwin = "scheduleUpdateTwin";
+    /// <summary>
+    /// Indicates a Device method job
+    /// </summary>
+    [EnumMember(Value = "scheduleDeviceMethod")]
+    ScheduleDeviceMethod,
+
+    /// <summary>
+    /// Indicates a Twin update job
+    /// </summary>
+    [EnumMember(Value = "scheduleUpdateTwin")]
+    ScheduleUpdateTwin
 }
 
 /// <summary>
-/// The job status to query for
+/// Specifies the various job status for a job.
 /// </summary>
-public static class JobStatus
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ScheduledJobStatus
 {
-    public const string UnknownValue = "unknown";
-    public const string ExportValue = "export";
-    public const string ImportValue = "import";
-    public const string BackupValue = "backup";
-    public const string ReadDevicePropertiesValue = "readDeviceProperties";
-    public const string WriteDevicePropertiesValue = "writeDeviceProperties";
-    public const string UpdateDeviceConfigurationValue = "updateDeviceConfiguration";
-    public const string RebootDeviceValue = "rebootDevice";
-    public const string FactoryResetDeviceValue = "factoryResetDevice";
-    public const string FirmwareUpdateValue = "firmwareUpdate";
-    public const string ScheduleDeviceMethodValue = "scheduleDeviceMethod";
-    public const string ScheduleUpdateTwinValue = "scheduleUpdateTwin";
-    public const string RestoreFromBackupValue = "restoreFromBackup";
-    public const string FailoverDataCopyValue = "failoverDataCopy";
+    /// <summary>
+    /// Unknown
+    /// </summary>
+    [EnumMember(Value = "unknown")]
+    Unknown,
+
+    /// <summary>
+    /// Indicates that a Job is in the queue for execution
+    /// </summary>
+    [EnumMember(Value = "enqueued")]
+    Enqueued,
+
+    /// <summary>
+    /// Indicates that a Job is running
+    /// </summary>
+    [EnumMember(Value = "running")]
+    Running,
+
+    /// <summary>
+    /// Indicates that a Job execution is completed
+    /// </summary>
+    [EnumMember(Value = "completed")]
+    Completed,
+
+    /// <summary>
+    /// Indicates that a Job execution failed
+    /// </summary>
+    [EnumMember(Value = "failed")]
+    Failed,
+
+    /// <summary>
+    /// Indicates that a Job execution was cancelled
+    /// </summary>
+    [EnumMember(Value = "cancelled")]
+    Cancelled,
+
+    /// <summary>
+    /// Indicates that a Job is scheduled for a future datetime
+    /// </summary>
+    [EnumMember(Value = "scheduled")]
+    Scheduled,
+
+    /// <summary>
+    /// Indicates that a Job is in the queue for execution (synonym for enqueued to be depricated)
+    /// </summary>
+    [EnumMember(Value = "queued")]
+    Queued
 }
 ```
 
