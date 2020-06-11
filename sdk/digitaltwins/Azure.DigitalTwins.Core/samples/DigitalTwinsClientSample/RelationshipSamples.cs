@@ -178,27 +178,17 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
 
-            #region Snippet:DigitalTwinsSampleDeleteAllRelationships
+            #region Snippet:DigitalTwinsSampleDeleteRelationship
 
-            // Delete all relationships from building to floor. These relationships were created using the BasicRelationship type.
-            AsyncPageable<string> buildingRelationshipsToDelete = client.GetRelationshipsAsync("buildingTwinId");
-            await foreach (var relationshipToDelete in buildingRelationshipsToDelete)
-            {
-                BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipToDelete);
-                Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
-                Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
-            }
+            // Delete the contains relationship from building to floor.
+            Response deleteBuildingRelationshipResponse = await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
+            Console.WriteLine($"Deleted relationship with Id buildingFloorRelationshipId. Status response: {deleteBuildingRelationshipResponse.Status}.");
 
-            // Delete all relationships from floor to building. These relationships were created using the CustomRelationship type.
-            AsyncPageable<string> floorRelationshipsToDelete = client.GetRelationshipsAsync("floorTwinId");
-            await foreach (var relationshipToDelete in floorRelationshipsToDelete)
-            {
-                CustomRelationship relationship = JsonSerializer.Deserialize<CustomRelationship>(relationshipToDelete);
-                Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
-                Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
-            }
+            #endregion Snippet:DigitalTwinsSampleDeleteRelationship
 
-            #endregion Snippet:DigitalTwinsSampleDeleteAllRelationships
+            // Delete the containedIn relationship from floor to building.
+            Response deleteFloorRelationshipResponse = await client.DeleteRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
+            Console.WriteLine($"Deleted relationship with Id floorBuildingRelationshipId. Status response: {deleteFloorRelationshipResponse.Status}.");
 
             // Clean up.
             try
