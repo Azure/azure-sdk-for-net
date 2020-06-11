@@ -117,8 +117,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 foreach (string modelId in models)
                 {
-                    await client.DeleteModelAsync(modelId);
-                    Console.WriteLine($"Deleted model {modelId}");
+                    Response deleteModelResponse = await client.DeleteModelAsync(modelId);
+                    Console.WriteLine($"Deleted model with Id {modelId}. Response status: {deleteModelResponse.Status}");
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
@@ -148,7 +148,7 @@ namespace Azure.DigitalTwins.Core.Samples
             try
             {
                 Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(modelsToCreate);
-                Console.WriteLine($"Created models status: {response.GetRawResponse().Status}");
+                Console.WriteLine($"Created models. Response status: {response.GetRawResponse().Status}");
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
             {
@@ -175,7 +175,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 AsyncPageable<ModelData> allModels = client.GetModelsAsync();
                 await foreach (ModelData model in allModels)
                 {
-                    Console.WriteLine($"Model Id: {model.Id}, display name: {model.DisplayName["en"]}, upload time: {model.UploadTime}, is decommissioned: {model.Decommissioned}");
+                    Console.WriteLine($"Retrieved model with Id {model.Id}, display name {model.DisplayName["en"]}, upload time {model.UploadTime}, and decommissioned: {model.Decommissioned}");
                 }
 
                 #endregion Snippet:DigitalTwinsSampleGetModels
@@ -199,43 +199,33 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     // Delete all relationships
-
-                    #region Snippet:DigitalTwinsSampleGetRelationships
-
                     AsyncPageable<string> relationships = client.GetRelationshipsAsync(twin.Key);
-
-                    #endregion Snippet:DigitalTwinsSampleGetRelationships
-
                     await foreach (var relationshipJson in relationships)
                     {
                         BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                         await client.DeleteRelationshipAsync(twin.Key, relationship.Id);
-                        Console.WriteLine($"Found and deleted relationship {relationship.Id}");
+                        Console.WriteLine($"Found and deleted relationship with Id {relationship.Id}.");
                     }
 
                     // Delete any incoming relationships
-
-                    #region Snippet:DigitalTwinsSampleGetIncomingRelationships
-
                     AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
-
-                    #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
 
                     await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
                     {
                         await client.DeleteRelationshipAsync(incomingRelationship.SourceId, incomingRelationship.RelationshipId);
-                        Console.WriteLine($"Found and deleted incoming relationship {incomingRelationship.RelationshipId}");
+                        Console.WriteLine($"Found and deleted incoming relationship with Id {incomingRelationship.RelationshipId}.");
                     }
 
                     // Now the digital twin should be safe to delete
+                    string digitalTwinId = twin.Key;
 
                     #region Snippet:DigitalTwinsSampleDeleteTwin
 
-                    await client.DeleteDigitalTwinAsync(twin.Key);
+                    Response deleteDigitalTwinResponse = await client.DeleteDigitalTwinAsync(digitalTwinId);
+                    Console.WriteLine($"Deleted digital twin with Id {digitalTwinId}. Response Status: {deleteDigitalTwinResponse.Status}");
 
                     #endregion Snippet:DigitalTwinsSampleDeleteTwin
 
-                    Console.WriteLine($"Deleted digital twin {twin.Key}");
                 }
                 catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
                 {
@@ -353,8 +343,6 @@ namespace Azure.DigitalTwins.Core.Samples
                 // We deserialize as BasicRelationship to get the entire custom relationship (custom relationship properties).
                 IEnumerable<BasicRelationship> relationships = JsonSerializer.Deserialize<IEnumerable<BasicRelationship>>(relationshipSet.Value);
 
-                #region Snippet:DigitalTwinsSampleCreateRelationship
-
                 // From loaded relationships, get the source Id and Id from each one,
                 // and create it with full relationship payload
                 foreach (BasicRelationship relationship in relationships)
@@ -375,8 +363,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         Console.WriteLine($"Relationship {relationship.Id} already exists: {ex.Message}");
                     }
                 }
-
-                #endregion Snippet:DigitalTwinsSampleCreateRelationship
             }
         }
 
@@ -421,10 +407,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 };
 
                 Response createEventRouteResponse = await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+                Console.WriteLine($"Created event route with Id {_eventRouteId}. Response status: {createEventRouteResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSampleCreateEventRoute
-
-                Console.WriteLine($"Created event route: {_eventRouteId} Response status: {createEventRouteResponse.Status}");
             }
             catch (Exception ex)
             {
@@ -443,10 +428,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 #region Snippet:DigitalTwinsSampleDeleteEventRoute
 
                 Response response = await client.DeleteEventRouteAsync(_eventRouteId);
+                Console.WriteLine($"Deleted event route with Id {_eventRouteId}. Response status: {response.Status}");
 
                 #endregion Snippet:DigitalTwinsSampleDeleteEventRoute
-
-                Console.WriteLine($"Successfully deleted event route: {_eventRouteId}, status: {response.Status}");
             }
             catch (Exception ex)
             {

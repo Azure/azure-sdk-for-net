@@ -56,7 +56,7 @@ namespace Azure.DigitalTwins.Samples
 
                 // construct your json telemetry payload by hand.
                 Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
-                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
+                Console.WriteLine($"Published telemetry message to twin with Id {twinId}. Response status: {publishTelemetryResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishTelemetry
 
@@ -71,7 +71,7 @@ namespace Azure.DigitalTwins.Samples
                     twinId,
                     "Component1",
                     JsonSerializer.Serialize(telemetryPayload));
-                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
+                Console.WriteLine($"Published component telemetry message to twin with Id {twinId}. Response status: {publishTelemetryToComponentResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishComponentTelemetry
             }
