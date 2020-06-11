@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A data set mapping data transfer object.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataSetMapping")]
     public partial class DataSetMapping : ProxyDto
     {
         /// <summary>
