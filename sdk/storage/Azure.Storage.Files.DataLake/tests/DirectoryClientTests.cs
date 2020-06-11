@@ -8,12 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
-using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
