@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Transports;
+using Azure.Messaging.ServiceBus.Transports.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -51,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(string body, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            Body = BinaryData.Create(body, encoding);
+            TransportBody = new AmqpTransportBody { Body = BinaryData.Create(body, encoding) };
             Properties = new Dictionary<string, object>();
         }
 
@@ -68,9 +69,14 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified <see cref="BinaryData"/> instance.
         /// </summary>
         /// <param name="body">The payload of the message.</param>
-        public ServiceBusMessage(BinaryData body)
+        public ServiceBusMessage(BinaryData body) :
+            this(new AmqpTransportBody { Body = body })
         {
-            Body = body;
+        }
+
+        internal ServiceBusMessage(ITransportBody transportBody)
+        {
+            TransportBody = transportBody;
             Properties = new Dictionary<string, object>();
         }
 
@@ -82,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            Body = receivedMessage.Body;
+            TransportBody = receivedMessage.SentMessage.TransportBody;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
             Label = receivedMessage.Label;
@@ -113,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
             set => TransportBody.Body = value;
         }
 
-        internal ITransportBody TransportBody { get; set; }
+        internal ITransportBody TransportBody { get; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.

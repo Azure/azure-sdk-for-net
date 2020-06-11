@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var amqpMessage = sbMessage.CreateAmqpMessage();
+            var amqpMessage = sbMessage.ToAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
@@ -221,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
-            ServiceBusReceivedMessage sbMessage = amqpMessage.CreateServiceBusReceivedMessage();
+            ServiceBusReceivedMessage sbMessage = amqpMessage.ToServiceBusReceivedMessage();
             var sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {

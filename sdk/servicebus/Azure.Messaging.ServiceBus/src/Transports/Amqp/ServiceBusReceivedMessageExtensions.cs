@@ -17,8 +17,8 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
         /// Gets the Data body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="ReadOnlyMemory{T}.Empty"/>.</returns>
-        public static ReadOnlyMemory<byte> GetAmqpDataBody(this ServiceBusReceivedMessage message) =>
+        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="Enumerable.Empty{T}()"/>.</returns>
+        public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusReceivedMessage message) =>
             message.SentMessage.GetAmqpDataBody();
 
         /// <summary>

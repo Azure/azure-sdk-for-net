@@ -12,8 +12,8 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
     /// </summary>
     public static class ServiceBusSenderExtensions
     {
-        internal static ServiceBusMessage CreateAmqpDataMessage(ReadOnlyMemory<byte> data) =>
-            new ServiceBusMessage { TransportBody = new AmqpTransportBody { BodyType = AmqpBodyType.Data, Data = data } };
+        internal static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<ReadOnlyMemory<byte>> data) =>
+            new ServiceBusMessage(new AmqpTransportBody { BodyType = AmqpBodyType.Data, Data = data });
 
         /// <summary>
         /// Creates a <see cref="ServiceBusMessage"/> with the AMQP Data body type.
@@ -21,11 +21,11 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
         /// <param name="sender">The sender for the message. This is unused to create the message.</param>
         /// <param name="data">The message body to provide to the AQMP Data body.</param>
         /// <returns>A new <see cref="ServiceBusMessage"/>.</returns>
-        public static ServiceBusMessage CreateAmqpDataMessage(this ServiceBusSender sender, ReadOnlyMemory<byte> data) =>
+        public static ServiceBusMessage CreateAmqpDataMessage(this ServiceBusSender sender, IEnumerable<ReadOnlyMemory<byte>> data) =>
             CreateAmqpDataMessage(data);
 
         internal static ServiceBusMessage CreateAmqpSequenceMessage(IEnumerable<IList> sequence) =>
-            new ServiceBusMessage { TransportBody = new AmqpTransportBody { BodyType = AmqpBodyType.Sequence, Sequence = sequence } };
+            new ServiceBusMessage(new AmqpTransportBody { BodyType = AmqpBodyType.Sequence, Sequence = sequence });
 
         /// <summary>
         /// Creates a <see cref="ServiceBusMessage"/> with the AMQP Sequence body type.
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
             CreateAmqpSequenceMessage(sequence);
 
         internal static ServiceBusMessage CreateAmqpValueMessage(object value) =>
-            new ServiceBusMessage { TransportBody = new AmqpTransportBody { BodyType = AmqpBodyType.Value, Value = value } };
+            new ServiceBusMessage(new AmqpTransportBody { BodyType = AmqpBodyType.Value, Value = value });
 
         /// <summary>
         /// Creates a <see cref="ServiceBusMessage"/> with the AMQP Value body type.

@@ -32,9 +32,9 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
         /// Gets the Data body type from an AMQP <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="ReadOnlyMemory{T}.Empty"/>.</returns>
-        public static ReadOnlyMemory<byte> GetAmqpDataBody(this ServiceBusMessage message) =>
-            message.TransportBody is AmqpTransportBody body ? body.Data : ReadOnlyMemory<byte>.Empty;
+        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="Enumerable.Empty{T}()"/>.</returns>
+        public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusMessage message) =>
+            message.TransportBody is AmqpTransportBody body ? body.Data : Enumerable.Empty<ReadOnlyMemory<byte>>();
 
         /// <summary>
         /// Gets the Sequence body type from an AMQP <see cref="ServiceBusMessage"/>.

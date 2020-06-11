@@ -12,11 +12,7 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
     {
         public AmqpBodyType BodyType { get; set; }
 
-        public ReadOnlyMemory<byte> Data
-        {
-            get => Body.AsBytes();
-            set => Body = new BinaryData(value);
-        }
+        public IEnumerable<ReadOnlyMemory<byte>> Data { get; set; }
 
         public IEnumerable<IList> Sequence { get; set; }
 
