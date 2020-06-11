@@ -4,11 +4,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Transports.Amqp
 {
-    internal class AmqpTransportBody : ITransportBody
+    internal class AmqpTransportBody : TransportBody
     {
         public AmqpBodyType BodyType { get; set; }
 
@@ -17,7 +16,5 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
         public IEnumerable<IList> Sequence { get; set; }
 
         public object Value { get; set; }
-
-        public BinaryData Body { get; set; }
     }
 }

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Transports
 {
-    internal interface ITransportBody
+    internal abstract class TransportBody
     {
-        BinaryData Body { get; set; }
+        public BinaryData Body { get; set; }
     }
 }

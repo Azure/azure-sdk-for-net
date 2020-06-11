@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -74,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-        internal ServiceBusMessage(ITransportBody transportBody)
+        internal ServiceBusMessage(TransportBody transportBody)
         {
             TransportBody = transportBody;
             Properties = new Dictionary<string, object>();
@@ -119,7 +118,7 @@ namespace Azure.Messaging.ServiceBus
             set => TransportBody.Body = value;
         }
 
-        internal ITransportBody TransportBody { get; }
+        internal TransportBody TransportBody { get; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
