@@ -472,7 +472,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// This sample demonstrates iterating over outgoing relationships and deserializing relationship strings into BasicRelationship objects.
         /// <code snippet="Snippet:DigitalTwinsSampleGetAllRelationships">
-        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(&quot;sampleTwin1Id&quot;);
+        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(&quot;buildingTwinId&quot;);
         ///
         /// await foreach (var relationshipJson in relationships)
         /// {
@@ -604,7 +604,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships">
-        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(&quot;sampleTwin1Id&quot;);
+        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(&quot;buildingTwinId&quot;);
         ///
         /// await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
         /// {
@@ -725,7 +725,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// This sample demonstrates getting and deserializing a digital twin relationship into a custom data type.
         /// <code snippet="Snippet:DigitalTwinsSampleGetCustomRelationship">
-        /// Response&lt;string&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync(&quot;sampleTwin2Id&quot;, &quot;sampleRelationship2Id&quot;);
+        /// Response&lt;string&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;);
         /// if (getCustomRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
         /// {
         ///     CustomRelationship getCustomRelationship = JsonSerializer.Deserialize&lt;CustomRelationship&gt;(getCustomRelationshipResponse.Value);
@@ -836,19 +836,19 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomRelationship">
-        /// var customRelationshipPayload = new CustomRelationship
+        /// var floorBuildingRelationshipPayload = new CustomRelationship
         /// {
-        ///     Id = &quot;sampleRelationship2Id&quot;,
-        ///     SourceId = &quot;sampleTwin2Id&quot;,
-        ///     TargetId = &quot;sampleTwin1Id&quot;,
-        ///     Name = &quot;related&quot;,
+        ///     Id = &quot;floorBuildingRelationshipId&quot;,
+        ///     SourceId = &quot;floorTwinId&quot;,
+        ///     TargetId = &quot;buildingTwinId&quot;,
+        ///     Name = &quot;containedIn&quot;,
         ///     Prop1 = &quot;Prop1 val&quot;,
         ///     Prop2 = 4
         /// };
-        /// string serializedCustomRelationship = JsonSerializer.Serialize(customRelationshipPayload);
+        /// string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
         ///
-        /// Response&lt;string&gt; createCustomRelationshipResponse = await client.CreateRelationshipAsync(&quot;sampleTwin2Id&quot;, &quot;sampleRelationship2Id&quot;, serializedCustomRelationship);
-        /// Console.WriteLine($&quot;Created a digital twin relationship with Id sampleRelationship2Id from digital twin with Id sampleTwin2Id to digital twin with Id sampleTwin1Id. &quot; +
+        /// Response&lt;string&gt; createCustomRelationshipResponse = await client.CreateRelationshipAsync(&quot;floorTwinId&quot;, &quot;floorBuildingRelationshipId&quot;, serializedCustomRelationship);
+        /// Console.WriteLine($&quot;Created a digital twin relationship with Id floorBuildingRelationshipId from digital twin with Id floorTwinId to digital twin with Id buildingTwinId. &quot; +
         ///     $&quot;Response status: {createCustomRelationshipResponse.GetRawResponse().Status}.&quot;);
         /// </code>
         /// </example>

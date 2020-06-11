@@ -316,12 +316,12 @@ One option is to use the provided class BasicRelationship for serialization and 
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
 
 ```C# Snippet:DigitalTwinsSampleCreateBasicRelationship
-var basicRelationshipPayload = new BasicRelationship
+var buildingFloorRelationshipPayload = new BasicRelationship
 {
-    Id = "sampleRelationship1Id",
-    SourceId = "sampleTwin1Id",
-    TargetId = "sampleTwin2Id",
-    Name = "related",
+    Id = "buildingFloorRelationshipId",
+    SourceId = "buildingTwinId",
+    TargetId = "floorTwinId",
+    Name = "contains",
     CustomProperties =
     {
         { "Prop1", "Prop1 value" },
@@ -329,9 +329,9 @@ var basicRelationshipPayload = new BasicRelationship
     }
 };
 
-string serializedRelationship = JsonSerializer.Serialize(basicRelationshipPayload);
-Response<string> createRelationshipResponse = await client.CreateRelationshipAsync("sampleTwin1Id", "sampleRelationship1Id", serializedRelationship);
-Console.WriteLine($"Created a digital twin relationship with Id sampleRelationship1Id from digital twin with Id sampleTwin1Id to digital twin with Id sampleTwin2Id. " +
+string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
+Response<string> createRelationshipResponse = await client.CreateRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
+Console.WriteLine($"Created a digital twin relationship with Id buildingFloorRelationshipId from digital twin with Id buildingTwinId to digital twin with Id floorTwinId. " +
     $"Response status: {createRelationshipResponse.GetRawResponse().Status}.");
 ```
 
@@ -340,19 +340,19 @@ By specifying your properties and types directly, it requires less code or knowl
 You can review the [CustomRelationship definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomRelationship.cs).
 
 ```C# Snippet:DigitalTwinsSampleCreateCustomRelationship
-var customRelationshipPayload = new CustomRelationship
+var floorBuildingRelationshipPayload = new CustomRelationship
 {
-    Id = "sampleRelationship2Id",
-    SourceId = "sampleTwin2Id",
-    TargetId = "sampleTwin1Id",
-    Name = "related",
+    Id = "floorBuildingRelationshipId",
+    SourceId = "floorTwinId",
+    TargetId = "buildingTwinId",
+    Name = "containedIn",
     Prop1 = "Prop1 val",
     Prop2 = 4
 };
-string serializedCustomRelationship = JsonSerializer.Serialize(customRelationshipPayload);
+string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
 
-Response<string> createCustomRelationshipResponse = await client.CreateRelationshipAsync("sampleTwin2Id", "sampleRelationship2Id", serializedCustomRelationship);
-Console.WriteLine($"Created a digital twin relationship with Id sampleRelationship2Id from digital twin with Id sampleTwin2Id to digital twin with Id sampleTwin1Id. " +
+Response<string> createCustomRelationshipResponse = await client.CreateRelationshipAsync("floorTwinId", "floorBuildingRelationshipId", serializedCustomRelationship);
+Console.WriteLine($"Created a digital twin relationship with Id floorBuildingRelationshipId from digital twin with Id floorTwinId to digital twin with Id buildingTwinId. " +
     $"Response status: {createCustomRelationshipResponse.GetRawResponse().Status}.");
 ```
 
@@ -360,7 +360,7 @@ Console.WriteLine($"Created a digital twin relationship with Id sampleRelationsh
 You can get a digital twin relationship and deserialize it into a BasicRelationship.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicRelationship
-Response<string> getBasicRelationshipResponse = await client.GetRelationshipAsync("sampleTwin1Id", "sampleRelationship1Id");
+Response<string> getBasicRelationshipResponse = await client.GetRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
 if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
     BasicRelationship basicRelationship = JsonSerializer.Deserialize<BasicRelationship>(getBasicRelationshipResponse.Value);
@@ -373,7 +373,7 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 
 Getting and deserializing a digital twin relationship into a custom data type is as easy.
 ```C# Snippet:DigitalTwinsSampleGetCustomRelationship
-Response<string> getCustomRelationshipResponse = await client.GetRelationshipAsync("sampleTwin2Id", "sampleRelationship2Id");
+Response<string> getCustomRelationshipResponse = await client.GetRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
 if (getCustomRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
     CustomRelationship getCustomRelationship = JsonSerializer.Deserialize<CustomRelationship>(getCustomRelationshipResponse.Value);
@@ -389,7 +389,7 @@ if (getCustomRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode
 `GetRelationshipsAsync` lists all the relationships of a digital twin. You can get digital twin relationships and deserialize them into `BasicRelationship`.
 
 ```C# Snippet:DigitalTwinsSampleGetAllRelationships
-AsyncPageable<string> relationships = client.GetRelationshipsAsync("sampleTwin1Id");
+AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
 
 await foreach (var relationshipJson in relationships)
 {
@@ -404,7 +404,7 @@ await foreach (var relationshipJson in relationships)
 `GetIncomingRelationshipsAsync` lists all incoming relationships of digital twin.
 
 ```C# Snippet:DigitalTwinsSampleGetIncomingRelationships
-AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync("sampleTwin1Id");
+AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync("buildingTwinId");
 
 await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
 {
@@ -417,18 +417,18 @@ await foreach (IncomingRelationship incomingRelationship in incomingRelationship
 To delete all outgoing relationships for a digital twin, simply iterate over the relationships and delete them iteratively.
 
 ```C# Snippet:DigitalTwinsSampleDeleteAllRelationships
-// Delete all relationships from sampleTwin1 to sampleTwin2. These relationships were created using the BasicRelationship type.
-AsyncPageable<string> twin1RelationshipsToDelete = client.GetRelationshipsAsync("sampleTwin1Id");
-await foreach (var relationshipToDelete in twin1RelationshipsToDelete)
+// Delete all relationships from building to floor. These relationships were created using the BasicRelationship type.
+AsyncPageable<string> buildingRelationshipsToDelete = client.GetRelationshipsAsync("buildingTwinId");
+await foreach (var relationshipToDelete in buildingRelationshipsToDelete)
 {
     BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipToDelete);
     Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
     Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
 }
 
-// Delete all relationships from sampleTwin2 to sampleTwin1. These relationships were created using the CustomRelationship type.
-AsyncPageable<string> twin2RelationshipsToDelete = client.GetRelationshipsAsync("sampleTwin2Id");
-await foreach (var relationshipToDelete in twin2RelationshipsToDelete)
+// Delete all relationships from floor to building. These relationships were created using the CustomRelationship type.
+AsyncPageable<string> floorRelationshipsToDelete = client.GetRelationshipsAsync("floorTwinId");
+await foreach (var relationshipToDelete in floorRelationshipsToDelete)
 {
     CustomRelationship relationship = JsonSerializer.Deserialize<CustomRelationship>(relationshipToDelete);
     Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);

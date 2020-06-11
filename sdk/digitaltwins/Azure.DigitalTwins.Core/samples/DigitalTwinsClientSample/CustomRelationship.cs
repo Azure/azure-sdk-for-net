@@ -15,13 +15,13 @@ namespace Azure.DigitalTwins.Core.Samples
         [JsonPropertyName("$relationshipId")]
         public string Id { get; set; }
 
-        [JsonPropertyName("targetId")]
+        [JsonPropertyName("$targetId")]
         public string TargetId { get; set; }
 
-        [JsonPropertyName("sourceId")]
+        [JsonPropertyName("$sourceId")]
         public string SourceId { get; set; }
 
-        [JsonPropertyName("relationshipName")]
+        [JsonPropertyName("$relationshipName")]
         public string Name { get; set; }
 
         [JsonPropertyName("Prop1")]
