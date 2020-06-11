@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public string SessionId { get; }
         /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; set; }
+        public string DataFlowName { get; }
         /// <summary> The output stream name. </summary>
-        public string StreamName { get; set; }
+        public string StreamName { get; }
         /// <summary> List of column names. </summary>
-        public IReadOnlyList<string> Columns { get; set; }
+        public IReadOnlyList<string> Columns { get; }
     }
 }

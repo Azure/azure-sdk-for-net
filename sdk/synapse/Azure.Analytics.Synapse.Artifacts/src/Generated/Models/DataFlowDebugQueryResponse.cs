@@ -23,6 +23,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The run ID of data flow debug session. </summary>
-        public string RunId { get; set; }
+        public string RunId { get; }
     }
 }

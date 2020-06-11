@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("keywords");
+            }
             if (IgnoreCase != null)
             {
                 writer.WritePropertyName("ignoreCase");

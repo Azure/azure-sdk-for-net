@@ -13,6 +13,8 @@ namespace Azure.Security.KeyVault.Tests
 
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");
 
+        public string ClientObjectId => GetRecordedVariable("CLIENT_OBJECTID");
+
         /// <summary>
         /// Gets the value of the "KEYVAULT_SKU" variable, or "premium" if not defined.
         /// </summary>

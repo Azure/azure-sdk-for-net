@@ -30,7 +30,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
         internal VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
         {
-            InstanceIds = instanceIds;
+            InstanceIds = instanceIds ?? new List<string>();
         }
 
         /// <summary> The virtual machine scale set instance ids. </summary>

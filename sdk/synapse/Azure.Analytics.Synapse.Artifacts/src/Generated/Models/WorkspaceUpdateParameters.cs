@@ -27,8 +27,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; set; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity of the workspace. </summary>
-        public WorkspaceIdentity Identity { get; set; }
+        public WorkspaceIdentity Identity { get; }
     }
 }

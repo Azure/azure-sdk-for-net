@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             RuleGroupName = ruleGroupName;
             Description = description;
-            Rules = rules;
+            Rules = rules ?? new List<ApplicationGatewayFirewallRule>();
         }
 
         /// <summary> The name of the web application firewall rule group. </summary>
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The description of the web application firewall rule group. </summary>
         public string Description { get; set; }
         /// <summary> The rules of the web application firewall rule group. </summary>
-        public IList<ApplicationGatewayFirewallRule> Rules { get; set; }
+        public IList<ApplicationGatewayFirewallRule> Rules { get; }
     }
 }

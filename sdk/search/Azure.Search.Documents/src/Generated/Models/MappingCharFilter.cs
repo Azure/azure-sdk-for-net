@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(mappings));
             }
 
-            Mappings = mappings.ToArray();
+            Mappings = mappings?.ToArray();
             ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
         }
 

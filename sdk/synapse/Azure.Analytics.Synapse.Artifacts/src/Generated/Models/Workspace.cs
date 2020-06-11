@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Managed service identity of the workspace. </summary>
-        public WorkspaceIdentity Identity { get; set; }
+        public WorkspaceIdentity Identity { get; }
         /// <summary> Workspace provisioning state, example Succeeded. </summary>
         public string ProvisioningState { get; }
         /// <summary> Time the workspace was created in ISO8601 format. </summary>
@@ -54,9 +54,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Version of the workspace. </summary>
         public string Version { get; }
         /// <summary> Linked service reference. </summary>
-        public LinkedServiceReference DefaultStorage { get; set; }
+        public LinkedServiceReference DefaultStorage { get; }
         /// <summary> Linked service reference. </summary>
-        public LinkedServiceReference DefaultSqlServer { get; set; }
+        public LinkedServiceReference DefaultSqlServer { get; }
         internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

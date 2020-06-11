@@ -384,7 +384,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             public static IPage<VirtualMachineScaleSetVM> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string))
             {
@@ -407,7 +408,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
