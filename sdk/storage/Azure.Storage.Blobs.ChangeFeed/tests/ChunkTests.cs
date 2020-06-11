@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             long dataVersion = 1;
             string metadataVersion = "1";
 
-            string api = "CreateBlob";
+            string api = "PutBlob";
             Guid clientRequestId = Guid.NewGuid();
             Guid requestId = Guid.NewGuid();
             ETag etag = new ETag("0x8D75EF45A3B8617");
@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(dataVersion, changeFeedEvent.SchemaVersion);
             Assert.AreEqual(metadataVersion, changeFeedEvent.MetadataVersion);
 
-            Assert.AreEqual(api, changeFeedEvent.EventData.BlobOperationName);
+            Assert.AreEqual(BlobOperationName.PutBlob, changeFeedEvent.EventData.BlobOperationName);
             Assert.AreEqual(clientRequestId, changeFeedEvent.EventData.ClientRequestId);
             Assert.AreEqual(requestId, changeFeedEvent.EventData.RequestId);
             Assert.AreEqual(etag, changeFeedEvent.EventData.ETag);
