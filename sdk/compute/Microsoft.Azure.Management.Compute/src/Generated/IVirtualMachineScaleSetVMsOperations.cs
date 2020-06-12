@@ -241,7 +241,8 @@ namespace Microsoft.Azure.Management.Compute
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// The list parameters.
+        /// The list parameters. Allowed values are 'instanceView',
+        /// 'instanceView/statuses'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -42,7 +42,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     newComponentModelPayload,
                     newModelPayload
                 });
-            Console.WriteLine($"Created models Ids {componentModelId} and {modelId} with response {createModelsResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created models with Ids {componentModelId} and {modelId}. Response status: {createModelsResponse.GetRawResponse().Status}.");
 
             #region Snippet:DigitalTwinsSampleCreateBasicTwin
 
@@ -63,8 +63,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         "Component1",
                         new ModelProperties
                         {
-                            // model Id of component
-                            Metadata = { ModelId = componentModelId },
                             // component properties
                             CustomProperties =
                             {
@@ -79,7 +77,7 @@ namespace Azure.DigitalTwins.Core.Samples
             string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
             Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-            Console.WriteLine($"Created digital twin {basicDtId} with response {createBasicDtResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created digital twin with Id {basicDtId}. Response status: {createBasicDtResponse.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
 
@@ -96,7 +94,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
                 string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
-                var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+                IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
                 Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
                     $"ETag: {basicDt.ETag}\n\t" +
@@ -119,12 +117,11 @@ namespace Azure.DigitalTwins.Core.Samples
             var customTwin = new CustomDigitalTwin
             {
                 Id = customDtId,
-                Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+                Metadata = { ModelId = modelId },
                 Prop1 = "Prop1 val",
                 Prop2 = 987,
                 Component1 = new Component1
                 {
-                    Metadata = new Component1Metadata { ModelId = componentModelId },
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
                 }
@@ -132,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Samples
             string dt2Payload = JsonSerializer.Serialize(customTwin);
 
             Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-            Console.WriteLine($"Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created digital twin with Id {customDtId}. Response status: {createCustomDtResponse.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
 
@@ -164,7 +161,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             Response<string> response = await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
 
-            Console.WriteLine($"Updated component for digital twin {basicDtId}. Update response status: {response.GetRawResponse().Status}");
+            Console.WriteLine($"Updated component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleUpdateComponent
 
@@ -174,7 +171,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
 
-            Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
+            Console.WriteLine($"Retrieved component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent
 

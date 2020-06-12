@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TestHelperProjects>Rbac1.6;Resources201705;</TestHelperProjects>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
+  </ItemGroup>
+</Project>
+

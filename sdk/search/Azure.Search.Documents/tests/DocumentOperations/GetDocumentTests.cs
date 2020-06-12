@@ -94,22 +94,25 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient();
-            Response<SearchDocument> response = await client.GetDocumentAsync("3");
+            Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>("3");
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("3", response.Value["hotelId"]);
         }
 
+#if EXPERIMENTAL_DYNAMIC
         [Test]
+#endif
         public async Task GetDocumentDynamic()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient();
-            Response<SearchDocument> response = await client.GetDocumentAsync("3");
+            Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>("3");
             dynamic hotel = response.Value;
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("3", hotel.hotelId);
         }
+
 
         [Test]
         public async Task GetDocumentStatic()
@@ -182,7 +185,7 @@ namespace Azure.Search.Documents.Tests
                 IndexDocumentsBatch.Upload(new[] { document }));
             await resources.WaitForIndexingAsync();
 
-            Response<SearchDocument> response = await resources.GetQueryClient().GetDocumentAsync((string)document["hotelId"]);
+            Response<SearchDocument> response = await resources.GetQueryClient().GetDocumentAsync<SearchDocument>((string)document["hotelId"]);
             Assert.AreEqual(document["hotelId"], response.Value["hotelId"]);
         }
 
@@ -298,8 +301,7 @@ namespace Azure.Search.Documents.Tests
             {
                 ["hotelId"] = "1",
                 ["hotelName"] = "2015-02-11T12:58:00Z",
-                // TODO: #10592- Unify on an Azure.Core spatial type
-                // ["location"] = GeographyPoint.Create(40.760586, -73.975403), // Test that we don't confuse Geo-JSON & complex types.
+                ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586), // Test that we don't confuse Geo-JSON & complex types.
                 ["rooms"] = new[]
                 {
                     new SearchDocument
@@ -315,14 +317,12 @@ namespace Azure.Search.Documents.Tests
                 {
                     ["hotelId"] = "1",
                     ["hotelName"] = new DateTimeOffset(2015, 2, 11, 12, 58, 0, TimeSpan.Zero),
-                    // TODO: #10592- Unify on an Azure.Core spatial type
-                    // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
+                    ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586),
                     ["rooms"] = new[]
                     {
                         new SearchDocument
                         {
-                            // TODO: #10601 - Verify it's okay to change from "NaN" in the Track 1 tests
-                            ["baseRate"] = double.NaN
+                            ["baseRate"] = "NaN"
                         }
                     }
                 },
@@ -466,8 +466,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 3,
-                    // TODO: #10592- Unify on an Azure.Core spatial type
-                    // Location = GeographyPoint.Create(35.904160, -78.940483),
+                    Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "6910 Fayetteville Rd",
@@ -524,7 +523,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await client.GetDocumentAsync("ThisDocumentDoesNotExist"));
+                async () => await client.GetDocumentAsync<SearchDocument>("ThisDocumentDoesNotExist"));
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -534,7 +533,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await client.GetDocumentAsync(
+                async () => await client.GetDocumentAsync<SearchDocument>(
                     "3",
                     new GetDocumentOptions() { SelectedFields = new[] { "ThisFieldDoesNotExist" } }));
             Assert.AreEqual(400, ex.Status);
@@ -569,8 +568,8 @@ namespace Azure.Search.Documents.Tests
                         Longs = new[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
                         Points = new[]
                         {
-                            GeographyPoint.Create(49, -123),
-                            GeographyPoint.Create(47, -121)
+                            TestExtensions.CreatePoint(49, -123),
+                            TestExtensions.CreatePoint(47, -121)
                         },
                         Strings = new[]
                         {
@@ -614,8 +613,8 @@ namespace Azure.Search.Documents.Tests
                     ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
                     ["Points"] = new GeographyPoint[]
                     {
-                        GeographyPoint.Create(49, -123),
-                        GeographyPoint.Create(47, -121)
+                        TestExtensions.CreatePoint(49, -123),
+                        TestExtensions.CreatePoint(47, -121)
                     },
                     ["Strings"] = new string[]
                     {
@@ -638,8 +637,8 @@ namespace Azure.Search.Documents.Tests
                     ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
                     ["Points"] = new GeographyPoint[]
                     {
-                        GeographyPoint.Create(49, -123),
-                        GeographyPoint.Create(47, -121)
+                        TestExtensions.CreatePoint(49, -123),
+                        TestExtensions.CreatePoint(47, -121)
                     },
                     ["Strings"] = new object[]
                     {

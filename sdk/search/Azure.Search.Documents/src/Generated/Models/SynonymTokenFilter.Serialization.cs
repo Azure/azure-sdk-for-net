@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("synonyms");
+            }
             if (IgnoreCase != null)
             {
                 writer.WritePropertyName("ignoreCase");

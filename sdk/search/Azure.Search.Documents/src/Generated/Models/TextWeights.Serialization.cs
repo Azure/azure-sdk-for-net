@@ -28,6 +28,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndObject();
             }
+            else
+            {
+                writer.WriteNull("weights");
+            }
             writer.WriteEndObject();
         }
 

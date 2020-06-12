@@ -22,6 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            else
+            {
+                writer.WriteNull("name");
+            }
             if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
@@ -31,6 +35,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("fields");
             }
             if (ScoringProfiles != null && ScoringProfiles.Any())
             {

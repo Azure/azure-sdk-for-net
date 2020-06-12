@@ -1950,7 +1950,7 @@ namespace Azure.Management.Compute.Models
     public partial class ContainerServiceSshConfiguration
     {
         public ContainerServiceSshConfiguration(System.Collections.Generic.IEnumerable<Azure.Management.Compute.Models.ContainerServiceSshPublicKey> publicKeys) { }
-        public System.Collections.Generic.IList<Azure.Management.Compute.Models.ContainerServiceSshPublicKey> PublicKeys { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Management.Compute.Models.ContainerServiceSshPublicKey> PublicKeys { get { throw null; } }
     }
     public partial class ContainerServiceSshPublicKey
     {

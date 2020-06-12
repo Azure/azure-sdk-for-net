@@ -1,7 +1,24 @@
 # Release History
 
-## 7.0.0-preview.3 (Unreleased)
+## 7.0.0-preview.4 (Unreleased)
 
+
+## 7.0.0-preview.3 (2020-06-08)
+### Acknowledgements
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
+
+### Added
+- Add the ServiceBusManagementClient for CRUD operations on a namespace
+- Add constructor for ServiceBusMessage taking a string
+- Use the BinaryData type for ServiceBusMessage.Body
+- Add diagnostic tracing
+  
+### Breaking Changes
+- Introduce ServiceBusSessionReceiverOptions/ServiceBusSessionProcessorOptions for creating
+  ServiceBusSessionReceiver/ServiceBusSessionProcessor
+- Make ServiceBusReceivedMessage.Properties IReadOnlyDictionary rather than IDictionary
 
 ## 7.0.0-preview.2 (2020-05-04)
 

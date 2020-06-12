@@ -24,6 +24,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("searchMode");
                 writer.WriteStringValue(SearchMode);
             }
+            else
+            {
+                writer.WriteNull("searchMode");
+            }
             if (SourceFields != null && SourceFields.Any())
             {
                 writer.WritePropertyName("sourceFields");
@@ -33,6 +37,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("sourceFields");
             }
             writer.WriteEndObject();
         }
