@@ -46,7 +46,6 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
-    <EnableApiCompat Condition="'$(EnableApiCompat)' == '' and '$(IsShippingClientLibrary)' == 'true'">true</EnableApiCompat>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
@@ -143,10 +142,4 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-
-  <!-- Management Client Library Specific Overrides -->
-  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
-    <EnableApiCompat>false</EnableApiCompat>
-  </PropertyGroup>
-
 </Project>

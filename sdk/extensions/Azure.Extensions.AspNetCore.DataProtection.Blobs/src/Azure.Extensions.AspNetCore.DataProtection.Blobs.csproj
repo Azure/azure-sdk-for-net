@@ -5,7 +5,7 @@
     <Description>Microsoft Azure Blob storage support as key store (https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/implementation/key-storage-providers).</Description>
     <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>
     <Version>1.1.0-preview.1</Version>
-    <EnableApiCompat>false</EnableApiCompat>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
   </PropertyGroup>

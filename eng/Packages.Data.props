@@ -56,7 +56,6 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
     <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
-    <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.19552.1" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.10.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.8.0-preview" />
@@ -129,7 +128,7 @@
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200602.2" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
-    
+
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0" />
   </ItemGroup>
@@ -151,7 +150,7 @@
     <!-- Extension packages -->
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
-  
+
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />

@@ -6,7 +6,6 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
   </PropertyGroup>
 
@@ -14,7 +13,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />

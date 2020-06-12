@@ -6,7 +6,6 @@
     <Version>4.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Key Vault Administration;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
     <NoWarn>$(NoWarn);3021;CA1812</NoWarn>
   </PropertyGroup>
 
