@@ -12,20 +12,21 @@ namespace Microsoft.Rest.Serialization
         public static readonly DateTime EpochDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
-        /// Converts a byte array to a Base64Url encoded string
+        /// Converts a <see cref="DateTime"/> to Unix time in seconds.
         /// </summary>
-        /// <param name="input">The byte array to convert</param>
-        /// <returns>The Base64Url encoded form of the input</returns>
+        /// <param name="dateTime">Date to convert.</param>
+        /// <returns>Number of seconds since the Unix epoch.</returns>
         private static long ToUnixTime(DateTime dateTime)
         {
             return (long)dateTime.Subtract(EpochDate).TotalSeconds;
         }
 
         /// <summary>
-        /// Converts a Base64Url encoded string to a byte array
+        /// Converts a Unix time in seconds to a <see cref="DateTime"/>.
         /// </summary>
-        /// <param name="input">The Base64Url encoded string</param>
-        /// <returns>The byte array represented by the enconded string</returns>
+        /// <param name="seconds">Number of seconds since the Unix epoch.</param>
+        /// <returns>UTC <see cref="DateTime"/> <paramref name="seconds"/> since
+        /// the Unix epoch.</returns>
         private static DateTime FromUnixTime(long seconds)
         {
             return EpochDate.AddSeconds(seconds);
