@@ -22,6 +22,16 @@ namespace Microsoft.Rest.Serialization
         }
 
         /// <summary>
+        /// Converts a <see cref="DateTimeOffset"/> to Unix time in seconds.
+        /// </summary>
+        /// <param name="dateTimeOffset">Date to convert.</param>
+        /// <returns>Number of seconds since the Unix epoch.</returns>
+        private static long ToUnixTime(DateTimeOffset dateTimeOffset)
+        {
+            return ToUnixTime(dateTimeOffset.UtcDateTime);
+        }
+
+        /// <summary>
         /// Converts a Unix time in seconds to a <see cref="DateTime"/>.
         /// </summary>
         /// <param name="seconds">Number of seconds since the Unix epoch.</param>
@@ -37,16 +47,15 @@ namespace Microsoft.Rest.Serialization
             if (objectType == typeof(DateTime?) || objectType == typeof(DateTime))
                 return true;
 
+            if (objectType == typeof(DateTimeOffset?) || objectType == typeof(DateTimeOffset))
+                return true;
+
             return false;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (objectType != typeof(DateTime?) && objectType != typeof(DateTime))
-            {
-                return serializer.Deserialize(reader, objectType);
-            }
-            else
+            if (objectType == typeof(DateTime?) || objectType == typeof(DateTime))
             {
                 var value = serializer.Deserialize<long?>(reader);
 
@@ -55,19 +64,36 @@ namespace Microsoft.Rest.Serialization
                     return FromUnixTime(value.Value);
                 }
             }
+            else if (objectType == typeof(DateTimeOffset?) || objectType == typeof(DateTimeOffset))
+            {
+                var value = serializer.Deserialize<long?>(reader);
+
+                if (value.HasValue)
+                {
+                    return new DateTimeOffset(FromUnixTime(value.Value));
+                }
+            }
+            else
+            {
+                return serializer.Deserialize(reader, objectType);
+            }
 
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            if (value.GetType() != typeof(DateTime))
+            if (value is DateTime dateTime)
             {
-                JToken.FromObject(value).WriteTo(writer);
+                writer.WriteValue(ToUnixTime(dateTime));
+            }
+            else if (value is DateTimeOffset dateTimeOffset)
+            {
+                writer.WriteValue(ToUnixTime(dateTimeOffset));
             }
             else
             {
-                JToken.FromObject(ToUnixTime((DateTime)value)).WriteTo(writer);
+                JToken.FromObject(value).WriteTo(writer);
             }
         }
     }

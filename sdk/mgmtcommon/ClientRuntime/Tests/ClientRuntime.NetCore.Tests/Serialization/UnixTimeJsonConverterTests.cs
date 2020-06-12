@@ -27,16 +27,23 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         public void CanSerializeLocal()
         {
             var date = new DateTime(2020, 2, 29, 8, 5, 4, 600, DateTimeKind.Local);
+            var dateOffset = new DateTimeOffset(date);
             var dates = new DateData
             {
                 DateTime = date,
                 DateTimeNullable = date,
+                DateTimeOffset = dateOffset,
+                DateTimeOffsetNullable = dateOffset,
             };
             var serializedJson = JsonConvert.SerializeObject(dates, Formatting.Indented);
             // DateTime is seconds since midnight 1970-01-01 local time, rounded down
+            // DateTimeOffset is seconds since midnight 1970-01-01 UTC, rounded down
+            var dateOffsetUnix = ToUnixTime(dateOffset.UtcDateTime);
             var expectedJson = @"{
   ""dt"": 1582963504,
-  ""dtn"": 1582963504
+  ""dtn"": 1582963504,
+  ""dto"": " + dateOffsetUnix + @",
+  ""dton"": " + dateOffsetUnix + @"
 }";
             Assert.Equal(expectedJson, serializedJson);
         }
@@ -47,16 +54,23 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         public void CanSerializeUnspecified()
         {
             var date = new DateTime(2020, 2, 29, 8, 5, 4, 600);
+            var dateOffset = new DateTimeOffset(date);
             var dates = new DateData
             {
                 DateTime = date,
                 DateTimeNullable = date,
+                DateTimeOffset = dateOffset,
+                DateTimeOffsetNullable = dateOffset,
             };
             var serializedJson = JsonConvert.SerializeObject(dates, Formatting.Indented);
             // DateTime is seconds since midnight 1970-01-01 ignoring tz, rounded down
+            // DateTimeOffset is seconds since midnight 1970-01-01 UTC, rounded down
+            var dateOffsetUnix = ToUnixTime(dateOffset.UtcDateTime);
             var expectedJson = @"{
   ""dt"": 1582963504,
-  ""dtn"": 1582963504
+  ""dtn"": 1582963504,
+  ""dto"": " + dateOffsetUnix + @",
+  ""dton"": " + dateOffsetUnix + @"
 }";
             Assert.Equal(expectedJson, serializedJson);
         }
@@ -65,16 +79,21 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         public void CanSerializeUtc()
         {
             var date = new DateTime(2020, 2, 29, 8, 5, 4, 600, DateTimeKind.Utc);
+            var dateOffset = new DateTimeOffset(date);
             var dates = new DateData
             {
                 DateTime = date,
                 DateTimeNullable = date,
+                DateTimeOffset = dateOffset,
+                DateTimeOffsetNullable = dateOffset,
             };
             var serializedJson = JsonConvert.SerializeObject(dates, Formatting.Indented);
             // Seconds since midnight 1970-01-01 UTC, rounded down
             var expectedJson = @"{
   ""dt"": 1582963504,
-  ""dtn"": 1582963504
+  ""dtn"": 1582963504,
+  ""dto"": 1582963504,
+  ""dton"": 1582963504
 }";
             Assert.Equal(expectedJson, serializedJson);
         }
@@ -92,7 +111,9 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
             var serializedJson = JsonConvert.SerializeObject(dates, Formatting.Indented, serializeSettings);
             var expectedJson = @"{
   ""dt"": -62135596800,
-  ""dtn"": null
+  ""dtn"": null,
+  ""dto"": -62135596800,
+  ""dton"": null
 }";
             Assert.Equal(expectedJson, serializedJson);
         }
@@ -102,24 +123,32 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         {
             var json = @"{
   ""dt"": 0,
-  ""dtn"": 0
+  ""dtn"": 0,
+  ""dto"": 0,
+  ""dton"": 0
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
+            var dateOffset = new DateTimeOffset(UnixTimeJsonConverter.EpochDate);
             Assert.Equal(UnixTimeJsonConverter.EpochDate, dates.DateTime);
             Assert.Equal(UnixTimeJsonConverter.EpochDate, dates.DateTimeNullable);
+            Assert.Equal(dateOffset, dates.DateTimeOffset);
+            Assert.Equal(dateOffset, dates.DateTimeOffsetNullable);
         }
 
         [Fact]
         public void CanDeserializeNull()
         {
             var json = @"{
-  ""dtn"": null
+  ""dtn"": null,
+  ""dton"": null
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
             var date = new DateTime();
             var dateOffset = new DateTimeOffset();
             Assert.Equal(date, dates.DateTime);
             Assert.Null(dates.DateTimeNullable);
+            Assert.Equal(dateOffset, dates.DateTimeOffset);
+            Assert.Null(dates.DateTimeOffsetNullable);
         }
 
         [Fact]
@@ -127,11 +156,16 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         {
             var json = @"{
   ""dt"": ""0"",
-  ""dtn"": ""0""
+  ""dtn"": ""0"",
+  ""dto"": ""0"",
+  ""dton"": ""0""
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
+            var dateOffset = new DateTimeOffset(UnixTimeJsonConverter.EpochDate);
             Assert.Equal(UnixTimeJsonConverter.EpochDate, dates.DateTime);
             Assert.Equal(UnixTimeJsonConverter.EpochDate, dates.DateTimeNullable);
+            Assert.Equal(dateOffset, dates.DateTimeOffset);
+            Assert.Equal(dateOffset, dates.DateTimeOffsetNullable);
         }
 
         // Note: The test author makes no statement about whether this behavior
@@ -141,11 +175,15 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         {
             var json = @"{
   ""dt"": """",
-  ""dtn"": """"
+  ""dtn"": """",
+  ""dto"": """",
+  ""dton"": """"
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
             Assert.Equal(new DateTime(), dates.DateTime);
             Assert.Null(dates.DateTimeNullable);
+            Assert.Equal(new DateTimeOffset(), dates.DateTimeOffset);
+            Assert.Null(dates.DateTimeOffsetNullable);
         }
 
         // Note: The test author makes no statement about whether this behavior
@@ -155,13 +193,17 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
         {
             var json = @"{
   ""dt"": 86400.9,
-  ""dtn"": 86400.9
+  ""dtn"": 86400.9,
+  ""dto"": 86400.9,
+  ""dton"": 86400.9
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
             var date = UnixTimeJsonConverter.EpochDate.AddDays(1).AddSeconds(1);
             var dateOffset = new DateTimeOffset(date);
             Assert.Equal(date, dates.DateTime);
             Assert.Equal(date, dates.DateTimeNullable);
+            Assert.Equal(dateOffset, dates.DateTimeOffset);
+            Assert.Equal(dateOffset, dates.DateTimeOffsetNullable);
         }
 
         [Fact]
@@ -180,6 +222,14 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
             [JsonConverter(typeof(UnixTimeJsonConverter))]
             [JsonProperty("dtn")]
             public DateTime? DateTimeNullable { get; set; }
+
+            [JsonProperty("dto")]
+            [JsonConverter(typeof(UnixTimeJsonConverter))]
+            public DateTimeOffset DateTimeOffset { get; set; }
+
+            [JsonProperty("dton")]
+            [JsonConverter(typeof(UnixTimeJsonConverter))]
+            public DateTimeOffset? DateTimeOffsetNullable { get; set; }
         }
     }
 }
