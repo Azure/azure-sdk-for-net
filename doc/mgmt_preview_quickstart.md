@@ -120,13 +120,14 @@ We can use the Resource client (``Azure.ResourceManager.Resources.ResourcesManag
 
 ```csharp
     ...
+    var newResourceGroup = new ResourceGroup(location);
     var resourceGroupName = "myResourceGroupName";
     var tags = new Dictionary<string,string>();
     tags.Add("environment","test");
     tags.Add("department","tech");
-    resourceGroup.Tags = tags;
-
-    resourceGroup = await resourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
+    newResourceGroup.Tags = tags;
+    // Use existing resource group name and new resource group object
+    newResourceGroup = await resourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, newResourceGroup);
 ```
 
 
