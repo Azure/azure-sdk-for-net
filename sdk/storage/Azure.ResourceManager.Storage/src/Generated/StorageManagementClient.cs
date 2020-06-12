@@ -53,106 +53,55 @@ namespace Azure.ResourceManager.Storage
             _subscriptionId = subscriptionId;
         }
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of SkusClient. </summary>
-        public virtual SkusClient GetSkusClient()
-        {
-            return new SkusClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of SkusOperations. </summary>
+        public virtual SkusOperations Skus => new SkusOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of StorageAccountsClient. </summary>
-        public virtual StorageAccountsClient GetStorageAccountsClient()
-        {
-            return new StorageAccountsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of StorageAccountsOperations. </summary>
+        public virtual StorageAccountsOperations StorageAccounts => new StorageAccountsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of UsagesClient. </summary>
-        public virtual UsagesClient GetUsagesClient()
-        {
-            return new UsagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of UsagesOperations. </summary>
+        public virtual UsagesOperations Usages => new UsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ManagementPoliciesClient. </summary>
-        public virtual ManagementPoliciesClient GetManagementPoliciesClient()
-        {
-            return new ManagementPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ManagementPoliciesOperations. </summary>
+        public virtual ManagementPoliciesOperations ManagementPolicies => new ManagementPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateEndpointConnectionsClient. </summary>
-        public virtual PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient()
-        {
-            return new PrivateEndpointConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
+        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateLinkResourcesClient. </summary>
-        public virtual PrivateLinkResourcesClient GetPrivateLinkResourcesClient()
-        {
-            return new PrivateLinkResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
+        public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ObjectReplicationPoliciesClient. </summary>
-        public virtual ObjectReplicationPoliciesClient GetObjectReplicationPoliciesClient()
-        {
-            return new ObjectReplicationPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ObjectReplicationPoliciesOperations. </summary>
+        public virtual ObjectReplicationPoliciesOperations ObjectReplicationPolicies => new ObjectReplicationPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of EncryptionScopesClient. </summary>
-        public virtual EncryptionScopesClient GetEncryptionScopesClient()
-        {
-            return new EncryptionScopesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of EncryptionScopesOperations. </summary>
+        public virtual EncryptionScopesOperations EncryptionScopes => new EncryptionScopesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of BlobServicesClient. </summary>
-        public virtual BlobServicesClient GetBlobServicesClient()
-        {
-            return new BlobServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of BlobServicesOperations. </summary>
+        public virtual BlobServicesOperations BlobServices => new BlobServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of BlobContainersClient. </summary>
-        public virtual BlobContainersClient GetBlobContainersClient()
-        {
-            return new BlobContainersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of BlobContainersOperations. </summary>
+        public virtual BlobContainersOperations BlobContainers => new BlobContainersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of FileServicesClient. </summary>
-        public virtual FileServicesClient GetFileServicesClient()
-        {
-            return new FileServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of FileServicesOperations. </summary>
+        public virtual FileServicesOperations FileServices => new FileServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of FileSharesClient. </summary>
-        public virtual FileSharesClient GetFileSharesClient()
-        {
-            return new FileSharesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of FileSharesOperations. </summary>
+        public virtual FileSharesOperations FileShares => new FileSharesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of QueueServicesClient. </summary>
-        public virtual QueueServicesClient GetQueueServicesClient()
-        {
-            return new QueueServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of QueueServicesOperations. </summary>
+        public virtual QueueServicesOperations QueueServices => new QueueServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of QueueClient. </summary>
-        public virtual QueueClient GetQueueClient()
-        {
-            return new QueueClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of QueueOperations. </summary>
+        public virtual QueueOperations Queue => new QueueOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of TableServicesClient. </summary>
-        public virtual TableServicesClient GetTableServicesClient()
-        {
-            return new TableServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of TableServicesOperations. </summary>
+        public virtual TableServicesOperations TableServices => new TableServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of TableClient. </summary>
-        public virtual TableClient GetTableClient()
-        {
-            return new TableClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of TableOperations. </summary>
+        public virtual TableOperations Table => new TableOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }
