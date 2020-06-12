@@ -16,9 +16,9 @@ namespace Microsoft.Rest.Serialization
         /// </summary>
         /// <param name="input">The byte array to convert</param>
         /// <returns>The Base64Url encoded form of the input</returns>
-        private static long? ToUnixTime(DateTime dateTime)
+        private static long ToUnixTime(DateTime dateTime)
         {
-            return (long?)dateTime.Subtract(EpochDate).TotalSeconds;
+            return (long)dateTime.Subtract(EpochDate).TotalSeconds;
         }
 
         /// <summary>
@@ -26,13 +26,9 @@ namespace Microsoft.Rest.Serialization
         /// </summary>
         /// <param name="input">The Base64Url encoded string</param>
         /// <returns>The byte array represented by the enconded string</returns>
-        private static DateTime? FromUnixTime(long? seconds)
+        private static DateTime FromUnixTime(long seconds)
         {
-            if (seconds.HasValue)
-            {
-                return EpochDate.AddSeconds(seconds.Value);
-            }
-            return null;
+            return EpochDate.AddSeconds(seconds);
         }
 
         public override bool CanConvert(Type objectType)
@@ -55,7 +51,7 @@ namespace Microsoft.Rest.Serialization
 
                 if (value.HasValue)
                 {
-                    return FromUnixTime(value);
+                    return FromUnixTime(value.Value);
                 }
             }
 
