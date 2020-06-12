@@ -110,7 +110,7 @@ We can use the Resource client (``Azure.Management.Resources.ResourcesManagement
 ***Create a resource group***
 
 ```csharp
-    var location = "uswest2";
+    var location = "westus2";
     var resourceGroupName = "myResourceGroupName";
     var resourceGroup = new ResourceGroup(location);
     resourceGroup = await resourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
@@ -134,9 +134,9 @@ We can use the Resource client (``Azure.Management.Resources.ResourcesManagement
 
 ```csharp
     AsyncPageable<ResourceGroup> response = resourceGroupsClient.ListAsync();
-    await foreach (ResourceGroup resourceGroup in response)
+    await foreach (ResourceGroup rg in response)
     {
-        Console.WriteLine(resourceGroup.Name);
+        Console.WriteLine(rg.Name);
     }
 ```
 
@@ -155,12 +155,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Identity;
-using Azure.Management.Compute;
-using Azure.Management.Compute.Models;
-using Azure.Management.Network;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace AzureCreateVMSample
 {
