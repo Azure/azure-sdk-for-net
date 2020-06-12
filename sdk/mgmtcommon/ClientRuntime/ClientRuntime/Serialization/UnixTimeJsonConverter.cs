@@ -9,6 +9,8 @@ namespace Microsoft.Rest.Serialization
 {
     public class UnixTimeJsonConverter : JsonConverter
     {
+        private const long UnixEpochSeconds = 62135596800;
+
         public static readonly DateTime EpochDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
@@ -18,7 +20,11 @@ namespace Microsoft.Rest.Serialization
         /// <returns>Number of seconds since the Unix epoch.</returns>
         private static long ToUnixTime(DateTime dateTime)
         {
-            return (long)dateTime.Subtract(EpochDate).TotalSeconds;
+            // Note: Divide first to round toward 0001-01-01, rather than
+            // toward the Unix epoch, to match DateTimeOffset.ToUnixTimeSeconds
+            // https://github.com/dotnet/runtime/blob/v5.0.0-preview.5.20278.1/src/libraries/System.Private.CoreLib/src/System/DateTimeOffset.cs#L583-L603
+            long seconds = dateTime.Ticks / TimeSpan.TicksPerSecond;
+            return seconds - UnixEpochSeconds;
         }
 
         /// <summary>

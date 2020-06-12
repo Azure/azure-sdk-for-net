@@ -98,6 +98,29 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
             Assert.Equal(expectedJson, serializedJson);
         }
 
+        [Fact]
+        public void CanSerializeNegative()
+        {
+            var date = new DateTime(1950, 3, 1, 8, 5, 4, 400, DateTimeKind.Utc);
+            var dateOffset = new DateTimeOffset(date);
+            var dates = new DateData
+            {
+                DateTime = date,
+                DateTimeNullable = date,
+                DateTimeOffset = dateOffset,
+                DateTimeOffsetNullable = dateOffset,
+            };
+            var serializedJson = JsonConvert.SerializeObject(dates, Formatting.Indented);
+            // Seconds since midnight 1970-01-01 ignoring zone, rounded down (away from 0)
+            var expectedJson = @"{
+  ""dt"": -626025296,
+  ""dtn"": -626025296,
+  ""dto"": -626025296,
+  ""dton"": -626025296
+}";
+            Assert.Equal(expectedJson, serializedJson);
+        }
+
         // Note: Currently handled internally by JSON.NET:
         // https://github.com/JamesNK/Newtonsoft.Json/issues/1639
         [Fact]
