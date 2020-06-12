@@ -8,6 +8,7 @@
 .vs/
 *.lock.json
 developer/
+launch.json
 
 # Build results
 binaries/
@@ -60,6 +61,9 @@ ipch/
 # Visual Studio profiler
 *.psess
 *.vsp
+
+# VS Code
+.vscode/
 
 # Code analysis
 *.CodeAnalysisLog.xml

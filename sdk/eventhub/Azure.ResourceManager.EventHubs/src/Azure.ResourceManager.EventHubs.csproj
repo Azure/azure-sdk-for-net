@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.ResourceManager.EventHubs</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.EventHub</Description>
+    <PackageTags>azure;management;eventhub</PackageTags>
+    <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
+  </PropertyGroup>
+</Project>

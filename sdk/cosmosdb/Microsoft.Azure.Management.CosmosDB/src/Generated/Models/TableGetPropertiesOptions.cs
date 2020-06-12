@@ -25,11 +25,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the TableGetPropertiesOptions class.
         /// </summary>
-        /// <param name="throughput">Value of the Cosmos DB resource
-        /// throughput. Use the ThroughputSetting resource when retrieving
-        /// offer details.</param>
-        public TableGetPropertiesOptions(int? throughput = default(int?))
-            : base(throughput)
+        /// <param name="throughput">Value of the Cosmos DB resource throughput
+        /// or autoscaleSettings. Use the ThroughputSetting resource when
+        /// retrieving offer details.</param>
+        /// <param name="autoscaleSettings">Specifies the Autoscale
+        /// settings.</param>
+        public TableGetPropertiesOptions(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
+            : base(throughput, autoscaleSettings)
         {
             CustomInit();
         }

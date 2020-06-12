@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchResourceEncryptionKey : IUtf8JsonSerializable
     {
@@ -20,15 +20,27 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("keyVaultKeyName");
                 writer.WriteStringValue(KeyName);
             }
+            else
+            {
+                writer.WriteNull("keyVaultKeyName");
+            }
             if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVaultKeyVersion");
                 writer.WriteStringValue(KeyVersion);
             }
+            else
+            {
+                writer.WriteNull("keyVaultKeyVersion");
+            }
             if (_vaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUri");
                 writer.WriteStringValue(_vaultUri);
+            }
+            else
+            {
+                writer.WriteNull("keyVaultUri");
             }
             if (AccessCredentialsInternal != null)
             {

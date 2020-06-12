@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Credentials of a registered application created for your search service, used for authenticated access to the encryption keys stored in Azure Key Vault. </summary>
     internal partial class AzureActiveDirectoryApplicationCredentials

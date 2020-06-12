@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on the value of a date-time field. </summary>
     public partial class FreshnessScoringFunction : ScoringFunction

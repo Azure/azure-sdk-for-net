@@ -25,6 +25,10 @@ namespace Azure.AI.FormRecognizer
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
+        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
@@ -48,7 +52,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trainRequest);
             request.Content = content;
             return message;
@@ -57,7 +61,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
             {
@@ -120,7 +124,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelRequest(modelId, includeKeys);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,7 +195,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Mark model for deletion. Model artifacts will be permanently removed within a predetermined period. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteCustomModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteCustomModelAsync(Guid modelId, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteCustomModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -220,7 +224,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -247,7 +251,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -256,11 +260,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -272,7 +275,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -281,11 +284,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -310,7 +312,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Content-Type", "application/json");
             if (fileStream != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
@@ -322,15 +324,14 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -341,15 +342,14 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -375,7 +375,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeFormResultRequest(modelId, resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -429,7 +429,213 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(ContentType contentType, Stream fileStream, bool? includeTextDetails)
+        internal HttpMessage CreateCopyCustomModelRequest(Guid modelId, CopyRequest copyRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/copy", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(copyRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Copy custom model stored in this resource (the source) to user specified target Form Recognizer resource. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="copyRequest"> Copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        {
+            if (copyRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyRequest));
+            }
+
+            using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Copy custom model stored in this resource (the source) to user specified target Form Recognizer resource. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="copyRequest"> Copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        {
+            if (copyRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyRequest));
+            }
+
+            using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCustomModelCopyResultRequest(Guid modelId, Guid resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/copyResults/", false);
+            uri.AppendPath(resultId, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Obtain current status and the result of a custom model copy operation. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="resultId"> Copy operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CopyOperationResult>> GetCustomModelCopyResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CopyOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Obtain current status and the result of a custom model copy operation. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="resultId"> Copy operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CopyOperationResult> GetCustomModelCopyResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CopyOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGenerateModelCopyAuthorizationRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/copyAuthorization", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<CopyAuthorizationResult, ServiceGenerateModelCopyAuthorizationHeaders>> GenerateModelCopyAuthorizationAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGenerateModelCopyAuthorizationRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceGenerateModelCopyAuthorizationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CopyAuthorizationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<CopyAuthorizationResult, ServiceGenerateModelCopyAuthorizationHeaders> GenerateModelCopyAuthorization(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGenerateModelCopyAuthorizationRequest();
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceGenerateModelCopyAuthorizationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CopyAuthorizationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -453,7 +659,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeReceiptAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -462,11 +668,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -477,7 +682,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeReceiptAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -486,11 +691,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -513,7 +717,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Content-Type", "application/json");
             if (fileStream != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
@@ -524,15 +728,14 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -542,15 +745,14 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -573,7 +775,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeReceiptResultRequest(resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -626,7 +828,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -645,7 +847,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeLayoutAsyncAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -654,11 +856,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -668,7 +869,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public Response AnalyzeLayoutAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -677,11 +878,10 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -700,7 +900,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Content-Type", "application/json");
             if (fileStream != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
@@ -710,15 +910,14 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -727,15 +926,14 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeLayoutAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -758,7 +956,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeLayoutResultRequest(resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -827,7 +1025,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models_internal>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListCustomModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -895,7 +1093,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -963,7 +1161,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<Models_internal>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

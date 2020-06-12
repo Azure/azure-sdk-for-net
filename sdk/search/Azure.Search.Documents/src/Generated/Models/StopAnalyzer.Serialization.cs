@@ -6,17 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class StopAnalyzer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Stopwords != null)
+            if (Stopwords != null && Stopwords.Any())
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();

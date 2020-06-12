@@ -21,5 +21,7 @@ namespace Azure.Core
         public override T Value { get; }
 
         public THeaders Headers { get; }
+
+        public static implicit operator Response(ResponseWithHeaders<T, THeaders> self) => self.GetRawResponse();
     }
 }

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -74,6 +74,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// The name of the Encryption Scope to be used when sending requests.
@@ -204,6 +216,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -302,6 +315,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -325,6 +339,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption">Client-side encryption options.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobBaseClient(
             Uri blobUri,
@@ -332,6 +347,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope)
         {
             _uri = blobUri;
@@ -339,6 +355,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -370,7 +387,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
         }
 
         /// <summary>
@@ -391,10 +408,10 @@ namespace Azure.Storage.Blobs.Specialized
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
         ///// </summary>
         ///// /// <remarks>
-        ///// Pass null or empty string to remove the verion ID returning a URL to the base blob.
+        ///// Pass null or empty string to remove the version ID returning a URL to the base blob.
         ///// </remarks>
         ///// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
-        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the verionId.</returns>
+        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the versionId.</returns>
         //public virtual BlobBaseClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobBaseClient WithVersionIdImpl(string versionId)
@@ -503,12 +520,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -552,12 +569,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -600,12 +617,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -638,11 +655,17 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            HttpRange requestedRange = range;
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
+                    if (UsingClientSideEncryption)
+                    {
+                        range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
+                    }
+
                     // Start downloading the blob
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
@@ -661,7 +684,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    response.Value.Content = RetriableStream.Create(
+                    stream = RetriableStream.Create(
                         stream,
                          startOffset =>
                             StartDownloadAsync(
@@ -685,6 +708,16 @@ namespace Azure.Storage.Blobs.Specialized
                             .Item2,
                         Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
+
+                    // if using clientside encryption, wrap the auto-retry stream in a decryptor
+                    // we already return a nonseekable stream; returning a crypto stream is fine
+                    if (UsingClientSideEncryption)
+                    {
+                        stream = await new BlobClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption))
+                            .DecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    response.Value.Content = stream;
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
@@ -712,7 +745,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -1160,7 +1193,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// This operation will download a blob of arbitrary size by downloading it as indiviually staged
+        /// This operation will download a blob of arbitrary size by downloading it as individually staged
         /// partitions if it's larger than the
         /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
@@ -1201,7 +1234,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
 
@@ -2623,7 +2656,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshot"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -2659,7 +2692,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -2695,7 +2728,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotInternal"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -2977,6 +3010,24 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
+                client.ClientSideEncryption,
+                client.EncryptionScope);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="client">Client to base off of.</param>
+        /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        public static BlobClient WithClientSideEncryptionOptions(this BlobClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
+            => new BlobClient(
+                client.Uri,
+                client.Pipeline,
+                client.Version,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey,
+                clientSideEncryptionOptions,
                 client.EncryptionScope);
     }
 }

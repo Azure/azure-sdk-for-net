@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Describes an error condition for the Azure Cognitive Search API. </summary>
     internal partial class SearchServiceError

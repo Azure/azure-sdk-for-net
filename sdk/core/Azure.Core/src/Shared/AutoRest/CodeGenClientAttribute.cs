@@ -6,13 +6,10 @@ using System;
 namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal class CodeGenClientAttribute : Attribute
+    internal class CodeGenClientAttribute : CodeGenTypeAttribute
     {
-        public string OriginalName { get; }
-
-        public CodeGenClientAttribute(string originalName)
+        public CodeGenClientAttribute(string originalName) : base(originalName)
         {
-            OriginalName = originalName;
         }
     }
 }

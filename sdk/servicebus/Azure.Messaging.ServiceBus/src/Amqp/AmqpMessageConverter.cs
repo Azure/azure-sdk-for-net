@@ -9,12 +9,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Filters;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Primitives;
 using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
+using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -25,7 +25,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string SequenceNumberName = "x-opt-sequence-number";
         private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
         private const string LockedUntilName = "x-opt-locked-until";
-        private const string PublisherName = "x-opt-publisher";
         private const string PartitionKeyName = "x-opt-partition-key";
         private const string PartitionIdName = "x-opt-partition-id";
         private const string ViaPartitionKeyName = "x-opt-via-partition-key";
@@ -155,7 +154,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var body = new ArraySegment<byte>((sbMessage.Body.IsEmpty) ? Array.Empty<byte>() : sbMessage.Body.ToArray());
+            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body.AsBytes();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var amqpMessage = AmqpMessage.Create(new Data { Value = body });
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
@@ -404,20 +404,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             switch (description.Filter)
             {
-                case SqlFilter sqlFilter:
-                    var filterMap = GetSqlFilterMap(sqlFilter);
-                    ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
+                case SqlRuleFilter sqlRuleFilter:
+                    var filterMap = GetSqlRuleFilterMap(sqlRuleFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleFilter] = filterMap;
                     break;
-                case CorrelationFilter correlationFilter:
-                    var correlationFilterMap = GetCorrelationFilterMap(correlationFilter);
-                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
+                case CorrelationRuleFilter correlationFilter:
+                    var correlationFilterMap = GetCorrelationRuleFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationRuleFilter] = correlationFilterMap;
                     break;
                 default:
                     throw new NotSupportedException(
                         Resources.RuleFilterNotSupported.FormatForUser(
                             description.Filter.GetType(),
-                            nameof(SqlFilter),
-                            nameof(CorrelationFilter)));
+                            nameof(SqlRuleFilter),
+                            nameof(CorrelationRuleFilter)));
             }
 
             var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
@@ -440,28 +440,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ruleDescription;
         }
 
-        public static Filter GetFilter(AmqpFilterCodec amqpFilter)
+        public static RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
         {
-            Filter filter;
+            RuleFilter filter;
 
             switch (amqpFilter.DescriptorCode)
             {
-                case AmqpSqlFilterCodec.Code:
-                    var amqpSqlFilter = (AmqpSqlFilterCodec)amqpFilter;
-                    filter = new SqlFilter(amqpSqlFilter.Expression);
+                case AmqpSqlRuleFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlRuleFilterCodec)amqpFilter;
+                    filter = new SqlRuleFilter(amqpSqlFilter.Expression);
                     break;
 
-                case AmqpTrueFilterCodec.Code:
-                    filter = new TrueFilter();
+                case AmqpTrueRuleFilterCodec.Code:
+                    filter = new TrueRuleFilter();
                     break;
 
-                case AmqpFalseFilterCodec.Code:
-                    filter = new FalseFilter();
+                case AmqpFalseRuleFilterCodec.Code:
+                    filter = new FalseRuleFilter();
                     break;
 
-                case AmqpCorrelationFilterCodec.Code:
-                    var amqpCorrelationFilter = (AmqpCorrelationFilterCodec)amqpFilter;
-                    var correlationFilter = new CorrelationFilter
+                case AmqpCorrelationRuleFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationRuleFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationRuleFilter
                     {
                         CorrelationId = amqpCorrelationFilter.CorrelationId,
                         MessageId = amqpCorrelationFilter.MessageId,
@@ -498,10 +498,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
             {
-                var amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
-                var sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
+                var amqpSqlRuleAction = (AmqpSqlRuleActionCodec)amqpAction;
+                var sqlRuleAction = new SqlRuleAction(amqpSqlRuleAction.SqlExpression);
 
-                action = sqlAction;
+                action = sqlRuleAction;
             }
             else
             {
@@ -702,38 +702,38 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new Data { Value = value };
         }
 
-        internal static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
+        internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
         {
             var amqpFilterMap = new AmqpMap
             {
-                [ManagementConstants.Properties.Expression] = sqlFilter.SqlExpression
+                [ManagementConstants.Properties.Expression] = sqlRuleFilter.SqlExpression
             };
             return amqpFilterMap;
         }
 
-        internal static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
+        internal static AmqpMap GetCorrelationRuleFilterMap(CorrelationRuleFilter correlationRuleFilter)
         {
-            var correlationFilterMap = new AmqpMap
+            var correlationRuleFilterMap = new AmqpMap
             {
-                [ManagementConstants.Properties.CorrelationId] = correlationFilter.CorrelationId,
-                [ManagementConstants.Properties.MessageId] = correlationFilter.MessageId,
-                [ManagementConstants.Properties.To] = correlationFilter.To,
-                [ManagementConstants.Properties.ReplyTo] = correlationFilter.ReplyTo,
-                [ManagementConstants.Properties.Label] = correlationFilter.Label,
-                [ManagementConstants.Properties.SessionId] = correlationFilter.SessionId,
-                [ManagementConstants.Properties.ReplyToSessionId] = correlationFilter.ReplyToSessionId,
-                [ManagementConstants.Properties.ContentType] = correlationFilter.ContentType
+                [ManagementConstants.Properties.CorrelationId] = correlationRuleFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationRuleFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationRuleFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationRuleFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationRuleFilter.Label,
+                [ManagementConstants.Properties.SessionId] = correlationRuleFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationRuleFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationRuleFilter.ContentType
             };
 
             var propertiesMap = new AmqpMap();
-            foreach (var property in correlationFilter.Properties)
+            foreach (var property in correlationRuleFilter.Properties)
             {
                 propertiesMap[new MapKey(property.Key)] = property.Value;
             }
 
-            correlationFilterMap[ManagementConstants.Properties.CorrelationFilterProperties] = propertiesMap;
+            correlationRuleFilterMap[ManagementConstants.Properties.CorrelationRuleFilterProperties] = propertiesMap;
 
-            return correlationFilterMap;
+            return correlationRuleFilterMap;
         }
 
         internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)

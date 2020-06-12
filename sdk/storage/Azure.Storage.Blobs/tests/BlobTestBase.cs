@@ -46,6 +46,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
         public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiBlobName() => $"test-β£©þ‽%3A-{Recording.Random.NewGuid()}";
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
@@ -224,6 +225,23 @@ namespace Azure.Storage.Test.Shared
                 new BlobServiceClient(
                     new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
+
+        public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
+            => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
+
+        public TokenCredential GetTokenCredential_TargetKeyClient()
+            => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
+
+        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+            => new Security.KeyVault.Keys.KeyClient(
+                new Uri(config.VaultEndpoint),
+                GetKeyClientTokenCredential(config));
+
+        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => new Identity.ClientSecretCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
 
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,

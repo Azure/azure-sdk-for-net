@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
     public partial class ImageAnalysisSkill : SearchIndexerSkill
@@ -27,6 +27,8 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
+            VisualFeatures = new List<VisualFeature>();
+            Details = new List<ImageDetail>();
             ODataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 
@@ -43,16 +45,12 @@ namespace Azure.Search.Documents.Models
         internal ImageAnalysisSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage? defaultLanguageCode, IList<VisualFeature> visualFeatures, IList<ImageDetail> details) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
-            VisualFeatures = visualFeatures;
-            Details = details;
+            VisualFeatures = visualFeatures ?? new List<VisualFeature>();
+            Details = details ?? new List<ImageDetail>();
             ODataType = oDataType ?? "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
-        /// <summary> A list of visual features. </summary>
-        public IList<VisualFeature> VisualFeatures { get; set; }
-        /// <summary> A string indicating which domain-specific details to return. </summary>
-        public IList<ImageDetail> Details { get; set; }
     }
 }

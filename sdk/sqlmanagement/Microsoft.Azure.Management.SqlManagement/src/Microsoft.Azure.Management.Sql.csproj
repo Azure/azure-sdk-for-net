@@ -17,6 +17,7 @@ New features:
 - Updated SDK clients of Auditing and Data Classification services.
 - Added support for Azure SQL Managed Instance operations (list/get/cancel) API version 2019-06-01-preview.
 - Added support for Azure SQL Managed Instance failover operation
+- Added private link connection support for data sync clients
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

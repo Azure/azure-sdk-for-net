@@ -22,10 +22,10 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - **Azure Storage account with blob storage:** To persist checkpoints as blobs in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
 
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the C# 8.0 syntax improvements.  
+- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
 
-  In order to take advantage of the C# 8.0 syntax, you will need the the [.NET Core SDK](https://dotnet.microsoft.com/download) installed and your application will need to either [target .NET Core 3.0](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify a language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of 8.0 or higher.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
-
+  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+  
   **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed resources in Azure and to receive connection strings for them, you can deploy our sample template by clicking:  
@@ -190,7 +190,7 @@ string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like 
 string eventHubName = "<< NAME OF THE EVENT HUB >>";
 string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-TokenCredential credential = new DefaultAzureIdentity();
+TokenCredential credential = new DefaultAzureCredential();
 BlobContainerClient storageClient = new BlobContainerClient(blobStorageUrl, credential);
 
 EventProcessorClient processor = new EventProcessorClient

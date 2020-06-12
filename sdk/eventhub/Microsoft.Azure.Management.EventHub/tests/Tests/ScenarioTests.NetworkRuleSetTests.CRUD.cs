@@ -25,7 +25,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 var location = this.ResourceManagementClient.GetLocationFromProvider();
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                var resourceGroup = string.Empty;
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
@@ -36,7 +36,9 @@ namespace EventHub.Tests.ScenarioTests
                 //Create a namespace
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
-                var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
+                try
+                {
+                    var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                 new EHNamespace()
                 {
                     Location = location,
@@ -52,49 +54,54 @@ namespace EventHub.Tests.ScenarioTests
                     }
                 });
 
-                Assert.NotNull(createNamespaceResponse);
-                Assert.Equal(createNamespaceResponse.Name, namespaceName);
+                    Assert.NotNull(createNamespaceResponse);
+                    Assert.Equal(createNamespaceResponse.Name, namespaceName);
 
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
-
-                //Get the created namespace
-                var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                Assert.NotNull(getNamespaceResponse);
-                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+                    //Get the created namespace
+                    var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                    if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
+                        TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //Create Namepsace IPRules 
+                    getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                    Assert.NotNull(getNamespaceResponse);
+                    Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                    Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-                List<NWRuleSetIpRules> IPRules = new List<NWRuleSetIpRules>();
+                    //Create Namepsace IPRules 
 
-                IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = NetworkRuleIPAction.Allow });
-                IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = NetworkRuleIPAction.Allow });
-                IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = NetworkRuleIPAction.Allow });
-                IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = NetworkRuleIPAction.Allow });
-                IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = NetworkRuleIPAction.Allow });
+                    List<NWRuleSetIpRules> IPRules = new List<NWRuleSetIpRules>();
 
-                List<NWRuleSetVirtualNetworkRules> VNetRules = new List<NWRuleSetVirtualNetworkRules>();
+                    IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.1", Action = NetworkRuleIPAction.Allow });
+                    IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.2", Action = NetworkRuleIPAction.Allow });
+                    IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.3", Action = NetworkRuleIPAction.Allow });
+                    IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.4", Action = NetworkRuleIPAction.Allow });
+                    IPRules.Add(new NWRuleSetIpRules() { IpMask = "1.1.1.5", Action = NetworkRuleIPAction.Allow });
 
-                VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default" }, IgnoreMissingVnetServiceEndpoint = true });
-                VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault" }, IgnoreMissingVnetServiceEndpoint = false });
-                VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01" }, IgnoreMissingVnetServiceEndpoint = false });
+                    List<NWRuleSetVirtualNetworkRules> VNetRules = new List<NWRuleSetVirtualNetworkRules>();
 
-                var netWorkRuleSet = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = DefaultAction.Deny, VirtualNetworkRules = VNetRules, IpRules = IPRules });
+                    VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default" }, IgnoreMissingVnetServiceEndpoint = true });
+                    VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault" }, IgnoreMissingVnetServiceEndpoint = false });
+                    VNetRules.Add(new NWRuleSetVirtualNetworkRules() { Subnet = new Subnet() { Id = @"/subscriptions/" + EventHubManagementClient.SubscriptionId + "/resourcegroups/v-ajnavtest/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault01" }, IgnoreMissingVnetServiceEndpoint = false });
 
-                var getNetworkRuleSet = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
+                    var netWorkRuleSet = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = DefaultAction.Deny, VirtualNetworkRules = VNetRules, IpRules = IPRules });
 
-                var netWorkRuleSet1 = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
+                    var getNetworkRuleSet = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
 
-                var getNetworkRuleSet1 = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
+                    var netWorkRuleSet1 = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
 
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                    var getNetworkRuleSet1 = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
 
-                //Delete namespace
-                EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);                
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+                finally
+                {
+                    //Delete Resource Group
+                    this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroup, null, default(CancellationToken)).ConfigureAwait(false);
+                    Console.WriteLine("End of EH2018 Namespace CRUD IPFilter Rules test");
+                }
+
             }
         }
     }

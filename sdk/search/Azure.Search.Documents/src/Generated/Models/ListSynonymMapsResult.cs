@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps. </summary>
     internal partial class ListSynonymMapsResult
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
         internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> synonymMaps)
         {
-            SynonymMaps = synonymMaps;
+            SynonymMaps = synonymMaps ?? new List<SynonymMap>();
         }
 
         /// <summary> The synonym maps in the Search service. </summary>

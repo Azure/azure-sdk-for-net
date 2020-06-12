@@ -23,6 +23,11 @@ namespace Azure.Data.Tables
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="url"> The URL of the service account or table that is the targe of the desired operation. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
             if (url == null)
@@ -40,7 +45,7 @@ namespace Azure.Data.Tables
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(StorageServiceProperties storageServiceProperties, int? timeout, string requestId)
+        internal HttpMessage CreateSetPropertiesRequest(TableServiceProperties tableServiceProperties, int? timeout, string requestId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,25 +66,25 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("Content-Type", "application/xml");
-            using var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
+            var content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(tableServiceProperties, "TableServiceProperties");
             request.Content = content;
             return message;
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Table service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceProperties"> The Table Service properties. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(StorageServiceProperties storageServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (tableServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(tableServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout, requestId);
+            using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout, requestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -91,19 +96,19 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Sets properties for a storage account&apos;s Table service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceProperties"> The Table Service properties. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(StorageServiceProperties storageServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (tableServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(tableServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout, requestId);
+            using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout, requestId);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -138,11 +143,11 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, requestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,11 +156,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
+                        if (document.Element("TableServiceProperties") is XElement tableServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(tableServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -164,11 +169,11 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> gets the properties of a storage account&apos;s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout, requestId);
             _pipeline.Send(message, cancellationToken);
@@ -177,11 +182,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        StorageServiceProperties value = default;
+                        TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
+                        if (document.Element("TableServiceProperties") is XElement tableServicePropertiesElement)
                         {
-                            value = StorageServiceProperties.DeserializeStorageServiceProperties(storageServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(tableServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -213,11 +218,11 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TableServiceStats, ServiceGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, requestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -226,11 +231,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        TableServiceStats value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
+                        if (document.Element("TableServiceStats") is XElement tableServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = TableServiceStats.DeserializeTableServiceStats(tableServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -239,11 +244,11 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. </summary>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StorageServiceStats, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TableServiceStats, ServiceGetStatisticsHeaders> GetStatistics(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetStatisticsRequest(timeout, requestId);
             _pipeline.Send(message, cancellationToken);
@@ -252,11 +257,11 @@ namespace Azure.Data.Tables
             {
                 case 200:
                     {
-                        StorageServiceStats value = default;
+                        TableServiceStats value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
+                        if (document.Element("TableServiceStats") is XElement tableServiceStatsElement)
                         {
-                            value = StorageServiceStats.DeserializeStorageServiceStats(storageServiceStatsElement);
+                            value = TableServiceStats.DeserializeTableServiceStats(tableServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

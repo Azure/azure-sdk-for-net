@@ -4,6 +4,7 @@ languages:
 - csharp
 products:
 - azure
+- azure-cognitive-services
 - azure-form-recognizer
 name: Azure Form Recognizer samples for .NET
 description: Samples for the Azure.AI.FormRecognizer client library
@@ -22,3 +23,4 @@ You can find samples for each of the main functions below.
 - [Recognize custom forms](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeCustomForms.md)
 - [Train a model](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_TrainModel.md)
 - [Manage custom models](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_ManageCustomModels.md)
+- [Copy a custom model between Form Recognizer resources](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_CopyCustomModel.md)

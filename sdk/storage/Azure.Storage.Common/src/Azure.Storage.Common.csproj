@@ -5,6 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
     <Version>12.5.0-preview.1</Version>
+    <ApiCompatVersion>12.4.3</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -21,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
+    <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <Compile Include="Shared\ChunkedStream.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />

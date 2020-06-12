@@ -14,9 +14,12 @@ namespace Azure.Core
     internal class XmlWriterContent : RequestContent
     {
         private readonly MemoryStream _stream;
+        private readonly RequestContent _content;
+
         public XmlWriterContent()
         {
             _stream = new MemoryStream();
+            _content = Create(_stream);
             XmlWriter = new XmlTextWriter(_stream, Encoding.UTF8);
         }
 
@@ -25,17 +28,13 @@ namespace Azure.Core
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             XmlWriter.Flush();
-            _stream.Position = 0;
-            using var content = Create(_stream);
-            await content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
             XmlWriter.Flush();
-            _stream.Position = 0;
-            using var content = Create(_stream);
-            content.WriteTo(stream, cancellation);
+            _content.WriteTo(stream, cancellation);
         }
 
         public override bool TryComputeLength(out long length)
@@ -47,6 +46,8 @@ namespace Azure.Core
 
         public override void Dispose()
         {
+            _content.Dispose();
+            XmlWriter.Dispose();
         }
     }
 }

@@ -7,9 +7,17 @@
 		<PackageId>Microsoft.Azure.Management.Subscription</PackageId>
 		<Description>Provides subscription management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Subscription</AssemblyName>
-		<Version>1.1.3-preview</Version>
-		<PackageTags>Microsoft Azure Subscription;subscription definitions;</PackageTags>
-		<PackageReleaseNotes>Adding Cancel and Rename API support</PackageReleaseNotes>
+		<Version>1.1.4-preview</Version>
+		<PackageTags>Microsoft Azure Subscription;</PackageTags>
+		<PackageReleaseNotes>
+            <![CDATA[
+                Breaking changes:
+                * This is the preview release of Microsoft.Subscription
+                * SDK structure has been updated to make it more consistent and user-friendly:
+                  1. CreateSubscriptionInEnrollmentAccount and CreateSubscription APIs have been moved to Subscription from SubscriptionFactory.
+                  2. CreateCspsubscription API is now supported to allow CSP subscription creation
+            ]]>
+     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

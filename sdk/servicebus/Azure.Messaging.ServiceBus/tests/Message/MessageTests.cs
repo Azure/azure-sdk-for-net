@@ -39,5 +39,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var message = new ServiceBusMessage();
             Assert.That(() => message.MessageId = "", Throws.InstanceOf<ArgumentException>());
         }
+
+        [Test]
+        public void SetMessageBodyAsString()
+        {
+            var messageBody = "some message";
+            var message = new ServiceBusMessage(messageBody);
+            Assert.AreEqual(message.Body.AsString(), messageBody);
+            Assert.AreEqual(message.Body.AsString(), messageBody);
+
+            message = new ServiceBusMessage(messageBody, Encoding.UTF32);
+            Assert.AreEqual(message.Body.AsString(Encoding.UTF32), messageBody);
+            Assert.AreNotEqual(message.Body.AsString(), messageBody);
+        }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The result of testing an analyzer on text. </summary>
     internal partial class AnalyzeResult
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
         internal AnalyzeResult(IReadOnlyList<AnalyzedTokenInfo> tokens)
         {
-            Tokens = tokens;
+            Tokens = tokens ?? new List<AnalyzedTokenInfo>();
         }
 
         /// <summary> The list of tokens returned by the analyzer specified in the request. </summary>

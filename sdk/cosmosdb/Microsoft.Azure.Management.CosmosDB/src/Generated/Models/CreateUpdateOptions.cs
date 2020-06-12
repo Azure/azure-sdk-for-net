@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,14 +31,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the CreateUpdateOptions class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="throughput">Request Units per second. For example,
-        /// "throughput": "10000".</param>
-        public CreateUpdateOptions(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), string throughput = default(string))
+        /// "throughput": 10000.</param>
+        /// <param name="autoscaleSettings">Specifies the Autoscale
+        /// settings.</param>
+        public CreateUpdateOptions(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
         {
-            AdditionalProperties = additionalProperties;
             Throughput = throughput;
+            AutoscaleSettings = autoscaleSettings;
             CustomInit();
         }
 
@@ -50,17 +48,17 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        public IDictionary<string, string> AdditionalProperties { get; set; }
-
-        /// <summary>
         /// Gets or sets request Units per second. For example, "throughput":
-        /// "10000".
+        /// 10000.
         /// </summary>
         [JsonProperty(PropertyName = "throughput")]
-        public string Throughput { get; set; }
+        public int? Throughput { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Autoscale settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "autoscaleSettings")]
+        public AutoscaleSettings AutoscaleSettings { get; set; }
 
     }
 }

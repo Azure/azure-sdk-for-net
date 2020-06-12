@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -16,6 +17,10 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\\\"value\\\"\"}", "application/json")]
+        [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
+        [TestCase("{\"json\"\n:\"value\"}", "application/json")]
+        [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
         [TestCase("invalid json", "application/json")]
@@ -48,7 +53,10 @@ namespace Azure.Core.Tests
             session.Entries.Add(recordEntry);
 
             var arrayBufferWriter = new ArrayBufferWriter<byte>();
-            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter);
+            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter, new JsonWriterOptions()
+            {
+                Indented = true
+            });
             session.Serialize(jsonWriter);
             jsonWriter.Flush();
 
@@ -283,7 +291,7 @@ namespace Azure.Core.Tests
 
             recordTransport.Process(message);
 
-            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body."));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body"));
 
             var skipRequestBody = true;
             var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);

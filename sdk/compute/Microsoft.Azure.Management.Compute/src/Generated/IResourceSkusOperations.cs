@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.Compute
         /// Subscription.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// The filter to apply on the operation. Only **location** filter is
+        /// supported currently.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -41,7 +41,7 @@ Use the **Azure.Search.Documents client library** to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents --version 1.0.0-preview.3
+dotnet add package Azure.Search.Documents --version 1.0.0-preview.4
 ```
 
 ### Prerequisites
@@ -89,7 +89,7 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 ```
 
 ### Send your first search query
@@ -112,7 +112,7 @@ AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
 // Let's get the top 5 jobs related to Microsoft
-SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     // Print out the title and job description (we'll see below how to
@@ -174,6 +174,7 @@ Let's start by importing our namespaces.
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 ```
 
 We'll then create a `SearchClient` to access our hotels search index.
@@ -189,7 +190,7 @@ AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
-There are three ways to interact with the data returned from a search query.
+There are two ways to interact with the data returned from a search query.
 Let's explore them with a search for a "luxury" hotel.
 
 #### Use `SearchDocument` like a dictionary
@@ -198,27 +199,12 @@ Let's explore them with a search for a "luxury" hotel.
 provide your own.  Here we perform the search, enumerate over the results, and
 extract data using `SearchDocument`'s dictionary indexer.
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Dict
-SearchResults<SearchDocument> response = client.Search("luxury");
+SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     SearchDocument doc = result.Document;
     string id = (string)doc["hotelId"];
     string name = (string)doc["hotelName"];
-    Console.WriteLine("{id}: {name}");
-}
-```
-
-#### Use `SearchDocument` with [C#'s `dynamic` keyword](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/using-type-dynamic)
-
-This starts out the same, but the use of `dynamic` makes the code a little
-easier to read.
-```C# Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-SearchResults<SearchDocument> response = client.Search("luxury");
-foreach (SearchResult<SearchDocument> result in response.GetResults())
-{
-    dynamic doc = result.Document;
-    string id = doc.hotelId;
-    string name = doc.hotelName;
     Console.WriteLine("{id}: {name}");
 }
 ```
@@ -280,7 +266,7 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a service client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
 // Create the index
 SearchIndex index = new SearchIndex("hotels")
@@ -289,7 +275,7 @@ SearchIndex index = new SearchIndex("hotels")
     {
         new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
         new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-        new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
         new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
         new ComplexField("address")
         {
@@ -306,7 +292,7 @@ SearchIndex index = new SearchIndex("hotels")
     Suggesters =
     {
         // Suggest query terms from both the hotelName and description fields.
-        new Suggester("sg", "hotelName", "description")
+        new SearchSuggester("sg", "hotelName", "description")
     }
 };
 

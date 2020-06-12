@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Tokenizes the input from an edge into n-grams of the given size(s). This tokenizer is implemented using Apache Lucene. </summary>
     public partial class EdgeNGramTokenizer : LexicalTokenizer
@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            TokenChars = new List<TokenCharacterKind>();
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Models
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            TokenChars = tokenChars;
+            TokenChars = tokenChars ?? new List<TokenCharacterKind>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
@@ -43,7 +44,5 @@ namespace Azure.Search.Documents.Models
         public int? MinGram { get; set; }
         /// <summary> The maximum n-gram length. Default is 2. Maximum is 300. </summary>
         public int? MaxGram { get; set; }
-        /// <summary> Character classes to keep in the tokens. </summary>
-        public IList<TokenCharacterKind> TokenChars { get; set; }
     }
 }

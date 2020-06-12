@@ -165,8 +165,8 @@
   <data name="NotSupportedPropertyType" xml:space="preserve">
     <value>'{0}' is not a supported type.</value>
   </data>
-  <data name="SqlFilterActionStatmentTooLong" xml:space="preserve">
-    <value>The length of the filter action statement is {0}, which exceeds the maximum length of {1}.</value>
+  <data name="SqlRuleFilterStatmentTooLong" xml:space="preserve">
+    <value>The length of the filter statement is {0}, which exceeds the maximum length of {1}</value>
   </data>
   <data name="CharacterReservedForUriScheme" xml:space="preserve">
     <value>'{0}' contains character '{1}' which is not allowed because it is reserved in the Uri scheme.</value>
@@ -178,7 +178,7 @@
     <value>Provided rule filter {0} is not supported. Supported values are: {1}, {2}</value>
   </data>
   <data name="PeekLockModeRequired" xml:space="preserve">
-    <value>This operation is only supported for a message receiver in 'PeekLock' receive mode.</value>
+    <value>This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled.</value>
   </data>
   <data name="MessageHandlerAlreadyRegistered" xml:space="preserve">
     <value>A message handler has already been registered.</value>

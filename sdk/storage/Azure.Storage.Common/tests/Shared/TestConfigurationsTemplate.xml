@@ -4,6 +4,7 @@
   <TargetSecondaryTestTenant>SecondaryTenant</TargetSecondaryTestTenant>
   <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>  <!-- Internal only -->
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
+  <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
   <TargetManagedDiskTenant>ManagedDiskTenant</TargetManagedDiskTenant>
 
@@ -124,4 +125,14 @@
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
+  <KeyVaultConfigurations>
+    <KeyVaultConfiguration>
+      <VaultName>ClientsideEncryptionKeyvault</VaultName>
+      <VaultEndpoint>https://[KEYVAULT NAME].vault.azure.net/</VaultEndpoint>
+      <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
+      <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
+      <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+    </KeyVaultConfiguration>
+  </KeyVaultConfigurations>
 </TestConfigurations>

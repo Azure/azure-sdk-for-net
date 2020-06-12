@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace { get; }
+        public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been disposed.
@@ -53,6 +52,12 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusClientOptions Options { get; set; }
 
         /// <summary>
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
+        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
         ///   including ensuring that the connection itself has been closed.
         /// </summary>
@@ -61,7 +66,7 @@ namespace Azure.Messaging.ServiceBus
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusConnection), Identifier);
+            Logger.ClientDisposeStart(typeof(ServiceBusClient), Identifier);
             IsDisposed = true;
             try
             {
@@ -69,12 +74,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusConnection), Identifier, ex);
+                Logger.ClientDisposeException(typeof(ServiceBusClient), Identifier, ex);
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusConnection), Identifier);
+                Logger.ClientDisposeComplete(typeof(ServiceBusClient), Identifier);
             }
         }
 
@@ -124,8 +129,10 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
+            Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Options = Connection.Options;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
@@ -153,12 +160,14 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
                 options);
             Options = Connection.Options;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
@@ -306,8 +315,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
-        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
-        /// the next available session returned from the service will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
@@ -318,8 +325,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
         public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string queueName,
-            ServiceBusReceiverOptions options = default,
-            string sessionId = default,
+            ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             ValidateEntityName(queueName);
@@ -327,7 +333,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
-                sessionId: sessionId,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -342,8 +347,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
-        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
-        /// the next available session returned from the service will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
@@ -355,8 +358,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverOptions options = default,
-            string sessionId = default,
+            ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             ValidateEntityName(topicName);
@@ -364,7 +366,6 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                sessionId: sessionId,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -530,21 +531,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
-        /// If left blank, the next available session returned from the service will be used.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
-            ServiceBusProcessorOptions options = default,
-            params string[] sessionIds)
+            ServiceBusSessionProcessorOptions options = default)
         {
             ValidateEntityName(queueName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                sessionIds: sessionIds,
-                options: options ?? new ServiceBusProcessorOptions());
+                options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
         /// <summary>
@@ -557,23 +554,19 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
-        /// If left blank, the next available session returned from the service will be used.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
-            ServiceBusProcessorOptions options = default,
-            params string[] sessionIds)
+            ServiceBusSessionProcessorOptions options = default)
         {
             ValidateEntityName(topicName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                sessionIds: sessionIds,
-                options: options ?? new ServiceBusProcessorOptions());
+                options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
         /// <summary>

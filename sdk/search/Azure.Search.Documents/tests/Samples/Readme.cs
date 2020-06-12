@@ -6,11 +6,13 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 
 namespace Azure.Search.Documents.Tests.Samples
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -62,7 +64,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
-            SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 // Print out the title and job description (we'll see below how to
@@ -74,7 +76,9 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
         }
 
+#if EXPERIMENTAL_DYNAMIC
         [Test]
+#endif
         [SyncOnly]
         public async Task CreateAndQuery()
         {
@@ -96,7 +100,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
-            SearchResults<SearchDocument> response = client.Search("luxury");
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
@@ -107,8 +111,8 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-            //@@ SearchResults<SearchDocument> response = client.Search("luxury");
-            /*@@*/ response = client.Search("luxury");
+            //@@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+            /*@@*/ response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -192,8 +196,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a service client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
-            /*@@*/ client = resources.GetServiceClient();
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            /*@@*/ client = resources.GetIndexClient();
 
             // Create the index
             //@@SearchIndex index = new SearchIndex("hotels")
@@ -203,7 +207,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                    new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new ComplexField("address")
                     {
@@ -220,7 +224,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Suggesters =
                 {
                     // Suggest query terms from both the hotelName and description fields.
-                    new Suggester("sg", "hotelName", "description")
+                    new SearchSuggester("sg", "hotelName", "description")
                 }
             };
 

@@ -1,0 +1,56 @@
+{
+  "parameters": {
+    "querySpecification": {
+      "query": "SELECT Widget, Gadget FROM DIGITALTWINS Widget JOIN Gadget RELATED Widget.Contains WHERE Widget.$dtId = 'Twin-01'"
+    },
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "items": [
+          {
+            "Widget": {
+              "$dtId": "Twin-01",
+              "$metadata": {
+                "$model": "dtmi:com:example:Sample;1"
+              },
+              "name": "Sample01",
+              "temp": 79,
+              "comfortIndex": 50
+            },
+            "Gadget": {
+              "$dtId": "Twin-02",
+              "$metadata": {
+                "$model": "dtmi:com:example:Sample;1"
+              },
+              "name": "Sample02",
+              "temp": 79,
+              "comfortIndex": 50
+            }
+          },
+          {
+            "Widget": {
+              "$dtId": "Twin-01",
+              "$metadata": {
+                "$model": "dtmi:com:example:Sample;1"
+              },
+              "name": "Sample01",
+              "temp": 79,
+              "comfortIndex": 50
+            },
+            "Gadget": {
+              "$dtId": "Twin-10",
+              "$metadata": {
+                "$model": "dtmi:com:example:Sample;1"
+              },
+              "name": "Sample10",
+              "temp": 79,
+              "comfortIndex": 50
+            }
+          }
+        ]
+      }
+    }
+  }
+}

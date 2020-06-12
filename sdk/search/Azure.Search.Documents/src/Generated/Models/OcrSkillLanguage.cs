@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input by OcrSkill. </summary>
     public readonly partial struct OcrSkillLanguage : IEquatable<OcrSkillLanguage>

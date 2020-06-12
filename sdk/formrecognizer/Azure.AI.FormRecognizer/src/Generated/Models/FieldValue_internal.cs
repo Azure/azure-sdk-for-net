@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence score. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </param>
         /// <param name="page"> The 1-based page number in the input document. </param>
-        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, int? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
+        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, long? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
         {
             Type = type;
             ValueString = valueString;
@@ -65,8 +65,6 @@ namespace Azure.AI.FormRecognizer.Models
         public string ValuePhoneNumber { get; }
         /// <summary> Floating point value. </summary>
         public float? ValueNumber { get; }
-        /// <summary> Integer value. </summary>
-        public int? ValueInteger { get; }
         /// <summary> Array of field values. </summary>
         public IReadOnlyList<FieldValue_internal> ValueArray { get; }
         /// <summary> Dictionary of named field values. </summary>

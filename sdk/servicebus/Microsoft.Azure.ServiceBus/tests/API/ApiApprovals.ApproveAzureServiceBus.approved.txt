@@ -256,6 +256,7 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class RetryExponential : Microsoft.Azure.ServiceBus.RetryPolicy
     {
         public RetryExponential(System.TimeSpan minimumBackoff, System.TimeSpan maximumBackoff, int maximumRetryCount) { }
+        public RetryExponential(System.TimeSpan minimumBackoff, System.TimeSpan maximumBackoff, System.TimeSpan deltaBackoff, int maxRetryCount) { }
         public System.TimeSpan DeltaBackoff { get; }
         public int MaxRetryCount { get; }
         public System.TimeSpan MaximumBackoff { get; }
