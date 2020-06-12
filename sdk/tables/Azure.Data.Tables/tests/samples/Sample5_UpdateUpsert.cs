@@ -32,7 +32,7 @@ namespace Azure.Data.Tables.Samples
             {
                 var client = serviceClient.GetTableClient(tableName);
 
-                #region Snippet:TablesSample2UpsertEntity
+                #region Snippet:TablesSample5UpsertEntity
                 // making an entity
                 var entity = new Dictionary<string, object>
                 {
@@ -47,9 +47,21 @@ namespace Azure.Data.Tables.Samples
                 client.Upsert(entity); // updates entity because it exists
                 #endregion
 
-                entity.Add("Price", 7.00);
-                #region Snippet:TablesSample2UpdateEntityOptimistic
-                // client.Update(entity);
+                #region Snippet:TablesSample5UpdateEntity
+                Pageable<IDictionary<string, object>> queryResultsBefore = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+
+                foreach (IDictionary<string, object> qEntity in queryResultsBefore)
+                {
+                    Console.WriteLine($"The price before updating: ${qEntity["Price"]}");
+                    qEntity["Price"] = 7.00;
+                    client.Update(qEntity, qEntity["odata.etag"] as string);
+                }
+
+                Pageable<IDictionary<string, object>> queryResultsAfter = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+                foreach (IDictionary<string, object> qEntity in queryResultsAfter)
+                {
+                    Console.WriteLine($"The price after updating: ${qEntity["Price"]}");
+                }
                 #endregion
             }
             finally
