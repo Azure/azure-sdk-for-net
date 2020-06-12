@@ -30,11 +30,12 @@ namespace Azure.Data.Tables.Samples
 
             try
             {
-
-                #region Snippet:TablesSample2InsertEntity
+                #region Snippet:TablesSample2GetTableClient
                 // Get a reference to the <see cref="TableClient" /> of the table.
                 var client = serviceClient.GetTableClient(tableName);
+                #endregion
 
+                #region Snippet:TablesSample2InsertEntity
                 // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
                 var entity = new Dictionary<string, object>
                 {
