@@ -1,0 +1,139 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourcegroups/avs-sdk-test-rg4505?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlZ3JvdXBzL2F2cy1zZGstdGVzdC1yZzQ1MDU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e27cbf2a-e85a-4a35-8556-25e941db1a74"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+        ],
+        "x-ms-correlation-request-id": [
+          "d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200612T191533Z:d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 12 Jun 2020 19:15:32 GMT"
+        ],
+        "Content-Length": [
+          "194"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg4505\",\r\n  \"name\": \"avs-sdk-test-rg4505\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg4505/providers/Microsoft.AVS/privateClouds?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzQ1MDUvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcz9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fb7b48d8-bc33-41d6-a15a-06858c138cfe"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/0.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+        ],
+        "x-ms-correlation-request-id": [
+          "060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200612T191534Z:060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 12 Jun 2020 19:15:33 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "12"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "AvsCrud": [
+      "avs-sdk-test-rg4505",
+      "appplatform-sdk-test-cloud2637"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
+  }
+}

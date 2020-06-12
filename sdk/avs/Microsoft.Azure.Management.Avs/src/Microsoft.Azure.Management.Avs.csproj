@@ -9,8 +9,6 @@
     <Version>0.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Avs</AssemblyName>
     <PackageTags>management;VMware;AVS;</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
 
