@@ -110,6 +110,39 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
+            if (Tags != null)
+            {
+                if (Tags.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Tags", 32);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 256);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^[A-Za-z0-9-._]+$");
+                }
+            }
+            if (Value != null)
+            {
+                if (Value.Length > 4096)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Value", 4096);
+                }
+                if (Value.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Value", 1);
+                }
+            }
         }
     }
 }
