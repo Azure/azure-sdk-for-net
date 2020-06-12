@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -20,7 +21,8 @@ namespace Azure.Data.Tables.Samples
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies6";
             string partitionKey = "somePartition";
-            string rowKey = "A1";
+            string rowKey = "1";
+            string rowKey2 = "2";
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
@@ -32,8 +34,6 @@ namespace Azure.Data.Tables.Samples
                 serviceClient.CreateTable(tableName);
                 var client = serviceClient.GetTableClient(tableName);
 
-                #region Snippet:TablesSample2InsertEntity
-                // making an entity
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKey },
@@ -42,7 +42,24 @@ namespace Azure.Data.Tables.Samples
                     {"Price", 5.00 },
                 };
                 client.Insert(entity);
-                #endregion
+
+                var entity2 = new Dictionary<string, object>
+                {
+                    {"PartitionKey", "another" },
+                    {"RowKey", rowKey2 },
+                    {"Product", "Chair" },
+                    {"Price", 7.00 },
+                };
+                client.Insert(entity2);
+
+                Pageable<IDictionary<string, object>> queryResults = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
+
+                foreach (IDictionary<string, object> qEntity in queryResults)
+                {
+                    Console.WriteLine(qEntity["Product"]);
+                }
+
+                Console.WriteLine($"The results total {queryResults.Count()} that matched the query requirements.");
             }
             finally
             {
