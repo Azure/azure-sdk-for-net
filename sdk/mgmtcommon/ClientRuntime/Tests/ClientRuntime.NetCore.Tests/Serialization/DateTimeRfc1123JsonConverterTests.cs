@@ -104,8 +104,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
             Assert.Equal(expectedJson, serializedJson);
         }
 
-        // Note: The test author makes no statement about whether this behavior
-        // is correct/desirable.  This test demonstrates current behavior.
         [Fact]
         public void CanDeserialize()
         {
@@ -117,11 +115,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Serialization
 }";
             var dates = JsonConvert.DeserializeObject<DateData>(json);
             var date = new DateTime(2020, 2, 29, 8, 5, 4, DateTimeKind.Utc);
-            var dateOffset = new DateTimeOffset();
+            var dateOffset = new DateTimeOffset(date);
             Assert.Equal(date, dates.DateTime);
             Assert.Equal(date, dates.DateTimeNullable);
             Assert.Equal(dateOffset, dates.DateTimeOffset);
-            Assert.Null(dates.DateTimeOffsetNullable);
+            Assert.Equal(dateOffset, dates.DateTimeOffsetNullable);
         }
 
         [Fact]

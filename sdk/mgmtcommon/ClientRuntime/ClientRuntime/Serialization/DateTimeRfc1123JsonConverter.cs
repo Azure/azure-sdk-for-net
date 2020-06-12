@@ -35,14 +35,12 @@ namespace Microsoft.Rest.Serialization
                 //of the resulting DateTime to be DateTimeKind.Utc since that is what the RFC1123 specification implies.
                 //See: http://stackoverflow.com/questions/1201378/how-does-datetime-touniversaltime-work
                 //See: http://stackoverflow.com/questions/16442484/datetime-unspecified-kind
-                DateTime? time = o as DateTime?;
-
-                if (time.HasValue && time.Value.Kind == DateTimeKind.Unspecified)
+                if (o is DateTime time && time.Kind == DateTimeKind.Unspecified)
                 {
-                    time = DateTime.SpecifyKind(time.Value, DateTimeKind.Utc);
+                    return DateTime.SpecifyKind(time, DateTimeKind.Utc);
                 }
 
-                return time;
+                return o;
             }
             catch (FormatException ex)
             {
