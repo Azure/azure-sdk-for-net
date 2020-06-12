@@ -42,7 +42,7 @@ namespace Microsoft.Rest.Serialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (objectType != typeof(DateTime?))
+            if (objectType != typeof(DateTime?) && objectType != typeof(DateTime))
             {
                 return serializer.Deserialize(reader, objectType);
             }
