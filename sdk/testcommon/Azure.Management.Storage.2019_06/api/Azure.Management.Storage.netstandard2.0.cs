@@ -1,8 +1,8 @@
 namespace Azure.Management.Storage
 {
-    public partial class BlobContainersClient
+    public partial class BlobContainersOperations
     {
-        protected BlobContainersClient() { }
+        protected BlobContainersOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.LegalHold> ClearLegalHold(string resourceGroupName, string accountName, string containerName, Azure.Management.Storage.Models.LegalHold legalHold, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.LegalHold>> ClearLegalHoldAsync(string resourceGroupName, string accountName, string containerName, Azure.Management.Storage.Models.LegalHold legalHold, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Storage.Models.BlobContainer> Create(string resourceGroupName, string accountName, string containerName, Azure.Management.Storage.Models.BlobContainer blobContainer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -30,9 +30,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.BlobContainer> Update(string resourceGroupName, string accountName, string containerName, Azure.Management.Storage.Models.BlobContainer blobContainer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, Azure.Management.Storage.Models.BlobContainer blobContainer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BlobServicesClient
+    public partial class BlobServicesOperations
     {
-        protected BlobServicesClient() { }
+        protected BlobServicesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.BlobServiceProperties> GetServiceProperties(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.BlobServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Storage.Models.BlobServiceProperties> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -40,9 +40,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.BlobServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, Azure.Management.Storage.Models.BlobServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.BlobServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.BlobServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EncryptionScopesClient
+    public partial class EncryptionScopesOperations
     {
-        protected EncryptionScopesClient() { }
+        protected EncryptionScopesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.EncryptionScope> Get(string resourceGroupName, string accountName, string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.EncryptionScope>> GetAsync(string resourceGroupName, string accountName, string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Storage.Models.EncryptionScope> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -52,9 +52,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.EncryptionScope> Put(string resourceGroupName, string accountName, string encryptionScopeName, Azure.Management.Storage.Models.EncryptionScope encryptionScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.EncryptionScope>> PutAsync(string resourceGroupName, string accountName, string encryptionScopeName, Azure.Management.Storage.Models.EncryptionScope encryptionScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class FileServicesClient
+    public partial class FileServicesOperations
     {
-        protected FileServicesClient() { }
+        protected FileServicesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.FileServiceProperties> GetServiceProperties(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.FileServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Storage.Models.FileServiceItems> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -62,9 +62,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.FileServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, Azure.Management.Storage.Models.FileServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.FileServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class FileSharesClient
+    public partial class FileSharesOperations
     {
-        protected FileSharesClient() { }
+        protected FileSharesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.FileShare> Create(string resourceGroupName, string accountName, string shareName, Azure.Management.Storage.Models.FileShare fileShare, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, Azure.Management.Storage.Models.FileShare fileShare, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -78,9 +78,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.FileShare> Update(string resourceGroupName, string accountName, string shareName, Azure.Management.Storage.Models.FileShare fileShare, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, Azure.Management.Storage.Models.FileShare fileShare, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagementPoliciesClient
+    public partial class ManagementPoliciesOperations
     {
-        protected ManagementPoliciesClient() { }
+        protected ManagementPoliciesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.ManagementPolicy> CreateOrUpdate(string resourceGroupName, string accountName, Azure.Management.Storage.Models.ManagementPolicy properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.ManagementPolicy>> CreateOrUpdateAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.ManagementPolicy properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -88,9 +88,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.ManagementPolicy> Get(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.ManagementPolicy>> GetAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ObjectReplicationPoliciesClient
+    public partial class ObjectReplicationPoliciesOperations
     {
-        protected ObjectReplicationPoliciesClient() { }
+        protected ObjectReplicationPoliciesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.ObjectReplicationPolicy> CreateOrUpdate(string resourceGroupName, string accountName, string objectReplicationPolicyId, Azure.Management.Storage.Models.ObjectReplicationPolicy properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.ObjectReplicationPolicy>> CreateOrUpdateAsync(string resourceGroupName, string accountName, string objectReplicationPolicyId, Azure.Management.Storage.Models.ObjectReplicationPolicy properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -100,15 +100,15 @@ namespace Azure.Management.Storage
         public virtual Azure.Pageable<Azure.Management.Storage.Models.ObjectReplicationPolicy> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Storage.Models.ObjectReplicationPolicy> ListAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OperationsClient
+    public partial class Operations
     {
-        protected OperationsClient() { }
+        protected Operations() { }
         public virtual Azure.Pageable<Azure.Management.Storage.Models.Operation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Storage.Models.Operation> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateEndpointConnectionsClient
+    public partial class PrivateEndpointConnectionsOperations
     {
-        protected PrivateEndpointConnectionsClient() { }
+        protected PrivateEndpointConnectionsOperations() { }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Storage.Models.PrivateEndpointConnection> Get(string resourceGroupName, string accountName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -118,15 +118,15 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.PrivateEndpointConnection> Put(string resourceGroupName, string accountName, string privateEndpointConnectionName, Azure.Management.Storage.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.PrivateEndpointConnection>> PutAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, Azure.Management.Storage.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateLinkResourcesClient
+    public partial class PrivateLinkResourcesOperations
     {
-        protected PrivateLinkResourcesClient() { }
+        protected PrivateLinkResourcesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.PrivateLinkResourceListResult> ListByStorageAccount(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.PrivateLinkResourceListResult>> ListByStorageAccountAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class QueueClient
+    public partial class QueueOperations
     {
-        protected QueueClient() { }
+        protected QueueOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.StorageQueue> Create(string resourceGroupName, string accountName, string queueName, Azure.Management.Storage.Models.StorageQueue queue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.StorageQueue>> CreateAsync(string resourceGroupName, string accountName, string queueName, Azure.Management.Storage.Models.StorageQueue queue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -138,9 +138,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.StorageQueue> Update(string resourceGroupName, string accountName, string queueName, Azure.Management.Storage.Models.StorageQueue queue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.StorageQueue>> UpdateAsync(string resourceGroupName, string accountName, string queueName, Azure.Management.Storage.Models.StorageQueue queue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class QueueServicesClient
+    public partial class QueueServicesOperations
     {
-        protected QueueServicesClient() { }
+        protected QueueServicesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.QueueServiceProperties> GetServiceProperties(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.QueueServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Storage.Models.ListQueueServices> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -148,15 +148,41 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.QueueServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, Azure.Management.Storage.Models.QueueServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.QueueServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.QueueServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SkusClient
+    public partial class SkusOperations
     {
-        protected SkusClient() { }
+        protected SkusOperations() { }
         public virtual Azure.Pageable<Azure.Management.Storage.Models.SkuInformation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Storage.Models.SkuInformation> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageAccountsClient
+    public partial class StorageAccountsCreateOperation : Azure.Operation<Azure.Management.Storage.Models.StorageAccount>
     {
-        protected StorageAccountsClient() { }
+        internal StorageAccountsCreateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Management.Storage.Models.StorageAccount Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Storage.Models.StorageAccount>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Storage.Models.StorageAccount>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageAccountsFailoverOperation : Azure.Operation<Azure.Response>
+    {
+        internal StorageAccountsFailoverOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageAccountsOperations
+    {
+        protected StorageAccountsOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.Management.Storage.Models.StorageAccountCheckNameAvailabilityParameters accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.Management.Storage.Models.StorageAccountCheckNameAvailabilityParameters accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -186,32 +212,6 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.StorageAccount> Update(string resourceGroupName, string accountName, Azure.Management.Storage.Models.StorageAccountUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.StorageAccount>> UpdateAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.StorageAccountUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageAccountsCreateOperation : Azure.Operation<Azure.Management.Storage.Models.StorageAccount>
-    {
-        internal StorageAccountsCreateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Management.Storage.Models.StorageAccount Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Storage.Models.StorageAccount>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Storage.Models.StorageAccount>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class StorageAccountsFailoverOperation : Azure.Operation<Azure.Response>
-    {
-        internal StorageAccountsFailoverOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class StorageAccountsRestoreBlobRangesOperation : Azure.Operation<Azure.Management.Storage.Models.BlobRestoreStatus>
     {
         internal StorageAccountsRestoreBlobRangesOperation() { }
@@ -230,31 +230,31 @@ namespace Azure.Management.Storage
         protected StorageManagementClient() { }
         public StorageManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Storage.StorageManagementClientOptions options = null) { }
         public StorageManagementClient(System.Uri endpoint, string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Storage.StorageManagementClientOptions options = null) { }
-        public virtual Azure.Management.Storage.BlobContainersClient GetBlobContainersClient() { throw null; }
-        public virtual Azure.Management.Storage.BlobServicesClient GetBlobServicesClient() { throw null; }
-        public virtual Azure.Management.Storage.EncryptionScopesClient GetEncryptionScopesClient() { throw null; }
-        public virtual Azure.Management.Storage.FileServicesClient GetFileServicesClient() { throw null; }
-        public virtual Azure.Management.Storage.FileSharesClient GetFileSharesClient() { throw null; }
-        public virtual Azure.Management.Storage.ManagementPoliciesClient GetManagementPoliciesClient() { throw null; }
-        public virtual Azure.Management.Storage.ObjectReplicationPoliciesClient GetObjectReplicationPoliciesClient() { throw null; }
-        public virtual Azure.Management.Storage.OperationsClient GetOperationsClient() { throw null; }
-        public virtual Azure.Management.Storage.PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient() { throw null; }
-        public virtual Azure.Management.Storage.PrivateLinkResourcesClient GetPrivateLinkResourcesClient() { throw null; }
-        public virtual Azure.Management.Storage.QueueClient GetQueueClient() { throw null; }
-        public virtual Azure.Management.Storage.QueueServicesClient GetQueueServicesClient() { throw null; }
-        public virtual Azure.Management.Storage.SkusClient GetSkusClient() { throw null; }
-        public virtual Azure.Management.Storage.StorageAccountsClient GetStorageAccountsClient() { throw null; }
-        public virtual Azure.Management.Storage.TableClient GetTableClient() { throw null; }
-        public virtual Azure.Management.Storage.TableServicesClient GetTableServicesClient() { throw null; }
-        public virtual Azure.Management.Storage.UsagesClient GetUsagesClient() { throw null; }
+        public virtual Azure.Management.Storage.BlobContainersOperations BlobContainers { get { throw null; } }
+        public virtual Azure.Management.Storage.BlobServicesOperations BlobServices { get { throw null; } }
+        public virtual Azure.Management.Storage.EncryptionScopesOperations EncryptionScopes { get { throw null; } }
+        public virtual Azure.Management.Storage.FileServicesOperations FileServices { get { throw null; } }
+        public virtual Azure.Management.Storage.FileSharesOperations FileShares { get { throw null; } }
+        public virtual Azure.Management.Storage.ManagementPoliciesOperations ManagementPolicies { get { throw null; } }
+        public virtual Azure.Management.Storage.ObjectReplicationPoliciesOperations ObjectReplicationPolicies { get { throw null; } }
+        public virtual Azure.Management.Storage.Operations Operations { get { throw null; } }
+        public virtual Azure.Management.Storage.PrivateEndpointConnectionsOperations PrivateEndpointConnections { get { throw null; } }
+        public virtual Azure.Management.Storage.PrivateLinkResourcesOperations PrivateLinkResources { get { throw null; } }
+        public virtual Azure.Management.Storage.QueueOperations Queue { get { throw null; } }
+        public virtual Azure.Management.Storage.QueueServicesOperations QueueServices { get { throw null; } }
+        public virtual Azure.Management.Storage.SkusOperations Skus { get { throw null; } }
+        public virtual Azure.Management.Storage.StorageAccountsOperations StorageAccounts { get { throw null; } }
+        public virtual Azure.Management.Storage.TableOperations Table { get { throw null; } }
+        public virtual Azure.Management.Storage.TableServicesOperations TableServices { get { throw null; } }
+        public virtual Azure.Management.Storage.UsagesOperations Usages { get { throw null; } }
     }
     public partial class StorageManagementClientOptions : Azure.Core.ClientOptions
     {
         public StorageManagementClientOptions() { }
     }
-    public partial class TableClient
+    public partial class TableOperations
     {
-        protected TableClient() { }
+        protected TableOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.Table> Create(string resourceGroupName, string accountName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.Table>> CreateAsync(string resourceGroupName, string accountName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string accountName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -266,9 +266,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.Table> Update(string resourceGroupName, string accountName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.Table>> UpdateAsync(string resourceGroupName, string accountName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TableServicesClient
+    public partial class TableServicesOperations
     {
-        protected TableServicesClient() { }
+        protected TableServicesOperations() { }
         public virtual Azure.Response<Azure.Management.Storage.Models.TableServiceProperties> GetServiceProperties(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.TableServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Storage.Models.ListTableServices> List(string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -276,9 +276,9 @@ namespace Azure.Management.Storage
         public virtual Azure.Response<Azure.Management.Storage.Models.TableServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, Azure.Management.Storage.Models.TableServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Storage.Models.TableServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, Azure.Management.Storage.Models.TableServiceProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class UsagesClient
+    public partial class UsagesOperations
     {
-        protected UsagesClient() { }
+        protected UsagesOperations() { }
         public virtual Azure.Pageable<Azure.Management.Storage.Models.Usage> ListByLocation(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Storage.Models.Usage> ListByLocationAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

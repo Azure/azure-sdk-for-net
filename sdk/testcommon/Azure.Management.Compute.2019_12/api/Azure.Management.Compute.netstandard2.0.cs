@@ -1,8 +1,8 @@
 namespace Azure.Management.Compute
 {
-    public partial class AvailabilitySetsClient
+    public partial class AvailabilitySetsOperations
     {
-        protected AvailabilitySetsClient() { }
+        protected AvailabilitySetsOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.AvailabilitySet> CreateOrUpdate(string resourceGroupName, string availabilitySetName, Azure.Management.Compute.Models.AvailabilitySet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.AvailabilitySet>> CreateOrUpdateAsync(string resourceGroupName, string availabilitySetName, Azure.Management.Compute.Models.AvailabilitySet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -23,54 +23,40 @@ namespace Azure.Management.Compute
         protected ComputeManagementClient() { }
         public ComputeManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public ComputeManagementClient(System.Uri endpoint, string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public virtual Azure.Management.Compute.AvailabilitySetsClient GetAvailabilitySetsClient() { throw null; }
-        public virtual Azure.Management.Compute.ContainerServicesClient GetContainerServicesClient() { throw null; }
-        public virtual Azure.Management.Compute.DedicatedHostGroupsClient GetDedicatedHostGroupsClient() { throw null; }
-        public virtual Azure.Management.Compute.DedicatedHostsClient GetDedicatedHostsClient() { throw null; }
-        public virtual Azure.Management.Compute.DiskEncryptionSetsClient GetDiskEncryptionSetsClient() { throw null; }
-        public virtual Azure.Management.Compute.DisksClient GetDisksClient() { throw null; }
-        public virtual Azure.Management.Compute.GalleriesClient GetGalleriesClient() { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationsClient GetGalleryApplicationsClient() { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationVersionsClient GetGalleryApplicationVersionsClient() { throw null; }
-        public virtual Azure.Management.Compute.GalleryImagesClient GetGalleryImagesClient() { throw null; }
-        public virtual Azure.Management.Compute.GalleryImageVersionsClient GetGalleryImageVersionsClient() { throw null; }
-        public virtual Azure.Management.Compute.ImagesClient GetImagesClient() { throw null; }
-        public virtual Azure.Management.Compute.LogAnalyticsClient GetLogAnalyticsClient() { throw null; }
-        public virtual Azure.Management.Compute.OperationsClient GetOperationsClient() { throw null; }
-        public virtual Azure.Management.Compute.ProximityPlacementGroupsClient GetProximityPlacementGroupsClient() { throw null; }
-        public virtual Azure.Management.Compute.ResourceSkusClient GetResourceSkusClient() { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsClient GetSnapshotsClient() { throw null; }
-        public virtual Azure.Management.Compute.SshPublicKeysClient GetSshPublicKeysClient() { throw null; }
-        public virtual Azure.Management.Compute.UsageClient GetUsageClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineExtensionImagesClient GetVirtualMachineExtensionImagesClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineExtensionsClient GetVirtualMachineExtensionsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineImagesClient GetVirtualMachineImagesClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineRunCommandsClient GetVirtualMachineRunCommandsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsClient GetVirtualMachineScaleSetExtensionsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetRollingUpgradesClient GetVirtualMachineScaleSetRollingUpgradesClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsClient GetVirtualMachineScaleSetsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsClient GetVirtualMachineScaleSetVMExtensionsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMsClient GetVirtualMachineScaleSetVMsClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesClient GetVirtualMachinesClient() { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineSizesClient GetVirtualMachineSizesClient() { throw null; }
+        public virtual Azure.Management.Compute.AvailabilitySetsOperations AvailabilitySets { get { throw null; } }
+        public virtual Azure.Management.Compute.ContainerServicesOperations ContainerServices { get { throw null; } }
+        public virtual Azure.Management.Compute.DedicatedHostGroupsOperations DedicatedHostGroups { get { throw null; } }
+        public virtual Azure.Management.Compute.DedicatedHostsOperations DedicatedHosts { get { throw null; } }
+        public virtual Azure.Management.Compute.DiskEncryptionSetsOperations DiskEncryptionSets { get { throw null; } }
+        public virtual Azure.Management.Compute.DisksOperations Disks { get { throw null; } }
+        public virtual Azure.Management.Compute.GalleriesOperations Galleries { get { throw null; } }
+        public virtual Azure.Management.Compute.GalleryApplicationsOperations GalleryApplications { get { throw null; } }
+        public virtual Azure.Management.Compute.GalleryApplicationVersionsOperations GalleryApplicationVersions { get { throw null; } }
+        public virtual Azure.Management.Compute.GalleryImagesOperations GalleryImages { get { throw null; } }
+        public virtual Azure.Management.Compute.GalleryImageVersionsOperations GalleryImageVersions { get { throw null; } }
+        public virtual Azure.Management.Compute.ImagesOperations Images { get { throw null; } }
+        public virtual Azure.Management.Compute.LogAnalyticsOperations LogAnalytics { get { throw null; } }
+        public virtual Azure.Management.Compute.Operations Operations { get { throw null; } }
+        public virtual Azure.Management.Compute.ProximityPlacementGroupsOperations ProximityPlacementGroups { get { throw null; } }
+        public virtual Azure.Management.Compute.ResourceSkusOperations ResourceSkus { get { throw null; } }
+        public virtual Azure.Management.Compute.SnapshotsOperations Snapshots { get { throw null; } }
+        public virtual Azure.Management.Compute.SshPublicKeysOperations SshPublicKeys { get { throw null; } }
+        public virtual Azure.Management.Compute.UsageOperations Usage { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineExtensionsOperations VirtualMachineExtensions { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineImagesOperations VirtualMachineImages { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineRunCommandsOperations VirtualMachineRunCommands { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachinesOperations VirtualMachines { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsOperations VirtualMachineScaleSets { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get { throw null; } }
+        public virtual Azure.Management.Compute.VirtualMachineSizesOperations VirtualMachineSizes { get { throw null; } }
     }
     public partial class ComputeManagementClientOptions : Azure.Core.ClientOptions
     {
         public ComputeManagementClientOptions() { }
-    }
-    public partial class ContainerServicesClient
-    {
-        protected ContainerServicesClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.ContainerService> Get(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ContainerService>> GetAsync(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.ContainerService> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ContainerService> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.ContainerService> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ContainerService> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.ContainerServicesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string containerServiceName, Azure.Management.Compute.Models.ContainerService parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ContainerServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string containerServiceName, Azure.Management.Compute.Models.ContainerService parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.ContainerServicesDeleteOperation StartDelete(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ContainerServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ContainerServicesCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.ContainerService>
     {
@@ -98,9 +84,23 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DedicatedHostGroupsClient
+    public partial class ContainerServicesOperations
     {
-        protected DedicatedHostGroupsClient() { }
+        protected ContainerServicesOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.ContainerService> Get(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ContainerService>> GetAsync(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.ContainerService> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ContainerService> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.ContainerService> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ContainerService> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.ContainerServicesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string containerServiceName, Azure.Management.Compute.Models.ContainerService parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ContainerServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string containerServiceName, Azure.Management.Compute.Models.ContainerService parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.ContainerServicesDeleteOperation StartDelete(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ContainerServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DedicatedHostGroupsOperations
+    {
+        protected DedicatedHostGroupsOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup> CreateOrUpdate(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup>> CreateOrUpdateAsync(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -113,20 +113,6 @@ namespace Azure.Management.Compute
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DedicatedHostGroup> ListBySubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup> Update(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroupUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup>> UpdateAsync(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroupUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DedicatedHostsClient
-    {
-        protected DedicatedHostsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHost> Get(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHost>> GetAsync(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.DedicatedHost> ListByHostGroup(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DedicatedHost> ListByHostGroupAsync(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DedicatedHostsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHost parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHost parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DedicatedHostsDeleteOperation StartDelete(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DedicatedHostsUpdateOperation StartUpdate(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHostUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsUpdateOperation> StartUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHostUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DedicatedHostsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.DedicatedHost>
     {
@@ -154,6 +140,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DedicatedHostsOperations
+    {
+        protected DedicatedHostsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHost> Get(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHost>> GetAsync(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.DedicatedHost> ListByHostGroup(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DedicatedHost> ListByHostGroupAsync(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DedicatedHostsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHost parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHost parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DedicatedHostsDeleteOperation StartDelete(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DedicatedHostsUpdateOperation StartUpdate(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHostUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DedicatedHostsUpdateOperation> StartUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, Azure.Management.Compute.Models.DedicatedHostUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DedicatedHostsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.DedicatedHost>
     {
         internal DedicatedHostsUpdateOperation() { }
@@ -166,22 +166,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.DedicatedHost>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.DedicatedHost>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DiskEncryptionSetsClient
-    {
-        protected DiskEncryptionSetsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet> Get(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.DiskEncryptionSet> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DiskEncryptionSetsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSet diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSet diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DiskEncryptionSetsDeleteOperation StartDelete(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DiskEncryptionSetsUpdateOperation StartUpdate(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSetUpdate diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSetUpdate diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DiskEncryptionSetsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.DiskEncryptionSet>
     {
@@ -209,6 +193,22 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DiskEncryptionSetsOperations
+    {
+        protected DiskEncryptionSetsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet> Get(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.DiskEncryptionSet> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.DiskEncryptionSet> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DiskEncryptionSetsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSet diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSet diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DiskEncryptionSetsDeleteOperation StartDelete(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DiskEncryptionSetsUpdateOperation StartUpdate(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSetUpdate diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DiskEncryptionSetsUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskEncryptionSetName, Azure.Management.Compute.Models.DiskEncryptionSetUpdate diskEncryptionSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DiskEncryptionSetsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.DiskEncryptionSet>
     {
         internal DiskEncryptionSetsUpdateOperation() { }
@@ -221,26 +221,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DisksClient
-    {
-        protected DisksClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.Disk> Get(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Disk>> GetAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Disk> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Disk> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Disk> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Disk> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DisksCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string diskName, Azure.Management.Compute.Models.Disk disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.Disk disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DisksDeleteOperation StartDelete(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DisksGrantAccessOperation StartGrantAccess(string resourceGroupName, string diskName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DisksRevokeAccessOperation StartRevokeAccess(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.DisksUpdateOperation StartUpdate(string resourceGroupName, string diskName, Azure.Management.Compute.Models.DiskUpdate disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.DiskUpdate disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DisksCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Disk>
     {
@@ -281,6 +261,26 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.AccessUri>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.AccessUri>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DisksOperations
+    {
+        protected DisksOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.Disk> Get(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Disk>> GetAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Disk> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Disk> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Disk> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Disk> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DisksCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string diskName, Azure.Management.Compute.Models.Disk disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.Disk disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DisksDeleteOperation StartDelete(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DisksGrantAccessOperation StartGrantAccess(string resourceGroupName, string diskName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DisksRevokeAccessOperation StartRevokeAccess(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.DisksUpdateOperation StartUpdate(string resourceGroupName, string diskName, Azure.Management.Compute.Models.DiskUpdate disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.DisksUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskName, Azure.Management.Compute.Models.DiskUpdate disk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DisksRevokeAccessOperation : Azure.Operation<Azure.Response>
     {
         internal DisksRevokeAccessOperation() { }
@@ -306,22 +306,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Disk>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Disk>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GalleriesClient
-    {
-        protected GalleriesClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.Gallery> Get(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Gallery>> GetAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Gallery> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Gallery> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Gallery> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Gallery> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleriesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.Gallery gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.Gallery gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleriesDeleteOperation StartDelete(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleriesUpdateOperation StartUpdate(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.GalleryUpdate gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.GalleryUpdate gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleriesCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Gallery>
     {
@@ -349,6 +333,22 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GalleriesOperations
+    {
+        protected GalleriesOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.Gallery> Get(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Gallery>> GetAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Gallery> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Gallery> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Gallery> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Gallery> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleriesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.Gallery gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.Gallery gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleriesDeleteOperation StartDelete(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleriesUpdateOperation StartUpdate(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.GalleryUpdate gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleriesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, Azure.Management.Compute.Models.GalleryUpdate gallery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class GalleriesUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Gallery>
     {
         internal GalleriesUpdateOperation() { }
@@ -361,20 +361,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Gallery>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Gallery>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GalleryApplicationsClient
-    {
-        protected GalleryApplicationsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplication> Get(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplication>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplication> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryApplication> ListByGalleryAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplication galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplication galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplicationUpdate galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplicationUpdate galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryApplicationsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryApplication>
     {
@@ -402,6 +388,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GalleryApplicationsOperations
+    {
+        protected GalleryApplicationsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplication> Get(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplication>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplication> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryApplication> ListByGalleryAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplication galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplication galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplicationUpdate galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, Azure.Management.Compute.Models.GalleryApplicationUpdate galleryApplication, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class GalleryApplicationsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryApplication>
     {
         internal GalleryApplicationsUpdateOperation() { }
@@ -414,20 +414,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryApplication>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryApplication>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GalleryApplicationVersionsClient
-    {
-        protected GalleryApplicationVersionsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplicationVersion> ListByGalleryApplication(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryApplicationVersion> ListByGalleryApplicationAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersion galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersion galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationVersionsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryApplicationVersionsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersionUpdate galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersionUpdate galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryApplicationVersionsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryApplicationVersion>
     {
@@ -455,6 +441,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GalleryApplicationVersionsOperations
+    {
+        protected GalleryApplicationVersionsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplicationVersion> ListByGalleryApplication(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryApplicationVersion> ListByGalleryApplicationAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersion galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersion galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationVersionsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryApplicationVersionsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersionUpdate galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryApplicationVersionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.Management.Compute.Models.GalleryApplicationVersionUpdate galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class GalleryApplicationVersionsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryApplicationVersion>
     {
         internal GalleryApplicationVersionsUpdateOperation() { }
@@ -467,20 +467,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GalleryImagesClient
-    {
-        protected GalleryImagesClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImage> Get(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImage>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImage> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryImage> ListByGalleryAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImage galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImage galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImagesDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImagesUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImageUpdate galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImageUpdate galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryImagesCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryImage>
     {
@@ -508,6 +494,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GalleryImagesOperations
+    {
+        protected GalleryImagesOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImage> Get(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImage>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImage> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryImage> ListByGalleryAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImage galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImage galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImagesDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImagesUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImageUpdate galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, Azure.Management.Compute.Models.GalleryImageUpdate galleryImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class GalleryImagesUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryImage>
     {
         internal GalleryImagesUpdateOperation() { }
@@ -520,20 +520,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryImage>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryImage>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class GalleryImageVersionsClient
-    {
-        protected GalleryImageVersionsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImageVersion> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryImageVersion> ListByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImageVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersion galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersion galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImageVersionsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.GalleryImageVersionsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersionUpdate galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersionUpdate galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GalleryImageVersionsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryImageVersion>
     {
@@ -561,6 +547,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GalleryImageVersionsOperations
+    {
+        protected GalleryImageVersionsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImageVersion> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.GalleryImageVersion> ListByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImageVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersion galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersion galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImageVersionsDeleteOperation StartDelete(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.GalleryImageVersionsUpdateOperation StartUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersionUpdate galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.GalleryImageVersionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.Management.Compute.Models.GalleryImageVersionUpdate galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class GalleryImageVersionsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.GalleryImageVersion>
     {
         internal GalleryImageVersionsUpdateOperation() { }
@@ -573,22 +573,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ImagesClient
-    {
-        protected ImagesClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.Image> Get(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Image>> GetAsync(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Image> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Image> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Image> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Image> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.ImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string imageName, Azure.Management.Compute.Models.Image parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string imageName, Azure.Management.Compute.Models.Image parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.ImagesDeleteOperation StartDelete(string resourceGroupName, string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.ImagesUpdateOperation StartUpdate(string resourceGroupName, string imageName, Azure.Management.Compute.Models.ImageUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string imageName, Azure.Management.Compute.Models.ImageUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ImagesCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Image>
     {
@@ -616,6 +600,22 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ImagesOperations
+    {
+        protected ImagesOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.Image> Get(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Image>> GetAsync(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Image> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Image> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Image> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Image> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.ImagesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string imageName, Azure.Management.Compute.Models.Image parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string imageName, Azure.Management.Compute.Models.Image parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.ImagesDeleteOperation StartDelete(string resourceGroupName, string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.ImagesUpdateOperation StartUpdate(string resourceGroupName, string imageName, Azure.Management.Compute.Models.ImageUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.ImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string imageName, Azure.Management.Compute.Models.ImageUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ImagesUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Image>
     {
         internal ImagesUpdateOperation() { }
@@ -628,14 +628,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Image>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Image>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class LogAnalyticsClient
-    {
-        protected LogAnalyticsClient() { }
-        public virtual Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation StartExportRequestRateByInterval(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation> StartExportRequestRateByIntervalAsync(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.LogAnalyticsExportThrottledRequestsOperation StartExportThrottledRequests(string location, Azure.Management.Compute.Models.LogAnalyticsInputBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.LogAnalyticsExportThrottledRequestsOperation> StartExportThrottledRequestsAsync(string location, Azure.Management.Compute.Models.LogAnalyticsInputBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogAnalyticsExportRequestRateByIntervalOperation : Azure.Operation<Azure.Management.Compute.Models.LogAnalyticsOperationResult>
     {
@@ -663,15 +655,23 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.LogAnalyticsOperationResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.LogAnalyticsOperationResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OperationsClient
+    public partial class LogAnalyticsOperations
     {
-        protected OperationsClient() { }
+        protected LogAnalyticsOperations() { }
+        public virtual Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation StartExportRequestRateByInterval(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation> StartExportRequestRateByIntervalAsync(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.LogAnalyticsExportThrottledRequestsOperation StartExportThrottledRequests(string location, Azure.Management.Compute.Models.LogAnalyticsInputBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.LogAnalyticsExportThrottledRequestsOperation> StartExportThrottledRequestsAsync(string location, Azure.Management.Compute.Models.LogAnalyticsInputBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class Operations
+    {
+        protected Operations() { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.ComputeOperationValue> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ComputeOperationValue> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProximityPlacementGroupsClient
+    public partial class ProximityPlacementGroupsOperations
     {
-        protected ProximityPlacementGroupsClient() { }
+        protected ProximityPlacementGroupsOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup> CreateOrUpdate(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.ProximityPlacementGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup>> CreateOrUpdateAsync(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.ProximityPlacementGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string proximityPlacementGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -685,31 +685,11 @@ namespace Azure.Management.Compute
         public virtual Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup> Update(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.UpdateResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup>> UpdateAsync(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.UpdateResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ResourceSkusClient
+    public partial class ResourceSkusOperations
     {
-        protected ResourceSkusClient() { }
+        protected ResourceSkusOperations() { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.ResourceSku> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ResourceSku> ListAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SnapshotsClient
-    {
-        protected SnapshotsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.Snapshot> Get(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Snapshot>> GetAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Snapshot> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Snapshot> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.Snapshot> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Snapshot> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.Snapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.Snapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsDeleteOperation StartDelete(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsDeleteOperation> StartDeleteAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsGrantAccessOperation StartGrantAccess(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsRevokeAccessOperation StartRevokeAccess(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.SnapshotsUpdateOperation StartUpdate(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.SnapshotUpdate snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsUpdateOperation> StartUpdateAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.SnapshotUpdate snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SnapshotsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.Snapshot>
     {
@@ -750,6 +730,26 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.AccessUri>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.AccessUri>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SnapshotsOperations
+    {
+        protected SnapshotsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.Snapshot> Get(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Snapshot>> GetAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Snapshot> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Snapshot> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.Snapshot> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Snapshot> ListByResourceGroupAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.SnapshotsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.Snapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.Snapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.SnapshotsDeleteOperation StartDelete(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsDeleteOperation> StartDeleteAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.SnapshotsGrantAccessOperation StartGrantAccess(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.GrantAccessData grantAccessData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.SnapshotsRevokeAccessOperation StartRevokeAccess(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.SnapshotsUpdateOperation StartUpdate(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.SnapshotUpdate snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.SnapshotsUpdateOperation> StartUpdateAsync(string resourceGroupName, string snapshotName, Azure.Management.Compute.Models.SnapshotUpdate snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SnapshotsRevokeAccessOperation : Azure.Operation<Azure.Response>
     {
         internal SnapshotsRevokeAccessOperation() { }
@@ -776,9 +776,9 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Snapshot>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.Snapshot>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SshPublicKeysClient
+    public partial class SshPublicKeysOperations
     {
-        protected SshPublicKeysClient() { }
+        protected SshPublicKeysOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource> Create(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource>> CreateAsync(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string sshPublicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -794,35 +794,21 @@ namespace Azure.Management.Compute
         public virtual Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource> Update(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyUpdateResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource>> UpdateAsync(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyUpdateResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class UsageClient
+    public partial class UsageOperations
     {
-        protected UsageClient() { }
+        protected UsageOperations() { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Usage> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Usage> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineExtensionImagesClient
+    public partial class VirtualMachineExtensionImagesOperations
     {
-        protected VirtualMachineExtensionImagesClient() { }
+        protected VirtualMachineExtensionImagesOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionImage> Get(string location, string publisherName, string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionImage>> GetAsync(string location, string publisherName, string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineExtensionImage>> ListTypes(string location, string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineExtensionImage>>> ListTypesAsync(string location, string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineExtensionImage>> ListVersions(string location, string publisherName, string type, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineExtensionImage>>> ListVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VirtualMachineExtensionsClient
-    {
-        protected VirtualMachineExtensionsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult>> ListAsync(string resourceGroupName, string vmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineExtension>
     {
@@ -850,6 +836,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class VirtualMachineExtensionsOperations
+    {
+        protected VirtualMachineExtensionsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult>> ListAsync(string resourceGroupName, string vmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class VirtualMachineExtensionsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineExtension>
     {
         internal VirtualMachineExtensionsUpdateOperation() { }
@@ -863,9 +863,9 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineImagesClient
+    public partial class VirtualMachineImagesOperations
     {
-        protected VirtualMachineImagesClient() { }
+        protected VirtualMachineImagesOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineImage> Get(string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineImageResource>> List(string location, string publisherName, string offer, string skus, string expand = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -877,27 +877,13 @@ namespace Azure.Management.Compute
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineImageResource>> ListSkus(string location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineRunCommandsClient
+    public partial class VirtualMachineRunCommandsOperations
     {
-        protected VirtualMachineRunCommandsClient() { }
+        protected VirtualMachineRunCommandsOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.RunCommandDocument> Get(string location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RunCommandDocument>> GetAsync(string location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.RunCommandDocumentBase> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.RunCommandDocumentBase> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VirtualMachineScaleSetExtensionsClient
-    {
-        protected VirtualMachineScaleSetExtensionsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> Get(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> List(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> ListAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension>
     {
@@ -925,6 +911,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class VirtualMachineScaleSetExtensionsOperations
+    {
+        protected VirtualMachineScaleSetExtensionsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> Get(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> List(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> ListAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class VirtualMachineScaleSetExtensionsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension>
     {
         internal VirtualMachineScaleSetExtensionsUpdateOperation() { }
@@ -951,9 +951,9 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineScaleSetRollingUpgradesClient
+    public partial class VirtualMachineScaleSetRollingUpgradesOperations
     {
-        protected VirtualMachineScaleSetRollingUpgradesClient() { }
+        protected VirtualMachineScaleSetRollingUpgradesOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.RollingUpgradeStatusInfo> GetLatest(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RollingUpgradeStatusInfo>> GetLatestAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Compute.VirtualMachineScaleSetRollingUpgradesCancelOperation StartCancel(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -988,54 +988,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VirtualMachineScaleSetsClient
-    {
-        protected VirtualMachineScaleSetsClient() { }
-        public virtual Azure.Response ConvertToSinglePlacementGroup(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet> Get(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet>> GetAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetInstanceView> GetInstanceView(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistoryAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSetSku> ListSkus(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSetSku> ListSkusAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeallocateOperation StartDeallocate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeleteInstancesOperation StartDeleteInstances(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeleteInstancesOperation> StartDeleteInstancesAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsPerformMaintenanceOperation StartPerformMaintenance(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsPowerOffOperation StartPowerOff(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = default(bool?), Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = default(bool?), Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsRedeployOperation StartRedeploy(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsReimageOperation StartReimage(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsReimageAllOperation StartReimageAll(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsReimageAllOperation> StartReimageAllAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsRestartOperation StartRestart(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsRestartOperation> StartRestartAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsSetOrchestrationServiceStateOperation StartSetOrchestrationServiceState(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsSetOrchestrationServiceStateOperation> StartSetOrchestrationServiceStateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsStartOperation StartStart(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsStartOperation> StartStartAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetsUpdateInstancesOperation StartUpdateInstances(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsUpdateInstancesOperation> StartUpdateInstancesAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineScaleSet>
     {
@@ -1088,6 +1040,54 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachineScaleSetsOperations
+    {
+        protected VirtualMachineScaleSetsOperations() { }
+        public virtual Azure.Response ConvertToSinglePlacementGroup(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet> Get(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet>> GetAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetInstanceView> GetInstanceView(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistoryAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSet> ListAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSetSku> ListSkus(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineScaleSetSku> ListSkusAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeallocateOperation StartDeallocate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsDeleteInstancesOperation StartDeleteInstances(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsDeleteInstancesOperation> StartDeleteInstancesAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsPerformMaintenanceOperation StartPerformMaintenance(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsPowerOffOperation StartPowerOff(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = default(bool?), Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = default(bool?), Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsRedeployOperation StartRedeploy(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsReimageOperation StartReimage(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsReimageAllOperation StartReimageAll(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsReimageAllOperation> StartReimageAllAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsRestartOperation StartRestart(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsRestartOperation> StartRestartAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsSetOrchestrationServiceStateOperation StartSetOrchestrationServiceState(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsSetOrchestrationServiceStateOperation> StartSetOrchestrationServiceStateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.OrchestrationServiceStateInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsStartOperation StartStart(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsStartOperation> StartStartAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetsUpdateInstancesOperation StartUpdateInstances(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetsUpdateInstancesOperation> StartUpdateInstancesAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetsPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
@@ -1219,20 +1219,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSet>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineScaleSetVMExtensionsClient
-    {
-        protected VirtualMachineScaleSetVMExtensionsClient() { }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult>> ListAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineExtension>
     {
         internal VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation() { }
@@ -1259,6 +1245,20 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class VirtualMachineScaleSetVMExtensionsOperations
+    {
+        protected VirtualMachineScaleSetVMExtensionsOperations() { }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult>> ListAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtension extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsDeleteOperation StartDelete(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMExtensionsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, Azure.Management.Compute.Models.VirtualMachineExtensionUpdate extensionParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class VirtualMachineScaleSetVMExtensionsUpdateOperation : Azure.Operation<Azure.Management.Compute.Models.VirtualMachineExtension>
     {
         internal VirtualMachineScaleSetVMExtensionsUpdateOperation() { }
@@ -1272,9 +1272,35 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineScaleSetVMsClient
+    public partial class VirtualMachineScaleSetVMsDeallocateOperation : Azure.Operation<Azure.Response>
     {
-        protected VirtualMachineScaleSetVMsClient() { }
+        internal VirtualMachineScaleSetVMsDeallocateOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachineScaleSetVMsDeleteOperation : Azure.Operation<Azure.Response>
+    {
+        internal VirtualMachineScaleSetVMsDeleteOperation() { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.Response Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachineScaleSetVMsOperations
+    {
+        protected VirtualMachineScaleSetVMsOperations() { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVM> Get(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVM>> GetAsync(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceView> GetInstanceView(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1305,32 +1331,6 @@ namespace Azure.Management.Compute
         public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMsStartOperation> StartStartAsync(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Compute.VirtualMachineScaleSetVMsUpdateOperation StartUpdate(string resourceGroupName, string vmScaleSetName, string instanceId, Azure.Management.Compute.Models.VirtualMachineScaleSetVM parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachineScaleSetVMsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Azure.Management.Compute.Models.VirtualMachineScaleSetVM parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VirtualMachineScaleSetVMsDeallocateOperation : Azure.Operation<Azure.Response>
-    {
-        internal VirtualMachineScaleSetVMsDeallocateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class VirtualMachineScaleSetVMsDeleteOperation : Azure.Operation<Azure.Response>
-    {
-        internal VirtualMachineScaleSetVMsDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineScaleSetVMsPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
@@ -1462,54 +1462,6 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineCaptureResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Management.Compute.Models.VirtualMachineCaptureResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachinesClient
-    {
-        protected VirtualMachinesClient() { }
-        public virtual Azure.Response Generalize(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GeneralizeAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachine> Get(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachine>> GetAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineInstanceView> InstanceView(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineInstanceView>> InstanceViewAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> ListAll(string statusOnly = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListAllAsync(string statusOnly = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAvailableSizes(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAvailableSizesAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> ListByLocation(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListByLocationAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SimulateEviction(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SimulateEvictionAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesCaptureOperation StartCapture(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineCaptureParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesCaptureOperation> StartCaptureAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineCaptureParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesConvertToManagedDisksOperation StartConvertToManagedDisks(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesConvertToManagedDisksOperation> StartConvertToManagedDisksAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachine parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachine parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesDeallocateOperation StartDeallocate(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesDeleteOperation StartDelete(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesPerformMaintenanceOperation StartPerformMaintenance(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesPowerOffOperation StartPowerOff(string resourceGroupName, string vmName, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmName, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesReapplyOperation StartReapply(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesReapplyOperation> StartReapplyAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesRedeployOperation StartRedeploy(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesReimageOperation StartReimage(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesReimageOperation> StartReimageAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesRestartOperation StartRestart(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRestartOperation> StartRestartAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesRunCommandOperation StartRunCommand(string resourceGroupName, string vmName, Azure.Management.Compute.Models.RunCommandInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRunCommandOperation> StartRunCommandAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.RunCommandInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesStartOperation StartStart(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesStartOperation> StartStartAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Management.Compute.VirtualMachinesUpdateOperation StartUpdate(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class VirtualMachinesConvertToManagedDisksOperation : Azure.Operation<Azure.Response>
     {
         internal VirtualMachinesConvertToManagedDisksOperation() { }
@@ -1562,11 +1514,59 @@ namespace Azure.Management.Compute
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualMachineSizesClient
+    public partial class VirtualMachineSizesOperations
     {
-        protected VirtualMachineSizesClient() { }
+        protected VirtualMachineSizesOperations() { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineSize> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachinesOperations
+    {
+        protected VirtualMachinesOperations() { }
+        public virtual Azure.Response Generalize(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GeneralizeAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachine> Get(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachine>> GetAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineInstanceView> InstanceView(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineInstanceView>> InstanceViewAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> ListAll(string statusOnly = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListAllAsync(string statusOnly = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAvailableSizes(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAvailableSizesAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachine> ListByLocation(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachine> ListByLocationAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SimulateEviction(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SimulateEvictionAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesCaptureOperation StartCapture(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineCaptureParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesCaptureOperation> StartCaptureAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineCaptureParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesConvertToManagedDisksOperation StartConvertToManagedDisks(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesConvertToManagedDisksOperation> StartConvertToManagedDisksAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachine parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachine parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesDeallocateOperation StartDeallocate(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesDeleteOperation StartDelete(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesPerformMaintenanceOperation StartPerformMaintenance(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesPowerOffOperation StartPowerOff(string resourceGroupName, string vmName, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmName, bool? skipShutdown = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesReapplyOperation StartReapply(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesReapplyOperation> StartReapplyAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesRedeployOperation StartRedeploy(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesReimageOperation StartReimage(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesReimageOperation> StartReimageAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineReimageParameters parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesRestartOperation StartRestart(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRestartOperation> StartRestartAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesRunCommandOperation StartRunCommand(string resourceGroupName, string vmName, Azure.Management.Compute.Models.RunCommandInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesRunCommandOperation> StartRunCommandAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.RunCommandInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesStartOperation StartStart(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesStartOperation> StartStartAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Management.Compute.VirtualMachinesUpdateOperation StartUpdate(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.Compute.VirtualMachinesUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmName, Azure.Management.Compute.Models.VirtualMachineUpdate parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachinesPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
