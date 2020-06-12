@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -36,8 +35,7 @@ namespace Azure.Iot.Hub.Service.Tests
         protected IoTHubServiceClient GetClient()
         {
             return InstrumentClient(
-                new IoTHubServiceClient(
-                    new Uri(TestEnvironment.IotHubHostname)));
+                new IoTHubServiceClient(TestSettings.Instance.IotHubConnectionString));
         }
 
         protected string GetRandom()

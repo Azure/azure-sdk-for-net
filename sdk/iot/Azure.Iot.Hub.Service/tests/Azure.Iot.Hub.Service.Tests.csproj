@@ -18,6 +18,12 @@
     <ProjectReference Include="..\src\Azure.Iot.Hub.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <!-- required by TestFramework.props -->
   <ItemGroup>
     <PackageReference Include="NUnit3TestAdapter" />

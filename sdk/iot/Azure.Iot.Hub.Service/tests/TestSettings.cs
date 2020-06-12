@@ -15,11 +15,12 @@ namespace Azure.Iot.Hub.Service.Tests
     /// </summary>
     public class TestSettings
     {
-        public const string IotHubServiceEnvironmentVariablesPrefix = "IOTHUB";
+        public const string IotHubServiceEnvironmentVariablesPrefix = "IOT";
 
         // These environment variables are required to be set to run tests against the CI pipeline.
         // If these environment variables exist in the environment, their values will replace (supersede) config.json values.
         private static readonly string s_iotHubConnectionString = $"{IotHubServiceEnvironmentVariablesPrefix}_CONNECTION_STRING";
+
         private static readonly string s_iotHubServiceTestMode = $"AZURE_IOT_TEST_MODE";
 
         public static TestSettings Instance { get; private set; }
@@ -37,7 +38,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public string IotHubConnectionString { get; set; }
 
         /// <summary>
-        /// The IoT Hub instance hostname.
+        /// The IoT Hub instance hostName.
         /// </summary>
         public string IotHubHostName { get; set; }
 
@@ -80,7 +81,6 @@ namespace Azure.Iot.Hub.Service.Tests
         // These environment variables are required to be set to run tests against the CI pipeline.
         private static void OverrideFromEnvVariables()
         {
-
         }
     }
 }

@@ -9,9 +9,8 @@ namespace Azure.Iot.Hub.Service.Tests
     public class IotHubServiceTestEnvironment : TestEnvironment
     {
         public IotHubServiceTestEnvironment()
-            : base("iothub")
+            : base("iot")
         {
         }
-
     }
 }
