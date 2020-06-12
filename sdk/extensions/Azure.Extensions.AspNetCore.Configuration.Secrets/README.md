@@ -42,7 +42,7 @@ The [Azure Identity library][identity] provides easy Azure Active Directory supp
 
 ## Next steps
 
-Read more about [configuration in ASP.NET Core](aspnetcore_configuration_doc).
+Read more about [configuration in ASP.NET Core][aspnetcore_configuration_doc].
 
 ## Contributing
 
