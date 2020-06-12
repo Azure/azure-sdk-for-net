@@ -125,7 +125,7 @@
     },
     "/configurations": {
       "get": {       
-        "description": "Gets multiple configurations on the IoT Hub for automatic device/module management. Pagination is not supported.",
+        "description": "Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported.",
         "operationId": "Configuration_GetConfigurations",
         "consumes": [],
         "produces": [
@@ -495,7 +495,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the edge device.  TODO <managed team>: Is it just device or edge device?",
+            "description": "The unique identifier of the edge device.  TODO <service team>: Is it just device or edge device?",
             "required": true,
             "type": "string"
           },
@@ -912,7 +912,7 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The module twin info that will replace the existing info. TODO <managed team>: Is the type for module twin info deviceTwinInfo?",
+            "description": "The module twin info that will replace the existing info. TODO <service team>: Is the type for module twin info deviceTwinInfo?",
             "required": true,
             "schema": {
               "$ref": "#/definitions/TwinData"
@@ -965,7 +965,7 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The module twin info containing the tags and desired properties to be updated. TODO <managed team>: Should the description say module twin info or device twin info?",
+            "description": "The module twin info containing the tags and desired properties to be updated. TODO <service team>: Should the description say module twin info or device twin info?",
             "required": true,
             "schema": {
               "$ref": "#/definitions/TwinData"
@@ -1756,12 +1756,12 @@
       "type": "object",
       "properties": {
         "results": {
-          "type": "object",
-          "additionalProperties": {
-            "format": "int64",
-            "type": "integer"
-          },
-          "description": "TODO <service team>: Can you add a description?"
+            "type": "object",
+            "additionalProperties": {
+                "format": "int64",
+                "type": "integer"
+            },
+            "description": "Version for device twin, including tags and desired properties. TODO <service team>: Is the format correct?"
         },
         "queries": {
           "type": "object",
@@ -1801,13 +1801,13 @@
         },
         "createdTimeUtc": {
           "format": "date-time",
-          "description": "The creation time of the configuration.",
+          "description": "The creation date and time of the configuration.",
           "type": "string",
           "readOnly": true
         },
         "lastUpdatedTimeUtc": {
           "format": "date-time",
-          "description": "The update time of the configuration.",
+          "description": "The update date and time of the configuration.",
           "type": "string",
           "readOnly": true
         },
@@ -1936,7 +1936,7 @@
         "generationId": {
           "type": "string",
           "readOnly": true,
-          "description": "The IoT Hub generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
+          "description": "The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
         },
         "etag": {
           "type": "string",
@@ -1967,19 +1967,19 @@
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The temporal indicator, showing the date and last time the connection state was updated."
+          "description": "The date and time the connection state was last updated."
         },
         "statusUpdatedTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The timestamp of when the status field was last updated."
+          "description": "The date and time when the status field was last updated."
         },
         "lastActivityTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The temporal indicator, showing the date and last time the device connected, received, or sent a message."
+          "description": "The date and last time the device last connected, received, or sent a message."
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
@@ -1997,14 +1997,14 @@
         },
         "deviceScope": {
           "type": "string",
-          "description": "The scope of the device."
+          "description": "The scope of the device. TODO <service team>: Any more info on what scope means? Can it be any value, or does it come from a set?"
         },
         "parentScopes": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "TODO <servce team>: Can you add a description for this parameter?"
+          "description": "TODO <service team>: Can you add a description for this parameter?"
         }
       },
       "required": [
@@ -2509,7 +2509,7 @@
         },
         "version": {
           "format": "int64",
-          "description": "TODO <managed team>: What should this be?.",
+          "description": "TODO <service team>: What should this be?.",
           "type": "integer",
           "readOnly": true
         },
@@ -2519,7 +2519,7 @@
           "readOnly": true
         },
         "status": {
-          "description": "The status of the device. If disabled, the device cannot connect to the service.",
+          "description": "The enabled status of the device. If disabled, the device cannot connect to the service.",
           "enum": [
             "enabled",
             "disabled"
@@ -2532,7 +2532,7 @@
         },
         "statusUpdateTime": {
           "format": "date-time",
-          "description": "The time when the status of the device was last updated.",
+          "description": "The date and time when the status of the device was last updated.",
           "type": "string",
           "readOnly": true
         },
@@ -2547,7 +2547,7 @@
         },
         "lastActivityTime": {
           "format": "date-time",
-          "description": "The time when the device last connected or received or sent a message. The time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations.",
+          "description": "The date and time when the device last connected or received or sent a message. The date and time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations.",
           "type": "string",
           "readOnly": true
         },
@@ -2623,13 +2623,13 @@
         },
         "startTimeUtc": {
           "format": "date-time",
-          "description": "The start time of the job in UTC.",
+          "description": "The start date and time of the job in UTC.",
           "type": "string",
           "readOnly": true
         },
         "endTimeUtc": {
           "format": "date-time",
-          "description": "The end time of the job in UTC.",
+          "description": "The end date and time of the job in UTC.",
           "type": "string",
           "readOnly": true
         },
@@ -2895,7 +2895,7 @@
         },
         "startTime": {
           "format": "date-time",
-          "description": "The start time of the job in ISO 8601 standard. TODO <service team>: Is this correct?.",
+          "description": "The start date and time of the job in ISO 8601 standard. TODO <service team>: Is this correct?.",
           "type": "string"
         },
         "maxExecutionTimeInSeconds": {
@@ -2928,7 +2928,7 @@
         "connectTimeoutInSeconds": {
           "format": "int32",
           "type": "integer",
-          "description": "The time (in seconds) that the service waits for the device to come online. The default is 0 seconds, which means the device must already be online and the maximum is 300 seconds."
+          "description": "The time (in seconds) that the service waits for the device to come online. The default is 0 seconds (which means the device must already be online) and the maximum is 300 seconds."
         }
       },
       "required": [
@@ -2950,19 +2950,19 @@
         },
         "createdTime": {
           "format": "date-time",
-          "description": "The creation time of the job.",
+          "description": "The creation date and time of the job.",
           "type": "string",
           "readOnly": true
         },
         "startTime": {
           "format": "date-time",
-          "description": "The start time of the scheduled job in UTC.",
+          "description": "The start date and time of the scheduled job in UTC.",
           "type": "string",
           "readOnly": true
         },
         "endTime": {
           "format": "date-time",
-          "description": "The end tiem of the job in UTC. // TODO: End time of scheduled job?",
+          "description": "The end date and time of the job in UTC.",
           "type": "string",
           "readOnly": true
         },
@@ -3028,7 +3028,7 @@
         },
         "deviceJobStatistics": {
           "$ref": "#/definitions/DeviceJobStatistics",
-          "description": "The job details.",
+          "description": "The job details. TODO <service team>. Can you add more details to this description?",
           "readOnly": true
         }
       },
@@ -3136,13 +3136,13 @@
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The temporal indicator, showing the date and time the connection state was last updated."
+          "description": "The date and time the connection state was last updated."
         },
         "lastActivityTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The temporal indicator, showing the date and time the device last connected, received, or sent a message."
+          "description": "The date and time the device last connected, received, or sent a message."
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
