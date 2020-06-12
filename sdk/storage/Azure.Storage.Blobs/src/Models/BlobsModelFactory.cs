@@ -510,5 +510,29 @@ namespace Azure.Storage.Blobs.Models
                 IsFatal = isFatal,
                 Position = position
             };
+
+        /// <summary>
+        /// Creates a new ObjectReplicationPolicy instance for mocking.
+        /// </summary>
+        public static ObjectReplicationPolicy ObjectReplicationPolicy(
+            string policyId,
+            IList<ObjectReplicationRule> rules)
+            => new ObjectReplicationPolicy
+            {
+                PolicyId = policyId,
+                Rules = rules
+            };
+
+        /// <summary>
+        /// Creates a new ObjectReplicationRule instance for mocking.
+        /// </summary>
+        public static ObjectReplicationRule ObjectReplicationRule(
+            string ruleId,
+            ObjectReplicationStatus replicationStatus)
+            => new ObjectReplicationRule
+            {
+                RuleId = ruleId,
+                ReplicationStatus = replicationStatus
+            };
     }
 }
