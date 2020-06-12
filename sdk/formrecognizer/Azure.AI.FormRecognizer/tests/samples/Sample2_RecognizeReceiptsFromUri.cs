@@ -25,33 +25,83 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
             RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
-            foreach (var receipt in receipts)
+
+            // To see the list of the supported fields returned by service and its corresponding types, consult:
+            // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+
+            foreach (RecognizedReceipt receipt in receipts)
             {
-                USReceipt usReceipt = receipt.AsUSReceipt();
-
-                string merchantName = usReceipt.MerchantName?.Value ?? default;
-                DateTime transactionDate = usReceipt.TransactionDate?.Value ?? default;
-                IReadOnlyList<USReceiptItem> items = usReceipt.Items ?? default;
-                float subtotal = usReceipt.Subtotal?.Value ?? default;
-                float tax = usReceipt.Tax?.Value ?? default;
-                float tip = usReceipt.Tip?.Value ?? default;
-                float total = usReceipt.Total?.Value ?? default;
-
-                Console.WriteLine($"Recognized USReceipt fields:");
-                Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
-                Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {usReceipt.TransactionDate.Confidence}");
-
-                for (int i = 0; i < items.Count; i++)
+                FormField merchantNameField;
+                if (receipt.RecognizedForm.Fields.TryGetValue("MerchantName", out merchantNameField))
                 {
-                    USReceiptItem item = usReceipt.Items[i];
-                    Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', Price: '{item.Price?.Value}'");
-                    Console.WriteLine($"    TotalPrice: '{item.TotalPrice.Value}'");
+                    if (merchantNameField.Value.Type == FieldValueType.String)
+                    {
+                        string merchantName = merchantNameField.Value.AsString();
+
+                        Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
+                    }
                 }
 
-                Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
-                Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
-                Console.WriteLine($"    Tip: '{tip}', with confidence '{usReceipt.Tip?.Confidence ?? 0.0f}'");
-                Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
+                FormField transactionDateField;
+                if (receipt.RecognizedForm.Fields.TryGetValue("TransactionDate", out transactionDateField))
+                {
+                    if (transactionDateField.Value.Type == FieldValueType.Date)
+                    {
+                        DateTime transactionDate = transactionDateField.Value.AsDate();
+
+                        Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
+                    }
+                }
+
+                FormField itemsField;
+                if (receipt.RecognizedForm.Fields.TryGetValue("Items", out itemsField))
+                {
+                    if (itemsField.Value.Type == FieldValueType.List)
+                    {
+                        foreach (FormField itemField in itemsField.Value.AsList())
+                        {
+                            Console.WriteLine("Item:");
+
+                            if (itemField.Value.Type == FieldValueType.Dictionary)
+                            {
+                                IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
+
+                                FormField itemNameField;
+                                if (itemFields.TryGetValue("Name", out itemNameField))
+                                {
+                                    if (itemNameField.Value.Type == FieldValueType.String)
+                                    {
+                                        string itemName = itemNameField.Value.AsString();
+
+                                        Console.WriteLine($"    Name: '{itemName}', with confidence {itemNameField.Confidence}");
+                                    }
+                                }
+
+                                FormField itemTotalPriceField;
+                                if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
+                                {
+                                    if (itemTotalPriceField.Value.Type == FieldValueType.Float)
+                                    {
+                                        float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
+
+                                        Console.WriteLine($"    Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                FormField totalField;
+                if (receipt.RecognizedForm.Fields.TryGetValue("Total", out totalField))
+                {
+                    if (totalField.Value.Type == FieldValueType.Float)
+                    {
+                        float total = totalField.Value.AsFloat();
+
+                        Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
+                    }
+                }
             }
             #endregion
         }

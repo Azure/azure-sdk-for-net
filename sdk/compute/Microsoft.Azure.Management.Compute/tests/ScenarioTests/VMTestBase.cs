@@ -365,7 +365,7 @@ namespace Compute.Tests
             return getPublicIpAddressResponse;
         }
 
-        protected Subnet CreateVNET(string rgName, bool addDnsServer = true)
+        protected Subnet CreateVNET(string rgName, bool addDnsServer = true, bool disablePEPolicies = false)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -396,6 +396,8 @@ namespace Compute.Tests
                             {
                                 Name = subnetName,
                                 AddressPrefix = "10.0.0.0/24",
+                                //TODO: Uncomment below after network dll upgrade
+                                //PrivateEndpointNetworkPolicies = disablePEPolicies ? "Disabled" : null
                             }
                         }
             };
@@ -876,7 +878,7 @@ namespace Compute.Tests
                         }
                     },
                 },
-                NetworkProfile = new NetworkProfile
+                NetworkProfile = new CM.NetworkProfile
                 {
                     NetworkInterfaces = new List<NetworkInterfaceReference>
                         {

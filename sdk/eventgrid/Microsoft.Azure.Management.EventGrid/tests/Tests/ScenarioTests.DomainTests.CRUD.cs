@@ -74,7 +74,9 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", getDomainResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(location, getDomainResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getDomainResponse.Tags, tag => tag.Key == "originalTag1");
-                Assert.Null(getDomainResponse.Identity);
+
+                //// Diable test as identity is not part of GA Version yet.
+                //// Assert.Null(getDomainResponse.Identity);
                 Assert.Null(getDomainResponse.InboundIpRules);
 
                 // Get all domains created within a resourceGroup
@@ -157,13 +159,16 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.DoesNotContain(replaceDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
                 // Update the domain with tags & allow traffic from all ips
-                var domainUpdateParameters = new DomainUpdateParameters();
-                domainUpdateParameters.Tags = new Dictionary<string, string>()
+                var domainUpdateParameters = new DomainUpdateParameters()
                 {
-                    { "updatedTag1", "updatedValue1" },
-                    { "updatedTag2", "updatedValue2" }
+                    Tags = new Dictionary<string, string>()
+                    {
+                        { "updatedTag1", "updatedValue1" },
+                        { "updatedTag2", "updatedValue2" }
+                    },
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
                 };
-                domain.PublicNetworkAccess = PublicNetworkAccess.Enabled;
+
                 var updateDomainResponse = this.EventGridManagementClient.Domains.UpdateAsync(resourceGroup, domainName, domainUpdateParameters).Result;
                 Assert.Contains(updateDomainResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateDomainResponse.Tags, tag => tag.Key == "replacedTag1");

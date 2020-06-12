@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(allowedOrigins));
             }
 
-            AllowedOrigins = allowedOrigins.ToArray();
+            AllowedOrigins = allowedOrigins?.ToArray();
         }
 
         /// <summary> Initializes a new instance of CorsOptions. </summary>

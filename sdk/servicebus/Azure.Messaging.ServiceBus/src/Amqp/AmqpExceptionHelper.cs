@@ -149,6 +149,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessageLockLost);
             }
 
+            if (string.Equals(condition, AmqpClientConstants.EntityAlreadyExistsError.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new ServiceBusException(message, ServiceBusException.FailureReason.MessagingEntityAlreadyExists);
+            }
+
             if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.SessionLockLost);

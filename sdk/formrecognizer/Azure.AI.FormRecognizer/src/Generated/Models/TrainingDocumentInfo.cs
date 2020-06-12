@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             DocumentName = documentName;
             PageCount = pageCount;
-            Errors = errors;
+            Errors = errors ?? new List<FormRecognizerError>();
             Status = status;
         }
 

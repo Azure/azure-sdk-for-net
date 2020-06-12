@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027spscwwei\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027ababbqyr\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "1018",
+        "Content-Length": "962",
         "Content-Type": "application/json",
-        "traceparent": "00-a1450d078e767c4e865e33c90bce789f-99051edeacd30840-00",
+        "traceparent": "00-f22ad1f65a9a494390e5e0f5a053d393-9a40598d382f0f4c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "26a6f1d5a3b239468a59914d90ca500b",
         "x-ms-return-client-request-id": "true"
@@ -40,13 +40,7 @@
               "coordinates": [
                 -122.13157699999999,
                 47.678581000000001
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
+              ]
             },
             "address": null,
             "rooms": []
@@ -56,16 +50,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "26a6f1d5-a3b2-3946-8a59-914d90ca500b",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:44:01 GMT",
-        "elapsed-time": "121",
+        "Date": "Mon, 01 Jun 2020 12:03:59 GMT",
+        "elapsed-time": "115",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "26a6f1d5-a3b2-3946-8a59-914d90ca500b",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "26a6f1d5-a3b2-3946-8a59-914d90ca500b"
       },
       "ResponseBody": {
         "value": [
@@ -79,15 +75,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027spscwwei\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027ababbqyr\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-9edbdf419ceb2f49adcec9a5c60eef19-a356eea487b2c644-00",
+        "traceparent": "00-ab00e89228d1a24881318ec99bd50e4b-2a6ce4812d06434f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5d990c2a343c51ee5341d72213255f52",
         "x-ms-return-client-request-id": "true"
@@ -96,60 +92,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "5d990c2a-343c-51ee-5341-d72213255f52",
         "Content-Length": "940",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:44:03 GMT",
+        "Date": "Mon, 01 Jun 2020 12:04:01 GMT",
         "elapsed-time": "9",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "5d990c2a-343c-51ee-5341-d72213255f52",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "5d990c2a-343c-51ee-5341-d72213255f52"
       },
-      "ResponseBody": {
-        "hotelId": "1",
-        "hotelName": "Fancy Stay",
-        "description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
-        "descriptionFr": "Meilleur h\u00F4tel en ville si vous aimez les h\u00F4tels de luxe. Ils ont une magnifique piscine \u00E0 d\u00E9bordement, un spa et un concierge tr\u00E8s utile. L\u0027emplacement est parfait \u2013 en plein centre, \u00E0 proximit\u00E9 de toutes les attractions touristiques. Nous recommandons fortement cet h\u00F4tel.",
-        "category": "Luxury",
-        "tags": [
-          "pool",
-          "view",
-          "wifi",
-          "concierge"
-        ],
-        "parkingIncluded": false,
-        "smokingAllowed": false,
-        "lastRenovationDate": "2010-06-27T00:00:00Z",
-        "rating": 5,
-        "location": {
-          "type": "Point",
-          "coordinates": [
-            -122.131577,
-            47.678581
-          ],
-          "crs": {
-            "type": "name",
-            "properties": {
-              "name": "EPSG:4326"
-            }
-          }
-        },
-        "address": null,
-        "rooms": []
-      }
+      "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027spscwwei\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027ababbqyr\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-65aa91814fa17147a38b09477c1284cd-d8ec70da2d072142-00",
+        "traceparent": "00-ade9416cd8fefa49a92d76c8c3841653-97ae9aff41ad584d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "a7e54185fafe352bf1bf7be371ac3975",
         "x-ms-return-client-request-id": "true"
@@ -158,21 +125,23 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 08 May 2020 06:44:03 GMT",
-        "elapsed-time": "218",
+        "client-request-id": "a7e54185-fafe-352b-f1bf-7be371ac3975",
+        "Date": "Mon, 01 Jun 2020 12:04:01 GMT",
+        "elapsed-time": "526",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "a7e54185-fafe-352b-f1bf-7be371ac3975",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "a7e54185-fafe-352b-f1bf-7be371ac3975"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1347817798",
-    "SearchIndexName": "spscwwei",
+    "SearchIndexName": "ababbqyr",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }
 }

@@ -38,5 +38,5 @@ stages:
     ServiceDirectory: network
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Network
-      safeName: AzureManagementNetwork
+    - name: Azure.ResourceManager.Network
+      safeName: AzureResourceManagerNetwork
