@@ -95,7 +95,7 @@ string cursor = enumerator.Current.ContinuationToken;
 
 // Resume iterating from the pervious position with the cursor.
 await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync(
-    continuation: cursor))
+    continuationToken: cursor))
 {
     changeFeedEvents.Add(changeFeedEvent);
 }
