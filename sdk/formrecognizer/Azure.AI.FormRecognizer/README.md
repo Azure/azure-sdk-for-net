@@ -404,8 +404,8 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Recognize form content][recognize_content]
-- [Recognize receipts][recognize_receipts]
 - [Recognize custom forms][recognize_custom_forms]
+- [Recognize receipts][recognize_receipts]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
