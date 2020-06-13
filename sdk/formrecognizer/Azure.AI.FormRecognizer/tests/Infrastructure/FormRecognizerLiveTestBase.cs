@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        public FormRecognizerLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public FormRecognizerLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
             Matcher = new FormRecognizerRecordMatcher();
