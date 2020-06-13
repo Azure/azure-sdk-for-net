@@ -42,7 +42,7 @@ namespace Azure.Core.TestFramework
             try
             {
                 var jsonO = JObject.Parse(body);
-                foreach (var jsonPath in JsonPathSanitizers)
+                foreach (string jsonPath in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
