@@ -430,8 +430,7 @@ namespace Compute.Tests
                             {
                                 Name = subnetName,
                                 AddressPrefix = "10.0.0.0/24",
-                                //TODO: Uncomment below after network dll upgrade
-                                //PrivateEndpointNetworkPolicies = disablePEPolicies ? "Disabled" : null
+                                PrivateEndpointNetworkPolicies = disablePEPolicies ? "Disabled" : null
                             }
                         }
             };
