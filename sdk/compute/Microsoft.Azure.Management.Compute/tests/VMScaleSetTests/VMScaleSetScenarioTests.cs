@@ -632,22 +632,14 @@ namespace Compute.Tests
             }
             finally
             {
-                try
+                if (deleteAsPartOfTest)
                 {
-                    if (deleteAsPartOfTest)
-                    {
-                        m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    }
-                    else
-                    {
-                        // Fire and forget. No need to wait for RG deletion completion
-                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
-                    }
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
-                catch (Exception e)
+                else
                 {
-                    // Swallow this exception so that the original exception is thrown
-                    Console.WriteLine(e);
+                    // Fire and forget. No need to wait for RG deletion completion
+                    m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 }
             }
         }
