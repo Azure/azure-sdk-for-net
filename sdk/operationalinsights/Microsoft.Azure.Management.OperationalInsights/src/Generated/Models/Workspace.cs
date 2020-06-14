@@ -53,6 +53,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="retentionInDays">The workspace data retention in days.
         /// -1 means Unlimited retention for the Unlimited Sku. 730 days is the
         /// maximum allowed for all other Skus. </param>
+        /// <param name="workspaceCapping">The daily volume cap for
+        /// ingestion.</param>
         /// <param name="publicNetworkAccessForIngestion">The network access
         /// type for accessing Log Analytics ingestion. Possible values
         /// include: 'Enabled', 'Disabled'</param>
@@ -62,13 +64,14 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="privateLinkScopedResources">List of linked private
         /// link scope resources.</param>
         /// <param name="eTag">The ETag of the workspace.</param>
-        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), string eTag = default(string))
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), WorkspaceCapping workspaceCapping = default(WorkspaceCapping), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), string eTag = default(string))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             CustomerId = customerId;
             Sku = sku;
             RetentionInDays = retentionInDays;
+            WorkspaceCapping = workspaceCapping;
             PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
             PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
             PrivateLinkScopedResources = privateLinkScopedResources;
@@ -109,6 +112,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the daily volume cap for ingestion.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.workspaceCapping")]
+        public WorkspaceCapping WorkspaceCapping { get; set; }
 
         /// <summary>
         /// Gets or sets the network access type for accessing Log Analytics
