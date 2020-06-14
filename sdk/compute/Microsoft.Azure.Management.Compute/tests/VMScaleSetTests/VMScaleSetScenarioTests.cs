@@ -243,7 +243,7 @@ namespace Compute.Tests
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
                         vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
-                        validateVmssVMInstanceView: true, imageReference: imageReference, validateListSku: false);
+                        validateVmssVMInstanceView: true, imageReference: imageReference, validateListSku: false, deleteAsPartOfTest: false);
                 }
             }
             finally
@@ -488,7 +488,7 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
-            ImageReference imageReference = null, bool validateListSku = true)
+            ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true)
         {
             EnsureClientsInitialized(context);
 
@@ -625,13 +625,30 @@ namespace Compute.Tests
 
                 vmScaleSetValidator?.Invoke(getResponse);
 
-                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                if (deleteAsPartOfTest)
+                {
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
             }
             finally
             {
-                //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
-                //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                m_ResourcesClient.ResourceGroups.Delete(rgName);
+                try
+                {
+                    if (deleteAsPartOfTest)
+                    {
+                        m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    }
+                    else
+                    {
+                        // Fire and forget. No need to wait for RG deletion completion
+                        m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Swallow this exception so that the original exception is thrown
+                    Console.WriteLine(e);
+                }
             }
         }
     }
