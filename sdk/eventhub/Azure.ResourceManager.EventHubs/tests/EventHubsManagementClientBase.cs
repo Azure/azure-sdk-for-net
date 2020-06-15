@@ -1,26 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
 using Azure.Core.TestFramework;
 using Azure.Management.Resources;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    [NonParallelizable]
     public abstract class EventHubsManagementClientBase : ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
     {
-        private const string ApplicationIdKey = "ApplicationId";
-        public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
-        public string TenantId { get; set; }
-        public string ApplicationId { get; set; }
-        public string Location { get; set; }
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
         public EventHubsManagementClient EventHubsManagementClient { get; set; }
@@ -39,8 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         protected void InitializeClients()
         {
-            this.TenantId = TestEnvironment.TenantId;
-            this.SubscriptionId = TestEnvironment.SubscriptionId;
+            SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = GetResourceManagementClient();
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
@@ -63,24 +53,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         public async Task<string> GetLocation()
         {
-            var provider = (await ResourceProvidersOperations.GetAsync("Microsoft.EventHub")).Value;
-            this.Location = provider.ResourceTypes.Where(
-                (resType) =>
-                {
-                    if (resType.ResourceType == "namespaces")
-                        return true;
-                    else
-                        return false;
-                }
-                ).First().Locations.FirstOrDefault();
-            return Location;
+            return await GetFirstUsableLocationAsync(ResourceProvidersOperations, "Microsoft.EventHub", "namespaces");
         }
 
-        public void IsDelay(int t)
+        public void DelayInTest(int seconds)
         {
-            if (Mode == RecordedTestMode.Record)
+            if (Mode != RecordedTestMode.Playback)
             {
-                Task.Delay(t * 1000);
+                Task.Delay(seconds * 1000);
             }
         }
     }

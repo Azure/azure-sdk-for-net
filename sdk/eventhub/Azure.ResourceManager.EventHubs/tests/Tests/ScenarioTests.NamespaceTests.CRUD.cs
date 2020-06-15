@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Azure.Core.TestFramework;
-    using Azure.ResourceManager.EventHubs.Models;
-    using Azure.ResourceManager.EventHubs.Tests;
-    using NUnit.Framework;
     public partial class ScenarioTests : EventHubsManagementClientBase
     {
         [Test]
@@ -29,11 +32,11 @@ namespace Azure.Management.EventHub.Tests
             var np = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np.Name,namespaceName);
-            IsDelay(60);
+            DelayInTest(60);
             //get the created namespace
             var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
-                IsDelay(10);
+                DelayInTest(10);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
@@ -79,9 +82,9 @@ namespace Azure.Management.EventHub.Tests
             Assert.NotNull(updateNamespaceResponse);
             // Get the updated namespace and also verify the Tags.
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
-            IsDelay(15);
+            DelayInTest(15);
             Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual(Location, getNamespaceResponse.Value.Location);
+            Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location);
             Assert.AreEqual(namespaceName, getNamespaceResponse.Value.Name);
             Assert.AreEqual(2, getNamespaceResponse.Value.Tags.Count);
             bool IsContainKey = false;

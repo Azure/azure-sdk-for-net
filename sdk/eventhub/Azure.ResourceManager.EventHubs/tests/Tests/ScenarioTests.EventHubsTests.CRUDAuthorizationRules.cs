@@ -1,15 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Azure.Core.TestFramework;
-    using Azure.ResourceManager.EventHubs.Models;
-    using Azure.ResourceManager.EventHubs.Tests;
-    using NUnit.Framework;
     public partial class ScenarioTests : EventHubsManagementClientBase
     {
         [Test]
@@ -38,11 +41,11 @@ namespace Azure.Management.EventHub.Tests
             var np = (await WaitForCompletionAsync (createNamespaceResponse)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np.Name, namespaceName);
-            IsDelay(5);
+            DelayInTest(5);
             //get the created namespace
             var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
-                IsDelay(5);
+                DelayInTest(5);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
@@ -125,7 +128,7 @@ namespace Azure.Management.EventHub.Tests
             Assert.AreEqual(regenerateConnection_primary.Value.PrimaryConnectionString, regenerateConnection_Secondary.Value.PrimaryConnectionString);
             // Delete Eventhub authorizationRule
             await EventHubsOperations.DeleteAuthorizationRuleAsync(resourceGroup, namespaceName, eventHubName, authorizationRuleName);
-            IsDelay(5);
+            DelayInTest(5);
             // Delete Eventhub and check for the NotFound exception
             await EventHubsOperations.DeleteAsync(resourceGroup, namespaceName, eventHubName);
             // Delete namespace and check for the NotFound exception

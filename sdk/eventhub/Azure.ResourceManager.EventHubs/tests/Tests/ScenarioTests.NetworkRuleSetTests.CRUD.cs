@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Azure.ResourceManager.EventHubs.Models;
-    using NUnit.Framework;
-    using Azure.Management.Resources;
-    using Azure.ResourceManager.EventHubs.Tests;
-
     public partial class ScenarioTests : EventHubsManagementClientBase
     {
         [Test]
@@ -34,11 +35,11 @@ namespace Azure.Management.EventHub.Tests
             var np = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np.Name, namespaceName);
-            IsDelay(5);
+            DelayInTest(5);
             //get the created namespace
             var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
-                IsDelay(5);
+                DelayInTest(5);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
@@ -60,7 +61,7 @@ namespace Azure.Management.EventHub.Tests
             var getNetworkRuleSet = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);
             var netWorkRuleSet1 = await NamespacesOperations.CreateOrUpdateNetworkRuleSetAsync(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
             var getNetworkRuleSet1 = await NamespacesOperations.GetNetworkRuleSetAsync(resourceGroup, namespaceName);
-            IsDelay(60);
+            DelayInTest(60);
             //Delete namespace
             await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
         }

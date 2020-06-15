@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Azure.Core.TestFramework;
-    using Azure.ResourceManager.EventHubs.Models;
-    using Azure.ResourceManager.EventHubs.Tests;
-    using NUnit.Framework;
     public partial class ScenarioTests: EventHubsManagementClientBase
     {
         [Test]
@@ -36,11 +39,11 @@ namespace Azure.Management.EventHub.Tests
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np.Name, namespaceName);
             Assert.True(np.KafkaEnabled, "KafkaEnabled is false");
-            IsDelay(5);
+            DelayInTest(5);
             //get the created namespace
             var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
-                IsDelay(5);
+                DelayInTest(5);
             getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
@@ -130,7 +133,7 @@ namespace Azure.Management.EventHub.Tests
             }
             Assert.True(isContainKey);
             Assert.True(isContainValue);
-            IsDelay(5);
+            DelayInTest(5);
             // Delete namespace
             await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
         }

@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Azure.ResourceManager.EventHubs.Models;
-    using Azure.ResourceManager.EventHubs.Tests;
-    using NUnit.Framework;
     public partial class ScenarioTests : EventHubsManagementClientBase
     {
         [Test]
@@ -37,7 +40,7 @@ namespace Azure.Management.EventHub.Tests
             var np1 = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np1.Name, namespaceName);
-            IsDelay(5);
+            DelayInTest(5);
             // Create namespace 2
             var namespaceName2 = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var createNamespaceResponse2 = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName2,
@@ -59,7 +62,7 @@ namespace Azure.Management.EventHub.Tests
             var np2 = (await WaitForCompletionAsync (createNamespaceResponse2)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np2.Name, namespaceName2);
-            IsDelay(5);
+            DelayInTest(5);
             // Create a namespace AuthorizationRule
             var authorizationRuleName = Recording.GenerateAssetName(Helper.AuthorizationRulesPrefix);
             var createAutorizationRuleParameter = new AuthorizationRule()
@@ -88,7 +91,7 @@ namespace Azure.Management.EventHub.Tests
                 AlternateName = alternateName
             });
             Assert.NotNull(DisasterRecoveryResponse);
-            IsDelay(30);
+            DelayInTest(30);
             //// Get the created DisasterRecovery config - Primary
             var disasterRecoveryGetResponse = await DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName);
             Assert.NotNull(disasterRecoveryGetResponse);
@@ -104,15 +107,15 @@ namespace Azure.Management.EventHub.Tests
             var disasterRecoveryGetResponse_Accepted =await DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName);
             while (DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName).Result.Value.ProvisioningState!= ProvisioningStateDR.Succeeded)
             {
-                IsDelay(10);
+                DelayInTest(10);
             }
             //// Break Pairing
             await DisasterRecoveryConfigsOperations.BreakPairingAsync(resourceGroup, namespaceName, namespaceName);
-            IsDelay(10);
+            DelayInTest(10);
             disasterRecoveryGetResponse_Accepted = await DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName);
             while (DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName).Result.Value.ProvisioningState != ProvisioningStateDR.Succeeded)
             {
-                IsDelay(10);
+                DelayInTest(10);
             }
             var DisasterRecoveryResponse_update = DisasterRecoveryConfigsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
             {
@@ -120,17 +123,17 @@ namespace Azure.Management.EventHub.Tests
                 AlternateName = alternateName
             });
             Assert.NotNull(DisasterRecoveryResponse_update);
-            IsDelay(10);
+            DelayInTest(10);
             while (DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName, namespaceName).Result.Value.ProvisioningState != ProvisioningStateDR.Succeeded)
             {
-                IsDelay(10);
+                DelayInTest(10);
             }
             // Fail over
             await DisasterRecoveryConfigsOperations.FailOverAsync(resourceGroup, namespaceName2, namespaceName);
-            IsDelay(10);
+            DelayInTest(10);
             while (DisasterRecoveryConfigsOperations.GetAsync(resourceGroup, namespaceName2, namespaceName).Result.Value.ProvisioningState != ProvisioningStateDR.Succeeded)
             {
-                IsDelay(10);
+                DelayInTest(10);
             }
             // Get all Disaster Recovery for a given NameSpace
             var getListisasterRecoveryResponse = DisasterRecoveryConfigsOperations.ListAsync(resourceGroup, namespaceName2);

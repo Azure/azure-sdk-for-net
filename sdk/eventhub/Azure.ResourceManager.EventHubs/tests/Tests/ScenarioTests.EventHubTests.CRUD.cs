@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Linq;
+using System.Threading.Tasks;
+
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Tests;
+
+using NUnit.Framework;
+
 namespace Azure.Management.EventHub.Tests
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Azure.Core.TestFramework;
-    using Azure.ResourceManager.EventHubs.Models;
-    using Azure.ResourceManager.EventHubs.Tests;
-    using NUnit.Framework;
     public partial class ScenarioTests : EventHubsManagementClientBase
     {
         public ScenarioTests(bool isAsync)
@@ -48,7 +51,7 @@ namespace Azure.Management.EventHub.Tests
             var np = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(np.Name, namespaceName);
-            IsDelay(5);
+            DelayInTest(5);
             // Create Eventhub
             var eventhubName = Recording.GenerateAssetName(Helper.EventHubPrefix);
             //You Need to create a storage account first --Youri 8.5.2020
