@@ -9,6 +9,7 @@ Run `dotnet msbuild /t:GenerateCode` in src directory to re-generate.
 title: Azure.Security.KeyVault.Administration
 input-file:
     - $(this-folder)/swagger/rbac.json
+    - $(this-folder)/swagger/backuprestore.json
 namespace: Azure.Security.KeyVault.Administration
 include-csproj: disable
 ```
