@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
         public ServiceOperations ServiceOperations { get; set; }
-
+        public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
         protected NetworkTestsManagementClientBase(bool isAsync) : base(isAsync)
         {
         }
@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
             ResourcesOperations = ResourceManagementClient.Resources;
             ServiceOperations = NetworkManagementClient.Service;
+            PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
         private StorageManagementClient GetStorageManagementClient()
