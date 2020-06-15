@@ -9,22 +9,13 @@
   - If it isn't, update it
 - Use this link to install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest])
 
-### Install the Azure IoT extension
-
-- Open a powershell window in admin mode.
-- Run `az extension list`
-  - If you don't see the azure-iot extension, install it by running `az extension add --name azure-iot`
-  - If you see azure-iot extension, update the extension by running `az extension update --name azure-iot`
-    - Make sure the latest version is at least **0.9.4**.
-- See the top-level IoT commands with `az iot -h`
-
 ## Delete
 
 To delete the digital twins instance, you need to first delete the endpoint added by the script (the service doesn't yet support cascading delete).
 
 1. To do this, run the command `az dt endpoint delete -n <dt name> -g <rg name> --en someEventHubEndpoint`.
 1. If you have other endpoints that have been added outside this script, you can discover them with the command `az dt endpoint list -n <dt name> -g <rg name>`.
-  - Then delete them with the same command in step 1.
+1. Then delete them with the same command in step 1.
 
 ## Maintenance
 
