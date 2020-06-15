@@ -39,8 +39,10 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data">The string data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(string data) =>
-            Create(data, Encoding.UTF8);
+        public BinaryData(string data)
+            : this(data, Encoding.UTF8)
+        {
+        }
 
         /// <summary>
         /// Creates a binary data instance from a string
@@ -50,10 +52,10 @@ namespace Azure.Core
         /// <param name="encoding">The encoding to use when converting
         /// the data to bytes.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(string data, Encoding encoding)
+        public BinaryData(string data, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            return new BinaryData(encoding.GetBytes(data));
+            Data = encoding.GetBytes(data);
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(Stream stream) =>
+        public static BinaryData FromStream(Stream stream) =>
             CreateAsync(stream, false).EnsureCompleted();
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace Azure.Core
         /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
         /// the request to cancel the operation.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> CreateAsync(
+        public static async Task<BinaryData> FromStreamAsync(
             Stream stream,
             CancellationToken cancellationToken = default) =>
             await CreateAsync(stream, true, cancellationToken).ConfigureAwait(false);
@@ -111,10 +113,10 @@ namespace Azure.Core
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create<T>(
+        public static BinaryData FromSerializable<T>(
             T data,
             ObjectSerializer serializer) =>
-            CreateAsync<T>(data, serializer, false).EnsureCompleted();
+            FromSerializableAsync<T>(data, serializer, false).EnsureCompleted();
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
@@ -127,12 +129,12 @@ namespace Azure.Core
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         /// TODO - add cancellation token support
         /// once ObjectSerializer.SerializeAsync adds it.
-        public static async Task<BinaryData> CreateAsync<T>(
+        public static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
             ObjectSerializer serializer) =>
-            await CreateAsync<T>(data, serializer, true).ConfigureAwait(false);
+            await FromSerializableAsync<T>(data, serializer, true).ConfigureAwait(false);
 
-        private static async Task<BinaryData> CreateAsync<T>(
+        private static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
             ObjectSerializer serializer,
             bool async)
@@ -154,8 +156,8 @@ namespace Azure.Core
         /// Converts the BinaryData to a string using UTF-8.
         /// </summary>
         /// <returns>The string representation of the data.</returns>
-        public string AsString() =>
-           AsString(Encoding.UTF8);
+        public override string ToString() =>
+           ToString(Encoding.UTF8);
 
         /// <summary>
         /// Converts the BinaryData to a string using the specified
@@ -164,7 +166,7 @@ namespace Azure.Core
         /// <param name="encoding">The encoding to use when decoding
         /// the bytes.</param>
         /// <returns>The string representation of the data.</returns>
-        public string AsString(
+        public string ToString(
             Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
@@ -188,7 +190,7 @@ namespace Azure.Core
         /// Converts the BinaryData to a stream.
         /// </summary>
         /// <returns>A stream representing the data.</returns>
-        public Stream AsStream()
+        public Stream ToStream()
         {
             if (MemoryMarshal.TryGetArray(
                 Data,
@@ -207,8 +209,8 @@ namespace Azure.Core
         /// <param name="serializer">The serializer to use
         /// when deserializing the data.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T As<T>(ObjectSerializer serializer) =>
-            AsAsync<T>(serializer, false).EnsureCompleted();
+        public T Deserialize<T>(ObjectSerializer serializer) =>
+            DeserializeAsync<T>(serializer, false).EnsureCompleted();
 
         /// <summary>
         /// Converts the BinaryData to the specified type.
@@ -222,11 +224,11 @@ namespace Azure.Core
         ///thrown.</returns>
         /// TODO - add cancellation token support
         /// once ObjectSerializer.DeserializeAsync adds it.
-        public async ValueTask<T> AsAsync<T>(
+        public async ValueTask<T> DeserializeAsync<T>(
             ObjectSerializer serializer) =>
-            await AsAsync<T>(serializer, true).ConfigureAwait(false);
+            await DeserializeAsync<T>(serializer, true).ConfigureAwait(false);
 
-        private async ValueTask<T> AsAsync<T>(
+        private async ValueTask<T> DeserializeAsync<T>(
             ObjectSerializer serializer,
             bool async)
         {
@@ -234,13 +236,13 @@ namespace Azure.Core
             if (async)
             {
                 return (T)await serializer.DeserializeAsync(
-                    AsStream(),
+                    ToStream(),
                     typeof(T))
                     .ConfigureAwait(false);
             }
             else
             {
-                return (T)serializer.Deserialize(AsStream(), typeof(T));
+                return (T)serializer.Deserialize(ToStream(), typeof(T));
             }
         }
 
