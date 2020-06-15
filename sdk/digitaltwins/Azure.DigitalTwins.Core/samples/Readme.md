@@ -111,23 +111,25 @@ catch (Exception ex)
 }
 ```
 
-## Create and delete digital twins
+## Create, get, update, and delete digital twins and update components
 
-### Create digital twins
-
-For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
-
-One option is to use the provided class BasicDigitalTwin for serialization and deserialization.
+For serializing and deserializing a digital twin, one option is to use the provided class BasicDigitalTwin for serialization and deserialization.
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
 
-```C# Snippet:DigitalTwinsSampleCreateBasicTwin
-// Create digital twin with component payload using the BasicDigitalTwin serialization helper
+Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
+By specifying your properties and types directly, it requires less code or knowledge of the type for interaction.
+You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomDigitalTwin.cs).
+
+To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need Id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component.
+
+```C# Snippet:DigitalTwinsSampleDigitalTwinsLifecycle
+// Create digital twin with component payload using the BasicDigitalTwin serialization helper,
+// based on the model defined at https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/SamplesConstants.cs#L66.
 
 var basicTwin = new BasicDigitalTwin
 {
-    Id = basicDtId,
-    // model Id of digital twin
-    Metadata = { ModelId = modelId },
+    Id = "basicDigitalTwin-123-Id",
+    Metadata = { ModelId = "sampleModel-123-Id" },
     CustomProperties =
     {
         // digital twin properties
@@ -151,41 +153,14 @@ var basicTwin = new BasicDigitalTwin
 
 string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
-Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-Console.WriteLine($"Created digital twin with Id {basicDtId}. Response status: {createBasicDtResponse.GetRawResponse().Status}.");
-```
+Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync("basicDigitalTwin-123-Id", basicDtPayload);
+Console.WriteLine($"Created digital twin with Id 'basicDigitalTwin-123-Id'. Response status: {createBasicDtResponse.GetRawResponse().Status}.");
 
-Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
-By specifying your properties and types directly, it requires less code or knowledge of the type for interaction.
-You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomDigitalTwin.cs).
+// You can also get a digital twin and deserialize it into a BasicDigitalTwin.
+// It works well for basic stuff, but as you can see it gets more difficult when delving into
+// more complex properties, like components.
 
-```C# Snippet:DigitalTwinsSampleCreateCustomTwin
-var customTwin = new CustomDigitalTwin
-{
-    Id = customDtId,
-    Metadata = { ModelId = modelId },
-    Prop1 = "Prop1 val",
-    Prop2 = 987,
-    Component1 = new Component1
-    {
-        ComponentProp1 = "Component prop1 val",
-        ComponentProp2 = 123,
-    }
-};
-string dt2Payload = JsonSerializer.Serialize(customTwin);
-
-Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-Console.WriteLine($"Created digital twin with Id {customDtId}. Response status: {createCustomDtResponse.GetRawResponse().Status}.");
-```
-
-### Get and deserialize a digital twin
-
-
-You can get a digital twin and deserialize it into a BasicDigitalTwin.
-It works well for basic stuff, but as you can see it gets more difficult when delving into more complex properties, like components.
-
-```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
-Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync("basicDigitalTwin-123-Id");
 if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
     BasicDigitalTwin basicDt = JsonSerializer.Deserialize<BasicDigitalTwin>(getBasicDtResponse.Value);
@@ -201,13 +176,31 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
         $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
-```
 
-Getting and deserializing a digital twin into a custom data type is extremely easy.
-Custom types provide the best possible experience.
+// Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
+// By specifying your properties and types directly, it requires less code or knowledge of the type for
+// interaction.
 
-```C# Snippet:DigitalTwinsSampleGetCustomDigitalTwin
-Response<string> getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
+var customTwin = new CustomDigitalTwin
+{
+    Id = "customDigitalTwin-123-Id",
+    Metadata = { ModelId = "sampleModel-123-Id" },
+    Prop1 = "Prop1 val",
+    Prop2 = 987,
+    Component1 = new Component1
+    {
+        ComponentProp1 = "Component prop1 val",
+        ComponentProp2 = 123,
+    }
+};
+string customDtPayload = JsonSerializer.Serialize(customTwin);
+
+Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync("customDigitalTwin-123-Id", customDtPayload);
+Console.WriteLine($"Created digital twin with Id 'customDigitalTwin-123-Id'. Response status: {createCustomDtResponse.GetRawResponse().Status}.");
+
+// Getting and deserializing a digital twin into a custom data type is extremely easy.
+// Custom types provide the best possible experience.
+Response<string> getCustomDtResponse = await client.GetDigitalTwinAsync("customDigitalTwin-123-Id");
 if (getCustomDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
     CustomDigitalTwin customDt = JsonSerializer.Deserialize<CustomDigitalTwin>(getCustomDtResponse.Value);
@@ -217,6 +210,29 @@ if (getCustomDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
         $"Prop2: {customDt.Prop2}\n\t" +
         $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
         $"ComponentProp2: {customDt.Component1.ComponentProp2}");
+}
+
+// Update Component1 by replacing the property ComponentProp1 value
+var componentUpdateUtility = new UpdateOperationsUtility();
+componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
+string updatePayload = componentUpdateUtility.Serialize();
+Response<string> response = await client.UpdateComponentAsync("customDigitalTwin-123-Id", "Component1", updatePayload);
+Console.WriteLine($"Updated component for digital twin with Id 'customDigitalTwin-123-Id'. Response status: {response.GetRawResponse().Status}");
+
+// Get Component
+response = await client.GetComponentAsync("basicDigitalTwin-123-Id", SamplesConstants.ComponentPath);
+Console.WriteLine($"Retrieved component for digital twin with Id 'basicDigitalTwin-123-Id'. Response status: {response.GetRawResponse().Status}");
+
+// Clean up
+
+try
+{
+    await client.DeleteDigitalTwinAsync("basicDigitalTwin-123-Id");
+    await client.DeleteDigitalTwinAsync("customDigitalTwin-123-Id");
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine($"Failed to delete digital twin due to {ex}");
 }
 ```
 
@@ -268,42 +284,6 @@ await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
         Console.WriteLine($"Found digital twin: {twin.Id}");
     }
 }
-```
-
-### Delete digital twins
-
-Delete a digital twin simply by providing Id of a digital twin as below.
-
-```C# Snippet:DigitalTwinsSampleDeleteTwin
-Response deleteDigitalTwinResponse = await client.DeleteDigitalTwinAsync(digitalTwinId);
-Console.WriteLine($"Deleted digital twin with Id {digitalTwinId}. Response Status: {deleteDigitalTwinResponse.Status}");
-```
-
-## Get and update digital twin components
-
-### Update digital twin components
-
-To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need Id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.
-
-```C# Snippet:DigitalTwinsSampleUpdateComponent
-// Update Component1 by replacing the property ComponentProp1 value
-var componentUpdateUtility = new UpdateOperationsUtility();
-componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
-string updatePayload = componentUpdateUtility.Serialize();
-
-Response<string> response = await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
-
-Console.WriteLine($"Updated component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
-```
-
-### Get digital twin components
-
-Get a component by providing name of a component and Id of digital twin to which it belongs.
-
-```C# Snippet:DigitalTwinsSampleGetComponent
-response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
-
-Console.WriteLine($"Retrieved component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
 ```
 
 ## Create, get,  list and delete digital twin relationships
