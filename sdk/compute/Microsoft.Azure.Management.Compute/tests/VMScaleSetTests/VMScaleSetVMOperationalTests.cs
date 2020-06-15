@@ -360,12 +360,13 @@ namespace Compute.Tests
 
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     InitializeCommon(context);
 
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
-                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true, bootDiagnosticsProfile: GetManagedDiagnosticsProfile());
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true,
+                        faultDomainCount: 1, bootDiagnosticsProfile: GetManagedDiagnosticsProfile());
                     var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmScaleSet.Name, instanceId);
                     ValidateBootDiagnosticsInstanceView(getInstanceViewResponse.BootDiagnostics, hasError: false,
                         enabledWithManagedBootDiagnostics: true);

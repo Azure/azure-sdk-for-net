@@ -53,5 +53,16 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/avinashakka/azure-rest-api-specs/blob/compute-2020-06/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "avinashakka";
+      public static readonly String GithubBranchName = "compute-2020-06";
+      public static readonly String GithubCommidId = "5ab71f778e35efe683fed8276d89ea875be97823";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
