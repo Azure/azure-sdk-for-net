@@ -1379,6 +1379,43 @@ namespace Azure.Storage.Blobs.Test
             Assert.Contains(blobName, names);
         }
 
+        [Test]
+        public async Task OpenWriteAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await blob.OpenWriteAsync(options);
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            await stream.WriteAsync(data, 0, 512);
+            await stream.WriteAsync(data, 512, 1024);
+            await stream.WriteAsync(data, 1536, 2048);
+            await stream.WriteAsync(data, 3584, 77);
+            await stream.WriteAsync(data, 3661, 2066);
+            await stream.WriteAsync(data, 5727, 4096);
+            await stream.WriteAsync(data, 9823, 6561);
+            await stream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
         private AppendBlobRequestConditions BuildDestinationAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
