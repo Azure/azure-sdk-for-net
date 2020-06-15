@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, object> additionalProperties)
         {
             Activity = activity;
-            DependencyConditions = dependencyConditions;
+            DependencyConditions = dependencyConditions ?? new List<DependencyCondition>();
             AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> Activity name. </summary>
         public string Activity { get; set; }
         /// <summary> Match-Condition for the dependency. </summary>
-        public IList<DependencyCondition> DependencyConditions { get; set; }
+        public IList<DependencyCondition> DependencyConditions { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

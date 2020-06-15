@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal TextWord_internal(string text, IReadOnlyList<float> boundingBox, float? confidence)
         {
             Text = text;
-            BoundingBox = boundingBox;
+            BoundingBox = boundingBox ?? new List<float>();
             Confidence = confidence;
         }
 

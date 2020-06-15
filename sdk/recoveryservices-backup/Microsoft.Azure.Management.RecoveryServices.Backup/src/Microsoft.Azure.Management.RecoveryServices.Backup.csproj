@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
 	<!-- Please do not move/edit code below this line -->
@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added new rest api related to Cross Region Restore.
+- Added changes for Azure Backup Health.
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultProperties VaultProperties { get; internal set; }
 
 
-        public VaultsClient VaultsClient { get; set; }
-        public ResourcesClient ResourcesClient { get; set; }
-        public ResourceGroupsClient ResourceGroupsClient { get; set; }
-        public ProvidersClient ResourceProvidersClient { get; set; }
+        public VaultsOperations VaultsClient { get; set; }
+        public ResourcesOperations ResourcesClient { get; set; }
+        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
+        public ProvidersOperations ResourceProvidersClient { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = resourceManagementClient.GetResourcesClient();
-            ResourceGroupsClient = resourceManagementClient.GetResourceGroupsClient();
-            ResourceProvidersClient = resourceManagementClient.GetProvidersClient();
+            ResourcesClient = resourceManagementClient.Resources;
+            ResourceGroupsClient = resourceManagementClient.ResourceGroups;
+            ResourceProvidersClient = resourceManagementClient.Providers;
 
             var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = keyVaultManagementClient.GetVaultsClient();
+            VaultsClient = keyVaultManagementClient.Vaults;
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
+                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
                 var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
                 await foreach (var servicePrincipal in servicePrincipalList)
                 {

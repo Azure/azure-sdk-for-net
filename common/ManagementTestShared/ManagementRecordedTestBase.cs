@@ -1,13 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Azure.Core;
 using Azure.Core.TestFramework;
+#if RESOURCES_RP
+using Azure.ResourceManager.Resources;
+#else
 using Azure.Management.Resources;
+#endif
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
 {
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.TestFramework
                 var resourceGroupsClient = new ResourcesManagementClient(
                     TestEnvironment.SubscriptionId,
                     TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).GetResourceGroupsClient();
+                    new ResourcesManagementClientOptions()).ResourceGroups;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
                     await resourceGroupsClient.StartDeleteAsync(resourceGroup);
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProvidersClient providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ProvidersOperations providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
             return provider.ResourceTypes.Where(
@@ -76,6 +80,13 @@ namespace Azure.ResourceManager.TestFramework
                         return false;
                 }
                 ).First().Locations.FirstOrDefault();
+        }
+
+        protected void SleepInTest(int milliSeconds)
+        {
+            if (Mode == RecordedTestMode.Playback)
+                return;
+            Thread.Sleep(milliSeconds);
         }
     }
 }

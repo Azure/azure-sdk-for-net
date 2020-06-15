@@ -196,19 +196,21 @@ namespace Azure.DigitalTwins.Core.Samples
 
             foreach (KeyValuePair<string, string> twin in twins)
             {
+                var digitalTwinId = twin.Key;
+
                 try
                 {
                     // Delete all relationships
-                    AsyncPageable<string> relationships = client.GetRelationshipsAsync(twin.Key);
+                    AsyncPageable<string> relationships = client.GetRelationshipsAsync(digitalTwinId);
                     await foreach (var relationshipJson in relationships)
                     {
                         BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
-                        await client.DeleteRelationshipAsync(twin.Key, relationship.Id);
+                        await client.DeleteRelationshipAsync(digitalTwinId, relationship.Id);
                         Console.WriteLine($"Found and deleted relationship with Id {relationship.Id}.");
                     }
 
                     // Delete any incoming relationships
-                    AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
+                    AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(digitalTwinId);
 
                     await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
                     {
@@ -217,7 +219,6 @@ namespace Azure.DigitalTwins.Core.Samples
                     }
 
                     // Now the digital twin should be safe to delete
-                    string digitalTwinId = twin.Key;
 
                     #region Snippet:DigitalTwinsSampleDeleteTwin
 
@@ -233,7 +234,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 }
                 catch (RequestFailedException ex)
                 {
-                    FatalError($"Failed to delete {twin.Key} due to {ex.Message}");
+                    FatalError($"Failed to delete {digitalTwinId} due to {ex.Message}");
                 }
             }
         }

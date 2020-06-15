@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets. </param>
         internal AvailabilitySetListResult(IReadOnlyList<AvailabilitySet> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<AvailabilitySet>();
             NextLink = nextLink;
         }
 

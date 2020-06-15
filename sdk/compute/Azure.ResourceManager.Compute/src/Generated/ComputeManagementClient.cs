@@ -53,184 +53,94 @@ namespace Azure.ResourceManager.Compute
             _subscriptionId = subscriptionId;
         }
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of AvailabilitySetsClient. </summary>
-        public virtual AvailabilitySetsClient GetAvailabilitySetsClient()
-        {
-            return new AvailabilitySetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of AvailabilitySetsOperations. </summary>
+        public virtual AvailabilitySetsOperations AvailabilitySets => new AvailabilitySetsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ProximityPlacementGroupsClient. </summary>
-        public virtual ProximityPlacementGroupsClient GetProximityPlacementGroupsClient()
-        {
-            return new ProximityPlacementGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ProximityPlacementGroupsOperations. </summary>
+        public virtual ProximityPlacementGroupsOperations ProximityPlacementGroups => new ProximityPlacementGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DedicatedHostGroupsClient. </summary>
-        public virtual DedicatedHostGroupsClient GetDedicatedHostGroupsClient()
-        {
-            return new DedicatedHostGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DedicatedHostGroupsOperations. </summary>
+        public virtual DedicatedHostGroupsOperations DedicatedHostGroups => new DedicatedHostGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DedicatedHostsClient. </summary>
-        public virtual DedicatedHostsClient GetDedicatedHostsClient()
-        {
-            return new DedicatedHostsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DedicatedHostsOperations. </summary>
+        public virtual DedicatedHostsOperations DedicatedHosts => new DedicatedHostsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of SshPublicKeysClient. </summary>
-        public virtual SshPublicKeysClient GetSshPublicKeysClient()
-        {
-            return new SshPublicKeysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of SshPublicKeysOperations. </summary>
+        public virtual SshPublicKeysOperations SshPublicKeys => new SshPublicKeysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineExtensionImagesClient. </summary>
-        public virtual VirtualMachineExtensionImagesClient GetVirtualMachineExtensionImagesClient()
-        {
-            return new VirtualMachineExtensionImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineExtensionImagesOperations. </summary>
+        public virtual VirtualMachineExtensionImagesOperations VirtualMachineExtensionImages => new VirtualMachineExtensionImagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineExtensionsClient. </summary>
-        public virtual VirtualMachineExtensionsClient GetVirtualMachineExtensionsClient()
-        {
-            return new VirtualMachineExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineExtensionsOperations. </summary>
+        public virtual VirtualMachineExtensionsOperations VirtualMachineExtensions => new VirtualMachineExtensionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineImagesClient. </summary>
-        public virtual VirtualMachineImagesClient GetVirtualMachineImagesClient()
-        {
-            return new VirtualMachineImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineImagesOperations. </summary>
+        public virtual VirtualMachineImagesOperations VirtualMachineImages => new VirtualMachineImagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of UsageClient. </summary>
-        public virtual UsageClient GetUsageClient()
-        {
-            return new UsageClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of UsageOperations. </summary>
+        public virtual UsageOperations Usage => new UsageOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachinesClient. </summary>
-        public virtual VirtualMachinesClient GetVirtualMachinesClient()
-        {
-            return new VirtualMachinesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachinesOperations. </summary>
+        public virtual VirtualMachinesOperations VirtualMachines => new VirtualMachinesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineSizesClient. </summary>
-        public virtual VirtualMachineSizesClient GetVirtualMachineSizesClient()
-        {
-            return new VirtualMachineSizesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineSizesOperations. </summary>
+        public virtual VirtualMachineSizesOperations VirtualMachineSizes => new VirtualMachineSizesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ImagesClient. </summary>
-        public virtual ImagesClient GetImagesClient()
-        {
-            return new ImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ImagesOperations. </summary>
+        public virtual ImagesOperations Images => new ImagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineScaleSetsClient. </summary>
-        public virtual VirtualMachineScaleSetsClient GetVirtualMachineScaleSetsClient()
-        {
-            return new VirtualMachineScaleSetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineScaleSetsOperations. </summary>
+        public virtual VirtualMachineScaleSetsOperations VirtualMachineScaleSets => new VirtualMachineScaleSetsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineScaleSetExtensionsClient. </summary>
-        public virtual VirtualMachineScaleSetExtensionsClient GetVirtualMachineScaleSetExtensionsClient()
-        {
-            return new VirtualMachineScaleSetExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineScaleSetExtensionsOperations. </summary>
+        public virtual VirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions => new VirtualMachineScaleSetExtensionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineScaleSetRollingUpgradesClient. </summary>
-        public virtual VirtualMachineScaleSetRollingUpgradesClient GetVirtualMachineScaleSetRollingUpgradesClient()
-        {
-            return new VirtualMachineScaleSetRollingUpgradesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineScaleSetRollingUpgradesOperations. </summary>
+        public virtual VirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades => new VirtualMachineScaleSetRollingUpgradesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineScaleSetVMExtensionsClient. </summary>
-        public virtual VirtualMachineScaleSetVMExtensionsClient GetVirtualMachineScaleSetVMExtensionsClient()
-        {
-            return new VirtualMachineScaleSetVMExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineScaleSetVMExtensionsOperations. </summary>
+        public virtual VirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions => new VirtualMachineScaleSetVMExtensionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineScaleSetVMsClient. </summary>
-        public virtual VirtualMachineScaleSetVMsClient GetVirtualMachineScaleSetVMsClient()
-        {
-            return new VirtualMachineScaleSetVMsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineScaleSetVMsOperations. </summary>
+        public virtual VirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs => new VirtualMachineScaleSetVMsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of LogAnalyticsClient. </summary>
-        public virtual LogAnalyticsClient GetLogAnalyticsClient()
-        {
-            return new LogAnalyticsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of LogAnalyticsOperations. </summary>
+        public virtual LogAnalyticsOperations LogAnalytics => new LogAnalyticsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of VirtualMachineRunCommandsClient. </summary>
-        public virtual VirtualMachineRunCommandsClient GetVirtualMachineRunCommandsClient()
-        {
-            return new VirtualMachineRunCommandsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VirtualMachineRunCommandsOperations. </summary>
+        public virtual VirtualMachineRunCommandsOperations VirtualMachineRunCommands => new VirtualMachineRunCommandsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourceSkusClient. </summary>
-        public virtual ResourceSkusClient GetResourceSkusClient()
-        {
-            return new ResourceSkusClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourceSkusOperations. </summary>
+        public virtual ResourceSkusOperations ResourceSkus => new ResourceSkusOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DisksClient. </summary>
-        public virtual DisksClient GetDisksClient()
-        {
-            return new DisksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DisksOperations. </summary>
+        public virtual DisksOperations Disks => new DisksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of SnapshotsClient. </summary>
-        public virtual SnapshotsClient GetSnapshotsClient()
-        {
-            return new SnapshotsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of SnapshotsOperations. </summary>
+        public virtual SnapshotsOperations Snapshots => new SnapshotsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DiskEncryptionSetsClient. </summary>
-        public virtual DiskEncryptionSetsClient GetDiskEncryptionSetsClient()
-        {
-            return new DiskEncryptionSetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DiskEncryptionSetsOperations. </summary>
+        public virtual DiskEncryptionSetsOperations DiskEncryptionSets => new DiskEncryptionSetsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of GalleriesClient. </summary>
-        public virtual GalleriesClient GetGalleriesClient()
-        {
-            return new GalleriesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of GalleriesOperations. </summary>
+        public virtual GalleriesOperations Galleries => new GalleriesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of GalleryImagesClient. </summary>
-        public virtual GalleryImagesClient GetGalleryImagesClient()
-        {
-            return new GalleryImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of GalleryImagesOperations. </summary>
+        public virtual GalleryImagesOperations GalleryImages => new GalleryImagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of GalleryImageVersionsClient. </summary>
-        public virtual GalleryImageVersionsClient GetGalleryImageVersionsClient()
-        {
-            return new GalleryImageVersionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of GalleryImageVersionsOperations. </summary>
+        public virtual GalleryImageVersionsOperations GalleryImageVersions => new GalleryImageVersionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of GalleryApplicationsClient. </summary>
-        public virtual GalleryApplicationsClient GetGalleryApplicationsClient()
-        {
-            return new GalleryApplicationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of GalleryApplicationsOperations. </summary>
+        public virtual GalleryApplicationsOperations GalleryApplications => new GalleryApplicationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of GalleryApplicationVersionsClient. </summary>
-        public virtual GalleryApplicationVersionsClient GetGalleryApplicationVersionsClient()
-        {
-            return new GalleryApplicationVersionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of GalleryApplicationVersionsOperations. </summary>
+        public virtual GalleryApplicationVersionsOperations GalleryApplicationVersions => new GalleryApplicationVersionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ContainerServicesClient. </summary>
-        public virtual ContainerServicesClient GetContainerServicesClient()
-        {
-            return new ContainerServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ContainerServicesOperations. </summary>
+        public virtual ContainerServicesOperations ContainerServices => new ContainerServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

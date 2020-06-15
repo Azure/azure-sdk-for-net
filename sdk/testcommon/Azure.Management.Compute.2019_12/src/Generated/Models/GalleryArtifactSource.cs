@@ -25,6 +25,6 @@ namespace Azure.Management.Compute.Models
         }
 
         /// <summary> The managed artifact. </summary>
-        public ManagedArtifact ManagedImage { get; set; }
+        public ManagedArtifact ManagedImage { get; }
     }
 }
