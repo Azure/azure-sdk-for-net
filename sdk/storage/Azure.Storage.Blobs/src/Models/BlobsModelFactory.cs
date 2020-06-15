@@ -510,5 +510,17 @@ namespace Azure.Storage.Blobs.Models
                 IsFatal = isFatal,
                 Position = position
             };
+
+        /// <summary>
+        /// Creates a new BlobTagItem instance for mocking.
+        /// </summary>
+        public static BlobTagItem BlobTagItem(
+            string blobName = default,
+            string blobContainerName = default)
+            => new BlobTagItem
+            {
+                BlobName = blobName,
+                BlobContainerName = blobContainerName
+            };
     }
 }

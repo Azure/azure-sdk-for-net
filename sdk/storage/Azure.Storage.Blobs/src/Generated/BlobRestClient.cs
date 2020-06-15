@@ -20902,7 +20902,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob info from a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobItem
+    internal partial class FilterBlobItem
     {
         /// <summary>
         /// Name
@@ -20945,26 +20945,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobItem value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilterBlobItem instance for mocking.
-        /// </summary>
-        public static FilterBlobItem FilterBlobItem(
-            string blobName,
-            string blobContainerName)
-        {
-            return new FilterBlobItem()
-            {
-                BlobName = blobName,
-                BlobContainerName = blobContainerName,
-            };
-        }
     }
 }
 #endregion class FilterBlobItem

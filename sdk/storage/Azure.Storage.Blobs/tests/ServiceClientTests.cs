@@ -535,14 +535,14 @@ namespace Azure.Storage.Blobs.Test
             await Task.Delay(2000);
 
             // Act
-            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
-            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            List<BlobTagItem> blobs = new List<BlobTagItem>();
+            await foreach (Page<BlobTagItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
 
             // Assert
-            FilterBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            BlobTagItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
             Assert.IsNotNull(filterBlob);
         }
 

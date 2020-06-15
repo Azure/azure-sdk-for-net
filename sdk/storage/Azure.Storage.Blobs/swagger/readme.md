@@ -1508,6 +1508,15 @@ directive:
     $["x-az-public"] = false;
 ```
 
+### Hide FilterBlobItem
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FilterBlobItem
+  transform: >
+    $["x-az-public"] = false;
+```
+
 ### Hide BlobTags
 ``` yaml
 directive:
