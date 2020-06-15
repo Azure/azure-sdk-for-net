@@ -90,7 +90,7 @@ if ($rgExists -eq "False")
 
 Write-Host "`nDeploying resources to $ResourceGroup in $Region`n"
 
-$armTemplateFile = "../../../test-resources.json";
+$armTemplateFile = Join-Path $PSScriptRoot -ChildPath "../../../test-resources.json";
 
 if (-not (Test-Path $armTemplateFile -PathType leaf))
 {
