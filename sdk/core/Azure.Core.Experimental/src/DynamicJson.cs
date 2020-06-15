@@ -131,7 +131,18 @@ namespace Azure.Core
         private DynamicJson(IEnumerable<DynamicJson> array)
         {
             _kind = JsonValueKind.Array;
-            _arrayRepresentation = new List<DynamicJson>(array);
+            _arrayRepresentation = new List<DynamicJson>();
+            foreach (var item in array)
+            {
+                if (item == null)
+                {
+                    _arrayRepresentation.Add(new DynamicJson((object?)null));
+                }
+                else
+                {
+                    _arrayRepresentation.Add(item);
+                }
+            }
         }
 
         private DynamicJson(object? value)
@@ -226,6 +237,37 @@ namespace Azure.Core
                     break;
             }
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="index"></param>
+        public DynamicJson this[int index]
+        {
+            get => GetValueAt(index);
+            set => SetValueAt(index, value);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="property"></param>
+        public DynamicJson this[string property]
+        {
+            get => GetValue(property);
+            set => SetValue(property, value);
+        }
+
+        private object SetValueAt(int index, object value)
+        {
+            if (!(value is DynamicJson dynamicJson))
+            {
+                dynamicJson = new DynamicJson(value);
+            }
+            EnsureArray()[index] = dynamicJson;
+            return value;
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -252,7 +294,7 @@ namespace Azure.Core
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
-        private object GetValue(string propertyName)
+        private DynamicJson GetValue(string propertyName)
         {
             if (propertyName == "Length" && _kind == JsonValueKind.Array)
             {
@@ -310,7 +352,7 @@ namespace Azure.Core
             return _value;
         }
 
-        private object GetValueAt(int index)
+        private DynamicJson GetValueAt(int index)
         {
             return EnsureArray()[index];
         }
@@ -423,7 +465,17 @@ namespace Azure.Core
 
             public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
             {
-                return base.BindSetIndex(binder, indexes, value);
+                if (indexes.Length != 1) throw new InvalidOperationException();
+                var index = indexes[0].Expression;
+
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(SetValueAt), BindingFlags.NonPublic | BindingFlags.Instance);
+                var arguments = new[] { index, Expression.Convert(value.Expression, typeof(object)) };
+
+                var setPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
+                var restrictions = binder.FallbackSetIndex(this, indexes, value).Restrictions; // TODO: all these restrictions are a hack. Tthey need to be cleaned up.
+                DynamicMetaObject getProperty = new DynamicMetaObject(setPropertyCall , restrictions);
+                return getProperty;
             }
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
             dynamicJson[2] = null;
             dynamicJson[3] = "string";
 
-            Assert.AreEqual(dynamicJson.ToString(), "[2, null, \"string\"]");
+            Assert.AreEqual(dynamicJson.ToString(), "[0,2,null,\"string\"]");
         }
 
         [Test]
