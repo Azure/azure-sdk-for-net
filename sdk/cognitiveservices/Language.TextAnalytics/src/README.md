@@ -1,6 +1,6 @@
 # Microsoft Azure Text Analytics SDK library for .NET
  ----
-**Note:** This SDK targets the V2.1 version of the Text Analytics service. For the new set of libraries that support newer service versions please see the Text Analytics Azure SDK under the path: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics
+**Note:** This SDK targets the V2.1 version of the Text Analytics service. For the new set of libraries that support newer service versions and follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/) please see the Text Analytics Azure SDK under the path: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics
 
  This SDK allows you to build applications that consumes Microsoft Cognitive Services Language APIs.
 
