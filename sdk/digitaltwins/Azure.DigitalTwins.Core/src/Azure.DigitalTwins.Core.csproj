@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly props -->
   <PropertyGroup>
     <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
-    <EnableApiCompat>false</EnableApiCompat>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <NoWarn>$(NoWarn);CA1812</NoWarn>
@@ -14,7 +13,7 @@
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

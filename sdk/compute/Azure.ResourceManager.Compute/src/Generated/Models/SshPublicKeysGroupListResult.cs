@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </param>
         internal SshPublicKeysGroupListResult(IReadOnlyList<SshPublicKeyResource> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<SshPublicKeyResource>();
             NextLink = nextLink;
         }
 

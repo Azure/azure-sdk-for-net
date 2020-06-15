@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.TestFramework
                 var resourceGroupsClient = new ResourcesManagementClient(
                     TestEnvironment.SubscriptionId,
                     TestEnvironment.Credential,
-                    new ResourcesManagementClientOptions()).GetResourceGroupsClient();
+                    new ResourcesManagementClientOptions()).ResourceGroups;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
                     await resourceGroupsClient.StartDeleteAsync(resourceGroup);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProvidersClient providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ProvidersOperations providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
             return provider.ResourceTypes.Where(

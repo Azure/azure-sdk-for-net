@@ -9,16 +9,13 @@
   - If it isn't, update it
 - Use this link to install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest])
 
-### 2. Install the ADT extension
+### 2. Install the Azure IoT extension
 
-ADT's CLI commands are not standard in the Azure CLI package yet, so you must first download the latest extension
-
-- Download the [latest snapshot](https://github.com/Azure/azure-digital-twins/tree/private-preview/CLI) of the ADT enabled IoT CLI extension (a .whl file)
-- Open Windows Powershell at the location you downloaded the extension to
+- Open a powershell window in admin mode.
 - Run `az extension list`
-  - If you have **azure-iot** or **azure-cli-iot-ext** installed, remove both with `az extension remove --name azure-iot` (current alias) and `az extension remove --name azure-cli-iot-ext` (legacy alias)
-- Add the new extension with `az extension add -y --source <whl-filename>`
-- See the top-level ADT commands with `az dt -h`
+  - If you see azure-iot extension, update the extension by running `az extension update --name azure-iot`
+  - If you don't see the azure-iot extension, install it by running `az extension add --name azure-iot`
+- See the top-level IoT commands with `az iot -h`
 
 ### 3. Whitelist subscription
 

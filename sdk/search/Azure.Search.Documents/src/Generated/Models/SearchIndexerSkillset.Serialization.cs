@@ -34,6 +34,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("skills");
+            }
             if (CognitiveServicesAccount != null)
             {
                 writer.WritePropertyName("cognitiveServices");

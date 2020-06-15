@@ -23,6 +23,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The ID of data flow debug job version. </summary>
-        public string JobVersion { get; set; }
+        public string JobVersion { get; }
     }
 }

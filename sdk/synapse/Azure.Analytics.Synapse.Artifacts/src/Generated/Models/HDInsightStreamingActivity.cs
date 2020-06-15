@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Reducer = reducer;
             Input = input;
             Output = output;
-            FilePaths = filePaths;
+            FilePaths = filePaths ?? new List<object>();
             FileLinkedService = fileLinkedService;
             Combiner = combiner;
             CommandEnvironment = commandEnvironment;
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
         public object Output { get; set; }
         /// <summary> Paths to streaming job files. Can be directories. </summary>
-        public IList<object> FilePaths { get; set; }
+        public IList<object> FilePaths { get; }
         /// <summary> Linked service reference where the files are located. </summary>
         public LinkedServiceReference FileLinkedService { get; set; }
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>

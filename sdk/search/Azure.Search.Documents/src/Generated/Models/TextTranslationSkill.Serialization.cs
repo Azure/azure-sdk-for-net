@@ -56,6 +56,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("inputs");
+            }
             if (Outputs != null && Outputs.Any())
             {
                 writer.WritePropertyName("outputs");
@@ -65,6 +69,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("outputs");
             }
             writer.WriteEndObject();
         }

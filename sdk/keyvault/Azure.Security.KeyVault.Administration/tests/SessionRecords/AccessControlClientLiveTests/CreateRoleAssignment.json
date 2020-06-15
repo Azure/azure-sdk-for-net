@@ -1,0 +1,239 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5e8636028f65bb56594d809618e68b9c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+      },
+      "ResponseBody": "OK"
+    },
+    {
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5e8636028f65bb56594d809618e68b9c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "4256",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/a290e904-7015-4bba-90c8-60543313cdb4",
+            "name": "a290e904-7015-4bba-90c8-60543313cdb4",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read",
+                    "Microsoft.KeyVault/managedHsm/keys/write",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action",
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action",
+                    "Microsoft.KeyVault/managedHsm/keys/restore/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/read",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/write",
+                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read"
+                  ],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/wrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/unwrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/sign/action",
+                    "Microsoft.KeyVault/managedHsm/keys/verify/action",
+                    "Microsoft.KeyVault/managedHsm/keys/create",
+                    "Microsoft.KeyVault/managedHsm/keys/delete",
+                    "Microsoft.KeyVault/managedHsm/keys/export/action",
+                    "Microsoft.KeyVault/managedHsm/keys/import/action",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Administrator",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/515eb02d-2335-4d2d-92f2-b1cbdf9c3778",
+            "name": "515eb02d-2335-4d2d-92f2-b1cbdf9c3778",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read",
+                    "Microsoft.KeyVault/managedHsm/keys/write",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action",
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action",
+                    "Microsoft.KeyVault/managedHsm/keys/restore/action"
+                  ],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/sign/action",
+                    "Microsoft.KeyVault/managedHsm/keys/verify/action",
+                    "Microsoft.KeyVault/managedHsm/keys/wrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/unwrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/create",
+                    "Microsoft.KeyVault/managedHsm/keys/delete",
+                    "Microsoft.KeyVault/managedHsm/keys/export/action",
+                    "Microsoft.KeyVault/managedHsm/keys/import/action",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Crypto Officer",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
+            "name": "21dbd100-6940-42c2-9190-5d6cb909625b",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read",
+                    "Microsoft.KeyVault/managedHsm/keys/write",
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action"
+                  ],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
+                    "Microsoft.KeyVault/managedHsm/keys/wrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/unwrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/sign/action",
+                    "Microsoft.KeyVault/managedHsm/keys/verify/action"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Crypto User",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/4bd23610-cdcf-4971-bdee-bdc562cc28e4",
+            "name": "4bd23610-cdcf-4971-bdee-bdc562cc28e4",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [
+                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/read",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/write",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete"
+                  ],
+                  "dataActions": [],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Policy Administrator",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "181",
+        "Content-Type": "application/json",
+        "Request-Id": "|3e6cb37e-4eecfa4a673ebe60.",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "16093e51ef8cfc750e2d28064b66eddd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
+        "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "398",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "x-ms-keyvault-region": "EASTUS",
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
+        "name": "e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
+        "properties": {
+          "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
+          "scope": "/"
+        },
+        "type": "Microsoft.Authorization/roleAssignments"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+    "RandomSeed": "1126588322"
+  }
+}

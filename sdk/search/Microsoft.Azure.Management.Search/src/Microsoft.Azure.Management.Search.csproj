@@ -8,9 +8,9 @@
 		<Description>Makes it easy to manage Azure Search services and API keys from a .NET application.</Description>
 		<AssemblyTitle>Microsoft Azure Search Management Library</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.Search</AssemblyName>
-		<Version>3.0.0</Version>
+		<Version>4.0.0</Version>
 		<PackageTags>Microsoft Azure Search;Microsoft Azure Search Management;</PackageTags>
-		<PackageReleaseNotes>This is the Azure Search Management SDK for .NET, based on version 2015-08-19 of the Azure Search Management REST API. It includes support for programmatically provisioning and managing Search services and API keys. It supports all available SKUs, including the new S3 and S3 High-Density SKUs. Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>This is the Azure Search Management SDK for .NET, based on version 2020-03-13 of the Azure Search Management REST API. It adds support to include private endpoints on search services</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>
