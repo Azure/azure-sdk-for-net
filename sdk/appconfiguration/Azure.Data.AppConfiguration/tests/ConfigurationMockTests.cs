@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -834,7 +834,8 @@ namespace Azure.Data.AppConfiguration.Tests
         private void AssertRequestCommon(MockRequest request)
         {
             Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
-            StringAssert.Contains("azsdk-net-Data.AppConfiguration/1.0.0", value);
+            Version version = typeof(ConfigurationClient).Assembly.GetName().Version;
+            StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)

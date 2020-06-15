@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Indexers request. If successful, it includes the full definitions of all indexers. </summary>
     internal partial class ListIndexersResult
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="indexers"> The indexers in the Search service. </param>
         internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers)
         {
-            Indexers = indexers;
+            Indexers = indexers ?? new List<SearchIndexer>();
         }
 
         /// <summary> The indexers in the Search service. </summary>

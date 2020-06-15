@@ -38,6 +38,13 @@ namespace Azure.Core
             }
         }
 
+        public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
+        {
+            if (format != "U") throw new ArgumentOutOfRangeException(format, "Only 'U' format is supported when writing a DateTimeOffset as a Number.");
+
+            writer.WriteNumberValue(value.ToUnixTimeSeconds());
+        }
+
         public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
         {
             switch (value)
@@ -63,14 +70,23 @@ namespace Azure.Core
                 case float f:
                     writer.WriteNumberValue(f);
                     break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
                 case string s:
                     writer.WriteStringValue(s);
                     break;
                 case bool b:
                     writer.WriteBooleanValue(b);
                     break;
+                case Guid g:
+                    writer.WriteStringValue(g);
+                    break;
                 case DateTimeOffset dateTimeOffset:
-                    writer.WriteStringValue(dateTimeOffset,"S");
+                    writer.WriteStringValue(dateTimeOffset,"O");
+                    break;
+                case DateTime dateTime:
+                    writer.WriteStringValue(dateTime, "O");
                     break;
                 case IEnumerable<KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();

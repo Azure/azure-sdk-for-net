@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task CompleteAsync(
-            IEnumerable<string> lockTokens,
+            string lockToken,
             CancellationToken cancellationToken);
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>

@@ -31,7 +31,6 @@ Use the **Azure.Search.Documents client library** to:
 - Enrich your search index with AI skills that add structure or extract meaning
   from raw documents during indexing.
 
-
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
 ## Getting started
@@ -41,15 +40,15 @@ Use the **Azure.Search.Documents client library** to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents --version 1.0.0-preview.2
+dotnet add package Azure.Search.Documents --version 1.0.0-preview.5
 ```
 
 ### Prerequisites
 
 You need an [Azure subscription][azure_sub] and a
-[Search Service][create_search_service_docs] to use this package.
+[search service][create_search_service_docs] to use this package.
 
-To create a new Search Service, you can use the [Azure Portal][create_search_service_docs],
+To create a new search service, you can use the [Azure portal][create_search_service_docs],
 [Azure PowerShell][create_search_service_ps], or the [Azure CLI][create_search_service_cli].
 Here's an example using the Azure CLI to create a free instance for getting started:
 
@@ -65,7 +64,7 @@ See [choosing a pricing tier](https://docs.microsoft.com/azure/search/search-sku
 All requests to a search service need an api-key that was generated specifically
 for your service. [The api-key is the sole mechanism for authenticating access to
 your search service endpoint.](https://docs.microsoft.com/azure/search/search-security-api-keys)  You can obtain your api-key from the
-[Azure Portal](https://portal.azure.com/) or via the Azure CLI:
+[Azure portal](https://portal.azure.com/) or via the Azure CLI:
 
 ```Powershell
 az search admin-key show --service-name <mysearch> --resource-group <mysearch-rg>
@@ -80,16 +79,18 @@ originating from a client app.
 *Note: The example Azure CLI snippet above retrieves an admin key so it's easier
 to get started exploring APIs, but it should be managed carefully.*
 
-We can use the api-key to create a new `SearchServiceClient`.
+We can use the api-key to create a new `SearchClient`.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+string indexName = "nycjobs";
+
 // Get the service endpoint and API key from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
 ### Send your first search query
@@ -106,13 +107,13 @@ string serviceName = "azs-playground";
 string indexName = "nycjobs";
 string apiKey = "252044BE3886FE4A8E3BAA4F595114BB";
 
-// Create a SearchIndexClient to send queries
+// Create a SearchClient to send queries
 Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
 AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
+SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
 // Let's get the top 5 jobs related to Microsoft
-SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     // Print out the title and job description (we'll see below how to
@@ -122,36 +123,39 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
     Console.WriteLine($"{title}\n{description}\n");
 }
 ```
+
 You can paste that into a new console app,
 [install the Azure.Search.Documents package](#Install-the-package), add a
 `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
 
-An **Azure Cognitive Search service** contains one or more **indexes** that
-provide persistent storage of searchable data in the form of JSON **documents**.
-_(If you're brand new to Search, you can make a very rough analogy between
-indexes and database tables.)_  The **Azure.Search.Documents client library**
-exposes operations on these resources through two main client types:
+An Azure Cognitive Search service contains one or more indexes that provide
+persistent storage of searchable data in the form of JSON documents.  _(If
+you're brand new to search, you can make a very rough analogy between
+indexes and database tables.)_  The Azure.Search.Documents client library
+exposes operations on these resources through two main client types.
 
-- `SearchIndexClient` helps with
-   - [Searching](https://docs.microsoft.com/en-us/azure/search/search-lucene-query-architecture)
-     your indexed documents using
-     [rich queries](https://docs.microsoft.com/azure/search/search-query-overview)
-     and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
-   - [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
-     partially typed search terms based on documents in the index
-   - [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
-    the most likely matching text in documents as a user types
-   - [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
-     documents from an index
+- `SearchClient` helps with:
+  - [Searching](https://docs.microsoft.com/azure/search/search-lucene-query-architecture)
+    your indexed documents using
+    [rich queries](https://docs.microsoft.com/azure/search/search-query-overview)
+    and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
+  - [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
+    partially typed search terms based on documents in the index
+  - [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
+   the most likely matching text in documents as a user types
+  - [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
+    documents from an index
 
-- `SearchServiceClient` allows you to:
+- `SearchIndexClient` allows you to:
   - [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
-  - [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
-  - [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
   - [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
   - Most of the `SearchServiceClient` functionality is not yet available in our current preview
+
+- `SearchIndexerClient` allows you to:
+  - [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
+  - [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
 
 _The `Azure.Search.Documents` client library (v1) is a brand new offering for
 .NET developers who want to use search technology in their applications.  There
@@ -163,7 +167,7 @@ exploring online resources.  A good rule of thumb is to check for the namespace
 ## Examples
 
 The following examples all use a simple [Hotel data set](https://docs.microsoft.com/samples/azure-samples/azure-search-sample-data/azure-search-sample-data/)
-that you can [import into your own index from the Azure Portal.](https://docs.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
+that you can [import into your own index from the Azure portal.](https://docs.microsoft.com/azure/search/search-get-started-portal#step-1---start-the-import-data-wizard-and-create-a-data-source)
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.
 
@@ -174,9 +178,10 @@ Let's start by importing our namespaces.
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 ```
 
-We'll then create a `SearchIndexClient` to access our hotels search index.
+We'll then create a `SearchClient` to access our hotels search index.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Client
 // Get the service endpoint and API key from the environment
@@ -186,10 +191,10 @@ string indexName = "hotels";
 
 // Create a client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchIndexClient client = new SearchIndexClient(endpoint, indexName, credential);
+SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
-There are three ways to interact with the data returned from a search query.
+There are two ways to interact with the data returned from a search query.
 Let's explore them with a search for a "luxury" hotel.
 
 #### Use `SearchDocument` like a dictionary
@@ -197,8 +202,9 @@ Let's explore them with a search for a "luxury" hotel.
 `SearchDocument` is the default type returned from queries when you don't
 provide your own.  Here we perform the search, enumerate over the results, and
 extract data using `SearchDocument`'s dictionary indexer.
+
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Dict
-SearchResults<SearchDocument> response = client.Search("luxury");
+SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     SearchDocument doc = result.Document;
@@ -208,24 +214,10 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 }
 ```
 
-#### Use `SearchDocument` with [C#'s `dynamic` keyword](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/using-type-dynamic)
-
-This starts out the same, but the use of `dynamic` makes the code a little
-easier to read.
-```C# Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-SearchResults<SearchDocument> response = client.Search("luxury");
-foreach (SearchResult<SearchDocument> result in response.GetResults())
-{
-    dynamic doc = result.Document;
-    string id = doc.hotelId;
-    string name = doc.hotelName;
-    Console.WriteLine("{id}: {name}");
-}
-```
-
 #### Use C# types
 
-We can also decorate our own types with [attributes from `System.Text.Json`](https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-how-to)
+We can also decorate our own types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
+
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 public class Hotel
 {
@@ -252,6 +244,7 @@ If you're working with a search index and know the schema, creating C# types
 is recommended.
 
 #### SearchOptions
+
 The `SearchOptions` provide powerful control over the behavior of our queries.
 Let's search for the top 5 luxury hotels with a good rating.
 
@@ -266,13 +259,58 @@ SearchOptions options = new SearchOptions
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
-``` 
+```
+
+### Creating an index
+
+You can use the `SearchIndexClient` to create a search index. Fields can be
+defined using convenient `SimpleField`, `SearchableField`, or `ComplexField`
+classes. Indexes can also define suggesters, lexical analyzers, and more.
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+
+// Create a service client
+AzureKeyCredential credential = new AzureKeyCredential(key);
+SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+
+// Create the index
+SearchIndex index = new SearchIndex("hotels")
+{
+    Fields =
+    {
+        new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+        new ComplexField("address")
+        {
+            Fields =
+            {
+                new SearchableField("streetAddress"),
+                new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+            }
+        }
+    },
+    Suggesters =
+    {
+        // Suggest query terms from both the hotelName and description fields.
+        new SearchSuggester("sg", "hotelName", "description")
+    }
+};
+
+client.CreateIndex(index);
+```
 
 ### Adding documents to your index
 
 You can `Upload`, `Merge`, `MergeOrUpload`, and `Delete` multiple documents from
 an index in a single batched request.  There are
-[a few special rules for merging](https://docs.microsoft.com/en-us/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
+[a few special rules for merging](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
 to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
@@ -284,7 +322,7 @@ IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = tr
 client.IndexDocuments(batch, options);
 ```
 
-The request will succeed even if any of the individual actions fails and
+The request will succeed even if any of the individual actions fail and
 return an `IndexDocumentsResult` for inspection.  There's also a `ThrowOnAnyError`
 option if you only care about success or failure of the whole batch.
 
@@ -292,7 +330,7 @@ option if you only care about success or failure of the whole batch.
 
 All of the examples so far have been using synchronous APIs, but we provide full
 support for async APIs as well.  You'll generally just add an `Async` suffix to
-the name and `await` it.
+the name of the method and `await` it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
 SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
@@ -308,7 +346,6 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 Any Azure.Search.Documents operation that fails will throw a
 [`RequestFailedException`][RequestFailedException] with
 helpful [`Status` codes][status_codes].  Many of these errors are recoverable.
-
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Troubleshooting
 try
@@ -327,11 +364,11 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 deeper into the requests you're making against the service.
 
 ## Next steps
+
 - [Go further with Azure.Search.Documents and our samples][samples]
 - [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
 - [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
- 
 ## Contributing
 
 See our [Search CONTRIBUTING.md][search_contrib] for details on building,

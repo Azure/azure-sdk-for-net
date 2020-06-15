@@ -1,0 +1,130 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "33fb91d27c5a3010474b58bf2270acbd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "623",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:51:01 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "33fb91d27c5a3010474b58bf2270acbd",
+        "x-ms-request-id": "d5cd5201-b1f1-428b-adda-9be905d2a333"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/Pipeline 1",
+            "name": "Pipeline 1",
+            "type": "Microsoft.Synapse/workspaces/pipelines",
+            "etag": "4200191d-0000-0100-0000-5eb8c9b40000",
+            "properties": {
+              "activities": [
+                {
+                  "name": "Notebook1",
+                  "type": "SynapseNotebook",
+                  "dependsOn": [],
+                  "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                  },
+                  "userProperties": [],
+                  "typeProperties": {
+                    "notebook": {
+                      "referenceName": "Notebook 1",
+                      "type": "NotebookReference"
+                    }
+                  }
+                }
+              ],
+              "annotations": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/pipelines/Pipeline%201?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e8fe8b1a5f24f4418785075a996cf9d6-5176c3c7274cfe4f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "eb51ee2b1608ec5afe9637bbb301e7f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "611",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:51:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "eb51ee2b1608ec5afe9637bbb301e7f3",
+        "x-ms-correlation-request-id": "845123fc-6889-47a9-8078-98e147bbbe9c",
+        "x-ms-request-id": "cc2399d3-052c-489b-a968-e2dd7463a18d",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/Pipeline 1",
+        "name": "Pipeline 1",
+        "type": "Microsoft.Synapse/workspaces/pipelines",
+        "properties": {
+          "activities": [
+            {
+              "name": "Notebook1",
+              "type": "SynapseNotebook",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "7.00:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "userProperties": [],
+              "typeProperties": {
+                "notebook": {
+                  "referenceName": "Notebook 1",
+                  "type": "NotebookReference"
+                }
+              }
+            }
+          ],
+          "annotations": []
+        },
+        "etag": "4200191d-0000-0100-0000-5eb8c9b40000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "1947362839"
+  }
+}

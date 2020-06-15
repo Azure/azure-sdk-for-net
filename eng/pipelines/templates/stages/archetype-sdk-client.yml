@@ -1,7 +1,9 @@
 parameters:
   Artifacts: []
   ServiceDirectory: not-specified
-  
+  TargetDocRepoOwner: 'Azure'
+  TargetDocRepoName: 'azure-docs-sdk-dotnet'
+
 stages:
   - stage: Build
     jobs:
@@ -20,3 +22,5 @@ stages:
         DependsOn: Build
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages
+        TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+        TargetDocRepoName: ${{parameters.TargetDocRepoName}} 

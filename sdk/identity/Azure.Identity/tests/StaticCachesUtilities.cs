@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests
     {
         private static readonly Lazy<Action> s_clearStaticMetadataProvider = new Lazy<Action>(() =>
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.StaticMetadataProvider", true);
+            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.NetworkCacheMetadataProvider", true);
             MethodInfo clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance);
             NewExpression callConstructor = Expression.New(staticMetadataProviderType);
             MethodCallExpression invokeClear = Expression.Call(callConstructor, clearMethod);

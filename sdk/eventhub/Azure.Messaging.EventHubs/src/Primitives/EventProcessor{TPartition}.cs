@@ -1334,7 +1334,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                 }
 
-                // Create and register the partition processor.
+                // Create and register the partition processor.  Ownership of the cancellationSource is transferred
+                // to the processor upon creation, including the responsibility for disposal.
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 

@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
@@ -144,7 +144,7 @@ namespace Azure.Identity.Tests
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
 
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
 
         private static TestFileSystemService CreateTestFileSystemService(string tenant = default, string cloudName = default)

@@ -1,9 +1,31 @@
 # Release History
 
-## 1.2.0-preview.3 (Unreleased)
+## 1.2.0-preview.5 (Unreleased)
 
+
+## 1.2.0-preview.4
+
+### New Features
+- Makes `AzureCliCredential`, `VisualStudioCredential` and `VisualStudioCodeCredential` public to allow direct usage.
+- Added `Authenticate` methods to `UsernamePasswordCredential`
+
+### Fixes and improvements
+- Fix `SharedTokenCacheCredential` account filter to be case-insensitive (Issue [#10816](https://github.com/Azure/azure-sdk-for-net/issues/10816))
+- Update `VisualStudioCodeCredential` to properly throw `CredentialUnavailableException` when re-authentication is needed. (Issue [#11595](https://github.com/Azure/azure-sdk-for-net/issues/11595))
+
+## 1.2.0-preview.3
+
+### New Features
+- First preview of new API for authenticating users with `DeviceCodeCredential` and `InteractiveBrowserCredential`
+  - Added method `Authenticate` which pro-actively interacts with the user to authenticate if necessary and returns a serializable `AuthenticationRecord`
+  - Added Options classes `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions` which support the following new options
+    - `AuthenticationRecord` enables initializing a credential with an `AuthenticationRecord` returned from a prior call to `Authenticate`
+    - `DisableAutomaticAuthentication` disables automatic user interaction causing the credential to throw an `AuthenticationRequiredException` when interactive authentication is necessary.
+    - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
 
 ## 1.2.0-preview.2
+
+### New Features
 - Updates `DefaultAzureCredential` to enable authenticating through Visual Studio
 - Updates `DefaultAzureCredential` to enable authentication through Visual Studio Code
 

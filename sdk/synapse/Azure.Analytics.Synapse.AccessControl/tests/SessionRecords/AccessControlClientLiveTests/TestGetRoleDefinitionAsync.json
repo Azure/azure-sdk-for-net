@@ -1,0 +1,165 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles?api-version=2020-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "e35a3d49af69d045432ec763c800e2b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "272",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:37 GMT",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "e35a3d49af69d045432ec763c800e2b5",
+        "x-ms-request-id": [
+          "d17e4081-462b-46d5-868f-d37f1a88b76f",
+          "d17e4081-462b-46d5-868f-d37f1a88b76f"
+        ]
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "6e4bf58a-b8e1-4cc3-bbf9-d73143322b78",
+            "name": "Workspace Admin",
+            "isBuiltIn": true
+          },
+          {
+            "id": "c3a6d2f1-a26f-4810-9b0f-591308d5cbf1",
+            "name": "Apache Spark Admin",
+            "isBuiltIn": true
+          },
+          {
+            "id": "7af0c69a-a548-47d6-aea3-d00e69bd83aa",
+            "name": "Sql Admin",
+            "isBuiltIn": true
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/6e4bf58a-b8e1-4cc3-bbf9-d73143322b78?api-version=2020-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-88298788dc2ca249b6d408e2875727e0-1afab985b023d843-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "70a97fc50dd05a4ffceacb3aad23af51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:37 GMT",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "70a97fc50dd05a4ffceacb3aad23af51",
+        "x-ms-request-id": [
+          "9a6224be-86be-41d4-98c8-75ff1c33a58c",
+          "9a6224be-86be-41d4-98c8-75ff1c33a58c"
+        ]
+      },
+      "ResponseBody": {
+        "id": "6e4bf58a-b8e1-4cc3-bbf9-d73143322b78",
+        "name": "Workspace Admin",
+        "isBuiltIn": true
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/c3a6d2f1-a26f-4810-9b0f-591308d5cbf1?api-version=2020-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-405ef6ed1defe04ea9a0d18ac197fda1-4696f3f061362142-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "88de35ed1e70c9c8c05e0764ea890bd5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "90",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:37 GMT",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "88de35ed1e70c9c8c05e0764ea890bd5",
+        "x-ms-request-id": [
+          "6f64fad1-8a51-424d-b23a-b501a1574c1b",
+          "6f64fad1-8a51-424d-b23a-b501a1574c1b"
+        ]
+      },
+      "ResponseBody": {
+        "id": "c3a6d2f1-a26f-4810-9b0f-591308d5cbf1",
+        "name": "Apache Spark Admin",
+        "isBuiltIn": true
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/7af0c69a-a548-47d6-aea3-d00e69bd83aa?api-version=2020-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-28dcd453d7a62643a9d654d0211ca06c-d006277cd756ce40-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "dd928f27b3c63c3bed00e67ee30b231f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "81",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:37 GMT",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "dd928f27b3c63c3bed00e67ee30b231f",
+        "x-ms-request-id": [
+          "65354f1d-ff01-4874-b2e0-383ad4821b2a",
+          "65354f1d-ff01-4874-b2e0-383ad4821b2a"
+        ]
+      },
+      "ResponseBody": {
+        "id": "7af0c69a-a548-47d6-aea3-d00e69bd83aa",
+        "name": "Sql Admin",
+        "isBuiltIn": true
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "1252128898"
+  }
+}

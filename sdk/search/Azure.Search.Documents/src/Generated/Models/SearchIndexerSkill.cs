@@ -9,29 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for skills. </summary>
     public partial class SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        public SearchIndexerSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs)
-        {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
-
-            Inputs = inputs.ToArray();
-            Outputs = outputs.ToArray();
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
@@ -46,8 +28,8 @@ namespace Azure.Search.Documents.Models
             Name = name;
             Description = description;
             Context = context;
-            Inputs = inputs;
-            Outputs = outputs;
+            Inputs = inputs ?? new List<InputFieldMappingEntry>();
+            Outputs = outputs ?? new List<OutputFieldMappingEntry>();
         }
 
         /// <summary> Identifies the concrete type of the skill. </summary>
@@ -58,9 +40,5 @@ namespace Azure.Search.Documents.Models
         public string Description { get; set; }
         /// <summary> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </summary>
         public string Context { get; set; }
-        /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; set; }
-        /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
-        public IList<OutputFieldMappingEntry> Outputs { get; set; }
     }
 }

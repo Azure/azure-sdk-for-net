@@ -8,28 +8,19 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchResourceEncryptionKey : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyName != null)
-            {
-                writer.WritePropertyName("keyVaultKeyName");
-                writer.WriteStringValue(KeyName);
-            }
-            if (KeyVersion != null)
-            {
-                writer.WritePropertyName("keyVaultKeyVersion");
-                writer.WriteStringValue(KeyVersion);
-            }
-            if (_vaultUri != null)
-            {
-                writer.WritePropertyName("keyVaultUri");
-                writer.WriteStringValue(_vaultUri);
-            }
+            writer.WritePropertyName("keyVaultKeyName");
+            writer.WriteStringValue(KeyName);
+            writer.WritePropertyName("keyVaultKeyVersion");
+            writer.WriteStringValue(KeyVersion);
+            writer.WritePropertyName("keyVaultUri");
+            writer.WriteStringValue(_vaultUri);
             if (AccessCredentialsInternal != null)
             {
                 writer.WritePropertyName("accessCredentials");
@@ -48,28 +39,16 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("keyVaultKeyName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultKeyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultKeyVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultKeyVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyVaultUri = property.Value.GetString();
                     continue;
                 }

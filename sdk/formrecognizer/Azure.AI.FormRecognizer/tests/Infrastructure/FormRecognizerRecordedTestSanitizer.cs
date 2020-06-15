@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -10,12 +10,20 @@ namespace Azure.AI.FormRecognizer.Tests
     {
         private const string SanitizedSasUri = "https://sanitized.blob.core.windows.net";
 
+        public FormRecognizerRecordedTestSanitizer()
+            : base()
+        {
+            JsonPathSanitizers.Add("$..accessToken");
+        }
+
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(Constants.AuthorizationHeader))
             {
                 headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
             }
+
+            base.SanitizeHeaders(headers);
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)

@@ -105,9 +105,8 @@ namespace Microsoft.Azure.Management.Security
             /// Name of an application control VM/server group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
-            public static AppWhitelistingGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body)
+            public static AppWhitelistingGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingGroup body)
             {
                 return operations.PutAsync(groupName, body).GetAwaiter().GetResult();
             }
@@ -122,17 +121,47 @@ namespace Microsoft.Azure.Management.Security
             /// Name of an application control VM/server group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppWhitelistingGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppWhitelistingGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingGroup body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutWithHttpMessagesAsync(groupName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete an application control VM/server group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control VM/server group
+            /// </param>
+            public static void Delete(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            {
+                operations.DeleteAsync(groupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete an application control VM/server group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control VM/server group
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A token filter that only keeps tokens with text contained in a specified list of words. This token filter is implemented using Apache Lucene. </summary>
     public partial class KeepTokenFilter : TokenFilter
@@ -39,13 +39,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="lowerCaseKeepWords"> A value indicating whether to lower case all words first. Default is false. </param>
         internal KeepTokenFilter(string oDataType, string name, IList<string> keepWords, bool? lowerCaseKeepWords) : base(oDataType, name)
         {
-            KeepWords = keepWords;
+            KeepWords = keepWords ?? new List<string>();
             LowerCaseKeepWords = lowerCaseKeepWords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeepTokenFilter";
         }
-
-        /// <summary> The list of words to keep. </summary>
-        public IList<string> KeepWords { get; set; }
         /// <summary> A value indicating whether to lower case all words first. Default is false. </summary>
         public bool? LowerCaseKeepWords { get; set; }
     }

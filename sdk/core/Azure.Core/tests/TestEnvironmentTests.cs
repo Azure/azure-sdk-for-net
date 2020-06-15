@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -12,8 +12,8 @@ namespace Azure.Core.Tests
         [SetUp]
         public void SetUp()
         {
-            Environment.SetEnvironmentVariable("_MOCK_RECORDED", "1");
-            Environment.SetEnvironmentVariable("_MOCK_NOTRECORDED", "2");
+            Environment.SetEnvironmentVariable("CORE_RECORDED", "1");
+            Environment.SetEnvironmentVariable("CORE_NOTRECORDED", "2");
         }
 
         [Theory]
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
 
         private class MockTestEnvironment: TestEnvironment
         {
-            public MockTestEnvironment(): base("_mock")
+            public MockTestEnvironment(): base("core")
             {
             }
 

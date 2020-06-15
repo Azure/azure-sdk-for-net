@@ -6,23 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CommonGramTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("commonWords");
-            writer.WriteStartArray();
-            foreach (var item in CommonWords)
+            if (CommonWords.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("commonWords");
+                writer.WriteStartArray();
+                foreach (var item in CommonWords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("commonWords");
+            }
             if (IgnoreCase != null)
             {
                 writer.WritePropertyName("ignoreCase");

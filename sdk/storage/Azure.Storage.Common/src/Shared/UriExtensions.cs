@@ -25,6 +25,9 @@ namespace Azure.Storage
             var builder = new UriBuilder(uri);
             var path = builder.Path;
             var seperator = (path.Length == 0 || path[path.Length - 1] != '/') ? "/" : "";
+            // In URLs, the percent sign is used to encode special characters, so if the segment
+            // has a percent sign in their URL path, we have to encode it before adding it to the path
+            segment = segment.Replace(Constants.PercentSign, Constants.EncodedPercentSign);
             builder.Path += seperator + segment;
             return builder.Uri;
         }

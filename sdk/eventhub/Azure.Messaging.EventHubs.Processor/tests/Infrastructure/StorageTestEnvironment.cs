@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Initializes a new instance of the <see cref="StorageTestEnvironment"/> class.
         /// </summary>
         ///
-        public StorageTestEnvironment() : base("eventhubs")
+        public StorageTestEnvironment() : base("eventhub")
         {
             ActiveStorageAccount = new Lazy<StorageProperties>(EnsureStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
         }

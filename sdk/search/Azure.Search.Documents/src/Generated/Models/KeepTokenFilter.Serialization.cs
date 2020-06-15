@@ -6,23 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class KeepTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keepWords");
-            writer.WriteStartArray();
-            foreach (var item in KeepWords)
+            if (KeepWords.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("keepWords");
+                writer.WriteStartArray();
+                foreach (var item in KeepWords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("keepWords");
+            }
             if (LowerCaseKeepWords != null)
             {
                 writer.WritePropertyName("keepWordsCase");

@@ -5,9 +5,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -16,6 +17,10 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\\\"value\\\"\"}", "application/json")]
+        [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
+        [TestCase("{\"json\"\n:\"value\"}", "application/json")]
+        [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
         [TestCase("invalid json", "application/json")]
@@ -48,7 +53,10 @@ namespace Azure.Core.Tests
             session.Entries.Add(recordEntry);
 
             var arrayBufferWriter = new ArrayBufferWriter<byte>();
-            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter);
+            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter, new JsonWriterOptions()
+            {
+                Indented = true
+            });
             session.Serialize(jsonWriter);
             jsonWriter.Flush();
 
@@ -198,6 +206,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Totally not a SANITIZED", session.Variables["B"]);
         }
 
+        [TestCase("*", "invalid json", "invalid json")]
+        [TestCase("$..secret",
+                "{\"secret\":\"I should be sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"I should be sanitized\"}}",
+                "{\"secret\":\"Sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"Sanitized\"}}")]
+        public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add(jsonPath);
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void RecordingSessionSanitizeTextBodyMultipleValues()
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add("$..secret");
+            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+
+            var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
+            var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
+        }
+
         [Test]
         public void SavingRecordingSanitizesValues()
         {
@@ -265,6 +302,33 @@ namespace Azure.Core.Tests
 
             StringAssert.DoesNotContain(body, text);
             StringAssert.Contains($"\"RequestBody\": null", text);
+        }
+
+        [Test]
+        public void RecordSessionLookupSkipsRequestBodyWhenFilterIsOn()
+        {
+            var request = new MockRequest();
+            request.Uri.Reset(new Uri("https://mockuri.com"));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A nice and long body."));
+            request.Headers.Add("Content-Type", "text/json");
+
+            HttpMessage message = new HttpMessage(request, null);
+            message.Response = new MockResponse(200);
+
+            var session = new RecordSession();
+            var recordTransport = new RecordTransport(session, Mock.Of<HttpPipelineTransport>(), entry => EntryRecordModel.RecordWithoutRequestBody, Mock.Of<Random>());
+
+            recordTransport.Process(message);
+
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body"));
+
+            var skipRequestBody = true;
+            var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);
+
+            playbackTransport.Process(message);
+
+            skipRequestBody = false;
+            Assert.Throws<InvalidOperationException>(() => playbackTransport.Process(message));
         }
 
         private class TestSanitizer : RecordedTestSanitizer

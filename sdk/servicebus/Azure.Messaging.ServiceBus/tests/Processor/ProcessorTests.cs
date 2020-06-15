@@ -27,6 +27,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void MustSetMessageHandler()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusProcessorOptions());
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void MustSetErrorHandler()
+        {
+            var processor = new ServiceBusProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                false,
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusProcessor(
@@ -116,6 +142,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void ProcessorOptionsValidation()
+        {
+            var options = new ServiceBusProcessorOptions();
+            Assert.That(
+                () => options.PrefetchCount = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentCalls = 0,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentCalls = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(0),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            // should not throw
+            options.PrefetchCount = 0;
+            options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
+            options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+        }
+
+        [Test]
         public async Task UserSettledPropertySetCorrectly()
         {
             var msg = new ServiceBusReceivedMessage();
@@ -124,26 +179,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 new Mock<ServiceBusReceiver>().Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             await args.AbandonAsync(msg);
-            Assert.IsTrue(args.IsMessageSettled);
+            Assert.IsTrue(msg.IsSettled);
 
             await args.CompleteAsync(msg);
-            Assert.IsTrue(args.IsMessageSettled);
+            Assert.IsTrue(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             await args.DeadLetterAsync(msg);
-            Assert.IsTrue(args.IsMessageSettled);
+            Assert.IsTrue(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             await args.DeadLetterAsync(msg, "reason");
-            Assert.IsTrue(args.IsMessageSettled);
+            Assert.IsTrue(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             await args.DeferAsync(msg);
-            Assert.IsTrue(args.IsMessageSettled);
+            Assert.IsTrue(msg.IsSettled);
         }
 
         [Test]
@@ -192,31 +247,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 mockReceiver.Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             Assert.That(async () => await args.AbandonAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
             Assert.That(async () => await args.CompleteAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterAsync(msg, "reason"),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
 
-            args.IsMessageSettled = false;
+            msg.IsSettled = false;
             Assert.That(async () => await args.DeferAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.IsMessageSettled);
+            Assert.IsFalse(msg.IsSettled);
         }
     }
 }

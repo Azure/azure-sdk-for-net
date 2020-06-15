@@ -315,6 +315,28 @@ namespace Azure.Storage.Queues.Models
         public string PopReceipt { get { throw null; } }
     }
 }
+namespace Azure.Storage.Queues.Specialized
+{
+    public partial class ClientSideDecryptionFailureEventArgs
+    {
+        internal ClientSideDecryptionFailureEventArgs() { }
+        public System.Exception Exception { get { throw null; } }
+    }
+    public partial class QueueClientSideEncryptionOptions : Azure.Storage.ClientSideEncryptionOptions
+    {
+        public QueueClientSideEncryptionOptions(Azure.Storage.ClientSideEncryptionVersion version) : base (default(Azure.Storage.ClientSideEncryptionVersion)) { }
+        public event System.EventHandler<Azure.Storage.Queues.Specialized.ClientSideDecryptionFailureEventArgs> DecryptionFailed { add { } remove { } }
+    }
+    public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
+    {
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
+    }
+    public static partial class SpecializedQueueExtensions
+    {
+        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptions(this Azure.Storage.Queues.QueueClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
+    }
+}
 namespace Azure.Storage.Sas
 {
     [System.FlagsAttribute]

@@ -1,0 +1,120 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managementGroupId": {
+      "type": "string",
+      "defaultValue": "tiano-mgtest01"
+    },
+    "subscriptionId": {
+        "type": "string",
+        "defaultValue": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+    },
+    "roleDefinitionId": {
+      "type": "string",
+      "defaultValue": "0cb07228-4614-4814-ac1a-c4e39793ce59"
+    }
+  },
+  "variables": {
+    "managementGroupScope": "[concat('Microsoft.Management/managementGroups/', parameters('managementGroupId'))]",
+    "managementGroupFullyQualifiedId": "[concat('/providers/', variables('managementGroupScope'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "name": "[parameters('roleDefinitionId')]",
+      "apiVersion": "2018-07-01",
+      "properties": {
+        "roleName": "Tiano SDK Test Role",
+        "description": "something",
+        "type": "CustomRole",
+        "permissions": [
+          {
+            "actions": [
+              "Microsoft.Storage/*/read"
+            ],
+            "notActions": [
+
+            ]
+          }
+        ],
+        "assignableScopes": [
+          "[variables('managementGroupFullyQualifiedId')]"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "mg-nested",
+      "apiVersion": "2019-07-01",
+      "location": "West US",
+      "scope": "[variables('managementGroupScope')]",
+      "properties": {
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+
+          },
+          "variables": {
+
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Authorization/policyDefinitions",
+              "name": "policy2",
+              "apiVersion": "2016-12-01",
+              "properties": {
+                "policyType": "Custom",
+                "parameters": {
+
+                },
+                "policyRule": {
+                  "if": {
+                    "field": "location",
+                    "equals": "northeurope"
+                  },
+                  "then": {
+                    "effect": "deny"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "mode": "Incremental"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "sub-nested",
+      "apiVersion": "2019-07-01",
+      "location": "East US",
+      "subscriptionId": "[parameters('subscriptionId')]",
+      "properties": {
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+
+          },
+          "variables": {
+
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "name": "sdk-testrg",
+              "apiVersion": "2019-07-01",
+              "location": "East US 2",
+              "properties": {
+
+              }
+            }
+          ]
+        },
+        "mode": "Incremental"
+      }
+    }
+  ]
+}

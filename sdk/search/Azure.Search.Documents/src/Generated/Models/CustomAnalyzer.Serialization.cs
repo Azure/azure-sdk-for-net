@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CustomAnalyzer : IUtf8JsonSerializable
     {
@@ -17,8 +18,8 @@ namespace Azure.Search.Documents.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer");
-            writer.WriteStringValue(Tokenizer.ToString());
-            if (TokenFilters != null)
+            writer.WriteStringValue(TokenizerName.ToString());
+            if (TokenFilters != null && TokenFilters.Any())
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null)
+            if (CharFilters != null && CharFilters.Any())
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();

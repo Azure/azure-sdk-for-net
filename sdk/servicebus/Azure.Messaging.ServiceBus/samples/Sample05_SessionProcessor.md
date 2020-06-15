@@ -33,7 +33,7 @@ messageBatch.TryAdd(
 await sender.SendAsync(messageBatch);
 
 // get the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+var options = new ServiceBusSessionProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.
@@ -55,8 +55,7 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
-    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
-    Console.WriteLine(body);
+    var body = args.Message.Body.AsString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteAsync(args.Message);

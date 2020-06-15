@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class FormTrainingClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
+    public class FormTrainingClientLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClientLiveTests"/> class.
@@ -25,24 +25,29 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher();
         }
 
-        /// <summary>
-        /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedClient()
+        [Test]
+        public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
         {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            var client = CreateInstrumentedFormTrainingClient(useTokenCredential: true);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            TrainingOperation operation;
 
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            var client = new FormTrainingClient(endpoint, credential, options);
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
+            }
 
-            return InstrumentClient(client);
+            // Sanity check to make sure we got an actual response back from the service.
+
+            CustomFormModel model = await operation.WaitForCompletionAsync();
+
+            Assert.IsNotNull(model.ModelId);
+            Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
+            Assert.IsNotNull(model.Errors);
+            Assert.AreEqual(0, model.Errors.Count);
         }
 
         [Test]
@@ -50,14 +55,14 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartTraining(bool labeled)
         {
-            var client = CreateInstrumentedClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var client = CreateInstrumentedFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();
@@ -67,9 +72,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.CreatedOn);
-            Assert.IsNotNull(model.LastModified);
-            Assert.IsNotNull(model.Status);
+            Assert.IsNotNull(model.RequestedOn);
+            Assert.IsNotNull(model.CompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(0, model.Errors.Count);
@@ -83,10 +87,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(0, doc.Errors.Count);
             }
 
-            foreach (var subModel in model.Models)
+            foreach (var submodel in model.Submodels)
             {
-                Assert.IsNotNull(subModel.FormType);
-                foreach (var fields in subModel.Fields)
+                Assert.IsNotNull(submodel.FormType);
+                foreach (var fields in submodel.Fields)
                 {
                     Assert.IsNotNull(fields.Value.Name);
                     if (labeled)
@@ -100,27 +104,15 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartTrainingError()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl);
+            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
-            await operation.WaitForCompletionAsync();
-
-            Assert.IsTrue(operation.HasValue);
-
-            CustomFormModel model = operation.Value;
-
-            Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.CreatedOn);
-            Assert.IsNotNull(model.LastModified);
-            Assert.IsNotNull(model.Status);
-            Assert.AreEqual(CustomFormModelStatus.Invalid, model.Status);
-            Assert.IsNotNull(model.Errors);
-            Assert.AreEqual(1, model.Errors.Count);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().Code);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().Message);
+            Assert.False(operation.HasValue);
+            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         [Test]
@@ -128,14 +120,14 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task TrainingOps(bool labeled)
         {
-            var client = CreateInstrumentedClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var client = CreateInstrumentedFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();
@@ -147,13 +139,13 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
             Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
-            Assert.AreEqual(trainedModel.CreatedOn, resultModel.CreatedOn);
-            Assert.AreEqual(trainedModel.LastModified, resultModel.LastModified);
+            Assert.AreEqual(trainedModel.RequestedOn, resultModel.RequestedOn);
+            Assert.AreEqual(trainedModel.CompletedOn, resultModel.CompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
             Assert.AreEqual(trainedModel.Status, resultModel.Status);
             Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
 
-            for (int i=0; i< resultModel.TrainingDocuments.Count; i++)
+            for (int i = 0; i < resultModel.TrainingDocuments.Count; i++)
             {
                 var tm = trainedModel.TrainingDocuments[i];
                 var rm = resultModel.TrainingDocuments[i];
@@ -165,25 +157,25 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(tm.Errors.Count, rm.Errors.Count);
             }
 
-            for (int i = 0; i < resultModel.Models.Count; i++)
+            for (int i = 0; i < resultModel.Submodels.Count; i++)
             {
-                Assert.AreEqual(trainedModel.Models[i].FormType, resultModel.Models[i].FormType);
+                Assert.AreEqual(trainedModel.Submodels[i].FormType, resultModel.Submodels[i].FormType);
 
-                foreach (var fields in resultModel.Models[i].Fields)
+                foreach (var fields in resultModel.Submodels[i].Fields)
                 {
-                    Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Name, fields.Value.Name);
+                    Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Name, fields.Value.Name);
                     if (labeled)
-                        Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Accuracy, fields.Value.Accuracy);
+                        Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Accuracy, fields.Value.Accuracy);
                     else
-                        Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Label, fields.Value.Label);
+                        Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Label, fields.Value.Label);
                 }
             }
 
-            CustomFormModelInfo modelInfo = client.GetModelInfosAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
-            Assert.IsNotNull(modelInfo.CreatedOn);
-            Assert.IsNotNull(modelInfo.LastModified);
+            Assert.IsNotNull(modelInfo.RequestedOn);
+            Assert.IsNotNull(modelInfo.CompletedOn);
             Assert.IsNotNull(modelInfo.Status);
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
@@ -194,6 +186,85 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.DeleteModelAsync(trainedModel.ModelId);
 
             Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
+        }
+
+        [Test]
+        public async Task CopyModel()
+        {
+            var sourceClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            CopyModelOperation operation;
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            }
+
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasValue);
+
+            CustomFormModelInfo modelCopied = operation.Value;
+
+            Assert.IsNotNull(modelCopied.CompletedOn);
+            Assert.IsNotNull(modelCopied.RequestedOn);
+            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
+            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+        }
+
+        [Test]
+        public void CopyModelError()
+        {
+            var sourceClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+        }
+
+        [Test]
+        public async Task GetCopyAuthorization()
+        {
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            Assert.IsNotNull(targetAuth.ModelId);
+            Assert.IsNotNull(targetAuth.AccessToken);
+            Assert.IsNotNull(targetAuth.ExpiresOn);
+            Assert.AreEqual(resourceID, targetAuth.ResourceId);
+            Assert.AreEqual(region, targetAuth.Region);
+        }
+
+        [Test]
+        public async Task SerializeDeserializeCopyAuthorizationAsync()
+        {
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            string jsonTargetAuth = targetAuth.ToJson();
+
+            CopyAuthorization targetAuthFromJson = CopyAuthorization.FromJson(jsonTargetAuth);
+
+            Assert.AreEqual(targetAuth.ModelId, targetAuthFromJson.ModelId);
+            Assert.AreEqual(targetAuth.ExpiresOn, targetAuthFromJson.ExpiresOn);
+            Assert.AreEqual(targetAuth.AccessToken, targetAuthFromJson.AccessToken);
+            Assert.AreEqual(targetAuth.ResourceId, targetAuthFromJson.ResourceId);
+            Assert.AreEqual(targetAuth.Region, targetAuthFromJson.Region);
         }
     }
 }
