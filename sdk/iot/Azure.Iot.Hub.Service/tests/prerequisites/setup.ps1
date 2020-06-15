@@ -100,6 +100,8 @@ az deployment group create --resource-group $ResourceGroup --name $IotHubName --
     baseName=$IotHubName `
     testApplicationOid=$applicationOId
 
+# Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
+# and we have to use that casing in order to get them from the deployment outputs.
 $iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_CONNECTIONSTRING.value' --output tsv
 $iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_ENDPOINT_URL.value' --output tsv
 
