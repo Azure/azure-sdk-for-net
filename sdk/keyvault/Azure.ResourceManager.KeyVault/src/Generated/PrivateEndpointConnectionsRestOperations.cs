@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PrivateEndpointConnectionsDeleteHeaders>> DeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -320,12 +320,13 @@ namespace Azure.ResourceManager.KeyVault
 
             using var message = CreateDeleteRequest(resourceGroupName, vaultName, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new PrivateEndpointConnectionsDeleteHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
                 case 204:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PrivateEndpointConnectionsDeleteHeaders> Delete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -353,12 +354,13 @@ namespace Azure.ResourceManager.KeyVault
 
             using var message = CreateDeleteRequest(resourceGroupName, vaultName, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
+            var headers = new PrivateEndpointConnectionsDeleteHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
                 case 204:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders>> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -75,11 +75,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             using var message = CreateCreateDataFlowDebugSessionRequest(request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DataFlowDebugSessionCreateDataFlowDebugSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -88,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders> CreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -97,11 +98,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             using var message = CreateCreateDataFlowDebugSessionRequest(request);
             _pipeline.Send(message, cancellationToken);
+            var headers = new DataFlowDebugSessionCreateDataFlowDebugSessionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -336,7 +338,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders>> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -345,11 +347,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             using var message = CreateExecuteCommandRequest(request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DataFlowDebugSessionExecuteCommandHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -358,7 +361,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response ExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders> ExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -367,11 +370,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
             using var message = CreateExecuteCommandRequest(request);
             _pipeline.Send(message, cancellationToken);
+            var headers = new DataFlowDebugSessionExecuteCommandHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                 case 202:
-                    return message.Response;
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
