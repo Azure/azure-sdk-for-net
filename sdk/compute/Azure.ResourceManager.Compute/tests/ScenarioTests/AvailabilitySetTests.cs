@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.True(createOrUpdateResponse.Value.Tags.ContainsKey(updateKey));
 
             // This call will also delete the Availability Set
-            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, defaultFD, defaultUD);
+            await ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, defaultFD, defaultUD);
         }
 
         private async Task VerifyNonDefaultValuesSucceed()
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.Compute.Tests
                 inputAvailabilitySet)).Value;
 
             // This call will also delete the Availability Set
-            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, nonDefaultFD, nonDefaultUD);
+            await ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, nonDefaultFD, nonDefaultUD);
         }
-        private async void ValidateResults(AvailabilitySet outputAvailabilitySet, AvailabilitySet inputAvailabilitySet, string resourceGroupName, string inputAvailabilitySetName, int expectedFD, int expectedUD)
+        private async Task ValidateResults(AvailabilitySet outputAvailabilitySet, AvailabilitySet inputAvailabilitySet, string resourceGroupName, string inputAvailabilitySetName, int expectedFD, int expectedUD)
         {
             string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
 
@@ -341,13 +341,13 @@ namespace Azure.ResourceManager.Compute.Tests
                     if (availabilitySet.Name == availabilitySet1Name)
                     {
                         Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
-                        ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
+                        await ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
                         validationCount++;
                     }
                     else if (availabilitySet.Name == availabilitySet2Name)
                     {
                         Assert.AreEqual(0, availabilitySet.VirtualMachines.Count);
-                        ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
+                        await ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
                         validationCount++;
                     }
                 }

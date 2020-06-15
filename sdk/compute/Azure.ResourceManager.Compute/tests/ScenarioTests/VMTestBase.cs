@@ -31,12 +31,6 @@ namespace Azure.ResourceManager.Compute.Tests
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
-        //protected ResourcesManagementClient m_ResourcesClient;
-        //protected ComputeManagementClient m_CrpClient;
-        //protected StorageManagementClient m_SrpClient;
-        //protected NetworkManagementClient m_NrpClient;
-
-        //public static string DefaultLocation = "SoutheastAsia";
         protected bool m_initialized = false;
         protected object m_lock = new object();
         protected string m_subId;
