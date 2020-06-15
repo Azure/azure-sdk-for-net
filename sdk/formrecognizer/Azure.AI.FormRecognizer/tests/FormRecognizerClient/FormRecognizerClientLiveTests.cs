@@ -294,7 +294,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            var form = operation.Value.Single().RecognizedForm;
+            var form = operation.Value.Single();
 
             Assert.NotNull(form);
 
@@ -397,7 +397,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
-            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedReceipts = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, recognizedReceipts.Count);
 
@@ -406,14 +406,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.NotNull(recognizedReceipt.RecognizedForm);
+                Assert.NotNull(recognizedReceipt);
 
-                ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
+                ValidateRecognizedForm(recognizedReceipt, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedReceipt.RecognizedForm.Fields["MerchantName"];
+                var sampleField = recognizedReceipt.Fields["MerchantName"];
                 var expectedValueText = receiptIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
                 Assert.IsNotNull(sampleField.ValueText);
@@ -434,7 +434,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedReceipts = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(3, recognizedReceipts.Count);
 
@@ -443,16 +443,16 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.NotNull(recognizedReceipt.RecognizedForm);
+                Assert.NotNull(recognizedReceipt);
 
-                ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
+                ValidateRecognizedForm(recognizedReceipt, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
                 if (receiptIndex == 0 || receiptIndex == 2)
                 {
-                    var sampleField = recognizedReceipt.RecognizedForm.Fields["MerchantName"];
+                    var sampleField = recognizedReceipt.Fields["MerchantName"];
                     var expectedValueText = receiptIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
                     Assert.IsNotNull(sampleField.ValueText);
@@ -460,7 +460,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            var blankForm = recognizedReceipts[1].RecognizedForm;
+            var blankForm = recognizedReceipts[1];
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
