@@ -27,10 +27,26 @@ namespace Azure.Core
                 _hasLong = element.TryGetInt64(out _long);
             }
 
+            public Number(long l)
+            {
+                _long = l;
+                _hasLong = true;
+                _double = default;
+                _hasDouble = false;
+            }
+
             private long _long;
             private bool _hasLong;
             private double _double;
             private bool _hasDouble;
+
+            public Number(double d)
+            {
+                _long = default;
+                _hasLong = false;
+                _double = d;
+                _hasDouble = true;
+            }
 
             public void WriteTo(Utf8JsonWriter writer)
             {
@@ -43,9 +59,18 @@ namespace Azure.Core
                     writer.WriteNumberValue(_long);
                 }
             }
+
+            public long AsLong()
+            {
+                return _long;
+            }
+
+            public double AsDouble()
+            {
+                return _double;
+            }
         }
 
-        private readonly JsonElement _element;
         private readonly JsonValueKind _kind;
         private Dictionary<string, DynamicJson>? _objectRepresentation;
         private List<DynamicJson>? _arrayRepresentation;
@@ -57,7 +82,6 @@ namespace Azure.Core
         /// <param name="element"></param>
         internal DynamicJson(JsonElement element)
         {
-            _element = element;
             _kind = element.ValueKind;
             switch (element.ValueKind)
             {
@@ -113,7 +137,34 @@ namespace Azure.Core
         private DynamicJson(object? value)
         {
             _value = value;
-            _kind = value == null ? JsonValueKind.Null : JsonValueKind.String;
+            switch (value)
+            {
+                case long l:
+                    _kind = JsonValueKind.Number;
+                    _value = new Number(l);
+                    break;
+                case int i:
+                    _kind = JsonValueKind.Number;
+                    _value = new Number(i);
+                    break;
+                case double d:
+                    _kind = JsonValueKind.Number;
+                    _value = new Number(d);
+                    break;
+                case float d:
+                    _kind = JsonValueKind.Number;
+                    _value = new Number(d);
+                    break;
+                case bool b when b:
+                    _kind = JsonValueKind.True;
+                    break;
+                case bool b when !b:
+                    _kind = JsonValueKind.False;
+                    break;
+                default:
+                    _kind = value == null ? JsonValueKind.Null : JsonValueKind.String;
+                    break;
+            }
         }
 
         /// <summary>
@@ -282,12 +333,22 @@ namespace Azure.Core
 
             if (type == typeof(long))
             {
-                return (long)value;
+                return ((Number)value).AsLong();
             }
             if (type == typeof(int))
             {
-                return (int)value;
+                return checked((int)((Number)value).AsLong());
             }
+
+            if (type == typeof(double))
+            {
+                return ((Number)value).AsDouble();
+            }
+            if (type == typeof(float))
+            {
+                return (float)((Number)value).AsDouble();
+            }
+
             if (type == typeof(bool))
             {
                 return (bool)value;
