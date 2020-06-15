@@ -10,4 +10,8 @@
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Iot.Hub.Service.csproj" />
+  </ItemGroup>
+
 </Project>
