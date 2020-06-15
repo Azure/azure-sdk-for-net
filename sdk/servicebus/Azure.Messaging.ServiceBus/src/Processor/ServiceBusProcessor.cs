@@ -22,7 +22,9 @@ namespace Azure.Messaging.ServiceBus
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class ServiceBusProcessor
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private Func<ProcessMessageEventArgs, Task> _processMessageAsync;
 
@@ -170,7 +172,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             bool isSessionEntity,
             ServiceBusProcessorOptions options,
-            params string[] sessionIds)
+            string[] sessionIds = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -203,7 +205,7 @@ namespace Azure.Messaging.ServiceBus
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
-            _sessionIds = sessionIds;
+            _sessionIds = sessionIds ?? Array.Empty<string>();
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
         }
 
@@ -257,7 +259,9 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessageAsync != default)
                 {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
 
@@ -269,7 +273,9 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessageAsync != value)
                 {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
 
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = default);
@@ -325,7 +331,9 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != default)
                 {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
@@ -337,7 +345,9 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != value)
                 {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = default);

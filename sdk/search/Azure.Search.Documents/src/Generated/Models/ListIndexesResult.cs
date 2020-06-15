@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="indexes"> The indexes in the Search service. </param>
         internal ListIndexesResult(IReadOnlyList<SearchIndex> indexes)
         {
-            Indexes = indexes;
+            Indexes = indexes ?? new List<SearchIndex>();
         }
 
         /// <summary> The indexes in the Search service. </summary>

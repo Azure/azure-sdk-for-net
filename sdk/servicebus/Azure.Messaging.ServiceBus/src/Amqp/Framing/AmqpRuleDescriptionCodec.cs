@@ -9,13 +9,13 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     internal sealed class AmqpRuleDescriptionCodec : DescribedList
     {
-        public static readonly string Name = AmqpConstants.Vendor + ":rule-description:list";
+        public const string Name = AmqpConstants.Vendor + ":rule-description:list";
         public const ulong Code = 0x0000013700000004;
         private const int Fields = 4;
 
         public AmqpRuleDescriptionCodec() : base(Name, Code) { }
 
-        public AmqpFilterCodec Filter { get; set; }
+        public AmqpRuleFilterCodec Filter { get; set; }
 
         public AmqpRuleActionCodec Action { get; set; }
 
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
         {
             if (count-- > 0)
             {
-                Filter = (AmqpFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
+                Filter = (AmqpRuleFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
             }
 
             if (count-- > 0)

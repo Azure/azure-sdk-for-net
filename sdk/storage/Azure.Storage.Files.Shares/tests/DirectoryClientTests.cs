@@ -808,5 +808,85 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await file.GetPropertiesAsync());
         }
+
+        [Test]
+        public async Task GetDirectoryAsync_AsciiName()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            string name = GetNewDirectoryName();
+
+            ShareDirectoryClient subdir = InstrumentClient(test.Share.GetDirectoryClient(name));
+            await subdir.CreateAsync();
+
+            // Assert
+            List<string> names = new List<string>();
+            ShareDirectoryClient rootDirectory = InstrumentClient(test.Share.GetRootDirectoryClient());
+            await foreach (ShareFileItem item in rootDirectory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
+        [Test]
+        public async Task GetDirectoryAsync_NonAsciiName()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            string name = GetNewNonAsciiDirectoryName();
+
+            ShareDirectoryClient subdir = InstrumentClient(test.Share.GetDirectoryClient(name));
+            await subdir.CreateAsync();
+
+            // Assert
+            List<string> names = new List<string>();
+            ShareDirectoryClient rootDirectory = InstrumentClient(test.Share.GetRootDirectoryClient());
+            await foreach (ShareFileItem item in rootDirectory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
+        [Test]
+        public async Task GetSubdirectoryAsync_AsciiName()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient dir = test.Directory;
+            string name = GetNewDirectoryName();
+
+            ShareDirectoryClient subdir = InstrumentClient(dir.GetSubdirectoryClient(name));
+            await subdir.CreateAsync();
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
+        [Test]
+        public async Task GetSubdirectoryAsync_NonAsciiName()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient dir = test.Directory;
+            string name = GetNewDirectoryName();
+
+            ShareDirectoryClient subdir = InstrumentClient(dir.GetSubdirectoryClient(name));
+            await subdir.CreateAsync();
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
     }
 }

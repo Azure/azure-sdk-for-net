@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,6 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
+            }
+            else
+            {
+                writer.WriteNull("name");
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
@@ -68,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("indexAnalyzer");
                 writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (SynonymMapNames != null)
+            if (SynonymMapNames != null && SynonymMapNames.Any())
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
@@ -78,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();

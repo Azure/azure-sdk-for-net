@@ -29,7 +29,7 @@
     <PackageReference Include="Azure.Identity" />
 
     <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->
-    <PackageReference Include="Microsoft.Spatial" />
+    <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
   </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

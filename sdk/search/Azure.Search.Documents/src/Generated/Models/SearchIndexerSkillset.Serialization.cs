@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,13 +24,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("skills");
-            writer.WriteStartArray();
-            foreach (var item in Skills)
+            if (Skills != null && Skills.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("skills");
+                writer.WriteStartArray();
+                foreach (var item in Skills)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("skills");
+            }
             if (CognitiveServicesAccount != null)
             {
                 writer.WritePropertyName("cognitiveServices");
@@ -68,6 +76,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("skills"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

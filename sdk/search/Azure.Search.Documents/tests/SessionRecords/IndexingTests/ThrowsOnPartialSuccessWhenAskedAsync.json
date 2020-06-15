@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027vkstulig\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027jqwxncep\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "486",
+        "Content-Length": "518",
         "Content-Type": "application/json",
-        "traceparent": "00-ef4c1b6e87f7bb46b649741724da830f-5d20da9b69e0104c-00",
+        "traceparent": "00-d6fb8140f0a7b34a91eceef41019b2b8-a4f1942ef2b88149-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "04bc46f5376814253de8557a155fc3da",
         "x-ms-return-client-request-id": "true"
@@ -30,6 +30,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -45,6 +46,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           }
@@ -53,16 +55,18 @@
       "StatusCode": 207,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "04bc46f5-3768-1425-3de8-557a155fc3da",
         "Content-Length": "155",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 07:01:11 GMT",
-        "elapsed-time": "94",
+        "Date": "Mon, 01 Jun 2020 11:37:14 GMT",
+        "elapsed-time": "177",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "04bc46f5-3768-1425-3de8-557a155fc3da",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "04bc46f5-3768-1425-3de8-557a155fc3da"
       },
       "ResponseBody": {
         "value": [
@@ -82,15 +86,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027vkstulig\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027jqwxncep\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-d4b33bdccdcb17489a4b35e9d4b84653-71c44de2a019be42-00",
+        "traceparent": "00-5b68f732e363304dbe150feb32b47f9f-33986510e0c4d443-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bcb8b5d8fbdfb9ec92ad1c84186d8e7f",
         "x-ms-return-client-request-id": "true"
@@ -99,20 +103,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 08 May 2020 07:01:11 GMT",
-        "elapsed-time": "180",
+        "client-request-id": "bcb8b5d8-fbdf-b9ec-92ad-1c84186d8e7f",
+        "Date": "Mon, 01 Jun 2020 11:37:14 GMT",
+        "elapsed-time": "535",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "bcb8b5d8-fbdf-b9ec-92ad-1c84186d8e7f",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "bcb8b5d8-fbdf-b9ec-92ad-1c84186d8e7f"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "500651422",
-    "SearchIndexName": "vkstulig",
+    "SearchIndexName": "jqwxncep",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }
 }

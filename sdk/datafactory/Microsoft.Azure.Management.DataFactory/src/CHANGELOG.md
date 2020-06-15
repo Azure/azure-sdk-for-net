@@ -1,11 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 4.10.0
-###  Feature Additions
-- Added new type conversion support in Copy activity
-
 ## Version 4.9.0
 ###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+- Added support for xml dataset in ADF
+- Added support for excel dataset in ADF
+- Added new type conversion support in Copy activity
 - Added support for copying data to and from Snowflake using copy activity
 - Added package store support for Azure-SSIS integration runtime
 - Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource

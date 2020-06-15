@@ -12,6 +12,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    TimeoutInMinutes: 120
     ScenarioName: AzureCloud
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.net' }"

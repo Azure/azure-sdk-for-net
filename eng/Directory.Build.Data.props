@@ -35,7 +35,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Management.'))">true</IsMgmtClientLibrary>
+    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
@@ -46,7 +46,6 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
-    <EnableApiCompat Condition="'$(EnableApiCompat)' == '' and '$(IsShippingClientLibrary)' == 'true'">true</EnableApiCompat>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
@@ -143,10 +142,4 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
-
-  <!-- Management Client Library Specific Overrides -->
-  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
-    <EnableApiCompat>false</EnableApiCompat>
-  </PropertyGroup>
-
 </Project>

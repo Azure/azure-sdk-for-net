@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maxGram");
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (TokenChars != null)
+            if (TokenChars != null && TokenChars.Any())
             {
                 writer.WritePropertyName("tokenChars");
                 writer.WriteStartArray();

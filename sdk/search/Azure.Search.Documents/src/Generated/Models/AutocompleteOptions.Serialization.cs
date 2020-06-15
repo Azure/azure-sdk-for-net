@@ -21,6 +21,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("search");
                 writer.WriteStringValue(SearchText);
             }
+            else
+            {
+                writer.WriteNull("search");
+            }
             if (Mode != null)
             {
                 writer.WritePropertyName("autocompleteMode");
@@ -60,6 +64,10 @@ namespace Azure.Search.Documents
             {
                 writer.WritePropertyName("suggesterName");
                 writer.WriteStringValue(SuggesterName);
+            }
+            else
+            {
+                writer.WriteNull("suggesterName");
             }
             if (Size != null)
             {

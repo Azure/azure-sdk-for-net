@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -16,6 +17,7 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\\\"value\\\"\"}", "application/json")]
         [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
         [TestCase("{\"json\"\n:\"value\"}", "application/json")]
         [TestCase("{\"json\" :\"value\"}", "application/json")]
@@ -202,6 +204,35 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("SANITIZED", session.Variables["A"]);
             Assert.AreEqual("Totally not a SANITIZED", session.Variables["B"]);
+        }
+
+        [TestCase("*", "invalid json", "invalid json")]
+        [TestCase("$..secret",
+                "{\"secret\":\"I should be sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"I should be sanitized\"}}",
+                "{\"secret\":\"Sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"Sanitized\"}}")]
+        public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add(jsonPath);
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
+        }
+
+        [Test]
+        public void RecordingSessionSanitizeTextBodyMultipleValues()
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            sanitizer.JsonPathSanitizers.Add("$..secret");
+            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+
+            var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
+            var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";
+
+            string response = sanitizer.SanitizeTextBody(default, body);
+
+            Assert.AreEqual(expected, response);
         }
 
         [Test]

@@ -177,6 +177,14 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
+        protected async Task InsertTestEntities(List<Dictionary<string,object>> entitiesToInsert)
+        {
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+        }
+
         public class TestEntity : TableEntity
         {
             public string StringTypeProperty { get; set; }

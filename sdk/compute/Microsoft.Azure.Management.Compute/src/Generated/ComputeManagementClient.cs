@@ -192,6 +192,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IDiskEncryptionSetsOperations DiskEncryptionSets { get; private set; }
 
         /// <summary>
+        /// Gets the IDiskAccessesOperations.
+        /// </summary>
+        public virtual IDiskAccessesOperations DiskAccesses { get; private set; }
+
+        /// <summary>
         /// Gets the IGalleriesOperations.
         /// </summary>
         public virtual IGalleriesOperations Galleries { get; private set; }
@@ -486,6 +491,7 @@ namespace Microsoft.Azure.Management.Compute
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
             DiskEncryptionSets = new DiskEncryptionSetsOperations(this);
+            DiskAccesses = new DiskAccessesOperations(this);
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);
             GalleryImageVersions = new GalleryImageVersionsOperations(this);

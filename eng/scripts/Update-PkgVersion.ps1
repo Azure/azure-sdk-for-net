@@ -35,54 +35,56 @@ Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft
 
 [CmdletBinding()]
 Param (
-    [ValidateNotNullOrEmpty()]
-    [string] $RepoRoot = "${PSScriptRoot}/../..",
-    [Parameter(Mandatory=$True)]
-    [string] $ServiceDirectory,
-    [Parameter(Mandatory=$True)]
-    [string] $PackageName,
-    [string] $PackageDirName,
-    [string] $NewVersionString
+  [ValidateNotNullOrEmpty()]
+  [string] $RepoRoot = "${PSScriptRoot}/../..",
+  [Parameter(Mandatory=$True)]
+  [string] $ServiceDirectory,
+  [Parameter(Mandatory=$True)]
+  [string] $PackageName,
+  [string] $PackageDirName,
+  [string] $NewVersionString
 )
 
 . ${PSScriptRoot}\..\common\scripts\SemVer.ps1
-
-# Updated Version in csproj and changelog using computed or set NewVersionString
-function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $ReplaceVersion=$False)
-{
-    Write-Verbose "New Version: ${NewPackageVersion}"
-    if ($SemVer.HasValidPrereleaseLabel() -ne $true){
-        Write-Error "Invalid prerelease label"
-        exit 1
-    }
-
-    ${PackageVersion}.Node.InnerText = $SemVer.ToString()
-    $CsprojData.Save($PackageCsprojPath)
-
-    # Increment Version in ChangeLog file
-    & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $SemVer.ToString() -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
-}
-
 # Obtain Current Package Version
-if ([System.String]::IsNullOrEmpty($PackageDirName)) {$PackageDirName = $PackageName}
-$CsprojData = New-Object -TypeName XML
-$CsprojData.PreserveWhitespace = $True
-$PackageCsprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
-$ChangelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
-$CsprojData.Load($PackageCsprojPath)
-$PackageVersion = Select-XML -Xml $CsprojData -XPath '/Project/PropertyGroup/Version'
+if ([System.String]::IsNullOrEmpty($PackageDirName)) { $PackageDirName = $PackageName }
+$changelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
+$csprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
+$csproj = new-object xml
+$csproj.PreserveWhitespace = $true
+$csproj.Load($csprojPath)
+$propertyGroup = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node.ParentNode
+$packageVersion = $propertyGroup.Version
 
-if ([System.String]::IsNullOrEmpty($NewVersionString))
-{
-    $SemVer = [AzureEngSemanticVersion]::new($PackageVersion)
-    Write-Verbose "Current Version: ${PackageVersion}"
+$packageSemVer = [AzureEngSemanticVersion]::new($packageVersion)
+$packageOldSemVer = [AzureEngSemanticVersion]::new($packageVersion)
+Write-Host "Current Version: ${PackageVersion}"
 
-    $SemVer.IncrementAndSetToPrerelease()
-    Update-Version -SemVer $SemVer
+if ([System.String]::IsNullOrEmpty($NewVersionString)) {
+  $packageSemVer.IncrementAndSetToPrerelease()
+
+  & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $packageSemVer.ToString() -ChangeLogPath $changeLogPath -Unreleased $true
 }
-else
-{
-    # Use specified VersionString
-    $SemVer = [AzureEngSemanticVersion]::new($NewVersionString)
-    Update-Version -SemVer $SemVer -Unreleased $False -ReplaceVersion $True
+else {
+  $packageSemVer = [AzureEngSemanticVersion]::new($NewVersionString)
+
+  & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $packageSemVer.ToString() -ChangeLogPath $changeLogPath -Unreleased $false -ReplaceVersion $true
 }
+
+Write-Host "New Version: ${packageSemVer}"
+if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
+  Write-Error "Invalid prerelease label"
+  exit 1
+}
+
+if (!$packageOldSemVer.IsPrerelease) {
+  if (!$propertyGroup.ApiCompatVersion) {
+    $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
+    $whitespace = $propertyGroup["Version"].PreviousSibling
+    $propertyGroup.InsertAfter($whitespace.Clone(), $propertyGroup["Version"]) | Out-Null
+  }
+  $propertyGroup.ApiCompatVersion = $packageOldSemVer.ToString()
+}
+
+$propertyGroup.Version = $packageSemVer.ToString()
+$csproj.Save($csprojPath)

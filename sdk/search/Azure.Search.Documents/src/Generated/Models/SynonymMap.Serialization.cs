@@ -17,8 +17,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("format");
-            writer.WriteStringValue(Format);
+            if (Format != null)
+            {
+                writer.WritePropertyName("format");
+                writer.WriteStringValue(Format);
+            }
+            else
+            {
+                writer.WriteNull("format");
+            }
             writer.WritePropertyName("synonyms");
             writer.WriteStringValue(Synonyms);
             if (EncryptionKey != null)
@@ -50,6 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("format"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     format = property.Value.GetString();
                     continue;
                 }

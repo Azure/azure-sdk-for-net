@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         protected readonly string _entityPath;
         protected readonly string _identifier;
         protected readonly TimeSpan? _maxReceiveWaitTime;
-        protected readonly ServiceBusReceiverOptions _receiverOptions;
+        private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions _processorOptions;
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationSource">CancellationTokenSource to cancel</param>
         /// <param name="task">Associated task to await</param>
-        protected async Task CancelTask(
+        protected static async Task CancelTask(
             CancellationTokenSource cancellationSource,
             Task task)
         {
@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private void ThrowIfSessionLockLost(
+        private static void ThrowIfSessionLockLost(
             Exception exception,
             ServiceBusErrorSource errorSource)
         {
@@ -353,7 +353,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="lockedUntil"></param>
         /// <returns></returns>
-        protected TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
+        protected static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
         {
             var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
 

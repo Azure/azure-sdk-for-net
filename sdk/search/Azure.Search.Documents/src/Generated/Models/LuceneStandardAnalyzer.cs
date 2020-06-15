@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new List<string>();
             ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 
@@ -33,13 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
         internal LuceneStandardAnalyzer(string oDataType, string name, int? maxTokenLength, IList<string> stopwords) : base(oDataType, name)
         {
             MaxTokenLength = maxTokenLength;
-            Stopwords = stopwords;
+            Stopwords = stopwords ?? new List<string>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>
         public int? MaxTokenLength { get; set; }
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
     }
 }

@@ -69,6 +69,10 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
 
+        #region Advanced Options
+        internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>
         /// class.

@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roleAssignments?api-version=2020-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "102",
+        "Content-Type": "application/json",
+        "traceparent": "00-e8d0396dbfe04142b922749f050cbcf9-d4f9df0027a40d43-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "e2dff03ce48183bd49a6a31e22a23495",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "roleId": "7af0c69a-a548-47d6-aea3-d00e69bd83aa",
+        "principalId": "02416857-9fe0-7bc3-6ae6-54f6bd999c12"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "183",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Jun 2020 06:02:25 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "e2dff03ce48183bd49a6a31e22a23495",
+        "x-ms-request-id": "593439f5-d0a2-40d2-9c97-582a744e39b3"
+      },
+      "ResponseBody": {
+        "id": "7af0c69a-a548-47d6-aea3-d00e69bd83aa-02416857-9fe0-7bc3-6ae6-54f6bd999c12",
+        "roleId": "7af0c69a-a548-47d6-aea3-d00e69bd83aa",
+        "principalId": "02416857-9fe0-7bc3-6ae6-54f6bd999c12"
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roleAssignments/7af0c69a-a548-47d6-aea3-d00e69bd83aa-02416857-9fe0-7bc3-6ae6-54f6bd999c12?api-version=2020-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-42f9b90dcaedef4bbe18fd78c4616e57-81f8f9e9af84a64f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "bb2b862d33e9dca343d3fd2cfe727ac9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 09 Jun 2020 06:02:25 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "bb2b862d33e9dca343d3fd2cfe727ac9",
+        "x-ms-request-id": "5d03cb78-520d-48a1-b9b5-b22709f63de0"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roleAssignments?api-version=2020-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8ced2bf8f9c7ee478df48da29400766a-c13b835aad957e4d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200608.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "caff1e60aa2f72a6aabdb939fca459c7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2761",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Jun 2020 06:02:25 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "caff1e60aa2f72a6aabdb939fca459c7",
+        "x-ms-continuation": "",
+        "x-ms-request-id": "795eb4b4-2273-491e-a7a6-48ec1432fa63"
+      },
+      "ResponseBody": "[{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-8f51e348-1fa6-4194-8d13-8e0368e3298a\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u00228f51e348-1fa6-4194-8d13-8e0368e3298a\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-f63e7747-5fce-43a9-bd12-fb382caa5b7e\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u0022f63e7747-5fce-43a9-bd12-fb382caa5b7e\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-6ece8f98-43d0-41c6-bb9a-7a0172e5a645\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u00226ece8f98-43d0-41c6-bb9a-7a0172e5a645\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-ca728363-7297-4e35-a9c3-c6400837883e\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u0022ca728363-7297-4e35-a9c3-c6400837883e\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-ed3c5c21-4f5d-4476-b9f6-f0c4bb404e1a\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u0022ed3c5c21-4f5d-4476-b9f6-f0c4bb404e1a\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-b71a874a-f1a8-4811-b06d-6748316e45a7\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u0022b71a874a-f1a8-4811-b06d-6748316e45a7\u0022},{\u0022id\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1-b71a874a-f1a8-4811-b06d-6748316e45a7\u0022,\u0022roleId\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1\u0022,\u0022principalId\u0022:\u0022b71a874a-f1a8-4811-b06d-6748316e45a7\u0022},{\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa-b71a874a-f1a8-4811-b06d-6748316e45a7\u0022,\u0022roleId\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022principalId\u0022:\u0022b71a874a-f1a8-4811-b06d-6748316e45a7\u0022},{\u0022id\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1-e3688378-4440-43dc-9c10-8b8250fbd549\u0022,\u0022roleId\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1\u0022,\u0022principalId\u0022:\u0022e3688378-4440-43dc-9c10-8b8250fbd549\u0022},{\u0022id\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1-ca728363-7297-4e35-a9c3-c6400837883e\u0022,\u0022roleId\u0022:\u0022c3a6d2f1-a26f-4810-9b0f-591308d5cbf1\u0022,\u0022principalId\u0022:\u0022ca728363-7297-4e35-a9c3-c6400837883e\u0022},{\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa-ca728363-7297-4e35-a9c3-c6400837883e\u0022,\u0022roleId\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022principalId\u0022:\u0022ca728363-7297-4e35-a9c3-c6400837883e\u0022},{\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa-e3688378-4440-43dc-9c10-8b8250fbd549\u0022,\u0022roleId\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022principalId\u0022:\u0022e3688378-4440-43dc-9c10-8b8250fbd549\u0022},{\u0022id\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78-e3688378-4440-43dc-9c10-8b8250fbd549\u0022,\u0022roleId\u0022:\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022,\u0022principalId\u0022:\u0022e3688378-4440-43dc-9c10-8b8250fbd549\u0022},{\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa-3e537dfe-8cfd-4b17-b9e3-ae366f099311\u0022,\u0022roleId\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022principalId\u0022:\u00223e537dfe-8cfd-4b17-b9e3-ae366f099311\u0022},{\u0022id\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa-1424271a-af44-4fb2-9c34-4da0cd9e2055\u0022,\u0022roleId\u0022:\u00227af0c69a-a548-47d6-aea3-d00e69bd83aa\u0022,\u0022principalId\u0022:\u00221424271a-af44-4fb2-9c34-4da0cd9e2055\u0022}]"
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "929018846"
+  }
+}
