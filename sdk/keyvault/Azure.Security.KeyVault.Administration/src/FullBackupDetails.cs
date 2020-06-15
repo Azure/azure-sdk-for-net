@@ -5,7 +5,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Full backup operation. </summary>
+    /// <summary>
+    /// The full backup details containing information about a specific full backup operation.
+    /// </summary>
     [CodeGenModel("FullBackupOperation")]
     public partial class FullBackupDetails
     { }
