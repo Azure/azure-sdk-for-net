@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -90,10 +92,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item, evaluated based on last heartbeat received. Possible values
         /// include: 'Invalid', 'Healthy', 'Unhealthy', 'NotReachable',
         /// 'IRPending'</param>
+        /// <param name="healthStatus">Health status of protected item.
+        /// Possible values include: 'Passed', 'ActionRequired',
+        /// 'ActionSuggested', 'Healthy', 'TransientDegraded',
+        /// 'PersistentDegraded', 'TransientUnhealthy', 'PersistentUnhealthy',
+        /// 'Invalid'</param>
+        /// <param name="healthDetails">Health details on this backup
+        /// item.</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureVmWorkloadSAPAseDatabaseProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), string protectedItemHealthStatus = default(string), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupTime, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo)
+        public AzureVmWorkloadSAPAseDatabaseProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), string protectedItemHealthStatus = default(string), string healthStatus = default(string), IList<HealthDetails> healthDetails = default(IList<HealthDetails>), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupTime, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, healthStatus, healthDetails, extendedInfo)
         {
             CustomInit();
         }
