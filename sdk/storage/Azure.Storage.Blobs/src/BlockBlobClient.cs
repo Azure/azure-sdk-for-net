@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Query"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1825,11 +1825,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual Response<BlobDownloadInfo> Query(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: false,
                 cancellationToken)
@@ -1839,7 +1839,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="QueryAsync"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1857,11 +1857,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             await QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: true,
                 cancellationToken)
@@ -1871,7 +1871,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="QueryInternal"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         private async Task<Response<BlobDownloadInfo>> QueryInternal(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -1906,7 +1906,7 @@ namespace Azure.Storage.Blobs.Specialized
                     QueryRequest queryRequest = new QueryRequest()
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
-                        Expression = query,
+                        Expression = querySqlExpression,
                         InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
