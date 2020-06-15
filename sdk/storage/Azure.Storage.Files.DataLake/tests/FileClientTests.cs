@@ -3117,7 +3117,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeQueryCsvTextConfiguration csvTextConfiguration = new DataLakeQueryCsvTextConfiguration
             {
                 ColumnSeparator = ",",
-                FieldQuote = '"',
+                QuotationCharacter = '"',
                 EscapeCharacter = '\\',
                 RecordSeparator = "\n",
                 HasHeaders = false

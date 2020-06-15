@@ -394,7 +394,7 @@ namespace Azure.Storage.Files.DataLake
             => new BlobQueryCsvTextConfiguration
             {
                 ColumnSeparator = textConfiguration.ColumnSeparator,
-                QuotationCharacter = textConfiguration.FieldQuote,
+                QuotationCharacter = textConfiguration.QuotationCharacter,
                 EscapeCharacter = textConfiguration.EscapeCharacter,
                 HasHeaders = textConfiguration.HasHeaders
             };

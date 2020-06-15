@@ -365,8 +365,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeQueryCsvTextConfiguration() { }
         public string ColumnSeparator { get { throw null; } set { } }
         public char? EscapeCharacter { get { throw null; } set { } }
-        public char? FieldQuote { get { throw null; } set { } }
         public bool HasHeaders { get { throw null; } set { } }
+        public char? QuotationCharacter { get { throw null; } set { } }
     }
     public partial class DataLakeQueryError
     {
