@@ -1,0 +1,177 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus/19.04/versions?$top=1\u0026api-version=2019-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5c6c850817f72b40b0024f5ff9193020-d684077c74ebbc42-00",
+        "User-Agent": [
+          "azsdk-net-Management.Compute/1.0.0-dev.20200604.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a6fb83f3a95ab8159293fd1fd3375f45",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "296",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 Jun 2020 10:55:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a6fb83f3a95ab8159293fd1fd3375f45",
+        "x-ms-correlation-request-id": "3c14b92e-80a2-4533-aa52-0e5a35f3249b",
+        "x-ms-ratelimit-remaining-subscription-reads": "9711",
+        "x-ms-request-id": "44b26d16-72d1-4d59-909f-21a577fee779",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200604T105513Z:3c14b92e-80a2-4533-aa52-0e5a35f3249b",
+        "x-ms-served-by": "5763bc19-56ac-4719-9ffa-8ce24fe8fe13_132344727797475363"
+      },
+      "ResponseBody": [
+        "[\r\n",
+        "  {\r\n",
+        "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
+        "    \u0022name\u0022: \u002219.04.201904170\u0022,\r\n",
+        "    \u0022id\u0022: \u0022/Subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.04/Versions/19.04.201904170\u0022\r\n",
+        "  }\r\n",
+        "]"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar7309?api-version=2017-05-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "76",
+        "Content-Type": "application/json",
+        "traceparent": "00-86f282cb512b6f45845e0a31886899b5-92859d1dfe392847-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/0.1.6-dev.20200604.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "59ccea571eca6d08fadce27de3e7ff81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "SoutheastAsia",
+        "tags": {
+          "crptestar7309": "2020-06-04 10:55:13Z"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "234",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 Jun 2020 10:55:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1f4e9086-7f25-45d3-8b6c-54cdd5950c9a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1055",
+        "x-ms-request-id": "1f4e9086-7f25-45d3-8b6c-54cdd5950c9a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200604T105514Z:1f4e9086-7f25-45d3-8b6c-54cdd5950c9a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7309",
+        "name": "crptestar7309",
+        "location": "southeastasia",
+        "tags": {
+          "crptestar7309": "2020-06-04 10:55:13Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7309/providers/Microsoft.Storage/storageAccounts/crptestar2195?api-version=2019-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "91",
+        "Content-Type": "application/json",
+        "traceparent": "00-341c488eb106d54cbafa81121145ad1f-dc918177a0a73d47-00",
+        "User-Agent": [
+          "azsdk-net-Management.Storage/1.0.0-dev.20200604.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ae637f5dbed92024f1bbd30acbfddc05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_GRS"
+        },
+        "kind": "Storage",
+        "location": "SoutheastAsia",
+        "properties": {}
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Thu, 04 Jun 2020 10:55:16 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/3b43980b-9bd2-4c58-8116-fa459d053ca8?monitor=true\u0026api-version=2019-06-01",
+        "Pragma": "no-cache",
+        "Retry-After": "17",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ae637f5dbed92024f1bbd30acbfddc05",
+        "x-ms-correlation-request-id": "718e1ef9-07e2-4236-a054-3d3ec3f12b12",
+        "x-ms-ratelimit-remaining-subscription-writes": "1192",
+        "x-ms-request-id": "3b43980b-9bd2-4c58-8116-fa459d053ca8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200604T105516Z:718e1ef9-07e2-4236-a054-3d3ec3f12b12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar7309?api-version=2017-05-10",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-8fe788589a4042468487f2426015ff8c-15a467de3aa54245-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/0.1.6-dev.20200604.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "53c27b93b0d4996bc5ac680e4afea2fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 04 Jun 2020 10:55:16 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI3MzA5LVNPVVRIRUFTVEFTSUEiLCJqb2JMb2NhdGlvbiI6InNvdXRoZWFzdGFzaWEifQ?api-version=2017-05-10",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7abd97d7-7ae6-4401-8211-cf1bcbd5b12a",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "7abd97d7-7ae6-4401-8211-cf1bcbd5b12a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200604T105517Z:7abd97d7-7ae6-4401-8211-cf1bcbd5b12a"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "198875497",
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+  }
+}
