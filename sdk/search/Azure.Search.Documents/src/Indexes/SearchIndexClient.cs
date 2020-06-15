@@ -20,6 +20,9 @@ namespace Azure.Search.Documents.Indexes
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
+#if EXPERIMENTAL_SERIALIZER
+        private readonly ObjectSerializer _serializer;
+#endif
 
         private ServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
@@ -70,6 +73,9 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
+#if EXPERIMENTAL_SERIALIZER
+            _serializer = options.Serializer;
+#endif
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(credential);
             _version = options.Version;
@@ -137,6 +143,9 @@ namespace Azure.Search.Documents.Indexes
             return new SearchClient(
                 Endpoint,
                 indexName,
+#if EXPERIMENTAL_SERIALIZER
+                _serializer,
+#endif
                 _pipeline,
                 _clientDiagnostics,
                 _version);

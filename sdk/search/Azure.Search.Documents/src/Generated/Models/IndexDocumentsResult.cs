@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
         internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results)
         {
-            Results = results;
+            Results = results ?? new List<IndexingResult>();
         }
 
         /// <summary> The list of status information for each document in the indexing request. </summary>

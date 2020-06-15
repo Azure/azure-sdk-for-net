@@ -6,11 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Redis</PackageId>
     <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
-    <Version>6.0.0-preview.1</Version>
+    <Version>6.0.0-preview.2</Version>
     <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
-    <PackageReleaseNotes>Added "ReplicasPerMaster" property for Cache Create, Update operations
-Added "ReplicasPerMaster" and "instances" property to the output of Cache Create, Update and Get operations</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for specifying ports to RedisRebootParameters to enable rebooting cache instances based on their exposed port information.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

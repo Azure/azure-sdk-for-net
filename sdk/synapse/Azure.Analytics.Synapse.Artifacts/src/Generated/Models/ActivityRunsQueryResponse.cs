@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal ActivityRunsQueryResponse(IReadOnlyList<ActivityRun> value, string continuationToken)
         {
-            Value = value;
+            Value = value ?? new List<ActivityRun>();
             ContinuationToken = continuationToken;
         }
 

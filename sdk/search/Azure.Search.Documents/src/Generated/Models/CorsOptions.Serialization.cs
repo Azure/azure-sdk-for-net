@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("allowedOrigins");
+            }
             if (MaxAgeInSeconds != null)
             {
                 writer.WritePropertyName("maxAgeInSeconds");

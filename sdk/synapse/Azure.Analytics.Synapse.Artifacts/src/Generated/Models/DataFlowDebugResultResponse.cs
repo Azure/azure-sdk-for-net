@@ -25,8 +25,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The run status of data preview, statistics or expression preview. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
         /// <summary> The result data of data preview, statistics or expression preview. </summary>
-        public string Data { get; set; }
+        public string Data { get; }
     }
 }

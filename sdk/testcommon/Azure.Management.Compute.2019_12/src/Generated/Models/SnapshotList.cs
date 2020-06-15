@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </param>
         internal SnapshotList(IReadOnlyList<Snapshot> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<Snapshot>();
             NextLink = nextLink;
         }
 

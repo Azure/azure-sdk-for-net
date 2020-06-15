@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Etag = etag;
             Priority = priority;
             RuleType = ruleType;
-            MatchConditions = matchConditions;
+            MatchConditions = matchConditions ?? new List<MatchCondition>();
             Action = action;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The rule type. </summary>
         public WebApplicationFirewallRuleType RuleType { get; set; }
         /// <summary> List of match conditions. </summary>
-        public IList<MatchCondition> MatchConditions { get; set; }
+        public IList<MatchCondition> MatchConditions { get; }
         /// <summary> Type of Actions. </summary>
         public WebApplicationFirewallAction Action { get; set; }
     }

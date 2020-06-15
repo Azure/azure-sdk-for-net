@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 
 namespace Azure.Search.Documents
 {
@@ -10,8 +11,6 @@ namespace Azure.Search.Documents
     /// </summary>
     internal static class Constants
     {
-        // TODO: #10596 - Switch constants to use JsonEncodedText
-
         /// <summary>
         /// Gets "*" to select all fields, properties, or rows.
         /// </summary>
@@ -45,47 +44,47 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The @search.text key.
         /// </summary>
-        public const string SearchTextKey = "@search.text";
+        public static readonly JsonEncodedText SearchTextKeyJson = JsonEncodedText.Encode("@search.text");
 
         /// <summary>
         /// The @search.coverage key.
         /// </summary>
-        public const string SearchCoverageKey = "@search.coverage";
+        public static readonly JsonEncodedText SearchCoverageKeyJson = JsonEncodedText.Encode("@search.coverage");
 
         /// <summary>
         /// The @search.score key.
         /// </summary>
-        public const string SearchScoreKey = "@search.score";
+        public static readonly JsonEncodedText SearchScoreKeyJson = JsonEncodedText.Encode("@search.score");
 
         /// <summary>
         /// The @search.facets key.
         /// </summary>
-        public const string SearchFacetsKey = "@search.facets";
+        public static readonly JsonEncodedText SearchFacetsKeyJson = JsonEncodedText.Encode("@search.facets");
 
         /// <summary>
         /// The @search.nextPageParameters key.
         /// </summary>
-        public const string SearchNextPageKey = "@search.nextPageParameters";
+        public static readonly JsonEncodedText SearchNextPageKeyJson = JsonEncodedText.Encode("@search.nextPageParameters");
 
         /// <summary>
         /// The @search.highlights key.
         /// </summary>
-        public const string SearchHighlightsKey = "@search.highlights";
+        public static readonly JsonEncodedText SearchHighlightsKeyJson = JsonEncodedText.Encode("@search.highlights");
 
         /// <summary>
         /// The @search.action key.
         /// </summary>
-        public const string SearchActionKey = "@search.action";
+        public static readonly JsonEncodedText SearchActionKeyJson = JsonEncodedText.Encode("@search.action");
 
         /// <summary>
         /// The @odata.count key.
         /// </summary>
-        public const string ODataCountKey = "@odata.count";
+        public static readonly JsonEncodedText ODataCountKeyJson = JsonEncodedText.Encode("@odata.count");
 
         /// <summary>
         /// The @odata.nextLink key.
         /// </summary>
-        public const string ODataNextLinkKey = "@odata.nextLink";
+        public static readonly JsonEncodedText ODataNextLinkKeyJson = JsonEncodedText.Encode("@odata.nextLink");
 
         /// <summary>
         /// The name key.
@@ -98,9 +97,19 @@ namespace Azure.Search.Documents
         public const string ValueKey = "value";
 
         /// <summary>
+        /// The value key.
+        /// </summary>
+        public static readonly JsonEncodedText ValueKeyJson = JsonEncodedText.Encode(ValueKey);
+
+        /// <summary>
         /// The count key.
         /// </summary>
         public const string CountKey = "count";
+
+        /// <summary>
+        /// The count key.
+        /// </summary>
+        public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
 
         /// <summary>
         /// The to key.
@@ -113,22 +122,15 @@ namespace Azure.Search.Documents
         public const string ToKey = "to";
 
         /// <summary>
-        /// Initial ArrayPool rental size for copying unseekable streams in
-        /// our sync <see cref="JsonExtensions.Deserialize{T}"/> method.
-        /// </summary>
-        public const int UnseekableStreamInitialRentSize = 4096;
-
-        /// <summary>
-        /// Byte order mark for a UTF8 document used by our sync
-        /// <see cref="JsonExtensions.Deserialize{T}"/> method.
-        /// </summary>
-        public static ReadOnlySpan<byte> Utf8Bom => new byte[] { 0xEF, 0xBB, 0xBF };
-
-        /// <summary>
         /// The default recursion limit if we don't get a value from
         /// <see cref="System.Text.Json.JsonSerializerOptions.MaxDepth"/>.
         /// The service limit is (currently) 10.
         /// </summary>
-        public static int MaxJsonRecursionDepth = 64;
+        public const int MaxJsonRecursionDepth = 64;
+
+        /// <summary>
+        /// The default size of buffer to use when copying data between streams.
+        /// </summary>
+        public const int CopyBufferSize = 81920;
     }
 }

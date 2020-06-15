@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Image Definitions in the Shared Image Gallery. Call ListNext() with this to fetch the next page of gallery Image Definitions. </param>
         internal GalleryImageList(IReadOnlyList<GalleryImage> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<GalleryImage>();
             NextLink = nextLink;
         }
 

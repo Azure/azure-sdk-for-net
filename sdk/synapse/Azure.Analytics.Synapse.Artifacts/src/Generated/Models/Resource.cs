@@ -41,9 +41,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The resource type. </summary>
         public string Type { get; }
         /// <summary> The resource location. </summary>
-        public string Location { get; set; }
+        public string Location { get; }
         /// <summary> The resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; set; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Etag identifies change in the resource. </summary>
         public string ETag { get; }
     }

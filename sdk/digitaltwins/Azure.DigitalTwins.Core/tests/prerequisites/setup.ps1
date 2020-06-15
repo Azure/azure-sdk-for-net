@@ -109,7 +109,7 @@ while (++$tries -le 10)
 {
     try
     {
-        az dt rbac assign-role --assignee $appId --role owner -n $DigitalTwinName --output none --only-show-errors
+        az dt role-assignment create --assignee $appId --role owner -n $DigitalTwinName --output none --only-show-errors
 
         if ($LastExitCode -eq 0)
         {

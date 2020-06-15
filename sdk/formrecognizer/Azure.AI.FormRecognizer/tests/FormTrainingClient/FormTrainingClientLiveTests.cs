@@ -220,21 +220,19 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
-        public async Task CopyModelError()
+        public void CopyModelError()
         {
             var sourceClient = CreateInstrumentedFormTrainingClient();
             var targetClient = CreateInstrumentedFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = CopyAuthorization.FromJson("{\"modelId\":\"328c3b7d - a563 - 4ba2 - 8c2f - 2f26d664486a\",\"accessToken\":\"5b5685e4 - 2f24 - 4423 - ab18 - 000000000000\",\"expirationDateTimeTicks\":1591932653,\"resourceId\":\"resourceId\",\"resourceRegion\":\"westcentralus\"}");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateInstrumentedFormTrainingClient();
@@ -251,7 +249,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
             var targetClient = CreateInstrumentedFormTrainingClient();

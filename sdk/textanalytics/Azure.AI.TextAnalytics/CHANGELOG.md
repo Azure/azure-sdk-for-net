@@ -1,5 +1,8 @@
 # Release History
 
+## 1.1.0-preview.1 (Unreleased)
+
+
 ## 1.0.0 (2020-06-09)
 - First stable release of Azure.AI.TextAnalytics package.
 

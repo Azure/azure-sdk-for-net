@@ -23,6 +23,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The provisioning state. </summary>
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; }
     }
 }

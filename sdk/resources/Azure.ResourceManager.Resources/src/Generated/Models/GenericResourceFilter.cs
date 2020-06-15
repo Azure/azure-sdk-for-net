@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        public string ResourceType { get; }
         /// <summary> The tag name. </summary>
-        public string Tagname { get; set; }
+        public string Tagname { get; }
         /// <summary> The tag value. </summary>
-        public string Tagvalue { get; set; }
+        public string Tagvalue { get; }
     }
 }

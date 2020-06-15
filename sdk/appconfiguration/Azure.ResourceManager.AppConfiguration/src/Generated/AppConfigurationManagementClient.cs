@@ -53,28 +53,16 @@ namespace Azure.ResourceManager.AppConfiguration
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of ConfigurationStoresClient. </summary>
-        public virtual ConfigurationStoresClient GetConfigurationStoresClient()
-        {
-            return new ConfigurationStoresClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ConfigurationStoresOperations. </summary>
+        public virtual ConfigurationStoresOperations ConfigurationStores => new ConfigurationStoresOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateEndpointConnectionsClient. </summary>
-        public virtual PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient()
-        {
-            return new PrivateEndpointConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
+        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateLinkResourcesClient. </summary>
-        public virtual PrivateLinkResourcesClient GetPrivateLinkResourcesClient()
-        {
-            return new PrivateLinkResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
+        public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

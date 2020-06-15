@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
@@ -33,6 +34,18 @@ namespace Azure.AI.FormRecognizer
             }
 
             return guid;
+        }
+
+        public static string GetResponseHeader(ResponseHeaders responseHeaders, string headerName)
+        {
+            if (responseHeaders.TryGetValue(headerName, out var headerValue))
+            {
+                return headerValue;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Header '{headerName}' was not present in the response sent by the server.");
+            }
         }
 
         public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<FormRecognizerError> errors, string errorMessage = default)

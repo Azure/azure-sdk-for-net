@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.DataProtection.Blobs` package allows storing AS
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs -v 1.0.0-preview.2
+dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs
 ```
 
 ### Prerequisites
@@ -61,7 +61,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ## Next steps
 
-Read more about [DataProtection in ASP.NET Core](aspnetcore_dataprotection_doc).
+Read more about [DataProtection in ASP.NET Core][aspnetcore_dataprotection_doc].
 
 ## Contributing
 
@@ -81,7 +81,7 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Blobs/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.DataProtection.Blobs
-[nuget]: https://www.nuget.org/
+[nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Blobs
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
 [storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
@@ -90,7 +90,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/using-data-protection
+[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction
 [samples]: samples/
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
