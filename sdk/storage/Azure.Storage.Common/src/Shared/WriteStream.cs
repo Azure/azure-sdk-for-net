@@ -88,8 +88,19 @@ namespace Azure.Storage.Shared
             }
             else
             {
-                // Flush the buffer.
-                await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                // Finish filling the buffer.
+                int remainingSpace = (int)(_bufferSize - _buffer.Position);
+                await WriteToBuffer(
+                    async,
+                    buffer,
+                    offset,
+                    remainingSpace,
+                    cancellationToken).ConfigureAwait(false);
+                remaining -= remainingSpace;
+                offset += remainingSpace;
+
+                // Upload bytes.
+                await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
                 while (remaining > 0)
                 {
@@ -103,7 +114,7 @@ namespace Azure.Storage.Shared
                     // Renaming bytes won't fit in buffer.
                     if (remaining > _bufferSize)
                     {
-                        await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                        await AppendInternal(async, cancellationToken).ConfigureAwait(false);
                         remaining -= (int)_bufferSize;
                         offset += (int)_bufferSize;
                     }
@@ -118,8 +129,7 @@ namespace Azure.Storage.Shared
             _position += count;
         }
 
-        protected virtual async Task FlushInternal(bool async, CancellationToken cancellationToken)
-            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+        protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
 
         public override void Flush()
             => FlushInternal(

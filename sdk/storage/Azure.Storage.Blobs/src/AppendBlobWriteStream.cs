@@ -60,6 +60,9 @@ namespace Azure.Storage.Blobs
             _buffer.Clear();
         }
 
+        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+
         protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
