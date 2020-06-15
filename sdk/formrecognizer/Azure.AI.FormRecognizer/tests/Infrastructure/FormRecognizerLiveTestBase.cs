@@ -11,6 +11,8 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
+        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
+
         public FormRecognizerLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();

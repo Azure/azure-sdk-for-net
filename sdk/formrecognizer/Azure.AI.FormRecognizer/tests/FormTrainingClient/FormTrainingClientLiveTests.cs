@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
