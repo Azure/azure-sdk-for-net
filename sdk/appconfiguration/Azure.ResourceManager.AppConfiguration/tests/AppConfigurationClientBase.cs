@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public AppConfigurationManagementClient AppConfigurationManagementClient { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
-        public ConfigurationStoresClient ConfigurationStoresClient { get; set; }
-        public PrivateEndpointConnectionsClient PrivateEndpointConnectionsClient { get; set; }
-        public ResourceGroupsClient ResourceGroupsClient { get; set; }
-        public PrivateLinkResourcesClient PrivateLinkResourcesClient { get; set; }
-        public OperationsClient OperationsClient { get; set; }
+        public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
+        public PrivateEndpointConnectionsOperations PrivateEndpointConnectionsOperations { get; set; }
+        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
+        public Operations Operations { get; set; }
         public string AZURE_LOCATION { get; set; }
         public string KEY_UUID { get; set; }
         public string LABEL_UUID { get; set; }
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             TEST_VALUE = "test value";
             ResourceGroupPrefix = "Default-EventHub-";
             AppConfigurationManagementClient = GetAppConfigurationManagementClient();
-            ConfigurationStoresClient = AppConfigurationManagementClient.GetConfigurationStoresClient();
-            PrivateEndpointConnectionsClient = AppConfigurationManagementClient.GetPrivateEndpointConnectionsClient();
-            PrivateLinkResourcesClient = AppConfigurationManagementClient.GetPrivateLinkResourcesClient();
-            OperationsClient = AppConfigurationManagementClient.GetOperationsClient();
+            ConfigurationStoresOperations = AppConfigurationManagementClient.ConfigurationStores;
+            PrivateEndpointConnectionsOperations = AppConfigurationManagementClient.PrivateEndpointConnections;
+            PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
+            Operations = AppConfigurationManagementClient.Operations;
             ResourcesManagementClient = GetResourceManagementClient();
-            ResourceGroupsClient = ResourcesManagementClient.GetResourceGroupsClient();
+            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()
