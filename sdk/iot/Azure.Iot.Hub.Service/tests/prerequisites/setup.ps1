@@ -98,7 +98,8 @@ if (-not (Test-Path $armTemplateFile -PathType leaf))
 # Deploy test-resources.json ARM template.
 az deployment group create --resource-group $ResourceGroup --name $IotHubName --template-file $armTemplateFile --parameters `
     baseName=$IotHubName `
-    testApplicationOid=$applicationOId
+    testApplicationOid=$applicationOId `
+    location=$Region
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
