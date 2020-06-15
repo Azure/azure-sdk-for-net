@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = new List<string> { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = new List<string> { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = new List<string> { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation

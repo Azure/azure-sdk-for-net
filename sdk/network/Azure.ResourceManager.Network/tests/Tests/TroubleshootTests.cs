@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             // CreateVirtualNetworkGateway API
             // Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             await TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
 
-            Response<Subnet> getSubnetResponse = await NetworkManagementClient.GetSubnetsClient().GetAsync(resourceGroupName, vnetName, subnetName);
+            Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnetName);
 
             // CreateVirtualNetworkGateway API
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
@@ -85,33 +85,33 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualNetworkGatewaysCreateOrUpdateOperation putVirtualNetworkGatewayResponseOperation =
-                await NetworkManagementClient.GetVirtualNetworkGatewaysClient().StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
+                await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
             await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
             // GetVirtualNetworkGateway API
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
-                await NetworkManagementClient.GetVirtualNetworkGatewaysClient().GetAsync(resourceGroupName, virtualNetworkGatewayName);
+                await NetworkManagementClient.VirtualNetworkGateways.GetAsync(resourceGroupName, virtualNetworkGatewayName);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.GetNetworkWatchersClient().CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
             //Create storage
             string storageName = Recording.GenerateAssetName("azsmnet");
             var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
-            Operation<StorageAccount> accountOperation = await StorageManagementClient.GetStorageAccountsClient().StartCreateAsync(resourceGroupName, storageName, storageParameters);
+            Operation<StorageAccount> accountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroupName, storageName, storageParameters);
             Response<StorageAccount> account = await WaitForCompletionAsync(accountOperation);
             TroubleshootingParameters parameters = new TroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id, account.Value.Id, "https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds");
 
             //Get troubleshooting
-            NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetTroubleshootingAsync("NetworkWatcherRG", "NetworkWatcher_westus2", parameters);
+            NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await NetworkManagementClient.NetworkWatchers.StartGetTroubleshootingAsync("NetworkWatcherRG", "NetworkWatcher_westus2", parameters);
             await WaitForCompletionAsync(troubleshootOperation);
             QueryTroubleshootingParameters qParameters = new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id);
 
             //Query last troubleshoot
-            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetTroubleshootingResultAsync("NetworkWatcherRG", "NetworkWatcher_westus2", qParameters);
+            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await NetworkManagementClient.NetworkWatchers.StartGetTroubleshootingResultAsync("NetworkWatcherRG", "NetworkWatcher_westus2", qParameters);
             await WaitForCompletionAsync(queryTroubleshootOperation);
             //TODO: make verification once fixed for troubleshoot API deployed
         }

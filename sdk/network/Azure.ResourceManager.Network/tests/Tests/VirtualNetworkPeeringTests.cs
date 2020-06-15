@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var location = "westus";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string remoteVirtualNetworkName = Recording.GenerateAssetName("azsmnet");
@@ -63,27 +63,27 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.GetVirtualNetworksClient().StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
+            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await WaitForCompletionAsync(putVnetResponseOperation);
             Assert.AreEqual("Succeeded", putVnetResponse.Value.ProvisioningState.ToString());
 
             // Get Vnet
-            Response<VirtualNetwork> getVnetResponse = await NetworkManagementClient.GetVirtualNetworksClient().GetAsync(resourceGroupName, vnetName);
+            Response<VirtualNetwork> getVnetResponse = await NetworkManagementClient.VirtualNetworks.GetAsync(resourceGroupName, vnetName);
             Assert.AreEqual(vnetName, getVnetResponse.Value.Name);
             Assert.NotNull(getVnetResponse.Value.ResourceGuid);
             Assert.AreEqual("Succeeded", getVnetResponse.Value.ProvisioningState.ToString());
 
             // Get all Vnets
-            AsyncPageable<VirtualNetwork> getAllVnetsAP = NetworkManagementClient.GetVirtualNetworksClient().ListAsync(resourceGroupName);
+            AsyncPageable<VirtualNetwork> getAllVnetsAP = NetworkManagementClient.VirtualNetworks.ListAsync(resourceGroupName);
             await getAllVnetsAP.ToEnumerableAsync();
             vnet.AddressSpace.AddressPrefixes[0] = "10.1.0.0/16";
             vnet.Subnets[0].AddressPrefix = "10.1.1.0/24";
             vnet.Subnets[1].AddressPrefix = "10.1.2.0/24";
-            VirtualNetworksCreateOrUpdateOperation remoteVirtualNetworkOperation = await NetworkManagementClient.GetVirtualNetworksClient().StartCreateOrUpdateAsync(resourceGroupName, remoteVirtualNetworkName, vnet);
+            VirtualNetworksCreateOrUpdateOperation remoteVirtualNetworkOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, remoteVirtualNetworkName, vnet);
             Response<VirtualNetwork> remoteVirtualNetwork = await WaitForCompletionAsync(remoteVirtualNetworkOperation);
 
             // Get Peerings in the vnet
-            AsyncPageable<VirtualNetworkPeering> listPeeringAP = NetworkManagementClient.GetVirtualNetworkPeeringsClient().ListAsync(resourceGroupName, vnetName);
+            AsyncPageable<VirtualNetworkPeering> listPeeringAP = NetworkManagementClient.VirtualNetworkPeerings.ListAsync(resourceGroupName, vnetName);
             List<VirtualNetworkPeering> listPeering = await listPeeringAP.ToEnumerableAsync();
             Assert.IsEmpty(listPeering);
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put peering in the vnet
-            VirtualNetworkPeeringsCreateOrUpdateOperation putPeeringOperation = await NetworkManagementClient.GetVirtualNetworkPeeringsClient().StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnetPeeringName, peering);
+            VirtualNetworkPeeringsCreateOrUpdateOperation putPeeringOperation = await NetworkManagementClient.VirtualNetworkPeerings.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnetPeeringName, peering);
             Response<VirtualNetworkPeering> putPeering = await WaitForCompletionAsync(putPeeringOperation);
             Assert.NotNull(putPeering.Value.Etag);
             Assert.AreEqual(vnetPeeringName, putPeering.Value.Name);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(VirtualNetworkPeeringState.Initiated, putPeering.Value.PeeringState);
 
             // get peering
-            Response<VirtualNetworkPeering> getPeering = await NetworkManagementClient.GetVirtualNetworkPeeringsClient().GetAsync(resourceGroupName, vnetName, vnetPeeringName);
+            Response<VirtualNetworkPeering> getPeering = await NetworkManagementClient.VirtualNetworkPeerings.GetAsync(resourceGroupName, vnetName, vnetPeeringName);
             Assert.AreEqual(getPeering.Value.Etag, putPeering.Value.Etag);
             Assert.AreEqual(vnetPeeringName, getPeering.Value.Name);
             Assert.AreEqual(remoteVirtualNetwork.Value.Id, getPeering.Value.RemoteVirtualNetwork.Id);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(VirtualNetworkPeeringState.Initiated, getPeering.Value.PeeringState);
 
             // list peering
-            listPeeringAP = NetworkManagementClient.GetVirtualNetworkPeeringsClient().ListAsync(resourceGroupName, vnetName);
+            listPeeringAP = NetworkManagementClient.VirtualNetworkPeerings.ListAsync(resourceGroupName, vnetName);
             listPeering = await listPeeringAP.ToEnumerableAsync();
             Has.One.EqualTo(listPeering);
             Assert.AreEqual(listPeering.ElementAt(0).Etag, putPeering.Value.Etag);
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(VirtualNetworkPeeringState.Initiated, listPeering.ElementAt(0).PeeringState);
 
             // delete peering
-            await NetworkManagementClient.GetVirtualNetworkPeeringsClient().StartDeleteAsync(resourceGroupName, vnetName, vnetPeeringName);
-            listPeeringAP = NetworkManagementClient.GetVirtualNetworkPeeringsClient().ListAsync(resourceGroupName, vnetName);
+            await NetworkManagementClient.VirtualNetworkPeerings.StartDeleteAsync(resourceGroupName, vnetName, vnetPeeringName);
+            listPeeringAP = NetworkManagementClient.VirtualNetworkPeerings.ListAsync(resourceGroupName, vnetName);
             listPeering = await listPeeringAP.ToEnumerableAsync();
             Assert.IsEmpty(listPeering);
 
             // Delete Vnet
-            await NetworkManagementClient.GetVirtualNetworksClient().StartDeleteAsync(resourceGroupName, vnetName);
-            await NetworkManagementClient.GetVirtualNetworksClient().StartDeleteAsync(resourceGroupName, remoteVirtualNetworkName);
+            await NetworkManagementClient.VirtualNetworks.StartDeleteAsync(resourceGroupName, vnetName);
+            await NetworkManagementClient.VirtualNetworks.StartDeleteAsync(resourceGroupName, remoteVirtualNetworkName);
 
             // Get all Vnets
-            getAllVnetsAP = NetworkManagementClient.GetVirtualNetworksClient().ListAsync(resourceGroupName);
+            getAllVnetsAP = NetworkManagementClient.VirtualNetworks.ListAsync(resourceGroupName);
             List<VirtualNetwork> getAllVnets = await getAllVnetsAP.ToEnumerableAsync();
             Assert.IsEmpty(getAllVnets);
         }

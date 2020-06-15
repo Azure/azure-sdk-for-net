@@ -11,7 +11,7 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
-    [ClientTestFixture]
+    [RunFrequency(RunTestFrequency.Manually)]
     public class NetworkTestsManagementClientBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
         public bool IsTestTenant = false;
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ComputeManagementClient ComputeManagementClient { get; set; }
         public NetworkManagementClient NetworkManagementClient { get; set; }
 
-        public NetworkInterfacesClient NetworkInterfacesClient { get; set; }
-        public ProvidersClient ProvidersClient { get; set; }
-        public ResourceGroupsClient ResourceGroupsClient { get; set; }
-        public ResourcesClient ResourcesClient { get; set; }
-        public ServiceClient ServiceClient { get; set; }
+        public NetworkInterfacesOperations NetworkInterfacesOperations { get; set; }
+        public ProvidersOperations ProvidersOperations { get; set; }
+        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public ResourcesOperations ResourcesOperations { get; set; }
+        public ServiceOperations ServiceOperations { get; set; }
 
         protected NetworkTestsManagementClientBase(bool isAsync) : base(isAsync)
         {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ComputeManagementClient = GetComputeManagementClient();
             NetworkManagementClient = GetNetworkManagementClient();
 
-            NetworkInterfacesClient = NetworkManagementClient.GetNetworkInterfacesClient();
-            ProvidersClient = ResourceManagementClient.GetProvidersClient();
-            ResourceGroupsClient = ResourceManagementClient.GetResourceGroupsClient();
-            ResourcesClient = ResourceManagementClient.GetResourcesClient();
-            ServiceClient = NetworkManagementClient.GetServiceClient();
+            NetworkInterfacesOperations = NetworkManagementClient.NetworkInterfaces;
+            ProvidersOperations = ResourceManagementClient.Providers;
+            ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
+            ResourcesOperations = ResourceManagementClient.Resources;
+            ServiceOperations = NetworkManagementClient.Service;
         }
 
         private StorageManagementClient GetStorageManagementClient()

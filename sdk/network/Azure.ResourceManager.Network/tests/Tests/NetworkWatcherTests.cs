@@ -39,29 +39,29 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("nw");
 
             string location = "eastus";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             NetworkWatcher properties = new NetworkWatcher { Location = location };
 
             //Create Network Watcher in the resource group
-            await NetworkManagementClient.GetNetworkWatchersClient().CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
             //Get Network Watcher by name in the resource group
-            Response<NetworkWatcher> getNetworkWatcherByName = await NetworkManagementClient.GetNetworkWatchersClient().GetAsync(resourceGroupName, networkWatcherName);
+            Response<NetworkWatcher> getNetworkWatcherByName = await NetworkManagementClient.NetworkWatchers.GetAsync(resourceGroupName, networkWatcherName);
 
             //Get all Network Watchers in the resource group
-            AsyncPageable<NetworkWatcher> getNetworkWatchersByResourceGroupAP = NetworkManagementClient.GetNetworkWatchersClient().ListAsync(resourceGroupName);
+            AsyncPageable<NetworkWatcher> getNetworkWatchersByResourceGroupAP = NetworkManagementClient.NetworkWatchers.ListAsync(resourceGroupName);
             List<NetworkWatcher> getNetworkWatchersByResourceGroup = await getNetworkWatchersByResourceGroupAP.ToEnumerableAsync();
 
             //Get all Network Watchers in the subscription
-            AsyncPageable<NetworkWatcher> getNetworkWatchersBySubscriptionAP = NetworkManagementClient.GetNetworkWatchersClient().ListAllAsync();
+            AsyncPageable<NetworkWatcher> getNetworkWatchersBySubscriptionAP = NetworkManagementClient.NetworkWatchers.ListAllAsync();
             List<NetworkWatcher> getNetworkWatchersBySubscription = await getNetworkWatchersBySubscriptionAP.ToEnumerableAsync();
 
             //Delete Network Watcher
-            await NetworkManagementClient.GetNetworkWatchersClient().StartDeleteAsync(resourceGroupName, networkWatcherName);
+            await NetworkManagementClient.NetworkWatchers.StartDeleteAsync(resourceGroupName, networkWatcherName);
 
             //Get all Network Watchers in the subscription
-            AsyncPageable<NetworkWatcher> getNetworkWatcherBySubscriptionAfterDeletingAP = NetworkManagementClient.GetNetworkWatchersClient().ListAllAsync();
+            AsyncPageable<NetworkWatcher> getNetworkWatcherBySubscriptionAfterDeletingAP = NetworkManagementClient.NetworkWatchers.ListAllAsync();
             List<NetworkWatcher> getNetworkWatcherBySubscriptionAfterDeleting = await getNetworkWatcherBySubscriptionAfterDeletingAP.ToEnumerableAsync();
 
             //Verify name of the created Network Watcher

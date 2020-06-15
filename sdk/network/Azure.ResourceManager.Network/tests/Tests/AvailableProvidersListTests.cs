@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Country = "United States"
             };
             Operation<AvailableProvidersList> providersListOperation =
-                await NetworkManagementClient.GetNetworkWatchersClient().StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+                await NetworkManagementClient.NetworkWatchers.StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Country = "United States",
                 State = "washington"
             };
-            Operation<AvailableProvidersList> providersListOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AvailableProvidersList> providersListOperation = await NetworkManagementClient.NetworkWatchers.StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 State = "washington",
                 City = "seattle"
             };
-            Operation<AvailableProvidersList> providersListOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AvailableProvidersList> providersListOperation = await NetworkManagementClient.NetworkWatchers.StartListAvailableProvidersAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);

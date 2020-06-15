@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public async Task BGPCommunityApiTest()
         {
             _ = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            AsyncPageable<Models.BgpServiceCommunity> communitiesAsync = NetworkManagementClient.GetBgpServiceCommunitiesClient().ListAsync();
+            AsyncPageable<Models.BgpServiceCommunity> communitiesAsync = NetworkManagementClient.BgpServiceCommunities.ListAsync();
             Task<List<Models.BgpServiceCommunity>> communities = communitiesAsync.ToEnumerableAsync();
             Assert.NotNull(communities);
             Assert.True(communities.Result.First().BgpCommunities.First().IsAuthorizedToUse);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             // Create route filter
             string filterName = "filter";
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             string circuitName = "circuit";
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             string circuitName = "circuit";
 

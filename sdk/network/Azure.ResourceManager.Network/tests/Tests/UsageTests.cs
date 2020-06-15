@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkSecurityGroups");
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string networkSecurityGroupName = Recording.GenerateAssetName("azsmnet");
             NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup() { Location = location, };
 
             // Put Nsg
-            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await NetworkManagementClient.GetNetworkSecurityGroupsClient().StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await NetworkManagementClient.NetworkSecurityGroups.StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
             Assert.AreEqual("Succeeded", putNsgResponse.Value.ProvisioningState.ToString());
 
-            Response<NetworkSecurityGroup> getNsgResponse = await NetworkManagementClient.GetNetworkSecurityGroupsClient().GetAsync(resourceGroupName, networkSecurityGroupName);
+            Response<NetworkSecurityGroup> getNsgResponse = await NetworkManagementClient.NetworkSecurityGroups.GetAsync(resourceGroupName, networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<Usage> usagesResponseAP = NetworkManagementClient.GetUsagesClient().ListAsync(getNsgResponse.Value.Location.Replace(" ", string.Empty));
+            AsyncPageable<Usage> usagesResponseAP = NetworkManagementClient.Usages.ListAsync(getNsgResponse.Value.Location.Replace(" ", string.Empty));
             List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);

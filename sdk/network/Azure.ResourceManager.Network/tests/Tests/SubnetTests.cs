@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnet1Name = Recording.GenerateAssetName("azsmnet");
             string subnet2Name = Recording.GenerateAssetName("azsmnet");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = new List<Subnet>() { new Subnet() { Name = subnet1Name, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.GetVirtualNetworksClient().StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
+            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
             await WaitForCompletionAsync(putVnetResponseOperation);
             // Create a Subnet
             // Populate paramters for a Subnet
@@ -69,26 +69,26 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             #region Verification
-            SubnetsCreateOrUpdateOperation putSubnetResponseOperation = await NetworkManagementClient.GetSubnetsClient().StartCreateOrUpdateAsync(resourceGroupName, vnetName, subnet2Name, subnet);
+            SubnetsCreateOrUpdateOperation putSubnetResponseOperation = await NetworkManagementClient.Subnets.StartCreateOrUpdateAsync(resourceGroupName, vnetName, subnet2Name, subnet);
             await WaitForCompletionAsync(putSubnetResponseOperation);
-            Response<VirtualNetwork> getVnetResponse = await NetworkManagementClient.GetVirtualNetworksClient().GetAsync(resourceGroupName, vnetName);
+            Response<VirtualNetwork> getVnetResponse = await NetworkManagementClient.VirtualNetworks.GetAsync(resourceGroupName, vnetName);
             Assert.AreEqual(2, getVnetResponse.Value.Subnets.Count());
 
-            Response<Subnet> getSubnetResponse = await NetworkManagementClient.GetSubnetsClient().GetAsync(resourceGroupName, vnetName, subnet2Name);
+            Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnet2Name);
 
             // Verify the getSubnetResponse
             Assert.True(AreSubnetsEqual(getVnetResponse.Value.Subnets[1], getSubnetResponse));
 
-            AsyncPageable<Subnet> getSubnetListResponseAP = NetworkManagementClient.GetSubnetsClient().ListAsync(resourceGroupName, vnetName);
+            AsyncPageable<Subnet> getSubnetListResponseAP = NetworkManagementClient.Subnets.ListAsync(resourceGroupName, vnetName);
             List<Subnet> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             // Verify ListSubnets
             Assert.True(AreSubnetsEqual(getVnetResponse.Value.Subnets, getSubnetListResponse));
 
             // Delete the subnet "subnet1"
-            await NetworkManagementClient.GetSubnetsClient().StartDeleteAsync(resourceGroupName, vnetName, subnet2Name);
+            await NetworkManagementClient.Subnets.StartDeleteAsync(resourceGroupName, vnetName, subnet2Name);
 
             // Verify that the deletion was successful
-            getSubnetListResponseAP = NetworkManagementClient.GetSubnetsClient().ListAsync(resourceGroupName, vnetName);
+            getSubnetListResponseAP = NetworkManagementClient.Subnets.ListAsync(resourceGroupName, vnetName);
             getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(getSubnetListResponse);
             Assert.AreEqual(subnet1Name, getSubnetListResponse.ElementAt(0).Name);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.GetVirtualNetworksClient().StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
+            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
             await WaitForCompletionAsync(putVnetResponseOperation);
-            Response<Subnet> getSubnetResponse = await NetworkManagementClient.GetSubnetsClient().GetAsync(resourceGroupName, vnetName, subnetName);
+            Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnetName);
             Assert.Null(getSubnetResponse.Value.ResourceNavigationLinks);
 
             //TODO:Need RedisManagementClient
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //    Assert.False(i == 60, "Cache is not in succeeded state even after 30 min.");
             //}
 
-            getSubnetResponse = await NetworkManagementClient.GetSubnetsClient().GetAsync(resourceGroupName, vnetName, subnetName);
+            getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnetName);
             Assert.AreEqual(1, getSubnetResponse.Value.ResourceNavigationLinks.Count);
         }
 

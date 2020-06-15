@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //Response<NetworkWatcher> createNetworkWatcher = await NetworkManagementClient.GetNetworkWatchersClient().CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //Response<NetworkWatcher> createNetworkWatcher = await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.GetVirtualMachinesClient().GetAsync(resourceGroupName, virtualMachineName);
-            string localIPAddress = NetworkManagementClient.GetNetworkInterfacesClient().GetAsync(resourceGroupName, networkInterfaceName).Result.Value.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
+            string localIPAddress = NetworkManagementClient.NetworkInterfaces.GetAsync(resourceGroupName, networkInterfaceName).Result.Value.IpConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 SourcePortRange = "*",
             };
 
-            Response<NetworkSecurityGroup> nsg = await NetworkManagementClient.GetNetworkSecurityGroupsClient().GetAsync(resourceGroupName, networkSecurityGroupName);
+            Response<NetworkSecurityGroup> nsg = await NetworkManagementClient.NetworkSecurityGroups.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.SecurityRules.Add(SecurityRule);
-            NetworkSecurityGroupsCreateOrUpdateOperation createOrUpdateOperation = await NetworkManagementClient.GetNetworkSecurityGroupsClient().StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, nsg);
+            NetworkSecurityGroupsCreateOrUpdateOperation createOrUpdateOperation = await NetworkManagementClient.NetworkSecurityGroups.StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, nsg);
             Response<NetworkSecurityGroup> networkSecurityGroup = await WaitForCompletionAsync(createOrUpdateOperation);
 
             //Get view security group rules
             SecurityGroupViewParameters sgvProperties = new SecurityGroupViewParameters(getVm.Value.Id);
-            NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await NetworkManagementClient.GetNetworkWatchersClient().StartGetVMSecurityRulesAsync("NetworkWatcherRG", "NetworkWatcher_westus2", sgvProperties);
+            NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await NetworkManagementClient.NetworkWatchers.StartGetVMSecurityRulesAsync("NetworkWatcherRG", "NetworkWatcher_westus2", sgvProperties);
             Response<SecurityGroupViewResult> viewNSGRules = await WaitForCompletionAsync(viewNSGRulesOperation);
 
             //Verify effective security rule defined earlier

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkSecurityGroups");
-            await ResourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
             string networkSecurityGroupName = Recording.GenerateAssetName("azsmnet");
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
             string securityRule2 = Recording.GenerateAssetName("azsmnet");
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Nsg
-            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await NetworkManagementClient.GetNetworkSecurityGroupsClient().StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
+            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await NetworkManagementClient.NetworkSecurityGroups.StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
             Assert.AreEqual("Succeeded", putNsgResponse.Value.ProvisioningState.ToString());
 
             // Get NSG
-            Response<NetworkSecurityGroup> getNsgResponse = await NetworkManagementClient.GetNetworkSecurityGroupsClient().GetAsync(resourceGroupName, networkSecurityGroupName);
+            Response<NetworkSecurityGroup> getNsgResponse = await NetworkManagementClient.NetworkSecurityGroups.GetAsync(resourceGroupName, networkSecurityGroupName);
             Assert.AreEqual(networkSecurityGroupName, getNsgResponse.Value.Name);
 
             // Get SecurityRule
-            Response<SecurityRule> getSecurityRuleResponse = await NetworkManagementClient.GetSecurityRulesClient().GetAsync(resourceGroupName, networkSecurityGroupName, securityRule1);
+            Response<SecurityRule> getSecurityRuleResponse = await NetworkManagementClient.SecurityRules.GetAsync(resourceGroupName, networkSecurityGroupName, securityRule1);
             Assert.AreEqual(securityRule1, getSecurityRuleResponse.Value.Name);
 
             CompareSecurityRule(getNsgResponse.Value.SecurityRules[0], getSecurityRuleResponse);
@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 SourcePortRange = "656",
             };
 
-            SecurityRulesCreateOrUpdateOperation putSecurityRuleResponseOperation = await NetworkManagementClient.GetSecurityRulesClient().StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRule2, SecurityRule);
+            SecurityRulesCreateOrUpdateOperation putSecurityRuleResponseOperation = await NetworkManagementClient.SecurityRules.StartCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRule2, SecurityRule);
             Response<SecurityRule> putSecurityRuleResponse = await WaitForCompletionAsync(putSecurityRuleResponseOperation);
             Assert.AreEqual("Succeeded", putSecurityRuleResponse.Value.ProvisioningState.ToString());
 
             // Get NSG
-            getNsgResponse = await NetworkManagementClient.GetNetworkSecurityGroupsClient().GetAsync(resourceGroupName, networkSecurityGroupName);
+            getNsgResponse = await NetworkManagementClient.NetworkSecurityGroups.GetAsync(resourceGroupName, networkSecurityGroupName);
 
             // Get the SecurityRule2
-            Response<SecurityRule> getSecurityRule2Response = await NetworkManagementClient.GetSecurityRulesClient().GetAsync(resourceGroupName, networkSecurityGroupName, securityRule2);
+            Response<SecurityRule> getSecurityRule2Response = await NetworkManagementClient.SecurityRules.GetAsync(resourceGroupName, networkSecurityGroupName, securityRule2);
             Assert.AreEqual(securityRule2, getSecurityRule2Response.Value.Name);
 
             // Verify the security rule
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             CompareSecurityRule(getNsgResponse.Value.SecurityRules[1], getSecurityRule2Response);
 
             // List all SecurityRules
-            AsyncPageable<SecurityRule> getsecurityRulesAP = NetworkManagementClient.GetSecurityRulesClient().ListAsync(resourceGroupName, networkSecurityGroupName);
+            AsyncPageable<SecurityRule> getsecurityRulesAP = NetworkManagementClient.SecurityRules.ListAsync(resourceGroupName, networkSecurityGroupName);
             List<SecurityRule> getsecurityRules = await getsecurityRulesAP.ToEnumerableAsync();
             Assert.AreEqual(2, getsecurityRules.Count());
             CompareSecurityRule(getNsgResponse.Value.SecurityRules[0], getsecurityRules.ElementAt(0));
             CompareSecurityRule(getNsgResponse.Value.SecurityRules[1], getsecurityRules.ElementAt(1));
 
             // Delete a SecurityRule
-            await NetworkManagementClient.GetSecurityRulesClient().StartDeleteAsync(resourceGroupName, networkSecurityGroupName, securityRule2);
+            await NetworkManagementClient.SecurityRules.StartDeleteAsync(resourceGroupName, networkSecurityGroupName, securityRule2);
 
-            getsecurityRulesAP = NetworkManagementClient.GetSecurityRulesClient().ListAsync(resourceGroupName, networkSecurityGroupName);
+            getsecurityRulesAP = NetworkManagementClient.SecurityRules.ListAsync(resourceGroupName, networkSecurityGroupName);
             getsecurityRules = await getsecurityRulesAP.ToEnumerableAsync();
             Has.One.EqualTo(getsecurityRules);
 
             // Delete NSG
-            await NetworkManagementClient.GetNetworkSecurityGroupsClient().StartDeleteAsync(resourceGroupName, networkSecurityGroupName);
+            await NetworkManagementClient.NetworkSecurityGroups.StartDeleteAsync(resourceGroupName, networkSecurityGroupName);
 
             // List NSG
-            AsyncPageable<NetworkSecurityGroup> listNsgResponseAP = NetworkManagementClient.GetNetworkSecurityGroupsClient().ListAsync(resourceGroupName);
+            AsyncPageable<NetworkSecurityGroup> listNsgResponseAP = NetworkManagementClient.NetworkSecurityGroups.ListAsync(resourceGroupName);
             List<NetworkSecurityGroup> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(listNsgResponse);
         }
