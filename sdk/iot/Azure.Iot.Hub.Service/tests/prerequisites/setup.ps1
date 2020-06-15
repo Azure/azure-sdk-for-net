@@ -90,7 +90,7 @@ Write-Host "`nDeploying resources to $ResourceGroup in $Region`n"
 
 $armTemplateFile = "../../../test-resources.json";
 
-if (!(Test-Path $armTemplateFile -PathType leaf))
+if (-not (Test-Path $armTemplateFile -PathType leaf))
 {
     throw "`nARM template was not found. Please make sure you have an ARM template file named test-resources.json in the root of the service directory`n"
 }
