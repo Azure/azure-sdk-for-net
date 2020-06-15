@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
-    public class EventHubManagementTestEnvironment : TestEnvironment
+    public class EventHubsManagementTestEnvironment : TestEnvironment
     {
-        public EventHubManagementTestEnvironment() : base("eventhubmgmt")
+        public EventHubsManagementTestEnvironment() : base("eventhub")
         {
         }
     }
