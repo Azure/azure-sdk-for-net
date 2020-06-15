@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Parameters = deploymentParams
             };
 
-            Deployment DeploymentModel = new Deployment(deploymentProperties);
-            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, DeploymentModel);
+            Deployment deploymentModel = new Deployment(deploymentProperties);
+            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
             await deploymentWait.WaitForCompletionAsync();
         }
 
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Template = templateString
             };
-            Deployment DeploymentModel = new Deployment(deploymentProperties);
-            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, DeploymentModel);
+            Deployment deploymentModel = new Deployment(deploymentProperties);
+            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
             await deploymentWait.WaitForCompletionAsync();
         }
     }

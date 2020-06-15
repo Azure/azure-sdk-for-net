@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Template = templateString,
                 Parameters = deploymentParams
             };
-            Deployment DeploymentModel = new Deployment(deploymentProperties);
+            Deployment deploymentModel = new Deployment(deploymentProperties);
 
-            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, DeploymentModel);
+            Operation<DeploymentExtended> deploymentWait = await resourcesClient.GetDeploymentsClient().StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
             await deploymentWait.WaitForCompletionAsync();
         }
     }

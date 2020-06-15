@@ -71592,41 +71592,41 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1380/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9920/supportedvpndevices?api-version=2020-04-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-6c8fdf5bfe827646babfaf888a2fad62-ac7c5832f1077544-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Network/1.0.0-dev.20200610.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "cbf0c743508219130c5f2aba1354f267",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "2180",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 10 Jun 2020 13:30:51 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "1b401c44-4c37-493c-9cea-c86fb9111791",
-        "x-ms-client-request-id": "cbf0c743508219130c5f2aba1354f267",
-        "x-ms-correlation-request-id": "b8614e82-bb62-475d-8f86-9c8a9868a7d4",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "05a014fe-23bb-4f6c-b8cd-ff50a7f87604",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200610T133051Z:b8614e82-bb62-475d-8f86-9c8a9868a7d4"
-      },
-      "ResponseBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CRpVpnDeviceList version=\u00221.0\u0022\u003E\u003CVendor name=\u0022Cisco\u0022\u003E\u003CDeviceFamily name=\u0022Cisco-ISR(IOS)\u0022\u003E\u003CFirmwareVersion name=\u0022Cisco-ISR-15.x--IKEv2\u002BBGP\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022IOS (ISR, ASR)\u0022\u003E\u003CFirmwareVersion name=\u002215.x (IKEv2)\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022ASA (Adaptive Security Appliance)\u0022\u003E\u003CFirmwareVersion name=\u0022Cisco_ASA_[9.8\u002B_ONLY]_RouteBased(IKEv2\u002BVTI\u002BBGP)\u0022 /\u003E\u003CFirmwareVersion name=\u0022Cisco_ASA_[Between_9.6(4)--9.7.x_ONLY]_RouteBased(IKEv2-NoBGP)\u0022 /\u003E\u003CFirmwareVersion name=\u0022Cisco_ASA_[BELOW_9.6(4)_ONLY]_IKEv2_{MUST:CustomAzure-IPSec-Policies_w/Narrow_TrafficSelectors}\u0022 /\u003E\u003CFirmwareVersion name=\u0022Cisco_ASA_[9.8\u002B_ONLY]_RouteBased(IKEv2\u0026gt;VTI-with-BGP-Option)\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\u0022Juniper\u0022\u003E\u003CDeviceFamily name=\u0022Juniper_SRX\u0022\u003E\u003CFirmwareVersion name=\u0022Juniper_SRX_JunOS-12.x_RouteBased\u0022 /\u003E\u003CFirmwareVersion name=\u0022Juniper_SRX_JunOS-12.x_RouteBased-and-BGP_Support\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022Juniper_SSG\u0022\u003E\u003CFirmwareVersion name=\u0022Juniper_SSG_ScreenOS-6.2.x-RouteBased\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022Juniper_J-Series\u0022\u003E\u003CFirmwareVersion name=\u0022Juniper_J-Series_JunOS12.x-RouteBased\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022Juniper_MX\u0022\u003E\u003CFirmwareVersion name=\u0022Juniper_MX_JunOS-12.x\u002B_RouteBased-and-BGP_Support\u0022 /\u003E\u003CFirmwareVersion name=\u0022Juniper_MX_JunOS-12.x\u002B_RouteBased_noBGP\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\u0022Juniper_ISG\u0022\u003E\u003CFirmwareVersion name=\u0022Juniper_ISG_ScreenOS-6.3.x--RouteBased\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\u0022Ubiquiti\u0022\u003E\u003CDeviceFamily name=\u0022EdgeRouter\u0022\u003E\u003CFirmwareVersion name=\u0022Ubiquiti_EdgeOS_1.10.x-RouteBased_BGP\u0022 /\u003E\u003CFirmwareVersion name=\u0022Ubiquiti_EdgeOS_1.10.x-RouteBased_VTI\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\u0022Generic Samples\u0022\u003E\u003CDeviceFamily name=\u0022Device Parameters\u0022\u003E\u003CFirmwareVersion name=\u00221.0\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\u0022Allied Telesis\u0022\u003E\u003CDeviceFamily name=\u0022AR-Series VPN Routers\u0022\u003E\u003CFirmwareVersion name=\u0022AR-Series 5.4.7\u002B\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\u0022Sentrium (VyOS)\u0022\u003E\u003CDeviceFamily name=\u0022VyOS\u0022\u003E\u003CFirmwareVersion name=\u0022VyOS1.2.2\u002B(VTI\u002BBGP)\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003C/RpVpnDeviceList\u003E"
+        "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1380/providers/Microsoft.Network/virtualNetworkGateways/azsmnet9920/supportedvpndevices?api-version=2020-04-01",
+        "RequestMethod": "POST",
+        "RequestHeaders": {
+            "Authorization": "Sanitized",
+            "traceparent": "00-6c8fdf5bfe827646babfaf888a2fad62-ac7c5832f1077544-00",
+            "User-Agent": [
+                "azsdk-net-ResourceManager.Network/1.0.0-dev.20200610.1",
+                "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.19041 )"
+            ],
+            "x-ms-client-request-id": "cbf0c743508219130c5f2aba1354f267",
+            "x-ms-return-client-request-id": "true"
+        },
+        "RequestBody": null,
+        "StatusCode": 200,
+        "ResponseHeaders": {
+            "Cache-Control": "no-cache",
+            "Content-Length": "2180",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Wed, 10 Jun 2020 13:30:51 GMT",
+            "Expires": "-1",
+            "Pragma": "no-cache",
+            "Server": [
+                "Microsoft-HTTPAPI/2.0",
+                "Microsoft-HTTPAPI/2.0"
+            ],
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "X-Content-Type-Options": "nosniff",
+            "x-ms-arm-service-request-id": "1b401c44-4c37-493c-9cea-c86fb9111791",
+            "x-ms-client-request-id": "cbf0c743508219130c5f2aba1354f267",
+            "x-ms-correlation-request-id": "b8614e82-bb62-475d-8f86-9c8a9868a7d4",
+            "x-ms-ratelimit-remaining-subscription-writes": "1198",
+            "x-ms-request-id": "05a014fe-23bb-4f6c-b8cd-ff50a7f87604",
+            "x-ms-routing-request-id": "SOUTHEASTASIA:20200610T133051Z:b8614e82-bb62-475d-8f86-9c8a9868a7d4"
+        },
+        "ResponseBody": "\u0022\u003C?xml version=\\\u00221.0\\\u0022 encoding=\\\u0022utf-8\\\u0022?\u003E\u003CRpVpnDeviceList version=\\\u00221.0\\\u0022\u003E\u003CVendor name=\\\u0022Cisco\\\u0022\u003E\u003CDeviceFamily name=\\\u0022Cisco-ISR(IOS)\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Cisco-ISR-15.x--IKEv2\u002BBGP\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022IOS (ISR, ASR)\\\u0022\u003E\u003CFirmwareVersion name=\\\u002215.x (IKEv2)\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022ASA (Adaptive Security Appliance)\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Cisco_ASA_[9.8\u002B_ONLY]_RouteBased(IKEv2\u002BVTI\u002BBGP)\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Cisco_ASA_[Between_9.6(4)--9.7.x_ONLY]_RouteBased(IKEv2-NoBGP)\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Cisco_ASA_[BELOW_9.6(4)_ONLY]_IKEv2_{MUST:CustomAzure-IPSec-Policies_w/Narrow_TrafficSelectors}\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Cisco_ASA_[9.8\u002B_ONLY]_RouteBased(IKEv2\u0026gt;VTI-with-BGP-Option)\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\\\u0022Juniper\\\u0022\u003E\u003CDeviceFamily name=\\\u0022Juniper_SRX\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Juniper_SRX_JunOS-12.x_RouteBased\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Juniper_SRX_JunOS-12.x_RouteBased-and-BGP_Support\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022Juniper_SSG\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Juniper_SSG_ScreenOS-6.2.x-RouteBased\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022Juniper_J-Series\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Juniper_J-Series_JunOS12.x-RouteBased\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022Juniper_MX\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Juniper_MX_JunOS-12.x\u002B_RouteBased-and-BGP_Support\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Juniper_MX_JunOS-12.x\u002B_RouteBased_noBGP\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003CDeviceFamily name=\\\u0022Juniper_ISG\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Juniper_ISG_ScreenOS-6.3.x--RouteBased\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\\\u0022Ubiquiti\\\u0022\u003E\u003CDeviceFamily name=\\\u0022EdgeRouter\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022Ubiquiti_EdgeOS_1.10.x-RouteBased_BGP\\\u0022 /\u003E\u003CFirmwareVersion name=\\\u0022Ubiquiti_EdgeOS_1.10.x-RouteBased_VTI\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\\\u0022Generic Samples\\\u0022\u003E\u003CDeviceFamily name=\\\u0022Device Parameters\\\u0022\u003E\u003CFirmwareVersion name=\\\u00221.0\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\\\u0022Allied Telesis\\\u0022\u003E\u003CDeviceFamily name=\\\u0022AR-Series VPN Routers\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022AR-Series 5.4.7\u002B\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003CVendor name=\\\u0022Sentrium (VyOS)\\\u0022\u003E\u003CDeviceFamily name=\\\u0022VyOS\\\u0022\u003E\u003CFirmwareVersion name=\\\u0022VyOS1.2.2\u002B(VTI\u002BBGP)\\\u0022 /\u003E\u003C/DeviceFamily\u003E\u003C/Vendor\u003E\u003C/RpVpnDeviceList\u003E\u0022"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1380/providers/Microsoft.Network/connections/azsmnet964/vpndeviceconfigurationscript?api-version=2020-04-01",
