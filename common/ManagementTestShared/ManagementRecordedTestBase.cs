@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Core.TestFramework;
+#if RESOURCES_RP
+using Azure.ResourceManager.Resources;
+#else
+using Azure.Management.Resources;
+#endif
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Management.Resources;
 
 namespace Azure.ResourceManager.TestFramework
 {
