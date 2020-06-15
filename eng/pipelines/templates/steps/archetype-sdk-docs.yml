@@ -7,12 +7,6 @@ steps:
     displayName: 'Use Python 3.6'
     inputs:
       versionSpec: '3.6'
-  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
-    parameters:
-      TargetFolder: '.'
-      RootFolder: '.'
-      BuildSHA: $(Build.SourceVersion)
-      RepoId: 'Azure/azure-sdk-for-net'
   - pwsh: |
       # Download and Extract or restore Packages required for Doc Generation
       Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
