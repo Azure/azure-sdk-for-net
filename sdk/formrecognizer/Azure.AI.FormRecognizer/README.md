@@ -124,9 +124,9 @@ For long running operations in the Azure SDK, the client exposes a `Start<operat
 ## Examples
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
 
-* [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
+* [Recognize Receipts](#recognize-receipts)
 * [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
 
