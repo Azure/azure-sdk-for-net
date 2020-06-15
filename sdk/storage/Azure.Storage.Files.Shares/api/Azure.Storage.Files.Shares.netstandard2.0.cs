@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileOpenWriteOptions
     {
         public ShareFileOpenWriteOptions() { }
-        public int BufferSize { get { throw null; } set { } }
+        public long BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public long MaxSize { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }

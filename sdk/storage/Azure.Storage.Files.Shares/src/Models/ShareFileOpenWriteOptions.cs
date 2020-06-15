@@ -17,13 +17,13 @@ namespace Azure.Storage.Files.Shares.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 100 MB.
+        /// The size of the buffer to use.  Default is 1 MB,
+        /// max is 4 MB.
         /// </summary>
-        public int BufferSize { get; set; }
+        public long BufferSize { get; set; }
 
         /// <summary>
-        /// Required if <see cref="Overwrite"/> is set to true.
+        /// Required if Overwrite is set to true.
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long MaxSize { get; set; }

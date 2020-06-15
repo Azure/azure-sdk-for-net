@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake
 
         public DataLakeFileWriteStream(
             DataLakeFileClient fileClient,
-            int bufferSize,
+            long bufferSize,
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler) : base(
@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 _writeIndex += _buffer.Length;
-                _buffer.SetLength(0);
+                _buffer.Clear();
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        protected override void ValidateBufferSize(int bufferSize)
+        protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
             {

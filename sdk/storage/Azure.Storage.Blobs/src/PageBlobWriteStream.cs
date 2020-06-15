@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs
 
         public PageBlobWriteStream(
             PageBlobClient pageBlobClient,
-            int bufferSize,
+            long bufferSize,
             long position,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs
             int remaining = count;
 
             // New bytes will fit in the buffer.
-            if (count <= _buffer.Capacity - _buffer.Position)
+            if (count <= _bufferSize - _buffer.Position)
             {
                 await WriteToBuffer(async, buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
@@ -62,15 +62,15 @@ namespace Azure.Storage.Blobs
                         async,
                         buffer,
                         offset,
-                        Math.Min(remaining, _buffer.Capacity),
+                        (int)Math.Min(remaining, _bufferSize),
                         cancellationToken).ConfigureAwait(false);
 
-                    // Renaming bytes won't fit in buffer.
-                    if (remaining > _buffer.Capacity)
+                    // Remaining bytes won't fit in buffer.
+                    if (remaining > _bufferSize)
                     {
                         await AppendInternal(async, cancellationToken).ConfigureAwait(false);
-                        remaining -= _buffer.Capacity;
-                        offset += _buffer.Capacity;
+                        remaining -= (int)_bufferSize;
+                        offset += (int)_bufferSize;
                     }
 
                     // Remaining bytes will fit in buffer.
@@ -110,11 +110,11 @@ namespace Azure.Storage.Blobs
                 }
 
                 _writeIndex += _buffer.Length;
-                _buffer.SetLength(0);
+                _buffer.Clear();
             }
         }
 
-        protected override void ValidateBufferSize(int bufferSize)
+        protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
             {

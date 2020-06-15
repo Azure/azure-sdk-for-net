@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -17,13 +18,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 100 MB.
+        /// The size of the buffer to use.  Default is 1 MB,
+        /// max is 100 MB.
         /// </summary>
-        public int BufferSize { get; set; }
+        public long BufferSize { get; set; }
 
         /// <summary>
-        /// Required if <see cref="Overwrite"/> is set to true.
+        /// Required <see cref="Overwrite"/> is set to true.
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long Size { get; set; }

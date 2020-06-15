@@ -17,16 +17,16 @@ namespace Azure.Storage.Blobs.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// Required if <see cref="Overwrite"/> is set to true.
+        /// The size of the buffer to use.  Default is 1 MB,
+        /// max is 4 MB.  Must be a increment of 512.
+        /// </summary>
+        public long BufferSize { get; set; }
+
+        /// <summary>
+        /// Required if Overwrite is set to true.
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long Size { get; set; }
-
-        /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 4 MB.
-        /// </summary>
-        public int BufferSize { get; set; }
 
         /// <summary>
         /// Optional <see cref="PageBlobRequestConditions"/> to add

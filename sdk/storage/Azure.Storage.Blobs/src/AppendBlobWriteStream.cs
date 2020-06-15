@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs
 
         public AppendBlobWriteStream(
             AppendBlobClient appendBlobClient,
-            int bufferSize,
+            long bufferSize,
             long position,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
@@ -57,10 +57,10 @@ namespace Azure.Storage.Blobs
                 }
             }
 
-            _buffer.SetLength(0);
+            _buffer.Clear();
         }
 
-        protected override void ValidateBufferSize(int bufferSize)
+        protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
             {

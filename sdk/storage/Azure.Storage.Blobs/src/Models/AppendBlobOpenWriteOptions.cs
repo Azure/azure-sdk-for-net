@@ -17,10 +17,10 @@ namespace Azure.Storage.Blobs.Models
         public bool Overwrite { get; set; }
 
         /// <summary>
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 4 MB.
+        /// The size of the buffer to use.  Default is 1 MB,
+        /// max is 4 MB.
         /// </summary>
-        public int BufferSize { get; set; }
+        public long BufferSize { get; set; }
 
         /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
@@ -33,5 +33,6 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
     }
 }

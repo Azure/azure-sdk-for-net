@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Shares
 
         public ShareFileWriteStream(
             ShareFileClient fileClient,
-            int bufferSize,
+            long bufferSize,
             long position,
             ShareFileRequestConditions conditions,
             IProgress<long> progressHandler) : base(
@@ -60,11 +60,11 @@ namespace Azure.Storage.Files.Shares
                 }
 
                 _writeIndex += _buffer.Length;
-                _buffer.SetLength(0);
+                _buffer.Clear();
             }
         }
 
-        protected override void ValidateBufferSize(int bufferSize)
+        protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
             {

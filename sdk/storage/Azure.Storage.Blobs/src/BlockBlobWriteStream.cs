@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs
 
         public BlockBlobWriteStream(
             BlockBlobClient blockBlobClient,
-            int bufferSize,
+            long bufferSize,
             long position,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 _blockIds.Add(blockId);
-                _buffer.SetLength(0);
+                _buffer.Clear();
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        protected override void ValidateBufferSize(int bufferSize)
+        protected override void ValidateBufferSize(long bufferSize)
         {
             if (bufferSize < 1)
             {

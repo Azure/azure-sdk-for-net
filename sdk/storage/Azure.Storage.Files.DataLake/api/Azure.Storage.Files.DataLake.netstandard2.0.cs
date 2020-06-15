@@ -300,7 +300,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeFileOpenWriteOptions
     {
         public DataLakeFileOpenWriteOptions() { }
-        public int BufferSize { get { throw null; } set { } }
+        public long BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }

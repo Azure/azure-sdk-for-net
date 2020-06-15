@@ -12,17 +12,19 @@ namespace Azure.Storage.Shared
     internal abstract class WriteStream : Stream
     {
         protected long _position;
+        protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
-        protected readonly MemoryStream _buffer;
+        protected readonly PooledMemoryStream _buffer;
 
         protected WriteStream(
             long position,
-            int bufferSize,
+            long bufferSize,
             IProgress<long> progressHandler)
         {
             _position = position;
+            _bufferSize = bufferSize;
             _progressHandler = progressHandler;
-            _buffer = new MemoryStream(bufferSize);
+            _buffer = new PooledMemoryStream((int)Math.Min(Constants.MB, bufferSize));
         }
 
         public override bool CanRead => false;
@@ -80,7 +82,7 @@ namespace Azure.Storage.Shared
             int remaining = count;
 
             // New bytes will fit in the buffer.
-            if (count <= _buffer.Capacity - _buffer.Position)
+            if (count <= _bufferSize - _buffer.Position)
             {
                 await WriteToBuffer(async, buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
@@ -95,15 +97,15 @@ namespace Azure.Storage.Shared
                         async,
                         buffer,
                         offset,
-                        Math.Min(remaining, _buffer.Capacity),
+                        (int)Math.Min(remaining, _bufferSize),
                         cancellationToken).ConfigureAwait(false);
 
                     // Renaming bytes won't fit in buffer.
-                    if (remaining > _buffer.Capacity)
+                    if (remaining > _bufferSize)
                     {
                         await FlushInternal(async, cancellationToken).ConfigureAwait(false);
-                        remaining -= _buffer.Capacity;
-                        offset += _buffer.Capacity;
+                        remaining -= (int)_bufferSize;
+                        offset += (int)_bufferSize;
                     }
 
                     // Remaining bytes will fit in buffer.
@@ -131,7 +133,7 @@ namespace Azure.Storage.Shared
 
         protected abstract Task AppendInternal(bool async, CancellationToken cancellationToken);
 
-        protected abstract void ValidateBufferSize(int bufferSize);
+        protected abstract void ValidateBufferSize(long bufferSize);
 
         protected async Task WriteToBuffer(
             bool async,
