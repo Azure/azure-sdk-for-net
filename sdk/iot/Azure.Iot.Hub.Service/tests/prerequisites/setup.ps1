@@ -88,7 +88,7 @@ if ($rgExists -eq "False")
 
 Write-Host "`nDeploying resources to $ResourceGroup in $Region`n"
 
-$armTemplateFile = "../../../test-resources.json";
+$armTemplateFile = Join-Path -Path $PSScriptRoot -ChildPath "../../../test-resources.json"
 
 if (-not (Test-Path $armTemplateFile -PathType leaf))
 {
@@ -115,7 +115,7 @@ $appSecretJsonEscaped = ConvertTo-Json $appSecret
 $config = @"
 {
     "IotHubConnectionString": "$iotHubConnectionString",
-    "IotHubHostName": "$($iotHubHostName)",
+    "IotHubHostName": "$iotHubHostName",
     "ApplicationId": "$appId",
     "ClientSecret": $appSecretJsonEscaped,
     "TestMode":  "Live"
