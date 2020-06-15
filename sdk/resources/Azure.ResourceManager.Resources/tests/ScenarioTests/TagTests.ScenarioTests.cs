@@ -146,7 +146,8 @@ namespace ResourceGroups.Tests
             }
             );
             await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource);
-            Thread.Sleep(3*1000);
+
+            SleepInTest(3*1000);
 
             var putTags = new Tags()
             {

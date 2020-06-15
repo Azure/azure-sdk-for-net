@@ -9,4 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="ScenarioTests\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

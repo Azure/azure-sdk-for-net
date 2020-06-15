@@ -10,6 +10,7 @@ using Azure.Management.Resources;
 #endif
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -79,6 +80,13 @@ namespace Azure.ResourceManager.TestFramework
                         return false;
                 }
                 ).First().Locations.FirstOrDefault();
+        }
+
+        protected void SleepInTest(int milliSeconds)
+        {
+            if (Mode == RecordedTestMode.Playback)
+                return;
+            Thread.Sleep(milliSeconds);
         }
     }
 }
