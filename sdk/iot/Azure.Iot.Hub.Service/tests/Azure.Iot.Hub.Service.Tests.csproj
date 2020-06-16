@@ -29,5 +29,11 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Castle.Core" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+  </ItemGroup>
   
 </Project>

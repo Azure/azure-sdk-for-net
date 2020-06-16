@@ -18,7 +18,6 @@ namespace Azure.Iot.Hub.Service.Tests
         }
 
         [Test]
-        [Category("Live")]
         public async Task Devices_Lifecycle()
         {
             // TODO: This is just a verification that tests run and it requires the tester to complete this test however they see fit.
