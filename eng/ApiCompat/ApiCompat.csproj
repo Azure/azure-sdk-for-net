@@ -1,39 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--This project is used to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. The most recent
+  <!--
+  This project is used to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. The most recent
   version is restored from Nuget via the package references below. The ApiCompatVerification target, specified below, is referenced in the
-  eng/Directory.Build.Data.targets file which causes this target to be executed for each csproj that has the EnableApiCompat parameter set to true.
-  The EnableApiCompat parameter defaults to the value of the IsShippingClientLibrary parameter, which is defined in the eng/Directory.Build.Data.props file.-->
+  eng/Directory.Build.Data.targets file which causes this target to be executed for each csproj that has an ApiCompatVersion set.
+  -->
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RunApiCompatForSrc>true</RunApiCompatForSrc>
-    <IntermediateOutputPath>$(IntermediateOutputPath)/$(TargetPackageName)</IntermediateOutputPath>    
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" />
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.19552.1" />
+    <PackageReference Include="$(TargetPackageName)" Version="$(TargetPackageVersion)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Data.AppConfiguration" />
-    <PackageReference Include="Azure.Messaging.EventHubs" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" />
-    <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.Security.KeyVault.Certificates" />
-    <PackageReference Include="Azure.Security.KeyVault.Keys" />
-    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
-    <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Azure.Storage.Blobs.Batch" />
-    <PackageReference Include="Azure.Storage.Common" />
-    <PackageReference Include="Azure.Storage.Files.Shares" />
-    <PackageReference Include="Azure.Storage.Queues" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
-  </ItemGroup>
-
-  <Import Project="..\Packages.Data.props" />
-
-  <Target Name="ApiCompatVerification" DependsOnTargets="_ResolveResolvedMatchingContract;$(TargetsTriggeredByCompilation)">
+  <Target Name="_VerifyTargetPackageInfo">
+    <Error Condition="'$(TargetPackageName)' == ''" Text="TargetPackageName is not set!" />
+    <Error Condition="'$(TargetPackageVersion)' == ''" Text="TargetPackageVersion is not set!" />
+    <Error Condition="'$(TargetOutputPath)' == ''" Text="TargetOutputPath is not set!" />
   </Target>
+
+  <Target Name="ApiCompatVerification"
+          DependsOnTargets="_VerifyTargetPackageInfo;
+                            Restore;
+                            _ResolveResolvedMatchingContract;
+                            $(TargetsTriggeredByCompilation)" />
 
   <Target Name="_ResolveResolvedMatchingContract" DependsOnTargets="ResolveReferences">
     <PropertyGroup>
@@ -45,8 +36,6 @@
       <_DependencyDirectories Include="$(TargetOutputPath)" />
       <ReferencePath Remove="$(TargetPackageDll)" />
     </ItemGroup>
-    <Error Condition="'@(ResolvedMatchingContract)' == ''"
-             Text="Unable to find dll for $(TargetPackageName). Make sure it is included in list of Package References if the ApiCompatVerification target (defined in eng/ApiCompat/ApiCompat.csproj) is intended to run for this package. If ApiCompatVerification should not be run, set the EnableApiCompat parameter to false in the csproj file." />
     <Message Text="Running ApiCompatVerification against $(TargetPackageDll) using assemblies from $(TargetOutputPath)" Importance="High" />
   </Target>
 </Project>

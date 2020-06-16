@@ -9,10 +9,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -391,7 +391,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         using MemoryStream stream = new MemoryStream();
                         await JsonSerializer
-                            .SerializeAsync(stream, hotel, JsonExtensions.SerializerOptions, cts.Token)
+                            .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
                             .ConfigureAwait(false);
 
                         stream.Seek(0, SeekOrigin.Begin);

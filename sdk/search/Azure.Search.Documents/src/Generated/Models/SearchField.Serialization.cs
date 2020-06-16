@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,11 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             if (IsKey != null)
@@ -68,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("indexAnalyzer");
                 writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (SynonymMapNames != null)
+            if (SynonymMapNames != null && SynonymMapNames.Any())
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
@@ -78,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -110,10 +108,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }

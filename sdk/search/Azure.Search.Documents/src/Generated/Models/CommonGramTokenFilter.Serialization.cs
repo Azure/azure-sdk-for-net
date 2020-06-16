@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("commonWords");
-            writer.WriteStartArray();
-            foreach (var item in CommonWords)
+            if (CommonWords.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("commonWords");
+                writer.WriteStartArray();
+                foreach (var item in CommonWords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("commonWords");
+            }
             if (IgnoreCase != null)
             {
                 writer.WritePropertyName("ignoreCase");

@@ -1,9 +1,12 @@
 # Release History
 
-## 1.0.0-preview.6 (Unreleased)
+## 1.1.0-preview.1 (Unreleased)
 
 
-## 1.0.0-preview.5 (Unreleased)
+## 1.0.0 (2020-06-09)
+- First stable release of Azure.AI.TextAnalytics package.
+
+## 1.0.0-preview.5 (2020-05-27)
 ### Breaking changes
 - Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.

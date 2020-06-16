@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
             RowSpan = rowSpan;
             ColumnSpan = columnSpan;
             Text = text;
-            BoundingBox = boundingBox;
+            BoundingBox = boundingBox ?? new List<float>();
             Confidence = confidence;
             Elements = elements;
             IsHeader = isHeader;

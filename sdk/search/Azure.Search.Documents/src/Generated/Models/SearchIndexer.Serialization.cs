@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
-            if (FieldMappings != null)
+            if (FieldMappings != null && FieldMappings.Any())
             {
                 writer.WritePropertyName("fieldMappings");
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputFieldMappings != null)
+            if (OutputFieldMappings != null && OutputFieldMappings.Any())
             {
                 writer.WritePropertyName("outputFieldMappings");
                 writer.WriteStartArray();

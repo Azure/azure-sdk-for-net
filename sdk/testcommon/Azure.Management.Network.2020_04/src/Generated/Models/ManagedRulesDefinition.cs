@@ -32,12 +32,12 @@ namespace Azure.Management.Network.Models
         internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets)
         {
             Exclusions = exclusions;
-            ManagedRuleSets = managedRuleSets;
+            ManagedRuleSets = managedRuleSets ?? new List<ManagedRuleSet>();
         }
 
         /// <summary> The Exclusions that are applied on the policy. </summary>
         public IList<OwaspCrsExclusionEntry> Exclusions { get; set; }
         /// <summary> The managed rule sets that are associated with the policy. </summary>
-        public IList<ManagedRuleSet> ManagedRuleSets { get; set; }
+        public IList<ManagedRuleSet> ManagedRuleSets { get; }
     }
 }

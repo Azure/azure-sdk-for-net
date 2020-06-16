@@ -3465,7 +3465,9 @@ namespace Azure.Storage.Files.DataLake
         /// is read from.
         /// </returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int bufferSize = Constants.DefaultStreamingDownloadSize,
@@ -3513,7 +3515,9 @@ namespace Azure.Storage.Files.DataLake
         /// is read from.
         /// </returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int bufferSize = Constants.DefaultStreamingDownloadSize,

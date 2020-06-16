@@ -78,7 +78,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities.
 
-            entityResults = (await client.QueryAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
             entityResults.Clear();
@@ -102,7 +102,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
         }
@@ -359,7 +359,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            var emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+            var emptyresult = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
 
@@ -381,7 +381,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+            emptyresult = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
         }
@@ -404,7 +404,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
             Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
@@ -434,7 +434,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
             Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
@@ -479,7 +479,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.First().Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }
@@ -504,7 +504,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities.
 
-            entityResults = (await client.QueryAsync<TestEntity>(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync<TestEntity>(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
             entityResults.Clear();
@@ -528,7 +528,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
         }
@@ -715,7 +715,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            var emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+            var emptyresult = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
 
@@ -760,7 +760,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
             entityResults.Sort((first, second) => first.IntTypeProperty.CompareTo(second.IntTypeProperty));
 
             for (int i = 0; i < entityResults.Count; i++)
@@ -782,10 +782,9 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
         [Test]
-        [Ignore("requires https://github.com/Azure/azure-sdk-for-net/issues/11764")]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
-            // Cratae some policies.
+            // Create some policies.
 
             var policyToCreate = new List<SignedIdentifier>
             {
@@ -799,7 +798,11 @@ namespace Azure.Data.Tables.Tests
 
             var policies = await client.GetAccessPolicyAsync();
 
-            Assert.That(policies.Value, Is.EquivalentTo(policyToCreate));
+            Assert.That(policies.Value[0].Id, Is.EqualTo(policyToCreate[0].Id));
+            Assert.That(policies.Value[0].AccessPolicy.Expiry, Is.EqualTo(policyToCreate[0].AccessPolicy.Expiry));
+            Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
+            Assert.That(policies.Value[0].AccessPolicy.Start, Is.EqualTo(policyToCreate[0].AccessPolicy.Start));
+
         }
     }
 }

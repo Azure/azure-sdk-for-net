@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
@@ -312,6 +314,21 @@ namespace Azure.Search.Documents.Tests
             }
 
             await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
+        }
+
+        [Test]
+        public async Task AnalyzeText()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            AnalyzeTextOptions request = new AnalyzeTextOptions("The quick brown fox jumped over the lazy dog.", LexicalTokenizerName.Whitespace);
+
+            Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
+            IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
+
+            Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
         }
     }
 }

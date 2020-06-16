@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -84,6 +85,7 @@ namespace Azure.Messaging.ServiceBus
         /// Service Bus entity gateway; intended to perform delegated operations.
         /// </summary>
         internal readonly TransportReceiver InnerReceiver;
+        internal readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -133,6 +135,7 @@ namespace Azure.Messaging.ServiceBus
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver);
+                _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -178,6 +181,11 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ReceiveMessageStart(Identifier, maxMessages);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.ReceiveActivityName,
+                requestedMessageCount: maxMessages);
+            scope.Start();
+
             IList<ServiceBusReceivedMessage> messages = null;
 
             try
@@ -190,11 +198,13 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.ReceiveMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ReceiveMessageComplete(Identifier, messages.Count);
+            scope.SetMessageData(messages);
+
             return messages;
         }
 
@@ -331,8 +341,12 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
-            IList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.PeekActivityName,
+                requestedMessageCount: maxMessages);
+            scope.Start();
 
+            IList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
             try
             {
                 messages = await InnerReceiver.PeekBatchAtAsync(
@@ -344,11 +358,12 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.PeekMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageComplete(Identifier, messages.Count);
+            scope.SetMessageData(messages);
             return messages;
         }
 
@@ -400,72 +415,32 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            await CompleteAsync(new[] { lockToken }, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
-        /// </summary>
-        ///
-        /// <param name="messages">An <see cref="IEnumerable{ServiceBusReceivedMessage}"/> containing the messages to complete.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal virtual async Task CompleteAsync(
-            IEnumerable<ServiceBusReceivedMessage> messages,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(messages, nameof(messages));
-            await CompleteAsync(
-                messages.Select(m => m.LockToken).ToList(),
-                cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
-        /// </summary>
-        ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal virtual async Task CompleteAsync(
-            IEnumerable<string> lockTokens,
-            CancellationToken cancellationToken = default)
-        {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
-            Argument.AssertNotNullOrEmpty(lockTokens, nameof(lockTokens));
+            Argument.AssertNotNullOrEmpty(lockToken, nameof(lockToken));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var lockTokenList = lockTokens.ToList();
             Logger.CompleteMessageStart(
                 Identifier,
-                lockTokenList.Count,
-                StringUtility.GetFormattedLockTokens(lockTokenList));
+                1,
+                lockToken);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.CompleteActivityName,
+                lockToken: lockToken);
+            scope.Start();
 
             try
             {
                 await InnerReceiver.CompleteAsync(
-                    lockTokenList,
+                    lockToken,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 Logger.CompleteMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CompleteMessageComplete(Identifier);
         }
 
@@ -521,6 +496,10 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.AbandonActivityName,
+                lockToken: lockToken);
+            scope.Start();
 
             try
             {
@@ -532,10 +511,10 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.AbandonMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageComplete(Identifier);
         }
 
@@ -676,6 +655,10 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.DeadLetterActivityName,
+                lockToken: lockToken);
+            scope.Start();
 
             try
             {
@@ -689,10 +672,10 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.DeadLetterMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeadLetterMessageComplete(Identifier);
         }
 
@@ -750,6 +733,10 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageStart(Identifier, 1, lockToken);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.DeferActivityName,
+                lockToken: lockToken);
+            scope.Start();
 
             try
             {
@@ -758,13 +745,13 @@ namespace Azure.Messaging.ServiceBus
                     propertiesToModify,
                     cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Logger.DeferMessageException(Identifier, ex.ToString());
+                Logger.DeferMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageComplete(Identifier);
         }
 
@@ -782,7 +769,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Throws an InvalidOperationException when the lock token is empty.
         /// </summary>
-        private void ThrowIfLockTokenIsEmpty(string lockToken)
+        private static void ThrowIfLockTokenIsEmpty(string lockToken)
         {
             if (Guid.Parse(lockToken) == Guid.Empty)
             {
@@ -832,7 +819,13 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
+
             Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList.Count, sequenceNumbersList);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
+            scope.AddAttribute(
+                DiagnosticProperty.SequenceNumbersAttribute,
+                string.Join(",", sequenceNumbers));
+            scope.Start();
 
             IList<ServiceBusReceivedMessage> deferredMessages = null;
             try
@@ -844,11 +837,12 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.ReceiveDeferredMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ReceiveDeferredMessageComplete(Identifier, sequenceNumbersList.Count);
+            Logger.ReceiveDeferredMessageComplete(Identifier, deferredMessages.Count);
+            scope.SetMessageData(deferredMessages);
             return deferredMessages;
         }
 
@@ -899,6 +893,11 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewMessageLockStart(Identifier, 1, lockToken);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.RenewMessageLockActivityName,
+                lockToken: lockToken);
+            scope.Start();
+
             DateTimeOffset lockedUntil;
             try
             {
@@ -909,11 +908,12 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.RenewMessageLockException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewMessageLockComplete(Identifier);
+            scope.AddAttribute(DiagnosticProperty.LockedUntilAttribute, lockedUntil);
             return lockedUntil;
         }
 

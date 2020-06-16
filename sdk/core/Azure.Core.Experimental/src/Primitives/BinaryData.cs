@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Azure.Core
     /// <summary>
     /// Abstraction for a payload of binary data.
     /// </summary>
-    public readonly struct BinaryData : IEquatable<BinaryData>
+    public readonly struct BinaryData
     {
         private const int CopyToBufferSize = 81920;
 
@@ -38,8 +39,10 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data">The string data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(string data) =>
-            Create(data, Encoding.UTF8);
+        public BinaryData(string data)
+            : this(data, Encoding.UTF8)
+        {
+        }
 
         /// <summary>
         /// Creates a binary data instance from a string
@@ -49,10 +52,10 @@ namespace Azure.Core
         /// <param name="encoding">The encoding to use when converting
         /// the data to bytes.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(string data, Encoding encoding)
+        public BinaryData(string data, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            return new BinaryData(encoding.GetBytes(data));
+            Data = encoding.GetBytes(data);
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(Stream stream) =>
+        public static BinaryData FromStream(Stream stream) =>
             CreateAsync(stream, false).EnsureCompleted();
 
         /// <summary>
@@ -70,7 +73,7 @@ namespace Azure.Core
         /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
         /// the request to cancel the operation.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> CreateAsync(
+        public static async Task<BinaryData> FromStreamAsync(
             Stream stream,
             CancellationToken cancellationToken = default) =>
             await CreateAsync(stream, true, cancellationToken).ConfigureAwait(false);
@@ -110,10 +113,10 @@ namespace Azure.Core
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create<T>(
+        public static BinaryData FromSerializable<T>(
             T data,
             ObjectSerializer serializer) =>
-            CreateAsync<T>(data, serializer, false).EnsureCompleted();
+            FromSerializableAsync<T>(data, serializer, false).EnsureCompleted();
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
@@ -126,12 +129,12 @@ namespace Azure.Core
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         /// TODO - add cancellation token support
         /// once ObjectSerializer.SerializeAsync adds it.
-        public static async Task<BinaryData> CreateAsync<T>(
+        public static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
             ObjectSerializer serializer) =>
-            await CreateAsync<T>(data, serializer, true).ConfigureAwait(false);
+            await FromSerializableAsync<T>(data, serializer, true).ConfigureAwait(false);
 
-        private static async Task<BinaryData> CreateAsync<T>(
+        private static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
             ObjectSerializer serializer,
             bool async)
@@ -150,11 +153,98 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Implicit conversion to string.
+        /// Converts the BinaryData to a string using UTF-8.
         /// </summary>
-        /// <param name="data"></param>
-        public static implicit operator string(BinaryData data) =>
-            data.AsString();
+        /// <returns>The string representation of the data.</returns>
+        public override string ToString() =>
+           ToString(Encoding.UTF8);
+
+        /// <summary>
+        /// Converts the BinaryData to a string using the specified
+        /// encoding.
+        /// </summary>
+        /// <param name="encoding">The encoding to use when decoding
+        /// the bytes.</param>
+        /// <returns>The string representation of the data.</returns>
+        public string ToString(
+            Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            if (MemoryMarshal.TryGetArray(
+                Data,
+                out ArraySegment<byte> data))
+            {
+                return encoding.GetString(data.Array);
+            }
+            return encoding.GetString(Data.ToArray());
+        }
+
+        /// <summary>
+        /// Converts the BinaryData to bytes.
+        /// </summary>
+        /// <returns>The data as bytes.</returns>
+        public ReadOnlyMemory<byte> AsBytes() =>
+            Data;
+
+        /// <summary>
+        /// Converts the BinaryData to a stream.
+        /// </summary>
+        /// <returns>A stream representing the data.</returns>
+        public Stream ToStream()
+        {
+            if (MemoryMarshal.TryGetArray(
+                Data,
+                out ArraySegment<byte> data))
+            {
+                return new MemoryStream(data.Array);
+            }
+            return new MemoryStream(Data.ToArray());
+        }
+
+        /// <summary>
+        /// Converts the BinaryData to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type that the data should be
+        /// converted to.</typeparam>
+        /// <param name="serializer">The serializer to use
+        /// when deserializing the data.</param>
+        ///<returns>The data converted to the specified type.</returns>
+        public T Deserialize<T>(ObjectSerializer serializer) =>
+            DeserializeAsync<T>(serializer, false).EnsureCompleted();
+
+        /// <summary>
+        /// Converts the BinaryData to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type that the data should be
+        /// converted to.</typeparam>
+        /// <param name="serializer">The serializer to use
+        /// when deserializing the data.</param>
+        ///<returns>The data cast to the specified type. If the cast cannot
+        ///be performed, an <see cref="InvalidCastException"/> will be
+        ///thrown.</returns>
+        /// TODO - add cancellation token support
+        /// once ObjectSerializer.DeserializeAsync adds it.
+        public async ValueTask<T> DeserializeAsync<T>(
+            ObjectSerializer serializer) =>
+            await DeserializeAsync<T>(serializer, true).ConfigureAwait(false);
+
+        private async ValueTask<T> DeserializeAsync<T>(
+            ObjectSerializer serializer,
+            bool async)
+        {
+            Argument.AssertNotNull(serializer, nameof(serializer));
+            if (async)
+            {
+                return (T)await serializer.DeserializeAsync(
+                    ToStream(),
+                    typeof(T))
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return (T)serializer.Deserialize(ToStream(), typeof(T));
+            }
+        }
 
         /// <summary>
         /// Implicit conversion to bytes.
@@ -166,16 +256,17 @@ namespace Azure.Core
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) =>
-            (obj is BinaryData other) && Equals(other);
-
+        public override bool Equals(object? obj)
+        {
+            if (obj is BinaryData data)
+            {
+                return data.Data.Equals(Data);
+            }
+            return false;
+        }
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             Data.GetHashCode();
-
-        /// <inheritdoc />
-        public bool Equals(BinaryData other) =>
-            other.Data.Equals(Data);
     }
 }

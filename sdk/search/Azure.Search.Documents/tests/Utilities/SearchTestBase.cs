@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -138,21 +140,38 @@ namespace Azure.Search.Documents.Tests
         /// Dynamic documents will ignore any extra fields on the actual
         /// document that weren't present on the expected document.
         /// </summary>
-        /// <typeparam name="T">The type of documents.</typeparam>
         /// <param name="expected">The expected document.</param>
         /// <param name="actual">The actual document.</param>
-        public static void AssertApproximate<T>(T expected, T actual)
+        /// <param name="path">Optional expression path.</param>
+        public static void AssertApproximate(object expected, object actual, string path = null)
         {
             if (expected is SearchDocument e && actual is SearchDocument a)
             {
                 foreach (string key in e.Keys)
                 {
-                    Assert.AreEqual(e[key], a[key]);
+                    object eValue = e[key];
+                    object aValue =
+                        (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
+                        (eValue is double) ? a.GetDouble(key) :
+                        a[key];
+                    AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
                 }
             }
+#if EXPERIMENTAL_SPATIAL
+            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            {
+                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+            }
+#endif
             else
             {
-                Assert.AreEqual(expected, actual);
+                AssertEqual(expected, actual, path);
+            }
+
+            static void AssertEqual(object e, object a, string path)
+            {
+                string location = path != null ? " at path " + path : "";
+                Assert.AreEqual(e, a, $"Expected value `{e}`{location}, not `{a}`.");
             }
         }
     }

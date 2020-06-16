@@ -46,9 +46,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal TextLine_internal(string text, IReadOnlyList<float> boundingBox, Language_internal? language, IReadOnlyList<TextWord_internal> words)
         {
             Text = text;
-            BoundingBox = boundingBox;
+            BoundingBox = boundingBox ?? new List<float>();
             Language = language;
-            Words = words;
+            Words = words ?? new List<TextWord_internal>();
         }
 
         /// <summary> The text content of the line. </summary>

@@ -26,7 +26,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     /// </summary>
     ///
     /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportReceiver" />
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal class AmqpReceiver : TransportReceiver
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -181,13 +183,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        private void CloseLink(ReceivingAmqpLink link)
+        private static void CloseLink(ReceivingAmqpLink link)
         {
             link.Session?.SafeClose();
             link.SafeClose();
         }
 
-        private void CloseLink(RequestResponseAmqpLink link)
+        private static void CloseLink(RequestResponseAmqpLink link)
         {
             link.Session?.SafeClose();
             link.SafeClose();
@@ -301,7 +303,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -311,12 +313,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task CompleteAsync(
-            IEnumerable<string> lockTokens,
+            string lockToken,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
                 async (timeout) =>
                 await CompleteInternalAsync(
-                    lockTokens,
+                    lockToken,
                     timeout).ConfigureAwait(false),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
@@ -325,24 +327,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="timeout"></param>
         private async Task CompleteInternalAsync(
-            IEnumerable<string> lockTokens,
+            string lockToken,
             TimeSpan timeout)
         {
-            var lockTokenGuids = lockTokens.Select(token => new Guid(token)).ToArray();
-            foreach (var tokenGuid in lockTokenGuids)
+            Guid lockTokenGuid = new Guid(lockToken);
+            var lockTokenGuids = new[] { lockTokenGuid };
+            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
-                if (_requestResponseLockedMessages.Contains(tokenGuid))
-                {
-                    await DisposeMessageRequestResponseAsync(
-                        lockTokenGuids,
-                        timeout,
-                        DispositionStatus.Completed,
-                        SessionId).ConfigureAwait(false);
-                    return;
-                }
+                await DisposeMessageRequestResponseAsync(
+                    lockTokenGuids,
+                    timeout,
+                    DispositionStatus.Completed,
+                    SessionId).ConfigureAwait(false);
+                return;
             }
             await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
         }
@@ -736,18 +736,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        private Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify) =>
+        private static Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, false);
 
-        private Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
+        private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
 
-        private List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
+        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
         {
             return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
         }
 
-        private Outcome GetModifiedOutcome(
+        private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
             bool undeliverableHere)
         {

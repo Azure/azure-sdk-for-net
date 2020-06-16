@@ -42,21 +42,21 @@ namespace Azure.Management.Network.Models
         /// <param name="transforms"> List of transforms. </param>
         internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms)
         {
-            MatchVariables = matchVariables;
+            MatchVariables = matchVariables ?? new List<MatchVariable>();
             Operator = @operator;
             NegationConditon = negationConditon;
-            MatchValues = matchValues;
+            MatchValues = matchValues ?? new List<string>();
             Transforms = transforms;
         }
 
         /// <summary> List of match variables. </summary>
-        public IList<MatchVariable> MatchVariables { get; set; }
+        public IList<MatchVariable> MatchVariables { get; }
         /// <summary> The operator to be matched. </summary>
         public WebApplicationFirewallOperator Operator { get; set; }
         /// <summary> Whether this is negate condition or not. </summary>
         public bool? NegationConditon { get; set; }
         /// <summary> Match value. </summary>
-        public IList<string> MatchValues { get; set; }
+        public IList<string> MatchValues { get; }
         /// <summary> List of transforms. </summary>
         public IList<WebApplicationFirewallTransform> Transforms { get; set; }
     }

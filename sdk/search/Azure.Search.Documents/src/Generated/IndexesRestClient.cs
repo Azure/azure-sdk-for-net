@@ -65,7 +65,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
@@ -246,7 +246,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
@@ -584,7 +584,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeRequest request)
+        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeTextOptions request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -602,7 +602,7 @@ namespace Azure.Search.Documents
             }
             request0.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request0.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
@@ -612,7 +612,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeTextOptions request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -650,7 +650,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
+        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeTextOptions request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {

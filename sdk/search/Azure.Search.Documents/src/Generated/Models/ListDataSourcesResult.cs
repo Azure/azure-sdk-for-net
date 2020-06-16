@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
-        internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSource> dataSources)
+        internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSourceConnection> dataSources)
         {
             if (dataSources == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
-        internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSource> dataSources)
+        internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSourceConnection> dataSources)
         {
-            DataSources = dataSources;
+            DataSources = dataSources ?? new List<SearchIndexerDataSourceConnection>();
         }
 
         /// <summary> The datasources in the Search service. </summary>
-        public IReadOnlyList<SearchIndexerDataSource> DataSources { get; }
+        public IReadOnlyList<SearchIndexerDataSourceConnection> DataSources { get; }
     }
 }
