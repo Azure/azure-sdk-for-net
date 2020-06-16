@@ -1503,52 +1503,6 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
-        /// operation reads or downloads a file from the system, including its metadata and properties.
-        ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
-        /// </summary>
-        /// <param name="range">
-        /// Optional. Only download the bytes of the file in the specified
-        /// range.  If not provided, download the entire file.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
-        /// on creating the file.
-        /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        /// the file's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal virtual Response<ShareFileDownloadInfo> Download(
-            HttpRange range,
-            ShareFileRequestConditions conditions,
-            bool rangeGetContentHash,
-            CancellationToken cancellationToken) =>
-            Download(
-                range,
-                rangeGetContentHash,
-                conditions,
-                cancellationToken);
-
-        /// <summary>
         /// The <see cref="Download(HttpRange, bool, CancellationToken)"/> operation reads
         /// or downloads a file from the system, including its metadata and properties.
         ///
@@ -1639,53 +1593,6 @@ namespace Azure.Storage.Files.Shares
                 rangeGetContentHash,
                 conditions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="DownloadAsync(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
-        /// operation reads or downloads a file from the system, including its metadata and properties.
-        ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
-        /// </summary>
-        /// <param name="range">
-        /// Optional. Only download the bytes of the file in the specified
-        /// range.  If not provided, download the entire file.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
-        /// on creating the file.
-        /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
-        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
-        /// the file's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            HttpRange range,
-            ShareFileRequestConditions conditions,
-            bool rangeGetContentHash,
-            CancellationToken cancellationToken) =>
-            await DownloadAsync(
-                range,
-                rangeGetContentHash,
-                conditions,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2012,8 +1919,8 @@ namespace Azure.Storage.Files.Shares
                     CancellationToken cancellationToken)
                         => DownloadAsync(
                             range,
-                            (ShareFileRequestConditions)conditions,
                             rangeGetContentHash,
+                            (ShareFileRequestConditions)conditions,
                             cancellationToken),
                     (HttpRange range,
                     object conditions,
@@ -2021,8 +1928,8 @@ namespace Azure.Storage.Files.Shares
                     CancellationToken cancellationToken)
                         => Download(
                             range,
-                            (ShareFileRequestConditions)conditions,
                             rangeGetContentHash,
+                            (ShareFileRequestConditions)conditions,
                             cancellationToken),
                     position,
                     bufferSize,
