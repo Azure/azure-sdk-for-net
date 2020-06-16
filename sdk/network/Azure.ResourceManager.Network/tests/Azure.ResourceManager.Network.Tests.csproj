@@ -3,7 +3,6 @@
     <TestHelperProjects>Resources201705;Compute201912;Storage201906;</TestHelperProjects>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
   <ItemGroup>
