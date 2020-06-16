@@ -161,7 +161,6 @@ namespace Azure.Core.Spatial
             Dictionary<string, object?>? additionalProperties = null;
             foreach (var property in element.EnumerateObject())
             {
-                additionalProperties ??= new Dictionary<string, object?>();
                 var propertyName = property.Name;
                 if (propertyName.Equals(TypeProperty, StringComparison.Ordinal) ||
                     propertyName.Equals(BBoxProperty, StringComparison.Ordinal) ||
@@ -169,6 +168,8 @@ namespace Azure.Core.Spatial
                 {
                     continue;
                 }
+
+                additionalProperties ??= new Dictionary<string, object?>();
                 additionalProperties.Add(propertyName, ReadAdditionalPropertyValue(property.Value));
             }
 
