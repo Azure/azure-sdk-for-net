@@ -21,7 +21,7 @@ namespace Azure.Iot.Hub.Service.Tests
             var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
 
             // Configuration client expects secret to be base64 encoded so we can't use the placeholder
-            parsed.Replace(secretKey, string.Empty);
+            parsed.Replace(secretKey, "Kg==;");
             return parsed.ToString();
         }
     }

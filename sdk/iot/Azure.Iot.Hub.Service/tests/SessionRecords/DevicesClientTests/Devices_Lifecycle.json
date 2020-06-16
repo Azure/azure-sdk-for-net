@@ -17,15 +17,15 @@
       "ResponseHeaders": {
         "Content-Length": "154",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jun 2020 22:17:54 GMT",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
         "iothub-errorcode": "DeviceNotFound",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c1d9b967-6fc5-469c-bcde-2b7bc1262519"
+        "x-ms-request-id": "0fda510e-5020-4fd7-9478-268ff0b31c6e"
       },
       "ResponseBody": {
         "Message": "ErrorCode:DeviceNotFound;testDevice549600225",
-        "ExceptionMessage": "Tracking ID:e6844a12e45e47559e5c0880881b26c1-TimeStamp:06/16/2020 22:17:55"
+        "ExceptionMessage": "Tracking ID:d13bed747f5645ad88344794baaa1fa7-TimeStamp:06/16/2020 22:34:56"
       }
     },
     {
@@ -49,16 +49,16 @@
       "ResponseHeaders": {
         "Content-Length": "603",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jun 2020 22:17:55 GMT",
-        "ETag": "\u0022Njg5OTI4Njk2\u0022",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "ETag": "\u0022ODc1MzM1OTg4\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "a01d7e5a-2808-42f3-8d4a-88a33b8539ad"
+        "x-ms-request-id": "f882e96f-a8f4-4d81-9e50-4e8415e4c5d1"
       },
       "ResponseBody": {
         "deviceId": "testDevice549600225",
-        "generationId": "637279426757389532",
-        "etag": "Njg5OTI4Njk2",
+        "generationId": "637279436963775213",
+        "etag": "ODc1MzM1OTg4",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -68,8 +68,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "6NWfzg2VLHx4BLJFSXaPR21QvD1hvNNoWIhsBAW4Pvs=",
-            "secondaryKey": "lVDQ0p38R4GYRyTGmEXr4Xgpnxt\u002BImy9/WpnrArwqdc="
+            "primaryKey": "J\u002BGP8bVAG8nh13Y8CSuFMZ0hXp8zJbtTuDESC2kq4Nk=",
+            "secondaryKey": "7u6SYfYFFlYNCa78Z8iIiM41S91cLgSUp4VRDL7e6F4="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -99,16 +99,16 @@
       "ResponseHeaders": {
         "Content-Length": "606",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jun 2020 22:17:55 GMT",
-        "ETag": "\u0022Njg5OTI4Njk2\u0022",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
+        "ETag": "\u0022ODc1MzM1OTg4\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "a5e29825-89c3-48f4-b164-018f3ca83246"
+        "x-ms-request-id": "0a977d93-f24b-4d5f-a3f9-a949a1c2606c"
       },
       "ResponseBody": {
         "deviceId": "testDevice549600225",
-        "generationId": "637279426757389532",
-        "etag": "Njg5OTI4Njk2",
+        "generationId": "637279436963775213",
+        "etag": "ODc1MzM1OTg4",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -118,8 +118,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "6NWfzg2VLHx4BLJFSXaPR21QvD1hvNNoWIhsBAW4Pvs=",
-            "secondaryKey": "lVDQ0p38R4GYRyTGmEXr4Xgpnxt\u002BImy9/WpnrArwqdc="
+            "primaryKey": "J\u002BGP8bVAG8nh13Y8CSuFMZ0hXp8zJbtTuDESC2kq4Nk=",
+            "secondaryKey": "7u6SYfYFFlYNCa78Z8iIiM41S91cLgSUp4VRDL7e6F4="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -149,16 +149,16 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 16 Jun 2020 22:17:55 GMT",
+        "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "8b994e11-b8d6-4182-8f8a-e15c798d0668"
+        "x-ms-request-id": "74520034-95d1-48d5-b7d1-7befa0f5620e"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "IOT_HUB_CONNECTION_STRING": "HostName=AzadE2EHub33.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=",
+    "IOT_HUB_CONNECTION_STRING": "HostName=AzadE2EHub33.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
     "RandomSeed": "764510717"
   }
 }

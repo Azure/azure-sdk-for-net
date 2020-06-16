@@ -36,17 +36,9 @@ namespace Azure.Iot.Hub.Service.Tests
 
         protected IoTHubServiceClient GetClient()
         {
-            string connectionString = TestEnvironment.IotHubConnectionString;
-
-            // In playback mode we will restore the shared access key to an invalid value so the connection string can be parsed.
-            if (Recording.Mode == RecordedTestMode.Playback)
-            {
-                connectionString = connectionString.Replace(";SharedAccessKey=", ";SharedAccessKey=Kg==;");
-            }
-
             return InstrumentClient(
                 new IoTHubServiceClient(
-                    connectionString,
+                    TestEnvironment.IotHubConnectionString,
                     Recording.InstrumentClientOptions(new IoTHubServiceClientOptions())));
         }
 
