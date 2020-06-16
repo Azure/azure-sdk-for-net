@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +25,10 @@ namespace Azure.Storage.Shared
             _position = position;
             _bufferSize = bufferSize;
             _progressHandler = progressHandler;
-            _buffer = new PooledMemoryStream((int)Math.Min(Constants.MB, bufferSize));
+            _buffer = new PooledMemoryStream(
+                arrayPool: ArrayPool<byte>.Shared,
+                absolutePosition: 0,
+                maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
         }
 
         public override bool CanRead => false;

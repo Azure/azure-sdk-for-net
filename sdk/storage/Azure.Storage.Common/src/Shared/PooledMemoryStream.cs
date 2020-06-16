@@ -33,7 +33,7 @@ namespace Azure.Storage.Shared
         }
 
         /// <summary>
-        /// Boundary at which point we start requesting multiple arrays for our buffer.
+        /// Size to rent from MemoryPool.
         /// </summary>
         public int MaxArraySize { get; }
 
@@ -54,22 +54,11 @@ namespace Azure.Storage.Shared
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        /// <summary>
-        /// Size to rent from MemoryPool during Writes.
-        /// </summary>
-        public int ArrayPoolRentalSize { get; }
-
-        private PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
+        public PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
         {
             AbsolutePosition = absolutePosition;
             ArrayPool = arrayPool;
             MaxArraySize = maxArraySize;
-        }
-
-        public PooledMemoryStream(int arrayPoolRentalSize)
-        {
-            ArrayPool = ArrayPool<byte>.Shared;
-            ArrayPoolRentalSize = arrayPoolRentalSize;
         }
 
         /// <summary>
@@ -326,13 +315,13 @@ namespace Azure.Storage.Shared
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            do
+            while (count > 0)
             {
                 BufferPartition currentBuffer = GetLatestBufferWithAvailableSpaceOrDefault();
 
                 if (currentBuffer == default)
                 {
-                    byte[] newBytes = ArrayPool.Rent(ArrayPoolRentalSize);
+                    byte[] newBytes = ArrayPool.Rent(MaxArraySize);
                     currentBuffer = new BufferPartition
                     {
                         Buffer = newBytes,
@@ -348,7 +337,6 @@ namespace Azure.Storage.Shared
                 offset += copied;
                 Position += copied;
             }
-            while (count > 0);
         }
 
         protected override void Dispose(bool disposing)
