@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class OSProfileTests : VMTestBase
     {
         private static readonly string CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("echo 'Hello World'"));
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("skip in track 1")]
         public void TestVMWithWindowsOSProfile()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string keyVaultName = Recording.GenerateAssetName(TestPrefix);
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public void TestVMWithLinuxOSProfile()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string sshPath = null;

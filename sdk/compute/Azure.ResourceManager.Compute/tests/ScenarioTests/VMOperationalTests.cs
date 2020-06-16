@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMOperationalTests : VMTestBase
     {
         public VMOperationalTests(bool isAsync)
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("need to be tested by compute team")]
         public async Task TestVMOperations()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMOperations_Redeploy()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMOperations_Reapply()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMOperations_PowerOffWithSkipShutdown()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMOperations_PerformMaintenance()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMOperations_SimulateEviction()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

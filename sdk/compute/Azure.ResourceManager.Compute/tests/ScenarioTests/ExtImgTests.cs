@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class ExtImgTests:ComputeClientBase
     {
         public ExtImgTests(bool isAsync)

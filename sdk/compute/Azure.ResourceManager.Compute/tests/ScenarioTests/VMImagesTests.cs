@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMImagesTests:ComputeClientBase
     {
         public VMImagesTests(bool isAsync)

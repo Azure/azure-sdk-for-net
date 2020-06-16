@@ -13,6 +13,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class AvailabilitySetTests : VMTestBase
     {
         public ResourceGroup resourceGroup1;
@@ -59,8 +60,8 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task TestOperations()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            //Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
-            EnsureClientsInitialized();
+            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+            EnsureClientsInitialized(false);
             await Initialize();
             // Attempt to Create Availability Set with out of bounds FD and UD values
             await VerifyInvalidFDUDValuesFail();

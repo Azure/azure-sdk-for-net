@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class LogAnalyticsTests : VMTestBase
     {
         public LogAnalyticsTests(bool isAsync)
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string rg1Name = Recording.GenerateAssetName(TestPrefix);
 
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             string sasUri = await GetBlobContainerSasUri(rg1Name, storageAccountName);
 

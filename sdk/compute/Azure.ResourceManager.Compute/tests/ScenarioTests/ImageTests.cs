@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class ImageTests : VMTestBase
     {
         public ImageTests(bool isAsync)
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
 
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
             await CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null);
         }
 

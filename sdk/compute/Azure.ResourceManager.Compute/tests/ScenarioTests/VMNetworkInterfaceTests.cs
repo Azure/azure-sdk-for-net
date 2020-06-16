@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMNetworkInterfaceTests : VMTestBase
     {
         public VMNetworkInterfaceTests(bool isAsync)
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestNicVirtualMachineReference()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore ("This case need to be tested by compute team")]
         public async Task TestEffectiveRouteAndAcls()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestMultiNicVirtualMachineReference()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestMultiIpConfigForMultiNICVM()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

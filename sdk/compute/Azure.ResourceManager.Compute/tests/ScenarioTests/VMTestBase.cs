@@ -38,6 +38,13 @@ namespace Azure.ResourceManager.Compute.Tests
         protected ImageReference m_windowsImageReference, m_linuxImageReference;
         protected ComputeManagementTestUtilities computeManagementTestUtilities;
 
+        protected void EnsureClientsInitialized(string location)
+        {
+            m_subId = TestEnvironment.SubscriptionId;
+
+            m_location = location;
+        }
+
         protected void EnsureClientsInitialized(bool useDefaultLocation = false)
         {
             m_subId = TestEnvironment.SubscriptionId;

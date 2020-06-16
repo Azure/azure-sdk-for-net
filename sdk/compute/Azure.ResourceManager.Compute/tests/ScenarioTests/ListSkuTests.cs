@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class ListSkuTests:ComputeClientBase
     {
         public ListSkuTests(bool isAsync)

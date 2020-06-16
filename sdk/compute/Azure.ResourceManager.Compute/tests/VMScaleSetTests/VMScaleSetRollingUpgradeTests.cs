@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             VirtualMachineScaleSet inputVMScaleSet;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             VirtualMachineScaleSet inputVMScaleSet;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             imageRef.Version = "latest";
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet inputVMScaleSet;
 
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             imageRef.Version = "latest";
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             imageRef.Version = "latest";
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet inputVMScaleSet;
 
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             // Windows VM image
             ImageReference imageRef = await GetPlatformVMImage(true);

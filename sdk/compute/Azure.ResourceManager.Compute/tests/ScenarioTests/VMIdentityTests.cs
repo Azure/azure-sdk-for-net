@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMIdentityTests : VMTestBase
     {
         public VMIdentityTests(bool isAsync)
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Prerequisite: in order to record this test, first create a user identity in resource group 'identitytest' and set the value of identity here.
             const string rgName = "identitytest";
             const string identity = "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/resourcegroups/identitytest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userid";
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imgageRef = await GetPlatformVMImage(useWindowsImage: true);
 

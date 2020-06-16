@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class HelpersTests :ComputeClientBase
     {
         public HelpersTests(bool isAsync)

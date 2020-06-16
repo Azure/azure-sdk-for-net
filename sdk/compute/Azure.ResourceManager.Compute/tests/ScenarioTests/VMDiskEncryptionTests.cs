@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMDiskEncryptionTests : VMTestBase
     {
         public VMDiskEncryptionTests(bool isAsync)
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task TestVMDiskEncryption()
         {
 
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

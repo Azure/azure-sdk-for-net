@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Before changing the default location, we have to save it to be reset it at the end of the test.
             // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Before changing the default location, we have to save it to be reset it at the end of the test.
             // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet inputVMScaleSet;
 
             bool passed = false;
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMSSWithMultiCA()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMSSAccelNtwkng()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

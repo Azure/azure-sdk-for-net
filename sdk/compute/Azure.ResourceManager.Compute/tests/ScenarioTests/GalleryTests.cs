@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class GalleryTests : VMTestBase
     {
         public GalleryTests(bool isAsync)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task Gallery_CRUD_Tests()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string rgName2 = rgName + "New";
 
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryImage_CRUD_Tests()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(galleryHomeLocation));
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", galleryHomeLocation);
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             VirtualMachine vm = null;
             string imageName = Recording.GenerateAssetName("psTestSourceImage");
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task GalleryApplication_CRUD_Tests()
         {
             string location = ComputeManagementTestUtilities.DefaultLocations;
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             string location = computeManagementTestUtilities.DefaultLocation;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string applicationName = Recording.GenerateAssetName("psTestSourceApplication");
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);

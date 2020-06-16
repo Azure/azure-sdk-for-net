@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMDataDiskTests : VMTestBase
     {
         public VMDataDiskTests(bool isAsync)
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMDataDiskScenario()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             ImageReference imgageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);

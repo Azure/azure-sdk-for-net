@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class DedicatedHostTests : VMTestBase
     {
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             string baseRGName = Recording.GenerateAssetName(TestPrefix);
             string rgName = baseRGName + "DH";

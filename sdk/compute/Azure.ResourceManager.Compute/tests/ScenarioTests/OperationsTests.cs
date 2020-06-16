@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class OperationsTests : VMTestBase
     {
         public OperationsTests(bool isAsync)
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestCrpOperations")]
         public async Task TestCrpOperations()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             var operations =  Operations.ListAsync();
             var operationResult = await operations.ToEnumerableAsync();
             //AzureOperationResponse<IEnumerable<ComputeOperationValue>> operations = OperationsClient.ListWithHttpMessagesAsync().GetAwaiter().GetResult();

@@ -10,5 +10,8 @@ modelerfour:
 directive:
   - from: compute.json
     where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
-    transform: $.description="Data Disk Image Array."
+    transform: $.description="The list of data disk images information."
+  - from: disk.json
+    where: $.definitions.GrantAccessData.properties.access
+    transform: $.description="The Access Level, accepted values include None, Read, Write."
 ```

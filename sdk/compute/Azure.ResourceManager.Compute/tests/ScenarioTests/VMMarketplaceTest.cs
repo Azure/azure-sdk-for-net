@@ -11,6 +11,7 @@ using Plan = Azure.ResourceManager.Compute.Models.Plan;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMMarketplaceTest : VMTestBase
     {
         public VMMarketplaceTest(bool isAsync)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMMarketplace()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference dummyImageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMBYOL()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);

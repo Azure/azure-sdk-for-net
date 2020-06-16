@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task TestVMScaleSetOperationsInternal(bool hasManagedDisks = false)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             bool passed = false;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet inputVMScaleSet;
 
             bool passed = false;
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(false);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
                 StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             bool passed = false;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(false);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
                 StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);

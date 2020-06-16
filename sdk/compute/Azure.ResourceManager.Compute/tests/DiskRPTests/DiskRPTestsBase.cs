@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         }
         protected async Task Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             DiskRPLocation = location ?? DiskRPLocation;
 
             // Data
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task DiskEncryptionSet_CRUD_Execute(string methodName, string location = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             DiskRPLocation = location ?? DiskRPLocation;
 
             // Data
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task Snapshot_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             // Data
             var rgName1 = Recording.GenerateAssetName(TestPrefix);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task DiskEncryptionSet_List_Execute(string methodName, string location = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             DiskRPLocation = location ?? DiskRPLocation;
 
             // Data
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task DiskEncryptionSet_CreateDisk_Execute(string methodName, string location = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             var desName = "longlivedSwaggerDES";
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task DiskEncryptionSet_UpdateDisk_Execute(string methodName, string location = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             var desName = "longlivedSwaggerDES";

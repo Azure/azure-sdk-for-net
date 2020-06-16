@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class ProximityPlacementGroupTests : VMTestBase
     {
         public ProximityPlacementGroupTests(bool isAsync)
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestProximityPlacementGroupsOperations")]
         public async Task TestProximityPlacementGroupsOperations()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             Initialize();
 
             //Verify proximityPlacementGroups operation

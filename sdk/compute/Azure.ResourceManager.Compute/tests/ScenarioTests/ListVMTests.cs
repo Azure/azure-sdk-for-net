@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class ListVMTests : VMTestBase
     {
         public ListVMTests(bool isAsync)

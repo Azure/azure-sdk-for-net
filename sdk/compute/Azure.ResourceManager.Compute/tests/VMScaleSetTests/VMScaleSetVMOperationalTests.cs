@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.Tests
         private ImageReference imageRef;
         private VirtualMachineScaleSet inputVMScaleSet;
 
-        private async void InitializeCommon()
+        private async void InitializeCommon(bool useDefaultLocation)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(useDefaultLocation);
 
             imageRef = await GetPlatformVMImage(useWindowsImage: true);
             rgName = Recording.GenerateAssetName(TestPrefix) + 1;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations()
         {
-            await TestVMScaleSetVMOperationsInternal();
+            await TestVMScaleSetVMOperationsInternal(true, false);
         }
 
         /// <summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_ManagedDisks()
         {
-            await TestVMScaleSetVMOperationsInternal(true);
+            await TestVMScaleSetVMOperationsInternal(true, true);
         }
 
-        private async Task TestVMScaleSetVMOperationsInternal(bool hasManagedDisks = false)
+        private async Task TestVMScaleSetVMOperationsInternal(bool useDefaultLocation, bool hasManagedDisks = false)
         {
-            InitializeCommon();
+            InitializeCommon(useDefaultLocation);
             instanceId = "0";
 
             bool passed = false;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_RunCommand()
         {
-            InitializeCommon();
+            InitializeCommon(false);
             instanceId = "0";
             bool passed = false;
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             bool passed = false;
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus2");
-            InitializeCommon();
+            InitializeCommon(true);
             instanceId = "0";
 
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Tests
             bool passed = false;
 
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-            InitializeCommon();
+            InitializeCommon(true);
 
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-                InitializeCommon();
+                InitializeCommon(true);
 
                 var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
                 var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef,

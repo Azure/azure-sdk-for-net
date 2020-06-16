@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         private async Task UltraSSD_CRUD_Helper(string location, string methodName, bool useZones = false, bool sharedDisks = false)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             // Data
             var rgName = Recording.GenerateAssetName(TestPrefix);

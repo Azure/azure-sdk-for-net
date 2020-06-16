@@ -31,13 +31,12 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetVMDiskEncryptionOperation")]
         public async Task TestVMScaleSetVMDiskEncryptionOperation()
         {
+            EnsureClientsInitialized(true);
             await TestDiskEncryptionOnScaleSetVMInternal(hasManagedDisks: true, useVmssExtension: true);
         }
 
         private async Task TestDiskEncryptionOnScaleSetVMInternal(bool hasManagedDisks = true, bool useVmssExtension = true)
         {
-            EnsureClientsInitialized();
-
             // Get platform image for VMScaleSet create
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable(environmentVariable, region);
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(false);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable(environmentVariable, region);
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(false);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

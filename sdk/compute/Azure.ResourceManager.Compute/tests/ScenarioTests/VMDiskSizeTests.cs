@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [AsyncOnly]
     public class VMDiskSizeTests : VMTestBase
     {
         public VMDiskSizeTests(bool isAsync)
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMDiskSizeScenario()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(false);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             var image = await VirtualMachineImagesOperations.GetAsync(
