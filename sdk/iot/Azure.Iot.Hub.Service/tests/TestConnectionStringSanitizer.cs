@@ -20,7 +20,6 @@ namespace Azure.Iot.Hub.Service.Tests
             const string secretKey = "SharedAccessKey";
             var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
 
-            // Configuration client expects secret to be base64 encoded so we can't use the placeholder
             parsed.Replace(secretKey, "Kg==;");
             return parsed.ToString();
         }
