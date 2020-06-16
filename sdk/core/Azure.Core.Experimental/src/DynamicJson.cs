@@ -11,6 +11,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
+
 #pragma warning disable 1591
 
 namespace Azure.Core
@@ -20,68 +22,20 @@ namespace Azure.Core
     /// </summary>
     public class DynamicJson : IDynamicMetaObjectProvider
     {
-        private struct Number
-        {
-            public Number(in JsonElement element)
-            {
-                _hasDouble = element.TryGetDouble(out _double);
-                _hasLong = element.TryGetInt64(out _long);
-            }
-
-            public Number(long l)
-            {
-                _long = l;
-                _hasLong = true;
-                _double = default;
-                _hasDouble = false;
-            }
-
-            private long _long;
-            private bool _hasLong;
-            private double _double;
-            private bool _hasDouble;
-
-            public Number(double d)
-            {
-                _long = default;
-                _hasLong = false;
-                _double = d;
-                _hasDouble = true;
-            }
-
-            public void WriteTo(Utf8JsonWriter writer)
-            {
-                if (_hasDouble)
-                {
-                    writer.WriteNumberValue(_double);
-                }
-                else
-                {
-                    writer.WriteNumberValue(_long);
-                }
-            }
-
-            public long AsLong()
-            {
-                return _long;
-            }
-
-            public double AsDouble()
-            {
-                return _double;
-            }
-        }
-
         private readonly JsonValueKind _kind;
         private Dictionary<string, DynamicJson>? _objectRepresentation;
         private List<DynamicJson>? _arrayRepresentation;
         private object? _value;
 
+        public DynamicJson(string json): this(JsonDocument.Parse(json).RootElement)
+        {
+        }
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="element"></param>
-        internal DynamicJson(JsonElement element)
+        public DynamicJson(JsonElement element)
         {
             _kind = element.ValueKind;
             switch (element.ValueKind)
@@ -553,7 +507,7 @@ namespace Azure.Core
         public static implicit operator DynamicJson(double value) => new DynamicJson(value);
         public static implicit operator DynamicJson(float value) => new DynamicJson(value);
         public static implicit operator DynamicJson(bool value) => new DynamicJson(value);
-        public static implicit operator DynamicJson(string? value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(string? value) => new DynamicJson((object?)value);
 
         public string? GetString() => (string?) this;
         public int GetIn32() => (int) this;
@@ -562,18 +516,99 @@ namespace Azure.Core
         public double GetDouble() => (double) this;
         public bool GetBoolean() => (bool) this;
         public int GetArrayLength() => EnsureArray().Count;
+        public DynamicJson GetProperty(string name) => GetValue(name);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="options"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+
         public static DynamicJson Serialize<T>(T value, JsonSerializerOptions? options = null)
         {
             var serialized = JsonSerializer.Serialize<T>(value, options);
             return new DynamicJson(JsonDocument.Parse(serialized).RootElement);
         }
+
+        public static DynamicJson Serialize<T>(T value, ObjectSerializer serializer)
+        {
+            using var memoryStream = new MemoryStream();
+            serializer.Serialize(memoryStream, value, typeof(T));
+            memoryStream.Position = 0;
+            return new DynamicJson(JsonDocument.Parse(memoryStream).RootElement);
+        }
+
+        public static async Task<DynamicJson> SerializeAsync<T>(T value, ObjectSerializer serializer)
+        {
+            using var memoryStream = new MemoryStream();
+            await serializer.SerializeAsync(memoryStream, value, typeof(T)).ConfigureAwait(false);
+            memoryStream.Position = 0;
+            return new DynamicJson(JsonDocument.Parse(memoryStream).RootElement);
+        }
+
+        public T Deserialize<T>(JsonSerializerOptions? options = null)
+        {
+            return JsonSerializer.Deserialize<T>(ToString(), options);
+        }
+
+        public T Deserialize<T>(JsonObjectSerializer serializer)
+        {
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
+            return (T) serializer.Deserialize(stream, typeof(T));
+        }
+
+        public async Task<T> DeserializeAsync<T>(JsonObjectSerializer serializer)
+        {
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
+            return (T) await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false);
+        }
+
+        private struct Number
+        {
+            public Number(in JsonElement element)
+            {
+                _hasDouble = element.TryGetDouble(out _double);
+                _hasLong = element.TryGetInt64(out _long);
+            }
+
+            public Number(long l)
+            {
+                _long = l;
+                _hasLong = true;
+                _double = default;
+                _hasDouble = false;
+            }
+
+            private long _long;
+            private bool _hasLong;
+            private double _double;
+            private bool _hasDouble;
+
+            public Number(double d)
+            {
+                _long = default;
+                _hasLong = false;
+                _double = d;
+                _hasDouble = true;
+            }
+
+            public void WriteTo(Utf8JsonWriter writer)
+            {
+                if (_hasDouble)
+                {
+                    writer.WriteNumberValue(_double);
+                }
+                else
+                {
+                    writer.WriteNumberValue(_long);
+                }
+            }
+
+            public long AsLong()
+            {
+                return _long;
+            }
+
+            public double AsDouble()
+            {
+                return _double;
+            }
+        }
+
     }
 }
