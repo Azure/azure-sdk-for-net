@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Iot.Hub.Service.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -16,33 +18,51 @@ namespace Azure.Iot.Hub.Service.Tests
         }
 
         [Test]
+        [Category("Live")]
         public async Task Devices_Lifecycle()
         {
             // TODO: This is just a verification that tests run and it requires the tester to complete this test however they see fit.
-            string testDeviceName = GetRandom();
+            string testDeviceName = $"testDevice{GetRandom()}";
+
+            DeviceIdentity device = null;
 
             IoTHubServiceClient client = GetClient();
-
             try
             {
-                await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                // If the Device doesn't exist, we will create it.
-                await client.Devices.CreateOrUpdateIdentityAsync(
-                new Models.DeviceIdentity
+                try
                 {
-                    DeviceId = testDeviceName
-                }).ConfigureAwait(false);
+                    device = (await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false)).Value;
+                }
+                catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
+                {
+                    // If the Device doesn't exist, we will create it.
+                    device = (await client.Devices.CreateOrUpdateIdentityAsync(
+                        new Models.DeviceIdentity
+                        {
+                            DeviceId = testDeviceName
+                        }).ConfigureAwait(false)).Value;
+                }
+
+                // Perform another GET. We expect the device to exist.
+                Response<Models.DeviceIdentity> response = await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false);
+                device = response.Value;
+                response.GetRawResponse().Status.Should().Be(200);
             }
-
-            // Perform another GET. We expect the device to exist.
-            Response<Models.DeviceIdentity> response = await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false);
-            response.GetRawResponse().Status.Should().Be(200);
-
-            // Delete the device at the end.
-            await client.Devices.DeleteIdentityAsync(response.Value, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (device != null)
+                    {
+                        await client.Devices.DeleteIdentityAsync(device, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
         }
     }
 }
