@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IsSequential = isSequential;
             BatchCount = batchCount;
             Items = items;
-            Activities = activities;
+            Activities = activities ?? new List<Activity>();
             Type = type ?? "ForEach";
         }
 
@@ -65,6 +65,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Collection to iterate. </summary>
         public Expression Items { get; set; }
         /// <summary> List of activities to execute . </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Samples
     public partial class AddAndRemoveRoleAssignment
     {
         [Test]
-        public void SubmitSparkJobSync()
+        public void AddAndRemoveRoleAssignmentSync()
         {
             // Environment variable with the Synapse workspace endpoint.
             string workspaceUrl = TestEnvironment.WorkspaceUrl;

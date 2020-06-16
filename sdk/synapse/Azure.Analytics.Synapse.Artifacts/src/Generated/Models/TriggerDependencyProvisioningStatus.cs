@@ -31,8 +31,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Trigger name. </summary>
-        public string TriggerName { get; set; }
+        public string TriggerName { get; }
         /// <summary> Provisioning status. </summary>
-        public string ProvisioningStatus { get; set; }
+        public string ProvisioningStatus { get; }
     }
 }

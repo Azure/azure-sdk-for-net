@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Azure.DigitalTwins.Core.Serialization
@@ -32,8 +33,6 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///             &quot;Component1&quot;,
     ///             new ModelProperties
     ///             {
-    ///                 // model Id of component
-    ///                 Metadata = { ModelId = componentModelId },
     ///                 // component properties
     ///                 CustomProperties =
     ///                 {
@@ -48,7 +47,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// string basicDtPayload = JsonSerializer.Serialize(basicTwin);
     ///
     /// Response&lt;string&gt; createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-    /// Console.WriteLine($&quot;Created digital twin {basicDtId} with response {createBasicDtResponse.GetRawResponse().Status}.&quot;);
+    /// Console.WriteLine($&quot;Created digital twin with Id {basicDtId}. Response status: {createBasicDtResponse.GetRawResponse().Status}.&quot;);
     /// </code>
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
@@ -61,7 +60,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///
     ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
     ///     string component1RawText = ((JsonElement)basicDt.CustomProperties[&quot;Component1&quot;]).GetRawText();
-    ///     var component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
+    ///     IDictionary&lt;string, object&gt; component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
     ///
     ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
@@ -72,7 +71,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// }
     /// </code>
     /// </example>
-    public class BasicDigitalTwin : ModelProperties
+    public class BasicDigitalTwin
     {
         /// <summary>
         /// The unique Id of the digital twin in a digital twins instance. This field is present on every digital twin.
@@ -85,5 +84,17 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// </summary>
         [JsonPropertyName("$etag")]
         public string ETag { get; set; }
+
+        /// <summary>
+        /// Information about the model a digital twin conforms to. This field is present on every digital twin.
+        /// </summary>
+        [JsonPropertyName("$metadata")]
+        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
+
+        /// <summary>
+        /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> CustomProperties { get; set; } = new Dictionary<string, object>();
     }
 }

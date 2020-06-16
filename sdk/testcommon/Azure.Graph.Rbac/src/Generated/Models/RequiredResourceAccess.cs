@@ -34,13 +34,13 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="additionalProperties"> . </param>
         internal RequiredResourceAccess(IList<ResourceAccess> resourceAccess, string resourceAppId, IDictionary<string, object> additionalProperties)
         {
-            ResourceAccess = resourceAccess;
+            ResourceAccess = resourceAccess ?? new List<ResourceAccess>();
             ResourceAppId = resourceAppId;
             AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> The list of OAuth2.0 permission scopes and app roles that the application requires from the specified resource. </summary>
-        public IList<ResourceAccess> ResourceAccess { get; set; }
+        public IList<ResourceAccess> ResourceAccess { get; }
         /// <summary> The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application. </summary>
         public string ResourceAppId { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }

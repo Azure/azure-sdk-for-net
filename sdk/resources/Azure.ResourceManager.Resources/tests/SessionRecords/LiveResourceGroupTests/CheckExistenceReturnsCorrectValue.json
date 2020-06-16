@@ -1,0 +1,113 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg329?api-version=2019-10-01",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-19fe0b54d11bef45b2234b97071c41b2-f52ce73b5ec97944-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "46586e7742c33dd61019d416085d64f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:44:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7e146830-bc8b-4dc6-b1a5-2e8155b7121d",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "7e146830-bc8b-4dc6-b1a5-2e8155b7121d",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024450Z:7e146830-bc8b-4dc6-b1a5-2e8155b7121d"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg329?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "traceparent": "00-14c663f7b29651418f85f3359082d50a-ee0d15209fc5534e-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "dfc963e930134efbcce84ef2f4512ece",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "South Central US"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "221",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:44:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6dc98d3f-b3d4-4623-8a8b-69f88cd5e3ca",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "6dc98d3f-b3d4-4623-8a8b-69f88cd5e3ca",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024451Z:6dc98d3f-b3d4-4623-8a8b-69f88cd5e3ca"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg329",
+        "name": "csmrg329",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "southcentralus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg329?api-version=2019-10-01",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a0006c7781a85e49bf4d92a11f941a08-6d75aec70f847f4f-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "ad77295494437b2a6ae56f89f000fb2d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 29 May 2020 02:44:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6d01e8c1-54ee-4ebb-ab96-9d2a0c2fa855",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "6d01e8c1-54ee-4ebb-ab96-9d2a0c2fa855",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024451Z:6d01e8c1-54ee-4ebb-ab96-9d2a0c2fa855"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1669520413",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

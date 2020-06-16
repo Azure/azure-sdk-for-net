@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowedOrigins != null && AllowedOrigins.Any())
+            if (AllowedOrigins.Any())
             {
                 writer.WritePropertyName("allowedOrigins");
                 writer.WriteStartArray();
@@ -26,6 +26,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("allowedOrigins");
             }
             if (MaxAgeInSeconds != null)
             {
@@ -43,10 +47,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("allowedOrigins"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

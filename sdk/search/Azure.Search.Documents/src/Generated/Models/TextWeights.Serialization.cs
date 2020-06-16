@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Weights != null && Weights.Any())
+            if (Weights.Any())
             {
                 writer.WritePropertyName("weights");
                 writer.WriteStartObject();
@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNumberValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            else
+            {
+                writer.WriteNull("weights");
             }
             writer.WriteEndObject();
         }
@@ -38,10 +42,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("weights"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, double> dictionary = new Dictionary<string, double>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

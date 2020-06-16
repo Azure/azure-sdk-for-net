@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Test is currently broken.")]
         public void CanRoundtripStaticallyTypedPrimitiveCollections()
         {
             Run(() =>

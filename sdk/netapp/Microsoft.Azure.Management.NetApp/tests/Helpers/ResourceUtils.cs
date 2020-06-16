@@ -1,5 +1,6 @@
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.NetApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
@@ -91,7 +92,10 @@ namespace NetApp.Tests.Helpers
             var resource = netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, resourceGroup, accountName);
             Assert.Equal(resource.Name, accountName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -123,7 +127,10 @@ namespace NetApp.Tests.Helpers
             }
             Assert.Equal(resource.Name, accountName + '/' + poolName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -151,7 +158,10 @@ namespace NetApp.Tests.Helpers
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -193,7 +203,10 @@ namespace NetApp.Tests.Helpers
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -255,7 +268,10 @@ namespace NetApp.Tests.Helpers
             // e.g. snapshot deletion might not be complete and therefore pool has child resource
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {
@@ -290,7 +306,10 @@ namespace NetApp.Tests.Helpers
             // e.g. snapshot deletion might not be complete and therefore volume has child resource
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {
@@ -326,7 +345,10 @@ namespace NetApp.Tests.Helpers
             // all levels
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {

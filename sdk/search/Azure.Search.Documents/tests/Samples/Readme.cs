@@ -36,13 +36,15 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+            string indexName = "nycjobs";
+
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -64,7 +66,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
-            SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 // Print out the title and job description (we'll see below how to
@@ -76,7 +78,9 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
         }
 
+#if EXPERIMENTAL_DYNAMIC
         [Test]
+#endif
         [SyncOnly]
         public async Task CreateAndQuery()
         {
@@ -98,7 +102,7 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
-            SearchResults<SearchDocument> response = client.Search("luxury");
+            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 SearchDocument doc = result.Document;
@@ -109,8 +113,8 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
-            //@@ SearchResults<SearchDocument> response = client.Search("luxury");
-            /*@@*/ response = client.Search("luxury");
+            //@@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
+            /*@@*/ response = client.Search<SearchDocument>("luxury");
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;

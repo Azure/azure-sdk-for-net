@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Status = status;
             LastResult = lastResult;
-            ExecutionHistory = executionHistory;
+            ExecutionHistory = executionHistory ?? new List<IndexerExecutionResult>();
             Limits = limits;
         }
 

@@ -23,6 +23,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Metadata path. </summary>
-        public string MetadataPath { get; set; }
+        public string MetadataPath { get; }
     }
 }

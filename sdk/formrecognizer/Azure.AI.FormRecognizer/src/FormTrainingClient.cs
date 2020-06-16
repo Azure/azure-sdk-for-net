@@ -315,10 +315,12 @@ namespace Azure.AI.FormRecognizer.Training
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
             var request = new CopyRequest(target.ResourceId,
                                           target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
 
-            ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
-            return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
+            Response response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
+            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+            return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
         }
 
         /// <summary>
@@ -339,9 +341,12 @@ namespace Azure.AI.FormRecognizer.Training
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
             var request = new CopyRequest(target.ResourceId,
                                           target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
-            ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
-            return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
+
+            Response response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
+            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+            return new CopyModelOperation(ServiceClient, Diagnostics, location, target.ModelId);
         }
 
         /// <summary>

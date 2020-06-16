@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
     <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>36.1.0.0</Version>
+    <Version>37.0.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are the fixes for Gallery Image Version Update and VM Scale Set ConvertToSinglePlacementGroup API.
+        This is a public release of the Azure Compute SDK. Included with this release are the changes for DiskRP API Version 2020-05-01 which includes Managed Disk support for Private Links via DiskAccess resource.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

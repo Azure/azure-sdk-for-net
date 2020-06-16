@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Resource type.</param>
-        public HubRouteTable(string id = default(string), IList<HubRoute> routes = default(IList<HubRoute>), IList<string> labels = default(IList<string>), IList<SubResource> associatedConnections = default(IList<SubResource>), IList<SubResource> propagatingConnections = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public HubRouteTable(string id = default(string), IList<HubRoute> routes = default(IList<HubRoute>), IList<string> labels = default(IList<string>), IList<string> associatedConnections = default(IList<string>), IList<string> propagatingConnections = default(IList<string>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Routes = routes;
@@ -86,13 +86,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets list of all connections associated with this route table.
         /// </summary>
         [JsonProperty(PropertyName = "properties.associatedConnections")]
-        public IList<SubResource> AssociatedConnections { get; private set; }
+        public IList<string> AssociatedConnections { get; private set; }
 
         /// <summary>
         /// Gets list of all connections that advertise to this route table.
         /// </summary>
         [JsonProperty(PropertyName = "properties.propagatingConnections")]
-        public IList<SubResource> PropagatingConnections { get; private set; }
+        public IList<string> PropagatingConnections { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the RouteTable resource. Possible

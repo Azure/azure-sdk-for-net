@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ETag { get; set; }
 
         [JsonPropertyName("$metadata")]
-        public CustomDigitalTwinMetadata Metadata { get; set; }
+        public CustomDigitalTwinMetadata Metadata { get; set; } = new CustomDigitalTwinMetadata();
 
         [JsonPropertyName("Prop1")]
         public string Prop1 { get; set; }
@@ -34,7 +34,7 @@ namespace Azure.DigitalTwins.Core.Samples
     internal class Component1
     {
         [JsonPropertyName("$metadata")]
-        public Component1Metadata Metadata { get; set; }
+        public Component1Metadata Metadata { get; set; } = new Component1Metadata();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
@@ -58,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public WritableProperty Prop2 { get; set; }
     }
 
-    internal class Component1Metadata : Metadata
+    internal class Component1Metadata
     {
         [JsonPropertyName("ComponentProp1")]
         public WritableProperty ComponentProp1 { get; set; }

@@ -54,22 +54,22 @@ namespace Azure.Management.Storage.Models
         /// <param name="allowedHeaders"> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </param>
         internal CorsRule(IList<string> allowedOrigins, IList<CorsRuleAllowedMethodsItem> allowedMethods, int maxAgeInSeconds, IList<string> exposedHeaders, IList<string> allowedHeaders)
         {
-            AllowedOrigins = allowedOrigins;
-            AllowedMethods = allowedMethods;
+            AllowedOrigins = allowedOrigins ?? new List<string>();
+            AllowedMethods = allowedMethods ?? new List<CorsRuleAllowedMethodsItem>();
             MaxAgeInSeconds = maxAgeInSeconds;
-            ExposedHeaders = exposedHeaders;
-            AllowedHeaders = allowedHeaders;
+            ExposedHeaders = exposedHeaders ?? new List<string>();
+            AllowedHeaders = allowedHeaders ?? new List<string>();
         }
 
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or &quot;*&quot; to allow all domains. </summary>
-        public IList<string> AllowedOrigins { get; set; }
+        public IList<string> AllowedOrigins { get; }
         /// <summary> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </summary>
-        public IList<CorsRuleAllowedMethodsItem> AllowedMethods { get; set; }
+        public IList<CorsRuleAllowedMethodsItem> AllowedMethods { get; }
         /// <summary> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </summary>
         public int MaxAgeInSeconds { get; set; }
         /// <summary> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </summary>
-        public IList<string> ExposedHeaders { get; set; }
+        public IList<string> ExposedHeaders { get; }
         /// <summary> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </summary>
-        public IList<string> AllowedHeaders { get; set; }
+        public IList<string> AllowedHeaders { get; }
     }
 }
