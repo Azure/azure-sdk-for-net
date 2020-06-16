@@ -161,7 +161,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
+            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunning-eastus2RG/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)

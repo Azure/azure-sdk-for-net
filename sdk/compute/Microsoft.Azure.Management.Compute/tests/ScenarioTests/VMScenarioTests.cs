@@ -118,7 +118,7 @@ namespace Compute.Tests
             string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet", vmSize: VirtualMachineSizeTypes.StandardA1V2, hasManagedDisks: true,
                    osDiskStorageAccountType: StorageAccountTypes.StandardLRS, diskEncryptionSetId: diskEncryptionSetId);
             }

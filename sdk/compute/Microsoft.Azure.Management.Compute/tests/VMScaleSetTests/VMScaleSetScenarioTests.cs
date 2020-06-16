@@ -115,7 +115,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
@@ -140,7 +140,7 @@ namespace Compute.Tests
             {
                 string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
 
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
 
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
