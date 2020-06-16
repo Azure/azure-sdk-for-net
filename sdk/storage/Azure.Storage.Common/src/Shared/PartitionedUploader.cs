@@ -19,7 +19,6 @@ namespace Azure.Storage
         // delegte for getting a partition from a stream based on the selected data management stragegy
         private delegate Task<StreamSlice> GetNextStreamPartition(
             Stream stream,
-            long? streamLength,
             long minCount,
             long maxCount,
             long absolutePosition,
@@ -246,11 +245,10 @@ namespace Azure.Storage
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
-                /* Streamed partitions only work if we know the length of the stream. We need to know the
-                 * exact length of a partition to be able to send it to the service, and can only calculate
-                 * that without buffering by tracking partition sizes against the overall stream length.
+                /* Streamed partitions only work if we can seek the stream; we need retries on
+                 * individual uploads.
                  */
-                GetNextStreamPartition partitionGetter = contentLength.HasValue
+                GetNextStreamPartition partitionGetter = content.CanSeek
                             ? (GetNextStreamPartition)GetStreamedPartitionInternal
                             : /*   redundant cast   */GetBufferedPartitionInternal;
 
@@ -507,7 +505,6 @@ namespace Azure.Storage
             {
                 StreamSlice partition = await getNextPartition(
                     stream,
-                    streamLength,
                     acceptableBlockSize,
                     blockSize,
                     absolutePosition,
@@ -538,9 +535,6 @@ namespace Azure.Storage
         /// <param name="stream">
         /// Stream to buffer a partition from.
         /// </param>
-        /// <param name="streamLength">
-        /// Unused, but part of <see cref="GetNextStreamPartition"/> definition.
-        /// </param>
         /// <param name="minCount">
         /// Minimum amount of data to wait on before finalizing buffer.
         /// </param>
@@ -561,7 +555,6 @@ namespace Azure.Storage
         /// </returns>
         private async Task<StreamSlice> GetBufferedPartitionInternal(
             Stream stream,
-            long? streamLength,
             long minCount,
             long maxCount,
             long absolutePosition,
@@ -586,10 +579,6 @@ namespace Azure.Storage
         /// <param name="stream">
         /// Stream to wrap.
         /// </param>
-        /// <param name="streamLength">
-        /// Length of stream to wrap. Value is required, but <see cref="GetNextStreamPartition"/>
-        /// defines it as nullable.
-        /// </param>
         /// <param name="minCount">
         /// Unused, but part of <see cref="GetNextStreamPartition"/> definition.
         /// </param>
@@ -606,18 +595,14 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the stream facade.
         /// </returns>
-        /// <exception cref="InvalidOperationException">
-        /// Throws if <paramref name="streamLength"/> has no value.
-        /// </exception>
         private static Task<StreamSlice> GetStreamedPartitionInternal(
             Stream stream,
-            long? streamLength,
             long minCount,
             long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => Task.FromResult((StreamSlice)new WindowStream(stream, streamLength.Value, absolutePosition, maxCount));
+            => Task.FromResult((StreamSlice)WindowStream.GetWindow(stream, maxCount, absolutePosition));
         #endregion
     }
 }

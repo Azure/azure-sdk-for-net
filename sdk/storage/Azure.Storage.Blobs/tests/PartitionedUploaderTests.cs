@@ -283,7 +283,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task NoBufferWhenUploadInSequenceOnKnownLengthStream()
+        public async Task NoBufferWhenUploadInSequenceOnSeekableStream()
         {
             const int blockSize = 10;
 
@@ -491,6 +491,7 @@ namespace Azure.Storage.Blobs.Test
 
                 read.Data.CopyTo(buffer, offset);
 
+                Position += read.Length;
                 return read.Length;
             }
 
