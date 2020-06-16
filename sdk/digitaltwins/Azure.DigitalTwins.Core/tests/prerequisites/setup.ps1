@@ -143,13 +143,4 @@ $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, 
 Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 Write-Host "Test environment settings stored into encrypted $outputFile"
 
-$userSettingsFileSuffix = ".test.assets.config.json"
-$userSettingsFileName = "$user$userSettingsFileSuffix"
-$userTestAssetSettingsFileName = "$PSScriptRoot\..\config\$userSettingsFileName"
-if (-not (Test-Path $userTestAssetSettingsFileName))
-{
-    Write-Host "Creating empty user test assets config file - $userSettingsFileName`n"
-    New-Item -ItemType File -Path $userTestAssetSettingsFileName -Value "{}" | Out-Null
-}
-
 Write-Host "Done!"
