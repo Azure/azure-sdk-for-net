@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
             Coverage = coverage;
             Facets = facets;
             NextPageParameters = nextPageParameters;
-            Results = results;
+            Results = results ?? new List<SearchResult>();
             NextLink = nextLink;
         }
 

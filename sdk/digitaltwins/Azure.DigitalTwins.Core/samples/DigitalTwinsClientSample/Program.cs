@@ -32,37 +32,16 @@ namespace Azure.DigitalTwins.Core.Samples
                         Environment.Exit(1);
                     });
 
-            if (options.GetLoginMethod() == LoginMethod.AppId
-                && string.IsNullOrWhiteSpace(options.ClientSecret))
-            {
-                Console.Error.WriteLine("When LoginMethod is AppId, ClientSecret parameter is required.");
-                Console.Error.WriteLine(HelpText.AutoBuild(result, null, null));
-                Environment.Exit(1);
-            }
-
-            // Instantiate the client
-
-            var httpClient = new HttpClient();
-            DigitalTwinsClient dtClient = (options.GetLoginMethod()) switch
-            {
-                LoginMethod.AppId => GetDigitalTwinsClient(
+            // Instantiate the client            
+            DigitalTwinsClient dtClient = GetDigitalTwinsClient(
                     options.TenantId,
                     options.ClientId,
                     options.ClientSecret,
-                    options.AdtEndpoint),
-
-                LoginMethod.User => GetDigitalTwinsClient(
-                    options.TenantId,
-                    options.ClientId,
-                    options.AdtEndpoint,
-                    httpClient),
-
-                _ => throw new Exception("Unsupported login method"),
-            };
+                    options.AdtEndpoint);
 
             // Run the samples
 
-            var dtLifecycleSamples = new DigitalTwinsLifecycleSamples(dtClient, options.EventHubName);
+            var dtLifecycleSamples = new DigitalTwinsLifecycleSamples(dtClient, options.EventHubEndpointName);
             await dtLifecycleSamples.RunSamplesAsync();
 
             var modelLifecycleSamples = new ModelLifecycleSamples();
@@ -74,31 +53,28 @@ namespace Azure.DigitalTwins.Core.Samples
             var publishTelemetrySamples = new PublishTelemetrySamples();
             await publishTelemetrySamples.RunSamplesAsync(dtClient);
 
-            // Clean up
-
-            httpClient.Dispose();
+            var relationshipSamples = new RelationshipSamples();
+            await relationshipSamples.RunSamplesAsync(dtClient);
         }
 
         /// <summary>
-        /// Illustrates how to construct a <see cref="DigitalTwinsClient"/>, using the <see cref="ClientSecretCredential"/>
+        /// Illustrates how to construct a <see cref="DigitalTwinsClient"/>, using the <see cref="DefaultAzureCredential"/>
         /// implementation of <see cref="Azure.Core.TokenCredential"/>.
-        /// </summary>
-        /// <param name="tenantId">The Id of the tenant of the application Id.</param>
-        /// <param name="clientId">The application Id.</param>
-        /// <param name="clientSecret">A client secret for the application Id.</param>
+        /// </summary>        
         /// <param name="adtEndpoint">The endpoint of the digital twins instance.</param>
         private static DigitalTwinsClient GetDigitalTwinsClient(string tenantId, string clientId, string clientSecret, string adtEndpoint)
         {
+            // These environment variables are necessary for DefaultAzureCredential to use application Id and client secret to login.
+            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecret);
+            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientId);
+            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantId);
+
             #region Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
 
-            // By using the ClientSecretCredential, a specified application Id can login using a
-            // client secret.
-            var tokenCredential = new ClientSecretCredential(
-                tenantId,
-                clientId,
-                clientSecret,
-                new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
-
+            // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+            // It attempts to use multiple credential types in an order until it finds a working credential.
+            var tokenCredential = new DefaultAzureCredential();
+            
             var client = new DigitalTwinsClient(
                 new Uri(adtEndpoint),
                 tokenCredential);
@@ -106,42 +82,6 @@ namespace Azure.DigitalTwins.Core.Samples
             #endregion Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
 
             return client;
-        }
-
-        /// <summary>
-        /// Illustrates how to construct a <see cref="DigitalTwinsClient"/> including client options,
-        /// using the <see cref="InteractiveBrowserCredential"/> implementation of <see cref="Azure.Core.TokenCredential"/>.
-        /// </summary>
-        /// <param name="tenantId">The Id of the tenant of the application Id.</param>
-        /// <param name="clientId">The application Id.</param>
-        /// <param name="adtEndpoint">The endpoint of the digital twins instance.</param>
-        /// <param name="httpClient">An HttpClient instance for the client to use</param>
-        private static DigitalTwinsClient GetDigitalTwinsClient(string tenantId, string clientId, string adtEndpoint, HttpClient httpClient)
-        {
-            #region Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin
-
-            // This illustrates how to specify client options, in this case, by providing an
-            // instance of HttpClient for the digital twins client to use.
-            var clientOptions = new DigitalTwinsClientOptions
-            {
-                Transport = new HttpClientTransport(httpClient),
-            };
-
-            // By using the InteractiveBrowserCredential, the current user can login using a web browser
-            // interactively with the AAD
-            var tokenCredential = new InteractiveBrowserCredential(
-                tenantId,
-                clientId,
-                new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
-
-            var client = new DigitalTwinsClient(
-                new Uri(adtEndpoint),
-                tokenCredential,
-                clientOptions);
-
-            #endregion Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin
-
-            return client;
-        }
+        }       
     }
 }

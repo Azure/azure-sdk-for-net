@@ -1,4 +1,4 @@
-﻿---
+---
 page_type: sample
 languages:
 - csharp
@@ -11,7 +11,7 @@ description: Samples for the Azure.Messaging.EventHubs client library
 
 # Azure.Messaging.EventHubs Samples
 
-The  Azure Event Hubs samples are intended to serve as an example and introduction to common scenarios in which the Event Hubs client library is used, and to help demonstrate library features.  The samples are accompanied by a [console application](./Program.cs) which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.
+The  Azure Event Hubs samples are intended to serve as an example and introduction to common scenarios in which the Event Hubs client library is used, and to help demonstrate library features.  The samples are accompanied by a [console application](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Program.cs) which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.
 
 Each of the samples is self-contained and focused on illustrating one specific scenario.  Each is numbered, with the lower numbers concentrating on basic scenarios and building to more complex scenarios as they increase; though each sample is independent, it will assume an understanding of the content discussed in earlier samples.
 
@@ -79,6 +79,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](./CONTRIBUTING.md) for more information.
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/CONTRIBUTING.md) for more information.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs/samples/%2FREADME.png)

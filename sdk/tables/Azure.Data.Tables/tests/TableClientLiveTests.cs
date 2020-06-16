@@ -782,10 +782,9 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
         [Test]
-        [Ignore("requires https://github.com/Azure/azure-sdk-for-net/issues/11764")]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
-            // Cratae some policies.
+            // Create some policies.
 
             var policyToCreate = new List<SignedIdentifier>
             {
@@ -799,7 +798,11 @@ namespace Azure.Data.Tables.Tests
 
             var policies = await client.GetAccessPolicyAsync();
 
-            Assert.That(policies.Value, Is.EquivalentTo(policyToCreate));
+            Assert.That(policies.Value[0].Id, Is.EqualTo(policyToCreate[0].Id));
+            Assert.That(policies.Value[0].AccessPolicy.Expiry, Is.EqualTo(policyToCreate[0].AccessPolicy.Expiry));
+            Assert.That(policies.Value[0].AccessPolicy.Permission, Is.EqualTo(policyToCreate[0].AccessPolicy.Permission));
+            Assert.That(policies.Value[0].AccessPolicy.Start, Is.EqualTo(policyToCreate[0].AccessPolicy.Start));
+
         }
     }
 }

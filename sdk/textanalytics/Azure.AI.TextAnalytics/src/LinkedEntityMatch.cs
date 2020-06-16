@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Details regarding the specific substring in the document matching
-    /// the linked entity, or well-known item, that the text analytics model
+    /// the linked entity, or well-known item, that the Text Analytics model
     /// identified.
     /// </summary>
     public readonly struct LinkedEntityMatch

@@ -73,7 +73,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
         /// <param name="healthStatus">Health status of protected item.
         /// Possible values include: 'Passed', 'ActionRequired',
-        /// 'ActionSuggested', 'Invalid'</param>
+        /// 'ActionSuggested', 'Healthy', 'TransientDegraded',
+        /// 'PersistentDegraded', 'TransientUnhealthy', 'PersistentUnhealthy',
+        /// 'Invalid'</param>
         /// <param name="healthDetails">Health details on this backup
         /// item.</param>
         /// <param name="lastBackupStatus">Last backup operation
@@ -136,7 +138,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets health status of protected item. Possible values
-        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
+        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Healthy',
+        /// 'TransientDegraded', 'PersistentDegraded', 'TransientUnhealthy',
+        /// 'PersistentUnhealthy', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
         public string HealthStatus { get; set; }

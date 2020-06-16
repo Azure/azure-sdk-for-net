@@ -18,9 +18,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
+    /// Enables authentication to Azure Active Directory using Azure CLI to obtain an access token.
     /// </summary>
-    internal class AzureCliCredential : TokenCredential
+    public class AzureCliCredential : TokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to set up account";

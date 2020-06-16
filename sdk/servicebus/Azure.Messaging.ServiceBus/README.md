@@ -37,7 +37,7 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.2
+dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.3
 ```
 
 ### Authenticate the client
@@ -125,7 +125,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // get the message body as a string
-string body = receivedMessage.Body.AsString();
+string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
@@ -279,7 +279,7 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessMessageEventArgs args)
 {
-    string body = args.Message.Body.AsString();
+    string body = args.Message.Body.ToString();
     Console.WriteLine(body);
 
     // we can evaluate application logic and use that to determine how to settle the message.

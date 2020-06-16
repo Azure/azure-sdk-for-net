@@ -25,9 +25,9 @@ namespace Azure.DigitalTwins.Core.Tests
 
             DigitalTwinsClient client = GetClient();
 
-            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.WifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
+            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
             string wifiComponentName = "wifiAccessPoint";
 
             try
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
-                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
+                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
                 await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin);
 

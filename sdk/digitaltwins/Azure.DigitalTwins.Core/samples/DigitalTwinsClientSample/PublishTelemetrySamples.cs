@@ -39,15 +39,13 @@ namespace Azure.DigitalTwins.Samples
 
             // Then we create the models.
             await client
-                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload })
-                ;
+                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
-                .Replace(SamplesConstants.ModelId, modelId)
-                .Replace(SamplesConstants.ComponentId, componentModelId);
+                .Replace(SamplesConstants.ModelId, modelId);
 
             await client.CreateDigitalTwinAsync(twinId, twinPayload);
             Console.WriteLine($"Created digital twin {twinId}.");
@@ -58,7 +56,7 @@ namespace Azure.DigitalTwins.Samples
 
                 // construct your json telemetry payload by hand.
                 Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
-                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
+                Console.WriteLine($"Published telemetry message to twin with Id {twinId}. Response status: {publishTelemetryResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishTelemetry
 
@@ -73,7 +71,7 @@ namespace Azure.DigitalTwins.Samples
                     twinId,
                     "Component1",
                     JsonSerializer.Serialize(telemetryPayload));
-                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
+                Console.WriteLine($"Published component telemetry message to twin with Id {twinId}. Response status: {publishTelemetryToComponentResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishComponentTelemetry
             }

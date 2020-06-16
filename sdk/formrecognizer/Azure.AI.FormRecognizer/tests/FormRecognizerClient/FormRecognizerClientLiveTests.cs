@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
             var formPage = formPages.Single();
 
             Assert.Greater(formPage.Lines.Count, 0);
@@ -101,8 +101,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync();
-
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -194,7 +193,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(2, formPages.Count);
 
@@ -225,7 +224,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentAsync(stream);
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(3, formPages.Count);
 
@@ -291,30 +290,42 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
-            var receipt = operation.Value.Single().AsUSReceipt();
+            var form = operation.Value.Single().RecognizedForm;
+
+            Assert.NotNull(form);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(USReceiptType.Itemized, receipt.ReceiptType);
-            Assert.That(receipt.ReceiptTypeConfidence, Is.EqualTo(0.66).Within(0.01));
+            Assert.AreEqual("prebuilt:receipt", form.FormType);
 
-            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
 
-            Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
-            Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
+            Assert.NotNull(form.Fields);
 
-            Assert.IsNotNull(receipt.TransactionDate);
-            Assert.IsNotNull(receipt.TransactionTime);
+            Assert.True(form.Fields.ContainsKey("ReceiptType"));
+            Assert.True(form.Fields.ContainsKey("MerchantAddress"));
+            Assert.True(form.Fields.ContainsKey("MerchantName"));
+            Assert.True(form.Fields.ContainsKey("MerchantPhoneNumber"));
+            Assert.True(form.Fields.ContainsKey("TransactionDate"));
+            Assert.True(form.Fields.ContainsKey("TransactionTime"));
+            Assert.True(form.Fields.ContainsKey("Items"));
+            Assert.True(form.Fields.ContainsKey("Subtotal"));
+            Assert.True(form.Fields.ContainsKey("Tax"));
+            Assert.True(form.Fields.ContainsKey("Total"));
 
-            var date = receipt.TransactionDate.Value;
-            var time = receipt.TransactionTime.Value;
+            Assert.AreEqual("Itemized", form.Fields["ReceiptType"].Value.AsString());
+            Assert.AreEqual("Contoso Contoso", form.Fields["MerchantName"].Value.AsString());
+            Assert.AreEqual("123 Main Street Redmond, WA 98052", form.Fields["MerchantAddress"].Value.AsString());
+            Assert.AreEqual("123-456-7890", form.Fields["MerchantPhoneNumber"].ValueText.Text);
+
+            var date = form.Fields["TransactionDate"].Value.AsDate();
+            var time = form.Fields["TransactionTime"].Value.AsTime();
 
             Assert.AreEqual(10, date.Day);
             Assert.AreEqual(6, date.Month);
@@ -332,23 +343,35 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Include a bit of tolerance when comparing float types.
 
-            Assert.AreEqual(expectedItems.Count, receipt.Items.Count);
+            var items = form.Fields["Items"].Value.AsList();
 
-            for (var itemIndex = 0; itemIndex < receipt.Items.Count; itemIndex++)
+            Assert.AreEqual(expectedItems.Count, items.Count);
+
+            for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
-                var receiptItem = receipt.Items[itemIndex];
+                var receiptItemInfo = items[itemIndex].Value.AsDictionary();
+
+                receiptItemInfo.TryGetValue("Quantity", out var quantityField);
+                receiptItemInfo.TryGetValue("Name", out var nameField);
+                receiptItemInfo.TryGetValue("Price", out var priceField);
+                receiptItemInfo.TryGetValue("TotalPrice", out var totalPriceField);
+
+                var quantity = quantityField == null ? null : (float?)quantityField.Value.AsFloat();
+                var name = nameField == null ? null : nameField.Value.AsString();
+                var price = priceField == null ? null : (float?)priceField.Value.AsFloat();
+                var totalPrice = totalPriceField == null ? null : (float?)totalPriceField.Value.AsFloat();
+
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Name, name, $"Name mismatch in item with index {itemIndex}.");
+                Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
+                Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
             }
 
-            Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
-            Assert.IsNull(receipt.Tip);
-            Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+            Assert.That(form.Fields["Subtotal"].Value.AsFloat(), Is.EqualTo(1098.99).Within(0.0001));
+            Assert.That(form.Fields["Tax"].Value.AsFloat(), Is.EqualTo(104.40).Within(0.0001));
+            Assert.That(form.Fields["Total"].Value.AsFloat(), Is.EqualTo(1203.39).Within(0.0001));
         }
 
         [Test]
@@ -374,7 +397,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
-            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync();
+            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(2, recognizedReceipts.Count);
 
@@ -383,7 +406,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
                 Assert.NotNull(recognizedReceipt.RecognizedForm);
 
                 ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
@@ -412,7 +434,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync();
+            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(3, recognizedReceipts.Count);
 
@@ -421,7 +443,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
                 Assert.NotNull(recognizedReceipt.RecognizedForm);
 
                 ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
@@ -490,7 +511,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
             }
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
@@ -540,7 +561,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
             var recognizedForm = recognizedForms.Single();
 
@@ -577,7 +598,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
             var recognizedForm = recognizedForms.Single();
 
@@ -605,7 +626,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
             var recognizedForm = recognizedForms.Single();
 
@@ -649,7 +670,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
             var fields = forms.Single().Fields;
 
             // Verify that we got back at least one null field to make sure we hit the code path we want to test.
@@ -685,7 +706,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
             }
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
@@ -736,7 +757,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(2, recognizedForms.Count);
 
@@ -776,7 +797,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(3, recognizedForms.Count);
 
@@ -817,7 +838,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [TestCase(true)]
+        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -831,7 +852,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             try
             {
-                await operation.WaitForCompletionAsync();
+                await operation.WaitForCompletionAsync(PollingInterval);
             }
             catch (RequestFailedException ex)
             {
@@ -844,8 +865,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
 
             Assert.True(operation.HasCompleted);
-            Assert.True(operation.HasValue);
-            Assert.AreEqual(0, operation.Value.Count);
+            Assert.False(operation.HasValue);
+            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         private void ValidateFormPage(FormPage formPage, bool includeTextContent, int expectedPageNumber)

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -26,9 +25,9 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             DigitalTwinsClient client = GetClient();
 
-            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.RoomTwinIdPrefix).ConfigureAwait(false);
-            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.FloorModelIdPrefix).ConfigureAwait(false);
-            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.RoomModelIdPrefix).ConfigureAwait(false);
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
 
             try
             {
@@ -49,7 +48,13 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin).ConfigureAwait(false);
+
+                var requestOptions = new RequestOptions
+                {
+                    IfMatch = "*"
+                };
+
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin, requestOptions).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
@@ -59,6 +64,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
                 };
+
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }

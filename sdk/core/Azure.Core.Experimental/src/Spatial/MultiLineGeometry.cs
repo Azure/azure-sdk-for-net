@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="MultiLineGeometry"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lines): this(lines, DefaultProperties)
+        public MultiLineGeometry(IEnumerable<LineGeometry> lines): this(lines, null, DefaultProperties)
         {
         }
 
@@ -23,8 +23,9 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="MultiLineGeometry"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lines, GeometryProperties properties): base(properties)
+        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
+        public MultiLineGeometry(IEnumerable<LineGeometry> lines, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(lines, nameof(lines));
 

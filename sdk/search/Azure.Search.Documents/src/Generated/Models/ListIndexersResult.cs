@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="indexers"> The indexers in the Search service. </param>
         internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers)
         {
-            Indexers = indexers;
+            Indexers = indexers ?? new List<SearchIndexer>();
         }
 
         /// <summary> The indexers in the Search service. </summary>

@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(string body, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            Body = BinaryData.Create(body, encoding);
+            Body = new BinaryData(body, encoding);
             Properties = new Dictionary<string, object>();
         }
 

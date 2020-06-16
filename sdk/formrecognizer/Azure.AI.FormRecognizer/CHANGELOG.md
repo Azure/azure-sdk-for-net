@@ -1,6 +1,11 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-preview.4 (Unreleased)
+
+### Breaking changes
+- Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
+
+## 1.0.0-preview.3 (06-10-2020)
 
 ### Renames
 
@@ -25,9 +30,15 @@
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 - In preparation for service-side changes, `FieldValue.AsInt32` has been replaced by `FieldValue.AsInt64`, which returns a `long`.
-- The order of the values for `USReceiptType` have changed so that `Other` has now a value of `1`.
 - Parameter `useTrainingLabels` is now required for `FormTrainingClient.StartTraining`.
 - Protected constructors have been removed from `Operation` types, such as `TrainingOperation` or `RecognizeContentOperation`.
+- `USReceipt`, `USReceiptItem`, `USReceiptType` and `FormField{T}` types removed. Information about a `RecognizedReceipt` must now be extracted from its `RecognizedForm`.
+- `ReceiptLocale` removed from `RecognizedReceipt`.
+- An `InvalidOperationException` is now raised if trying to access the `Value` property of a `TrainingOperation` when a trained model is invalid.
+- A `RequestFailedException` is now raised if a model with `status=="invalid"` is returned from the `StartTraining` and `StartTrainingAsync` methods.
+- A `RequestFailedException` is now raised if an operation like `StartRecognizeReceipts` or `StartRecognizeContent` fails.
+- An `InvalidOperationException` is now raised if trying to access the `Value` property of a `xxOperation` object when the executed operation failed.
+- Method `GetFormTrainingClient` has been removed from `FormRecognizerClient` and `GetFormRecognizerClient` has been added to `FormTrainingClient`.
 
 ### New Features
 

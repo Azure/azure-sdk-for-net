@@ -4,10 +4,9 @@
     <PackageId>Azure.Graph.Rbac</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsoft.ResourceGraph</Description>
     <PackageTags>azure;management;resourcegraph</PackageTags>
-    <!--Need explicitly specify IsMgmtClientLibrary and EnableApiCompact 
+    <!--Need explicitly specify IsMgmtClientLibrary  
     as this project doesn't start with Azure.Management-->
     <IsMgmtClientLibrary>true</IsMgmtClientLibrary>
-    <EnableApiCompat>false</EnableApiCompat>
     <NoWarn>$(NoWarn);AZC0001;AZC0008;AZC0012;CS1591</NoWarn>
   </PropertyGroup>
 </Project>

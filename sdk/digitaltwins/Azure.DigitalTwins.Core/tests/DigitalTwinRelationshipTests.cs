@@ -36,13 +36,13 @@ namespace Azure.DigitalTwins.Core.Tests
             var hvacCoolsFloorRelationshipId = "HvacToFloorRelationship";
             var roomContainedInFloorRelationshipId = "RoomToFloorRelationship";
 
-            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.FloorModelIdPrefix).ConfigureAwait(false);
-            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.RoomModelIdPrefix).ConfigureAwait(false);
-            string hvacModelId = await GetUniqueTwinIdAsync(client, TestAssetSettings.HvacModelIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+            string hvacModelId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.HvacModelIdPrefix).ConfigureAwait(false);
 
-            string floorTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.FloorTwinIdPrefix).ConfigureAwait(false);
-            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.RoomTwinIdPrefix).ConfigureAwait(false);
-            string hvacTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.HvacTwinIdPrefix).ConfigureAwait(false);
+            string floorTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.FloorTwinIdPrefix).ConfigureAwait(false);
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string hvacTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.HvacTwinIdPrefix).ConfigureAwait(false);
 
             try
             {
@@ -68,7 +68,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorTwinCoolsRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, CoolsRelationship);
                 string floorTwinContainedInRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, ContainedInRelationship);
                 string floorCooledByHvacPayload = TestAssetsHelper.GetRelationshipPayload(hvacTwinId, CooledByRelationship);
-                string floorContainsRoomUpdatePayload = TestAssetsHelper.GetRelationshipUpdatePayload("isAccessRestricted", false);
+                string floorContainsRoomUpdatePayload = TestAssetsHelper.GetRelationshipUpdatePayload("/isAccessRestricted", false);
 
                 // CREATE relationships
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>1.0.0-preview.4</Version>
+    <Version>1.0.0-preview.5</Version>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
@@ -10,9 +10,6 @@
     </Description>
     <PackageTags>Azure Cognitive Search;Azure Search Documents;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    
-    <!-- We don't have to worry about Breaking Changes until GA -->
-    <EnableApiCompat>false</EnableApiCompat>
 
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
