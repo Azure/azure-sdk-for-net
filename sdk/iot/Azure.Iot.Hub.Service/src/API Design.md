@@ -62,9 +62,14 @@ This sub-client has been implemented. Refer to [ModulesClient](./ModulesClient.c
 
 <details><summary><b>Jobs</b></summary>
 
-## Import/Export Jobs APIs
+There are two types of jobs exposed by IoT Hub
+
+### Import/Export Jobs APIs
 
 Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
+
+### Scheduled Jobs
+Scheduled jobs execute device twin updates and direct methods against a set of devices at a scheduled time. You can use scheduled jobs to update desired properties, update tags and invoke direct methods.
 
 ```csharp
 public class Jobs
@@ -111,16 +116,7 @@ public class Jobs
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A response string object indicating result of the cancellation.</returns>
     public virtual Task<Response<string>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken = default);
-}
 
-```
-
-## Scheduled Jobs
-Scheduled jobs execute device twin updates and direct methods against a set of devices at a scheduled time. You can use scheduled jobs to update desired properties, update tags and invoke direct methods.
-
-```csharp
-public class ScheduledJobs
-{
     /// <summary>
     /// Creates a new scheduled job to update twin tags and desired properties on one or multiple devices.
     /// </summary>
@@ -143,7 +139,7 @@ public class ScheduledJobs
     /// <param name="maxExecutionTime">Max execution time in seconds, i.e., time-to-live duration the job can run. If not provided, the default is 3600 seconds</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodJobAsync(string jobId, string query, CloudToDeviceMethod cloudToDeviceMethod, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime = null, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodJobAsync(string jobId, string query, CloudToDeviceMethodRequest cloudToDeviceMethodRequest, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves details of a scheduled job from the IoT Hub.
@@ -159,7 +155,7 @@ public class ScheduledJobs
     /// <param name="jobId">Id of the job to cancel</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobResponse>> CancelScheduledJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Query the IoT hub to retrieve information regarding scheduled jobs.
