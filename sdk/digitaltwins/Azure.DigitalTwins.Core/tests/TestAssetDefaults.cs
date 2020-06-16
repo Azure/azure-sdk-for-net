@@ -11,10 +11,8 @@ namespace Azure.DigitalTwins.Core.Tests
     /// These are the settings that will be used by the end-to-end tests tests.
     /// The json files configured in the config will load the settings specific to a user.
     /// </summary>
-    public class TestAssetSettings
+    public static class TestAssetDefaults
     {
-        public static TestAssetSettings Instance { get; private set; }
-
         /// <summary>
         /// Default Floor Twin Id prefix.
         /// </summary>
@@ -63,56 +61,26 @@ namespace Azure.DigitalTwins.Core.Tests
         /// <summary>
         /// Default Floor Model Id.
         /// </summary>
-        public string FloorModelId { get; set; }
+        public const string FloorModelId = "dtmi:example:Floor;1";
 
         /// <summary>
         /// Default Room Model Id.
         /// </summary>
-        public string RoomModelId { get; set; }
+        public const string RoomModelId = "dtmi:example:Room;1";
 
         /// <summary>
         /// Default Hvac Model Id.
         /// </summary>
-        public string HvacModelId { get; set; }
+        public const string HvacModelId = "dtmi:example:Hvac;1";
 
         /// <summary>
         /// Default Building Model Id.
         /// </summary>
-        public string BuildingModelId { get; set; }
+        public const string BuildingModelId = "dtmi:example:Building;1";
 
         /// <summary>
         /// Default Ward Model Id.
         /// </summary>
-        public string WardModelId { get; set; }
-
-        static TestAssetSettings()
-        {
-            if (Instance != null)
-            {
-                return;
-            }
-
-            // Initialize the settings related to test assets - Models and IDs
-            var testsAssetSettingsConfigBuilder = new ConfigurationBuilder();
-
-            string testAssetSettingsCommonPath = Path.Combine(
-                TestSettings.Instance.WorkingDirectory,
-                "config",
-                "common.test.assets.config.json");
-            testsAssetSettingsConfigBuilder.AddJsonFile(testAssetSettingsCommonPath);
-
-            string testAssetSettingsUserPath = Path.Combine(
-                TestSettings.Instance.WorkingDirectory,
-                "config",
-                $"{Environment.UserName}.test.assets.config.json");
-            if (File.Exists(testAssetSettingsUserPath))
-            {
-                testsAssetSettingsConfigBuilder.AddJsonFile(testAssetSettingsUserPath);
-            }
-
-            IConfiguration config = testsAssetSettingsConfigBuilder.Build();
-
-            Instance = config.Get<TestAssetSettings>();
-        }
+        public const string WardModelId = "dtmi:example:Ward;1";
     }
 }
