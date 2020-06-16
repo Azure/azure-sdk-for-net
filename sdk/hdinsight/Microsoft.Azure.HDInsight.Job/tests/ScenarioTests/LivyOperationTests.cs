@@ -26,7 +26,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
     using Microsoft.Azure.HDInsight.Job.Models;
     using System.Linq;
 
-    public class LivyOperationTests : TestBase, IClassFixture<SparkJobTestsFixture> 
+    public class LivyOperationTests : TestBase, IClassFixture<SparkJobTestsFixture>
     {
         public SparkJobTestsFixture CommonData { get; set; }
 
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                 {
                     File = "wasbs:///spark-examples.jar",
                     ClassName = "org.apache.spark.examples.SparkPi",
-                    Arguments = new List<string>(){"10"}
+                    Arguments = new List<string>() { "10" }
                 };
                 var createResponse = client.Job.SubmitSparkBatchJob(createRequest);
                 Assert.NotNull(createResponse);
@@ -56,9 +56,9 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
 
                 var checkResponse = client.Job.ListSparkBatchJob();
                 Assert.NotNull(checkResponse);
-                Assert.Equal(originalResponse.Total+1, checkResponse.Total);
+                Assert.Equal(originalResponse.Total + 1, checkResponse.Total);
 
-                var specifySizeResponse = originalResponse = client.Job.ListSparkBatchJob(1,0);
+                var specifySizeResponse = originalResponse = client.Job.ListSparkBatchJob(1, 0);
                 Assert.NotNull(checkResponse);
                 Assert.Equal(1, specifySizeResponse.FromProperty);
                 Assert.Equal(0, specifySizeResponse.Sessions.Count);
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
 
                 var checkResponse = client.Job.ListSparkBatchJob();
                 Assert.NotNull(checkResponse);
-                Assert.Equal(originalResponse.Total-1, checkResponse.Total);
+                Assert.Equal(originalResponse.Total - 1, checkResponse.Total);
             }
         }
 
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                 //delete statements
                 var cancelResponse = client.Job.DeleteSparkStatementJob((int)createResponse.Id, (int)statementResponse.Id);
                 Assert.Equal("canceled", cancelResponse.CancelMessage);
-                
+
                 //delete session
                 client.Job.DeleteSparkSessionJob((int)createResponse.Id);
             }

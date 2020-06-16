@@ -54,8 +54,6 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                      this.ContainerName,
                      out string storageAccountSuffix);
 
-                HDInsightManagementHelper.SubmitSparkJobFile(ResourceGroupName, StorageAccountName, ContainerName, StorageAccountAccessKey);
-
                 HDInsightManagementHelper.CreateSqlServer(
                      this.ResourceGroupName,
                      this.Location,
