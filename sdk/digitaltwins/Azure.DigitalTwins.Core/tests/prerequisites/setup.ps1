@@ -113,17 +113,35 @@ $appSecret = az ad app credential reset --id $appId --years 2 --query 'password'
 $user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("Writing user config file - $fileName`n")
-$appSecretJsonEscaped = ConvertTo-Json $appSecret
+
 $config = @"
 {
-    "DigitalTwinsInstanceHostName": "$dtHostName",
-    "ApplicationId": "$appId",
-    "ClientSecret": $appSecretJsonEscaped,
-    "TestMode":  "Live"
+    "TestMode":  "Live"	
 }
 "@
 
 $config | Out-File "$PSScriptRoot\..\config\$fileName"
+
+$outputfileDir = (Get-Item -Path $PSScriptRoot).Parent.Parent.Parent.Fullname
+$outputFile = Join-Path -Path $outputfileDir -ChildPath "test-resources.json.env"
+$tenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47"
+
+Add-Type -AssemblyName System.Security
+
+$appSecretJsonEscaped = ConvertTo-Json $appSecret
+$environmentText = @"
+{
+    "DIGITALTWINS_URL": "$dtHostName",
+    "DIGITALTWINS_CLIENT_ID": "$appId",
+    "DIGITALTWINS_CLIENT_SECRET": $appSecretJsonEscaped,
+    "DIGITALTWINS_TENANT_ID":  "$tenantId"
+}
+"@
+
+$bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
+$protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+Write-Host "Test environment settings stored into encrypted $outputFile"
 
 $userSettingsFileSuffix = ".test.assets.config.json"
 $userSettingsFileName = "$user$userSettingsFileSuffix"
