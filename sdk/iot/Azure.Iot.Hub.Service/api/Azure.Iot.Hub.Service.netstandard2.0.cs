@@ -50,8 +50,10 @@ namespace Azure.Iot.Hub.Service
     public partial class IoTHubServiceClient
     {
         protected IoTHubServiceClient() { }
-        public IoTHubServiceClient(System.Uri endpoint) { }
-        public IoTHubServiceClient(System.Uri endpoint, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
+        public IoTHubServiceClient(string connectionString) { }
+        public IoTHubServiceClient(string connectionString, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
+        public IoTHubServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public IoTHubServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
         public Azure.Iot.Hub.Service.DevicesClient Devices { get { throw null; } }
         public Azure.Iot.Hub.Service.FilesClient Files { get { throw null; } }
         public Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
