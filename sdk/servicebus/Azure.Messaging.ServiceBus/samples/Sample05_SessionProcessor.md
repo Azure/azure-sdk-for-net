@@ -17,7 +17,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 messageBatch.TryAdd(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
     {
@@ -30,7 +30,7 @@ messageBatch.TryAdd(
     });
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusSessionProcessorOptions

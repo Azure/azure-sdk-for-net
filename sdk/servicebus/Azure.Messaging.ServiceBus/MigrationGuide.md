@@ -140,13 +140,13 @@ ServiceBusSender sender = client.CreateSender(queueName);
 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // get the message body as a string
 string body = receivedMessage.Body.ToString();
@@ -223,18 +223,18 @@ IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the messages
-await sender.SendAsync(messages);
+await sender.SendMessagesAsync(messages);
 ```
 
 Or using the safe-batching feature:
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 ```
 
 And to receive a batch:
@@ -243,7 +243,7 @@ And to receive a batch:
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 {
