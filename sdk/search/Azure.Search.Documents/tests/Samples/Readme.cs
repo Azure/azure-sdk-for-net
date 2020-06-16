@@ -236,6 +236,19 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        public async Task GetDocument()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resources.GetQueryClient();
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_GetDocument
+            Hotel doc = client.GetDocument<Hotel>("1");
+            Console.WriteLine($"{doc.Id}: {doc.Name}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
         public async Task Index()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
