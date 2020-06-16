@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 if (!useSessions)

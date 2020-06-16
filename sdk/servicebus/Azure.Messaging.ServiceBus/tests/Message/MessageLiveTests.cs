@@ -164,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var received = await receiver.ReceiveAsync();
+                var received = await receiver.ReceiveMessageAsync();
                 var receivedBody = received.Body.Deserialize<TestBody>(serializer);
                 Assert.AreEqual(testBody.A, receivedBody.A);
                 Assert.AreEqual(testBody.B, receivedBody.B);
