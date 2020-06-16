@@ -23,6 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             string receiptUri = FormRecognizerTestEnvironment.CreateUriString("contoso-receipt.jpg");
 
+            #region Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
             RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
             List<Receipt> receipts = new List<Receipt>();
 
@@ -33,12 +34,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
                 if (receipt.MerchantName != null)
                 {
-                    Console.WriteLine($"Merchant Name: '{receipt.MerchantName.Value}', with confidence {receipt.MerchantName.Confidence}");
+                    string merchantName = receipt.MerchantName;
+                    Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {receipt.MerchantName.Confidence}");
                 }
 
                 if (receipt.TransactionDate != null)
                 {
-                    Console.WriteLine($"Transaction Date: '{receipt.TransactionDate.Value}', with confidence {receipt.TransactionDate.Confidence}");
+                    DateTime transactionDate = receipt.TransactionDate;
+                    Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {receipt.TransactionDate.Confidence}");
                 }
 
                 foreach (ReceiptItem item in receipt.Items)
@@ -47,15 +50,24 @@ namespace Azure.AI.FormRecognizer.Samples
 
                     if (item.Name != null)
                     {
-                        Console.WriteLine($"    Name: '{item.Name.Value}', with confidence {item.Name.Confidence}");
+                        string name = item.Name;
+                        Console.WriteLine($"    Name: '{name}', with confidence {item.Name.Confidence}");
                     }
 
                     if (item.TotalPrice != null)
                     {
-                        Console.WriteLine($"    Total Price: '{item.TotalPrice.Value}', with confidence {item.TotalPrice.Confidence}");
+                        float totalPrice = item.TotalPrice;
+                        Console.WriteLine($"    Total Price: '{totalPrice}', with confidence {item.TotalPrice.Confidence}");
                     }
                 }
+
+                if (receipt.Total != null)
+                {
+                    float total = receipt.Total;
+                    Console.WriteLine($"Total: '{total}', with confidence {receipt.Total.Confidence}");
+                }
             }
+            #endregion
         }
     }
 }
