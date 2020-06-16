@@ -77,7 +77,7 @@ if (-not $sp)
 }
 
 # Get test application OID from the service principal
-$applicationOId = az ad sp show --id $sp --query "objectId" --output tsv
+$applicationOId = az ad sp show --id $appId --query "objectId" --output tsv
 
 $rgExists = az group exists --name $ResourceGroup
 if ($rgExists -eq "False")
