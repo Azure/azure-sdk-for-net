@@ -63,6 +63,7 @@ namespace Azure.Storage.Shared
             _downloadToFunc = downloadToFunc;
             _position = position;
             _bufferSize = bufferSize;
+            _stream = new MemoryStream(bufferSize);
             _requestConditions = requestConditions;
         }
 
@@ -88,7 +89,7 @@ namespace Azure.Storage.Shared
         {
             ValidateReadParameters(buffer, offset, count);
 
-            if (_stream == null)
+            if (_stream.Position == 0)
             {
                 await Download(async, cancellationToken).ConfigureAwait(false);
                 if (_lastDownloadBytes == 0)
@@ -146,9 +147,27 @@ namespace Azure.Storage.Shared
                 throw;
             }
 
-            _stream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
+            Stream networkStream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
+
+            _stream.SetLength(0);
+
+            if (async)
+            {
+                await networkStream.CopyToAsync(
+                    _stream,
+                    Constants.DefaultBufferSize,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                networkStream.CopyTo(
+                    _stream,
+                    Constants.DefaultBufferSize);
+            }
+
+            _stream.Position = 0;
             _lastDownloadBytes = response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
-            //_endOfLastDownloadPosition = _position + _lastDownloadBytes;
             _length = GetBlobLength(response);
         }
 
