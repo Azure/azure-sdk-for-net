@@ -7,21 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.0.1-preview</Version>
+		<Version>20.0.2-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Renamed Firewall Policy child resource from RuleGroup to RuleCollectionGroup
-            - Moved property TerminateTLS from NatRuleCondition to ApplicationRuleCondition
-            - Added support for VirtualHubBgpConnections, VirtualHubIpConfigurations, NetworkVirtualApplianceSites, HubVirtualNetworkConnections resources
-            - Added support for DnsProxy property to FirewallPolicy
-            - Added support for DestinationFqdns property to FirewallPolicy
-            - Added support for HopLink property to ConnectivityHop
-            - Added support for PrivateLinkConfiguration property to ApplicationGateway
-            - Added support for NvaSku property to NetworkVirtualAppliance
-            - Added support for HubPublicIPAddresses property to VirtualHub
-            - Added support for GetEffectiveVirtualHubRoutes method to VirtualHubs
-            - Added support for RoutingState property to VirtualHubs
+            - Fix incorrect type of AssociatedConnections and PropagatingConnections in HubRouteTable
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
