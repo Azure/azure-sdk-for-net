@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
+            Sanitizer = new TestConnectionStringSanitizer();
         }
 
         public E2eTestBase(bool isAsync, RecordedTestMode testMode)
@@ -34,8 +36,18 @@ namespace Azure.Iot.Hub.Service.Tests
 
         protected IoTHubServiceClient GetClient()
         {
+            string connectionString = TestEnvironment.IotHubConnectionString;
+
+            // In playback mode we will restore the shared access key to an invalid value so the connection string can be parsed.
+            if (Recording.Mode == RecordedTestMode.Playback)
+            {
+                connectionString = connectionString.Replace(";SharedAccessKey=", ";SharedAccessKey=Kg==;");
+            }
+
             return InstrumentClient(
-                new IoTHubServiceClient(TestSettings.Instance.IotHubConnectionString));
+                new IoTHubServiceClient(
+                    connectionString,
+                    Recording.InstrumentClientOptions(new IoTHubServiceClientOptions())));
         }
 
         protected string GetRandom()
