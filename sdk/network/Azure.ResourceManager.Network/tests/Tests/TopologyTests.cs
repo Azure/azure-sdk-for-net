@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
 
             //Deploy Vm from template
-            await Deployments.CreateVm(
+            await CreateVm(
                 resourcesClient: ResourceManagementClient,
                 resourceGroupName: resourceGroupName1,
                 location: location,

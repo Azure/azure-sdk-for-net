@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await TestHelper.CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location, NetworkManagementClient);
+            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location, NetworkManagementClient);
 
             //Prerequisite:-Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = "GatewaySubnet";
 
-            await TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
+            await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
 
             Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnetName);
 

@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string nic1name = Recording.GenerateAssetName("azsmnet");
             string nic2name = Recording.GenerateAssetName("azsmnet");
 
-            Task<NetworkInterface> nic1 = TestHelper.CreateNetworkInterface(
+            Task<NetworkInterface> nic1 = CreateNetworkInterface(
                 nic1name,
                 resourceGroupName,
                 null,
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 "ipconfig",
                 NetworkManagementClient);
 
-            Task<NetworkInterface> nic2 = TestHelper.CreateNetworkInterface(
+            Task<NetworkInterface> nic2 = CreateNetworkInterface(
                 nic2name,
                 resourceGroupName,
                 null,

@@ -61,7 +61,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
 var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
-var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
+var virtualNetworksOperations = networkClient.VirtualNetworks;
 
 // Create VNet
 var vnet = new VirtualNetwork()
@@ -78,7 +78,7 @@ var vnet = new VirtualNetwork()
     },
 };
 
-var response = await virtualNetworksClient.StartCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
+var response = await virtualNetworksOperations.StartCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
 vnet = await response.WaitForCompletionAsync();
 ```
 

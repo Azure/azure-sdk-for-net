@@ -161,84 +161,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.CheckPrivateLinkServiceVisibility");
-            scope.Start();
-            try
-            {
-                return await RestClient.CheckPrivateLinkServiceVisibilityAsync(location, parameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.CheckPrivateLinkServiceVisibility");
-            scope.Start();
-            try
-            {
-                return RestClient.CheckPrivateLinkServiceVisibility(location, parameters, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup");
-            scope.Start();
-            try
-            {
-                return await RestClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(location, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.CheckPrivateLinkServiceVisibilityByResourceGroup");
-            scope.Start();
-            try
-            {
-                return RestClient.CheckPrivateLinkServiceVisibilityByResourceGroup(location, resourceGroupName, parameters, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets all private link services in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -863,6 +785,132 @@ namespace Azure.ResourceManager.Network
             {
                 var originalResponse = RestClient.DeletePrivateEndpointConnection(resourceGroupName, serviceName, peConnectionName, cancellationToken);
                 return new PrivateLinkServicesDeletePrivateEndpointConnectionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePrivateEndpointConnectionRequest(resourceGroupName, serviceName, peConnectionName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks whether the subscription is visible to private link service. </summary>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation> StartCheckPrivateLinkServiceVisibilityAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.StartCheckPrivateLinkServiceVisibility");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CheckPrivateLinkServiceVisibilityAsync(location, parameters, cancellationToken).ConfigureAwait(false);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, _pipeline, RestClient.CreateCheckPrivateLinkServiceVisibilityRequest(location, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks whether the subscription is visible to private link service. </summary>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation StartCheckPrivateLinkServiceVisibility(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.StartCheckPrivateLinkServiceVisibility");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CheckPrivateLinkServiceVisibility(location, parameters, cancellationToken);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, _pipeline, RestClient.CreateCheckPrivateLinkServiceVisibilityRequest(location, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation> StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.StartCheckPrivateLinkServiceVisibilityByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(location, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(location, resourceGroupName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
+        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation StartCheckPrivateLinkServiceVisibilityByResourceGroup(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServicesOperations.StartCheckPrivateLinkServiceVisibilityByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CheckPrivateLinkServiceVisibilityByResourceGroup(location, resourceGroupName, parameters, cancellationToken);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(location, resourceGroupName, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string filterName = "filter";
             string ruleName = "rule";
 
-            Models.RouteFilter filter = await TestHelper.CreateDefaultRouteFilter(resourceGroupName,
+            Models.RouteFilter filter = await CreateDefaultRouteFilter(resourceGroupName,
                 filterName, location, NetworkManagementClient);
 
             Assert.AreEqual(filter.Name, filterName);
             Assert.IsEmpty(filter.Rules);
 
             // Update route filter with rule by put on parent resources
-            filter = await TestHelper.CreateDefaultRouteFilter(resourceGroupName,
+            filter = await CreateDefaultRouteFilter(resourceGroupName,
                 filterName, location, NetworkManagementClient, true);
 
             Assert.AreEqual(filter.Name, filterName);
             Assert.IsNotEmpty(filter.Rules);
 
             // Update route filter and delete rules
-            filter = await TestHelper.CreateDefaultRouteFilter(resourceGroupName,
+            filter = await CreateDefaultRouteFilter(resourceGroupName,
                filterName, location, NetworkManagementClient);
 
             Assert.AreEqual(filter.Name, filterName);
             Assert.IsEmpty(filter.Rules);
 
-            filter = await TestHelper.CreateDefaultRouteFilterRule(resourceGroupName,
+            filter = await CreateDefaultRouteFilterRule(resourceGroupName,
                 filterName, ruleName, location, NetworkManagementClient);
 
             Assert.AreEqual(filter.Name, filterName);
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             string circuitName = "circuit";
 
-            Models.ExpressRouteCircuit circuit = await TestHelper.CreateDefaultExpressRouteCircuit(resourceGroupName,
+            Models.ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
                 circuitName, location, NetworkManagementClient);
 
             Assert.AreEqual(circuit.Name, circuitName);
             Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await TestHelper.UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroupName,
+            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroupName,
                 circuitName, NetworkManagementClient);
 
             Assert.AreEqual(circuit.Name, circuitName);
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             string circuitName = "circuit";
 
-            Models.ExpressRouteCircuit circuit = await TestHelper.CreateDefaultExpressRouteCircuit(resourceGroupName,
+            Models.ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
                 circuitName, location, NetworkManagementClient);
 
             Assert.AreEqual(circuit.Name, circuitName);
             Assert.AreEqual(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await TestHelper.UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroupName,
+            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroupName,
                 circuitName, NetworkManagementClient);
 
             Assert.AreEqual(circuit.Name, circuitName);

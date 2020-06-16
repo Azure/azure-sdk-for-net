@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with template
-            await Deployments.CreateVm(
+            await CreateVm(
                 resourcesClient: ResourceManagementClient,
                 resourceGroupName: resourceGroupName,
                 location: location,
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             PacketCapture pcProperties = new PacketCapture(getVm.Value.Id, new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" });
 
             PacketCapturesCreateOperation createPacketCapture1Operation = await NetworkManagementClient.PacketCaptures.StartCreateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", pcName1, pcProperties);
-            Response<PacketCaptureResult> createPacketCapture1 = await createPacketCapture1Operation.WaitForCompletionAsync();
+            Response<PacketCaptureResult> createPacketCapture1 = await WaitForCompletionAsync(createPacketCapture1Operation);
             Response<PacketCaptureResult> getPacketCapture = await NetworkManagementClient.PacketCaptures.GetAsync("NetworkWatcherRG", "NetworkWatcher_westus2", pcName1);
             PacketCapturesGetStatusOperation queryPCOperation = await NetworkManagementClient.PacketCaptures.StartGetStatusAsync("NetworkWatcherRG", "NetworkWatcher_westus2", pcName1);
-            await queryPCOperation.WaitForCompletionAsync();
+            await WaitForCompletionAsync(queryPCOperation);
 
             //Validation
             Assert.AreEqual(pcName1, createPacketCapture1.Value.Name);

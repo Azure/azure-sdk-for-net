@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await TestHelper.CreateDefaultPublicIpAddress(
+            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
                 resourceGroupName,
                 lbDomaingNameLabel,
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
+            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
 
             // Create Nics
             string nic1name = Recording.GenerateAssetName("azsmnet");
             string nic2name = Recording.GenerateAssetName("azsmnet");
             string nic3name = Recording.GenerateAssetName("azsmnet");
 
-            NetworkInterface nic1 = await TestHelper.CreateNetworkInterface(
+            NetworkInterface nic1 = await CreateNetworkInterface(
                 nic1name,
                 resourceGroupName,
                 null,
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 "ipconfig",
                 NetworkManagementClient);
 
-            NetworkInterface nic2 = await TestHelper.CreateNetworkInterface(
+            NetworkInterface nic2 = await CreateNetworkInterface(
                 nic2name,
                 resourceGroupName,
                 null,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 "ipconfig",
                 NetworkManagementClient);
 
-            NetworkInterface nic3 = await TestHelper.CreateNetworkInterface(
+            NetworkInterface nic3 = await CreateNetworkInterface(
                 nic3name,
                 resourceGroupName,
                 null,
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Name = loadBalancingRuleName,
                         FrontendIPConfiguration = new SubResource()
                         {
-                            Id = TestHelper.GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         IdleTimeoutInMinutes = 15,
                         BackendAddressPool = new SubResource()
                         {
-                            Id = TestHelper.GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                                 resourceGroupName, lbName, "backendAddressPools", backEndAddressPoolName)
                         },
                         Probe = new SubResource()
                         {
-                            Id = TestHelper.GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "probes", probeName)
                         }
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Name = inboundNatRule1Name,
                         FrontendIPConfiguration = new SubResource()
                         {
-                            Id = TestHelper.GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Name = inboundNatRule2Name,
                         FrontendIPConfiguration = new SubResource()
                         {
-                            Id = TestHelper.GetChildLbResourceId(TestEnvironment.SubscriptionId,
+                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
                         Protocol = TransportProtocol.Tcp,

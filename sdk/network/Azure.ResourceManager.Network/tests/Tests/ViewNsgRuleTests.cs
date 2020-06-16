@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with template
-            await Deployments.CreateVm(
+            await CreateVm(
                 resourcesClient: ResourceManagementClient,
                 resourceGroupName: resourceGroupName,
                 location: location,

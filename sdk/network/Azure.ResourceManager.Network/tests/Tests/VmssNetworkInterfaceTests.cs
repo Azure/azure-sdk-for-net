@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string deploymentName = Recording.GenerateAssetName("vmss");
             await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
-            await DeploymentUpdate.CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
+            await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
 
             string virtualMachineScaleSetName = "vmssip";
             AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
