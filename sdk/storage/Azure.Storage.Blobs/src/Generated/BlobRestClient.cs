@@ -18101,7 +18101,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// TagCount
         /// </summary>
-        public int? TagCount { get; internal set; }
+        public long? TagCount { get; internal set; }
 
         /// <summary>
         /// Expiry-Time
@@ -18292,7 +18292,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
             if (_child != null)
             {
-                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.TagCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
             if (_child != null)
@@ -18372,7 +18372,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             string encryptionScope = default,
-            int? tagCount = default,
+            long? tagCount = default,
             System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
             Azure.ETag? eTag = default,

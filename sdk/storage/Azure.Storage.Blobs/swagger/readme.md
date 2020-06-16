@@ -478,6 +478,7 @@ directive:
 
         $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
         $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
+        $.BlobItemProperties.properties.TagCount.format = "int64";
         delete $.BlobItemProperties.properties.AccessTierChangeTime;
         
         $.BlobItemInternal["x-az-public"] = false;
