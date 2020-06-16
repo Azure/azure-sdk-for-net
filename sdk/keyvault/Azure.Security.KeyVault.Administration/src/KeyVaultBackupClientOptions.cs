@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    public class KeyVaultBackupRestoreClientOptions : ClientOptions
+    public class KeyVaultBackupClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest service version supported by this client library.
@@ -40,14 +40,14 @@ namespace Azure.Security.KeyVault.Administration
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyVaultBackupRestoreClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="KeyVaultBackupClientOptions"/> class.
         /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public KeyVaultBackupRestoreClientOptions(ServiceVersion version = LatestVersion)
+        public KeyVaultBackupClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
 

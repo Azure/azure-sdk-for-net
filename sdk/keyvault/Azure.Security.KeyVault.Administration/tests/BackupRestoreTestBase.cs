@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class BackupRestoreTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public KeyVaultBackupRestoreClient Client { get; set; }
+        public KeyVaultBackupClient Client { get; set; }
         internal string SasToken { get; set; }
 
         public BackupRestoreTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
@@ -25,15 +25,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
 
-        private KeyVaultBackupRestoreClient GetClient(TestRecording recording = null)
+        private KeyVaultBackupClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
             return InstrumentClient
-                (new KeyVaultBackupRestoreClient(
+                (new KeyVaultBackupClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultBackupRestoreClientOptions())));
+                    recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
         }
 
 

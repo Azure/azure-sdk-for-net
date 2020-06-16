@@ -61,8 +61,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// </summary>
         /// <param name="value">The <see cref="FullRestoreDetails" /> that will be returned from <see cref="FullRestoreOperation.Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="FullRestoreOperation.GetRawResponse" />.</param>
-        /// <param name="client">An instance of <see cref="KeyVaultBackupRestoreClient" />.</param>
-        public static FullRestoreOperation FullRestoreOperation(FullRestoreDetails value, Response response, KeyVaultBackupRestoreClient client) =>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        public static FullRestoreOperation FullRestoreOperation(FullRestoreDetails value, Response response, KeyVaultBackupClient client) =>
             new FullRestoreOperation(value, response, client);
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// </summary>
         /// <param name="value">The <see cref="FullBackupDetails" /> that will be returned from <see cref="FullBackupOperation.Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="FullBackupOperation.GetRawResponse" />.</param>
-        /// <param name="client">An instance of <see cref="KeyVaultBackupRestoreClient" />.</param>
-        public static FullBackupOperation FullBackupOperation(FullBackupDetails value, Response response, KeyVaultBackupRestoreClient client) =>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        public static FullBackupOperation FullBackupOperation(FullBackupDetails value, Response response, KeyVaultBackupClient client) =>
             new FullBackupOperation(value, response, client);
     }
 }

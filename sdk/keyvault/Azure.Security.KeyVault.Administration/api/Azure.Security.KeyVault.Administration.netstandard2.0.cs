@@ -1,6 +1,6 @@
 public partial class FullBackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.Models.FullBackupDetails>
 {
-    internal FullBackupOperation() { }
+    public FullBackupOperation(string jobId, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
     public override bool HasCompleted { get { throw null; } }
     public override bool HasValue { get { throw null; } }
     public override string Id { get { throw null; } }
@@ -13,7 +13,7 @@ public partial class FullBackupOperation : Azure.Operation<Azure.Security.KeyVau
 }
 public partial class FullRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails>
 {
-    internal FullRestoreOperation() { }
+    public FullRestoreOperation(string jobId, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
     public override bool HasCompleted { get { throw null; } }
     public override bool HasValue { get { throw null; } }
     public override string Id { get { throw null; } }
@@ -52,25 +52,21 @@ namespace Azure.Security.KeyVault.Administration
             V7_2_Preview = 1,
         }
     }
-    public partial class KeyVaultBackupRestoreClient
+    public partial class KeyVaultBackupClient
     {
-        protected KeyVaultBackupRestoreClient() { }
-        public KeyVaultBackupRestoreClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
-        public KeyVaultBackupRestoreClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClientOptions options) { }
+        protected KeyVaultBackupClient() { }
+        public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
+        public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultBackupClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.FullBackupDetails> GetFullBackupDetails(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullBackupDetails>> GetFullBackupDetailsAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails> GetFullRestoreDetails(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails>> GetFullRestoreDetailsAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual FullBackupOperation StartFullBackup(System.Uri blobStorageUri, string SasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<FullBackupOperation> StartFullBackupAsync(System.Uri blobStorageUri, string SasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual FullRestoreOperation StartFullRestore(System.Uri blobStorageUri, string SasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<FullRestoreOperation> StartFullRestoreAsync(System.Uri blobStorageUri, string SasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class KeyVaultBackupRestoreClientOptions : Azure.Core.ClientOptions
+    public partial class KeyVaultBackupClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultBackupRestoreClientOptions(Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClientOptions.ServiceVersion.V7_2_Preview) { }
-        public Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClientOptions.ServiceVersion Version { get { throw null; } }
+        public KeyVaultBackupClientOptions(Azure.Security.KeyVault.Administration.KeyVaultBackupClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultBackupClientOptions.ServiceVersion.V7_2_Preview) { }
+        public Azure.Security.KeyVault.Administration.KeyVaultBackupClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_2_Preview = 1,
@@ -122,9 +118,9 @@ namespace Azure.Security.KeyVault.Administration.Models
     public static partial class KeyVaultModelFactory
     {
         public static Azure.Security.KeyVault.Administration.Models.FullBackupDetails FullBackupDetails(string status, string statusDetails, Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError error, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime, string jobId, System.Uri azureStorageBlobContainerUri) { throw null; }
-        public static FullBackupOperation FullBackupOperation(Azure.Security.KeyVault.Administration.Models.FullBackupDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClient client) { throw null; }
+        public static FullBackupOperation FullBackupOperation(Azure.Security.KeyVault.Administration.Models.FullBackupDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.FullRestoreDetails FullRestoreDetails(string status, string statusDetails, Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError error, string jobId, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime) { throw null; }
-        public static FullRestoreOperation FullRestoreOperation(Azure.Security.KeyVault.Administration.Models.FullRestoreDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupRestoreClient client) { throw null; }
+        public static FullRestoreOperation FullRestoreOperation(Azure.Security.KeyVault.Administration.Models.FullRestoreDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.RoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.Models.RoleAssignmentPropertiesWithScope properties) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> permissions, System.Collections.Generic.IReadOnlyList<string> assignableScopes) { throw null; }
     }
