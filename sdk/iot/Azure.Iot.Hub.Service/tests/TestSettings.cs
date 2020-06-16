@@ -19,7 +19,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
         // These environment variables are required to be set to run tests against the CI pipeline.
         // If these environment variables exist in the environment, their values will replace (supersede) config.json values.
-        private static readonly string s_iotHubConnectionString = $"{IotHubServiceEnvironmentVariablesPrefix}_CONNECTION_STRING";
+        private static readonly string s_iotHubConnectionString = $"{IotHubServiceEnvironmentVariablesPrefix}_HUB_CONNECTION_STRING";
 
         private static readonly string s_iotHubServiceTestMode = $"AZURE_IOT_TEST_MODE";
 
@@ -81,6 +81,22 @@ namespace Azure.Iot.Hub.Service.Tests
         // These environment variables are required to be set to run tests against the CI pipeline.
         private static void OverrideFromEnvVariables()
         {
+            string iotHubConnectionString = Environment.GetEnvironmentVariable(s_iotHubConnectionString);
+            if (!string.IsNullOrWhiteSpace(iotHubConnectionString))
+            {
+                Instance.IotHubConnectionString = iotHubConnectionString;
+            }
+
+            string testMode = Environment.GetEnvironmentVariable(s_iotHubServiceTestMode);
+            if (!string.IsNullOrWhiteSpace(testMode))
+            {
+                // Enum.Parse<type>(value) cannot be used in net461 so using the type casting syntax.
+                Instance.TestMode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), testMode);
+            }
+            else
+            {
+                Environment.SetEnvironmentVariable(s_iotHubServiceTestMode, Instance.TestMode.ToString());
+            }
         }
     }
 }
