@@ -36,13 +36,15 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+            string indexName = "nycjobs";
+
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 

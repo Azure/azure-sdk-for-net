@@ -315,7 +315,7 @@ namespace Azure.AI.FormRecognizer.Training
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
             var request = new CopyRequest(target.ResourceId,
                                           target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
 
             Response response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -341,7 +341,7 @@ namespace Azure.AI.FormRecognizer.Training
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
             var request = new CopyRequest(target.ResourceId,
                                           target.Region,
-                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn.ToUnixTimeSeconds()));
 
             Response response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
