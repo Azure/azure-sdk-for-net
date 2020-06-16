@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableServiceClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         /// <summary>
@@ -99,18 +99,30 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task GetPropertiesReturnsProperties()
         {
+            // Get current properties
+            TableServiceProperties beforeResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+
+            // Create list of CorsRules
             IList<CorsRule> corsRules = new List<CorsRule>();
 
+            // Create TableServiceProperties to set
             var tableServicePropertiesToSet = new TableServiceProperties(
-                new LoggingSettings("1.0", true, true, true, new RetentionPolicy(false)), hourMetrics: new TableMetrics("1.0", true, true, new RetentionPolicy(true, 7)), minuteMetrics: new TableMetrics("1.0", false, null, new RetentionPolicy(false)), corsRules);
+                new LoggingSettings("1.0", !beforeResponse.Logging.Delete, true, true, new RetentionPolicy(false)), hourMetrics: new TableMetrics("1.0", true, true, new RetentionPolicy(true, 7)), minuteMetrics: new TableMetrics("1.0", false, null, new RetentionPolicy(false)), corsRules);
 
+            // Set properties
             await service.SetPropertiesAsync(tableServicePropertiesToSet).ConfigureAwait(false);
 
-            // Get configured properties
-            await Task.Delay(12000);
-            TableServiceProperties response = await service.GetPropertiesAsync().ConfigureAwait(false);
+            // Wait 20 seconds if on Live mode
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(20000);
+            }
 
-            CompareTableServiceProperties(tableServicePropertiesToSet, response);
+            // Get configured properties
+            TableServiceProperties afterResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+
+            // Test each property
+            CompareTableServiceProperties(tableServicePropertiesToSet, afterResponse);
         }
 
         private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
