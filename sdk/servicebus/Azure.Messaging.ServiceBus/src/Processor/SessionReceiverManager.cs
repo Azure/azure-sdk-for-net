@@ -232,7 +232,7 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await _receiver.ReceiveAsync(
+                    ServiceBusReceivedMessage message = await _receiver.ReceiveMessageAsync(
                         _maxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)

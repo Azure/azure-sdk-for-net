@@ -142,18 +142,18 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
+        /// <param name="message"></param>
         ///
-        /// <param name="message">A messsage to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async Task SendAsync(
+        public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await SendAsync(
+            await SendMessagesAsync(
                 new ServiceBusMessage[] { message },
                 cancellationToken).ConfigureAwait(false);
         }
@@ -162,7 +162,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Sends a set of messages to the associated Service Bus entity using a batched approach.
         ///   If the size of the messages exceed the maximum size of a single batch,
         ///   an exception will be triggered and the send will fail. In order to ensure that the messages
-        ///   being sent will fit in a batch, use <see cref="SendAsync(ServiceBusMessageBatch, CancellationToken)"/> instead.
+        ///   being sent will fit in a batch, use <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/> instead.
         /// </summary>
         ///
         /// <param name="messages">The set of messages to send.</param>
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async Task SendAsync(
+        public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
@@ -257,9 +257,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the default batch options.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public virtual ValueTask<ServiceBusMessageBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        public virtual ValueTask<ServiceBusMessageBatch> CreateMessageBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
@@ -275,14 +275,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
         public virtual async ValueTask<ServiceBusMessageBatch> CreateBatchAsync(
-            CreateBatchOptions options,
+            CreateMessageBatchOptions options,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
-            options = options?.Clone() ?? new CreateBatchOptions();
+            options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
             ServiceBusMessageBatch batch;
@@ -307,11 +307,11 @@ namespace Azure.Messaging.ServiceBus
         ///   the associated Service Bus entity.
         /// </summary>
         ///
-        /// <param name="messageBatch">The batch of messages to send. A batch may be created using <see cref="CreateBatchAsync(CancellationToken)" />.</param>
+        /// <param name="messageBatch">The batch of messages to send. A batch may be created using <see cref="CreateMessageBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async Task SendAsync(
+        public virtual async Task SendMessagesAsync(
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken = default)
         {
@@ -348,9 +348,9 @@ namespace Azure.Messaging.ServiceBus
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
         ///
-        /// <param name="message">The message to schedule.</param>
         /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="message"></param>
         ///
         /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
         /// <returns>The sequence number of the message that was scheduled.</returns>
@@ -360,31 +360,68 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
+            long[] sequenceNumbers = await ScheduleMessagesAsync(
+                new ServiceBusMessage[] { message },
+                scheduledEnqueueTime,
+                cancellationToken)
+            .ConfigureAwait(false);
+            // if there isn't one sequence number in the array, an
+            // exception should have been thrown by this point.
+            return sequenceNumbers[0];
+        }
+
+
+
+        /// <summary>
+        /// Schedules a message to appear on Service Bus at a later time.
+        /// </summary>
+        ///
+        /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="messages"></param>
+        ///
+        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
+        public virtual async Task<long[]> ScheduleMessagesAsync(
+            IEnumerable<ServiceBusMessage> messages,
+            DateTimeOffset scheduledEnqueueTime,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(messages, nameof(messages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
+            var messageList = messages.ToList();
+
+            Logger.ScheduleMessagesStart(
+                Identifier,
+                messageList.Count,
+                scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
+
             using DiagnosticScope scope = CreateDiagnosticScope(
-                new ServiceBusMessage[] { message },
+                messages,
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 
-            long sequenceNumber;
+            long[] sequenceNumbers = null;
             try
             {
-                message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
-                sequenceNumber = await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                foreach (ServiceBusMessage message in messageList)
+                {
+                    message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
+                }
+                sequenceNumbers = await _innerSender.ScheduleMessagesAsync(messageList, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                Logger.ScheduleMessageException(Identifier, exception.ToString());
+                Logger.ScheduleMessagesException(Identifier, exception.ToString());
                 scope.Failed(exception);
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ScheduleMessageComplete(Identifier);
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumber);
-            return sequenceNumber;
+            Logger.ScheduleMessagesComplete(Identifier);
+            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
+            return sequenceNumbers;
         }
 
         /// <summary>
@@ -394,29 +431,43 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public virtual async Task CancelScheduledMessageAsync(
             long sequenceNumber,
+            CancellationToken cancellationToken = default) =>
+            await CancelScheduledMessagesAsync(
+                new long[] { sequenceNumber },
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Cancels a message that was scheduled.
+        /// </summary>
+        /// <param name="sequenceNumbers">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public virtual async Task CancelScheduledMessagesAsync(
+            IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.CancelScheduledMessageStart(Identifier, sequenceNumber);
+            var sequenceNumberList = sequenceNumbers.ToArray();
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
 
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumber);
+            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             scope.Start();
             try
             {
-                await _innerSender.CancelScheduledMessageAsync(sequenceNumber, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceNumberList, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                Logger.CancelScheduledMessageException(Identifier, ex.ToString());
+                Logger.CancelScheduledMessagesException(Identifier, ex.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.CancelScheduledMessageComplete(Identifier);
+            Logger.CancelScheduledMessagesComplete(Identifier);
         }
 
         /// <summary>

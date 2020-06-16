@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)

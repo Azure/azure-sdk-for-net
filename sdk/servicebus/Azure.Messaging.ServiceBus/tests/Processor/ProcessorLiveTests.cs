@@ -29,11 +29,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads * 2;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -101,11 +101,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads * 2;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -182,11 +182,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = GetClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -250,11 +250,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = GetClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -313,10 +313,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 int numMessages = 100;
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
 
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await tcs.Task;
 
                 var receiver = GetNoRetryClient().CreateReceiver(scope.QueueName);
-                var receivedMessages = await receiver.ReceiveBatchAsync(numMessages);
+                var receivedMessages = await receiver.ReceiveMessagesAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages
                 Assert.IsTrue(receivedMessages.Count > 0);
@@ -463,7 +463,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendAsync(GetMessage());
+                await sender.SendMessageAsync(GetMessage());
                 var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoComplete = true
@@ -482,7 +482,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var msg = await receiver.ReceiveAsync();
+                var msg = await receiver.ReceiveMessageAsync();
                 Assert.IsNull(msg);
             }
         }
@@ -502,7 +502,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendAsync(GetMessage());
+                await sender.SendMessageAsync(GetMessage());
                 var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoComplete = true
@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
                     // if the message is abandoned (whether by user callback or

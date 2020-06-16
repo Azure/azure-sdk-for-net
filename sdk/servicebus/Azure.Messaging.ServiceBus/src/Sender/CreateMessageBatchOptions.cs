@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     ///   behaves and is sent to the Queue/Topic.
     /// </summary>
     ///
-    public class CreateBatchOptions
+    public class CreateMessageBatchOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
         private long? _maxSizeInBytes = null;
@@ -71,13 +71,13 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="CreateMessageBatchOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
+        /// <returns>A new copy of <see cref="CreateMessageBatchOptions" />.</returns>
         ///
-        internal CreateBatchOptions Clone() =>
-            new CreateBatchOptions
+        internal CreateMessageBatchOptions Clone() =>
+            new CreateMessageBatchOptions
             {
                 _maxSizeInBytes = MaxSizeInBytes
             };
