@@ -149,7 +149,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // get the message body as a string
-string body = receivedMessage.Body.AsString();
+string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
@@ -248,7 +248,7 @@ IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchA
 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 {
     // get the message body as a string
-    string body = receivedMessage.Body.AsString();
+    string body = receivedMessage.Body.ToString();
     Console.WriteLine(body);
 }
 ```
