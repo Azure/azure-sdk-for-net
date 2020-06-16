@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs
                 LastModified = properties.LastModified,
                 CreatedOn = properties.CreatedOn,
                 Metadata = properties.Metadata,
-                ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
+                ObjectReplicationDestinationPolicyId = properties.ObjectReplicationPolicyId,
                 ObjectReplicationSourceProperties =
                     properties.ObjectReplicationRules?.Count > 0
                     ? BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules)
@@ -163,13 +163,13 @@ namespace Azure.Storage.Blobs
         /// List of <see cref="ObjectReplicationPolicy"/>, which contains the Policy ID and the respective
         /// rule(s) and replication status(s) for each policy.
         /// If the blob has object replication policy applied and is the destination blob,
-        /// this method will return default as the policy id should be set in ObjectReplicationDestinationPolicy
-        /// (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicy"/>,<see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicy"/>).
+        /// this method will return default as the policy id should be set in ObjectReplicationDestinationPolicyId
+        /// (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicyId"/>,<see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicyId"/>).
         /// </returns>
         internal static IList<ObjectReplicationPolicy> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
         {
             // If the dictionary contains a key with policy id, we are not required to do any parsing since
-            // the policy id should already be stored in the ObjectReplicationDestinationPolicy.
+            // the policy id should already be stored in the ObjectReplicationDestinationPolicyId.
             if (OrIds.First().Key == "policy-id")
             {
                 return default;

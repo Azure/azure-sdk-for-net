@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.LeaseState LeaseState { get { throw null; } }
         public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public string ObjectReplicationDestinationPolicy { get { throw null; } }
+        public string ObjectReplicationDestinationPolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> ObjectReplicationSourceProperties { get { throw null; } }
         public long TagCount { get { throw null; } }
         public string VersionId { get { throw null; } }
@@ -683,7 +683,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.LeaseState LeaseState { get { throw null; } }
         public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public string ObjectReplicationDestinationPolicy { get { throw null; } }
+        public string ObjectReplicationDestinationPolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationPolicy> ObjectReplicationSourceProperties { get { throw null; } }
         public long TagCount { get { throw null; } }
         public string VersionId { get { throw null; } }

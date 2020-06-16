@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs.Models
                 VersionId = versionId,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
                 IsCurrentVersion = isCurrentVersion,
-                ObjectReplicationDestinationPolicy = objectReplicationDestinationPolicy,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
                 TagCount = tagCount,
                 Metadata = metadata,
                 ExpiresOn = expiresOn,
@@ -596,7 +596,7 @@ namespace Azure.Storage.Blobs.Models
                 VersionId = versionId,
                 IsSealed = isSealed,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
-                ObjectReplicationDestinationPolicy = objectReplicationDestinationPolicy
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy
             };
     }
 }
