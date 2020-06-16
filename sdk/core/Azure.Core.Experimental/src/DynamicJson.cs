@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+#pragma warning disable 1591
 
 namespace Azure.Core
 {
@@ -177,12 +178,6 @@ namespace Azure.Core
                     break;
             }
         }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
         public static DynamicJson Parse(string json)
         {
             return Create(JsonDocument.Parse(json).RootElement);
@@ -272,7 +267,7 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <returns></returns>
-        public JsonElement AsJsonElement()
+        public JsonElement ToJsonElement()
         {
             var memoryStream = new MemoryStream();
             var writer = new Utf8JsonWriter(memoryStream);
@@ -479,6 +474,25 @@ namespace Azure.Core
             }
         }
 
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DynamicJson> EnumerateArray()
+        {
+            return EnsureArray();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<KeyValuePair<string, DynamicJson>> EnumerateObject()
+        {
+            return EnsureObject();
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -527,25 +541,27 @@ namespace Azure.Core
             return new DynamicJson(values);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static implicit operator DynamicJson(int value)
-        {
-            return new DynamicJson(value);
-        }
+        public static explicit operator bool(DynamicJson json) => (bool) json.ConvertTo(typeof(bool))!;
+        public static explicit operator int(DynamicJson json) => (int) json.ConvertTo(typeof(int))!;
+        public static explicit operator long(DynamicJson json) => (int) json.ConvertTo(typeof(long))!;
+        public static explicit operator string?(DynamicJson json) => (string?) json.ConvertTo(typeof(string));
+        public static explicit operator float(DynamicJson json) => (int) json.ConvertTo(typeof(float))!;
+        public static explicit operator double(DynamicJson json) => (int) json.ConvertTo(typeof(float))!;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static implicit operator DynamicJson(string? value)
-        {
-            return new DynamicJson(value);
-        }
+        public static implicit operator DynamicJson(int value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(long value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(double value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(float value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(bool value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(string? value) => new DynamicJson(value);
+
+        public string? GetString() => (string?) this;
+        public int GetIn32() => (int) this;
+        public long GetLong() => (long) this;
+        public float GetFloat() => (float) this;
+        public double GetDouble() => (double) this;
+        public bool GetBoolean() => (bool) this;
+        public int GetArrayLength() => EnsureArray().Count;
 
         /// <summary>
         ///
