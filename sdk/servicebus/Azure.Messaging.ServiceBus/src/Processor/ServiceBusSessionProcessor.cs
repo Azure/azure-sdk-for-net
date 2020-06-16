@@ -172,8 +172,8 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Optional event that can be set to be notified when a session is about to be closed for processing.
-        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
-        /// available to be received for the session.
+        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out,
+        /// so there are currently no messages available to be received for the session.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]

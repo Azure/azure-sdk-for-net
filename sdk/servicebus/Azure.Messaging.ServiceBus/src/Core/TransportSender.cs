@@ -41,9 +41,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public abstract ValueTask<TransportMessageBatch> CreateBatchAsync(
+        public abstract ValueTask<TransportMessageBatch> CreateMessageBatchAsync(
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken);
 

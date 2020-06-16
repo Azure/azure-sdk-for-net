@@ -158,14 +158,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        public override async ValueTask<TransportMessageBatch> CreateBatchAsync(
+        public override async ValueTask<TransportMessageBatch> CreateMessageBatchAsync(
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
             TransportMessageBatch messageBatch = null;
             Task createBatchTask = _retryPolicy.RunOperation(async (timeout) =>
             {
-                messageBatch = await CreateBatchInternalAsync(
+                messageBatch = await CreateMessageBatchInternalAsync(
                     options,
                     timeout).ConfigureAwait(false);
             },
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return messageBatch;
         }
 
-        internal async ValueTask<TransportMessageBatch> CreateBatchInternalAsync(
+        internal async ValueTask<TransportMessageBatch> CreateMessageBatchInternalAsync(
             CreateMessageBatchOptions options,
             TimeSpan timeout)
         {

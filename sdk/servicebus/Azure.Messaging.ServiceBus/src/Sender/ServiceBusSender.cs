@@ -257,9 +257,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the default batch options.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public virtual ValueTask<ServiceBusMessageBatch> CreateMessageBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        public virtual ValueTask<ServiceBusMessageBatch> CreateMessageBatchAsync(CancellationToken cancellationToken = default) => CreateMessageBatchAsync(null, cancellationToken);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
@@ -275,9 +275,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public virtual async ValueTask<ServiceBusMessageBatch> CreateBatchAsync(
+        public virtual async ValueTask<ServiceBusMessageBatch> CreateMessageBatchAsync(
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusMessageBatch batch;
             try
             {
-                TransportMessageBatch transportBatch = await _innerSender.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+                TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
                 batch = new ServiceBusMessageBatch(transportBatch);
             }
             catch (Exception ex)
@@ -348,11 +348,16 @@ namespace Azure.Messaging.ServiceBus
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
         ///
+        /// <param name="message">The <see cref="ServiceBusMessage"/> to schedule.</param>
         /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <param name="message"></param>
         ///
-        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
+        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.
+        /// Messages can also be scheduled by setting <see cref="ServiceBusMessage.ScheduledEnqueueTime"/> and
+        /// using <see cref="SendMessageAsync(ServiceBusMessage, CancellationToken)"/>,
+        /// <see cref="SendMessagesAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>, or
+        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
+        ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
@@ -373,14 +378,19 @@ namespace Azure.Messaging.ServiceBus
 
 
         /// <summary>
-        /// Schedules a message to appear on Service Bus at a later time.
+        /// Schedules a set of messages to appear on Service Bus at a later time.
         /// </summary>
         ///
+        /// <param name="messages">The set of messages to schedule.</param>
         /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <param name="messages"></param>
         ///
-        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
+        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.
+        /// Messages can also be scheduled by setting <see cref="ServiceBusMessage.ScheduledEnqueueTime"/> and
+        /// using <see cref="SendMessageAsync(ServiceBusMessage, CancellationToken)"/>,
+        /// <see cref="SendMessagesAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>, or
+        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
+        ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public virtual async Task<long[]> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
@@ -438,9 +448,9 @@ namespace Azure.Messaging.ServiceBus
             .ConfigureAwait(false);
 
         /// <summary>
-        /// Cancels a message that was scheduled.
+        /// Cancels a set of messages that were scheduled.
         /// </summary>
-        /// <param name="sequenceNumbers">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumbers">The set of <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the messages to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public virtual async Task CancelScheduledMessagesAsync(
             IEnumerable<long> sequenceNumbers,

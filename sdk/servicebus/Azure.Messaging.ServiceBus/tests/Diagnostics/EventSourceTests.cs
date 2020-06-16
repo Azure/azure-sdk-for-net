@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportSender.Setup(
-                 sender => sender.CreateBatchAsync(
+                 sender => sender.CreateMessageBatchAsync(
                     It.IsAny<CreateMessageBatchOptions>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportMessageBatch>(mockTransportBatch.Object));
