@@ -585,8 +585,8 @@ namespace Azure.Storage.Blobs.Test
 
             //Assert
             Assert.AreEqual(1, sourceResponse.Value.Details.ObjectReplicationSourceProperties.Count);
-            Assert.IsNull(sourceResponse.Value.Details.ObjectReplicationDestinationPolicy);
-            Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicy);
+            Assert.IsNull(sourceResponse.Value.Details.ObjectReplicationDestinationPolicyId);
+            Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicyId);
             Assert.IsNull(destResponse.Value.Details.ObjectReplicationSourceProperties);
         }
         #endregion Sequential Download
@@ -2896,8 +2896,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(1, source_response.Value.ObjectReplicationSourceProperties.Count);
-            Assert.IsNull(source_response.Value.ObjectReplicationDestinationPolicy);
-            Assert.IsNotEmpty(dest_response.Value.ObjectReplicationDestinationPolicy);
+            Assert.IsNull(source_response.Value.ObjectReplicationDestinationPolicyId);
+            Assert.IsNotEmpty(dest_response.Value.ObjectReplicationDestinationPolicyId);
             Assert.IsNull(dest_response.Value.ObjectReplicationSourceProperties);
         }
 

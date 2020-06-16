@@ -10,9 +10,9 @@ namespace Azure.Storage.Blobs.Models
     /// Contains Object Replication Policy ID and the respective list of
     /// <see cref="ObjectReplicationRule"/>(s). This is used when retrieving the
     /// Object Replication Properties on the source blob. The policy id for the
-    /// destination blob is set in ObjectReplicationDestinationPolicy of the respective
-    /// method responses. (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicy"/>,
-    /// <see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicy"/>).
+    /// destination blob is set in ObjectReplicationDestinationPolicyId of the respective
+    /// method responses. (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicyId"/>,
+    /// <see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicyId"/>).
     /// </summary>
     public class ObjectReplicationPolicy
     {

@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Models
                     flattened.ObjectReplicationRules?.Count > 0
                     ? BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
                     : null,
-                ObjectReplicationDestinationPolicy = flattened.ObjectReplicationPolicyId
+                ObjectReplicationDestinationPolicyId = flattened.ObjectReplicationPolicyId
             };
         }
 
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Object Replication Policy Id. This value is only set when the policy id
         /// </summary>
-        public string ObjectReplicationDestinationPolicy { get; internal set; }
+        public string ObjectReplicationDestinationPolicyId { get; internal set; }
     }
 
     /// <summary>
