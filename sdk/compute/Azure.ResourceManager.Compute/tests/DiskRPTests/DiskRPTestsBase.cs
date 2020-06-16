@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         #region Execution
         protected async Task Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             DiskRPLocation = location ?? DiskRPLocation;
 
             // Data
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         protected async Task Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
             DiskRPLocation = location ?? DiskRPLocation;
 
             // Data

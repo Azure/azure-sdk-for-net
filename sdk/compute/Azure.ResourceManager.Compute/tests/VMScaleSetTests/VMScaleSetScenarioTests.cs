@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public async Task TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
-            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false);
+            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, useDefaultLocation: true);
         }
 
         /// <summary>
@@ -384,9 +384,10 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task TestScaleSetOperationsInternal(string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
-            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null)
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
+            bool useDefaultLocation = false)
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(useDefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

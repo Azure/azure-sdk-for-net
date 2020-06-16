@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetBatchOperations()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

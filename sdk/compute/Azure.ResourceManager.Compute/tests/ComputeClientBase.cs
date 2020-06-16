@@ -17,6 +17,7 @@ namespace Azure.ResourceManager
 {
     [RunFrequency(RunTestFrequency.Manually)]
     [ClientTestFixture]
+    [NonParallelizable]
     public abstract class ComputeClientBase : ManagementRecordedTestBase<ComputeManagementTestEnvironment>
     {
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager
         public NetworkSecurityGroupsOperations NetworkSecurityGroupsOperations { get; set; }
         public PublicIPPrefixesOperations PublicIPPrefixesOperations { get; set; }
         public ComputeManagementClient ComputeManagementClient { get; set; }
-        public string DefaultLocation { get; set; }
+        public string DefaultLocation { get; private set; }
         protected ComputeClientBase(bool isAsync)
             : base(isAsync)
         {

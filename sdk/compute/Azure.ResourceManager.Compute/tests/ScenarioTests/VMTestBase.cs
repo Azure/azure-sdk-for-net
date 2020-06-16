@@ -38,24 +38,23 @@ namespace Azure.ResourceManager.Compute.Tests
         protected ImageReference m_windowsImageReference, m_linuxImageReference;
         protected ComputeManagementTestUtilities computeManagementTestUtilities;
 
-        protected void EnsureClientsInitialized()
+        protected void EnsureClientsInitialized(bool useDefaultLocation = false)
         {
-            if (!m_initialized)
+            m_subId = TestEnvironment.SubscriptionId;
+
+            if (useDefaultLocation)
             {
-                lock (m_lock)
+                m_location = DefaultLocation;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
                 {
-                    if (!m_initialized)
-                    {
-                        m_subId = TestEnvironment.SubscriptionId;
-                        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
-                        {
-                            m_location = DefaultLocation;
-                        }
-                        else
-                        {
-                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "");
-                        }
-                    }
+                    m_location = DefaultLocation;
+                }
+                else
+                {
+                    m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "");
                 }
             }
         }

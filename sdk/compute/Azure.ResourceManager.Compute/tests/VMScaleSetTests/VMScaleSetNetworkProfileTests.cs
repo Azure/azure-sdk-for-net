@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithApplciationGateway()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithDnsSettings()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithnNsg()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithnIpv6()
         {
-            EnsureClientsInitialized();
+            EnsureClientsInitialized(true);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
