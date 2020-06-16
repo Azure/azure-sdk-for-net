@@ -9,7 +9,7 @@ namespace Azure.Iot.Hub.Service.Tests
     public class IotHubServiceTestEnvironment : TestEnvironment
     {
         public IotHubServiceTestEnvironment()
-            : base(TestsConstants.IOT_HUB_ENV_VARIABLE_PREFIX)
+            : base(TestsConstants.IOT_HUB_ENV_VARIABLE_PREFIX.ToLower())
         {
         }
 
