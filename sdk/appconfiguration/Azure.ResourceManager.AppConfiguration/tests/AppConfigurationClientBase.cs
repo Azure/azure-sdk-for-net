@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
         public Operations Operations { get; set; }
-        public string Azure_Location { get; set; }
-        public string Key_UuId { get; set; }
-        public string Label_UuId { get; set; }
+        public string AzureLocation { get; set; }
+        public string KeyUuId { get; set; }
+        public string LabelUuId { get; set; }
         public string Key { get; set; }
         public string Label { get; set; }
-        public string Test_Content_Type { get; set; }
-        public string Test_Value { get; set; }
+        public string TestContentType { get; set; }
+        public string TestValue { get; set; }
         public string ResourceGroupPrefix { get; set; }
         protected AppConfigurationClientBase(bool isAsync)
             : base(isAsync)
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
         protected void Initialize()
         {
-            Azure_Location = "eastus";
-            Key_UuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";
-            Label_UuId = "1d7b2b28-549e-11e9-b51c-2816a84d0309";
-            Key = "PYTHON_UNIT_" + Key_UuId;
-            Label = "test_label1_" + Label_UuId;
-            Test_Content_Type = "test content type";
-            Test_Value = "test value";
+            AzureLocation = "eastus";
+            KeyUuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";
+            LabelUuId = "1d7b2b28-549e-11e9-b51c-2816a84d0309";
+            Key = "PYTHON_UNIT_" + KeyUuId;
+            Label = "test_label1_" + LabelUuId;
+            TestContentType = "test content type";
+            TestValue = "test value";
             ResourceGroupPrefix = "Default-EventHub-";
             AppConfigurationManagementClient = GetAppConfigurationManagementClient();
             ConfigurationStoresOperations = AppConfigurationManagementClient.ConfigurationStores;

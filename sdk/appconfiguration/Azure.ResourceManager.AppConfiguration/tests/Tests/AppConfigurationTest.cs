@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task Test_AppConfiguration_list_Key_Values()
+        public async Task AppConfigurationListKeyValues()
         {
             var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, Azure_Location, resourceGroup);
+            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
             var configurationCreateResult = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName, new ConfigurationStore("westus", new Sku("Standard")));
@@ -46,91 +46,91 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             //list configuration
             var configListResult = ConfigurationStoresOperations.ListKeysAsync(resourceGroup, configurationStoreName);
             var conList = await configListResult.ToEnumerableAsync();
-            //# ConfigurationStores_ListKeys[post]
-            //    keys = list(self.mgmt_client.configuration_stores.list_keys(resource_group.name, CONFIGURATION_STORE_NAME))
+            //# ConfigurationStoresListKeys[post]
+            //    keys = list(self.mgmtclient.configurationstores.listkeys(resourcegroup.name, CONFIGURATIONSTORENAME))
             var configRegenerateResult = ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters(conList.First().Id));
 
-            //if self.is_live:
+            //if self.islive:
             //    # create key-value
-            //    self.create_kv(key.connection_string)
+            //    self.createkv(key.connectionstring)
             //create Key
             //var addConfigurationsetting = await PrivateEndpointConnectionsClient
             //[skip]
-            //var listkeyvalueResult = await ConfigurationStoresClient.ListKeyValueAsync(resourceGroup, CONFIGURATION_STORE_NAME,KEY,LABEL);
-            //# ConfigurationStores_ListKeyValue[post]
+            //var listkeyvalueResult = await ConfigurationStoresClient.ListKeyValueAsync(resourceGroup, CONFIGURATIONSTORENAME,KEY,LABEL);
+            //# ConfigurationStoresListKeyValue[post]
             //    BODY = {
             //        "key": KEY,
             //  "label": LABEL
             //}
-            //    result = self.mgmt_client.configuration_stores.list_key_value(resource_group.name, CONFIGURATION_STORE_NAME, BODY)
+            //    result = self.mgmtclient.configurationstores.listkeyvalue(resourcegroup.name, CONFIGURATIONSTORENAME, BODY)
         }
 
         [Test]
-        public async Task Test_AppConfiguration()
+        public async Task AppConfiguration()
         {
-            //string SERVICE_NAME = "myapimrndxyz";
-            //string VNET_NAME = "vnetname";
-            //string SUB_NET = "subnetname";
-            //string ENDPOINT_NAME = "endpointxyz";D:\sdk\20200507\azure-sdk-for-net\sdk\appconfiguration\Azure.Management.AppConfiguration\src\Generated\Operations\PrivateEndpointConnectionsRestClient.cs
+            //string SERVICENAME = "myapimrndxyz";
+            //string VNETNAME = "vnetname";
+            //string SUBNET = "subnetname";
+            //string ENDPOINTNAME = "endpointxyz";D:\sdk\20200507\azure-sdk-for-net\sdk\appconfiguration\Azure.Management.AppConfiguration\src\Generated\Operations\PrivateEndpointConnectionsRestClient.cs
             string configurationStoreName = Recording.GenerateAssetName("configuration");
-            string private_Endpoint_Connection_Name = Recording.GenerateAssetName("privateendpoint");
+            string privateEndpointConnectionName = Recording.GenerateAssetName("privateendpoint");
             var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, Azure_Location, resourceGroup);
+            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
             //JsonElement jsonElement= new JsonElement() { }
             //DeserializeConfigurationStore
             var configurationCreateResult = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName, new ConfigurationStore("westus", new Sku("Standard")));
             var configCreate = await WaitForCompletionAsync(configurationCreateResult);
             //if (Mode == RecordedTestMode.Record)
             //{
-            //   await PrivateEndpointConnectionsClient.StartCreateOrUpdateAsync(resourceGroup, CONFIGURATION_STORE_NAME, SUB_NET, ENDPOINT_NAME, configCreate.Id);
+            //   await PrivateEndpointConnectionsClient.StartCreateOrUpdateAsync(resourceGroup, CONFIGURATIONSTORENAME, SUBNET, ENDPOINTNAME, configCreate.Id);
             //   string resourceGroupName, string configStoreName, string privateEndpointConnectionName, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, CancellationToken cancellationToken = default
             //}
             var configurationGetResult = await ConfigurationStoresOperations.GetAsync(resourceGroup, configurationStoreName);
             //TODO these are not ready
-            //PRIVATE_ENDPOINT_CONNECTION_NAME = configurationGetResult.Value.Endpoint;
-            //private_connection_id = conf_store.private_endpoint_connections[0].id
+            //PRIVATEENDPOINTCONNECTIONNAME = configurationGetResult.Value.Endpoint;
+            //privateconnectionid = confstore.privateendpointconnections[0].id
             //            BODY = {
-            //# "id": "https://management.azure.com/subscriptions/" + self.settings.SUBSCRIPTION_ID + "/resourceGroups/" + resource_group.name + "/providers/Microsoft.AppConfiguration/configurationStores/" + CONFIGURATION_STORE_NAME + "/privateEndpointConnections/" + PRIVATE_ENDPOINT_CONNECTION_NAME,
-            //                "id": private_connection_id,
-            //          "private_endpoint": {
-            //                    "id": "/subscriptions/" + self.settings.SUBSCRIPTION_ID + "/resourceGroups/" + resource_group.name + "/providers/Microsoft.Network/privateEndpoints/" + ENDPOINT_NAME,
+            //# "id": "https://management.azure.com/subscriptions/" + self.settings.SUBSCRIPTIONID + "/resourceGroups/" + resourcegroup.name + "/providers/Microsoft.AppConfiguration/configurationStores/" + CONFIGURATIONSTORENAME + "/privateEndpointConnections/" + PRIVATEENDPOINTCONNECTIONNAME,
+            //                "id": privateconnectionid,
+            //          "privateendpoint": {
+            //                    "id": "/subscriptions/" + self.settings.SUBSCRIPTIONID + "/resourceGroups/" + resourcegroup.name + "/providers/Microsoft.Network/privateEndpoints/" + ENDPOINTNAME,
             //          },
-            //          "private_link_service_connection_state": {
+            //          "privatelinkserviceconnectionstate": {
             //                    "status": "Approved",
             //            "description": "Auto-Approved"
             //          }
             //            }
-            //            result = self.mgmt_client.private_endpoint_connections.begin_create_or_update(
-            //                resource_group.name,
-            //                CONFIGURATION_STORE_NAME,
-            //                PRIVATE_ENDPOINT_CONNECTION_NAME,
+            //            result = self.mgmtclient.privateendpointconnections.begincreateorupdate(
+            //                resourcegroup.name,
+            //                CONFIGURATIONSTORENAME,
+            //                PRIVATEENDPOINTCONNECTIONNAME,
             //                BODY)
             //            # id=BODY["id"],
-            //            # private_endpoint=BODY["private_endpoint"],
-            //            # private_link_service_connection_state=BODY["private_link_service_connection_state"])
+            //            # privateendpoint=BODY["privateendpoint"],
+            //            # privatelinkserviceconnectionstate=BODY["privatelinkserviceconnectionstate"])
             //        result = result.result()
             //[Skip]
-            //var private_endpoint_getResult = await PrivateEndpointConnectionsClient.GetAsync(resourceGroup, CONFIGURATION_STORE_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME);
+            //var privateendpointgetResult = await PrivateEndpointConnectionsClient.GetAsync(resourceGroup, CONFIGURATIONSTORENAME, PRIVATEENDPOINTCONNECTIONNAME);
 
-            var list_by_configuration_Result = PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroup, configurationStoreName);
+            var listByConfigurationResult = PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroup, configurationStoreName);
 
-            var list_by_configuration_Res = await list_by_configuration_Result.ToEnumerableAsync();
-            var PRIVATE_LINK_RESOURCE_NAME = list_by_configuration_Res.First().Name;
+            var listByConfigurationRes = await listByConfigurationResult.ToEnumerableAsync();
+            var privateLinkResourceName = listByConfigurationRes.First().Name;
             //[Skip]
-            //var private_link_resource_getResult = await PrivateLinkResourcesClient.GetAsync(resourceGroup, CONFIGURATION_STORE_NAME, PRIVATE_LINK_RESOURCE_NAME);
+            //var privatelinkresourcegetResult = await PrivateLinkResourcesClient.GetAsync(resourceGroup, CONFIGURATIONSTORENAME, PRIVATELINKRESOURCENAME);
 
-            var list_by_configuration_storeResult = PrivateEndpointConnectionsOperations.ListByConfigurationStoreAsync(resourceGroup, configurationStoreName);
-            var list_by_configuration_storeRe = await list_by_configuration_storeResult.ToEnumerableAsync();
-            //# PrivateEndpointConnection_List[get]
-            //    result = list(self.mgmt_client.private_endpoint_connections.list_by_configuration_store(resource_group.name, CONFIGURATION_STORE_NAME))
+            var listByConfigurationStoreResult = PrivateEndpointConnectionsOperations.ListByConfigurationStoreAsync(resourceGroup, configurationStoreName);
+            var listByConfigurationStoreRe = await listByConfigurationStoreResult.ToEnumerableAsync();
+            //# PrivateEndpointConnectionList[get]
+            //    result = list(self.mgmtclient.privateendpointconnections.listbyconfigurationstore(resourcegroup.name, CONFIGURATIONSTORENAME))
 
             var operationListResult = Operations.ListAsync();
 
-            var configuration_store_list_by_resource_groupResult = ConfigurationStoresOperations.ListByResourceGroupAsync(resourceGroup);
+            var configurationStoreListByResourceGroupResult = ConfigurationStoresOperations.ListByResourceGroupAsync(resourceGroup);
 
-            var configuration_stores_list_Result = ConfigurationStoresOperations.ListAsync(resourceGroup);
+            var configurationStoresListResult = ConfigurationStoresOperations.ListAsync(resourceGroup);
 
-            var configuration_stores_begin_updateResult = ConfigurationStoresOperations.StartUpdateAsync(resourceGroup, configurationStoreName, new ConfigurationStoreUpdateParameters()
+            var configurationStoresBeginUpdateResult = ConfigurationStoresOperations.StartUpdateAsync(resourceGroup, configurationStoreName, new ConfigurationStoreUpdateParameters()
             {
                 Tags = new Dictionary<string, string> { { "category", "Marketing" } },
                 Sku = new Sku("Standard")
