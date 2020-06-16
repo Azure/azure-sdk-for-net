@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
@@ -25,12 +24,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
             RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
-            List<Receipt> receipts = new List<Receipt>();
 
             foreach (RecognizedForm recognizedForm in recognizedForms)
             {
                 Receipt receipt = new Receipt(recognizedForm);
-                receipts.Add(receipt);
 
                 if (receipt.MerchantName != null)
                 {

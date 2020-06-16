@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// <summary>
         /// The type of receipt the service identified the submitted receipt to be.
         /// </summary>
-        public string ReceiptType { get; }
+        public FormField<string> ReceiptType { get; }
 
         /// <summary>
         /// A list of purchased items present in the recognized receipt.
