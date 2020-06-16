@@ -82,7 +82,7 @@ public class Jobs
     /// <param name="options">The optional settings for this request.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
-    public virtual Task<Response<JobProperties>> CreateExportDevicesJobAsync(string outputBlobContainerUri, bool excludeKeys, JobRequestOptions options = default, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> CreateExportDevicesJobAsync(Uri outputBlobContainerUri, bool excludeKeys, JobRequestOptions options = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a job to import device registrations into the IoT Hub.
@@ -92,7 +92,7 @@ public class Jobs
     /// <param name="options">The optional settings for this request.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
-    public virtual Task<Response<JobProperties>> CreateImportDevicesJobAsync(string importBlobContainerUri, string outputBlobContainerUri, JobRequestOptions options = default, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> CreateImportDevicesJobAsync(Uri importBlobContainerUri, Uri outputBlobContainerUri, JobRequestOptions options = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List all import and export jobs for the IoT Hub.
