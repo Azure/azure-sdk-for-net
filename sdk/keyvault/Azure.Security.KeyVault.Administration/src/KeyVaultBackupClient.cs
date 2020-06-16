@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="SasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual async Task<FullBackupOperation> StartFullBackupAsync(Uri blobStorageUri, string SasToken, CancellationToken cancellationToken = default)
+        public virtual async Task<BackupOperation> StartFullBackupAsync(Uri blobStorageUri, string SasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartFullBackup)}");
             scope.Start();
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Administration
                 var response = await _restClient.FullBackupAsync(VaultUri.AbsoluteUri, new SASTokenParameter(blobStorageUri.AbsoluteUri, SasToken), cancellationToken)
                     .ConfigureAwait(false);
 
-                return new FullBackupOperation(this, response);
+                return new BackupOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="SasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual FullBackupOperation StartFullBackup(Uri blobStorageUri, string SasToken, CancellationToken cancellationToken = default)
+        public virtual BackupOperation StartFullBackup(Uri blobStorageUri, string SasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartFullBackup)}");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 var response = _restClient.FullBackup(VaultUri.AbsoluteUri, new SASTokenParameter(blobStorageUri.AbsoluteUri, SasToken), cancellationToken);
 
-                return new FullBackupOperation(this, response);
+                return new BackupOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="SasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual async Task<FullRestoreOperation> StartFullRestoreAsync(Uri blobStorageUri, string SasToken, string folderName, CancellationToken cancellationToken = default)
+        public virtual async Task<RestoreOperation> StartFullRestoreAsync(Uri blobStorageUri, string SasToken, string folderName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartFullRestore)}");
             scope.Start();
@@ -137,7 +137,7 @@ namespace Azure.Security.KeyVault.Administration
                                                                            new RestoreOperationParameters(new SASTokenParameter(blobStorageUri.AbsoluteUri, SasToken), folderName),
                                                                            cancellationToken).ConfigureAwait(false);
 
-                return new FullRestoreOperation(this, response);
+                return new RestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="SasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public virtual FullRestoreOperation StartFullRestore(Uri blobStorageUri, string SasToken, string folderName, CancellationToken cancellationToken = default)
+        public virtual RestoreOperation StartFullRestore(Uri blobStorageUri, string SasToken, string folderName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartFullRestore)}");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Administration
                                                                 new RestoreOperationParameters(new SASTokenParameter(blobStorageUri.AbsoluteUri, SasToken), folderName),
                                                                 cancellationToken);
 
-                return new FullRestoreOperation(this, response);
+                return new RestoreOperation(this, response);
             }
             catch (Exception ex)
             {

@@ -59,19 +59,19 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary>
         /// Initializes a new instance of a FullRestoreOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="FullRestoreDetails" /> that will be returned from <see cref="FullRestoreOperation.Value" />.</param>
-        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="FullRestoreOperation.GetRawResponse" />.</param>
+        /// <param name="value">The <see cref="FullRestoreDetails" /> that will be returned from <see cref="RestoreOperation.Value" />.</param>
+        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="RestoreOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        public static FullRestoreOperation FullRestoreOperation(FullRestoreDetails value, Response response, KeyVaultBackupClient client) =>
-            new FullRestoreOperation(value, response, client);
+        public static RestoreOperation FullRestoreOperation(FullRestoreDetails value, Response response, KeyVaultBackupClient client) =>
+            new RestoreOperation(value, response, client);
 
         /// <summary>
         /// Initializes a new instance of a FullBackupOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="FullBackupDetails" /> that will be returned from <see cref="FullBackupOperation.Value" />.</param>
-        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="FullBackupOperation.GetRawResponse" />.</param>
+        /// <param name="value">The <see cref="FullBackupDetails" /> that will be returned from <see cref="BackupOperation.Value" />.</param>
+        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="BackupOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        public static FullBackupOperation FullBackupOperation(FullBackupDetails value, Response response, KeyVaultBackupClient client) =>
-            new FullBackupOperation(value, response, client);
+        public static BackupOperation FullBackupOperation(FullBackupDetails value, Response response, KeyVaultBackupClient client) =>
+            new BackupOperation(value, response, client);
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public async Task Backup()
         {
             var source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-            FullBackupOperation backupOperation = await Client.StartFullBackupAsync(new Uri(TestEnvironment.StorageUri), SasToken, source.Token);
+            BackupOperation backupOperation = await Client.StartFullBackupAsync(new Uri(TestEnvironment.StorageUri), SasToken, source.Token);
 
             FullBackupDetails result = await backupOperation.WaitForCompletionAsync(source.Token);
 

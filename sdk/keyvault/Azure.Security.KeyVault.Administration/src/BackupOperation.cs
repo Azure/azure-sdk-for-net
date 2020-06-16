@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Administration.Models;
 /// <summary>
 /// A long-running operation for <see cref="KeyVaultBackupClient.StartFullBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartFullBackupAsync(Uri, string, CancellationToken)"/>.
 /// </summary>
-public class FullBackupOperation : Operation<FullBackupDetails>
+public class BackupOperation : Operation<FullBackupDetails>
 {
     /// <summary>
     /// The number of seconds recommended by the service to delay before checking on completion status.
@@ -23,13 +23,13 @@ public class FullBackupOperation : Operation<FullBackupDetails>
     private FullBackupDetails _value;
 
     /// <summary>
-    /// Creates an instance of a FullBackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
+    /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
     ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
     /// to re-populate the details of this operation.
     /// </summary>
-    /// <param name="jobId">The <see cref="Id" /> from a previous <see cref="FullBackupOperation" />.</param>
+    /// <param name="jobId">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
     /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-    public FullBackupOperation(string jobId, KeyVaultBackupClient client)
+    public BackupOperation(string jobId, KeyVaultBackupClient client)
     {
         Argument.AssertNotNull(jobId, nameof(jobId));
         Argument.AssertNotNull(client, nameof(client));
@@ -39,11 +39,11 @@ public class FullBackupOperation : Operation<FullBackupDetails>
     }
 
     /// <summary>
-    /// Initializes a new instance of a FullBackupOperation.
+    /// Initializes a new instance of a BackupOperation.
     /// </summary>
     /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
     /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartFullBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartFullBackupAsync(Uri, string, CancellationToken)"/>.</param>
-    internal FullBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<FullBackupDetails, ServiceFullBackupHeaders> response)
+    internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<FullBackupDetails, ServiceFullBackupHeaders> response)
     {
         _client = client;
         _response = response;
@@ -52,12 +52,12 @@ public class FullBackupOperation : Operation<FullBackupDetails>
     }
 
     /// <summary>
-    /// Initializes a new instance of a FullBackupOperation for mocking purposes.
+    /// Initializes a new instance of a BackupOperation for mocking purposes.
     /// </summary>
     /// <param name="value">The <see cref="FullBackupDetails" /> that will be returned from <see cref="Value" />.</param>
     /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
     /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-    internal FullBackupOperation(FullBackupDetails value, Response response, KeyVaultBackupClient client)
+    internal BackupOperation(FullBackupDetails value, Response response, KeyVaultBackupClient client)
     {
         Argument.AssertNotNull(value, nameof(value));
         Argument.AssertNotNull(response, nameof(response));
