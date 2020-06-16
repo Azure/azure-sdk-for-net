@@ -55,11 +55,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
-                    var peekedText = peekedMessage.Body.AsString();
+                    var peekedText = peekedMessage.Body.ToString();
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
-                    Assert.AreEqual(sentMsg.Body.AsString(), peekedText);
+                    Assert.AreEqual(sentMsg.Body.ToString(), peekedText);
                     Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     ct++;

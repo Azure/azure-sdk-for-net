@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(wordList));
             }
 
-            WordList = wordList?.ToArray();
+            WordList = wordList.ToArray();
             ODataType = "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter";
         }
 

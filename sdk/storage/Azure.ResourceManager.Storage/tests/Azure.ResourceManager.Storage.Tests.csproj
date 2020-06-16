@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TestHelperProjects>Resources201705;</TestHelperProjects>
+  </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Storage.csproj" />
   </ItemGroup>
 </Project>

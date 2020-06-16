@@ -55,7 +55,7 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
-    var body = args.Message.Body.AsString();
+    var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteAsync(args.Message);

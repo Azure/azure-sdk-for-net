@@ -1,0 +1,727 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg5213?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-e75c1dfe4c11774da8684fdfeb02cde0-9fad23cd85eb7545-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "67069e91f13c6313fd6411fe1d319b80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "West US"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:40:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d9decb22-cfe1-48e7-9e5c-2284a8694244",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "d9decb22-cfe1-48e7-9e5c-2284a8694244",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024018Z:d9decb22-cfe1-48e7-9e5c-2284a8694244"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg5213",
+        "name": "csmrg5213",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg5213/providers/Microsoft.Web//serverFarms/csmr4876?api-version=2018-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "111",
+        "Content-Type": "application/json",
+        "traceparent": "00-ed80bb385e12f145a43ae6714caaf7c9-f82f8079cc758841-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "725bd774f3e2d130507de99ca1e22da9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {},
+        "sku": {
+          "name": "S1"
+        },
+        "location": "West US",
+        "tags": {
+          "department": "finance",
+          "tagname": "tagvalue"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1376",
+        "Content-Type": "application/json",
+        "Date": "Fri, 29 May 2020 02:40:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "232210a4-0d15-4ead-a440-ab092b0ba58c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "9fd35fa9-2319-4032-81ae-9535177911df",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024026Z:232210a4-0d15-4ead-a440-ab092b0ba58c",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg5213/providers/Microsoft.Web/serverfarms/csmr4876",
+        "name": "csmr4876",
+        "type": "Microsoft.Web/serverfarms",
+        "kind": "app",
+        "location": "West US",
+        "tags": {
+          "department": "finance",
+          "tagname": "tagvalue"
+        },
+        "properties": {
+          "serverFarmId": 32673,
+          "name": "csmr4876",
+          "workerSize": "Default",
+          "workerSizeId": 0,
+          "workerTierName": null,
+          "numberOfWorkers": 1,
+          "currentWorkerSize": "Default",
+          "currentWorkerSizeId": 0,
+          "currentNumberOfWorkers": 1,
+          "status": "Ready",
+          "webSpace": "csmrg5213-WestUSwebspace",
+          "subscription": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d",
+          "adminSiteName": null,
+          "hostingEnvironment": null,
+          "hostingEnvironmentProfile": null,
+          "maximumNumberOfWorkers": 10,
+          "planName": "VirtualDedicatedPlan",
+          "adminRuntimeSiteName": null,
+          "computeMode": "Dedicated",
+          "siteMode": null,
+          "geoRegion": "West US",
+          "perSiteScaling": false,
+          "maximumElasticWorkerCount": 1,
+          "numberOfSites": 0,
+          "hostingEnvironmentId": null,
+          "isSpot": false,
+          "spotExpirationTime": null,
+          "freeOfferExpirationTime": null,
+          "tags": {
+            "department": "finance",
+            "tagname": "tagvalue"
+          },
+          "kind": "app",
+          "resourceGroup": "csmrg5213",
+          "reserved": false,
+          "isXenon": false,
+          "hyperV": false,
+          "mdmId": "waws-prod-bay-089_32673",
+          "targetWorkerCount": 0,
+          "targetWorkerSizeId": 0,
+          "provisioningState": "Succeeded",
+          "webSiteId": null,
+          "existingServerFarmIds": null
+        },
+        "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "size": "S1",
+          "family": "S",
+          "capacity": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resources?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "455cd6b6fb389d676e3416bf0777c21a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "16648",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:40:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f71112af-3ac9-4493-943f-a1278e560301",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "f71112af-3ac9-4493-943f-a1278e560301",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024046Z:f71112af-3ac9-4493-943f-a1278e560301"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/AppConfigTestResource/providers/Microsoft.AppConfiguration/configurationStores/resourceappconfig",
+            "name": "resourceappconfig",
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "sku": {
+              "name": "free"
+            },
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deployo2ea2gply4mqam72dtwr4b5dxtqtc45vm7iinxfltyltpg4/providers/Microsoft.Network/networkSecurityGroups/clivmNSG",
+            "name": "clivmNSG",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "eastus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deployo2ea2gply4mqam72dtwr4b5dxtqtc45vm7iinxfltyltpg4/providers/Microsoft.Network/virtualNetworks/clivmVNET",
+            "name": "clivmVNET",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "eastus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq/providers/Microsoft.Network/networkInterfaces/clivmVMNic",
+            "name": "clivmVMNic",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "eastus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq/providers/Microsoft.Network/networkSecurityGroups/clivmNSG",
+            "name": "clivmNSG",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "eastus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq/providers/Microsoft.Network/publicIPAddresses/clivmPublicIp",
+            "name": "clivmPublicIp",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Basic"
+            },
+            "location": "eastus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq/providers/Microsoft.Network/virtualNetworks/clivmVNET",
+            "name": "clivmVNET",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "eastus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_lock_with_resource_idnttjuftsazkqwvurcpyjh2ljwwpms5mzw5nr3z2bnd3hd/providers/Microsoft.DocumentDB/databaseAccounts/cli-cosmos2fl3iinyer3qxjo6xqtw",
+            "name": "cli-cosmos2fl3iinyer3qxjo6xqtw",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "MongoDB",
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cloud-shell-storage-westus/providers/Microsoft.Storage/storageAccounts/cs4b9f138a11d64x4108x841",
+            "name": "cs4b9f138a11d64x4108x841",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "location": "westus",
+            "tags": {
+              "ms-resource-usage": "azure-cloud-shell"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg189/providers/Microsoft.Web/serverFarms/csmr118",
+            "name": "csmr118",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg189/providers/Microsoft.Web/serverFarms/csmr8523",
+            "name": "csmr8523",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus",
+            "tags": {
+              "csmtn5212": ""
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg2077/providers/Microsoft.Web/serverFarms/csmr8040",
+            "name": "csmr8040",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg2077/providers/Microsoft.Web/serverFarms/csmr9359",
+            "name": "csmr9359",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus",
+            "tags": {
+              "csmtn6725": "csmtv9169"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3458/providers/Microsoft.Web/serverFarms/csmr5645",
+            "name": "csmr5645",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus",
+            "tags": {
+              "department": "finance",
+              "tagname": "tagvalue"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg5213/providers/Microsoft.Web/serverFarms/csmr4876",
+            "name": "csmr4876",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus",
+            "tags": {
+              "department": "finance",
+              "tagname": "tagvalue"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg66/providers/Sendgrid.Email/accounts/csmr554",
+            "name": "csmr554",
+            "type": "Sendgrid.Email/accounts",
+            "location": "centralus",
+            "plan": {
+              "name": "free",
+              "promotionCode": "",
+              "product": "sendgrid_azure",
+              "publisher": "Sendgrid"
+            },
+            "tags": {
+              "provision_source": "RMS"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg9308/providers/Microsoft.Web/serverFarms/csmr9752",
+            "name": "csmr9752",
+            "type": "Microsoft.Web/serverFarms",
+            "sku": {
+              "name": "S1",
+              "tier": "Standard",
+              "size": "S1",
+              "family": "S",
+              "capacity": 1
+            },
+            "kind": "app",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_centralus",
+            "name": "NetworkWatcher_centralus",
+            "type": "Microsoft.Network/networkWatchers",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_eastus",
+            "name": "NetworkWatcher_eastus",
+            "type": "Microsoft.Network/networkWatchers",
+            "location": "eastus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_southcentralus",
+            "name": "NetworkWatcher_southcentralus",
+            "type": "Microsoft.Network/networkWatchers",
+            "location": "southcentralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus",
+            "name": "NetworkWatcher_westus",
+            "type": "Microsoft.Network/networkWatchers",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/ps1661/providers/Microsoft.Storage/storageAccounts/tianosatest79",
+            "name": "tianosatest79",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/ps_test_subscription_deployment/providers/Microsoft.Storage/storageAccounts/armbuilddemo18123",
+            "name": "armbuilddemo18123",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa021921",
+            "name": "tagsa021921",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "eastus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/RG-Test01/providers/Microsoft.Web/serverFarms/Default1dc",
+            "name": "Default1dc",
+            "type": "Microsoft.Web/serverFarms",
+            "kind": "app",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/RG-Test01/providers/microsoft.web/sites/RS-Test01",
+            "name": "RS-Test01",
+            "type": "microsoft.web/sites",
+            "kind": "app",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TAGSAPISDK/providers/Microsoft.Compute/disks/TagTestVM_disk1_f3ae4754471741719026a26f420eae48",
+            "name": "TagTestVM_disk1_f3ae4754471741719026a26f420eae48",
+            "type": "Microsoft.Compute/disks",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "managedBy": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM",
+            "name": "TagTestVM",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "centralus",
+            "tags": {
+              "tagKey1": "tagValue3",
+              "tagKey3": "tagValue3"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachineScaleSets/testscale",
+            "name": "testscale",
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "sku": {
+              "name": "Standard_B1ls",
+              "tier": "Standard",
+              "capacity": 2
+            },
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.DevTestLab/schedules/shutdown-computevm-TagTestVM",
+            "name": "shutdown-computevm-TagTestVM",
+            "type": "Microsoft.DevTestLab/schedules",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.KeyVault/vaults/TagsSDK",
+            "name": "TagsSDK",
+            "type": "Microsoft.KeyVault/vaults",
+            "location": "westus",
+            "tags": {
+              "testtag": "testval",
+              "testTag2": "testVal2"
+            }
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/networkInterfaces/tagtestvm785",
+            "name": "tagtestvm785",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/networkSecurityGroups/basicNsgTagsApiSDK-vnet-nic01",
+            "name": "basicNsgTagsApiSDK-vnet-nic01",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/networkSecurityGroups/TagTestVM-nsg",
+            "name": "TagTestVM-nsg",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/publicIPAddresses/TagTestVM-ip",
+            "name": "TagTestVM-ip",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Standard"
+            },
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/virtualNetworks/TagsApiSDK-vnet",
+            "name": "TagsApiSDK-vnet",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Network/virtualNetworks/TagsVirtualNetwork",
+            "name": "TagsVirtualNetwork",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK/providers/Microsoft.Storage/storageAccounts/tagsapisdkdiag",
+            "name": "tagsapisdkdiag",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "westus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcexsdi4t2d7m7gelzoe3jyqq6nmwaw2zd5uatr765qd/providers/Microsoft.RecoveryServices/vaults/vault-lregm62jds6pxeuzorgpbucc",
+            "name": "vault-lregm62jds6pxeuzorgpbucc",
+            "type": "Microsoft.RecoveryServices/vaults",
+            "sku": {
+              "name": "Standard"
+            },
+            "location": "westus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/disks/manageddisk1",
+            "name": "manageddisk1",
+            "type": "Microsoft.Compute/disks",
+            "sku": {
+              "name": "Premium_LRS",
+              "tier": "Premium"
+            },
+            "managedBy": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/testVM",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TESTGROUP/providers/Microsoft.Compute/disks/MyVm_disk1_53b3fe3224bc4eb4901b527e78ccbb93",
+            "name": "MyVm_disk1_53b3fe3224bc4eb4901b527e78ccbb93",
+            "type": "Microsoft.Compute/disks",
+            "sku": {
+              "name": "Premium_LRS",
+              "tier": "Premium"
+            },
+            "managedBy": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/MyVm",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/disks/testVM_DataDisk_0",
+            "name": "testVM_DataDisk_0",
+            "type": "Microsoft.Compute/disks",
+            "sku": {
+              "name": "Premium_LRS",
+              "tier": "Premium"
+            },
+            "managedBy": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/testVM",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TESTGROUP/providers/Microsoft.Compute/disks/testVM_disk1_ec3a7d7733af46e18d80ad54e6be2048",
+            "name": "testVM_disk1_ec3a7d7733af46e18d80ad54e6be2048",
+            "type": "Microsoft.Compute/disks",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "managedBy": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/testVM",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/snapshots/testsnapshot",
+            "name": "testsnapshot",
+            "type": "Microsoft.Compute/snapshots",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/MyVm",
+            "name": "MyVm",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Compute/virtualMachines/testVM",
+            "name": "testVM",
+            "type": "Microsoft.Compute/virtualMachines",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.DevTestLab/schedules/shutdown-computevm-testVM",
+            "name": "shutdown-computevm-testVM",
+            "type": "Microsoft.DevTestLab/schedules",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/networkInterfaces/MyVmVMNic",
+            "name": "MyVmVMNic",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/networkInterfaces/testvm390",
+            "name": "testvm390",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/networkSecurityGroups/MyVmNSG",
+            "name": "MyVmNSG",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/networkSecurityGroups/testVM-nsg",
+            "name": "testVM-nsg",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/publicIPAddresses/MyVmPublicIP",
+            "name": "MyVmPublicIP",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Basic"
+            },
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/publicIPAddresses/testVM-ip",
+            "name": "testVM-ip",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Basic"
+            },
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Network/virtualNetworks/testGroup-vnet",
+            "name": "testGroup-vnet",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "centralus"
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup/providers/Microsoft.Storage/storageAccounts/teststorage568",
+            "name": "teststorage568",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "location": "centralus",
+            "tags": {}
+          },
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/store3rglfs2us55z4",
+            "name": "store3rglfs2us55z4",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "location": "centralus",
+            "tags": {}
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "436314569",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

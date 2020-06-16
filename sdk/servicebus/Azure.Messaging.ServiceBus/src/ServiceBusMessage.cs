@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(string body, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            TransportBody = new AmqpTransportBody { Body = BinaryData.Create(body, encoding) };
+            TransportBody = new AmqpTransportBody { Body = new BinaryData(body, encoding) };
             Properties = new Dictionary<string, object>();
         }
 

@@ -50,6 +50,8 @@ namespace Azure.Core.Spatial
 
             string type = typeProperty.GetString();
 
+            GeometryBoundingBox? boundingBox = ReadBoundingBox(element);
+
             if (type == GeometryCollectionType)
             {
                 var geometries = new List<Geometry>();
@@ -58,18 +60,18 @@ namespace Azure.Core.Spatial
                     geometries.Add(Read(geometry));
                 }
 
-                return new CollectionGeometry(geometries, ReadProperties(element, GeometriesProperty));
+                return new CollectionGeometry(geometries, boundingBox, ReadAdditionalProperties(element, GeometriesProperty));
             }
 
+            IReadOnlyDictionary<string, object?> additionalProperties = ReadAdditionalProperties(element);
             JsonElement coordinates = GetRequiredProperty(element, CoordinatesProperty);
-            GeometryProperties? properties = ReadProperties(element);
 
             switch (type)
             {
                 case PointType:
-                    return new PointGeometry(ReadCoordinate(coordinates), properties);
+                    return new PointGeometry(ReadCoordinate(coordinates), boundingBox, additionalProperties);
                 case LineStringType:
-                    return new LineGeometry(ReadCoordinates(coordinates), properties);
+                    return new LineGeometry(ReadCoordinates(coordinates), boundingBox, additionalProperties);
                 case MultiPointType:
                     var points = new List<PointGeometry>();
                     foreach (GeometryPosition coordinate in ReadCoordinates(coordinates))
@@ -77,7 +79,7 @@ namespace Azure.Core.Spatial
                         points.Add(new PointGeometry(coordinate));
                     }
 
-                    return new MultiPointGeometry(points, properties);
+                    return new MultiPointGeometry(points, boundingBox, additionalProperties);
 
                 case PolygonType:
                     var rings = new List<LineGeometry>();
@@ -86,7 +88,7 @@ namespace Azure.Core.Spatial
                         rings.Add(new LineGeometry(ReadCoordinates(ringArray)));
                     }
 
-                    return new PolygonGeometry(rings, properties);
+                    return new PolygonGeometry(rings, boundingBox, additionalProperties);
 
                 case MultiLineStringType:
                     var lineStrings = new List<LineGeometry>();
@@ -95,7 +97,7 @@ namespace Azure.Core.Spatial
                         lineStrings.Add(new LineGeometry(ReadCoordinates(ringArray)));
                     }
 
-                    return new MultiLineGeometry(lineStrings, properties);
+                    return new MultiLineGeometry(lineStrings, boundingBox, additionalProperties);
 
                 case MultiPolygonType:
 
@@ -111,14 +113,14 @@ namespace Azure.Core.Spatial
                         polygons.Add(new PolygonGeometry(polygonRings));
                     }
 
-                    return new MultiPolygonGeometry(polygons, properties);
+                    return new MultiPolygonGeometry(polygons, boundingBox, additionalProperties);
 
                 default:
                     throw new NotSupportedException($"Unsupported geometry type '{type}' ");
             }
         }
 
-        private static GeometryProperties ReadProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
+        private static GeometryBoundingBox? ReadBoundingBox(in JsonElement element)
         {
             GeometryBoundingBox? bbox = null;
 
@@ -151,10 +153,14 @@ namespace Azure.Core.Spatial
                 }
             }
 
+            return bbox;
+        }
+
+        private static IReadOnlyDictionary<string, object?> ReadAdditionalProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
+        {
             Dictionary<string, object?>? additionalProperties = null;
             foreach (var property in element.EnumerateObject())
             {
-                additionalProperties ??= new Dictionary<string, object?>();
                 var propertyName = property.Name;
                 if (propertyName.Equals(TypeProperty, StringComparison.Ordinal) ||
                     propertyName.Equals(BBoxProperty, StringComparison.Ordinal) ||
@@ -162,15 +168,12 @@ namespace Azure.Core.Spatial
                 {
                     continue;
                 }
+
+                additionalProperties ??= new Dictionary<string, object?>();
                 additionalProperties.Add(propertyName, ReadAdditionalPropertyValue(property.Value));
             }
 
-            if (bbox != null || additionalProperties != null)
-            {
-                return new GeometryProperties(bbox, additionalProperties);
-            }
-
-            return Geometry.DefaultProperties;
+            return additionalProperties ?? Geometry.DefaultProperties;
         }
 
         private static object? ReadAdditionalPropertyValue(in JsonElement element)
@@ -363,7 +366,7 @@ namespace Azure.Core.Spatial
                     throw new NotSupportedException($"Geometry type '{value?.GetType()}' not supported");
             }
 
-            if (value.Properties.BoundingBox is GeometryBoundingBox bbox)
+            if (value.BoundingBox is GeometryBoundingBox bbox)
             {
                 writer.WritePropertyName(BBoxProperty);
                 writer.WriteStartArray();
@@ -382,7 +385,7 @@ namespace Azure.Core.Spatial
                 writer.WriteEndArray();
             }
 
-            foreach (var additionalProperty in value.Properties.AdditionalProperties)
+            foreach (var additionalProperty in value.AdditionalProperties)
             {
                 writer.WritePropertyName(additionalProperty.Key);
                 WriteAdditionalPropertyValue(writer, additionalProperty.Value);

@@ -42,10 +42,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // get the message body as a string
-                string body = receivedMessage.Body.AsString();
+                string body = receivedMessage.Body.ToString();
                 Console.WriteLine(body);
                 #endregion
-                Assert.AreEqual("Hello world!", receivedMessage.Body.AsString());
+                Assert.AreEqual("Hello world!", receivedMessage.Body.ToString());
             }
         }
 
@@ -75,8 +75,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 // get the message body as a string
-                string body = peekedMessage.Body.AsString();
-                Assert.AreEqual("Hello world!", peekedMessage.Body.AsString());
+                string body = peekedMessage.Body.ToString();
+                Assert.AreEqual("Hello world!", peekedMessage.Body.ToString());
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string
-                    string body = receivedMessage.Body.AsString();
+                    string body = receivedMessage.Body.ToString();
                     Console.WriteLine(body);
                 }
                 #endregion
@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.AsString(), receivedMessage.Body.AsString());
+                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToString(), receivedMessage.Body.ToString());
                 }
             }
         }
@@ -163,13 +163,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string using an implicit cast
-                    string body = receivedMessage.Body.AsString();
+                    string body = receivedMessage.Body.ToString();
                 }
                 var sentMessagesEnum = messageBatch.AsEnumerable<ServiceBusMessage>().GetEnumerator();
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.AsString(), receivedMessage.Body.AsString());
+                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToString(), receivedMessage.Body.ToString());
                 }
             }
         }

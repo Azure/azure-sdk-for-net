@@ -83,11 +83,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Enable ApiCompat  -->
-  <ItemGroup>
-    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" BuildReference="false" Condition="'$(EnableApiCompat)' == 'true'" />
-  </ItemGroup>
-
   <PropertyGroup>
     <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
@@ -164,7 +159,7 @@
     <PackageReference Include="Moq" />
   </ItemGroup>
   <!-- *********** END OF Management Client Library Override section ************* -->
-    
+
   <!-- Added layer of checks to make sure we correctly switched to project references -->
   <Target Name="VerifyProjectReferencesReferences" AfterTargets="Build">
     <ItemGroup>
@@ -179,10 +174,13 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
-   <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(EnableApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+  <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(ApiCompatVersion)' != '' and '$(DesignTimeBuild)' != 'true'">
     <MSBuild
       Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
-      Properties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)"
+      Properties="TargetPackageName=$(PackageId);
+                  TargetPackageVersion=$(ApiCompatVersion);
+                  TargetOutputPath=$(IntermediateOutputPath);
+                  BaseIntermediateOutputPath=$(BaseIntermediateOutputPath)\ApiCompat\"
       Targets="ApiCompatVerification"
      />
   </Target>

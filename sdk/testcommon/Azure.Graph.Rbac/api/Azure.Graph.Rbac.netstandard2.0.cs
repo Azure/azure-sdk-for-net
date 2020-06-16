@@ -1,8 +1,8 @@
 namespace Azure.Graph.Rbac
 {
-    public partial class ApplicationsClient
+    public partial class ApplicationsOperations
     {
-        protected ApplicationsClient() { }
+        protected ApplicationsOperations() { }
         public virtual Azure.Response AddOwner(string applicationObjectId, Azure.Graph.Rbac.Models.AddOwnerParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddOwnerAsync(string applicationObjectId, Azure.Graph.Rbac.Models.AddOwnerParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.Application> Create(Azure.Graph.Rbac.Models.ApplicationCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -32,9 +32,9 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Response UpdatePasswordCredentials(string applicationObjectId, Azure.Graph.Rbac.Models.PasswordCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdatePasswordCredentialsAsync(string applicationObjectId, Azure.Graph.Rbac.Models.PasswordCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeletedApplicationsClient
+    public partial class DeletedApplicationsOperations
     {
-        protected DeletedApplicationsClient() { }
+        protected DeletedApplicationsOperations() { }
         public virtual Azure.Response HardDelete(string applicationObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> HardDeleteAsync(string applicationObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.Application> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,17 +44,17 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Response<Azure.Graph.Rbac.Models.Application> Restore(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.Application>> RestoreAsync(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DomainsClient
+    public partial class DomainsOperations
     {
-        protected DomainsClient() { }
+        protected DomainsOperations() { }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.Domain> Get(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.Domain>> GetAsync(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.Domain> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.Domain> ListAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GroupsClient
+    public partial class GroupsOperations
     {
-        protected GroupsClient() { }
+        protected GroupsOperations() { }
         public virtual Azure.Response AddMember(string groupObjectId, Azure.Graph.Rbac.Models.GroupAddMemberParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddMemberAsync(string groupObjectId, Azure.Graph.Rbac.Models.GroupAddMemberParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AddOwner(string objectId, Azure.Graph.Rbac.Models.AddOwnerParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,9 +84,9 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Response RemoveOwner(string objectId, string ownerObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveOwnerAsync(string objectId, string ownerObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OAuth2PermissionGrantClient
+    public partial class OAuth2PermissionGrantOperations
     {
-        protected OAuth2PermissionGrantClient() { }
+        protected OAuth2PermissionGrantOperations() { }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.OAuth2PermissionGrant> Create(Azure.Graph.Rbac.Models.OAuth2PermissionGrant body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.OAuth2PermissionGrant>> CreateAsync(Azure.Graph.Rbac.Models.OAuth2PermissionGrant body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -96,9 +96,9 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.OAuth2PermissionGrant> ListNext(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.OAuth2PermissionGrant> ListNextAsync(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ObjectsClient
+    public partial class ObjectsOperations
     {
-        protected ObjectsClient() { }
+        protected ObjectsOperations() { }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.DirectoryObject> GetObjectsByObjectIds(Azure.Graph.Rbac.Models.GetObjectsParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.DirectoryObject> GetObjectsByObjectIdsAsync(Azure.Graph.Rbac.Models.GetObjectsParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.DirectoryObject> GetObjectsByObjectIdsNext(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -109,23 +109,23 @@ namespace Azure.Graph.Rbac
         protected RbacManagementClient() { }
         public RbacManagementClient(string tenantID, Azure.Core.TokenCredential tokenCredential, Azure.Graph.Rbac.RbacManagementClientOptions options = null) { }
         public RbacManagementClient(string tenantID, System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Graph.Rbac.RbacManagementClientOptions options = null) { }
-        public virtual Azure.Graph.Rbac.ApplicationsClient GetApplicationsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.DeletedApplicationsClient GetDeletedApplicationsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.DomainsClient GetDomainsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.GroupsClient GetGroupsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.OAuth2PermissionGrantClient GetOAuth2PermissionGrantClient() { throw null; }
-        public virtual Azure.Graph.Rbac.ObjectsClient GetObjectsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.ServicePrincipalsClient GetServicePrincipalsClient() { throw null; }
-        public virtual Azure.Graph.Rbac.SignedInUserClient GetSignedInUserClient() { throw null; }
-        public virtual Azure.Graph.Rbac.UsersClient GetUsersClient() { throw null; }
+        public virtual Azure.Graph.Rbac.ApplicationsOperations Applications { get { throw null; } }
+        public virtual Azure.Graph.Rbac.DeletedApplicationsOperations DeletedApplications { get { throw null; } }
+        public virtual Azure.Graph.Rbac.DomainsOperations Domains { get { throw null; } }
+        public virtual Azure.Graph.Rbac.GroupsOperations Groups { get { throw null; } }
+        public virtual Azure.Graph.Rbac.OAuth2PermissionGrantOperations OAuth2PermissionGrant { get { throw null; } }
+        public virtual Azure.Graph.Rbac.ObjectsOperations Objects { get { throw null; } }
+        public virtual Azure.Graph.Rbac.ServicePrincipalsOperations ServicePrincipals { get { throw null; } }
+        public virtual Azure.Graph.Rbac.SignedInUserOperations SignedInUser { get { throw null; } }
+        public virtual Azure.Graph.Rbac.UsersOperations Users { get { throw null; } }
     }
     public partial class RbacManagementClientOptions : Azure.Core.ClientOptions
     {
         public RbacManagementClientOptions() { }
     }
-    public partial class ServicePrincipalsClient
+    public partial class ServicePrincipalsOperations
     {
-        protected ServicePrincipalsClient() { }
+        protected ServicePrincipalsOperations() { }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal> Create(Azure.Graph.Rbac.Models.ServicePrincipalCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.ServicePrincipal>> CreateAsync(Azure.Graph.Rbac.Models.ServicePrincipalCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string objectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -149,9 +149,9 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Response UpdatePasswordCredentials(string objectId, Azure.Graph.Rbac.Models.PasswordCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdatePasswordCredentialsAsync(string objectId, Azure.Graph.Rbac.Models.PasswordCredentialsUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SignedInUserClient
+    public partial class SignedInUserOperations
     {
-        protected SignedInUserClient() { }
+        protected SignedInUserOperations() { }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.User> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.User>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.DirectoryObject> ListOwnedObjects(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,9 +159,9 @@ namespace Azure.Graph.Rbac
         public virtual Azure.Pageable<Azure.Graph.Rbac.Models.DirectoryObject> ListOwnedObjectsNext(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Graph.Rbac.Models.DirectoryObject> ListOwnedObjectsNextAsync(string nextLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class UsersClient
+    public partial class UsersOperations
     {
-        protected UsersClient() { }
+        protected UsersOperations() { }
         public virtual Azure.Response<Azure.Graph.Rbac.Models.User> Create(Azure.Graph.Rbac.Models.UserCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Graph.Rbac.Models.User>> CreateAsync(Azure.Graph.Rbac.Models.UserCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string upnOrObjectId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
