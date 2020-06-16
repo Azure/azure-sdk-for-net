@@ -14,42 +14,35 @@ namespace Azure.Messaging.ServiceBus.Transports.Amqp
     public static class ServiceBusMessageExtensions
     {
         /// <summary>
-        /// Checks if the message contains an AMQP body.
-        /// </summary>
-        /// <param name="message">The message to use.</param>
-        /// <returns>True if the message contains an AMQP body. Otherwise, false.</returns>
-        public static bool HasAmqpBody(this ServiceBusMessage message) => message.TransportBody is AmqpTransportBody;
-
-        /// <summary>
         /// Gets the body type from an AMQP body.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the body type. Otherwise, <see cref="AmqpBodyType.Unspecified"/>.</returns>
+        /// <returns>Returns the body type of the AMQP message.</returns>
         public static AmqpBodyType GetAmqpBodyType(this ServiceBusMessage message) =>
-            message.TransportBody is AmqpTransportBody body ? body.BodyType : AmqpBodyType.Unspecified;
+            ((AmqpTransportBody)message.TransportBody).BodyType;
 
         /// <summary>
         /// Gets the Data body type from an AMQP <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="Enumerable.Empty{T}()"/>.</returns>
+        /// <returns>Returns the Data body of the AMQP message.</returns>
         public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusMessage message) =>
-            message.TransportBody is AmqpTransportBody body ? body.Data : Enumerable.Empty<ReadOnlyMemory<byte>>();
+            ((AmqpTransportBody)message.TransportBody).Data;
 
         /// <summary>
         /// Gets the Sequence body type from an AMQP <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the Sequence body. Otherwise, <see cref="Enumerable.Empty{T}()"/>.</returns>
+        /// <returns>Returns the Sequence body of the AMQP message.</returns>
         public static IEnumerable<IList> GetAmqpSequenceBody(this ServiceBusMessage message) =>
-            message.TransportBody is AmqpTransportBody body ? body.Sequence : Enumerable.Empty<IList>();
+            ((AmqpTransportBody)message.TransportBody).Sequence;
 
         /// <summary>
         /// Gets the Value body type from an AMQP <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns>If the message contains an AMQP body, returns the Value body. Otherwise, null.</returns>
+        /// <returns>Returns the Value body of the AMQP message.</returns>
         public static object GetAmqpValueBody(this ServiceBusMessage message) =>
-            message.TransportBody is AmqpTransportBody body ? body.Value : null;
+            ((AmqpTransportBody)message.TransportBody).Value;
     }
 }
