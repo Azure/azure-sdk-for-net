@@ -158,14 +158,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = BinaryData.Create(testBody, serializer);
+                var body = BinaryData.FromSerializable(testBody, serializer);
                 var msg = new ServiceBusMessage(body);
 
                 await sender.SendAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveAsync();
-                var receivedBody = received.Body.As<TestBody>(serializer);
+                var receivedBody = received.Body.Deserialize<TestBody>(serializer);
                 Assert.AreEqual(testBody.A, receivedBody.A);
                 Assert.AreEqual(testBody.B, receivedBody.B);
                 Assert.AreEqual(testBody.C, receivedBody.C);
