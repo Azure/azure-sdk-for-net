@@ -6,23 +6,23 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
-        public System.Threading.Tasks.ValueTask<T> AsAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public BinaryData(string data) { throw null; }
+        public BinaryData(string data, System.Text.Encoding encoding) { throw null; }
         public System.ReadOnlyMemory<byte> AsBytes() { throw null; }
-        public System.IO.Stream AsStream() { throw null; }
-        public string AsString() { throw null; }
-        public string AsString(System.Text.Encoding encoding) { throw null; }
-        public T As<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.BinaryData Create(System.IO.Stream stream) { throw null; }
-        public static Azure.Core.BinaryData Create(string data) { throw null; }
-        public static Azure.Core.BinaryData Create(string data, System.Text.Encoding encoding) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.BinaryData Create<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromSerializableAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData FromSerializable<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
+        public System.IO.Stream ToStream() { throw null; }
+        public override string ToString() { throw null; }
+        public string ToString(System.Text.Encoding encoding) { throw null; }
     }
     public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer
     {
