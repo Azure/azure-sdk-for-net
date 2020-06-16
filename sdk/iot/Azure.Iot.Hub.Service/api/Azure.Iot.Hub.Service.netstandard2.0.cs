@@ -54,12 +54,12 @@ namespace Azure.Iot.Hub.Service
         public IoTHubServiceClient(string connectionString, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
         public IoTHubServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public IoTHubServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
-        public Azure.Iot.Hub.Service.DevicesClient Devices { get { throw null; } }
-        public Azure.Iot.Hub.Service.FilesClient Files { get { throw null; } }
-        public Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
-        public Azure.Iot.Hub.Service.CloudToDeviceMessagesClient Messages { get { throw null; } }
-        public Azure.Iot.Hub.Service.ModulesClient Modules { get { throw null; } }
-        public Azure.Iot.Hub.Service.StatisticsClient Statistics { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.DevicesClient Devices { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.FilesClient Files { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.CloudToDeviceMessagesClient Messages { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.ModulesClient Modules { get { throw null; } }
+        public virtual Azure.Iot.Hub.Service.StatisticsClient Statistics { get { throw null; } }
     }
     public partial class IoTHubServiceClientOptions : Azure.Core.ClientOptions
     {
