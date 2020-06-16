@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels);
+                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
             }
 
             return trainedModel;
