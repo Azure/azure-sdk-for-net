@@ -6,6 +6,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\AppConfigurationTest\" />
   </ItemGroup>
 </Project>

@@ -88,31 +88,34 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = new List<Subnet>() { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
             };
-            var putVnetResponseOperation = await WaitForCompletionAsync ( await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
+            var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
-            //var setPrivateEndpointResponse = await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
-            //    new Management.Network.Models.PrivateEndpoint()
-            //    { Location = "eastus", PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
-            //                                                           putVnetResponseOperation.ToString(),new List<string>{"configurationStores"},null,null)},
-            //        Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName } });
+            var setPrivateEndpointResponse = await WaitForCompletionAsync(await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
+                new Management.Network.Models.PrivateEndpoint()
+                {
+                    Location = "eastus",
+                    PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
+                                                                       configurationCreateResult.Value.Id,new List<string>{"configurationStores"},"Please approve my connection",null)},
+                    Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
+                }));
             //get Configuration
             var configurationGetResult = (await ConfigurationStoresOperations.GetAsync(resourceGroupName, configurationStoreName)).Value;
             Assert.IsNotNull(configurationGetResult);
-            //privateEndpointConnectionName = configurationGetResult.PrivateEndpointConnections[0].Name;
-            //var privateConnectionId = configurationGetResult.PrivateEndpointConnections[0].Id;
+            privateEndpointConnectionName = configurationGetResult.PrivateEndpointConnections[0].Name;
+            var privateConnectionId = configurationGetResult.PrivateEndpointConnections[0].Id;
             //Create PrivateEndpointConnection
-            //var createPrivateEndPointConnectionResponse = await WaitForCompletionAsync( await PrivateEndpointConnectionsOperations.StartCreateOrUpdateAsync(resourceGroupName, configurationStoreName, privateEndpointConnectionName,
-            //                new Models.PrivateEndpointConnection(
-            //                    //privateConnectionId,privateEndpointConnectionName,null,null,
-            //                    null, privateEndpointConnectionName, null, null,
-            //                    new Models.PrivateEndpoint("/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/" + EndpointName),
-            //                    new Models.PrivateLinkServiceConnectionState(Models.ConnectionStatus.Approved, "Auto-Approved",null)
-            //                    )));
-            //Assert.IsNotNull(createPrivateEndPointConnectionResponse);
-            //var getPrivateEndPointConnectionResponse = await PrivateEndpointConnectionsOperations.GetAsync(resourceGroupName, configurationStoreName,privateEndpointConnectionName);
-            //Assert.IsNotNull(getPrivateEndPointConnectionResponse);
+            var createPrivateEndPointConnectionResponse = await WaitForCompletionAsync(await PrivateEndpointConnectionsOperations.StartCreateOrUpdateAsync(resourceGroupName, configurationStoreName, privateEndpointConnectionName,
+                            new Models.PrivateEndpointConnection(
+                                //privateConnectionId,privateEndpointConnectionName,null,null,
+                                privateConnectionId, privateEndpointConnectionName, null, null,
+                                new Models.PrivateEndpoint("/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/" + EndpointName),
+                                new Models.PrivateLinkServiceConnectionState(Models.ConnectionStatus.Approved, "Auto-Approved", null)
+                                )));
+            Assert.IsNotNull(createPrivateEndPointConnectionResponse);
+            var getPrivateEndPointConnectionResponse = await PrivateEndpointConnectionsOperations.GetAsync(resourceGroupName, configurationStoreName, privateEndpointConnectionName);
+            Assert.IsNotNull(getPrivateEndPointConnectionResponse);
 
             var listByConfigurationResult = PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName, configurationStoreName);
             var listByConfigurationRes = await listByConfigurationResult.ToEnumerableAsync();
@@ -122,7 +125,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsNotNull(privatelinkresourcegetResult.Value);
             var listByConfigurationStoreResult = PrivateEndpointConnectionsOperations.ListByConfigurationStoreAsync(resourceGroupName, configurationStoreName);
             var listByConfigurationStoreResponse = await listByConfigurationStoreResult.ToEnumerableAsync();
-            Assert.IsTrue(listByConfigurationStoreResponse.Count()==0);
+            Assert.IsTrue(listByConfigurationStoreResponse.Count()>=1);
             // get PrivateEndpointConnectionList
             var ConfigurationStoreListResponse = await PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName,configurationStoreName).ToEnumerableAsync();
             privateLinkResourceName = ConfigurationStoreListResponse.First().Name;
@@ -159,8 +162,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             var checkNameAvailabilityResponse = await Operations.CheckNameAvailabilityAsync(new CheckNameAvailabilityParameters("contoso", "Microsoft.AppConfiguration/configurationStores"));
             Assert.IsNotNull(checkNameAvailabilityResponse.Value);
             //PrivateEndpointConnections Delete
-            //var deletePrivateEndpointConnectionResponse = await WaitForCompletionAsync( await PrivateEndpointConnectionsOperations.StartDeleteAsync(resourceGroupName,configurationStoreName,privateEndpointConnectionName));
-
+            var deletePrivateEndpointConnectionResponse = await WaitForCompletionAsync(await PrivateEndpointConnectionsOperations.StartDeleteAsync(resourceGroupName, configurationStoreName, privateEndpointConnectionName));
+            Assert.IsNotNull(deletePrivateEndpointConnectionResponse.Value);
             //ConfigurationStores Delete
             var deleteConfigurationStores = await WaitForCompletionAsync(await ConfigurationStoresOperations.StartDeleteAsync(resourceGroupName,configurationStoreName));
             Assert.IsNotNull(deleteConfigurationStores.Value);
