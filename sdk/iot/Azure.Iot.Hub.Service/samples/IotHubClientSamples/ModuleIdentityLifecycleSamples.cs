@@ -75,7 +75,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the device identity.
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully create a new device identity with Id: '{deviceId}' - Status Code: {response.GetRawResponse().Status}");
+                SampleLogger.PrintSuccessfulEvent($"Successfully create a new device identity with Id: '{deviceId}'");
 
                 return response.Value;
             }
@@ -109,7 +109,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the module identity.
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully create a new module identity with Id: '{moduleId}' - Status Code: {response.GetRawResponse().Status}");
+                SampleLogger.PrintSuccessfulEvent($"Successfully create a new module identity with Id: '{moduleId}'");
 
                 return response.Value;
             }
@@ -161,7 +161,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to delete the module identity.
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully deleted module identity with Id: '{moduleIdentity.ModuleId}' - Status Code: {response.Status}");
+                SampleLogger.PrintSuccessfulEvent($"Successfully deleted module identity with Id: '{moduleIdentity.ModuleId}'");
             }
             catch (Exception ex)
             {
@@ -184,7 +184,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to delete the device identity.
                 Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}' - Status Code: {response.Status}");
+                SampleLogger.PrintSuccessfulEvent($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
             }
             catch (Exception ex)
             {
