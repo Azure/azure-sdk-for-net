@@ -67,7 +67,7 @@ foreach (RecognizedForm recognizedForm in recognizedForms)
 }
 ```
 
-Using `FormField<T>` to make your fields strongly-typed, and populating a custom helper model class, such as `Receipt`, is the recommended approach for handling recognized custom forms in which expected labels are known.
+Using `FormField<T>` to make your fields strongly-typed, and populating a custom helper model class, such as `Receipt`, is the recommended approach for handling recognized forms in which expected labels are known.
 
 To see the full example source files, see:
 
