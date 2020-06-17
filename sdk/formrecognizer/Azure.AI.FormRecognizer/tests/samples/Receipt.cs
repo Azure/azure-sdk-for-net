@@ -17,21 +17,21 @@ namespace Azure.AI.FormRecognizer.Samples
         /// <summary>
         /// Initializes a new instance of the <see cref="Receipt"/> class.
         /// </summary>
-        /// <param name="receipt">The form from which information will be extracted to build this receipt.</param>
-        public Receipt(RecognizedForm receipt)
+        /// <param name="recognizedForm">The form from which information will be extracted to build this receipt.</param>
+        public Receipt(RecognizedForm recognizedForm)
         {
-            ReceiptType = ConvertStringField("ReceiptType", receipt.Fields);
-            MerchantAddress = ConvertStringField("MerchantAddress", receipt.Fields);
-            MerchantName = ConvertStringField("MerchantName", receipt.Fields);
-            MerchantPhoneNumber = ConvertPhoneNumberField("MerchantPhoneNumber", receipt.Fields);
-            Subtotal = ConvertFloatField("Subtotal", receipt.Fields);
-            Tax = ConvertFloatField("Tax", receipt.Fields);
-            Tip = ConvertFloatField("Tip", receipt.Fields);
-            Total = ConvertFloatField("Total", receipt.Fields);
-            TransactionDate = ConvertDateField("TransactionDate", receipt.Fields);
-            TransactionTime = ConvertTimeField("TransactionTime", receipt.Fields);
+            ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
+            MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
+            MerchantName = ConvertStringField("MerchantName", recognizedForm.Fields);
+            MerchantPhoneNumber = ConvertPhoneNumberField("MerchantPhoneNumber", recognizedForm.Fields);
+            Subtotal = ConvertFloatField("Subtotal", recognizedForm.Fields);
+            Tax = ConvertFloatField("Tax", recognizedForm.Fields);
+            Tip = ConvertFloatField("Tip", recognizedForm.Fields);
+            Total = ConvertFloatField("Total", recognizedForm.Fields);
+            TransactionDate = ConvertDateField("TransactionDate", recognizedForm.Fields);
+            TransactionTime = ConvertTimeField("TransactionTime", recognizedForm.Fields);
 
-            Items = ConvertReceiptItems(receipt.Fields);
+            Items = ConvertReceiptItems(recognizedForm.Fields);
         }
 
         /// <summary>
