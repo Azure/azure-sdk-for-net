@@ -58,13 +58,9 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateInstrumentedFormRecognizerClient(useTokenCredential: true);
-            RecognizeContentOperation operation;
-
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream);
-            }
+
+            RecognizeContentOperation operation = await client.StartRecognizeContentAsync(stream);
 
             // Sanity check to make sure we got an actual response back from the service.
 
@@ -90,10 +86,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeContentAsync(stream);
-                }
+                operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
@@ -182,10 +175,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeContentAsync(stream);
-                }
+                operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
@@ -216,13 +206,9 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            RecognizeContentOperation operation;
-
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream);
-            }
+
+            RecognizeContentOperation operation = await client.StartRecognizeContentAsync(stream);
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -279,10 +265,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeReceiptsAsync(stream);
-                }
+                operation = await client.StartRecognizeReceiptsAsync(stream);
             }
             else
             {
@@ -386,10 +369,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeReceiptsAsync(stream, options);
-                }
+                operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
             else
             {
@@ -426,13 +406,10 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
-            RecognizeReceiptsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeReceiptsAsync(stream, options);
-            }
+
+            RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsAsync(stream, options);
 
             RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -500,10 +477,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-                }
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
             else
             {
@@ -550,10 +524,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-                }
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
             else
             {
@@ -588,15 +559,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
-            RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-            }
+
+            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -616,15 +584,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
-            RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-            }
+
+            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -655,20 +620,15 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            RecognizeCustomFormsOperation operation;
 
             // Use Form_<id>.<ext> files for training with labels.
-
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
             // Attempt to recognize a different type of form: Invoice_1.pdf. This form does not contain all the labels
             // the newly trained model expects.
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-            }
+            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
 
             RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
             var fields = forms.Single().Fields;
@@ -695,10 +655,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-                }
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
             else
             {
@@ -746,10 +703,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
-                }
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
             else
             {
