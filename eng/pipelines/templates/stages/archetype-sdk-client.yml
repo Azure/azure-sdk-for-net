@@ -4,7 +4,7 @@ resources:
       type: github
       name: azure/azure-sdk-tools
       endpoint: azure
-      ref: refs/tags/azure-sdk-tools_20200608.1
+      azure-sdk-tools_20200617.3
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
