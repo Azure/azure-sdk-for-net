@@ -5,7 +5,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\AppConfigurationTest\" />
-  </ItemGroup>
 </Project>

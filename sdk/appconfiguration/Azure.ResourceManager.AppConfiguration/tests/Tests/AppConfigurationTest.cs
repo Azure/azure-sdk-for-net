@@ -4,11 +4,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Azure.Core.TestFramework;
 using Azure.Management.Network;
 using Azure.Management.Network.Models;
 using Azure.ResourceManager.AppConfiguration.Models;
+
 using NUnit.Framework;
+
 using Sku = Azure.ResourceManager.AppConfiguration.Models.Sku;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests

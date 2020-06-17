@@ -4,6 +4,6 @@
     <PackageId>Azure.ResourceManager.AppConfiguration</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsoft.AppConfiguration</Description>
     <PackageTags>azure;management;appconfiguration</PackageTags>
-    <NoWarn>$(NoWarn);AZC0001;AZC0008;CA1308</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
   </PropertyGroup>
 </Project>

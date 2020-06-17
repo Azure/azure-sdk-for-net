@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public abstract class AppConfigurationClientBase : ManagementRecordedTestBase<AppConfigurationManagementTestEnvironment>
     {
-        public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public AppConfigurationManagementClient AppConfigurationManagementClient { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
         public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
