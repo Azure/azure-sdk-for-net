@@ -24,6 +24,47 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 The known receipt fields returned by the service, such as `MerchantName` and `TransactionDate`, will be strongly-typed and put together into another helper class called `Receipt`.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
+RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+
+foreach (RecognizedForm recognizedForm in recognizedForms)
+{
+    Receipt receipt = new Receipt(recognizedForm);
+
+    if (receipt.MerchantName != null)
+    {
+        string merchantName = receipt.MerchantName;
+        Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {receipt.MerchantName.Confidence}");
+    }
+
+    if (receipt.TransactionDate != null)
+    {
+        DateTime transactionDate = receipt.TransactionDate;
+        Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {receipt.TransactionDate.Confidence}");
+    }
+
+    foreach (ReceiptItem item in receipt.Items)
+    {
+        Console.WriteLine("Item:");
+
+        if (item.Name != null)
+        {
+            string name = item.Name;
+            Console.WriteLine($"    Name: '{name}', with confidence {item.Name.Confidence}");
+        }
+
+        if (item.TotalPrice != null)
+        {
+            float totalPrice = item.TotalPrice;
+            Console.WriteLine($"    Total Price: '{totalPrice}', with confidence {item.TotalPrice.Confidence}");
+        }
+    }
+
+    if (receipt.Total != null)
+    {
+        float total = receipt.Total;
+        Console.WriteLine($"Total: '{total}', with confidence {receipt.Total.Confidence}");
+    }
+}
 ```
 
 Using `FormField<T>` to make your fields strongly-typed, and populating a custom helper model class, such as `Receipt`, is the recommended approach for handling recognized custom forms in which expected labels are known.
