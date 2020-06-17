@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional paratmers for uploading to a Blob.
     /// </summary>
-    public class UploadBlobOptions
+    public class BlobUploadOptions
     {
         /// <summary>
         /// Optional standard HTTP header properties that can be set for the

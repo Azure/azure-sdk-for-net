@@ -326,7 +326,7 @@ namespace Azure.Storage
                 public const string EventTime = "eventTime";
                 public const string EventId = "id";
                 public const string Data = "data";
-                public const string DataVersion = "dataVersion";
+                public const string SchemaVersion = "schemaVersion";
                 public const string MetadataVersion = "metadataVersion";
             }
 

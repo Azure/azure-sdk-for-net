@@ -5312,7 +5312,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5434,7 +5434,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -8713,7 +8713,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-status", out _header))
                         {
-                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatusType(_header);
+                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
                         {
@@ -8721,11 +8721,11 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
                         {
-                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStateType(_header);
+                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
-                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatusType(_header);
+                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
@@ -8845,7 +8845,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-status", out _header))
                         {
-                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatusType(_header);
+                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
                         {
@@ -8853,11 +8853,11 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
                         {
-                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStateType(_header);
+                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
-                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatusType(_header);
+                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
@@ -14158,7 +14158,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -14283,7 +14283,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -15496,7 +15496,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
-        public Azure.Storage.Blobs.Models.CopyStatusType CopyStatus { get; internal set; }
+        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
 
         /// <summary>
         /// When a blob is leased, specifies whether the lease is of infinite or fixed duration.
@@ -15506,12 +15506,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Lease state of the blob.
         /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStateType LeaseState { get; internal set; }
+        public Azure.Storage.Blobs.Models.LeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the blob.
         /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStatusType LeaseStatus { get; internal set; }
+        public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// Indicates that the service supports requests for partial blob content.
@@ -16209,12 +16209,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Deleted
         /// </summary>
-        public bool? Deleted { get; internal set; }
+        public bool? IsDeleted { get; internal set; }
 
         /// <summary>
         /// Version
         /// </summary>
-        public string Version { get; internal set; }
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// Properties of a container
@@ -16259,12 +16259,12 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
             if (_child != null)
             {
-                _value.Deleted = bool.Parse(_child.Value);
+                _value.IsDeleted = bool.Parse(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
             if (_child != null)
             {
-                _value.Version = _child.Value;
+                _value.VersionId = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
@@ -16289,15 +16289,15 @@ namespace Azure.Storage.Blobs.Models
         public static BlobContainerItem BlobContainerItem(
             string name,
             Azure.Storage.Blobs.Models.BlobContainerProperties properties,
-            bool? deleted = default,
-            string version = default)
+            bool? isDeleted = default,
+            string versionId = default)
         {
             return new BlobContainerItem()
             {
                 Name = name,
                 Properties = properties,
-                Deleted = deleted,
-                Version = version,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
             };
         }
     }
@@ -16360,7 +16360,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// DeletedTime
         /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// RemainingRetentionDays
@@ -16455,7 +16455,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
             if (_child != null)
             {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
             if (_child != null)
@@ -16501,7 +16501,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             string defaultEncryptionScope = default,
             bool? preventEncryptionScopeOverride = default,
-            System.DateTimeOffset? deletedTime = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             bool? hasLegalHold = default)
@@ -16517,7 +16517,7 @@ namespace Azure.Storage.Blobs.Models
                 LeaseStatus = leaseStatus,
                 DefaultEncryptionScope = defaultEncryptionScope,
                 PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
-                DeletedTime = deletedTime,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
                 Metadata = metadata,
                 HasLegalHold = hasLegalHold,
@@ -18101,7 +18101,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// TagCount
         /// </summary>
-        public int? TagCount { get; internal set; }
+        public long? TagCount { get; internal set; }
 
         /// <summary>
         /// Expiry-Time
@@ -18292,7 +18292,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
             if (_child != null)
             {
-                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.TagCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
             if (_child != null)
@@ -18372,7 +18372,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             string encryptionScope = default,
-            int? tagCount = default,
+            long? tagCount = default,
             System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
             Azure.ETag? eTag = default,
@@ -19475,7 +19475,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlobTag
     /// </summary>
-    public partial class BlobTag
+    internal partial class BlobTag
     {
         /// <summary>
         /// Key
@@ -19547,7 +19547,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob tags
     /// </summary>
-    public partial class BlobTags
+    internal partial class BlobTags
     {
         /// <summary>
         /// BlobTagSet
@@ -20427,70 +20427,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum CopyStatus
 
-#region enum CopyStatusType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// State of the copy operation identified by x-ms-copy-id.
-    /// </summary>
-    public enum CopyStatusType
-    {
-        /// <summary>
-        /// pending
-        /// </summary>
-        Pending,
-
-        /// <summary>
-        /// success
-        /// </summary>
-        Success,
-
-        /// <summary>
-        /// aborted
-        /// </summary>
-        Aborted,
-
-        /// <summary>
-        /// failed
-        /// </summary>
-        Failed
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.CopyStatusType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.CopyStatusType.Pending => "pending",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Success => "success",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Aborted => "aborted",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Failed => "failed",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.CopyStatusType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.CopyStatusType ParseCopyStatusType(string value)
-            {
-                return value switch
-                {
-                    "pending" => Azure.Storage.Blobs.Models.CopyStatusType.Pending,
-                    "success" => Azure.Storage.Blobs.Models.CopyStatusType.Success,
-                    "aborted" => Azure.Storage.Blobs.Models.CopyStatusType.Aborted,
-                    "failed" => Azure.Storage.Blobs.Models.CopyStatusType.Failed,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.CopyStatusType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum CopyStatusType
-
 #region class DataLakeStorageError
 namespace Azure.Storage.Blobs.Models
 {
@@ -20966,22 +20902,17 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob info from a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobItem
+    internal partial class FilterBlobItem
     {
         /// <summary>
         /// Name
         /// </summary>
-        public string Name { get; internal set; }
+        public string BlobName { get; internal set; }
 
         /// <summary>
         /// ContainerName
         /// </summary>
-        public string ContainerName { get; internal set; }
-
-        /// <summary>
-        /// TagValue
-        /// </summary>
-        public string TagValue { get; internal set; }
+        public string BlobContainerName { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of FilterBlobItem instances.
@@ -21002,45 +20933,18 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
-                _value.Name = _child.Value;
+                _value.BlobName = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("ContainerName", ""));
             if (_child != null)
             {
-                _value.ContainerName = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("TagValue", ""));
-            if (_child != null)
-            {
-                _value.TagValue = _child.Value;
+                _value.BlobContainerName = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobItem value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilterBlobItem instance for mocking.
-        /// </summary>
-        public static FilterBlobItem FilterBlobItem(
-            string name,
-            string containerName,
-            string tagValue)
-        {
-            return new FilterBlobItem()
-            {
-                Name = name,
-                ContainerName = containerName,
-                TagValue = tagValue,
-            };
-        }
     }
 }
 #endregion class FilterBlobItem
@@ -21051,7 +20955,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The result of a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobSegment
+    internal partial class FilterBlobSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -21076,7 +20980,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new FilterBlobSegment instance
         /// </summary>
-        internal FilterBlobSegment()
+        public FilterBlobSegment()
             : this(false)
         {
         }
@@ -21136,30 +21040,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobSegment value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilterBlobSegment instance for mocking.
-        /// </summary>
-        public static FilterBlobSegment FilterBlobSegment(
-            string serviceEndpoint,
-            string where,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs,
-            string nextMarker = default)
-        {
-            return new FilterBlobSegment()
-            {
-                ServiceEndpoint = serviceEndpoint,
-                Where = where,
-                Blobs = blobs,
-                NextMarker = nextMarker,
-            };
-        }
     }
 }
 #endregion class FilterBlobSegment
@@ -21691,77 +21571,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum LeaseState
 
-#region enum LeaseStateType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Lease state of the blob.
-    /// </summary>
-    public enum LeaseStateType
-    {
-        /// <summary>
-        /// available
-        /// </summary>
-        Available,
-
-        /// <summary>
-        /// leased
-        /// </summary>
-        Leased,
-
-        /// <summary>
-        /// expired
-        /// </summary>
-        Expired,
-
-        /// <summary>
-        /// breaking
-        /// </summary>
-        Breaking,
-
-        /// <summary>
-        /// broken
-        /// </summary>
-        Broken
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.LeaseStateType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.LeaseStateType.Available => "available",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Leased => "leased",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Expired => "expired",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Breaking => "breaking",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Broken => "broken",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStateType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.LeaseStateType ParseLeaseStateType(string value)
-            {
-                return value switch
-                {
-                    "available" => Azure.Storage.Blobs.Models.LeaseStateType.Available,
-                    "leased" => Azure.Storage.Blobs.Models.LeaseStateType.Leased,
-                    "expired" => Azure.Storage.Blobs.Models.LeaseStateType.Expired,
-                    "breaking" => Azure.Storage.Blobs.Models.LeaseStateType.Breaking,
-                    "broken" => Azure.Storage.Blobs.Models.LeaseStateType.Broken,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStateType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStateType
-
 #region enum LeaseStatus
 namespace Azure.Storage.Blobs.Models
 {
@@ -21813,56 +21622,6 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum LeaseStatus
-
-#region enum LeaseStatusType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The current lease status of the blob.
-    /// </summary>
-    public enum LeaseStatusType
-    {
-        /// <summary>
-        /// locked
-        /// </summary>
-        Locked,
-
-        /// <summary>
-        /// unlocked
-        /// </summary>
-        Unlocked
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.LeaseStatusType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.LeaseStatusType.Locked => "locked",
-                    Azure.Storage.Blobs.Models.LeaseStatusType.Unlocked => "unlocked",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStatusType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.LeaseStatusType ParseLeaseStatusType(string value)
-            {
-                return value switch
-                {
-                    "locked" => Azure.Storage.Blobs.Models.LeaseStatusType.Locked,
-                    "unlocked" => Azure.Storage.Blobs.Models.LeaseStatusType.Unlocked,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStatusType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStatusType
 
 #region enum ListBlobsIncludeItem
 namespace Azure.Storage.Blobs.Models
@@ -21955,7 +21714,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// ListContainersIncludeType values
     /// </summary>
-    public enum ListContainersIncludeType
+    internal enum ListContainersIncludeType
     {
         /// <summary>
         /// metadata

@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
 
             // Resume iterating from the pervious position with the cursor.
             foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChanges(
-                continuation: cursor))
+                continuationToken: cursor))
             {
                 changeFeedEvents.Add(changeFeedEvent);
             }

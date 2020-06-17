@@ -3408,7 +3408,7 @@ namespace Azure.Storage.Files.DataLake
                     // Relative
                     if (options.TimeToExpire.HasValue)
                     {
-                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOffset.CreationTime)
+                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOrigin.CreationTime)
                         {
                             blobExpiryOptions = PathExpiryOptions.RelativeToCreation;
                         }
@@ -3470,7 +3470,7 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="Query"/> API returns the
         /// result of a query against the file.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -3488,7 +3488,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{FileDownloadInfo}"/>.
         /// </returns>
         public virtual Response<FileDownloadInfo> Query(
-            string query,
+            string querySqlExpression,
             DataLakeQueryOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -3497,7 +3497,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobDownloadInfo> response = _blockBlobClient.Query(
-                    query,
+                    querySqlExpression,
                     options.ToBlobQueryOptions(),
                     cancellationToken);
 
@@ -3520,7 +3520,7 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="Query"/> API returns the
         /// result of a query against the file.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -3538,7 +3538,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{FileDownloadInfo}"/>.
         /// </returns>
         public virtual async Task<Response<FileDownloadInfo>> QueryAsync(
-            string query,
+            string querySqlExpression,
             DataLakeQueryOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -3547,7 +3547,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobDownloadInfo> response = await _blockBlobClient.QueryAsync(
-                    query,
+                    querySqlExpression,
                     options.ToBlobQueryOptions(),
                     cancellationToken)
                     .ConfigureAwait(false);

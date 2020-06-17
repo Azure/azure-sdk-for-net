@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            BlobChangeFeedAsyncPagable blobChangeFeedAsyncPagable
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
                 = blobChangeFeedClient.GetChangesAsync();
             IList<BlobChangeFeedEvent> list = await blobChangeFeedAsyncPagable.ToListAsync();
             foreach (BlobChangeFeedEvent e in list)
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            BlobChangeFeedAsyncPagable blobChangeFeedAsyncPagable
+            AsyncPageable<BlobChangeFeedEvent> blobChangeFeedAsyncPagable
                 = blobChangeFeedClient.GetChangesAsync();
             IAsyncEnumerable<Page<BlobChangeFeedEvent>> asyncEnumerable = blobChangeFeedAsyncPagable.AsPages(pageSizeHint: 500);
             Page<BlobChangeFeedEvent> page = await asyncEnumerable.FirstAsync();
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             string continuation = page.ContinuationToken;
 
-            BlobChangeFeedAsyncPagable cursorBlobChangeFeedAsyncPagable
+            AsyncPageable<BlobChangeFeedEvent> cursorBlobChangeFeedAsyncPagable
                 = blobChangeFeedClient.GetChangesAsync(continuation);
 
             IList<BlobChangeFeedEvent> list = await cursorBlobChangeFeedAsyncPagable.ToListAsync();

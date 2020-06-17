@@ -1632,7 +1632,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
             var data = GetRandomBuffer(Size);
             IDictionary<string, string> tags = BuildTags();
-            UploadBlobOptions options = new UploadBlobOptions
+            BlobUploadOptions options = new BlobUploadOptions
             {
                 Tags = tags
             };

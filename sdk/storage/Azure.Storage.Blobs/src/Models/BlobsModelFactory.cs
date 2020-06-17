@@ -164,8 +164,8 @@ namespace Azure.Storage.Blobs.Models
             BlobType blobType,
             string versionId,
             IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
-            bool isCurrentVersion,
-            string objectReplicationDestinationPolicy,
+            bool isLatestVersion,
+            string objectReplicationDestinationPolicyId,
             long tagCount,
             IDictionary<string, string> metadata,
             DateTimeOffset expiresOn,
@@ -207,8 +207,8 @@ namespace Azure.Storage.Blobs.Models
                 BlobType = blobType,
                 VersionId = versionId,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
-                IsCurrentVersion = isCurrentVersion,
-                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
+                IsLatestVersion = isLatestVersion,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicyId,
                 TagCount = tagCount,
                 Metadata = metadata,
                 ExpiresOn = expiresOn,
@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs.Models
            BlobItemProperties properties,
            string snapshot = default,
            string versionId = default,
-           bool? isCurrentVersion = default,
+           bool? isLatestVersion = default,
            IDictionary<string, string> metadata = default,
            IDictionary<string, string> tags = default)
         {
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.Models
                 Properties = properties,
                 Snapshot = snapshot,
                 VersionId = versionId,
-                IsCurrentVersion = isCurrentVersion,
+                IsLatestVersion = isLatestVersion,
                 Metadata = metadata,
                 Tags = tags
             };
@@ -509,6 +509,18 @@ namespace Azure.Storage.Blobs.Models
                 Description = description,
                 IsFatal = isFatal,
                 Position = position
+            };
+
+        /// <summary>
+        /// Creates a new BlobTagItem instance for mocking.
+        /// </summary>
+        public static BlobTagItem BlobTagItem(
+            string blobName = default,
+            string blobContainerName = default)
+            => new BlobTagItem
+            {
+                BlobName = blobName,
+                BlobContainerName = blobContainerName
             };
 
         /// <summary>

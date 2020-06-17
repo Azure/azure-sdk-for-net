@@ -96,7 +96,7 @@ namespace Azure.Storage.Sas
         /// The name of the blob version being made accessible, or
         /// <see cref="string.Empty"/> for a blob SAS.
         /// </summary>
-        public string BlobVersion { get; set; }
+        public string BlobVersionId { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
@@ -243,7 +243,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot ?? BlobVersion,
+                Snapshot ?? BlobVersionId,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
@@ -312,7 +312,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot ?? BlobVersion,
+                Snapshot ?? BlobVersionId,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
@@ -405,12 +405,12 @@ namespace Azure.Storage.Sas
             else
             {
                 // Blob
-                if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersion))
+                if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
-                else if (string.IsNullOrEmpty(BlobVersion))
+                else if (string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.BlobSnapshot;
                 }

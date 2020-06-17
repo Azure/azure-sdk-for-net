@@ -154,7 +154,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
             var data = GetRandomBuffer(Constants.KB);
             IDictionary<string, string> tags = BuildTags();
-            UploadBlobOptions options = new UploadBlobOptions
+            BlobUploadOptions options = new BlobUploadOptions
             {
                 Tags = tags
             };
@@ -325,7 +325,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
             var data = GetRandomBuffer(Constants.KB);
             IDictionary<string, string> tags = BuildTags();
-            UploadBlobOptions options = new UploadBlobOptions
+            BlobUploadOptions options = new BlobUploadOptions
             {
                 Tags = tags
             };
@@ -569,7 +569,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.StagedUploadInternal(
                 content: stream,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     TransferOptions = transferOptions
                 },
@@ -604,7 +604,7 @@ namespace Azure.Storage.Blobs.Test
 
                 await blob.StagedUploadInternal(
                     path: path,
-                    new UploadBlobOptions
+                    new BlobUploadOptions
                     {
                         TransferOptions = transferOptions
                     },

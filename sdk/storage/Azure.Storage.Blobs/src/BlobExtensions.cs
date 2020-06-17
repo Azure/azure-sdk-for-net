@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
                 Snapshot = blobItemInternal.Snapshot,
                 Properties = blobItemInternal.Properties,
                 VersionId = blobItemInternal.VersionId,
-                IsCurrentVersion = blobItemInternal.IsCurrentVersion,
+                IsLatestVersion = blobItemInternal.IsCurrentVersion,
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
                     : null,
@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs
                 ArchiveStatus = properties.ArchiveStatus,
                 AccessTierChangedOn = properties.AccessTierChangedOn,
                 VersionId = properties.VersionId,
-                IsCurrentVersion = properties.IsCurrentVersion,
+                IsLatestVersion = properties.IsCurrentVersion,
                 TagCount = properties.TagCount,
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,
@@ -203,6 +203,37 @@ namespace Azure.Storage.Blobs
                 }
             }
             return OrProperties;
+        }
+
+        internal static BlobTagItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
+        {
+            if (filterBlobItem == null)
+            {
+                return null;
+            }
+
+            return new BlobTagItem
+            {
+                BlobName = filterBlobItem.BlobName,
+                BlobContainerName = filterBlobItem.BlobContainerName
+            };
+        }
+
+        internal static List<BlobTagItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
+        {
+            if (filterBlobItems == null)
+            {
+                return null;
+            }
+
+            List<BlobTagItem> list = new List<BlobTagItem>();
+
+            foreach (FilterBlobItem filterBlobItem in filterBlobItems)
+            {
+                list.Add(filterBlobItem.ToBlobTagItem());
+            }
+
+            return list;
         }
     }
 }

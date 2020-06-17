@@ -7,31 +7,18 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for creating an Page Blob.
+    /// Optional parameters for creating an Append Blob.
     /// </summary>
-    public class CreatePageBlobOptions
+    public class AppendBlobCreateOptions
     {
         /// <summary>
-        /// Optional user-controlled value that you can use to track requests.
-        /// The value of the SequenceNumber must be between
-        /// 0 and 2^63 - 1.  The default value is 0.
-        /// </summary>
-        public long? SequenceNumber { get; set; }
-
-        /// <summary>
         /// Optional standard HTTP header properties that can be set for the
-        /// new page blob.
+        /// new append blob.
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
         /// <summary>
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on the creation of this new page blob.
-        /// </summary>
-        public PageBlobRequestConditions Conditions { get; set; }
-
-        /// <summary>
-        /// Optional custom metadata to set for this page blob.
+        /// Optional custom metadata to set for this append blob.
         /// </summary>
         public Metadata Metadata { get; set; }
 
@@ -39,5 +26,11 @@ namespace Azure.Storage.Blobs.Models
         /// Options tags to set for this append blob.
         /// </summary>
         public Tags Tags { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the creation of this new append blob.
+        /// </summary>
+        public AppendBlobRequestConditions Conditions { get; set; }
     }
 }
