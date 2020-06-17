@@ -23,6 +23,7 @@ namespace Azure.ResourceManager
         protected string LocationEastUs2 = "EastUS2";
         protected string LocationSouthAsia = "southeastasia";
         protected string LocationWestCentralUs = "westcentralus";
+        protected string LocationAustraliaSouthEast = "australiasoutheast";
 
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ProvidersOperations ProvidersOperations { get; set; }
