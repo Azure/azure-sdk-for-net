@@ -16,10 +16,10 @@ namespace Azure.AI.FormRecognizer.Samples
         /// <summary>
         /// This sample illustrates how to consume a Bounding Box type data that is available across the Form Recognizer library.
         /// A bounding box is a sequence of four <see cref="PointF"/> representing a quadrilateral that outlines
-        /// the text of an element in a recognized form.
+        /// an element such as a line or a word in a recognized form.
         /// Coordinates are specified relative to the top-left of the original image,
         /// and points are ordered clockwise from the top-left corner relative to the text orientation.
-        /// Units are in pixels for images and inches for PDF.
+        /// Units type of a recognized page can be found at <see cref="FormPage.Unit"/>.
         /// For the purpose of the sample, we will use the StartRecognizeContent capability.
         /// </summary>
         [Test]
