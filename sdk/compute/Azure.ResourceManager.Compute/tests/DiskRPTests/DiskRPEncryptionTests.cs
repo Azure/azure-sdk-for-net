@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Ignore("this should be tested by generate team")]
         public async Task DiskEncryptionPositiveTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             string testVaultId = @"/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/24/providers/Microsoft.KeyVault/vaults/swaggervault2";
             string encryptionKeyUri = @"https://swaggervault2.vault.azure.net/keys/swaggerkey/6108e4eb47c14bdf863f1465229f8e66";
             string secretUri = @"https://swaggervault2.vault.azure.net/secrets/swaggersecret/c464e5083aab4f73968700e8b077c54d";
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Test]
         public async Task DiskEncryptionNegativeTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             string fakeTestVaultId =
             @"/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/testrg/providers/Microsoft.KeyVault/vaults/keyvault";
             string fakeEncryptionKeyUri = @"https://testvault.vault.azure.net/secrets/swaggersecret/test123";

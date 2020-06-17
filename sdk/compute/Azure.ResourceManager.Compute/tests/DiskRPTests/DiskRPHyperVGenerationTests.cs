@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Test]
         public async Task DiskHyperVGeneration1PositiveTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Test]
         public async Task DiskHyperVGeneration2PositiveTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Test]
         public async Task DiskHyperVGenerationOmittedTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);

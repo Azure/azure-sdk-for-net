@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Test]
         public async Task UploadDiskPositiveTest()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         [Ignore("this should be tested by generate team")]
         public async Task DiskFromGalleryImageVersion()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage.ToString());
