@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CommonWords != null && CommonWords.Any())
+            if (CommonWords.Any())
             {
                 writer.WritePropertyName("commonWords");
                 writer.WriteStartArray();
@@ -59,10 +59,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("commonWords"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

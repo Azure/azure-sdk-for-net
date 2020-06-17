@@ -6,23 +6,23 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
-        public System.Threading.Tasks.ValueTask<T> AsAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public BinaryData(string data) { throw null; }
+        public BinaryData(string data, System.Text.Encoding encoding) { throw null; }
         public System.ReadOnlyMemory<byte> AsBytes() { throw null; }
-        public System.IO.Stream AsStream() { throw null; }
-        public string AsString() { throw null; }
-        public string AsString(System.Text.Encoding encoding) { throw null; }
-        public T As<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.BinaryData Create(System.IO.Stream stream) { throw null; }
-        public static Azure.Core.BinaryData Create(string data) { throw null; }
-        public static Azure.Core.BinaryData Create(string data, System.Text.Encoding encoding) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.BinaryData Create<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromSerializableAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData FromSerializable<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
+        public System.IO.Stream ToStream() { throw null; }
+        public override string ToString() { throw null; }
+        public string ToString(System.Text.Encoding encoding) { throw null; }
     }
     public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer
     {
@@ -46,14 +46,15 @@ namespace Azure.Core.Spatial
 {
     public sealed partial class CollectionGeometry : Azure.Core.Spatial.Geometry
     {
-        public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.Geometry> Geometries { get { throw null; } }
     }
     public abstract partial class Geometry
     {
-        protected Geometry(Azure.Core.Spatial.GeometryProperties properties) { }
-        public Azure.Core.Spatial.GeometryProperties Properties { get { throw null; } }
+        protected Geometry(Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object?> AdditionalProperties { get { throw null; } }
+        public Azure.Core.Spatial.GeometryBoundingBox? BoundingBox { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GeometryBoundingBox : System.IEquatable<Azure.Core.Spatial.GeometryBoundingBox>
@@ -94,46 +95,40 @@ namespace Azure.Core.Spatial
         public static bool operator !=(Azure.Core.Spatial.GeometryPosition left, Azure.Core.Spatial.GeometryPosition right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GeometryProperties
-    {
-        public GeometryProperties(Azure.Core.Spatial.GeometryBoundingBox? boundingBox = default(Azure.Core.Spatial.GeometryBoundingBox?), System.Collections.Generic.IReadOnlyDictionary<string, object?>? additionalProperties = null) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object?> AdditionalProperties { get { throw null; } }
-        public Azure.Core.Spatial.GeometryBoundingBox? BoundingBox { get { throw null; } }
-    }
     public sealed partial class LineGeometry : Azure.Core.Spatial.Geometry
     {
-        public LineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.GeometryPosition> positions) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public LineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.GeometryPosition> positions, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public LineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.GeometryPosition> positions) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public LineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.GeometryPosition> positions, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.GeometryPosition> Positions { get { throw null; } }
     }
     public sealed partial class MultiLineGeometry : Azure.Core.Spatial.Geometry
     {
-        public MultiLineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> lines) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public MultiLineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> lines, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public MultiLineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> lines) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public MultiLineGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> lines, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.LineGeometry> Lines { get { throw null; } }
     }
     public sealed partial class MultiPointGeometry : Azure.Core.Spatial.Geometry
     {
-        public MultiPointGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PointGeometry> points) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public MultiPointGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PointGeometry> points, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public MultiPointGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PointGeometry> points) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public MultiPointGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PointGeometry> points, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.PointGeometry> Points { get { throw null; } }
     }
     public sealed partial class MultiPolygonGeometry : Azure.Core.Spatial.Geometry
     {
-        public MultiPolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PolygonGeometry> polygons) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public MultiPolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PolygonGeometry> polygons, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public MultiPolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PolygonGeometry> polygons) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public MultiPolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.PolygonGeometry> polygons, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.PolygonGeometry> Polygons { get { throw null; } }
     }
     public sealed partial class PointGeometry : Azure.Core.Spatial.Geometry
     {
-        public PointGeometry(Azure.Core.Spatial.GeometryPosition position) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public PointGeometry(Azure.Core.Spatial.GeometryPosition position, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public PointGeometry(Azure.Core.Spatial.GeometryPosition position) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public PointGeometry(Azure.Core.Spatial.GeometryPosition position, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public Azure.Core.Spatial.GeometryPosition Position { get { throw null; } }
     }
     public sealed partial class PolygonGeometry : Azure.Core.Spatial.Geometry
     {
-        public PolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> rings) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
-        public PolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> rings, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
+        public PolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> rings) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
+        public PolygonGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.LineGeometry> rings, Azure.Core.Spatial.GeometryBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> additionalProperties) : base (default(Azure.Core.Spatial.GeometryBoundingBox?), default(System.Collections.Generic.IReadOnlyDictionary<string, object>)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.LineGeometry> Rings { get { throw null; } }
     }
 }
