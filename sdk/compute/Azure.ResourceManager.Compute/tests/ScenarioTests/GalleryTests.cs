@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(imageVersionFromGet.ReplicationStatus);
             Assert.NotNull(imageVersionFromGet.ReplicationStatus.Summary);
 
-            inputImageVersion.PublishingProfile.EndOfLifeDate = Recording.UtcNow.AddDays(100).Date;
+            inputImageVersion.PublishingProfile.EndOfLifeDate = Recording.UtcNow.AddDays(100);
             await WaitForCompletionAsync(await GalleryImageVersionsOperations.StartCreateOrUpdateAsync(rgName, galleryName, galleryImageName,
                 galleryImageVersionName, inputImageVersion));
             Trace.TraceInformation(string.Format("Updated the gallery image version: {0} in gallery image: {1}",
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(applicationVersionFromGet.ReplicationStatus);
             Assert.NotNull(applicationVersionFromGet.ReplicationStatus.Summary);
 
-            inputApplicationVersion.PublishingProfile.EndOfLifeDate = Recording.UtcNow.AddDays(100).Date;
+            inputApplicationVersion.PublishingProfile.EndOfLifeDate = Recording.UtcNow.AddDays(100);
             await WaitForCompletionAsync(await GalleryApplicationVersionsOperations.StartCreateOrUpdateAsync(rgName, galleryName, galleryApplicationName,
                 galleryApplicationVersionName, inputApplicationVersion));
             Trace.TraceInformation(string.Format("Updated the gallery application version: {0} in gallery application: {1}",
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Compute.Tests
                             StorageAccountType = StorageAccountType.StandardLRS
                         }
                     },
-                    EndOfLifeDate = Recording.UtcNow.AddDays(10).Date
+                    EndOfLifeDate = Recording.UtcNow.AddDays(10)
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile
                 {
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     TargetRegions = new List<TargetRegion> {
                         new TargetRegion(DefaultLocation){ RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
-                    EndOfLifeDate = Recording.UtcNow.AddDays(10).Date
+                    EndOfLifeDate = Recording.UtcNow.AddDays(10)
                 }
             };
         }

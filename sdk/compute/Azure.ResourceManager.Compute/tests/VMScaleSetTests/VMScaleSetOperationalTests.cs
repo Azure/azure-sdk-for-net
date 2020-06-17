@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetOperations()
         {
+            EnsureClientsInitialized(LocationEastUs2);
             await TestVMScaleSetOperationsInternal();
         }
 
@@ -52,12 +53,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetOperations_ManagedDisks()
         {
+            EnsureClientsInitialized(LocationEastUs2);
             await TestVMScaleSetOperationsInternal(hasManagedDisks: true);
         }
 
         private async Task TestVMScaleSetOperationsInternal(bool hasManagedDisks = false)
         {
-            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

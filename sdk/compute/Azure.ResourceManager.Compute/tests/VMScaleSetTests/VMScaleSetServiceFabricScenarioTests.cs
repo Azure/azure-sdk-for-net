@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Test(Skip = "ReRecord due to CR change")]
         public void TestVMScaleSetServiceFabric()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
             TestVMScaleSetServiceFabricImpl();
         }
 

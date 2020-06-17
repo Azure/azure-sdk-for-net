@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Test(Skip = "TODO: Wait for KMS Client")]
         public async Task TestVMCertificatesOperations()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

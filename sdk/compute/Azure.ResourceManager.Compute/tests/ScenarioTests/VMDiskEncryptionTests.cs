@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task TestVMDiskEncryption()
         {
 
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

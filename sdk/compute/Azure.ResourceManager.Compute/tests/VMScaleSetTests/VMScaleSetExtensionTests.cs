@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("this case should be tested by compute team")]
         public async Task TestVMScaleSetExtensions()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
             await TestVMScaleSetExtensionsImpl();
         }
 
         [Test]
         public async Task TestVMScaleSetExtensionSequencing()
         {
+            EnsureClientsInitialized(LocationSouthAsia);
             // Create resource group
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             var vmssName = Recording.GenerateAssetName("vmss");
             VirtualMachineScaleSet inputVMScaleSet;
-            EnsureClientsInitialized(true);
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: false);
             VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
 

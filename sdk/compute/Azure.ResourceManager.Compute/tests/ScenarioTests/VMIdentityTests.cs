@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("this should be tested by generate team")]
         public async Task TestVMIdentitySystemAssignedUserAssigned()
         {
+            EnsureClientsInitialized(LocationSouthAsia);
             // Prerequisite: in order to record this test, first create a user identity in resource group 'identitytest' and set the value of identity here.
             const string rgName = "identitytest";
             const string identity = "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/resourcegroups/identitytest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userid";
-            EnsureClientsInitialized(true);
 
             ImageReference imgageRef = await GetPlatformVMImage(useWindowsImage: true);
 

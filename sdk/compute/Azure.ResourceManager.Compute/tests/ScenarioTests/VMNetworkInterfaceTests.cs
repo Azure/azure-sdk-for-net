@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestNicVirtualMachineReference()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore ("This case need to be tested by compute team")]
         public async Task TestEffectiveRouteAndAcls()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestMultiNicVirtualMachineReference()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestMultiIpConfigForMultiNICVM()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

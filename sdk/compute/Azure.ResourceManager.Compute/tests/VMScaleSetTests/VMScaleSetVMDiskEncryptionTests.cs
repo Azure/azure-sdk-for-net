@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetVMDiskEncryptionOperation")]
         public async Task TestVMScaleSetVMDiskEncryptionOperation()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
             await TestDiskEncryptionOnScaleSetVMInternal(hasManagedDisks: true, useVmssExtension: true);
         }
 

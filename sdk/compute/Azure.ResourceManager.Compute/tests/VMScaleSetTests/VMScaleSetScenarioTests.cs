@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations")]
         public async Task TestVMScaleSetScenarioOperations()
         {
+            EnsureClientsInitialized(LocationSouthAsia);
             await TestScaleSetOperationsInternal();
         }
 
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public async Task TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
-            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, useDefaultLocation: true);
+            EnsureClientsInitialized(LocationSouthAsia);
+            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false);
         }
 
         /// <summary>
@@ -67,16 +69,8 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone")]
         public async Task TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
-                await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            EnsureClientsInitialized(LocationCentralUs);
+            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
         }
 
         /// <summary>
@@ -87,17 +81,9 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_DiffDisks")]
         public async Task TestVMScaleSetScenarioOperations_DiffDisks()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardDS5V2.ToString(), hasManagedDisks: true,
-                    hasDiffDisks: true);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            EnsureClientsInitialized(LocationNorthEurope);
+            await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardDS5V2.ToString(), hasManagedDisks: true,
+                hasDiffDisks: true);
         }
 
         /// <summary>
@@ -108,35 +94,19 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_With_DiskEncryptionSet")]
         public async Task TestVMScaleSetScenarioOperations_With_DiskEncryptionSet()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
+            EnsureClientsInitialized(LocationCentralUsEuap);
+            string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
 
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
-                await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardA1V2.ToString(), hasManagedDisks: true, osDiskSizeInGB: 175, diskEncryptionSetId: diskEncryptionSetId);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardA1V2.ToString(), hasManagedDisks: true, osDiskSizeInGB: 175, diskEncryptionSetId: diskEncryptionSetId);
         }
 
         [Test]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_UltraSSD")]
         public async Task TestVMScaleSetScenarioOperations_UltraSSD()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardE4SV3.ToString(), hasManagedDisks: true,
-                        useVmssExtension: false, zones: new List<string> { "1" }, enableUltraSSD: true, osDiskSizeInGB: 175);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardE4SV3.ToString(), hasManagedDisks: true,
+                    useVmssExtension: false, zones: new List<string> { "1" }, enableUltraSSD: true, osDiskSizeInGB: 175);
         }
 
         /// <summary>
@@ -146,20 +116,12 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones")]
         public async Task TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
-                await TestScaleSetOperationsInternal(
-                    hasManagedDisks: true,
-                    useVmssExtension: false,
-                    zones: new List<string> { "1", "3" },
-                    osDiskSizeInGB: 175);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            EnsureClientsInitialized(LocationCentralUs);
+            await TestScaleSetOperationsInternal(
+                hasManagedDisks: true,
+                useVmssExtension: false,
+                zones: new List<string> { "1", "3" },
+                osDiskSizeInGB: 175);
         }
 
         /// <summary>
@@ -169,226 +131,182 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_PpgScenario")]
         public async Task TestVMScaleSetScenarioOperations_PpgScenario()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, isPpgScenario: true);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, isPpgScenario: true);
         }
 
         [Test]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public async Task TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false,
-                    vmScaleSetCustomizer:
-                    vmScaleSet =>
+            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false,
+                vmScaleSetCustomizer:
+                vmScaleSet =>
+                {
+                    vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile = new ScheduledEventsProfile
                     {
-                        vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile = new ScheduledEventsProfile
+                        TerminateNotificationProfile = new TerminateNotificationProfile
                         {
-                            TerminateNotificationProfile = new TerminateNotificationProfile
-                            {
-                                Enable = true,
-                                NotBeforeTimeout = "PT6M",
-                            }
-                        };
-                    },
-                    vmScaleSetValidator: vmScaleSet =>
-                    {
-                        Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.Enable);
-                        Assert.True("PT6M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.NotBeforeTimeout);
-                    });
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+                            Enable = true,
+                            NotBeforeTimeout = "PT6M",
+                        }
+                    };
+                },
+                vmScaleSetValidator: vmScaleSet =>
+                {
+                    Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.Enable);
+                    Assert.True("PT6M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.NotBeforeTimeout);
+                });
         }
 
         [Test]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest")]
         public async Task TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
-            string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            //change the location 'centraluseuap' to 'eastus2'
-            string region = "eastus2";
-            string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
+            EnsureClientsInitialized(LocationEastUs2LowerCase);
 
-            try
+            ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
+
+            // Create resource group
+            var rgName = Recording.GenerateAssetName(TestPrefix);
+            var vmssName = Recording.GenerateAssetName("vmss");
+            string storageAccountName = Recording.GenerateAssetName(TestPrefix);
+            VirtualMachineScaleSet inputVMScaleSet;
+            var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
+
+            await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
+
+            var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
+                rgName,
+                vmssName,
+                storageAccountOutput,
+                imageRef,
+                null,
+                (vmScaleSet) =>
+                {
+                    vmScaleSet.Overprovision = false;
+                },
+                createWithManagedDisks: true,
+                createWithPublicIpAddress: false,
+                createWithHealthProbe: true);
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+
+            // Set Automatic Repairs to true
+            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
             {
-                Environment.SetEnvironmentVariable(environmentVariable, region);
-                EnsureClientsInitialized(false);
+                Enabled = true
+            };
+            await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
-                ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
+            getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
+            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
-                // Create resource group
-                var rgName = Recording.GenerateAssetName(TestPrefix);
-                var vmssName = Recording.GenerateAssetName("vmss");
-                string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-                VirtualMachineScaleSet inputVMScaleSet;
-                var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
-
-                await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
-
-                var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
-                    rgName,
-                    vmssName,
-                    storageAccountOutput,
-                    imageRef,
-                    null,
-                    (vmScaleSet) =>
-                    {
-                        vmScaleSet.Overprovision = false;
-                    },
-                    createWithManagedDisks: true,
-                    createWithPublicIpAddress: false,
-                    createWithHealthProbe: true);
-                VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-
-                // Set Automatic Repairs to true
-                inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = true
-                };
-                await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
-
-                getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-
-                // Update Automatic Repairs default values
-                inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = true,
-
-                    GracePeriod = "PT35M"
-                };
-                await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
-
-                getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-
-                // Set automatic repairs to null
-                inputVMScaleSet.AutomaticRepairsPolicy = null;
-                await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
-
-                getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-
-                Assert.AreEqual("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod);
-
-                // Disable Automatic Repairs
-                inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = false
-                };
-                await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
-
-                getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                Assert.NotNull(getResponse.AutomaticRepairsPolicy);
-                Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
-            }
-            finally
+            // Update Automatic Repairs default values
+            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+                Enabled = true,
+
+                GracePeriod = "PT35M"
+            };
+            await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+            getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
+            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+
+            // Set automatic repairs to null
+            inputVMScaleSet.AutomaticRepairsPolicy = null;
+            await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+            getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
+
+            Assert.AreEqual("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod);
+
+            // Disable Automatic Repairs
+            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+            {
+                Enabled = false
+            };
+            await UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+            getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
+            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
         }
 
         [Test]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_OrchestrationService")]
         public async Task TestVMScaleSetScenarioOperations_OrchestrationService()
         {
-            string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "northeurope";
-            string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
+            EnsureClientsInitialized(LocationNorthEurope);
 
-            try
+            ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
+
+            // Create resource group
+            var rgName = Recording.GenerateAssetName(TestPrefix);
+            var vmssName = Recording.GenerateAssetName("vmss");
+            string storageAccountName = Recording.GenerateAssetName(TestPrefix);
+            VirtualMachineScaleSet inputVMScaleSet;
+            var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
+
+            await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
+
+            AutomaticRepairsPolicy automaticRepairsPolicy = new AutomaticRepairsPolicy()
             {
-                Environment.SetEnvironmentVariable(environmentVariable, region);
-                EnsureClientsInitialized(false);
-
-                ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
-
-                // Create resource group
-                var rgName = Recording.GenerateAssetName(TestPrefix);
-                var vmssName = Recording.GenerateAssetName("vmss");
-                string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-                VirtualMachineScaleSet inputVMScaleSet;
-                var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
-
-                await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
-
-                AutomaticRepairsPolicy automaticRepairsPolicy = new AutomaticRepairsPolicy()
+                Enabled = true
+            };
+            var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
+                rgName,
+                vmssName,
+                storageAccountOutput,
+                imageRef,
+                null,
+                (vmScaleSet) =>
                 {
-                    Enabled = true
-                };
-                var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
-                    rgName,
-                    vmssName,
-                    storageAccountOutput,
-                    imageRef,
-                    null,
-                    (vmScaleSet) =>
-                    {
-                        vmScaleSet.Overprovision = false;
-                    },
-                    createWithManagedDisks: true,
-                    createWithPublicIpAddress: false,
-                    createWithHealthProbe: true,
-                    automaticRepairsPolicy: automaticRepairsPolicy);
-                VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                var getInstanceViewResponse = (await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName)).Value;
+                    vmScaleSet.Overprovision = false;
+                },
+                createWithManagedDisks: true,
+                createWithPublicIpAddress: false,
+                createWithHealthProbe: true,
+                automaticRepairsPolicy: automaticRepairsPolicy);
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+            var getInstanceViewResponse = (await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName)).Value;
 
-                Assert.True(getInstanceViewResponse.OrchestrationServices.Count == 1);
-                Assert.AreEqual("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
-                Assert.AreEqual("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName.ToString());
+            Assert.True(getInstanceViewResponse.OrchestrationServices.Count == 1);
+            Assert.AreEqual("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
+            Assert.AreEqual("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName.ToString());
 
 
-                ////TODO
-                OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Suspend);
-                //OrchestrationServiceStateAction orchestrationServiceStateAction = new OrchestrationServiceStateAction();
-                await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
+            ////TODO
+            OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Suspend);
+            //OrchestrationServiceStateAction orchestrationServiceStateAction = new OrchestrationServiceStateAction();
+            await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
 
-                getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
-                Assert.AreEqual(OrchestrationServiceState.Suspended.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
+            getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
+            Assert.AreEqual(OrchestrationServiceState.Suspended.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
 
-                orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Resume);
-                await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
-                getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
-                Assert.AreEqual(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
+            orchestrationServiceStateInput = new OrchestrationServiceStateInput(new OrchestrationServiceSummary().ServiceName, OrchestrationServiceStateAction.Resume);
+            await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartSetOrchestrationServiceStateAsync(rgName, vmssName, orchestrationServiceStateInput));
+            getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);
+            Assert.AreEqual(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
 
-                await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, vmssName));
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-            }
+            await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, vmssName));
         }
 
 
         private async Task TestScaleSetOperationsInternal(string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
-            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
-            bool useDefaultLocation = false)
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null)
         {
-            EnsureClientsInitialized(useDefaultLocation);
-
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);
