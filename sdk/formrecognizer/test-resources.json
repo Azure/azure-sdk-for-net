@@ -34,7 +34,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "['TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
