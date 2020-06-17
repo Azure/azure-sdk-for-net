@@ -1,9 +1,11 @@
 public partial class BackupOperation : Azure.Operation<System.Uri>
 {
     public BackupOperation(string id, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
+    public System.DateTimeOffset? EndTime { get { throw null; } }
     public override bool HasCompleted { get { throw null; } }
     public override bool HasValue { get { throw null; } }
     public override string Id { get { throw null; } }
+    public System.DateTimeOffset? StartTime { get { throw null; } }
     public override System.Uri Value { get { throw null; } }
     public override Azure.Response GetRawResponse() { throw null; }
     public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -60,10 +62,10 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultBackupClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual BackupOperation StartFullBackup(System.Uri blobStorageUri, string SasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<BackupOperation> StartFullBackupAsync(System.Uri blobStorageUri, string SasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual RestoreOperation StartFullRestore(System.Uri blobStorageUri, string SasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<RestoreOperation> StartFullRestoreAsync(System.Uri blobStorageUri, string SasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual BackupOperation StartBackup(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<BackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual RestoreOperation StartRestore(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<RestoreOperation> StartRestoreAsync(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultBackupClientOptions : Azure.Core.ClientOptions
     {
