@@ -203,7 +203,7 @@ namespace Azure.Core
         /// <param name="property"></param>
         public DynamicJson this[string property]
         {
-            get => GetValue(property);
+            get => GetPropertyValue(property);
             set => SetValue(property, value);
         }
 
@@ -243,12 +243,18 @@ namespace Azure.Core
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
-        private DynamicJson GetValue(string propertyName)
+        private object GetDynamicValue(string propertyName)
         {
             if (propertyName == "Length" && _kind == JsonValueKind.Array)
             {
                 return EnsureArray().Count;
             }
+
+            return GetPropertyValue(propertyName);
+        }
+
+        private DynamicJson GetPropertyValue(string propertyName)
+        {
 
             if (EnsureObject().TryGetValue(propertyName, out DynamicJson element))
             {
@@ -361,7 +367,7 @@ namespace Azure.Core
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
                 var targetObject = Expression.Convert(Expression, LimitType);
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetValue), BindingFlags.NonPublic | BindingFlags.Instance);
+                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetDynamicValue), BindingFlags.NonPublic | BindingFlags.Instance);
                 var arguments = new Expression[] { Expression.Constant(binder.Name) };
 
                 var getPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
@@ -515,7 +521,7 @@ namespace Azure.Core
         public double GetDouble() => (double) this;
         public bool GetBoolean() => (bool) this;
         public int GetArrayLength() => EnsureArray().Count;
-        public DynamicJson GetProperty(string name) => GetValue(name);
+        public DynamicJson GetProperty(string name) => GetPropertyValue(name);
 
 
         public static DynamicJson Serialize<T>(T value, JsonSerializerOptions? options = null)
