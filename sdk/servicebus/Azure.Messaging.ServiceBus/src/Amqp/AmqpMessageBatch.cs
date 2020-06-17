@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public override bool TryAdd(ServiceBusMessage message)
+        public override bool TryAddMessage(ServiceBusMessage message)
         {
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotDisposed(_disposed, nameof(ServiceBusMessageBatch));

@@ -149,8 +149,8 @@ batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
 await sender.SendMessagesAsync(messageBatch);
@@ -250,8 +250,8 @@ ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
 await sender.SendMessagesAsync(messageBatch);

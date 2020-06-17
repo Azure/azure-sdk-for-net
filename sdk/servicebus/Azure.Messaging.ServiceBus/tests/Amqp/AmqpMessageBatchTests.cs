@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -62,11 +62,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddValidatesTheMessage()
         {
             var batch = new AmqpMessageBatch(new CreateMessageBatchOptions { MaxSizeInBytes = 25 });
-            Assert.That(() => batch.TryAdd(null), Throws.ArgumentNullException);
+            Assert.That(() => batch.TryAddMessage(null), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -76,11 +76,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var batch = new AmqpMessageBatch(new CreateMessageBatchOptions { MaxSizeInBytes = 25 });
             batch.Dispose();
 
-            Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -91,11 +91,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
             var batch = new AmqpMessageBatch(options);
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[50])), Is.False, "A message of the maximum size is too large due to the reserved overhead.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[50])), Is.False, "A message of the maximum size is too large due to the reserved overhead.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -107,11 +107,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var batch = new AmqpMessageBatch(options);
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True);
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -128,17 +128,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             {
                 if (index == messages.Length - 1)
                 {
-                    Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[10])), Is.False, "The final addition should not fit in the available space.");
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[10])), Is.False, "The final addition should not fit in the available space.");
                 }
                 else
                 {
-                    Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[10])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                    Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[10])), Is.True, $"The addition for index: { index } should fit and be accepted.");
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAdd" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.TryAddMessage" />
         ///   method.
         /// </summary>
         ///
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             for (var index = 0; index < batchMessages.Length; ++index)
             {
                 batchMessages[index] = new ServiceBusMessage(new byte[0]);
-                batch.TryAdd(batchMessages[index]);
+                batch.TryAddMessage(batchMessages[index]);
             }
 
             IEnumerable<ServiceBusMessage> batchEnumerable = batch.AsEnumerable<ServiceBusMessage>();
@@ -233,7 +233,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
@@ -264,7 +264,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");
@@ -295,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
@@ -326,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");

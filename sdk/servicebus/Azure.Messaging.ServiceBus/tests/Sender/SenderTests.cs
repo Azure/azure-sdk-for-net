@@ -224,24 +224,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Setup(connection => connection.ThrowIfClosed());
 
             mockTransportBatch
-                .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
+                .Setup(transport => transport.TryAddMessage(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
 
             mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
             var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
             var sendTask = sender.SendMessagesAsync(batch);
 
-            Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
 
             await sendTask;
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
         }

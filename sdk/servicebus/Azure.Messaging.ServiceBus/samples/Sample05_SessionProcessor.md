@@ -18,12 +18,12 @@ ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAdd(
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
     {
         SessionId = "Session1"
     });
-messageBatch.TryAdd(
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
     {
         SessionId = "Session2"

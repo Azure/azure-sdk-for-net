@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using
-        ///   a <see cref="ServiceBusMessageBatch.TryAdd"/>. If a message would exceed the maximum
+        ///   a <see cref="ServiceBusMessageBatch.TryAddMessage"/>. If a message would exceed the maximum
         ///   allowable size of the batch, the batch will not allow adding the message and signal that
         ///   scenario using it return value.
         ///

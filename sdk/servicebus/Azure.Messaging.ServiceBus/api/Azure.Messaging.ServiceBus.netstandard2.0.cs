@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         public long MaxSizeInBytes { get { throw null; } }
         public long SizeInBytes { get { throw null; } }
         public void Dispose() { }
-        public bool TryAdd(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
+        public bool TryAddMessage(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
     }
     public partial class ServiceBusProcessor
     {

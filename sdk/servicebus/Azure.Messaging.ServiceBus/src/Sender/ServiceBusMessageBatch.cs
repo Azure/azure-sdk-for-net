@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     ///   intended to be sent to the Queue/Topic as a single batch.
     ///   A <see cref="ServiceBusMessageBatch"/> can be created using
     ///   <see cref="ServiceBusSender.CreateMessageBatchAsync(System.Threading.CancellationToken)"/>.
-    ///   Messages can be added to the batch using the <see cref="TryAdd"/> method on the batch.
+    ///   Messages can be added to the batch using the <see cref="TryAddMessage"/> method on the batch.
     /// </summary>
     ///
     public sealed class ServiceBusMessageBatch : IDisposable
@@ -80,12 +80,12 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public bool TryAdd(ServiceBusMessage message)
+        public bool TryAddMessage(ServiceBusMessage message)
         {
             lock (_syncGuard)
             {
                 AssertNotLocked();
-                return InnerBatch.TryAdd(message);
+                return InnerBatch.TryAddMessage(message);
             }
         }
 

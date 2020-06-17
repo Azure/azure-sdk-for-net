@@ -147,8 +147,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a message batch that we can send
                 #region Snippet:ServiceBusSendAndReceiveSafeBatch
                 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
                 // send the message batch
                 await sender.SendMessagesAsync(messageBatch);

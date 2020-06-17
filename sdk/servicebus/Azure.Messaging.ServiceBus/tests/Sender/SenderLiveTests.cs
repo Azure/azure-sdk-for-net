@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>()));
+                batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>()));
 
                 await sender.SendMessagesAsync(batch);
             }
@@ -115,9 +115,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
 
                 // Actual limit is 262144 bytes for a single message.
-                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
-                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
-                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
+                batch.TryAddMessage(new ServiceBusMessage(new byte[100000 / 3]));
+                batch.TryAddMessage(new ServiceBusMessage(new byte[100000 / 3]));
+                batch.TryAddMessage(new ServiceBusMessage(new byte[100000 / 3]));
 
                 await sender.SendMessagesAsync(batch);
             }
@@ -149,8 +149,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
 
                 // Actual limit is 262144 bytes for a single message.
-                Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.False, "A message was rejected by the batch; message size exceed.");
+                Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new byte[200000])), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new byte[200000])), Is.False, "A message was rejected by the batch; message size exceed.");
 
                 await sender.SendMessagesAsync(batch);
             }

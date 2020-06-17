@@ -256,7 +256,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var batch = await sender.CreateMessageBatchAsync();
                 for (int i = 0; i < numMessages; i++)
                 {
-                    batch.TryAdd(GetMessage(sessionId));
+                    batch.TryAddMessage(GetMessage(sessionId));
                 }
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, batch.AsEnumerable<ServiceBusMessage>(), listener);
