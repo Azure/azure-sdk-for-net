@@ -6,5 +6,5 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 input-file:
     -  $(this-folder)/swagger/mini-secrets.json
 
-public-clients: true
+public-clients: false
 ```
