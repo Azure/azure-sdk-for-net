@@ -1,6 +1,6 @@
 # Recognize receipts
 
-This sample demonstrates how to recognize and extract common fields from US receipts, using a pre-trained receipt model.
+This sample demonstrates how to recognize and extract common fields from US receipts, using a pre-trained receipt model. For a suggested approach to extracting information from receipts, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -123,3 +123,4 @@ To see the full example source files, see:
 * [Recognize receipts from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample3_RecognizeReceiptsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
