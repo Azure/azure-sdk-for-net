@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class Error
+    public partial class KeyVaultServiceError
     {
-        internal static Error DeserializeError(JsonElement element)
+        internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element)
         {
             string code = default;
             string message = default;
-            Error innererror = default;
+            KeyVaultServiceError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -43,11 +43,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    innererror = DeserializeError(property.Value);
+                    innererror = DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
             }
-            return new Error(code, message, innererror);
+            return new KeyVaultServiceError(code, message, innererror);
         }
     }
 }
