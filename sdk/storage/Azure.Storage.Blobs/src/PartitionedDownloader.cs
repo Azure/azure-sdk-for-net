@@ -328,12 +328,17 @@ namespace Azure.Storage.Blobs
         private static async Task CopyToAsync(
             BlobDownloadInfo result,
             Stream destination,
-            CancellationToken cancellationToken) =>
+            CancellationToken cancellationToken)
+        {
             await result.Content.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
+
+            result.Content.Dispose();
+        }
+
 
         private static void CopyTo(
             BlobDownloadInfo result,
@@ -342,6 +347,7 @@ namespace Azure.Storage.Blobs
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.Dispose();
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)
