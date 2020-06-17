@@ -24,7 +24,7 @@ namespace Microsoft.Azure.HDInsight.Job
     /// <summary>
     /// The HDInsight Job Client.
     /// </summary>
-    public partial class HDInsightJobManagementClient : ServiceClient<HDInsightJobManagementClient>, IHDInsightJobManagementClient, IAzureClient
+    public partial class HDInsightJobClient : ServiceClient<HDInsightJobClient>, IHDInsightJobClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.HDInsight.Job
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The cluster dns name against which the job management is to be.
+        /// The cluster endpoint, for example https://clustername.azurehdinsight.net.
         /// </summary>
-        public string ClusterDnsName { get; set; }
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// The user name used for running job.
@@ -80,31 +80,31 @@ namespace Microsoft.Azure.HDInsight.Job
         public virtual IJobOperations Job { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling HDInsightJobManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected HDInsightJobManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling HDInsightJobClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected HDInsightJobClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected HDInsightJobManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected HDInsightJobClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -112,13 +112,13 @@ namespace Microsoft.Azure.HDInsight.Job
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected HDInsightJobManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected HDInsightJobClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.HDInsight.Job
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal HDInsightJobManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal HDInsightJobClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.HDInsight.Job
         }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -152,11 +152,11 @@ namespace Microsoft.Azure.HDInsight.Job
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling HDInsightJobManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling HDInsightJobClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal HDInsightJobManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        internal HDInsightJobClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.HDInsight.Job
         }
 
         /// <summary>
-        /// Initializes a new instance of the HDInsightJobManagementClient class.
+        /// Initializes a new instance of the HDInsightJobClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.HDInsight.Job
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal HDInsightJobManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal HDInsightJobClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.HDInsight.Job
         private void Initialize()
         {
             Job = new JobOperations(this);
-            BaseUri = "https://{clusterDnsName}";
+            BaseUri = "https://{endpoint}";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

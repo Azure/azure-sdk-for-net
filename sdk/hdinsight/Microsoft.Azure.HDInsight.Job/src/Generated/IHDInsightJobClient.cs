@@ -18,7 +18,7 @@ namespace Microsoft.Azure.HDInsight.Job
     /// <summary>
     /// The HDInsight Job Client.
     /// </summary>
-    public partial interface IHDInsightJobManagementClient : System.IDisposable
+    public partial interface IHDInsightJobClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -40,9 +40,10 @@ namespace Microsoft.Azure.HDInsight.Job
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The cluster dns name against which the job management is to be.
+        /// The cluster endpoint, for example
+        /// https://clustername.azurehdinsight.net.
         /// </summary>
-        string ClusterDnsName { get; set; }
+        string Endpoint { get; set; }
 
         /// <summary>
         /// The user name used for running job.
