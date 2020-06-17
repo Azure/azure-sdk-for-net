@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Compute.Tests
         public VMTestBase(bool isAsync)
            : base(isAsync)
         {
-            computeManagementTestUtilities = new ComputeManagementTestUtilities(isAsync);
         }
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";

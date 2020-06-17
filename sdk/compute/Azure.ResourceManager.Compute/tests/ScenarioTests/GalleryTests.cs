@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Compute.Tests
         public GalleryTests(bool isAsync)
            : base(isAsync)
         {
-            computeManagementTestUtilities = new ComputeManagementTestUtilities(isAsync);
         }
+
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task Gallery_CRUD_Tests()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(galleryHomeLocation);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string rgName2 = rgName + "New";
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string galleryName2 = galleryName + "New";
             await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(galleryHomeLocation));
             Trace.TraceInformation("Created the resource group: " + rgName2);
-            computeManagementTestUtilities.WaitSeconds(10);
+            WaitSeconds(10);
             await WaitForCompletionAsync(await GalleriesOperations.StartCreateOrUpdateAsync(rgName2, galleryName2, galleryIn));
             Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName2, rgName2));
             List<Gallery> listGalleriesInRgResult = await (GalleriesOperations.ListByResourceGroupAsync(rgName)).ToEnumerableAsync();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryImage_CRUD_Tests()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(galleryHomeLocation);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(galleryHomeLocation));
@@ -142,9 +142,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryImageVersion_CRUD_Tests()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", galleryHomeLocation);
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(galleryHomeLocation);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             VirtualMachine vm = null;
             string imageName = Recording.GenerateAssetName("psTestSourceImage");
@@ -206,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                 galleryImageVersionName, galleryImageName));
 
-            computeManagementTestUtilities.WaitMinutes(5);
+            this.WaitMinutes(5);
             await WaitForCompletionAsync(await ImagesOperations.StartDeleteAsync(rgName, imageName));
             Trace.TraceInformation("Deleted the CRP image.");
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, vm.Name));
@@ -222,8 +220,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryApplication_CRUD_Tests()
         {
-            string location = ComputeManagementTestUtilities.DefaultLocations;
-            EnsureClientsInitialized(true);
+            string location = LocationSouthAsia;
+            EnsureClientsInitialized(location);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
@@ -264,10 +262,8 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("need to be skipped")]
         public async Task GalleryApplicationVersion_CRUD_Tests()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            string location = computeManagementTestUtilities.DefaultLocation;
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
-            EnsureClientsInitialized(false);
+            string location = LocationSouthAsia;
+            EnsureClientsInitialized(LocationSouthAsia);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string applicationName = Recording.GenerateAssetName("psTestSourceApplication");
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task TestVMScaleSetOperationsInternal(bool hasManagedDisks = false)
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -97,16 +97,13 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetOperations_Redeploy()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             string vmssName = Recording.GenerateAssetName("vmss");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             VirtualMachineScaleSet inputVMScaleSet;
 
             bool passed = false;
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -139,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet inputVMScaleSet;
 
             bool passed = false;
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -158,8 +155,6 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetOperations_PerformMaintenance()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             string vmssName = Recording.GenerateAssetName("vmss");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
@@ -170,8 +165,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-                EnsureClientsInitialized(false);
+                EnsureClientsInitialized(LocationEastUs2);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
                 StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -214,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetBatchOperations()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(LocationSouthAsia);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -262,16 +256,13 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetBatchOperations_Redeploy()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             string vmssName = Recording.GenerateAssetName("vmss");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             VirtualMachineScaleSet inputVMScaleSet;
 
             bool passed = false;
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
@@ -292,8 +283,6 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetBatchOperations_PerformMaintenance()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             string vmssName = Recording.GenerateAssetName("vmss");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
@@ -303,8 +292,7 @@ namespace Azure.ResourceManager.Compute.Tests
             bool passed = false;
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
-                EnsureClientsInitialized(false);
+                EnsureClientsInitialized(LocationEastUs2);
 
                 ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
                 StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);

@@ -59,9 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationWestCentralUs);
             await Initialize();
             // Attempt to Create Availability Set with out of bounds FD and UD values
             await VerifyInvalidFDUDValuesFail();

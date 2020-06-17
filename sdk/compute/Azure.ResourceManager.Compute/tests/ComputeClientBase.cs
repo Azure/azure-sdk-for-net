@@ -20,6 +20,10 @@ namespace Azure.ResourceManager
     [NonParallelizable]
     public abstract class ComputeClientBase : ManagementRecordedTestBase<ComputeManagementTestEnvironment>
     {
+        protected string LocationEastUs2 = "EastUS2";
+        protected string LocationSouthAsia = "southeastasia";
+        protected string LocationWestCentralUs = "westcentralus";
+
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ProvidersOperations ProvidersOperations { get; set; }
         public DeploymentsOperations DeploymentsOperations { get; set; }
