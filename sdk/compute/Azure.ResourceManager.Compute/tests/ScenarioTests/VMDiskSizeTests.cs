@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMDiskSizeScenario()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             var image = await VirtualMachineImagesOperations.GetAsync(

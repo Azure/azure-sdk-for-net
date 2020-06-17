@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestVMScaleSetVMOperationsInternal(false);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_ManagedDisks()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestVMScaleSetVMOperationsInternal(true);
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_RunCommand()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             InitializeCommon();
             instanceId = "0";
             bool passed = false;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("this case need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task TestVMScaleSetVMOperations_Put()
         {
             bool passed = false;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_Redeploy()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             instanceId = "0";
             bool passed = false;
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetVMOperations_PerformMaintenance()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             instanceId = "0";
             VirtualMachineScaleSet vmScaleSet = null;
 

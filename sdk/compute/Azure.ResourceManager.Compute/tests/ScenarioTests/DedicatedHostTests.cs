@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestDedicatedHostOperations()
         {
-            EnsureClientsInitialized(LocationEastUs2.ToLower());
+            EnsureClientsInitialized(LocationEastUs2UpperCase.ToLower());
 
             string baseRGName = Recording.GenerateAssetName(TestPrefix);
             string rgName = baseRGName + "DH";

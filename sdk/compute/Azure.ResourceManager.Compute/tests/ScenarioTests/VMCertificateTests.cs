@@ -46,11 +46,10 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This test should be skipped")]
-        //[Test(Skip = "TODO: Wait for KMS Client")]
+        [Ignore("skip in track 1: TODO: Wait for KMS Client")]
         public async Task TestVMCertificatesOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

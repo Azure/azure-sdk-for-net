@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This should be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetScenarioOperations")]
         public async Task TestVMScaleSetScenarioOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestScaleSetOperationsInternal();
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public async Task TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in region which support local diff disks.
         /// </summary>
         [Test]
-        [Ignore("this case should be tested by compute team it can playback in track2")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_DiffDisks")]
         public async Task TestVMScaleSetScenarioOperations_DiffDisks()
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
         /// </summary>
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetScenarioOperations_With_DiskEncryptionSet")]
         public async Task TestVMScaleSetScenarioOperations_With_DiskEncryptionSet()
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_UltraSSD")]
         public async Task TestVMScaleSetScenarioOperations_UltraSSD()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
             await TestScaleSetOperationsInternal(vmSize: VirtualMachineSizeTypes.StandardE4SV3.ToString(), hasManagedDisks: true,
                     useVmssExtension: false, zones: new List<string> { "1" }, enableUltraSSD: true, osDiskSizeInGB: 175);
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_PpgScenario")]
         public async Task TestVMScaleSetScenarioOperations_PpgScenario()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
             await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false, isPpgScenario: true);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public async Task TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
             await TestScaleSetOperationsInternal(hasManagedDisks: true, useVmssExtension: false,
                 vmScaleSetCustomizer:
                 vmScaleSet =>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest")]
         public async Task TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

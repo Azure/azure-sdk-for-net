@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMDataDiskScenario()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             ImageReference imgageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);

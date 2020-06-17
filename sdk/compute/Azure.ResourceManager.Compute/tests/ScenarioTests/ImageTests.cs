@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestCreateImage_with_DiskEncryptionSet")]
         public async Task TestCreateImage_with_DiskEncryptionSet()
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestCreateImage_without_DiskEncryptionSet")]
         public async Task TestCreateImage_without_DiskEncryptionSet()
         {
-            EnsureClientsInitialized(LocationEastUs2.ToLower());
+            EnsureClientsInitialized(LocationEastUs2UpperCase.ToLower());
             await CreateImageTestHelper(DefaultLocation, diskEncryptionSetId: null);
         }
 

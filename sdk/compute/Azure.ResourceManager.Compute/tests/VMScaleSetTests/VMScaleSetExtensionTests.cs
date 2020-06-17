@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("this case should be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task TestVMScaleSetExtensions()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestVMScaleSetExtensionsImpl();
         }
 
         [Test]
         public async Task TestVMScaleSetExtensionSequencing()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             // Create resource group
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             var vmssName = Recording.GenerateAssetName("vmss");

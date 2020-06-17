@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Tests
         /// TODO: Add negative test case validation
         /// </summary>
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestDiskEncryption")]
         public async Task TestVMDiskEncryption()
         {
 
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         }
 
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task UltraSSD_CRUD_EmptyDiskShared()
         {
             await UltraSSD_CRUD_Helper(location: "eastus2euap", methodName: "UltraSSD_CRUD_EmptyDiskShared", sharedDisks: true);

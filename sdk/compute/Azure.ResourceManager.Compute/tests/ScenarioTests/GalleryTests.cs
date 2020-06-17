@@ -42,17 +42,16 @@ namespace Azure.ResourceManager.Compute.Tests
         protected const string GalleryNamePrefix = "galleryPsTestGallery";
         protected const string GalleryImageNamePrefix = "galleryPsTestGalleryImage";
         protected const string GalleryApplicationNamePrefix = "galleryPsTestGalleryApplication";
-        private string galleryHomeLocation = "eastus2";
         private string sourceImageId = "";
 
         [Test]
         public async Task Gallery_CRUD_Tests()
         {
-            EnsureClientsInitialized(galleryHomeLocation);
+            EnsureClientsInitialized(LocationEastUs2);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string rgName2 = rgName + "New";
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(galleryHomeLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName);
 
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             Trace.TraceInformation("Listing galleries.");
             string galleryName2 = galleryName + "New";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(galleryHomeLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName2);
             WaitSeconds(10);
             await WaitForCompletionAsync(await GalleriesOperations.StartCreateOrUpdateAsync(rgName2, galleryName2, galleryIn));
@@ -97,10 +96,10 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryImage_CRUD_Tests()
         {
-            EnsureClientsInitialized(galleryHomeLocation);
+            EnsureClientsInitialized(LocationEastUs2);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(galleryHomeLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName);
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
             Gallery gallery = GetTestInputGallery();
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryImageVersion_CRUD_Tests()
         {
-            EnsureClientsInitialized(galleryHomeLocation);
+            EnsureClientsInitialized(LocationEastUs2);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             VirtualMachine vm = null;
             string imageName = Recording.GenerateAssetName("psTestSourceImage");
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task GalleryApplication_CRUD_Tests()
         {
-            string location = LocationSouthAsia;
+            string location = DefaultLocation;
             EnsureClientsInitialized(location);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
@@ -259,11 +258,11 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("need to be skipped")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task GalleryApplicationVersion_CRUD_Tests()
         {
-            string location = LocationSouthAsia;
-            EnsureClientsInitialized(LocationSouthAsia);
+            string location = DefaultLocation;
+            EnsureClientsInitialized(DefaultLocation);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string applicationName = Recording.GenerateAssetName("psTestSourceApplication");
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
@@ -400,7 +399,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private Gallery GetTestInputGallery()
         {
-            return new Gallery(galleryHomeLocation)
+            return new Gallery(LocationEastUs2)
             {
                 Description = "This is a sample gallery description"
             };
@@ -408,7 +407,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private GalleryImage GetTestInputGalleryImage()
         {
-            return new GalleryImage(galleryHomeLocation)
+            return new GalleryImage(LocationEastUs2)
             {
                 Identifier = new GalleryImageIdentifier("testPub", "testOffer", "testSku"),
                 OsState = OperatingSystemStateTypes.Generalized,
@@ -420,14 +419,14 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private GalleryImageVersion GetTestInputGalleryImageVersion(string sourceImageId)
         {
-            return new GalleryImageVersion(galleryHomeLocation)
+            return new GalleryImageVersion(LocationEastUs2)
             {
                 PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion(galleryHomeLocation) {
+                        new TargetRegion(LocationEastUs2) {
                             RegionalReplicaCount = 1,
                             StorageAccountType = StorageAccountType.StandardLRS
                         }
@@ -521,7 +520,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private GalleryApplication GetTestInputGalleryApplication()
         {
-            return new GalleryApplication(ComputeManagementTestUtilities.DefaultLocations)
+            return new GalleryApplication(DefaultLocation)
             {
                 Eula = "This is the gallery application EULA.",
                 SupportedOSType = OperatingSystemTypes.Windows,

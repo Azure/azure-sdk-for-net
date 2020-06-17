@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScenarioOperations")]
         public async Task TestVMScenarioOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestVMScenarioOperationsInternal("TestVMScenarioOperations");
         }
         /// <summary>
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in region which support XMF VMSizeFamily like eastus2.
         /// </summary>
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScenarioOperations_ManagedDisks")]
         public async Task TestVMScenarioOperations_ManagedDisks()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             await TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64S.ToString(), hasManagedDisks: true,
                 osDiskStorageAccountType: StorageAccountTypes.PremiumLRS.ToString(), dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS.ToString(), writeAcceleratorEnabled: true);
         }
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
         /// </summary>
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet")]
         public async Task TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
             await TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_DiskEncryptionSet", vmSize: VirtualMachineSizeTypes.StandardA1V2.ToString(), hasManagedDisks: true,
                osDiskStorageAccountType: StorageAccountTypes.StandardLRS.ToString(), diskEncryptionSetId: diskEncryptionSetId);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in zone supported regions like eastus2.
         /// </summary>
         [Test]
-        [Ignore("This case should be tested by compute team because of the incorrect subscriptionid")]
+        [Ignore("TRACK2: compute team will help to record because of the incorrect subscriptionid")]
         //[Trait("Name", "TestVMScenarioOperations_ManagedDisks_PirImage_Zones")]
         public async Task TestVMScenarioOperations_ManagedDisks_PirImage_Zones()
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScenarioOperations_ManagedDisks_UltraSSD")]
         public async Task TestVMScenarioOperations_ManagedDisks_UltraSSD()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
             await TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_UltraSSD", hasManagedDisks: true, zones: new List<string> { "1" },
                 vmSize: VirtualMachineSizeTypes.StandardE16SV3.ToString(), osDiskStorageAccountType: StorageAccountTypes.PremiumLRS.ToString(),
                 dataDiskStorageAccountType: StorageAccountTypes.UltraSSDLRS.ToString(), callUpdateVM: true);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Compute.Tests
         /// To record this test case, you need to run it in zone supported regions like eastus2euap.
         /// </summary>
         [Test]
-        [Ignore("This case should be tested by compute team because of the incorrect subscriptionid")]
+        [Ignore("TRACK2: compute team will help to record because of the incorrect subscriptionid")]
         //[Trait("Name", "TestVMScenarioOperations_PpgScenario")]
         public async Task TestVMScenarioOperations_PpgScenario()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             await TestVMScenarioOperationsInternal("TestVMScenarioOperations_PpgScenario", hasManagedDisks: true, isPpgScenario: true);
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithApplciationGateway()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithDnsSettings()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Associates a VMScaleSet with PublicIp with Ip tags
         /// </summary>
         [Test]
-        [Ignore("this case should be tested by compute team because of ex '[4:46 PM] Lipeng You (Wicresoft North America Ltd)'message': 'Subscription /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups//providers/Microsoft.Network/subscriptions/ is not registered for feature Microsoft.Network/AllowBringYourOwnPublicIpAddress required to carry out the requested operation.'")]
+        [Ignore("TRACK2: compute team will help to record because of ex '[4:46 PM] Lipeng You (Wicresoft North America Ltd)'message': 'Subscription /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups//providers/Microsoft.Network/subscriptions/ is not registered for feature Microsoft.Network/AllowBringYourOwnPublicIpAddress required to carry out the requested operation.'")]
         public async Task TestVMScaleSetWithPublicIPAndIPTags()
         {
             EnsureClientsInitialized(LocationWestCentralUs);
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithnNsg()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetWithnIpv6()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 

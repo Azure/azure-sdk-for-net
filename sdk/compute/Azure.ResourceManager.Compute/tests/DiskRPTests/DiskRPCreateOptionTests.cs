@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         /// positive test for testing disks created from a gallery image version
         /// </summary>
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task DiskFromGalleryImageVersion()
         {
             EnsureClientsInitialized(DefaultLocation);

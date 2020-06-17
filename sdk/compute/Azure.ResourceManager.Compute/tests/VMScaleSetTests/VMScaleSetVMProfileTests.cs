@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Tests.VMScaleSetTests
         [Test]
         public async Task TestVMScaleSetWithLicenseType()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             // Create resource group
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Tests.VMScaleSetTests
         [Test]
         public async Task TestVMScaleSetDiagnosticsProfile()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             // Create resource group
             string rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             var vmssName = Recording.GenerateAssetName("vmss");

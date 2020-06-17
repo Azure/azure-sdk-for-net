@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("need to be tested by compute team because of the ex' cannot unmarshal string into Go struct field Properties.properties.masterProfile of type int.'")]
+        [Ignore("TRACK2: compute team will help to record because of the ex' cannot unmarshal string into Go struct field Properties.properties.masterProfile of type int.'")]
         public async Task TestContainerServiceUpdateOperations()
         {
             // Create resource group

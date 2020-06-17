@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMMarketplace()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference dummyImageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMBYOL()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);

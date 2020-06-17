@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This test need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetRollingUpgrade")]
         public async Task TestVMScaleSetRollingUpgrade()
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This test need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetRollingUpgradeAPIs")]
         public async Task TestVMScaleSetRollingUpgradeAPIs()
         {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This test need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetRollingUpgradeHistory")]
         public async Task TestVMScaleSetRollingUpgradeHistory()
         {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Testing Automatic OS Upgrade Policy
         /// </summary>
         [Test]
-        [Ignore("This test need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetAutomaticOSUpgradePolicies")]
         public async Task TestVMScaleSetAutomaticOSUpgradePolicies()
         {
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.Compute.Tests
         // Perform an extension rolling upgrade
         // Delete ResourceGroup
         [Test]
-        [Ignore("This test need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
         public async Task TestVMScaleSetExtensionUpgradeAPIs()
         {
-            EnsureClientsInitialized(LocationEastUs2LowerCase);
+            EnsureClientsInitialized(LocationEastUs2);
 
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string vmssName = Recording.GenerateAssetName("vmss");

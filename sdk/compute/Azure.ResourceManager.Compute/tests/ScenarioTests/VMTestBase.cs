@@ -35,34 +35,12 @@ namespace Azure.ResourceManager.Compute.Tests
         protected string m_subId;
         protected string m_location;
         protected ImageReference m_windowsImageReference, m_linuxImageReference;
-        protected ComputeManagementTestUtilities computeManagementTestUtilities;
 
         protected void EnsureClientsInitialized(string location)
         {
             m_subId = TestEnvironment.SubscriptionId;
 
             m_location = location;
-        }
-
-        protected void EnsureClientsInitialized(bool useDefaultLocation = false)
-        {
-            m_subId = TestEnvironment.SubscriptionId;
-
-            if (useDefaultLocation)
-            {
-                m_location = DefaultLocation;
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
-                {
-                    m_location = DefaultLocation;
-                }
-                else
-                {
-                    m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "");
-                }
-            }
         }
 
         protected async Task<ImageReference> FindVMImage(string publisher, string offer, string sku)
@@ -83,21 +61,15 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             if (useWindowsImage)
             {
-                //if (m_windowsImageReference == null)
-                //{
-                    Trace.TraceInformation("Querying available Windows Server image from PIR...");
-                    m_windowsImageReference = await FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
-                //}
+                Trace.TraceInformation("Querying available Windows Server image from PIR...");
+                m_windowsImageReference = await FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
                 return m_windowsImageReference;
             }
 
-            //if (m_linuxImageReference == null)
-            //{
-                Trace.TraceInformation("Querying available Ubuntu image from PIR...");
-                // If this sku disappears, query latest with
-                // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = await FindVMImage("Canonical", "UbuntuServer", "19.04");
-            //}
+            Trace.TraceInformation("Querying available Ubuntu image from PIR...");
+            // If this sku disappears, query latest with
+            // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
+            m_linuxImageReference = await FindVMImage("Canonical", "UbuntuServer", "19.04");
             return m_linuxImageReference;
         }
 

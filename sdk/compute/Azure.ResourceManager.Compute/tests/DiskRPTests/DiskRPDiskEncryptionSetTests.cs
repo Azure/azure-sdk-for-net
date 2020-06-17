@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         }
 
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task DiskEncryptionSet_CreateDisk()
         {
             await DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: supportedZoneLocation);
         }
 
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task DiskEncryptionSet_AddDESToExistingDisk()
         {
             await DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: supportedZoneLocation);

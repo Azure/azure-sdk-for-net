@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMBootDiagnostics")]
         public async Task TestVMBootDiagnostics()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageReference = await GetPlatformVMImage(useWindowsImage: true);
             string resourceGroupName = Recording.GenerateAssetName(TestPrefix);

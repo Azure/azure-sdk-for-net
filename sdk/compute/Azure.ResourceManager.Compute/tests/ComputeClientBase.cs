@@ -20,9 +20,9 @@ namespace Azure.ResourceManager
     [NonParallelizable]
     public abstract class ComputeClientBase : ManagementRecordedTestBase<ComputeManagementTestEnvironment>
     {
-        protected string LocationEastUs2 = "EastUS2";
-        protected string LocationEastUs2LowerCase = "eastus2";
-        protected string LocationSouthAsia = "southeastasia";
+        protected string DefaultLocation = "southeastasia";
+        protected string LocationEastUs2UpperCase = "EastUS2";
+        protected string LocationEastUs2 = "eastus2";
         protected string LocationWestCentralUs = "westcentralus";
         protected string LocationAustraliaSouthEast = "australiasoutheast";
         protected string LocationNorthEurope = "northeurope";
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager
         public NetworkSecurityGroupsOperations NetworkSecurityGroupsOperations { get; set; }
         public PublicIPPrefixesOperations PublicIPPrefixesOperations { get; set; }
         public ComputeManagementClient ComputeManagementClient { get; set; }
-        public string DefaultLocation { get; private set; }
+
         protected ComputeClientBase(bool isAsync)
             : base(isAsync)
         {
@@ -129,7 +129,6 @@ namespace Azure.ResourceManager
             var StorageManagementClient = GetStorageManagementClient();
             StorageAccountsOperations = StorageManagementClient.StorageAccounts;
             BlobContainersOperations = StorageManagementClient.BlobContainers;
-            DefaultLocation = "southeastasia";
         }
         internal ComputeManagementClient GetComputeManagementClient()
         {
@@ -149,15 +148,13 @@ namespace Azure.ResourceManager
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
         }
-        public void WaitSeconds(double seconds)
+
+        public void WaitSeconds(int seconds)
         {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
-            }
+            SleepInTest(seconds * 1000);
         }
 
-        public void WaitMinutes(double minutes)
+        public void WaitMinutes(int minutes)
         {
             WaitSeconds(minutes * 60);
         }

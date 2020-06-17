@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("this should be tested by generate team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task TestExportingThrottlingLogs()
         {
             string rg1Name = Recording.GenerateAssetName(TestPrefix);

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Regular")]
         public async Task TestVMScaleSetPriorityOperations_Accept_Regular()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Regular.ToString());
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Low")]
         public async Task TestVMScaleSetPriorityOperations_Accept_Low()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             // Create low priority scaleset with no eviction policy specified. Eviction policy is defaulted to Deallocate.
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Low.ToString(), hasManagedDisks: true);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Spot")]
         public async Task TestVMScaleSetScenarioOperations_Accept_Spot()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             // Create Azure Spot scaleset with no eviction policy specified. Eviction policy is defaulted to Deallocate.
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Spot.ToString(), hasManagedDisks: true);
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetEvictionPolicyOperations_Accept_DeleteEvictionPolicy")]
         public async Task TestVMScaleSetEvictionPolicyOperations_Accept_DeleteEvictionPolicy()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             // Create low priority scaleset with 'delete' eviction policy specified
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Low.ToString(), evictionPolicy: VirtualMachineEvictionPolicyTypes.Delete.ToString(), hasManagedDisks: true);
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetVariablePricedLowPriorityVM_Accept_DefaultMaxPrice")]
         public async Task TestVMScaleSetVariablePricedLowPriorityVM_Accept_DefaultMaxPrice()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Low.ToString(), new BillingProfile { MaxPrice = -1 }, hasManagedDisks: true);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestVMScaleSetVariablePricedLowPriorityVM_Accept_UserSpecifiedMaxPrice")]
         public async Task TestVMScaleSetVariablePricedLowPriorityVM_Accept_UserSpecifiedMaxPrice()
         {
-            EnsureClientsInitialized(LocationEastUs2);
+            EnsureClientsInitialized(LocationEastUs2UpperCase);
             await TestVMScaleSetPriorityOperationsInternal(VirtualMachinePriorityTypes.Low.ToString(), new BillingProfile { MaxPrice = 100 }, hasManagedDisks: true);
         }
 

@@ -26,12 +26,11 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("This test should be skipped")]
-        //[Test(Skip = "ReRecord due to CR change")]
+        [Ignore("skip in track 1 : ReRecord due to CR change")]
         //[Trait("Name", "TestVMScaleSetVMDiskEncryptionOperation")]
         public async Task TestVMScaleSetVMDiskEncryptionOperation()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
             await TestDiskEncryptionOnScaleSetVMInternal(hasManagedDisks: true, useVmssExtension: true);
         }
 

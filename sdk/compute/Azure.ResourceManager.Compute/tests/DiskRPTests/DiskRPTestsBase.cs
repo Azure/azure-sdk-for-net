@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             await CleanupResourceGroupsAsync();
         }
         protected const string DiskNamePrefix = "diskrp";
-        private string DiskRPLocation = ComputeManagementTestUtilities.DefaultLocations.ToLower();
+        private string DiskRPLocation = "southeastasia";
 
         #region Execution
         protected async Task Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)

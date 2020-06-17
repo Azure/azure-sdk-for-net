@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestVMScaleSetScalingOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Compute.Tests
         /// Delete RG
         /// </summary>
         [Test]
-        [Ignore("this case need to be tested by compute team")]
+        [Ignore("TRACK2: compute team will help to record")]
         public async Task TestVMScaleSetUpdateOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore ("this case need to be tested by compute team")]
         public async Task TestVMScaleSetPatchOperations()
         {
-            EnsureClientsInitialized(LocationSouthAsia);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

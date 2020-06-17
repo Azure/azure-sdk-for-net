@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore("this case should be tested by compute team because of different provided version of different locations and subscriptions")]
+        [Ignore("TRACK2: compute team will help to record because of different provided version of different locations and subscriptions")]
         public async Task TestExtImgListVersionsFilters()
         {
             string existingVersionPrefix = existingVersion.Substring(0, existingVersion.LastIndexOf('.'));

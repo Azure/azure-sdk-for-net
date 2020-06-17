@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public string m_resourceGroup1Name;
 
         [Test]
-        [Ignore("need to be skipped")]
+        [Ignore("TRACK2: compute team will help to record")]
         //[Trait("Name", "TestProximityPlacementGroupsOperations")]
         public async Task TestProximityPlacementGroupsOperations()
         {
