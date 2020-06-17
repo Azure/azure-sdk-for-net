@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             return variableName switch
             {
-                KeyVaultTestEnvironment.PrimaryKeyEnvironmentVariableName => string.Empty,
+                KeyVaultTestEnvironment.PrimaryKeyEnvironmentVariableName => SanitizeValue,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }
