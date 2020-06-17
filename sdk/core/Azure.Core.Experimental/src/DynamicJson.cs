@@ -58,7 +58,6 @@ namespace Azure.Core
                     _value = element.GetString();
                     break;
                 case JsonValueKind.Number:
-                    // TODO:
                     _value = new Number(element);
                     break;
                 case JsonValueKind.True:
@@ -132,6 +131,7 @@ namespace Azure.Core
                     break;
             }
         }
+
         public static DynamicJson Parse(string json)
         {
             return Create(JsonDocument.Parse(json).RootElement);
@@ -357,7 +357,6 @@ namespace Azure.Core
         {
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             { }
-
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
