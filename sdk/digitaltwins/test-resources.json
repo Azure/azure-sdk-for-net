@@ -4,6 +4,7 @@
   "parameters": {
     "baseName": {
       "type": "string",
+      "minLength": 6,
       "defaultValue": "[resourceGroup().name]",
       "metadata": {
         "description": "The base resource name."
