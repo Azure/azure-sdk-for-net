@@ -17,12 +17,12 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Initializes a new instance of KeyVaultError. </summary>
         /// <param name="error"> The key vault server error. </param>
-        internal KeyVaultError(Error error)
+        internal KeyVaultError(KeyVaultServiceError error)
         {
             Error = error;
         }
 
         /// <summary> The key vault server error. </summary>
-        public Error Error { get; }
+        public KeyVaultServiceError Error { get; }
     }
 }
