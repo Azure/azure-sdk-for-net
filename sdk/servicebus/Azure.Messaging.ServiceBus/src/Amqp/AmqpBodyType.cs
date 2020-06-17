@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.ServiceBus.Transports.Amqp
+namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     /// The types of AMQP bodies for an AMQP message.

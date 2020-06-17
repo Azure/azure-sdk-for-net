@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Messaging.ServiceBus.Transports.Amqp
+namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     /// These extensions allow additional functionality for the <see cref="ServiceBusClient"/>.

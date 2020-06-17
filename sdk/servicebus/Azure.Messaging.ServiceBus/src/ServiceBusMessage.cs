@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Transports;
-using Azure.Messaging.ServiceBus.Transports.Amqp;
+using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {

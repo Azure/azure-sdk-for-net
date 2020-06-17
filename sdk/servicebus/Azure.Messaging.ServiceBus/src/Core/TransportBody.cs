@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Transports
+namespace Azure.Messaging.ServiceBus.Core
 {
     internal abstract class TransportBody
     {

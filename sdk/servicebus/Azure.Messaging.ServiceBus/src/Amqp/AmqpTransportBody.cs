@@ -4,8 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Transports.Amqp
+namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal class AmqpTransportBody : TransportBody
     {

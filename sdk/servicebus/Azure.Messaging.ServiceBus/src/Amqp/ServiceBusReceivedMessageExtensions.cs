@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Messaging.ServiceBus.Transports.Amqp
+namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     /// Extension methods for <see cref="ServiceBusReceivedMessage"/>.
