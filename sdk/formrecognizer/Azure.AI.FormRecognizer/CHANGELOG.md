@@ -5,7 +5,7 @@
 ### Breaking changes
 
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
-- `RecognizedReceipt` class removed. Receipt information is now extracted directly from `RecognizedForm`.
+- `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt information must now be extracted from a `RecognizedForm`.
 
 ## 1.0.0-preview.3 (06-10-2020)
 
