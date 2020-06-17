@@ -88,8 +88,8 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 
 To see the full example source files, see:
 
-* [Train a model with forms](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_TrainModelWithForms.cs)
-* [Train a model with forms and labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample5_TrainModelWithFormsAndLabels.cs)
+* [Train a model with forms](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample5_TrainModelWithForms.cs)
+* [Train a model with forms and labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample6_TrainModelWithFormsAndLabels.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool

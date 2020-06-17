@@ -1,4 +1,4 @@
-# Strongly typing a recognized form
+# Strongly-typing a recognized form
 
 This sample demonstrates how to use the fields in your recognized forms to create an object with strongly typed fields. The pre-trained receipt model will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields' names and types.
 
