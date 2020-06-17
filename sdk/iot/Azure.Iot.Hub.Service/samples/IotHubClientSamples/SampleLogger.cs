@@ -29,9 +29,9 @@ namespace Azure.Iot.Hub.Service.Samples
             Console.ResetColor();
         }
 
-        internal static void PrintUnsuccessfulEvent(string message)
+        internal static void PrintWarning(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"\n{message}");
             Console.ResetColor();
         }

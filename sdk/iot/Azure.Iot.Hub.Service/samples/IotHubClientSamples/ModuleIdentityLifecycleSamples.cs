@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Models;
 
@@ -121,12 +120,22 @@ namespace Azure.Iot.Hub.Service.Samples
             }
         }
 
-        public Task InvokeMethodAsync()
+        public Task ListAllModulesAsync()
         {
             return Task.CompletedTask;
         }
 
-        public Task ListAllModulesAsync()
+        public Task GetModuleIdentityAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task UpdateModuleIdentityAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task GetModuleTwinAsync()
         {
             return Task.CompletedTask;
         }
@@ -136,17 +145,7 @@ namespace Azure.Iot.Hub.Service.Samples
             return Task.CompletedTask;
         }
 
-        public Task GetModuleTwinAsync()
-        {
-            return Task.CompletedTask;
-        }   
-
-        public Task UpdateModuleIdentityAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task GetModuleIdentityAsync()
+        public Task InvokeMethodAsync()
         {
             return Task.CompletedTask;
         }
