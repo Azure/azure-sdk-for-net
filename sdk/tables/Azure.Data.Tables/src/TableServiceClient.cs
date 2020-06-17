@@ -274,15 +274,14 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetProperties(TableServiceProperties tableServiceProperties, string requestId = null, CancellationToken cancellationToken = default)
+        public virtual Response SetProperties(TableServiceProperties tableServiceProperties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
             {
-                return _serviceOperations.SetProperties(tableServiceProperties, requestId: requestId, cancellationToken: cancellationToken);
+                return _serviceOperations.SetProperties(tableServiceProperties, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -293,15 +292,14 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties tableServiceProperties, string requestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties tableServiceProperties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
             {
-                return await _serviceOperations.SetPropertiesAsync(tableServiceProperties, requestId: requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _serviceOperations.SetPropertiesAsync(tableServiceProperties, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -311,15 +309,14 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TableServiceProperties> GetProperties(string requestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<TableServiceProperties> GetProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
             scope.Start();
             try
             {
-                var response = _serviceOperations.GetProperties(requestId: requestId, cancellationToken: cancellationToken);
+                var response = _serviceOperations.GetProperties(cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -330,15 +327,14 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TableServiceProperties>> GetPropertiesAsync(string requestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableServiceProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
             scope.Start();
             try
             {
-                var response = await _serviceOperations.GetPropertiesAsync(requestId: requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceOperations.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
