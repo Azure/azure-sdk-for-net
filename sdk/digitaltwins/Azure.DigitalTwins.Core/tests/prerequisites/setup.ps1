@@ -9,7 +9,7 @@ param(
     [string] $SubscriptionId,
 
     [Parameter(Mandatory)]
-    [ValidateLength(6, 64)]
+    [ValidateLength(6, 50)]
     [string] $DigitalTwinName,
 
     [Parameter()]
