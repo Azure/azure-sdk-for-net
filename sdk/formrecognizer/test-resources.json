@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "westcentralus",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
@@ -34,7 +34,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "['TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
