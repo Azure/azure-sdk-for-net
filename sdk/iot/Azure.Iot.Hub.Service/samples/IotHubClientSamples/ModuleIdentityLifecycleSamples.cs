@@ -6,7 +6,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service.Samples
 {
     /// <summary>
-    /// This sample goes through the lifecycle of a Module Identity of a device
+    /// This sample goes through the lifecycle of a Module Identity for a device
     /// </summary>
     internal class ModuleIdentityLifecycleSamples
     {
@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service.Samples
         {
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITY");
 
-            // Construt the device identity object.
+            // Construct the device identity object.
             DeviceIdentity deviceIdentity = new DeviceIdentity
             {
                 DeviceId = deviceId
@@ -96,7 +96,7 @@ namespace Azure.Iot.Hub.Service.Samples
         {
             SampleLogger.PrintHeader("CREATE MODULE IDENTITY");
 
-            // Construt the module identity object.
+            // Construct the module identity object.
             ModuleIdentity moduleIdentity = new ModuleIdentity
             {
                 DeviceId = deviceIdentity.DeviceId,

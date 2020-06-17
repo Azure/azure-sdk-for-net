@@ -14,7 +14,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// </summary>
         public static async Task Main(string[] args)
         {
-            // Parse and validate paramters
+            // Parse and validate parameters
 
             CommandLineOptions options = null;
             ParserResult<CommandLineOptions> result = Parser.Default.ParseArguments<CommandLineOptions>(args)
