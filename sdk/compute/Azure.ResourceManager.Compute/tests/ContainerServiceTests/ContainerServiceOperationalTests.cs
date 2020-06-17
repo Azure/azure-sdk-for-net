@@ -37,14 +37,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("This case should be tested by compute team because of ex 'Address prefix string for resource /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar12191/providers/Microsoft.Network/virtualNetworks/dcos-vnet-35162761 cannot be null or empty' when record in track2")]
         public async Task TestDCOSOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             var csName = Recording.GenerateAssetName(ContainerServiceNamePrefix);
             var masterDnsPrefixName = Recording.GenerateAssetName(MasterProfileDnsPrefix);
             var agentPoolDnsPrefixName = Recording.GenerateAssetName(AgentPoolProfileDnsPrefix);
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationAustraliaSouthEast);
 
             ContainerService inputContainerService;
             var getTwocontainerService = await CreateContainerService_NoAsyncTracking(
@@ -71,14 +69,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("this should be tested by generate team")]
         public async Task TestSwarmOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix) + 1;
             var csName = Recording.GenerateAssetName(ContainerServiceNamePrefix);
             var masterDnsPrefixName = Recording.GenerateAssetName(MasterProfileDnsPrefix);
             var agentPoolDnsPrefixName = Recording.GenerateAssetName(AgentPoolProfileDnsPrefix);
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationAustraliaSouthEast);
             ContainerService inputContainerService;
             var getTwocontainerService = await CreateContainerService_NoAsyncTracking(
                 rgName,

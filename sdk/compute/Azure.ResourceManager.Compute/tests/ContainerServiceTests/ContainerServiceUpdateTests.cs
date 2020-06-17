@@ -37,14 +37,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("need to be tested by compute team because of the ex' cannot unmarshal string into Go struct field Properties.properties.masterProfile of type int.'")]
         public async Task TestContainerServiceUpdateOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             // Create resource group
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var csName = Recording.GenerateAssetName(ContainerServiceNamePrefix);
             var masterDnsPrefixName = Recording.GenerateAssetName(MasterProfileDnsPrefix);
             var agentPoolDnsPrefixName = Recording.GenerateAssetName(AgentPoolProfileDnsPrefix);
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationAustraliaSouthEast);
 
             ContainerService inputContainerService;
             var getTwocontainerService = await CreateContainerService_NoAsyncTracking(

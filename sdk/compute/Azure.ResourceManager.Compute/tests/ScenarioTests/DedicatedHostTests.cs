@@ -38,9 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestDedicatedHostOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-            EnsureClientsInitialized(false);
+            EnsureClientsInitialized(LocationEastUs2.ToLower());
 
             string baseRGName = Recording.GenerateAssetName(TestPrefix);
             string rgName = baseRGName + "DH";

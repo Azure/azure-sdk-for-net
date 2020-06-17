@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("skip in track 1")]
         public void TestVMWithWindowsOSProfile()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string keyVaultName = Recording.GenerateAssetName(TestPrefix);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public void TestVMWithLinuxOSProfile()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string sshPath = null;

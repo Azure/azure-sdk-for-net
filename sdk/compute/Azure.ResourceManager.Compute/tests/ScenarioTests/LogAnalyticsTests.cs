@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string rg1Name = Recording.GenerateAssetName(TestPrefix);
 
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             string sasUri = await GetBlobContainerSasUri(rg1Name, storageAccountName);
 

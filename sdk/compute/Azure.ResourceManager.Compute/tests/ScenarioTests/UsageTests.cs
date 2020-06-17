@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestListUsages()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

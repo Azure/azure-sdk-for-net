@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Trait("Name", "TestProximityPlacementGroupsOperations")]
         public async Task TestProximityPlacementGroupsOperations()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             Initialize();
 
             //Verify proximityPlacementGroups operation

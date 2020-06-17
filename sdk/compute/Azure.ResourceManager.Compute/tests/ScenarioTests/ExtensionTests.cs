@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Ignore("this should be tested by generate team")]
         public async Task TestVMExtensionOperations()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             // Create resource group

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestListVMInSubscription()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
 
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [Test]
         public async Task TestListVMsInSubscriptionByLocation()
         {
-            EnsureClientsInitialized(true);
+            EnsureClientsInitialized(DefaultLocation);
             ImageReference imageRef = await GetPlatformVMImage(useWindowsImage: true);
             string baseResourceGroupName = Recording.GenerateAssetName(TestPrefix);
             string resourceGroup1Name = baseResourceGroupName + "a";
