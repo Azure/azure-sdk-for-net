@@ -13,8 +13,17 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
+        /// <summary>
+        /// This sample illustrates how to consume a Bounding Box type data that is available across the Form Recognizer library.
+        /// A bounding box is a sequence of four <see cref="PointF"/> representing a quadrilateral that outlines
+        /// an element such as a line or a word in a recognized form.
+        /// Coordinates are specified relative to the top-left of the original image,
+        /// and points are ordered clockwise from the top-left corner relative to the text orientation.
+        /// Units type of a recognized page can be found at <see cref="FormPage.Unit"/>.
+        /// For the purpose of the sample, we will use the StartRecognizeContent capability.
+        /// </summary>
         [Test]
-        public async Task RecognizeContentFromFile()
+        public async Task BoundingBoxSample()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -33,23 +42,13 @@ namespace Azure.AI.FormRecognizer.Samples
                     for (int i = 0; i < page.Lines.Count; i++)
                     {
                         FormLine line = page.Lines[i];
-                        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+                        Console.WriteLine($"    Line {i} with text: '{line.Text}'.");
 
                         Console.WriteLine("        Its bounding box is:");
                         Console.WriteLine($"        Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
                         Console.WriteLine($"        Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
                         Console.WriteLine($"        Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
                         Console.WriteLine($"        Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
-                    }
-
-                    for (int i = 0; i < page.Tables.Count; i++)
-                    {
-                        FormTable table = page.Tables[i];
-                        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-                        foreach (FormTableCell cell in table.Cells)
-                        {
-                            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
-                        }
                     }
                 }
             }
