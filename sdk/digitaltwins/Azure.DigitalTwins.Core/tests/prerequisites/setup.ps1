@@ -8,14 +8,15 @@ param(
     [Parameter(Mandatory)]
     [string] $SubscriptionId,
 
-    [Parameter()]
+    [Parameter(Mandatory)]
+    [ValidateLength(6, 64)]
     [string] $DigitalTwinName,
 
     [Parameter()]
     [string] $AppRegistrationName
 )
 
-Function Connect-AzureSubscription()
+Function Connect-AzureSubscription
 {
     # Ensure the user is logged in
     try
@@ -51,11 +52,6 @@ if (-not $isAdmin)
 Connect-AzureSubscription
 
 $Region = $Region.Replace(' ', '')
-
-if (-not $DigitalTwinName)
-{
-    $DigitalTwinName = $ResourceGroup
-}
 
 if (-not $AppRegistrationName)
 {
