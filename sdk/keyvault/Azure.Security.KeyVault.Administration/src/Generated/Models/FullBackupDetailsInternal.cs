@@ -10,14 +10,14 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Full backup operation. </summary>
-    public partial class FullBackupDetails
+    internal partial class FullBackupDetailsInternal
     {
-        /// <summary> Initializes a new instance of FullBackupDetails. </summary>
-        internal FullBackupDetails()
+        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
+        internal FullBackupDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of FullBackupDetails. </summary>
+        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
         /// <param name="status"> Status of the backup operation. </param>
         /// <param name="statusDetails"> The status details of backup operation. </param>
         /// <param name="error"> Error encountered, if any, during the full backup operation. </param>
@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the backup operation in UTC. </param>
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
-        internal FullBackupDetails(string status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri)
+        internal FullBackupDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri)
         {
             Status = status;
             StatusDetails = statusDetails;

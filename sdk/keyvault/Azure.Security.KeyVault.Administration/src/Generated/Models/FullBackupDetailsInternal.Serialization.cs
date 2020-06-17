@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class FullBackupDetails
+    internal partial class FullBackupDetailsInternal
     {
-        internal static FullBackupDetails DeserializeFullBackupDetails(JsonElement element)
+        internal static FullBackupDetailsInternal DeserializeFullBackupDetailsInternal(JsonElement element)
         {
             string status = default;
             string statusDetails = default;
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new FullBackupDetails(status, statusDetails, error, startTime, endTime, jobId, azureStorageBlobContainerUri);
+            return new FullBackupDetailsInternal(status, statusDetails, error, startTime, endTime, jobId, azureStorageBlobContainerUri);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FullBackupDetails, ServiceFullBackupHeaders>> FullBackupAsync(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders>> FullBackupAsync(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 202:
                     {
-                        FullBackupDetails value = default;
+                        FullBackupDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullBackupDetails.DeserializeFullBackupDetails(document.RootElement);
+                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FullBackupDetails, ServiceFullBackupHeaders> FullBackup(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders> FullBackup(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 202:
                     {
-                        FullBackupDetails value = default;
+                        FullBackupDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullBackupDetails.DeserializeFullBackupDetails(document.RootElement);
+                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -148,7 +148,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FullBackupDetails>> FullBackupStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        public async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        FullBackupDetails value = default;
+                        FullBackupDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullBackupDetails.DeserializeFullBackupDetails(document.RootElement);
+                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FullBackupDetails> FullBackupStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        public Response<FullBackupDetailsInternal> FullBackupStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -203,7 +203,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        FullBackupDetails value = default;
+                        FullBackupDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -211,7 +211,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullBackupDetails.DeserializeFullBackupDetails(document.RootElement);
+                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
@@ -244,7 +244,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FullRestoreDetails, ServiceFullRestoreOperationHeaders>> FullRestoreOperationAsync(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FullRestoreDetailsInternal, ServiceFullRestoreOperationHeaders>> FullRestoreOperationAsync(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 202:
                     {
-                        FullRestoreDetails value = default;
+                        FullRestoreDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -266,7 +266,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullRestoreDetails.DeserializeFullRestoreDetails(document.RootElement);
+                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -279,7 +279,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FullRestoreDetails, ServiceFullRestoreOperationHeaders> FullRestoreOperation(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FullRestoreDetailsInternal, ServiceFullRestoreOperationHeaders> FullRestoreOperation(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -293,7 +293,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 202:
                     {
-                        FullRestoreDetails value = default;
+                        FullRestoreDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -301,7 +301,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullRestoreDetails.DeserializeFullRestoreDetails(document.RootElement);
+                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -329,7 +329,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FullRestoreDetails>> FullRestoreStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        public async Task<Response<FullRestoreDetailsInternal>> FullRestoreStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -346,7 +346,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        FullRestoreDetails value = default;
+                        FullRestoreDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -354,7 +354,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullRestoreDetails.DeserializeFullRestoreDetails(document.RootElement);
+                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
@@ -367,7 +367,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FullRestoreDetails> FullRestoreStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        public Response<FullRestoreDetailsInternal> FullRestoreStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -384,7 +384,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        FullRestoreDetails value = default;
+                        FullRestoreDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         if (document.RootElement.ValueKind == JsonValueKind.Null)
                         {
@@ -392,7 +392,7 @@ namespace Azure.Security.KeyVault.Administration
                         }
                         else
                         {
-                            value = FullRestoreDetails.DeserializeFullRestoreDetails(document.RootElement);
+                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }

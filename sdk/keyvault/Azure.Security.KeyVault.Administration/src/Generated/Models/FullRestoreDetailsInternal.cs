@@ -10,21 +10,21 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Full restore operation. </summary>
-    public partial class FullRestoreDetails
+    internal partial class FullRestoreDetailsInternal
     {
-        /// <summary> Initializes a new instance of FullRestoreDetails. </summary>
-        internal FullRestoreDetails()
+        /// <summary> Initializes a new instance of FullRestoreDetailsInternal. </summary>
+        internal FullRestoreDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of FullRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of FullRestoreDetailsInternal. </summary>
         /// <param name="status"> Status of the restore operation. </param>
         /// <param name="statusDetails"> The status details of restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the full restore operation. </param>
         /// <param name="jobId"> Identifier for the full restore operation. </param>
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
-        internal FullRestoreDetails(string status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        internal FullRestoreDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             Status = status;
             StatusDetails = statusDetails;

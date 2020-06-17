@@ -6,9 +6,9 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary>
-    /// The full restore details containing information about a specific full restore operation.
+    /// The full backup details containing information about a specific full backup operation.
     /// </summary>
-    [CodeGenModel("FullRestoreOperation")]
-    public partial class FullRestoreDetails
+    [CodeGenModel("FullBackupOperation")]
+    internal partial class FullBackupDetailsInternal
     { }
 }

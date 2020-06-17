@@ -1,28 +1,30 @@
-public partial class BackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.Models.FullBackupDetails>
+public partial class BackupOperation : Azure.Operation<System.Uri>
 {
-    public BackupOperation(string jobId, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
+    public BackupOperation(string id, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
     public override bool HasCompleted { get { throw null; } }
     public override bool HasValue { get { throw null; } }
     public override string Id { get { throw null; } }
-    public override Azure.Security.KeyVault.Administration.Models.FullBackupDetails Value { get { throw null; } }
+    public override System.Uri Value { get { throw null; } }
     public override Azure.Response GetRawResponse() { throw null; }
     public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullBackupDetails>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullBackupDetails>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    public override System.Threading.Tasks.ValueTask<Azure.Response<System.Uri>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    public override System.Threading.Tasks.ValueTask<Azure.Response<System.Uri>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
 }
-public partial class RestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails>
+public partial class RestoreOperation : Azure.Operation<Azure.Response>
 {
-    public RestoreOperation(string jobId, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
+    public RestoreOperation(string id, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { }
+    public System.DateTimeOffset? EndTime { get { throw null; } }
     public override bool HasCompleted { get { throw null; } }
     public override bool HasValue { get { throw null; } }
     public override string Id { get { throw null; } }
-    public override Azure.Security.KeyVault.Administration.Models.FullRestoreDetails Value { get { throw null; } }
+    public System.DateTimeOffset? StartTime { get { throw null; } }
+    public override Azure.Response Value { get { throw null; } }
     public override Azure.Response GetRawResponse() { throw null; }
     public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.Models.FullRestoreDetails>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Response>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
 }
 namespace Azure.Security.KeyVault.Administration
 {
@@ -94,33 +96,10 @@ namespace Azure.Security.KeyVault.Administration
 }
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class FullBackupDetails
-    {
-        internal FullBackupDetails() { }
-        public string AzureStorageBlobContainerUri { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError Error { get { throw null; } }
-        public string JobId { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
-        public string Status { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-    }
-    public partial class FullRestoreDetails
-    {
-        internal FullRestoreDetails() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError Error { get { throw null; } }
-        public string JobId { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
-        public string Status { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-    }
     public static partial class KeyVaultModelFactory
     {
-        public static Azure.Security.KeyVault.Administration.Models.FullBackupDetails FullBackupDetails(string status, string statusDetails, Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError error, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime, string jobId, System.Uri azureStorageBlobContainerUri) { throw null; }
-        public static BackupOperation FullBackupOperation(Azure.Security.KeyVault.Administration.Models.FullBackupDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { throw null; }
-        public static Azure.Security.KeyVault.Administration.Models.FullRestoreDetails FullRestoreDetails(string status, string statusDetails, Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError error, string jobId, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime) { throw null; }
-        public static RestoreOperation FullRestoreOperation(Azure.Security.KeyVault.Administration.Models.FullRestoreDetails value, Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client) { throw null; }
+        public static BackupOperation BackupOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.Uri blobContainerUri, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
+        public static RestoreOperation RestoreOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.RoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.Models.RoleAssignmentPropertiesWithScope properties) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> permissions, System.Collections.Generic.IReadOnlyList<string> assignableScopes) { throw null; }
     }
