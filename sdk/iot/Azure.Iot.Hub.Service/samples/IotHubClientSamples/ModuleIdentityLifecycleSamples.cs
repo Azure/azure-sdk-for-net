@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service.Samples
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITY");
 
             // Construct the device identity object.
-            DeviceIdentity deviceIdentity = new DeviceIdentity
+            var deviceIdentity = new DeviceIdentity
             {
                 DeviceId = deviceId
             };
@@ -96,7 +96,7 @@ namespace Azure.Iot.Hub.Service.Samples
             SampleLogger.PrintHeader("CREATE MODULE IDENTITY");
 
             // Construct the module identity object.
-            ModuleIdentity moduleIdentity = new ModuleIdentity
+            var moduleIdentity = new ModuleIdentity
             {
                 DeviceId = deviceIdentity.DeviceId,
                 ModuleId = moduleId
