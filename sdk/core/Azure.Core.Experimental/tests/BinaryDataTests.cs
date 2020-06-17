@@ -35,13 +35,36 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AsStringThrowsOnNullEncoding()
+        public void ToStringThrowsOnNullEncoding()
         {
             var payload = "some data";
             var data = new BinaryData(payload);
             Assert.That(
                 () => data.ToString(null),
                 Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void ToStringRespectsArraySegmentBoundaries()
+        {
+            var payload = "pre payload post";
+            var bytes = Encoding.UTF8.GetBytes(payload);
+            var segment = new ArraySegment<byte>(bytes, 4, 7);
+            var data = new BinaryData(segment);
+            Assert.AreEqual("payload", data.ToString());
+        }
+
+        [Test]
+        public async Task ToStreamRespectsArraySegmentBoundaries()
+        {
+            var payload = "pre payload post";
+            var bytes = Encoding.UTF8.GetBytes(payload);
+            var segment = new ArraySegment<byte>(bytes, 4, 7);
+            var data = new BinaryData(segment);
+            var stream = data.ToStream();
+            var sr = new StreamReader(stream);
+            Assert.AreEqual("payload", await sr.ReadToEndAsync());
+
         }
 
         [Test]
@@ -90,7 +113,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void GenericCreateThrowsOnNullSerializer()
+        public void FromSerializableThrowsOnNullSerializer()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             Assert.That(
@@ -114,7 +137,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task AsThrowsExceptionOnIncompatibleType()
+        public async Task DeserializeThrowsExceptionOnIncompatibleType()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             var serializer = new JsonObjectSerializer();
@@ -133,7 +156,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AsThrowsOnNullSerializer ()
+        public void DeserializeThrowsOnNullSerializer()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             var serializer = new JsonObjectSerializer();
