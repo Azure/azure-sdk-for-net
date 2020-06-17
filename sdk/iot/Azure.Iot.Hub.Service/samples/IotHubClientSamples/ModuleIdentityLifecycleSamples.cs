@@ -39,7 +39,7 @@ namespace Azure.Iot.Hub.Service.Samples
             // Update Module Identity.
             await UpdateModuleIdentityAsync();
 
-            // Get Module module Twin,
+            // Get Module Twin,
             await GetModuleTwinAsync();
 
             // Update Module Twin.
