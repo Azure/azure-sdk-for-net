@@ -31,7 +31,6 @@ namespace Microsoft.Rest
         /// List of default UserAgent info that will be added to HttpClient instance
         /// </summary>
         //private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
-        private object lockUserAgent;
         private PlatformInfo _platformInfo;
         private string _osName;
         private string _osVersion;
@@ -340,8 +339,6 @@ namespace Microsoft.Rest
         /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
         protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
         {
-            //Init lock object
-            lockUserAgent = new object();
 
             if (httpClient == null)
             {
@@ -356,14 +353,14 @@ namespace Microsoft.Rest
 
                 HttpClient = new HttpClient(currentHandler, false);
                 FirstMessageHandler = currentHandler;
+                //Set Default info in user agent only if http client is not reused
+                SetDefaultAgentInfo();
             }
             else
             {
+                //if user reuse http client, there is thread-safety issue that another thread is reading default request headers of it while current thread is writing
                 HttpClient = httpClient;
             }
-
-            //Set Default info in user agent
-            SetDefaultAgentInfo();
         }
 
         /// <summary>
@@ -562,13 +559,10 @@ namespace Microsoft.Rest
 
         private void AddUserAgentEntry(ProductInfoHeaderValue pInfoHeaderValue)
         {
-            lock (lockUserAgent)
+            if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
+                new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
             {
-                if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
-                    new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
-                {
-                    HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
-                }
+                HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
             }
         }
 
