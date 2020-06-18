@@ -104,5 +104,15 @@ namespace Azure.Core.Pipeline
             Send(message, cancellationToken);
             return message.Response;
         }
+
+        /// <summary>
+        /// Creates a scope in which all outgoing requests would use the provided
+        /// </summary>
+        /// <param name="clientRequestId">The client request id value to be sent with request.</param>
+        /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when client request id shouldn't be sent anymore.</returns>
+        public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
+        {
+            return ReadClientRequestIdPolicy.StartScope(clientRequestId);
+        }
     }
 }
