@@ -488,7 +488,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: new ServiceBusProcessorOptions());
         }
@@ -514,7 +513,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: options);
         }
@@ -541,7 +539,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: new ServiceBusProcessorOptions());
         }
@@ -569,7 +566,6 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: options);
         }
@@ -593,7 +589,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
@@ -620,7 +615,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                // copy off plugins to new array to avoid races if user changes plugins afterwards
                 plugins: Plugins.ToArray(),
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
