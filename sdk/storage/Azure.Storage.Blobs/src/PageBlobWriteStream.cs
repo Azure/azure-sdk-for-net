@@ -32,7 +32,12 @@ namespace Azure.Storage.Blobs
             _writeIndex = position;
         }
 
-        protected override async Task WriteInternal(bool async, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        protected override async Task WriteInternal(
+            byte[] buffer,
+            int offset,
+            int count,
+            bool async,
+            CancellationToken cancellationToken)
         {
             ValidateWriteParameters(buffer, offset, count);
             int remaining = count;

@@ -55,10 +55,10 @@ namespace Azure.Storage.Shared
             int offset,
             int count)
             => WriteInternal(
-                async: false,
                 buffer,
                 offset,
                 count,
+                async: false,
                 cancellationToken: default)
             .EnsureCompleted();
 
@@ -68,18 +68,18 @@ namespace Azure.Storage.Shared
             int count,
             CancellationToken cancellationToken)
             => await WriteInternal(
-                async: true,
                 buffer,
                 offset,
                 count,
+                async: true,
                 cancellationToken)
             .ConfigureAwait(false);
 
         protected virtual async Task WriteInternal(
-            bool async,
             byte[] buffer,
             int offset,
             int count,
+            bool async,
             CancellationToken cancellationToken)
         {
             ValidateWriteParameters(buffer, offset, count);
@@ -106,6 +106,7 @@ namespace Azure.Storage.Shared
                 // Upload bytes.
                 await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
+                // We need to loop, because remaining bytes might be greater than _buffer size.
                 while (remaining > 0)
                 {
                     await WriteToBuffer(
