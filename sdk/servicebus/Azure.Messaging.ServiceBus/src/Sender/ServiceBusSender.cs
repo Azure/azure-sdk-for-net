@@ -217,10 +217,13 @@ namespace Azure.Messaging.ServiceBus
                 {
                     try
                     {
+                        Logger.PluginCallStarted(plugin.Name, message.MessageId);
                         await plugin.BeforeMessageSend(message).ConfigureAwait(false);
+                        Logger.PluginCallCompleted(plugin.Name, message.MessageId);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Logger.PluginCallException(plugin.Name, message.MessageId, ex.ToString());
                         if (!plugin.ShouldContinueOnException)
                         {
                             throw;
@@ -427,7 +430,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
-
+            await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
                 messageList.Count,

@@ -37,7 +37,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         }
 
         [Test]
-        public async Task PluginsCanAlterMessage()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task PluginsCanAlterMessage(bool schedule)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -50,11 +52,58 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
 
-                await sender.SendMessageAsync(new ServiceBusMessage());
+                if (schedule)
+                {
+                    await sender.ScheduleMessageAsync(new ServiceBusMessage(), DateTimeOffset.UtcNow);
+                }
+                else
+                {
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                }
+
                 Assert.True(plugin.WasCalled);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task PluginsCanAlterSetofMessages(bool schedule)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                var plugin = new SendReceivePlugin();
+                var client = GetClient();
+                client.RegisterPlugin(plugin);
+
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                int numMessages = 5;
+                if (schedule)
+                {
+                    await sender.ScheduleMessagesAsync(GetMessages(numMessages), DateTimeOffset.UtcNow);
+                }
+                else
+                {
+                    await sender.SendMessagesAsync(GetMessages(numMessages));
+                }
+
+                Assert.True(plugin.WasCalled);
+
+                var remaining = numMessages;
+                while (remaining > 0)
+                {
+                    var receivedMessages = await receiver.ReceiveMessagesAsync(remaining);
+                    remaining = -receivedMessages.Count;
+                    foreach (var receivedMessage in receivedMessages)
+                    {
+                        Assert.AreEqual("received", receivedMessage.Body.ToString());
+                    }
+                }
             }
         }
 
@@ -203,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enableSession: false))
             {
                 var client = GetClient();
-                client.RegisterPlugin(new ShouldCompleteAnywayExceptionPlugin());
+                client.RegisterPlugin(new ShouldContinueOnExceptionPlugin());
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(new ServiceBusMessage());
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -212,61 +261,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 Assert.AreEqual("received", message.Label);
             }
         }
-
-        //    [Fact]
-        //    [LiveTest]
-        //    [DisplayTestMethodName]
-        //    public async Task QueueClientShouldPassPluginsToMessageSession()
-        //    {
-        //        await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
-        //        {
-        //            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-        //            try
-        //            {
-        //                var messageReceived = false;
-        //                var sendReceivePlugin = new SendReceivePlugin();
-        //                queueClient.RegisterPlugin(sendReceivePlugin);
-
-        //                var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"))
-        //                {
-        //                    MessageId = Guid.NewGuid().ToString(),
-        //                    SessionId = Guid.NewGuid().ToString()
-        //                };
-        //                await queueClient.SendMessageAsync(sendMessage);
-
-        //                // Ensure the plugin is called.
-        //                Assert.True(sendReceivePlugin.MessageBodies.ContainsKey(sendMessage.MessageId));
-
-        //                queueClient.RegisterSessionHandler(
-        //                    (session, message, cancellationToken) =>
-        //                    {
-        //                        Assert.Equal(sendMessage.SessionId, session.SessionId);
-        //                        Assert.True(session.RegisteredPlugins.Contains(sendReceivePlugin));
-        //                        Assert.Equal(sendMessage.Body, message.Body);
-
-        //                        messageReceived = true;
-        //                        return Task.CompletedTask;
-        //                    },
-        //                    exceptionArgs => Task.CompletedTask);
-
-        //                for (var i = 0; i < 20; i++)
-        //                {
-        //                    if (messageReceived)
-        //                    {
-        //                        break;
-        //                    }
-        //                    await Task.Delay(TimeSpan.FromSeconds(2));
-        //                }
-
-        //                Assert.True(messageReceived);
-        //            }
-        //            finally
-        //            {
-        //                await queueClient.CloseAsync();
-        //            }
-        //        });
-        //    }
-        //}
 
 #pragma warning disable SA1402 // File may only contain a single type
         internal class FirstPlugin : ServiceBusPlugin
@@ -332,11 +326,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             }
         }
 
-        internal class ShouldCompleteAnywayExceptionPlugin : ServiceBusPlugin
+        internal class ShouldContinueOnExceptionPlugin : ServiceBusPlugin
         {
             public override bool ShouldContinueOnException => true;
 
-            public override string Name => nameof(ShouldCompleteAnywayExceptionPlugin);
+            public override string Name => nameof(ShouldContinueOnExceptionPlugin);
 
             public override async Task BeforeMessageSend(ServiceBusMessage message)
             {

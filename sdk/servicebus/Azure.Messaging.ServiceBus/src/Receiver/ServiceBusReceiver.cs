@@ -252,10 +252,13 @@ namespace Azure.Messaging.ServiceBus
                 {
                     try
                     {
+                        Logger.PluginCallStarted(plugin.Name, message.MessageId);
                         await plugin.AfterMessageReceive(message).ConfigureAwait(false);
+                        Logger.PluginCallCompleted(plugin.Name, message.MessageId);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Logger.PluginCallException(plugin.Name, message.MessageId, ex.ToString());
                         if (!plugin.ShouldContinueOnException)
                         {
                             throw;
