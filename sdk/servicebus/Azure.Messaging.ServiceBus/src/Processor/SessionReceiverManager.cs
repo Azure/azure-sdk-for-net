@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -48,9 +49,10 @@ namespace Azure.Messaging.ServiceBus
             Func<ProcessSessionMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            IList<ServiceBusPlugin> plugins)
             : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
-                  scopeFactory)
+                  scopeFactory, plugins)
         {
             _sessionInitHandler = sessionInitHandler;
             _sessionCloseHandler = sessionCloseHandler;
@@ -107,6 +109,7 @@ namespace Azure.Messaging.ServiceBus
             _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: _entityPath,
                 connection: _connection,
+                plugins: _plugins,
                 options: _sessionReceiverOptions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 

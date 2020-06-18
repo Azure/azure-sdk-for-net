@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -86,6 +87,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal readonly TransportReceiver InnerReceiver;
         internal readonly EntityScopeFactory _scopeFactory;
+        internal readonly IList<ServiceBusPlugin> _plugins;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -100,6 +102,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
+        /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         /// the next available session returned from the service will be used.</param>
@@ -108,6 +111,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default)
         {
@@ -136,6 +140,7 @@ namespace Azure.Messaging.ServiceBus
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _plugins = plugins;
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -196,6 +201,7 @@ namespace Azure.Messaging.ServiceBus
                     maxMessages,
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
+                await ApplyPlugins(messages).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -236,6 +242,27 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
+        }
+
+        private async Task ApplyPlugins(IList<ServiceBusReceivedMessage> messages)
+        {
+            foreach (ServiceBusPlugin plugin in _plugins)
+            {
+                foreach (ServiceBusReceivedMessage message in messages)
+                {
+                    try
+                    {
+                        await plugin.AfterMessageReceive(message).ConfigureAwait(false);
+                    }
+                    catch (Exception)
+                    {
+                        if (!plugin.ShouldContinueOnException)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

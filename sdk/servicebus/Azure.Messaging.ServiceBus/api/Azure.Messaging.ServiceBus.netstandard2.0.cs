@@ -77,6 +77,7 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace { get { throw null; } }
         public bool IsDisposed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
+        public void ClearPlugins() { }
         public Azure.Messaging.ServiceBus.ServiceBusReceiver CreateDeadLetterReceiver(string queueName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options = null) { throw null; }
         public Azure.Messaging.ServiceBus.ServiceBusReceiver CreateDeadLetterReceiver(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options = null) { throw null; }
         public Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string queueName) { throw null; }
@@ -94,6 +95,8 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> CreateSessionReceiverAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> CreateSessionReceiverAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public System.Collections.ObjectModel.ReadOnlyCollection<Azure.Messaging.ServiceBus.Plugins.ServiceBusPlugin> GetPlugins() { throw null; }
+        public void RegisterPlugin(Azure.Messaging.ServiceBus.Plugins.ServiceBusPlugin plugin) { }
     }
     public partial class ServiceBusClientOptions
     {
@@ -775,6 +778,31 @@ namespace Azure.Messaging.ServiceBus.Management
         public static bool operator ==(Azure.Messaging.ServiceBus.Management.TrueRuleFilter left, Azure.Messaging.ServiceBus.Management.TrueRuleFilter right) { throw null; }
         public static bool operator !=(Azure.Messaging.ServiceBus.Management.TrueRuleFilter left, Azure.Messaging.ServiceBus.Management.TrueRuleFilter right) { throw null; }
         public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Messaging.ServiceBus.Plugins
+{
+    public abstract partial class ServiceBusPlugin
+    {
+        protected ServiceBusPlugin() { }
+        public abstract string Name { get; }
+        public virtual bool ShouldContinueOnException { get { throw null; } }
+        public virtual System.Threading.Tasks.Task AfterMessageReceive(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
+        public virtual System.Threading.Tasks.Task BeforeMessageSend(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
+        protected static void SetBody(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Azure.Core.BinaryData body) { }
+        protected static void SetContentType(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string contentType) { }
+        protected static void SetCorrelationId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string correlationId) { }
+        protected static void SetLabel(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string label) { }
+        protected static void SetMessageId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string messageId) { }
+        protected static void SetPartitionKey(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string partitionKey) { }
+        protected static void SetReplyTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyTo) { }
+        protected static void SetReplyToSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyToSessionId) { }
+        protected static void SetScheduledEnqueueTime(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.DateTimeOffset scheduledEnqueueTime) { }
+        protected static void SetSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string sessionId) { }
+        protected static void SetTimeToLive(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.TimeSpan timeToLive) { }
+        protected static void SetTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string to) { }
+        protected static void SetUserProperty(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string key, object value) { }
+        protected static void SetViaPartitionKey(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string viaPartitionKey) { }
     }
 }
 namespace Microsoft.Extensions.Azure

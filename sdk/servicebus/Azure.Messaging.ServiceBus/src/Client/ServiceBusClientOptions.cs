@@ -49,6 +49,7 @@ namespace Azure.Messaging.ServiceBus
                 _retryOptions = value;
             }
         }
+
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
