@@ -21,7 +21,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 `FormField<T>` is a helper class used in this sample as a strongly-typed version of `FormField`. They have the same properties, except for `Value`, which returns a `T` instead of a `FieldValue`.
 
-The known receipt fields returned by the service, such as `MerchantName` and `TransactionDate`, will be strongly-typed and put together into another helper class called `Receipt`.
+The known receipt fields returned by the service, such as `MerchantName` and `TransactionDate`, will be strongly-typed and put together into a custom wrapper class called `Receipt`.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
 RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
@@ -67,7 +67,7 @@ foreach (RecognizedForm recognizedForm in recognizedForms)
 }
 ```
 
-Using `FormField<T>` to make your fields strongly-typed, and populating a custom helper model class, such as `Receipt`, is the recommended approach for handling recognized forms in which expected labels are known.
+Using `FormField<T>` to make your fields strongly-typed, and populating a custom wrapper class, such as `Receipt`, is the recommended approach for handling forms where fields have known labels.
 
 To see the full example source files, see:
 
