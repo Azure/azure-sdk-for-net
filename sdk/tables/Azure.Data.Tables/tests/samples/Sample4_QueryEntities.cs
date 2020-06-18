@@ -19,7 +19,7 @@ namespace Azure.Data.Tables.Samples
             string storageUri = StorageUri;
             string accountName = AccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies4.1";
+            string tableName = "OfficeSupplies4p1";
             string partitionKey = "somePartition";
             string rowKey = "1";
             string rowKey2 = "2";
