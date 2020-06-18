@@ -67,22 +67,22 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey(System.Security.Cryptography.Aes aesProvider, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
         public JsonWebKey(System.Security.Cryptography.ECDsa ecdsa, bool includePrivateParameters = false, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
         public JsonWebKey(System.Security.Cryptography.RSA rsaProvider, bool includePrivateParameters = false, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
-        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] D { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] DP { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] DQ { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] E { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] K { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] D { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] DP { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] DQ { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] E { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] K { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.Security.KeyVault.Keys.KeyOperation> KeyOps { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Security.KeyVault.Keys.KeyType KeyType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] N { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] P { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] Q { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] QI { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] T { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] X { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] Y { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyType KeyType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] N { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] P { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] Q { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] QI { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] T { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] X { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] Y { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Security.Cryptography.Aes ToAes() { throw null; }
         public System.Security.Cryptography.ECDsa ToECDsa(bool includePrivateParameters = false) { throw null; }
         public System.Security.Cryptography.RSA ToRSA(bool includePrivateParameters = false) { throw null; }
