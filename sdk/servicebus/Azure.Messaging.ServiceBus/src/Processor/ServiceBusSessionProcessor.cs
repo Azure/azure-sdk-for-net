@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusSessionProcessor
     {
-        internal readonly ServiceBusProcessor _innerProcessor;
+        private readonly ServiceBusProcessor _innerProcessor;
 
         /// <summary>
         /// The path of the Service Bus entity that the processor is connected to, specific to the

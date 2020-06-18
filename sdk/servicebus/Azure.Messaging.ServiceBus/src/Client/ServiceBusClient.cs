@@ -21,6 +21,9 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
+
+        private readonly ServiceBusClientOptions _options;
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -132,7 +135,8 @@ namespace Azure.Messaging.ServiceBus
             Connection = new ServiceBusConnection(connectionString, options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
-            Plugins = options?.Clone().Plugins ?? new List<ServiceBusPlugin>();
+            _options = Connection.Options;
+            Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -167,7 +171,8 @@ namespace Azure.Messaging.ServiceBus
                 fullyQualifiedNamespace,
                 credential,
                 options);
-            Plugins = options?.Clone().Plugins ?? new List<ServiceBusPlugin>();
+            _options = Connection.Options;
+            Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

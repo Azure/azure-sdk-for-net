@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
                 sessionId: SessionId);
             scope.Start();
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
                 sessionId: SessionId);
             scope.Start();
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
                 sessionId: SessionId);
             scope.Start();
