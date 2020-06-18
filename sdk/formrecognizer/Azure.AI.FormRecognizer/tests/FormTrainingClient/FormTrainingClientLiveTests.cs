@@ -51,10 +51,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);

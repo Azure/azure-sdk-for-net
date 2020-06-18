@@ -54,9 +54,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingClient = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            DisposableTrainedModel trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
-
-            return trainedModel;
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
         }
     }
 }
