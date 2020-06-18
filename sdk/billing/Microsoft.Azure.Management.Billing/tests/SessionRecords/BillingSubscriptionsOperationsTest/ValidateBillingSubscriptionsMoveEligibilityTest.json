@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e85d57d2-101f-4801-a2d7-2076ca4f13ae"
+          "9df71ebf-5aef-4d82-a01b-91be4cd5605b"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 01:12:20 GMT"
+          "Thu, 18 Jun 2020 19:34:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -51,16 +51,16 @@
           "DENY"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-request-id": [
-          "d3ab88c1-e183-4e7b-8956-7347d107034a"
+          "e774e4b8-fee8-4a0a-895e-15c62e8e75d2"
         ],
         "x-ms-correlation-request-id": [
-          "d3ab88c1-e183-4e7b-8956-7347d107034a"
+          "e774e4b8-fee8-4a0a-895e-15c62e8e75d2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T011221Z:d3ab88c1-e183-4e7b-8956-7347d107034a"
+          "NORTHEUROPE:20200618T193441Z:e774e4b8-fee8-4a0a-895e-15c62e8e75d2"
         ],
         "X-Content-Type-Options": [
           "nosniff"

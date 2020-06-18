@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1de7fe33-27e1-49a0-b09d-fdadae9a44ee"
+          "ffd1f309-5cd1-4198-8914-59e57ffb2975"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 01:11:50 GMT"
+          "Thu, 18 Jun 2020 19:35:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -54,13 +54,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "987f9f63-fc41-4e74-8235-6a823df7006d"
+          "a4ce25eb-0c62-4f4c-a209-890edce26b75"
         ],
         "x-ms-correlation-request-id": [
-          "987f9f63-fc41-4e74-8235-6a823df7006d"
+          "a4ce25eb-0c62-4f4c-a209-890edce26b75"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T011151Z:987f9f63-fc41-4e74-8235-6a823df7006d"
+          "NORTHEUROPE:20200618T193515Z:a4ce25eb-0c62-4f4c-a209-890edce26b75"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -85,7 +85,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/UCAF-IQUR-PJA-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1f5ad1b1-5aad-4728-a73d-1c29791c2948"
+          "bbfd46e5-addc-48fe-89f4-36d5630c1760"
         ],
         "accept-language": [
           "en-US"
@@ -108,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 01:11:56 GMT"
+          "Thu, 18 Jun 2020 19:35:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -132,13 +132,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "20ef2091-0c26-41cf-8e1b-edc54a680050"
+          "f7de1989-2475-453d-93fe-50e5aff7526b"
         ],
         "x-ms-correlation-request-id": [
-          "20ef2091-0c26-41cf-8e1b-edc54a680050"
+          "f7de1989-2475-453d-93fe-50e5aff7526b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T011157Z:20ef2091-0c26-41cf-8e1b-edc54a680050"
+          "NORTHEUROPE:20200618T193522Z:f7de1989-2475-453d-93fe-50e5aff7526b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
