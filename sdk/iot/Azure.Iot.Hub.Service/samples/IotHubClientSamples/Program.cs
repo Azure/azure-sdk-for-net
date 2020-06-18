@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using CommandLine;
 
 namespace Azure.Iot.Hub.Service.Samples
@@ -11,9 +12,9 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Main entry point to the sample.
         /// </summary>
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            // Parse and validate paramters
+            // Parse and validate parameters
 
             CommandLineOptions options = null;
             ParserResult<CommandLineOptions> result = Parser.Default.ParseArguments<CommandLineOptions>(args)
@@ -25,6 +26,13 @@ namespace Azure.Iot.Hub.Service.Samples
                 {
                     Environment.Exit(1);
                 });
+
+            // Instantiate the client
+            IoTHubServiceClient hubClient = new IoTHubServiceClient(options.IotHubConnectionString);
+
+            // Run the samples
+            var moduleIdentityLifecycleSamples = new ModuleIdentityLifecycleSamples(hubClient);
+            await moduleIdentityLifecycleSamples.RunSampleAsync();
         }
     }
 }
