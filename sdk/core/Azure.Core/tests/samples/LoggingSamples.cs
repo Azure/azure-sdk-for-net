@@ -6,6 +6,7 @@ using System.Diagnostics.Tracing;
 using System.Net.Http;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -104,6 +105,20 @@ namespace Azure.Core.Samples
             #region Snippet:TraceLogging
             // Setup a listener to monitor logged events.
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger();
+            #endregion
+        }
+
+        [Test]
+        public void ClientRequestId()
+        {
+            #region Snippet:ClientRequestId
+            var secretClient = new SecretClient(new Uri("<uri>"), new DefaultAzureCredential());
+
+            using (HttpPipeline.CreateClientRequestIdScope("<custom-client-request-id>"))
+            {
+                // The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+                secretClient.GetSecret("<secret-name>");
+            }
             #endregion
         }
     }
