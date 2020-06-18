@@ -23,6 +23,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: eventhub
+    TimeoutInMinutes: 120
     ScenarioName: AzureUSGovernment
     SubscriptionConfiguration: $(sub-config-gov-test-resources)
     EnvVars:
@@ -32,6 +33,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: eventhub
+    TimeoutInMinutes: 120
     ScenarioName: AzureChinaCloud
     SubscriptionConfiguration: $(sub-config-cn-test-resources)
     EnvVars:
