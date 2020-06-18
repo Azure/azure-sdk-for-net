@@ -113,7 +113,7 @@ namespace Azure.Core.Pipeline
         /// <example>
         /// Sample usage:
         /// <code snippet="Snippet:ClientRequestId">
-        /// var secretClient = new SecretClient(new Uri(&quot;&lt;uri&gt;&quot;), new DefaultAzureCredential());
+        /// var secretClient = new SecretClient(new Uri(&quot;http://example.com&quot;), new DefaultAzureCredential());
         ///
         /// using (HttpPipeline.CreateClientRequestIdScope(&quot;&lt;custom-client-request-id&gt;&quot;))
         /// {

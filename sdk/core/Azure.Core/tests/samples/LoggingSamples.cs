@@ -109,10 +109,11 @@ namespace Azure.Core.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void ClientRequestId()
         {
             #region Snippet:ClientRequestId
-            var secretClient = new SecretClient(new Uri("<uri>"), new DefaultAzureCredential());
+            var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
             using (HttpPipeline.CreateClientRequestIdScope("<custom-client-request-id>"))
             {
