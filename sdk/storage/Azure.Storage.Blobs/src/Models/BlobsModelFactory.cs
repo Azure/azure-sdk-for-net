@@ -43,6 +43,27 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobContentInfo BlobContentInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
+            string encryptionKeySha256,
+            string encryptionScope,
+            long blobSequenceNumber)
+            => new BlobContentInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobSequenceNumber = blobSequenceNumber,
+            };
+
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContentInfo BlobContentInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
@@ -56,6 +77,79 @@ namespace Azure.Storage.Blobs.Models
                     EncryptionKeySha256 = encryptionKeySha256,
                     BlobSequenceNumber = blobSequenceNumber,
                 };
+
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
+            string copyProgress,
+            string contentType,
+            string contentEncoding,
+            string contentLanguage,
+            byte[] contentHash ,
+            string contentDisposition,
+            string cacheControl,
+            long? blobSequenceNumber,
+            BlobType? blobType,
+            LeaseStatus? leaseStatus,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            string copyId,
+            CopyStatus? copyStatus,
+            Uri copySource,
+            long? contentLength,
+            string copyStatusDescription,
+            bool? serverEncrypted,
+            bool? incrementalCopy,
+            string destinationSnapshot,
+            int? remainingRetentionDays,
+            AccessTier? accessTier,
+            DateTimeOffset? lastModified,
+            ArchiveStatus? archiveStatus,
+            string customerProvidedKeySha256,
+            string encryptionScope,
+            ETag? eTag,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? copyCompletedOn,
+            DateTimeOffset? deletedOn,
+            DateTimeOffset? accessTierChangedOn)
+            => new BlobItemProperties()
+            {
+                AccessTierInferred = accessTierInferred,
+                CopyProgress = copyProgress,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentHash = contentHash,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                CopySource = copySource,
+                ContentLength = contentLength,
+                CopyStatusDescription = copyStatusDescription,
+                ServerEncrypted = serverEncrypted,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ArchiveStatus = archiveStatus,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
+            };
 
         /// <summary>
         /// Creates a new BlobItemProperties instance for mocking.
@@ -215,6 +309,83 @@ namespace Azure.Storage.Blobs.Models
                 CreatedOn = createdOn,
                 IsSealed = isSealed,
                 ContentHash = contentHash,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobProperties BlobProperties(
+            DateTimeOffset lastModified,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            LeaseDurationType leaseDuration,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string destinationSnapshot,
+            string cacheControl,
+            bool isIncrementalCopy,
+            long blobSequenceNumber,
+            CopyStatus copyStatus,
+            string acceptRanges,
+            Uri copySource,
+            int blobCommittedBlockCount,
+            string copyProgress,
+            bool isServerEncrypted,
+            string copyId,
+            string encryptionKeySha256,
+            string copyStatusDescription,
+            string encryptionScope,
+            DateTimeOffset copyCompletedOn,
+            string accessTier,
+            BlobType blobType,
+            bool accessTierInferred,
+            IDictionary<string, string> metadata,
+            string archiveStatus,
+            DateTimeOffset createdOn,
+            DateTimeOffset accessTierChangedOn,
+            string contentType)
+        {
+            return new BlobProperties()
+            {
+                LastModified = lastModified,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                LeaseDuration = leaseDuration,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                DestinationSnapshot = destinationSnapshot,
+                CacheControl = cacheControl,
+                IsIncrementalCopy = isIncrementalCopy,
+                BlobSequenceNumber = blobSequenceNumber,
+                CopyStatus = copyStatus,
+                AcceptRanges = acceptRanges,
+                CopySource = copySource,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                CopyProgress = copyProgress,
+                IsServerEncrypted = isServerEncrypted,
+                CopyId = copyId,
+                EncryptionKeySha256 = encryptionKeySha256,
+                CopyStatusDescription = copyStatusDescription,
+                EncryptionScope = encryptionScope,
+                CopyCompletedOn = copyCompletedOn,
+                AccessTier = accessTier,
+                BlobType = blobType,
+                AccessTierInferred = accessTierInferred,
+                Metadata = metadata,
+                ArchiveStatus = archiveStatus,
+                CreatedOn = createdOn,
+                AccessTierChangedOn = accessTierChangedOn,
+                ContentType = contentType,
             };
         }
 
@@ -609,6 +780,37 @@ namespace Azure.Storage.Blobs.Models
                 IsSealed = isSealed,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
                 ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy
+            };
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            PublicAccessType? publicAccess,
+            LeaseStatus? leaseStatus,
+            bool? hasLegalHold,
+            string defaultEncryptionScope,
+            bool? preventEncryptionScopeOverride,
+            IDictionary<string, string> metadata,
+            bool? hasImmutabilityPolicy)
+            => new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                LeaseStatus = leaseStatus,
+                HasLegalHold = hasLegalHold,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                Metadata = metadata,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
     }
 }
