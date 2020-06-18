@@ -2,6 +2,9 @@
 
 ## 4.1.0-preview.2 (Unreleased)
 
+### Minor changes
+
+- Make public `JsonWebKey` properties settable ([#12084](https://github.com/Azure/azure-sdk-for-net/issues/12084))
 
 ## 4.1.0-preview.1 (2020-03-09)
 
