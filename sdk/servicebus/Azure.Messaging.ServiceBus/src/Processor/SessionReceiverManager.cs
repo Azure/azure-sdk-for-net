@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
             Func<ProcessErrorEventArgs, Task> errorHandler,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins)
+            ServiceBusPlugin[] plugins)
             : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
                   scopeFactory, plugins)
         {

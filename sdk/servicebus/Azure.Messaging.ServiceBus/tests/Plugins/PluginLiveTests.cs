@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 // this should not impact already created receiver
                 client.RegisterPlugin(plugin);
-                Assert.AreEqual(1, receiver._plugins.Count);
+                Assert.AreEqual(1, receiver._plugins.Length);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -150,7 +150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var receiver = await client.CreateSessionReceiverAsync(scope.TopicName, scope.SubscriptionNames.First());
                 // this should not impact already created receiver
                 client.RegisterPlugin(plugin);
-                Assert.AreEqual(1, receiver._plugins.Count);
+                Assert.AreEqual(1, receiver._plugins.Length);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());

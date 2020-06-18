@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -221,7 +220,8 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueOrTopicName,
                 options: new ServiceBusSenderOptions(),
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins));
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray());
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueOrTopicName,
                 options: options,
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins));
+                plugins: Plugins.ToArray());
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -314,7 +314,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -342,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -407,7 +407,7 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -434,7 +434,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatDeadLetterPath(queueName),
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -465,7 +465,7 @@ namespace Azure.Messaging.ServiceBus
                         topicName,
                         subscriptionName)),
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -488,7 +488,8 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -513,7 +514,8 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -539,7 +541,8 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -566,7 +569,8 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: options);
         }
 
@@ -589,7 +593,8 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
@@ -615,7 +620,8 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                plugins: new List<ServiceBusPlugin>(Plugins),
+                // copy off plugins to new array to avoid races if user changes plugins afterwards
+                plugins: Plugins.ToArray(),
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
@@ -679,7 +685,5 @@ namespace Azure.Messaging.ServiceBus
                 throw new ArgumentException(Resources.SendViaCannotBeUsedWithEntityInConnectionString);
             }
         }
-
-
     }
 }

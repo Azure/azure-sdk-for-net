@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Messaging.ServiceBus.Plugins;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

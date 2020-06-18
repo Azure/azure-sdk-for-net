@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,
-            IList<ServiceBusPlugin> plugins,
+            ServiceBusPlugin[] plugins,
             ServiceBusSessionProcessorOptions options)
         {
             _innerProcessor = new ServiceBusProcessor(

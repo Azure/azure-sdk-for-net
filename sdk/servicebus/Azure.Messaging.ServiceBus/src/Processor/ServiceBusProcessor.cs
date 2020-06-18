@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
-        internal readonly IList<ServiceBusPlugin> _plugins;
+        internal readonly ServiceBusPlugin[] _plugins;
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            IList<ServiceBusPlugin> plugins,
+            ServiceBusPlugin[] plugins,
             ServiceBusProcessorOptions options,
             string[] sessionIds = default)
         {

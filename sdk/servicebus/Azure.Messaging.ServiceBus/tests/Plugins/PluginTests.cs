@@ -58,49 +58,49 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             var plugin = new TestPlugin();
             client.RegisterPlugin(plugin);
             var receiver = client.CreateReceiver("fakeQueue");
-            Assert.AreEqual(1, receiver._plugins.Count);
+            Assert.AreEqual(1, receiver._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(1, receiver._plugins.Count);
+            Assert.AreEqual(1, receiver._plugins.Length);
 
             var subscriptionReceiver = client.CreateReceiver("fakeTopic", "fakeSubscription");
-            Assert.AreEqual(2, subscriptionReceiver._plugins.Count);
+            Assert.AreEqual(2, subscriptionReceiver._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(2, subscriptionReceiver._plugins.Count);
+            Assert.AreEqual(2, subscriptionReceiver._plugins.Length);
 
             var sender = client.CreateSender("fakeQueue");
-            Assert.AreEqual(3, sender._plugins.Count);
+            Assert.AreEqual(3, sender._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(3, sender._plugins.Count);
+            Assert.AreEqual(3, sender._plugins.Length);
 
             var dlq = client.CreateDeadLetterReceiver("fakeQueue");
-            Assert.AreEqual(4, dlq._plugins.Count);
+            Assert.AreEqual(4, dlq._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(4, dlq._plugins.Count);
+            Assert.AreEqual(4, dlq._plugins.Length);
 
             var subscriptionDlq = client.CreateDeadLetterReceiver("fakeTopic", "fakeSubscription");
-            Assert.AreEqual(5, subscriptionDlq._plugins.Count);
+            Assert.AreEqual(5, subscriptionDlq._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(5, subscriptionDlq._plugins.Count);
+            Assert.AreEqual(5, subscriptionDlq._plugins.Length);
 
             var processor = client.CreateProcessor("fakeQueue");
-            Assert.AreEqual(6, processor._plugins.Count);
+            Assert.AreEqual(6, processor._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(6, processor._plugins.Count);
+            Assert.AreEqual(6, processor._plugins.Length);
 
             var subscriptionProcessor = client.CreateProcessor("fakeTopic", "fakeSubscription");
-            Assert.AreEqual(7, subscriptionProcessor._plugins.Count);
+            Assert.AreEqual(7, subscriptionProcessor._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(7, subscriptionProcessor._plugins.Count);
+            Assert.AreEqual(7, subscriptionProcessor._plugins.Length);
 
             var sessionProcessor = client.CreateSessionProcessor("fakeQueue");
-            Assert.AreEqual(8, sessionProcessor._innerProcessor._plugins.Count);
+            Assert.AreEqual(8, sessionProcessor._innerProcessor._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(8, sessionProcessor._innerProcessor._plugins.Count);
+            Assert.AreEqual(8, sessionProcessor._innerProcessor._plugins.Length);
 
             var subscriptionSessionProcessor = client.CreateSessionProcessor("fakeTopic", "fakeSubscription");
-            Assert.AreEqual(9, subscriptionSessionProcessor._innerProcessor._plugins.Count);
+            Assert.AreEqual(9, subscriptionSessionProcessor._innerProcessor._plugins.Length);
             client.RegisterPlugin(plugin);
-            Assert.AreEqual(9, subscriptionSessionProcessor._innerProcessor._plugins.Count);
+            Assert.AreEqual(9, subscriptionSessionProcessor._innerProcessor._plugins.Length);
         }
 
         internal class TestPlugin : ServiceBusPlugin

@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
         protected readonly EntityScopeFactory _scopeFactory;
-        protected readonly IList<ServiceBusPlugin> _plugins;
+        protected readonly ServiceBusPlugin[] _plugins;
 
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
             Func<ProcessMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
             EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins)
+            ServiceBusPlugin[] plugins)
         {
             _connection = connection;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;

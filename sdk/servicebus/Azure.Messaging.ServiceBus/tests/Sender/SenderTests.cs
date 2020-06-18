@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", null, mockConnection.Object, new List<ServiceBusPlugin>());
+            var sender = new ServiceBusSender("dummy", null, mockConnection.Object, new ServiceBusPlugin[] { });
             var sendTask = sender.SendMessagesAsync(batch);
 
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");

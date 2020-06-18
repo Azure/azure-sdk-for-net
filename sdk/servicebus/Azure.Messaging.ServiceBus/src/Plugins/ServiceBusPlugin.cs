@@ -16,7 +16,6 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <summary>
         /// Gets the name of the <see cref="ServiceBusPlugin"/>.
         /// </summary>
-        /// <remarks>This name is used to identify the plugin, and prevent a plugin from being registered multiple times.</remarks>
         public abstract string Name { get; }
 
         /// <summary>
