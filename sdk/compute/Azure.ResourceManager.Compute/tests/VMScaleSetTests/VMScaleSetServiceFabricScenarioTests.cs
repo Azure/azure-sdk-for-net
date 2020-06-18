@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
+
 using NUnit.Framework;
 
 
@@ -17,14 +19,15 @@ namespace Azure.ResourceManager.Compute.Tests
         /// ForceRecoveryServiceFabricPlatformUpdateDomainWalk
         /// </summary>
         [Test]
+        [Ignore("skip in track1")]
         //[Test(Skip = "ReRecord due to CR change")]
-        public void TestVMScaleSetServiceFabric()
+        public async Task TestVMScaleSetServiceFabric()
         {
             EnsureClientsInitialized(DefaultLocation);
-            TestVMScaleSetServiceFabricImpl();
+            await TestVMScaleSetServiceFabricImpl();
         }
 
-        private async void TestVMScaleSetServiceFabricImpl()
+        private async Task TestVMScaleSetServiceFabricImpl()
         {
             /*
              * IMPORTANT: Since code to create an SF cluster is not there and needs to be added, it has not been done
