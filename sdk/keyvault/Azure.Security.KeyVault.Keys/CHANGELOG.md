@@ -1,5 +1,16 @@
 # Release History
 
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add "import" value to `KeyOperation` enumeration.
+- Add `RecoverableDays` property to `KeyProperties`.
+
+### Minor changes
+
+- Make public `JsonWebKey` properties settable ([#12084](https://github.com/Azure/azure-sdk-for-net/issues/12084))
+
 ## 4.0.3 (2020-03-18)
 
 ### Fixed
