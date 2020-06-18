@@ -11,10 +11,10 @@ namespace Microsoft.Azure.EventHubs.Tests
     public class TaskExtensionsTests
     {
         // It has been observed during the CI build that test runs can cause delays that were noted at
-        // 1-2 seconds and were causing intermittent failures as a result.  The long delay has been set at 5
+        // 1-2 seconds and were causing intermittent failures as a result.  The long delay has been set at 60
         // seconds arbitrarily, which may delay results should tests fail but is otherwise not expected to
         // be an actual wait time under normal circumstances.
-        private readonly TimeSpan LongDelay = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan LongDelay = TimeSpan.FromSeconds(60);
         private readonly TimeSpan TinyDelay = TimeSpan.FromMilliseconds(1);
 
         [Fact]
