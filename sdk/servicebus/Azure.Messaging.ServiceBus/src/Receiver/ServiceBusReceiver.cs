@@ -248,21 +248,19 @@ namespace Azure.Messaging.ServiceBus
         {
             foreach (ServiceBusPlugin plugin in _plugins)
             {
+                string pluginType = plugin.GetType().Name;
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
                     try
                     {
-                        Logger.PluginCallStarted(plugin.Name, message.MessageId);
+                        Logger.PluginCallStarted(pluginType, message.MessageId);
                         await plugin.AfterMessageReceive(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(plugin.Name, message.MessageId);
+                        Logger.PluginCallCompleted(pluginType, message.MessageId);
                     }
                     catch (Exception ex)
                     {
-                        Logger.PluginCallException(plugin.Name, message.MessageId, ex.ToString());
-                        if (!plugin.ShouldContinueOnException)
-                        {
-                            throw;
-                        }
+                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+                        throw;
                     }
                 }
             }
@@ -529,7 +527,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
         /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
         /// to create a receiver for the queue or subscription.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to ReceiveMode.PeekLock.
         /// </remarks>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,

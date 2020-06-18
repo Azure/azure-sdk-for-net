@@ -19,9 +19,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enablePartitioning: false,
                 enableSession: false))
             {
-                var client = GetClient();
-                client.RegisterPlugin(new FirstPlugin());
-                client.RegisterPlugin(new SecondPlugin());
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new FirstPlugin());
+                options.AddPlugin(new SecondPlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var sendMessage = new ServiceBusMessage();
@@ -41,44 +43,44 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         [TestCase(false)]
         public async Task PluginsCanAlterMessage(bool schedule)
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
+            await using var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: false))
+                enableSession: false);
+            var plugin = new SendReceivePlugin();
+            var options = new ServiceBusClientOptions();
+            options.AddPlugin(plugin);
+            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
+            var sender = client.CreateSender(scope.QueueName);
+            var receiver = client.CreateReceiver(scope.QueueName);
+
+            if (schedule)
             {
-                var plugin = new SendReceivePlugin();
-                var client = GetClient();
-                client.RegisterPlugin(plugin);
-
-                var sender = client.CreateSender(scope.QueueName);
-                var receiver = client.CreateReceiver(scope.QueueName);
-
-                if (schedule)
-                {
-                    await sender.ScheduleMessageAsync(new ServiceBusMessage(), DateTimeOffset.UtcNow);
-                }
-                else
-                {
-                    await sender.SendMessageAsync(new ServiceBusMessage());
-                }
-
-                Assert.True(plugin.WasCalled);
-                var receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("received", receivedMessage.Body.ToString());
+                await sender.ScheduleMessageAsync(new ServiceBusMessage(), DateTimeOffset.UtcNow);
             }
+            else
+            {
+                await sender.SendMessageAsync(new ServiceBusMessage());
+            }
+
+            Assert.True(plugin.WasCalled);
+            var receivedMessage = await receiver.ReceiveMessageAsync();
+            Assert.AreEqual("received", receivedMessage.Body.ToString());
         }
 
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task PluginsCanAlterSetofMessages(bool schedule)
+        public async Task PluginsCanAlterSetOfMessages(bool schedule)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false))
             {
                 var plugin = new SendReceivePlugin();
-                var client = GetClient();
-                client.RegisterPlugin(plugin);
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(plugin);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
 
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -116,16 +118,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             {
 
                 var plugin = new SendReceivePlugin();
-                var client = GetClient();
-                client.RegisterPlugin(plugin);
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(plugin);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
                 var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
-                // this should not impact already created receiver
-                client.RegisterPlugin(plugin);
-                Assert.AreEqual(1, receiver._plugins.Length);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -141,16 +141,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             {
 
                 var plugin = new SendReceivePlugin();
-                var client = GetClient();
-                client.RegisterPlugin(plugin);
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(plugin);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.TopicName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
                 var receiver = await client.CreateSessionReceiverAsync(scope.TopicName, scope.SubscriptionNames.First());
-                // this should not impact already created receiver
-                client.RegisterPlugin(plugin);
-                Assert.AreEqual(1, receiver._plugins.Length);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -164,10 +162,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 enablePartitioning: false,
                 enableSession: false))
             {
-                var client = GetClient();
                 var plugin = new SendReceivePlugin();
-                client.RegisterPlugin(plugin);
-
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(plugin);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 Assert.True(plugin.WasCalled);
@@ -196,8 +194,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             {
 
                 var plugin = new SendReceivePlugin();
-                var client = GetClient();
-                client.RegisterPlugin(plugin);
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(plugin);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
@@ -221,21 +220,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         }
 
         [Test]
-        public async Task PluginWithoutShouldContinueOnExceptionShouldThrow()
+        public async Task PluginCausingExceptionShouldThrow()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false))
             {
-                var client = GetClient();
-                client.RegisterPlugin(new ExceptionPlugin());
-
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new SendExceptionPlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 var sender = client.CreateSender(scope.QueueName);
                 Assert.That(
                     async() => await sender.SendMessageAsync(new ServiceBusMessage()),
                     Throws.InstanceOf<NotImplementedException>());
 
-                sender = GetClient().CreateSender(scope.QueueName);
+                options = new ServiceBusClientOptions();
+                options.AddPlugin(new ReceiveExceptionPlugin());
+                client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(new ServiceBusMessage());
                 var receiver = client.CreateReceiver(scope.QueueName);
                 Assert.That(
@@ -244,30 +246,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             }
         }
 
-        [Test]
-        public async Task PluginWithShouldContinueOnExceptionShouldContinue()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
-                enablePartitioning: false,
-                enableSession: false))
-            {
-                var client = GetClient();
-                client.RegisterPlugin(new ShouldContinueOnExceptionPlugin());
-                var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(new ServiceBusMessage());
-                var receiver = client.CreateReceiver(scope.QueueName);
-                var message = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("before exception", message.Body.ToString());
-                Assert.AreEqual("received", message.Label);
-            }
-        }
-
 #pragma warning disable SA1402 // File may only contain a single type
         internal class FirstPlugin : ServiceBusPlugin
 #pragma warning restore SA1402 // File may only contain a single type
         {
-            public override string Name => nameof(FirstPlugin);
-
             public override Task BeforeMessageSend(ServiceBusMessage message)
             {
                 message.Properties.Add("FirstSendPlugin", true);
@@ -279,8 +261,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         internal class SecondPlugin : ServiceBusPlugin
 #pragma warning restore SA1402 // File may only contain a single type
         {
-            public override string Name => nameof(SecondPlugin);
-
             public override Task BeforeMessageSend(ServiceBusMessage message)
             {
                 // Ensure that the first plugin actually ran first
@@ -292,8 +272,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
         internal class SendReceivePlugin : ServiceBusPlugin
         {
-            public override string Name => nameof(SendReceivePlugin);
-
             public bool WasCalled;
 
             public override Task BeforeMessageSend(ServiceBusMessage message)
@@ -311,10 +289,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             }
         }
 
-        internal class ExceptionPlugin : ServiceBusPlugin
+        internal class SendExceptionPlugin : ServiceBusPlugin
         {
-            public override string Name => nameof(ExceptionPlugin);
-
             public override Task BeforeMessageSend(ServiceBusMessage message)
             {
                 throw new NotImplementedException();
@@ -322,26 +298,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
             public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
             {
-                throw new NotImplementedException();
+                return Task.CompletedTask;
             }
         }
 
-        internal class ShouldContinueOnExceptionPlugin : ServiceBusPlugin
+        internal class ReceiveExceptionPlugin : ServiceBusPlugin
         {
-            public override bool ShouldContinueOnException => true;
-
-            public override string Name => nameof(ShouldContinueOnExceptionPlugin);
-
-            public override async Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSend(ServiceBusMessage message)
             {
-                message.Body = new BinaryData("before exception");
-                await Task.Delay(1);
-                throw new NotImplementedException();
+                return Task.CompletedTask;
             }
 
             public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
             {
-                SetLabel(message, "received");
                 throw new NotImplementedException();
             }
         }

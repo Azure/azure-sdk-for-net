@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,31 +63,6 @@ namespace Azure.Messaging.ServiceBus
         /// The list of plugins for the client.
         /// </summary>
         internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
-
-        /// <summary>
-        /// Register a plugin to be used to alter
-        /// incoming/outgoing messages.
-        /// </summary>
-        /// <param name="plugin">The plugin instance to register.</param>
-        public void RegisterPlugin(ServiceBusPlugin plugin)
-        {
-            Argument.AssertNotNull(plugin, nameof(plugin));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusClient));
-            Plugins.Add(plugin);
-        }
-
-        /// <summary>
-        /// Clear the registered plugins from the <see cref="ServiceBusClient"/>.
-        /// </summary>
-        public void ClearPlugins() =>
-            Plugins.Clear();
-
-        /// <summary>
-        /// Get the list of registered plugins.
-        /// </summary>
-        /// <returns>A list of <see cref="ServiceBusPlugin"/>.</returns>
-        public ReadOnlyCollection<ServiceBusPlugin> GetPlugins() =>
-            new ReadOnlyCollection<ServiceBusPlugin>(Plugins);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -164,6 +138,7 @@ namespace Azure.Messaging.ServiceBus
             Connection = new ServiceBusConnection(connectionString, options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Options = Connection.Options;
+            Plugins = options?.Plugins ?? new List<ServiceBusPlugin>();
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }

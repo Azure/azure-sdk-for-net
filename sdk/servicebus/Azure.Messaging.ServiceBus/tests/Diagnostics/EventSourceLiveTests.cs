@@ -212,8 +212,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                client.RegisterPlugin(new PluginLiveTests.SendReceivePlugin());
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.SendReceivePlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusMessage message = GetMessage();
                 await sender.SendMessageAsync(message);
@@ -231,8 +232,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                client.RegisterPlugin(new PluginLiveTests.ExceptionPlugin());
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.SendExceptionPlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusMessage message = GetMessage();
                 Assert.That(
@@ -241,8 +243,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.PluginStartEvent);
                 _listener.SingleEventById(ServiceBusEventSource.PluginExceptionEvent);
 
-                client.ClearPlugins();
-                client.RegisterPlugin(new PluginLiveTests.ShouldContinueOnExceptionPlugin());
+                options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.ReceiveExceptionPlugin());
+                client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(message);
                 Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
