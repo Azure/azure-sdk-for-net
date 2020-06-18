@@ -22,10 +22,10 @@ namespace Azure.Iot.Hub.Service.Samples
             Environment.Exit(0);
         }
 
-        internal static void PrintSuccessfulEvent(string message)
+        internal static void PrintSuccess(string message)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"\n{message}");
+            Console.WriteLine($"{message}");
             Console.ResetColor();
         }
 

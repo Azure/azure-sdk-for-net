@@ -75,7 +75,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the device identity.
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully create a new device identity with Id: '{deviceId}'");
+                SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{deviceId}'");
 
                 return response.Value;
             }
@@ -109,7 +109,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the module identity.
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully create a new module identity with Id: '{moduleId}'");
+                SampleLogger.PrintSuccess($"Successfully created a new module identity with Id: '{moduleId}'");
 
                 return response.Value;
             }
@@ -150,6 +150,10 @@ namespace Azure.Iot.Hub.Service.Samples
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Deletes a module identity
+        /// </summary>
+        /// <param name="moduleIdentity">Module identity to delete</param>
         public async Task DeleteModuleIdentityAsync(ModuleIdentity moduleIdentity)
         {
             SampleLogger.PrintHeader("DELETE MODULE IDENTITY");
@@ -159,9 +163,10 @@ namespace Azure.Iot.Hub.Service.Samples
                 Console.WriteLine($"Deleting module identity with Id: '{moduleIdentity.ModuleId}'");
 
                 // Call APIs to delete the module identity.
+                // We use UnconditionalIfMatch to force delete the Module Identity (disregard the IfMatch ETag)
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully deleted module identity with Id: '{moduleIdentity.ModuleId}'");
+                SampleLogger.PrintSuccess($"Successfully deleted module identity with Id: '{moduleIdentity.ModuleId}'");
             }
             catch (Exception ex)
             {
@@ -172,7 +177,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Deletes a device identity
         /// </summary>
-        /// <param name="deviceId">Device identity to delete</param>
+        /// <param name="deviceIdentity">Device identity to delete</param>
         public async Task DeleteDeviceIdentityAsync(DeviceIdentity deviceIdentity)
         {
             SampleLogger.PrintHeader("DELETE DEVICE IDENTITY");
@@ -182,9 +187,10 @@ namespace Azure.Iot.Hub.Service.Samples
                 Console.WriteLine($"Deleting device identity with Id: '{deviceIdentity.DeviceId}'");
 
                 // Call APIs to delete the device identity.
+                // We use UnconditionalIfMatch to force delete the Device Identity (disregard the IfMatch ETag)
                 Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
-                SampleLogger.PrintSuccessfulEvent($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
+                SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
             }
             catch (Exception ex)
             {
