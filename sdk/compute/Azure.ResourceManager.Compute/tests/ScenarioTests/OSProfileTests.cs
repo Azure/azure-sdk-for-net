@@ -10,6 +10,7 @@ using Azure.ResourceManager.Compute.Models;
 using Azure.Management.Resources;
 using Azure.Management.Storage.Models;
 using NUnit.Framework;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Tests
         //[Test(Skip = "Secret Vault")]
         [Test]
         [Ignore("skip in track 1")]
-        public void TestVMWithWindowsOSProfile()
+        public async Task TestVMWithWindowsOSProfile()
         {
             EnsureClientsInitialized(DefaultLocation);
 
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             SecretVaultHelper.CreateKeyVault(m_subId, rgName, keyVaultName).Wait();
 
-            TestVMWithOSProfile(
+            await TestVMWithOSProfile(
                 rgName: rgName,
                 useWindowsProfile: true,
                 vmCustomizer: enableWinRMCustomDataAndUnattendContent,
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        public void TestVMWithLinuxOSProfile()
+        public async Task TestVMWithLinuxOSProfile()
         {
             EnsureClientsInitialized(DefaultLocation);
 
@@ -256,14 +257,14 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.AreEqual(DefaultSshPublicKey, publicKeys[0].KeyData);
             };
 
-            TestVMWithOSProfile(
+            await TestVMWithOSProfile(
                 rgName: rgName,
                 useWindowsProfile: false,
                 vmCustomizer: enableSSHAndCustomData,
                 vmValidator: validateWinRMCustomDataAndUnattendContent);
         }
 
-        private async void TestVMWithOSProfile(
+        private async Task TestVMWithOSProfile(
             string rgName,
             bool useWindowsProfile,
             Action<VirtualMachine> vmCustomizer = null,
