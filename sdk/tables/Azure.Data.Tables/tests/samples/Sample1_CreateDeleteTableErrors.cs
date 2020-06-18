@@ -12,12 +12,12 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void TableCreateError()
+        public void CreateTableError()
         {
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies2";
+            string tableName = "OfficeSupplies1.3";
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),

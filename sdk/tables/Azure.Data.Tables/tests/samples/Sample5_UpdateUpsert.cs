@@ -13,12 +13,12 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void TableOperations()
+        public void UpdateUpsert()
         {
             string storageUri = StorageUri;
             string accountName = AccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies4";
+            string tableName = "OfficeSupplies5.1";
             string partitionKey = "somePartition";
             string rowKey = "A1";
 
