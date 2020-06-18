@@ -161,6 +161,24 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
+        /// <c>long</c>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// </summary>
+        /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
+        /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        private static FormField<long> ConvertInt64Field(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            if (fields.TryGetValue(fieldName, out FormField field)
+                && field.Value.Type == FieldValueType.Float)
+            {
+                return new FormField<long>(field, field.Value.AsInt64());
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
         /// <c>float</c>. Returns <c>null</c> if field does not exist or if conversion is not possible.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
