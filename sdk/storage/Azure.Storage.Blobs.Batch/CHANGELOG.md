@@ -1,7 +1,8 @@
 # Release History
 
 ## 12.3.0-preview.1 (Unreleased)
-
+- Added support for service version 2019-12-12.
+- This release contains bug fixes to improve quality.
 
 ## 12.2.1 (2020-03)
 - Minor bugfixes around task completion.
