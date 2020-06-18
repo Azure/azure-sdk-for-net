@@ -53,12 +53,22 @@ namespace Azure.Core
         public static explicit operator double (Azure.Core.DynamicJson json) { throw null; }
         public static explicit operator int (Azure.Core.DynamicJson json) { throw null; }
         public static explicit operator long (Azure.Core.DynamicJson json) { throw null; }
+        public static explicit operator bool? (Azure.Core.DynamicJson json) { throw null; }
+        public static explicit operator double? (Azure.Core.DynamicJson json) { throw null; }
+        public static explicit operator int? (Azure.Core.DynamicJson json) { throw null; }
+        public static explicit operator long? (Azure.Core.DynamicJson json) { throw null; }
+        public static explicit operator float? (Azure.Core.DynamicJson json) { throw null; }
         public static explicit operator float (Azure.Core.DynamicJson json) { throw null; }
         public static explicit operator string (Azure.Core.DynamicJson json) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (bool value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (double value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (int value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (long value) { throw null; }
+        public static implicit operator Azure.Core.DynamicJson (bool? value) { throw null; }
+        public static implicit operator Azure.Core.DynamicJson (double? value) { throw null; }
+        public static implicit operator Azure.Core.DynamicJson (int? value) { throw null; }
+        public static implicit operator Azure.Core.DynamicJson (long? value) { throw null; }
+        public static implicit operator Azure.Core.DynamicJson (float? value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (float value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (string? value) { throw null; }
         public static Azure.Core.DynamicJson Parse(string json) { throw null; }
