@@ -243,14 +243,14 @@ namespace Azure.Core
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
-        private object GetDynamicValue(string propertyName)
+        private IEnumerable GetDynamicEnumerable()
         {
-            if (propertyName == "Length" && _kind == JsonValueKind.Array)
+            if (_kind == JsonValueKind.Array)
             {
-                return EnsureArray().Count;
+                return EnsureArray();
             }
 
-            return GetPropertyValue(propertyName);
+            return EnsureObject();
         }
 
         private DynamicJson GetPropertyValue(string propertyName)
@@ -307,73 +307,53 @@ namespace Azure.Core
             return _value;
         }
 
+        private Number EnsureNumberValue()
+        {
+            if (_kind != JsonValueKind.Number)
+            {
+                throw new InvalidOperationException($"Expected kind to be number but was {_kind} instead");
+            }
+
+            return (Number) EnsureValue()!;
+        }
+
         private DynamicJson GetValueAt(int index)
         {
             return EnsureArray()[index];
         }
 
-        private object? ConvertTo(Type type)
-        {
-            Debug.Assert(type != null);
-
-            if (type == typeof(IEnumerable))
-            {
-                return EnsureArray();
-            }
-
-            var value = EnsureValue();
-
-            if (value == null)
-            {
-                return null;
-            }
-
-            if (type == typeof(long))
-            {
-                return ((Number)value).AsLong();
-            }
-            if (type == typeof(int))
-            {
-                return checked((int)((Number)value).AsLong());
-            }
-
-            if (type == typeof(double))
-            {
-                return ((Number)value).AsDouble();
-            }
-            if (type == typeof(float))
-            {
-                return (float)((Number)value).AsDouble();
-            }
-
-            if (type == typeof(bool))
-            {
-                return (bool)value;
-            }
-
-            if (type == typeof(string))
-            {
-                return (string)value;
-            }
-
-            throw new InvalidOperationException($"Unknown type {type}");
-        }
-
         private class MetaObject : DynamicMetaObject
         {
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(DynamicJson).GetMethod(nameof(GetPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance);
+
+            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(DynamicJson).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
+
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
-            { }
+            {
+            }
 
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
                 var targetObject = Expression.Convert(Expression, LimitType);
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetDynamicValue), BindingFlags.NonPublic | BindingFlags.Instance);
-                var arguments = new Expression[] { Expression.Constant(binder.Name) };
 
-                var getPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
+                var arguments = new Expression[] { Expression.Constant(binder.Name) };
+                var getPropertyCall = Expression.Call(targetObject, GetDynamicValueMethod, arguments);
+
                 var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                DynamicMetaObject getProperty = new DynamicMetaObject(getPropertyCall, restrictions);
-                return getProperty;
+                return new DynamicMetaObject(getPropertyCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindConvert(ConvertBinder binder)
+            {
+                if (binder.Type == typeof(IEnumerable))
+                {
+                    var targetObject = Expression.Convert(Expression, LimitType);
+                    var getPropertyCall = Expression.Call(targetObject, GetDynamicEnumerableMethod);
+
+                    var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                    return new DynamicMetaObject(getPropertyCall, restrictions);
+                }
+                return base.BindConvert(binder);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
@@ -386,36 +366,6 @@ namespace Azure.Core
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
                 return setProperty;
-            }
-
-            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
-            {
-                if (indexes.Length != 1) throw new InvalidOperationException();
-                var index = indexes[0].Expression;
-
-                var targetObject = Expression.Convert(Expression, LimitType);
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetValueAt), BindingFlags.NonPublic | BindingFlags.Instance);
-                var arguments = new[] { index };
-
-                var getPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
-                var restrictions = binder.FallbackGetIndex(this, indexes).Restrictions; // TODO: all these restrictions are a hack. Tthey need to be cleaned up.
-                DynamicMetaObject getProperty = new DynamicMetaObject(getPropertyCall, restrictions);
-                return getProperty;
-            }
-
-            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
-            {
-                if (indexes.Length != 1) throw new InvalidOperationException();
-                var index = indexes[0].Expression;
-
-                var targetObject = Expression.Convert(Expression, LimitType);
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(SetValueAt), BindingFlags.NonPublic | BindingFlags.Instance);
-                var arguments = new[] { index, Expression.Convert(value.Expression, typeof(object)) };
-
-                var setPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
-                var restrictions = binder.FallbackSetIndex(this, indexes, value).Restrictions; // TODO: all these restrictions are a hack. Tthey need to be cleaned up.
-                DynamicMetaObject getProperty = new DynamicMetaObject(setPropertyCall , restrictions);
-                return getProperty;
             }
         }
 
@@ -486,12 +436,19 @@ namespace Azure.Core
             return new DynamicJson(values);
         }
 
-        public static explicit operator bool(DynamicJson json) => (bool) json.ConvertTo(typeof(bool))!;
-        public static explicit operator int(DynamicJson json) => (int) json.ConvertTo(typeof(int))!;
-        public static explicit operator long(DynamicJson json) => (long) json.ConvertTo(typeof(long))!;
-        public static explicit operator string?(DynamicJson json) => (string?) json.ConvertTo(typeof(string));
-        public static explicit operator float(DynamicJson json) => (float) json.ConvertTo(typeof(float))!;
-        public static explicit operator double(DynamicJson json) => (double) json.ConvertTo(typeof(double))!;
+        public static explicit operator bool(DynamicJson json) => json.GetBoolean();
+        public static explicit operator int(DynamicJson json) => json.GetIn32();
+        public static explicit operator long(DynamicJson json) => json.GetLong();
+        public static explicit operator string?(DynamicJson json) => json.GetString();
+        public static explicit operator float(DynamicJson json) => json.GetFloat();
+        public static explicit operator double(DynamicJson json) => json.GetDouble();
+
+
+        public static explicit operator bool?(DynamicJson json) => json._kind == JsonValueKind.Null ? (bool?)null : json.GetBoolean();
+        public static explicit operator int?(DynamicJson json) => json._kind == JsonValueKind.Null ? (int?)null : json.GetIn32();
+        public static explicit operator long?(DynamicJson json) => json._kind == JsonValueKind.Null ? (long?)null : json.GetLong();
+        public static explicit operator float?(DynamicJson json) => json._kind == JsonValueKind.Null ? (float?)null : json.GetFloat();
+        public static explicit operator double?(DynamicJson json) => json._kind == JsonValueKind.Null ? (double?)null : json.GetDouble();
 
         public static implicit operator DynamicJson(int value) => new DynamicJson(value);
         public static implicit operator DynamicJson(long value) => new DynamicJson(value);
@@ -499,13 +456,36 @@ namespace Azure.Core
         public static implicit operator DynamicJson(float value) => new DynamicJson(value);
         public static implicit operator DynamicJson(bool value) => new DynamicJson(value);
         public static implicit operator DynamicJson(string? value) => new DynamicJson((object?)value);
+        public static implicit operator DynamicJson(int? value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(long? value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(double? value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(float? value) => new DynamicJson(value);
+        public static implicit operator DynamicJson(bool? value) => new DynamicJson(value);
 
-        public string? GetString() => (string?) this;
-        public int GetIn32() => (int) this;
-        public long GetLong() => (long) this;
-        public float GetFloat() => (float) this;
-        public double GetDouble() => (double) this;
-        public bool GetBoolean() => (bool) this;
+        public string? GetString() => (string?)EnsureValue();
+
+        public int GetIn32()
+        {
+            var value = EnsureNumberValue().AsLong();
+            if (value > int.MaxValue || value < int.MinValue)
+            {
+                throw new OverflowException();
+            }
+            return (int)value;
+        }
+
+        public long GetLong() => EnsureNumberValue().AsLong();
+        public float GetFloat()
+        {
+            var value = EnsureNumberValue().AsDouble();
+            if (value > float.MaxValue || value < float.MinValue)
+            {
+                throw new OverflowException();
+            }
+            return (float)value;
+        }
+        public double GetDouble() => EnsureNumberValue().AsDouble();
+        public bool GetBoolean() => (bool)EnsureValue()!;
         public int GetArrayLength() => EnsureArray().Count;
         public DynamicJson GetProperty(string name) => GetPropertyValue(name);
 

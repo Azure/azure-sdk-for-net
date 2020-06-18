@@ -25,7 +25,6 @@ namespace Azure.Core.Tests
         public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonAsType<int>("5"));
 
         [Test]
-        [Ignore("nope")]
         public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonAsType<long>("5"));
 
         [Test]
@@ -34,15 +33,12 @@ namespace Azure.Core.Tests
         [Test]
         public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonAsType<string>("null"));
 
-        [Ignore("nope")]
         [Test]
         public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonAsType<int?>("null"));
 
-        [Ignore("nope")]
         [Test]
         public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonAsType<long?>("null"));
 
-        [Ignore("nope")]
         [Test]
         public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonAsType<bool?>("null"));
 
@@ -92,14 +88,14 @@ namespace Azure.Core.Tests
         public void DynamicArrayHasLength()
         {
             dynamic dynamicJson = DynamicJson.Parse("[0, 1, 2, 3]");
-            Assert.AreEqual(4, dynamicJson.Length);
+            Assert.AreEqual(4, dynamicJson.GetArrayLength());
         }
 
         [Test]
         public void DynamicArrayFor()
         {
             dynamic dynamicJson = DynamicJson.Parse("[0, 1, 2, 3]");
-            for (int i = 0; i < dynamicJson.Length; i++)
+            for (int i = 0; i < dynamicJson.GetArrayLength(); i++)
             {
                 Assert.AreEqual(i, (int)dynamicJson[i]);
             }
@@ -139,6 +135,59 @@ namespace Azure.Core.Tests
             Assert.Throws<FormatException>(() => _ = (int)dynamicJson);
             Assert.Throws<FormatException>(() => _ = (long)json);
             Assert.Throws<FormatException>(() => _ = (long)dynamicJson);
+        }
+
+        [Test]
+        public void FloatOverflowThrows()
+        {
+            var json = DynamicJson.Parse("34028234663852885981170418348451692544000");
+            dynamic dynamicJson = json;
+            Assert.Throws<OverflowException>(() => _ = (float)json);
+            Assert.Throws<OverflowException>(() => _ = (float)dynamicJson);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)dynamicJson);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+        }
+
+        [Test]
+        public void FloatUnderflowThrows()
+        {
+            var json = DynamicJson.Parse("-34028234663852885981170418348451692544000");
+            dynamic dynamicJson = json;
+            Assert.Throws<OverflowException>(() => _ = (float)json);
+            Assert.Throws<OverflowException>(() => _ = (float)dynamicJson);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)dynamicJson);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+        }
+
+
+        [Test]
+        public void IntOverflowThrows()
+        {
+            var json = DynamicJson.Parse("3402823466385288598");
+            dynamic dynamicJson = json;
+            Assert.Throws<OverflowException>(() => _ = (int)json);
+            Assert.Throws<OverflowException>(() => _ = (int)dynamicJson);
+            Assert.AreEqual(3402823466385288598L, (long)dynamicJson);
+            Assert.AreEqual(3402823466385288598L, (long)json);
+            Assert.AreEqual(3402823466385288598D, (double)dynamicJson);
+            Assert.AreEqual(3402823466385288598D, (double)json);
+            Assert.AreEqual(3402823466385288598F, (float)dynamicJson);
+            Assert.AreEqual(3402823466385288598F, (float)json);
+        }
+
+        [Test]
+        public void IntUnderflowThrows()
+        {
+            var json = DynamicJson.Parse("-3402823466385288598");
+            dynamic dynamicJson = json;
+            Assert.Throws<OverflowException>(() => _ = (int)json);
+            Assert.Throws<OverflowException>(() => _ = (int)dynamicJson);
+            Assert.AreEqual(-3402823466385288598L, (long)dynamicJson);
+            Assert.AreEqual(-3402823466385288598L, (long)json);
+            Assert.AreEqual(-3402823466385288598D, (double)dynamicJson);
+            Assert.AreEqual(-3402823466385288598D, (double)json);
+            Assert.AreEqual(-3402823466385288598F, (float)dynamicJson);
+            Assert.AreEqual(-3402823466385288598F, (float)json);
         }
 
         [Test]
