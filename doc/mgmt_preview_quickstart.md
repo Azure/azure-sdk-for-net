@@ -79,7 +79,7 @@ Now that the environment is setup, all you need to do is to create an
 authenticated client. Our default option is to use
 **DefaultAzureCredential** and in this guide we have picked
 **Resources** as our target service, but you can set it up similarly for
-any other service that you are using.
+any other service that you are using. **For example, in order to manage Compute or Network resources, you would create a ``ComputeManagementClient`` or ``NetworkManagementClient``**
 
 To authenticate to Azure and create a management client, simply do the
 following:
