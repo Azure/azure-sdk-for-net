@@ -132,10 +132,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
-            Connection = new ServiceBusConnection(connectionString, options);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
-            _options = Connection.Options;
             Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -165,13 +165,13 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
-                options);
-            _options = Connection.Options;
+                _options);
             Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }

@@ -249,12 +249,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(message);
                 Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
-                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
+                Assert.AreEqual(1, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
-                await receiver.ReceiveMessageAsync();
+                Assert.That(
+                    async () => await receiver.ReceiveMessageAsync(),
+                    Throws.InstanceOf<NotImplementedException>());
                 Assert.AreEqual(3, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
-                Assert.AreEqual(3, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
+                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
             };
         }
     }

@@ -61,12 +61,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly TransportClient _innerClient;
 
         /// <summary>
-        ///   The set of client options used for creation of client.
-        /// </summary>
-        ///
-        internal ServiceBusClientOptions Options { get; set; }
-
-        /// <summary>
         /// Parameterless constructor to allow mocking.
         /// </summary>
         internal ServiceBusConnection() { }
@@ -90,8 +84,6 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            options = options?.Clone() ?? new ServiceBusClientOptions();
-
             ValidateConnectionOptions(options);
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -105,7 +97,6 @@ namespace Azure.Messaging.ServiceBus
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             TransportType = options.TransportType;
             EntityPath = connectionStringProperties.EntityPath;
-            Options = options;
             RetryOptions = options.RetryOptions;
 
             var sharedAccessSignature = new SharedAccessSignature
@@ -139,7 +130,6 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options = options?.Clone() ?? new ServiceBusClientOptions();
             ValidateConnectionOptions(options);
             switch (credential)
             {
@@ -155,7 +145,6 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             TransportType = options.TransportType;
-            Options = options;
             RetryOptions = options.RetryOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
