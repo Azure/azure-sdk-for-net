@@ -55,8 +55,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ErrorMessage = errorMessage;
             StartTime = startTime;
             EndTime = endTime;
-            Errors = errors;
-            Warnings = warnings;
+            Errors = errors ?? new List<SearchIndexerError>();
+            Warnings = warnings ?? new List<SearchIndexerWarning>();
             ItemCount = itemCount;
             FailedItemCount = failedItemCount;
             InitialTrackingState = initialTrackingState;

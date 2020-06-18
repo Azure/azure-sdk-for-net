@@ -201,34 +201,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockReceiver = new Mock<ServiceBusSessionReceiver>();
 
             mockReceiver
-                .Setup(receiver => receiver.AbandonAsync(
+                .Setup(receiver => receiver.AbandonMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeferAsync(
+                .Setup(receiver => receiver.DeferMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.CompleteAsync(
+                .Setup(receiver => receiver.CompleteMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),

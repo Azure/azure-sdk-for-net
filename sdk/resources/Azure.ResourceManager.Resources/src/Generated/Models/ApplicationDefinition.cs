@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
             LockLevel = lockLevel;
             DisplayName = displayName;
             IsEnabled = isEnabled;
-            Authorizations = authorizations;
+            Authorizations = authorizations ?? new List<ApplicationProviderAuthorization>();
             Artifacts = artifacts;
             Description = description;
             PackageFileUri = packageFileUri;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> A value indicating whether the package is enabled or not. </summary>
         public string IsEnabled { get; set; }
         /// <summary> The managed application provider authorizations. </summary>
-        public IList<ApplicationProviderAuthorization> Authorizations { get; set; }
+        public IList<ApplicationProviderAuthorization> Authorizations { get; }
         /// <summary> The collection of managed application artifacts. The portal will use the files specified as artifacts to construct the user experience of creating a managed application from a managed application definition. </summary>
         public IList<ApplicationArtifact> Artifacts { get; set; }
         /// <summary> The managed application definition description. </summary>

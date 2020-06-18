@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Breaking changes
+- Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 
 ## 1.0.0-preview.3 (06-10-2020)
 

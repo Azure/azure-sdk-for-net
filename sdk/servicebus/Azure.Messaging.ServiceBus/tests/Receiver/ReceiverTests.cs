@@ -50,10 +50,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver("queue");
             Assert.That(
-                async () => await receiver.ReceiveAsync(TimeSpan.FromSeconds(0)),
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(0)),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
             Assert.That(
-                async () => await receiver.ReceiveAsync(TimeSpan.FromSeconds(-1)),
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(-1)),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
     }

@@ -77,7 +77,7 @@ jobs:
           artifact: packages
           path: $(Pipeline.Workspace)/packages
           patterns: "*.nupkg"
-      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

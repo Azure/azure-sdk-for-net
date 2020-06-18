@@ -1,17 +1,18 @@
 # Acquiring TestFramework
 
-To start using test framework import `sdk\core\Azure.Core\tests\TestFramework.props` into test `.csproj`:
+To start using Test Framework add a project reference using the alias `AzureCoreTestFramework` into your test `.csproj`:
 
 ``` xml
 <Project Sdk="Microsoft.NET.Sdk">
 
 ...
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+   <ProjectReference Include="$(AzureCoreTestFramework)" />
 ...
 
 </Project>
 
 ```
+As an example, see the [Template](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/tests/Azure.Template.Tests.csproj#L15) project.
 
 # Sync-async tests
 
@@ -182,13 +183,19 @@ __NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make 
 
 ## Sanitizing
 
-Secrets that are part of requests, responses, headers or connections strings should be sanitized before saving the record. Common headers like `Authentication` are sanitized automatically but if custom logic is required `RecordedTest.Sanitizer` should be used as extension point.
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Common headers like `Authentication` are sanitized automatically but if custom logic is required and/or if request or response body need to be sanitied, the `RecordedTest.Sanitizer` should be used as extension point.
 
 For example:
 
 ``` C#
     public class ConfigurationRecordedTestSanitizer : RecordedTestSanitizer
     {
+        public ConfigurationRecordedTestSanitizer()
+            base()
+        {
+            JsonPathSanitizers.Add("$..secret");
+        }
+
         public override void SanitizeConnectionString(ConnectionString connectionString)
         {
             const string secretKey = "secret";
@@ -208,6 +215,8 @@ For example:
         }
     }
 ```
+
+**Note:** `JsonPathSanitizers` takes [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
 
 ## Matching
 

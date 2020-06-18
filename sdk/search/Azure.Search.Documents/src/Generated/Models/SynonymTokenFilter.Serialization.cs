@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Synonyms != null && Synonyms.Any())
+            if (Synonyms.Any())
             {
                 writer.WritePropertyName("synonyms");
                 writer.WriteStartArray();
@@ -26,6 +26,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("synonyms");
             }
             if (IgnoreCase != null)
             {
@@ -55,10 +59,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("synonyms"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

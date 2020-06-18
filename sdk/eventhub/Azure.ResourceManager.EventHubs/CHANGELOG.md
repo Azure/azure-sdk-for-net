@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.EventHubs` to `Azure.ResourceManager.EventHubss`
+The package name has been changed from `Microsoft.Azure.Management.EventHub` to `Azure.ResourceManager.EventHubs`
 
 #### Management Client Changes
 
@@ -85,34 +85,34 @@ using Azure.Identity;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 
-var eventHubsManagementClient = new EventHubsManagementClient(subscriptionId, new DefaultAzureCredential());
-var namespacesClient = eventHubsManagementClient.GetNamespacesClient();
-var eventHubsClient = eventHubsManagementClient.GetEventHubsClient();
+ var eventHubsManagementClient = new EventHubsManagementClient(subscriptionId, new DefaultAzureCredential());
+ var namespacesOperations = eventHubsManagementClient.Namespaces;
+ var eventHubsOperations = eventHubsManagementClient.EventHubs;
 
-var createNamespaceResponse = await namespacesClient.StartCreateOrUpdateAsync(
-    resourceGroup,
-    namespaceName,
-    new EHNamespace()
-    {
-        Location = "westus",
-        Sku= new Sku(SkuName.Standard)
-        {
-            Tier = SkuTier.Standard,
-        },
-        Tags = new Dictionary<string, string>()
-        {
-            {"tag1", "value1"},
-            {"tag2", "value2"}
-        }
-    });
-await createNamespaceResponse.WaitForCompletionAsync();
+ var createNamespaceResponse = await namespacesOperations.StartCreateOrUpdateAsync(
+     resourceGroup,
+     namespaceName,
+     new EHNamespace()
+     {
+         Location = "westus",
+         Sku = new Sku(SkuName.Standard)
+         {
+             Tier = SkuTier.Standard,
+         },
+         Tags = new Dictionary<string, string>()
+         {
+             {"tag1", "value1"},
+             {"tag2", "value2"}
+         }
+     });
+ await createNamespaceResponse.WaitForCompletionAsync();
 
-// Create Eventhub
-var createEventhubResponse = await eventHubsClient.CreateOrUpdateAsync(
-    resourceGroup,
-    namespaceName,
-    venthubName,
-    new Eventhub() { MessageRetentionInDays = 5 });
+ // Create Eventhub
+ Eventhub eventHub = await eventHubsOperations.CreateOrUpdateAsync(
+     resourceGroup,
+     namespaceName,
+     venthubName,
+     new Eventhub() { MessageRetentionInDays = 5 });
 ```
 
 #### Object Model Changes

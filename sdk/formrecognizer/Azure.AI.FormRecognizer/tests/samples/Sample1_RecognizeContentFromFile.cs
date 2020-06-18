@@ -34,6 +34,12 @@ namespace Azure.AI.FormRecognizer.Samples
                     {
                         FormLine line = page.Lines[i];
                         Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+
+                        Console.WriteLine("        Its bounding box is:");
+                        Console.WriteLine($"        Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+                        Console.WriteLine($"        Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+                        Console.WriteLine($"        Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+                        Console.WriteLine($"        Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
                     }
 
                     for (int i = 0; i < page.Tables.Count; i++)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of proximity placement groups. </param>
         internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroup> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<ProximityPlacementGroup>();
             NextLink = nextLink;
         }
 

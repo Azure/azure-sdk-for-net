@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.Network` to `Azure.ResourceManager.Network`
+The package name has been changed from `Microsoft.Azure.Management.Network` to `Azure.ResourceManager.Network`
 
 #### Management Client Changes
 
@@ -61,7 +61,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
 var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
-var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
+var virtualNetworksOperations = networkClient.VirtualNetworks;
 
 // Create VNet
 var vnet = new VirtualNetwork()
@@ -78,7 +78,7 @@ var vnet = new VirtualNetwork()
     },
 };
 
-var response = await virtualNetworksClient.StartCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
+var response = await virtualNetworksOperations.StartCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
 vnet = await response.WaitForCompletionAsync();
 ```
 

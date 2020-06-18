@@ -27,9 +27,9 @@ using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 var appConfigurationManagementClient = new AppConfigurationManagementClient(subscriptionId, new DefaultAzureCredential());
-var configurationStoresClient = eventHubsManagementClient.GetConfigurationStoresClient();
+var configurationOperations = appConfigurationManagementClient.ConfigurationStores;
 
-var configurationCreateResult = await configurationStoresClient.StartCreateAsync(
+var configurationCreateResult = await configurationOperations.StartCreateAsync(
     resourceGroup,
     storeName,
     new ConfigurationStore("westus", new Sku("Standard")));

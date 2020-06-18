@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of VM scale set extensions. Call ListNext() with this to fetch the next page of VM scale set extensions. </param>
         internal VirtualMachineScaleSetExtensionListResult(IReadOnlyList<VirtualMachineScaleSetExtension> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<VirtualMachineScaleSetExtension>();
             NextLink = nextLink;
         }
 

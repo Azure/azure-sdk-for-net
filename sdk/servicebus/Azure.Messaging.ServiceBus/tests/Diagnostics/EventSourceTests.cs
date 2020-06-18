@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            await sender.SendAsync(GetMessage());
+            await sender.SendMessageAsync(GetMessage());
 
             mockLogger
                 .Verify(
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            await sender.SendAsync(GetMessages(5));
+            await sender.SendMessagesAsync(GetMessages(5));
 
             mockLogger
                 .Verify(
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Throws(new Exception());
 
             Assert.That(
-                async () => await sender.SendAsync(GetMessage()),
+                async () => await sender.SendMessageAsync(GetMessage()),
                 Throws.InstanceOf<Exception>());
             mockLogger
                 .Verify(
@@ -121,13 +121,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(3);
 
             mockTransportSender.Setup(
-                 sender => sender.CreateBatchAsync(
-                    It.IsAny<CreateBatchOptions>(),
+                 sender => sender.CreateMessageBatchAsync(
+                    It.IsAny<CreateMessageBatchOptions>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportMessageBatch>(mockTransportBatch.Object));
 
-            var batch = await sender.CreateBatchAsync();
-            await sender.SendAsync(batch);
+            var batch = await sender.CreateMessageBatchAsync();
+            await sender.SendMessagesAsync(batch);
             mockLogger
                 .Verify(
                     log => log.CreateMessageBatchStart(
@@ -162,18 +162,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
+            mockTransportSender.Setup(
+                sender => sender.ScheduleMessagesAsync(
+                    It.IsAny<IList<ServiceBusMessage>>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new long[] { 1 }));
+
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
             await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
             mockLogger
                 .Verify(
-                    log => log.ScheduleMessageStart(
+                    log => log.ScheduleMessagesStart(
                         sender.Identifier,
+                        1,
                         scheduleTime.ToString(CultureInfo.InvariantCulture)),
                 Times.Once);
             mockLogger
                 .Verify(
-                    log => log.ScheduleMessageComplete(
+                    log => log.ScheduleMessagesComplete(
                         sender.Identifier),
                 Times.Once);
         }
@@ -191,8 +198,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             mockTransportSender.Setup(
-                sender => sender.ScheduleMessageAsync(
-                    It.IsAny<ServiceBusMessage>(),
+                sender => sender.ScheduleMessagesAsync(
+                    It.IsAny<IList<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
@@ -203,13 +210,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockLogger
                 .Verify(
-                    log => log.ScheduleMessageStart(
+                    log => log.ScheduleMessagesStart(
                         sender.Identifier,
+                        1,
                         scheduleTime.ToString(CultureInfo.InvariantCulture)),
                 Times.Once);
             mockLogger
                 .Verify(
-                    log => log.ScheduleMessageException(
+                    log => log.ScheduleMessagesException(
                         sender.Identifier,
                         It.IsAny<string>()),
                 Times.Once);
@@ -226,18 +234,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            var sequenceNumber = 1;
-            await sender.CancelScheduledMessageAsync(sequenceNumber);
+            long[] sequenceNumbers = new long[] { 1 };
+            await sender.CancelScheduledMessagesAsync(sequenceNumbers: sequenceNumbers);
 
             mockLogger
                 .Verify(
-                    log => log.CancelScheduledMessageStart(
+                    log => log.CancelScheduledMessagesStart(
                         sender.Identifier,
-                        sequenceNumber),
+                        sequenceNumbers),
                 Times.Once);
             mockLogger
                 .Verify(
-                    log => log.CancelScheduledMessageComplete(
+                    log => log.CancelScheduledMessagesComplete(
                         sender.Identifier),
                 Times.Once);
         }
@@ -253,27 +261,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
-            var sequenceNumber = 1;
+            long[] sequenceNumbers = new long[] { 1 };
 
             mockTransportSender.Setup(
-                sender => sender.CancelScheduledMessageAsync(
-                    sequenceNumber,
+                sender => sender.CancelScheduledMessagesAsync(
+                    It.IsAny<long[]>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             Assert.That(
-                async () => await sender.CancelScheduledMessageAsync(sequenceNumber),
+                async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers: sequenceNumbers),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
                 .Verify(
-                    log => log.CancelScheduledMessageStart(
+                    log => log.CancelScheduledMessagesStart(
                         sender.Identifier,
-                        sequenceNumber),
+                        sequenceNumbers),
                 Times.Once);
             mockLogger
                 .Verify(
-                    log => log.CancelScheduledMessageException(
+                    log => log.CancelScheduledMessagesException(
                         sender.Identifier,
                         It.IsAny<string>()),
                 Times.Once);
@@ -287,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveBatchAsync(
+                transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
@@ -300,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
 
-            await receiver.ReceiveAsync();
+            await receiver.ReceiveMessageAsync();
 
             mockLogger
                 .Verify(
@@ -325,7 +333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveBatchAsync(
+                transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
@@ -338,7 +346,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
 
-            var msgs = await receiver.ReceiveBatchAsync(maxMessages: maxMessages);
+            var msgs = await receiver.ReceiveMessagesAsync(maxMessages: maxMessages);
 
             mockLogger
                 .Verify(
@@ -364,7 +372,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveBatchAsync(
+                transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
@@ -375,7 +383,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             Assert.That(
-                async () => await receiver.ReceiveAsync(),
+                async () => await receiver.ReceiveMessageAsync(),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -402,7 +410,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.PeekBatchAtAsync(
+                transportReceiver => transportReceiver.PeekMessagesAsync(
                     It.IsAny<long?>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
@@ -415,20 +423,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
             var seqNumber = 5;
 
-            if (specifySeqNumber)
-            {
-                await receiver.PeekAtAsync(seqNumber);
-            }
-            else
-            {
-                await receiver.PeekAsync();
-            }
+            await receiver.PeekMessageAsync(specifySeqNumber ? seqNumber : (long?)null);
 
             mockLogger
                 .Verify(
                     log => log.PeekMessageStart(
                         receiver.Identifier,
-                        specifySeqNumber ? (long?) seqNumber : null,
+                        specifySeqNumber ? (long?)seqNumber : null,
                         1),
                 Times.Once);
             mockLogger
@@ -450,7 +451,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.PeekBatchAtAsync(
+                transportReceiver => transportReceiver.PeekMessagesAsync(
                     It.IsAny<long?>(),
                     maxMessages,
                     It.IsAny<CancellationToken>()))
@@ -465,14 +466,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var seqNumber = 5;
             IList<ServiceBusReceivedMessage> msgs;
-            if (specifySeqNumber)
-            {
-                msgs = await receiver.PeekBatchAtAsync(seqNumber, maxMessages);
-            }
-            else
-            {
-                msgs = await receiver.PeekBatchAsync(maxMessages: maxMessages);
-            }
+            msgs = await receiver.PeekMessagesAsync(maxMessages, specifySeqNumber ? seqNumber : (long?)null);
 
             mockLogger
                 .Verify(
@@ -499,7 +493,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.PeekBatchAtAsync(
+                transportReceiver => transportReceiver.PeekMessagesAsync(
                     It.IsAny<long?>(),
                     1,
                     It.IsAny<CancellationToken>()))
@@ -510,7 +504,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             Assert.That(
-                async () => await receiver.PeekAsync(),
+                async () => await receiver.PeekMessageAsync(),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -541,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
-            await receiver.CompleteAsync(msg);
+            await receiver.CompleteMessageAsync(msg);
 
             mockLogger
                 .Verify(
@@ -576,7 +570,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
             Assert.That(
-                async () => await receiver.CompleteAsync(msg),
+                async () => await receiver.CompleteMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -606,7 +600,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
-            await receiver.DeferAsync(msg);
+            await receiver.DeferMessageAsync(msg);
 
             mockLogger
                 .Verify(
@@ -641,7 +635,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
             Assert.That(
-                async () => await receiver.DeferAsync(msg),
+                async () => await receiver.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -671,7 +665,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
-            await receiver.DeadLetterAsync(msg);
+            await receiver.DeadLetterMessageAsync(msg);
 
             mockLogger
                 .Verify(
@@ -708,7 +702,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
             Assert.That(
-                async () => await receiver.DeadLetterAsync(msg),
+                async () => await receiver.DeadLetterMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -738,7 +732,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
-            await receiver.AbandonAsync(msg);
+            await receiver.AbandonMessageAsync(msg);
 
             mockLogger
                 .Verify(
@@ -773,7 +767,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var msg = new ServiceBusReceivedMessage() { LockTokenGuid = Guid.NewGuid() };
             Assert.That(
-                async () => await receiver.AbandonAsync(msg),
+                async () => await receiver.AbandonMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -1043,11 +1037,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveBatchAsync(
+                transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult((IList<ServiceBusReceivedMessage>) new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
+                .Returns(Task.FromResult((IList<ServiceBusReceivedMessage>)new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
             var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusProcessorOptions
             {
                 MaxAutoLockRenewalDuration = TimeSpan.Zero,
@@ -1133,7 +1127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveBatchAsync(
+                transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))

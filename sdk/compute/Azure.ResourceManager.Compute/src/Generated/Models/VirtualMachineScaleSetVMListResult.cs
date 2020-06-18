@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs. </param>
         internal VirtualMachineScaleSetVMListResult(IReadOnlyList<VirtualMachineScaleSetVM> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<VirtualMachineScaleSetVM>();
             NextLink = nextLink;
         }
 

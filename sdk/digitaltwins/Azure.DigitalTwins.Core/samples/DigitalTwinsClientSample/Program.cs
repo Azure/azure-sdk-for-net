@@ -52,6 +52,9 @@ namespace Azure.DigitalTwins.Core.Samples
 
             var publishTelemetrySamples = new PublishTelemetrySamples();
             await publishTelemetrySamples.RunSamplesAsync(dtClient);
+
+            var relationshipSamples = new RelationshipSamples();
+            await relationshipSamples.RunSamplesAsync(dtClient);
         }
 
         /// <summary>
