@@ -61,7 +61,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ## Next steps
 
-Read more about [DataProtection in ASP.NET Core](aspnetcore_dataprotection_doc).
+Read more about [DataProtection in ASP.NET Core][aspnetcore_dataprotection_doc].
 
 ## Contributing
 
@@ -90,7 +90,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/using-data-protection
+[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction
 [samples]: samples/
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

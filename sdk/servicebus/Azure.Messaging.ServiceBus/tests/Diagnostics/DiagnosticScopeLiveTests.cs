@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
                 int numMessages = 5;
                 var msgs = GetMessages(numMessages, sessionId);
-                await sender.SendAsync(msgs);
+                await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(useSessions, sender, msgs, listener);
 
                 ServiceBusReceiver receiver = null;
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 while (remaining > 0)
                 {
                     // loop in case we don't receive all messages in one attempt
-                    var received = await receiver.ReceiveBatchAsync(remaining);
+                    var received = await receiver.ReceiveMessagesAsync(remaining);
                     receivedMsgs.AddRange(received);
                     (string Key, object Value, DiagnosticListener) receiveStart = listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.ReceiveActivityName + ".Start", receiveStart.Key);
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgIndex = 0;
 
                 var completed = receivedMsgs[msgIndex];
-                await receiver.CompleteAsync(completed);
+                await receiver.CompleteMessageAsync(completed);
                 (string Key, object Value, DiagnosticListener) completeStart = listener.Events.Dequeue();
                 Assert.AreEqual(DiagnosticProperty.CompleteActivityName + ".Start", completeStart.Key);
                 Activity completeActivity = (Activity)completeStart.Value;
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.AreEqual(DiagnosticProperty.CompleteActivityName + ".Stop", completeStop.Key);
 
                 var deferred = receivedMsgs[++msgIndex];
-                await receiver.DeferAsync(deferred);
+                await receiver.DeferMessageAsync(deferred);
                 (string Key, object Value, DiagnosticListener) deferStart = listener.Events.Dequeue();
                 Assert.AreEqual(DiagnosticProperty.DeferActivityName + ".Start", deferStart.Key);
                 Activity deferActivity = (Activity)deferStart.Value;
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.AreEqual(DiagnosticProperty.DeferActivityName + ".Stop", deferStop.Key);
 
                 var deadLettered = receivedMsgs[++msgIndex];
-                await receiver.DeadLetterAsync(deadLettered);
+                await receiver.DeadLetterMessageAsync(deadLettered);
                 (string Key, object Value, DiagnosticListener) deadLetterStart = listener.Events.Dequeue();
                 Assert.AreEqual(DiagnosticProperty.DeadLetterActivityName + ".Start", deadLetterStart.Key);
                 Activity deadLetterActivity = (Activity)deadLetterStart.Value;
@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.AreEqual(DiagnosticProperty.DeadLetterActivityName + ".Stop", deadletterStop.Key);
 
                 var abandoned = receivedMsgs[++msgIndex];
-                await receiver.AbandonAsync(abandoned);
+                await receiver.AbandonMessageAsync(abandoned);
                 (string Key, object Value, DiagnosticListener) abandonStart = listener.Events.Dequeue();
                 Assert.AreEqual(DiagnosticProperty.AbandonActivityName + ".Start", abandonStart.Key);
                 Activity abandonActivity = (Activity)abandonStart.Value;
@@ -253,12 +253,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
 
                 // send a batch
-                var batch = await sender.CreateBatchAsync();
+                var batch = await sender.CreateMessageBatchAsync();
                 for (int i = 0; i < numMessages; i++)
                 {
-                    batch.TryAdd(GetMessage(sessionId));
+                    batch.TryAddMessage(GetMessage(sessionId));
                 }
-                await sender.SendAsync(batch);
+                await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, batch.AsEnumerable<ServiceBusMessage>(), listener);
             };
         }
@@ -273,7 +273,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = GetMessages(messageCt);
-                await sender.SendAsync(msgs);
+                await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs, listener);
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
@@ -326,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = GetMessages(messageCt, "sessionId");
-                await sender.SendAsync(msgs);
+                await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs, listener);
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,

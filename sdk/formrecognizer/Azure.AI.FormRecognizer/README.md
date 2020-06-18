@@ -124,11 +124,63 @@ For long running operations in the Azure SDK, the client exposes a `Start<operat
 ## Examples
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
 
-* [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
+* [Recognize Receipts](#recognize-receipts)
 * [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
+
+### Recognize Content
+Recognize text and table data, along with their bounding box coordinates, from documents.
+
+```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
+FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+foreach (FormPage page in formPages)
+{
+    Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        FormLine line = page.Lines[i];
+        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+    }
+
+    for (int i = 0; i < page.Tables.Count; i++)
+    {
+        FormTable table = page.Tables[i];
+        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+        foreach (FormTableCell cell in table.Cells)
+        {
+            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
+        }
+    }
+}
+```
+
+### Recognize Custom Forms
+Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+
+```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+string modelId = "<modelId>";
+
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+foreach (RecognizedForm form in forms)
+{
+    Console.WriteLine($"Form of type: {form.FormType}");
+    foreach (FormField field in form.Fields.Values)
+    {
+        Console.WriteLine($"Field '{field.Name}: ");
+
+        if (field.LabelText != null)
+        {
+            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+        }
+
+        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+        Console.WriteLine($"    Confidence: '{field.Confidence}");
+    }
+}
+```
 
 ### Recognize Receipts
 Recognize data from US sales receipts using a prebuilt model.
@@ -214,58 +266,6 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
                 Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
             }
         }
-    }
-}
-```
-
-### Recognize Content
-Recognize text and table data, along with their bounding box coordinates, from documents.
-
-```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
-foreach (FormPage page in formPages)
-{
-    Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
-
-    for (int i = 0; i < page.Lines.Count; i++)
-    {
-        FormLine line = page.Lines[i];
-        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
-    }
-
-    for (int i = 0; i < page.Tables.Count; i++)
-    {
-        FormTable table = page.Tables[i];
-        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-        foreach (FormTableCell cell in table.Cells)
-        {
-            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
-        }
-    }
-}
-```
-
-### Recognize Custom Forms
-Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
-
-```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
-string modelId = "<modelId>";
-
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
-foreach (RecognizedForm form in forms)
-{
-    Console.WriteLine($"Form of type: {form.FormType}");
-    foreach (FormField field in form.Fields.Values)
-    {
-        Console.WriteLine($"Field '{field.Name}: ");
-
-        if (field.LabelText != null)
-        {
-            Console.WriteLine($"    Label: '{field.LabelText.Text}");
-        }
-
-        Console.WriteLine($"    Value: '{field.ValueText.Text}");
-        Console.WriteLine($"    Confidence: '{field.Confidence}");
     }
 }
 ```
@@ -404,8 +404,8 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Recognize form content][recognize_content]
-- [Recognize receipts][recognize_receipts]
 - [Recognize custom forms][recognize_custom_forms]
+- [Recognize receipts][recognize_receipts]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]

@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
                     ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
-                    FieldQuote = cvsTextConfiguration.FieldQuote?.ToString(CultureInfo.InvariantCulture),
+                    FieldQuote = cvsTextConfiguration.QuotationCharacter?.ToString(CultureInfo.InvariantCulture),
                     RecordSeparator = cvsTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture),
                     EscapeChar = cvsTextConfiguration.EscapeCharacter?.ToString(CultureInfo.InvariantCulture),
                     HeadersPresent = cvsTextConfiguration.HasHeaders

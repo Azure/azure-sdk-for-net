@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="value"> A collection of PasswordCredentials. </param>
         internal PasswordCredentialsUpdateParameters(IList<PasswordCredential> value)
         {
-            Value = value;
+            Value = value ?? new List<PasswordCredential>();
         }
 
         /// <summary> A collection of PasswordCredentials. </summary>

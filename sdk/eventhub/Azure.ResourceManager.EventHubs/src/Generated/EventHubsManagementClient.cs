@@ -53,52 +53,28 @@ namespace Azure.ResourceManager.EventHubs
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of ClustersClient. </summary>
-        public virtual ClustersClient GetClustersClient()
-        {
-            return new ClustersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ClustersOperations. </summary>
+        public virtual ClustersOperations Clusters => new ClustersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of NamespacesClient. </summary>
-        public virtual NamespacesClient GetNamespacesClient()
-        {
-            return new NamespacesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of NamespacesOperations. </summary>
+        public virtual NamespacesOperations Namespaces => new NamespacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ConfigurationClient. </summary>
-        public virtual ConfigurationClient GetConfigurationClient()
-        {
-            return new ConfigurationClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ConfigurationOperations. </summary>
+        public virtual ConfigurationOperations Configuration => new ConfigurationOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DisasterRecoveryConfigsClient. </summary>
-        public virtual DisasterRecoveryConfigsClient GetDisasterRecoveryConfigsClient()
-        {
-            return new DisasterRecoveryConfigsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DisasterRecoveryConfigsOperations. </summary>
+        public virtual DisasterRecoveryConfigsOperations DisasterRecoveryConfigs => new DisasterRecoveryConfigsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of EventHubsClient. </summary>
-        public virtual EventHubsClient GetEventHubsClient()
-        {
-            return new EventHubsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of EventHubsOperations. </summary>
+        public virtual EventHubsOperations EventHubs => new EventHubsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ConsumerGroupsClient. </summary>
-        public virtual ConsumerGroupsClient GetConsumerGroupsClient()
-        {
-            return new ConsumerGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ConsumerGroupsOperations. </summary>
+        public virtual ConsumerGroupsOperations ConsumerGroups => new ConsumerGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of RegionsClient. </summary>
-        public virtual RegionsClient GetRegionsClient()
-        {
-            return new RegionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of RegionsOperations. </summary>
+        public virtual RegionsOperations Regions => new RegionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

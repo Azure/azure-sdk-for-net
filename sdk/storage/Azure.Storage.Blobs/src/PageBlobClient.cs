@@ -258,7 +258,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Create
         /// <summary>
-        /// The <see cref="Create(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// The <see cref="Create(long, PageBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new page blob of the specified <paramref name="size"/>.
         /// The content of any existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Create(
             long size,
-            CreatePageBlobOptions options,
+            PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 size,
@@ -301,7 +301,7 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateAsync(long, PageBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new page blob of the specified <paramref name="size"/>.
         /// The content of any existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
@@ -330,7 +330,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
             long size,
-            CreatePageBlobOptions options,
+            PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 size,
@@ -464,7 +464,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExists(long, PageBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
         /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
@@ -493,7 +493,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> CreateIfNotExists(
             long size,
-            CreatePageBlobOptions options,
+            PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 size,
@@ -506,7 +506,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(long, PageBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
         /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
@@ -535,7 +535,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             long size,
-            CreatePageBlobOptions options,
+            PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 size,

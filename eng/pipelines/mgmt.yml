@@ -138,12 +138,7 @@ pr:
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - eng/pipelines/mgmt.yml
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
-resources:
-  repositories:
-  - repository: azure-sdk-tools
-    type: github
-    name: Azure/azure-sdk-tools
-    endpoint: azure
+
 variables:
   DotNetCoreSDKVersion: '2.2.202'
   skipComponentGovernanceDetection: true

@@ -53,58 +53,31 @@ namespace Azure.Graph.Rbac
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of SignedInUserClient. </summary>
-        public virtual SignedInUserClient GetSignedInUserClient()
-        {
-            return new SignedInUserClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of SignedInUserOperations. </summary>
+        public virtual SignedInUserOperations SignedInUser => new SignedInUserOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of ApplicationsClient. </summary>
-        public virtual ApplicationsClient GetApplicationsClient()
-        {
-            return new ApplicationsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of ApplicationsOperations. </summary>
+        public virtual ApplicationsOperations Applications => new ApplicationsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of DeletedApplicationsClient. </summary>
-        public virtual DeletedApplicationsClient GetDeletedApplicationsClient()
-        {
-            return new DeletedApplicationsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of DeletedApplicationsOperations. </summary>
+        public virtual DeletedApplicationsOperations DeletedApplications => new DeletedApplicationsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of GroupsClient. </summary>
-        public virtual GroupsClient GetGroupsClient()
-        {
-            return new GroupsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of GroupsOperations. </summary>
+        public virtual GroupsOperations Groups => new GroupsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of ServicePrincipalsClient. </summary>
-        public virtual ServicePrincipalsClient GetServicePrincipalsClient()
-        {
-            return new ServicePrincipalsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of ServicePrincipalsOperations. </summary>
+        public virtual ServicePrincipalsOperations ServicePrincipals => new ServicePrincipalsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of UsersClient. </summary>
-        public virtual UsersClient GetUsersClient()
-        {
-            return new UsersClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of UsersOperations. </summary>
+        public virtual UsersOperations Users => new UsersOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of ObjectsClient. </summary>
-        public virtual ObjectsClient GetObjectsClient()
-        {
-            return new ObjectsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of ObjectsOperations. </summary>
+        public virtual ObjectsOperations Objects => new ObjectsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of DomainsClient. </summary>
-        public virtual DomainsClient GetDomainsClient()
-        {
-            return new DomainsClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of DomainsOperations. </summary>
+        public virtual DomainsOperations Domains => new DomainsOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
 
-        /// <summary> Creates a new instance of OAuth2PermissionGrantClient. </summary>
-        public virtual OAuth2PermissionGrantClient GetOAuth2PermissionGrantClient()
-        {
-            return new OAuth2PermissionGrantClient(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
-        }
+        /// <summary> Returns an instance of OAuth2PermissionGrantOperations. </summary>
+        public virtual OAuth2PermissionGrantOperations OAuth2PermissionGrant => new OAuth2PermissionGrantOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Name = name;
             DestinationType = destinationType;
-            Destinations = destinations;
+            Destinations = destinations ?? new List<string>();
             NextHopType = nextHopType;
             NextHop = nextHop;
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of destinations (eg: CIDR, ResourceId, Service). </summary>
         public string DestinationType { get; set; }
         /// <summary> List of all destinations. </summary>
-        public IList<string> Destinations { get; set; }
+        public IList<string> Destinations { get; }
         /// <summary> The type of next hop (eg: ResourceId). </summary>
         public string NextHopType { get; set; }
         /// <summary> NextHop resource ID. </summary>

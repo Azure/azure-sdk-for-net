@@ -1240,7 +1240,7 @@ namespace Authorization.Tests
 
                 var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
-                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // Currently, only system deny assignments created by allowlisted apps are supported.
                 // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
                 var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
 
@@ -1270,7 +1270,7 @@ namespace Authorization.Tests
 
                 var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
-                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // Currently, only system deny assignments created by allowlisted apps are supported.
                 // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
                 var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
 

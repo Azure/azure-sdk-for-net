@@ -601,11 +601,11 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareItem
     {
         internal ShareItem() { }
-        public bool? Deleted { get { throw null; } }
+        public bool? IsDeleted { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareProperties Properties { get { throw null; } }
         public string Snapshot { get { throw null; } }
-        public string Version { get { throw null; } }
+        public string VersionId { get { throw null; } }
     }
     public enum ShareLeaseDuration
     {
@@ -645,10 +645,12 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null, bool? deleted = default(bool?), string version = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null, bool? isDeleted = default(bool?), string versionId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified, Azure.ETag? eTag, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedTime = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified, Azure.ETag? eTag, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareSnapshotInfo ShareSnapshotInfo(string snapshot, Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(int shareUsageBytes) { throw null; }
@@ -660,7 +662,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareProperties
     {
         internal ShareProperties() { }
-        public System.DateTimeOffset? DeletedTime { get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.DateTimeOffset? LastModified { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }

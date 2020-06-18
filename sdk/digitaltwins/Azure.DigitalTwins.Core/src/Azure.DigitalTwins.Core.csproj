@@ -4,7 +4,6 @@
     <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
-    <EnableApiCompat>false</EnableApiCompat>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <NoWarn>$(NoWarn);CA1812</NoWarn>

@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="versionId">The version identifier.</param>
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
-        protected virtual BlobBaseClient WithVersionCore(string versionId)
+        private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
             return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);

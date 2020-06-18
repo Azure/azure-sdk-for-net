@@ -25,8 +25,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The feature name. </summary>
-        public string FeatureName { get; set; }
+        public string FeatureName { get; }
         /// <summary> The feature type. </summary>
-        public string FeatureType { get; set; }
+        public string FeatureType { get; }
     }
 }

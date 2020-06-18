@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Expression = expression;
             Timeout = timeout;
-            Activities = activities;
+            Activities = activities ?? new List<Activity>();
             Type = type ?? "Until";
         }
 
@@ -61,6 +61,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object Timeout { get; set; }
         /// <summary> List of activities to execute. </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
     }
 }

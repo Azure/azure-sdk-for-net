@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.Resource.Tests
 {
     public class ResourceManagementTestEnvironment : TestEnvironment
     {
-        public ResourceManagementTestEnvironment() : base("resourcemgmt")
+        public ResourceManagementTestEnvironment() : base("resources")
         {
         }
     }

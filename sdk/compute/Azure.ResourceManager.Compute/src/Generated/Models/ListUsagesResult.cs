@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </param>
         internal ListUsagesResult(IReadOnlyList<Usage> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<Usage>();
             NextLink = nextLink;
         }
 

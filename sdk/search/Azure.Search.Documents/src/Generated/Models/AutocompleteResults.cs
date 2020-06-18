@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         internal AutocompleteResults(double? coverage, IReadOnlyList<AutocompleteItem> results)
         {
             Coverage = coverage;
-            Results = results;
+            Results = results ?? new List<AutocompleteItem>();
         }
 
         /// <summary> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </summary>

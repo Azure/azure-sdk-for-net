@@ -17,20 +17,20 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
     {
         SessionId = "Session1"
     });
-messageBatch.TryAdd(
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
     {
         SessionId = "Session2"
     });
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusSessionProcessorOptions
@@ -55,7 +55,7 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
-    var body = args.Message.Body.AsString();
+    var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteAsync(args.Message);

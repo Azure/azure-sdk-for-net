@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            writer.WriteStartElement(nameHint ?? "TableServiceProperties");
+            writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Logging != null)
             {
                 writer.WriteObjectValue(Logging, "Logging");

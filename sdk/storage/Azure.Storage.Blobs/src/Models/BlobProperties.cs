@@ -32,12 +32,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Object Replication Policy Id of the destination blob.
         /// </summary>
-        public string ObjectReplicationDestinationPolicy { get; internal set; }
+        public string ObjectReplicationDestinationPolicyId { get; internal set; }
 
         /// <summary>
         /// Parsed Object Replication Policy Id, Rule Id(s) and status of the source blob.
         /// </summary>
-        public IDictionary<string, IDictionary<string, string>> ObjectReplicationSourceProperties { get; internal set; }
+        public IList<ObjectReplicationPolicy> ObjectReplicationSourceProperties { get; internal set; }
 
         /// <summary>
         /// The blob's type.
@@ -232,7 +232,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The value of this header indicates whether version of this blob is a current version, see also x-ms-version-id header.
         /// </summary>
-        public bool IsCurrentVersion { get; internal set; }
+        public bool IsLatestVersion { get; internal set; }
 
         /// <summary>
         /// The number of tags associated with the blob.
@@ -255,7 +255,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobProperties()
         {
             Metadata = new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            ObjectReplicationSourceProperties = new Dictionary<string, IDictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
+            ObjectReplicationSourceProperties = new List<ObjectReplicationPolicy>();
         }
     }
 }

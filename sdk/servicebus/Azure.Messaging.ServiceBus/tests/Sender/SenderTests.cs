@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(message: null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessageAsync(null));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(messages: null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessagesAsync(messages: null));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            await mock.Object.SendAsync(new List<ServiceBusMessage>());
+            await mock.Object.SendMessagesAsync(new List<ServiceBusMessage>());
         }
 
         [Test]
@@ -53,13 +53,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 CallBase = true
             };
             mock
-               .Setup(m => m.SendAsync(
+               .Setup(m => m.SendMessagesAsync(
                    It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
                    It.IsAny<CancellationToken>()))
                .Returns(Task.CompletedTask)
                .Verifiable("The single send should delegate to the list send.");
 
-            await mock.Object.SendAsync(new ServiceBusMessage());
+            await mock.Object.SendMessageAsync(new ServiceBusMessage());
         }
 
         [Test]
@@ -69,7 +69,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync((ServiceBusMessageBatch)null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessagesAsync((ServiceBusMessageBatch)null));
+        }
+
+        [Test]
+        public void ScheduleNullMessageShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.ScheduleMessageAsync(null, default));
+        }
+
+        [Test]
+        public void ScheduleNullMessageListShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.ScheduleMessagesAsync(null, default));
+        }
+
+        [Test]
+        public void ScheduleEmptyListShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentException>(async () => await mock.Object.ScheduleMessagesAsync(
+                new List<ServiceBusMessage>(),
+                default));
         }
 
         [Test]
@@ -164,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusSender.SendAsync"/>
+        ///   Verifies functionality of the <see cref="ServiceBusSender.SendMessagesAsync"/>
         ///   method.
         /// </summary>
         ///
@@ -192,24 +224,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Setup(connection => connection.ThrowIfClosed());
 
             mockTransportBatch
-                .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
+                .Setup(transport => transport.TryAddMessage(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
 
             mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
             var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
-            var sendTask = sender.SendAsync(batch);
+            var sendTask = sender.SendMessagesAsync(batch);
 
-            Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
 
             await sendTask;
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
         }

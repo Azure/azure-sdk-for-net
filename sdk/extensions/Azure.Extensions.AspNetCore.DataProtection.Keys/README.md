@@ -46,7 +46,7 @@ The [Azure Identity library][identity] provides easy Azure Active Directory supp
 
 ## Next steps
 
-Read more about [DataProtection in ASP.NET Core](aspnetcore_dataprotection_doc).
+Read more about [DataProtection in ASP.NET Core][aspnetcore_dataprotection_doc].
 
 ## Contributing
 
@@ -67,13 +67,14 @@ additional questions or comments.
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.DataProtection.Keys
 [nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys
+[keyvault_doc]: https://docs.microsoft.com/en-us/azure/key-vault/general/overview
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [keyvault_create_ps]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-powershell#create-a-key-vault
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/using-data-protection
+[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction?view=aspnetcore-3.1
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [samples]: samples/

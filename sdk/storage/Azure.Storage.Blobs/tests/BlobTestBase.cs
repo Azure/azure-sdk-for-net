@@ -412,7 +412,7 @@ namespace Azure.Storage.Test.Shared
                 BlobContainerName = containerName,
                 BlobName = blobName,
                 Snapshot = snapshot,
-                BlobVersion = blobVersion,
+                BlobVersionId = blobVersion,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),

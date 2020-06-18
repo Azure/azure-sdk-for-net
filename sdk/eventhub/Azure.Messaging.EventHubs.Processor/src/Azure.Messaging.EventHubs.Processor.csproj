@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <Version>5.2.0-preview.1</Version>
+    <ApiCompatVersion>5.1.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>

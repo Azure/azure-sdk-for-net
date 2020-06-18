@@ -336,8 +336,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         internal static BlobExpirationOffset ToBlobExpirationOffset(
-            this DataLakeFileExpirationOffset setExpiryRelativeTo)
-            => setExpiryRelativeTo == DataLakeFileExpirationOffset.Now
+            this DataLakeFileExpirationOrigin setExpiryRelativeTo)
+            => setExpiryRelativeTo == DataLakeFileExpirationOrigin.Now
             ? BlobExpirationOffset.Now
             : BlobExpirationOffset.CreationTime;
 
@@ -394,7 +394,7 @@ namespace Azure.Storage.Files.DataLake
             => new BlobQueryCsvTextConfiguration
             {
                 ColumnSeparator = textConfiguration.ColumnSeparator,
-                FieldQuote = textConfiguration.FieldQuote,
+                QuotationCharacter = textConfiguration.QuotationCharacter,
                 EscapeCharacter = textConfiguration.EscapeCharacter,
                 HasHeaders = textConfiguration.HasHeaders
             };

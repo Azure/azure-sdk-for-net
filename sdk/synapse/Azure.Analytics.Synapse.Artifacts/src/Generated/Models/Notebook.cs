@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells;
+            Cells = cells ?? new List<NotebookCell>();
             AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </summary>
         public int NbformatMinor { get; set; }
         /// <summary> Array of cells of the current notebook. </summary>
-        public IList<NotebookCell> Cells { get; set; }
+        public IList<NotebookCell> Cells { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class StorageManagementTestEnvironment : TestEnvironment
     {
-        public StorageManagementTestEnvironment() : base("storagemgmt")
+        public StorageManagementTestEnvironment() : base("storage")
         {
         }
     }

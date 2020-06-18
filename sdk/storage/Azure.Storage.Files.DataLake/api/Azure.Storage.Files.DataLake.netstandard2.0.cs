@@ -82,8 +82,8 @@ namespace Azure.Storage.Files.DataLake
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.IO.Stream OpenWrite(Azure.Storage.Files.DataLake.Models.DataLakeFileOpenWriteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.IO.Stream> OpenWriteAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileOpenWriteOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Query(string query, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo>> QueryAsync(string query, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Query(string querySqlExpression, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo>> QueryAsync(string querySqlExpression, Azure.Storage.Files.DataLake.Models.DataLakeQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read() { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, bool rangeGetContentHash = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileDownloadInfo> Read(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Permissions { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
-    public enum DataLakeFileExpirationOffset
+    public enum DataLakeFileExpirationOrigin
     {
         CreationTime = 0,
         Now = 1,
@@ -310,9 +310,9 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileScheduleDeletionOptions() { }
         public DataLakeFileScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
-        public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset setRelativeTo) { }
+        public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin setRelativeTo) { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset? SetExpiryRelativeTo { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class DataLakeFileUploadOptions
@@ -376,8 +376,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeQueryCsvTextConfiguration() { }
         public string ColumnSeparator { get { throw null; } set { } }
         public char? EscapeCharacter { get { throw null; } set { } }
-        public char? FieldQuote { get { throw null; } set { } }
         public bool HasHeaders { get { throw null; } set { } }
+        public char? QuotationCharacter { get { throw null; } set { } }
     }
     public partial class DataLakeQueryError
     {

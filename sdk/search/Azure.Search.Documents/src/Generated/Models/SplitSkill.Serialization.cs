@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            if (Inputs != null && Inputs.Any())
+            if (Inputs.Any())
             {
                 writer.WritePropertyName("inputs");
                 writer.WriteStartArray();
@@ -59,7 +59,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Outputs != null && Outputs.Any())
+            else
+            {
+                writer.WriteNull("inputs");
+            }
+            if (Outputs.Any())
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartArray();
@@ -68,6 +72,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("outputs");
             }
             writer.WriteEndObject();
         }
@@ -146,10 +154,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("inputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -167,10 +171,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>. Supported value is now larger
+        /// to <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>. Supported value is now larger
         /// than <see cref="int.MaxValue"/>; please use
         /// <see cref="BlockBlobMaxUploadBlobLongBytes"/>.
         /// </summary>
@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
+        /// to <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
         /// </summary>
         public virtual long BlockBlobMaxUploadBlobLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
@@ -387,11 +387,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
@@ -419,7 +419,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             var uploader = GetPartitionedUploader(
@@ -435,11 +435,11 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             var uploader = GetPartitionedUploader(
@@ -541,7 +541,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => Upload(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => await UploadAsync(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Query"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1825,11 +1825,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual Response<BlobDownloadInfo> Query(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: false,
                 cancellationToken)
@@ -1839,7 +1839,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="QueryAsync"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1857,11 +1857,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             await QueryInternal(
-                query,
+                querySqlExpression,
                 options,
                 async: true,
                 cancellationToken)
@@ -1871,7 +1871,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="QueryInternal"/> API returns the
         /// result of a query against the blob.
         /// </summary>
-        /// <param name="query">
+        /// <param name="querySqlExpression">
         /// The query.
         /// </param>
         /// <param name="options">
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         private async Task<Response<BlobDownloadInfo>> QueryInternal(
-            string query,
+            string querySqlExpression,
             BlobQueryOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -1906,7 +1906,7 @@ namespace Azure.Storage.Blobs.Specialized
                     QueryRequest queryRequest = new QueryRequest()
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
-                        Expression = query,
+                        Expression = querySqlExpression,
                         InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
@@ -2094,17 +2094,17 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion OpenWrite
 
         #region PartitionedUploader
-        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+        internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            =>  new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+            =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 arrayPool,
                 operationName);
 
-        internal static PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
+        internal static PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
         {
             static string GenerateBlockId(long offset)
             {
@@ -2117,7 +2117,7 @@ namespace Azure.Storage.Blobs.Specialized
                 return Convert.ToBase64String(id);
             }
 
-            return new PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors
+            return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
                     => await client.UploadInternal(

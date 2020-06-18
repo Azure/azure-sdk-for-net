@@ -160,10 +160,10 @@ using Azure.ResourceManager.Network.Models;
 var computeClient = new ComputeManagementClient(subscriptionId, new DefaultAzureCredential());
 var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
 
-var availabilitySetsClient = computeClient.GetAvailabilitySetsClient();
-var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
-var networkInterfaceClient = networkClient.GetNetworkInterfacesClient();
-var virtualMachinesClient = computeClient.GetVirtualMachinesClient();
+var availabilitySetsClient = computeClient.AvailabilitySets;
+var virtualNetworksClient = networkClient.VirtualNetworks;
+var networkInterfaceClient = networkClient.NetworkInterfaces;
+var virtualMachinesClient = computeClient.VirtualMachines;
 
 var location = "westus";
 // Create AvailabilitySet

@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await Receiver.ReceiveAsync(
+                    ServiceBusReceivedMessage message = await Receiver.ReceiveMessageAsync(
                         _maxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus
                     // don't pass the processor cancellation token
                     // as we want in flight autocompletion to be able
                     // to finish
-                    await Receiver.CompleteAsync(
+                    await Receiver.CompleteMessageAsync(
                         message.LockToken,
                         CancellationToken.None)
                         .ConfigureAwait(false);
@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus
                         // don't pass the processor cancellation token
                         // as we want in flight abandon to be able
                         // to finish even if user stopped processing
-                        await Receiver.AbandonAsync(
+                        await Receiver.AbandonMessageAsync(
                             message.LockToken,
                             cancellationToken: CancellationToken.None)
                             .ConfigureAwait(false);
