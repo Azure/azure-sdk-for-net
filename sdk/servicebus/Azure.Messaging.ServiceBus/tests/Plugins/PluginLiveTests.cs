@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 var plugin = new SendReceivePlugin();
                 var options = new ServiceBusClientOptions();
                 options.AddPlugin(plugin);
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
                 var sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));

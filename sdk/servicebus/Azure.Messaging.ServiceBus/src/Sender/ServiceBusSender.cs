@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         private readonly TransportSender _innerSender;
         private readonly EntityScopeFactory _scopeFactory;
-        internal readonly ServiceBusPlugin[] _plugins;
+        internal readonly IList<ServiceBusPlugin> _plugins;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             ServiceBusSenderOptions options,
             ServiceBusConnection connection,
-            ServiceBusPlugin[] plugins)
+            IList<ServiceBusPlugin> plugins)
         {
             Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try

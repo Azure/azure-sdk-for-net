@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal readonly TransportReceiver InnerReceiver;
         internal readonly EntityScopeFactory _scopeFactory;
-        internal readonly ServiceBusPlugin[] _plugins;
+        internal readonly IList<ServiceBusPlugin> _plugins;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            ServiceBusPlugin[] plugins,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default)
         {

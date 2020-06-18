@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string entityPath,
             ServiceBusConnection connection,
-            ServiceBusPlugin[] plugins,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
-            ServiceBusPlugin[] plugins,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options) :
             base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), options?.SessionId)
         {
