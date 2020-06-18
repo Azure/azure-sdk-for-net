@@ -176,7 +176,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
+                    _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                     _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
@@ -192,7 +192,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedForm> receipts = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
