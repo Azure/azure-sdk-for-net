@@ -62,14 +62,15 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        ///
+        /// The list of plugins for the client.
         /// </summary>
         internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
-        /// Register a ServiceBusPlugin
+        /// Register a plugin to be used to alter
+        /// incoming/outgoing messages.
         /// </summary>
-        /// <param name="plugin"></param>
+        /// <param name="plugin">The plugin instance to register.</param>
         public void RegisterPlugin(ServiceBusPlugin plugin)
         {
             Argument.AssertNotNull(plugin, nameof(plugin));
@@ -84,7 +85,7 @@ namespace Azure.Messaging.ServiceBus
             Plugins.Clear();
 
         /// <summary>
-        /// Get the list of registerd plugins.
+        /// Get the list of registered plugins.
         /// </summary>
         /// <returns>A list of <see cref="ServiceBusPlugin"/>.</returns>
         public ReadOnlyCollection<ServiceBusPlugin> GetPlugins() =>

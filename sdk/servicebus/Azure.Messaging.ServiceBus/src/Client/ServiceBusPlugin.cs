@@ -24,10 +24,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         public virtual bool ShouldContinueOnException => false;
 
         /// <summary>
-        /// This operation is called before a message is sent.
+        /// This operation is called before a message is sent and can be
+        /// overridden to alter the properties of an outgoing message.
         /// </summary>
-        /// <param name="message">The <see cref="ServiceBusMessage"/> to be modified by the plugin</param>
-        /// <returns>The modified <see cref="ServiceBusMessage"/>.</returns>
+        /// <param name="message">The <see cref="ServiceBusMessage"/> to be modified by the plugin.</param>
         public virtual Task BeforeMessageSend(ServiceBusMessage message)
         {
             return Task.CompletedTask;
@@ -35,30 +35,31 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         /// <summary>
         /// This operation is called after a message is received, but before it is returned to the <see cref="ServiceBusReceiver"/>.
+        /// It can be overriden to alter the properties of an
+        /// incoming message.
         /// </summary>
-        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin</param>
-        /// <returns>The modified <see cref="ServiceBusReceivedMessage"/>.</returns>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin.</param>
         public virtual Task AfterMessageReceive(ServiceBusReceivedMessage message)
         {
             return Task.CompletedTask;
         }
 
         /// <summary>
-        ///
+        /// Set the <see cref="ServiceBusReceivedMessage.Body"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="body"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="body">The body to set on the message. This will overwrite any existing body.</param>
         protected static void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
             message.SentMessage.Body = body;
         }
 
         /// <summary>
-        ///
+        /// Set a key/value pair on the <see cref="ServiceBusReceivedMessage.Properties"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="key">The key to add or update the value of.</param>
+        /// <param name="value">The value to set for the associated key.</param>
         protected static void SetUserProperty(ServiceBusReceivedMessage message, string key, object value)
         {
             message.SentMessage.Properties[key] = value;
@@ -66,10 +67,12 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
 
         /// <summary>
-        ///
+        /// Sets the
+        /// <see cref="ServiceBusReceivedMessage.ContentType"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="contentType"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="contentType">The content type to set on
+        /// the message.</param>
 
         protected static void SetContentType(ServiceBusReceivedMessage message, string contentType)
         {
@@ -77,10 +80,11 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.CorrelationId"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="correlationId"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="correlationId">The correlationId to set
+        /// on the message.</param>
 
         protected static void SetCorrelationId(ServiceBusReceivedMessage message, string correlationId)
         {
@@ -88,10 +92,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.Label"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="label"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="label">The label to set on the message.</param>
 
         protected static void SetLabel(ServiceBusReceivedMessage message, string label)
         {
@@ -99,10 +103,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.MessageId"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="messageId"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="messageId">The message ID to set on the message.</param>
 
         protected static void SetMessageId(ServiceBusReceivedMessage message, string messageId)
         {
@@ -110,10 +114,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.PartitionKey"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="partitionKey"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="partitionKey">The partion key to set on the message.</param>
 
         protected static void SetPartitionKey(ServiceBusReceivedMessage message, string partitionKey)
         {
@@ -121,10 +125,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.ReplyTo"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="replyTo"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="replyTo">The reply to value to set on the message.</param>
 
         protected static void SetReplyTo(ServiceBusReceivedMessage message, string replyTo)
         {
@@ -132,10 +136,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.ReplyToSessionId"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="replyToSessionId"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="replyToSessionId">The reply to session ID value to set on the message.</param>
 
         protected static void SetReplyToSessionId(ServiceBusReceivedMessage message, string replyToSessionId)
         {
@@ -143,10 +147,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.SessionId"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="sessionId"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="sessionId">The session ID to set on the message.</param>
 
         protected static void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
         {
@@ -154,10 +158,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.ScheduledEnqueueTime"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="scheduledEnqueueTime"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="scheduledEnqueueTime">The scheduled enqueue time to set on the message.</param>
 
         protected static void SetScheduledEnqueueTime(ServiceBusReceivedMessage message, DateTimeOffset scheduledEnqueueTime)
         {
@@ -165,10 +169,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.TimeToLive"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="timeToLive"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="timeToLive">The time to live to set on the message.</param>
 
         protected static void SetTimeToLive(ServiceBusReceivedMessage message, TimeSpan timeToLive)
         {
@@ -176,10 +180,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.To"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="to"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="to">The to value to set on the message.</param>
 
         protected static void SetTo(ServiceBusReceivedMessage message, string to)
         {
@@ -187,10 +191,10 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        ///
+        /// Sets the <see cref="ServiceBusReceivedMessage.ViaPartitionKey"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="viaPartitionKey"></param>
+        /// <param name="message">The message to modify.</param>
+        /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
 
         protected static void SetViaPartitionKey(ServiceBusReceivedMessage message, string viaPartitionKey)
         {
