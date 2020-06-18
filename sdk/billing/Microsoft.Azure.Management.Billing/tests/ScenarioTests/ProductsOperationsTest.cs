@@ -22,6 +22,10 @@ namespace Billing.Tests.ScenarioTests
         private const string BillingProfileName = "KKMM-ZUHC-BG7-TGB";
         private const string InvoiceSectionName = "UCAF-IQUR-PJA-TGB";
         private const string ProductName = "b04536f5-e758-081a-b981-0b9afad94173";
+        private const string SourceInvoiceSectionId =
+            "/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/UCAF-IQUR-PJA-TGB";
+        private const string DestinationInvoiceSectionId =
+            "/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB";
 
         [Fact]
         public void GetProductTest()
@@ -95,6 +99,128 @@ namespace Billing.Tests.ScenarioTests
                 Assert.Contains(InvoiceSectionName, product.InvoiceSectionId);
                 Assert.Equal(AvailabilityId, product.AvailabilityId);
                 Assert.Equal(ProductName, product.Name);
+            }
+        }
+
+        [Fact]
+        public void MoveProductByInvoiceSectionTest()
+        {
+            // move product
+            this.MovePorductTest(DestinationInvoiceSectionId);
+
+            // restore
+            this.MovePorductTest(SourceInvoiceSectionId);
+        }
+
+        [Fact]
+        public void ValidateProductMoveEligibilityByInvoiceSectionTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the products
+                var validateProductTransferEligibilityResult = billingMgmtClient.Products.ValidateMove(
+                    BillingAccountName,
+                    ProductName,
+                    new TransferProductRequestProperties
+                    {
+                        DestinationInvoiceSectionId = DestinationInvoiceSectionId
+                    });
+
+                // Verify the response and make sure we can move product to destination InvoiceSection
+                Assert.NotNull(validateProductTransferEligibilityResult);
+                Assert.NotNull(validateProductTransferEligibilityResult.IsMoveEligible);
+                Assert.True(validateProductTransferEligibilityResult.IsMoveEligible.Value);
+            }
+        }
+
+        [Fact]
+        public void UpdateProductAutoRenewTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var autoRenewOff = "Off";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the products
+                var productUpdateResult = billingMgmtClient.Products.Update(
+                    BillingAccountName,
+                    ProductName,
+                    new Product
+                    {
+                        AutoRenew = autoRenewOff
+                    });
+
+                // Verify the response
+                Assert.NotNull(productUpdateResult);
+                Assert.NotNull(productUpdateResult.AutoRenew);
+                Assert.Equal(autoRenewOff, productUpdateResult.AutoRenew);
+
+                // restore
+                var autoRenew = "On";
+                productUpdateResult = billingMgmtClient.Products.Update(
+                    BillingAccountName,
+                    ProductName,
+                    new Product
+                    {
+                        AutoRenew = autoRenew
+                    });
+
+                // verify restore
+                Assert.NotNull(productUpdateResult);
+                Assert.NotNull(productUpdateResult.AutoRenew);
+                Assert.Equal(autoRenew, productUpdateResult.AutoRenew);
+            }
+        }
+
+        private void MovePorductTest(string destinationInvoiceSectionId)
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the products
+                var validateProductTransferEligibilityResult = billingMgmtClient.Products.ValidateMove(
+                    BillingAccountName,
+                    ProductName,
+                    new TransferProductRequestProperties
+                    {
+                        DestinationInvoiceSectionId = destinationInvoiceSectionId
+                    });
+
+                // Verify the response and make sure we can move product to destination InvoiceSection
+                Assert.NotNull(validateProductTransferEligibilityResult);
+                Assert.NotNull(validateProductTransferEligibilityResult.IsMoveEligible);
+                if (validateProductTransferEligibilityResult.IsMoveEligible.Value)
+                {
+                    var movedProduct = billingMgmtClient.Products.Move(
+                         BillingAccountName,
+                         ProductName,
+                         new TransferProductRequestProperties
+                         {
+                             DestinationInvoiceSectionId = destinationInvoiceSectionId
+                         });
+
+                    // verify response
+                    Assert.NotNull(movedProduct);
+                    Assert.Equal(destinationInvoiceSectionId, movedProduct.InvoiceSectionId);
+                }
             }
         }
     }
