@@ -388,20 +388,6 @@ namespace Azure.Core
                 return setProperty;
             }
 
-            public override DynamicMetaObject BindConvert(ConvertBinder binder)
-            {
-                var sourceInstance = Expression.Convert(Expression, LimitType);
-                var destinationType = binder.Type;
-                var destinationTypeExpression = Expression.Constant(destinationType);
-
-                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(ConvertTo), BindingFlags.NonPublic | BindingFlags.Instance);
-                Expression expression = Expression.Call(sourceInstance, methodIplementation, new Expression[] { destinationTypeExpression });
-                expression = Expression.Convert(expression, binder.Type);
-                return new DynamicMetaObject(expression, restrictions);
-            }
-
             public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
             {
                 if (indexes.Length != 1) throw new InvalidOperationException();
@@ -502,10 +488,10 @@ namespace Azure.Core
 
         public static explicit operator bool(DynamicJson json) => (bool) json.ConvertTo(typeof(bool))!;
         public static explicit operator int(DynamicJson json) => (int) json.ConvertTo(typeof(int))!;
-        public static explicit operator long(DynamicJson json) => (int) json.ConvertTo(typeof(long))!;
+        public static explicit operator long(DynamicJson json) => (long) json.ConvertTo(typeof(long))!;
         public static explicit operator string?(DynamicJson json) => (string?) json.ConvertTo(typeof(string));
-        public static explicit operator float(DynamicJson json) => (int) json.ConvertTo(typeof(float))!;
-        public static explicit operator double(DynamicJson json) => (int) json.ConvertTo(typeof(float))!;
+        public static explicit operator float(DynamicJson json) => (float) json.ConvertTo(typeof(float))!;
+        public static explicit operator double(DynamicJson json) => (double) json.ConvertTo(typeof(double))!;
 
         public static implicit operator DynamicJson(int value) => new DynamicJson(value);
         public static implicit operator DynamicJson(long value) => new DynamicJson(value);
@@ -522,7 +508,6 @@ namespace Azure.Core
         public bool GetBoolean() => (bool) this;
         public int GetArrayLength() => EnsureArray().Count;
         public DynamicJson GetProperty(string name) => GetPropertyValue(name);
-
 
         public static DynamicJson Serialize<T>(T value, JsonSerializerOptions? options = null)
         {

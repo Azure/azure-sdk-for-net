@@ -141,6 +141,15 @@ namespace Azure.Core.Tests
             Assert.Throws<FormatException>(() => _ = (long)dynamicJson);
         }
 
+        [Test]
+        public void ReadingArrayAsValueThrows()
+        {
+            var json = DynamicJson.Parse("[1,3]");
+            dynamic dynamicJson = json;
+            Assert.Throws<InvalidOperationException>(() => _ = (int)json);
+            Assert.Throws<InvalidOperationException>(() => _ = (int)dynamicJson);
+        }
+
         private T JsonAsType<T>(string json)
         {
             dynamic dynamicJson = DynamicJson.Parse(json);
