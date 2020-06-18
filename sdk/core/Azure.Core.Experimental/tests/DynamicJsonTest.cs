@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework;
@@ -111,6 +112,33 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("Hello", (string)dynamicJson.primitive);
             Assert.AreEqual(true, (bool)dynamicJson.nested.nestedPrimitive);
+        }
+
+        [Test]
+        public void CanReadIntsAsFloatingPoints()
+        {
+            var json = DynamicJson.Parse("5");
+            dynamic dynamicJson = json;
+
+            Assert.AreEqual(5, (float)dynamicJson);
+            Assert.AreEqual(5, (double)dynamicJson);
+            Assert.AreEqual(5, (int)dynamicJson);
+            Assert.AreEqual(5, (long)dynamicJson);
+            Assert.AreEqual(5, (float)json);
+            Assert.AreEqual(5, (double)json);
+            Assert.AreEqual(5, (int)json);
+            Assert.AreEqual(5, (long)json);
+        }
+
+        [Test]
+        public void ReadingFloatingPointAsIntThrows()
+        {
+            var json = DynamicJson.Parse("5.5");
+            dynamic dynamicJson = json;
+            Assert.Throws<FormatException>(() => _ = (int)json);
+            Assert.Throws<FormatException>(() => _ = (int)dynamicJson);
+            Assert.Throws<FormatException>(() => _ = (long)json);
+            Assert.Throws<FormatException>(() => _ = (long)dynamicJson);
         }
 
         private T JsonAsType<T>(string json)

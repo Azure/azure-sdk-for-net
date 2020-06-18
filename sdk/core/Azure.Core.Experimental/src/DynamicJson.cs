@@ -606,6 +606,10 @@ namespace Azure.Core
 
             public long AsLong()
             {
+                if (!_hasLong)
+                {
+                    throw new FormatException();
+                }
                 return _long;
             }
 
