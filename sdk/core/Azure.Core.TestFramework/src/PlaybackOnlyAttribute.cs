@@ -14,6 +14,16 @@ namespace Azure.Core.TestFramework
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true, Inherited = true)]
     public class PlaybackOnlyAttribute : NUnitAttribute, IApplyToTest
     {
+        private readonly string _reason;
+
+        /// <summary>
+        /// Constructs the attribute giving a reason the associated tests is playback only.
+        /// </summary>
+        public PlaybackOnlyAttribute(string reason)
+        {
+            _reason = reason;
+        }
+
         /// <summary>
         /// Modifies the <paramref name="test"/> by adding categories to it and changing the run state as needed.
         /// </summary>
@@ -28,7 +38,7 @@ namespace Azure.Core.TestFramework
                 if (mode != RecordedTestMode.Playback)
                 {
                     test.RunState = RunState.Ignored;
-                    test.Properties.Set("_SKIPREASON", $"Live tests will not run when AZURE_TEST_MODE is {mode}");
+                    test.Properties.Set("_SKIPREASON", $"Playback tests will not run when AZURE_TEST_MODE is {mode}.  This test was skipped for the following reason: {_reason}");
                 }
             }
         }
