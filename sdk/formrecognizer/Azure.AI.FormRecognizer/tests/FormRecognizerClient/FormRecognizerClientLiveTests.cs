@@ -397,24 +397,24 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
-            RecognizedFormCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
-            Assert.AreEqual(2, recognizedReceipts.Count);
+            Assert.AreEqual(2, recognizedForms.Count);
 
-            for (int receiptIndex = 0; receiptIndex < recognizedReceipts.Count; receiptIndex++)
+            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
             {
-                var recognizedReceipt = recognizedReceipts[receiptIndex];
-                var expectedPageNumber = receiptIndex + 1;
+                var recognizedForm = recognizedForms[formIndex];
+                var expectedPageNumber = formIndex + 1;
 
-                Assert.NotNull(recognizedReceipt);
+                Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedReceipt, includeTextContent: true,
+                ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedReceipt.Fields["MerchantName"];
-                var expectedValueText = receiptIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+                var sampleField = recognizedForm.Fields["MerchantName"];
+                var expectedValueText = formIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
                 Assert.IsNotNull(sampleField.ValueText);
                 Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
@@ -434,33 +434,33 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
-            Assert.AreEqual(3, recognizedReceipts.Count);
+            Assert.AreEqual(3, recognizedForms.Count);
 
-            for (int receiptIndex = 0; receiptIndex < recognizedReceipts.Count; receiptIndex++)
+            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
             {
-                var recognizedReceipt = recognizedReceipts[receiptIndex];
-                var expectedPageNumber = receiptIndex + 1;
+                var recognizedForm = recognizedForms[formIndex];
+                var expectedPageNumber = formIndex + 1;
 
-                Assert.NotNull(recognizedReceipt);
+                Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedReceipt, includeTextContent: true,
+                ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                if (receiptIndex == 0 || receiptIndex == 2)
+                if (formIndex == 0 || formIndex == 2)
                 {
-                    var sampleField = recognizedReceipt.Fields["MerchantName"];
-                    var expectedValueText = receiptIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+                    var sampleField = recognizedForm.Fields["MerchantName"];
+                    var expectedValueText = formIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
                     Assert.IsNotNull(sampleField.ValueText);
                     Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
                 }
             }
 
-            var blankForm = recognizedReceipts[1];
+            var blankForm = recognizedForms[1];
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
