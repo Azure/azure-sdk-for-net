@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.Support
         /// the $filter parameter. Output will be a paged result with
         /// _nextLink_, using which you can retrieve the next set of support
         /// tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-        /// 12 months after ticket creation. If a ticket was created more than
-        /// 12 months ago, a request for data might cause an error.
+        /// 18 months after ticket creation. If a ticket was created more than
+        /// 18 months ago, a request for data might cause an error.
         /// </summary>
         /// <param name='top'>
         /// The number of values to return in the collection. Default is 25 and
@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.Support
         Task<AzureOperationResponse<IPage<SupportTicketDetails>>> ListWithHttpMessagesAsync(int? top = default(int?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data
-        /// is available for 12 months after ticket creation. If a ticket was
-        /// created more than 12 months ago, a request for data might cause an
+        /// is available for 18 months after ticket creation. If a ticket was
+        /// created more than 18 months ago, a request for data might cause an
         /// error.
         /// </summary>
         /// <param name='supportTicketName'>
@@ -250,8 +250,8 @@ namespace Microsoft.Azure.Management.Support
         /// the $filter parameter. Output will be a paged result with
         /// _nextLink_, using which you can retrieve the next set of support
         /// tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-        /// 12 months after ticket creation. If a ticket was created more than
-        /// 12 months ago, a request for data might cause an error.
+        /// 18 months after ticket creation. If a ticket was created more than
+        /// 18 months ago, a request for data might cause an error.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
