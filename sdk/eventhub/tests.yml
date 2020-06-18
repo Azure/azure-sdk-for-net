@@ -35,4 +35,4 @@ jobs:
     ScenarioName: AzureChinaCloud
     SubscriptionConfiguration: $(sub-config-cn-test-resources)
     EnvVars:
-      AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn      
+      AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
