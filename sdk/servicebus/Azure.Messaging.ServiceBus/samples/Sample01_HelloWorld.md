@@ -20,13 +20,13 @@ ServiceBusSender sender = client.CreateSender(queueName);
 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // get the message body as a string
 string body = receivedMessage.Body.ToString();
@@ -35,7 +35,7 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-There are two ways of sending several messages at once. The first way uses the `SendAsync`
+There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync`
 overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of
 the supplied messages in a single message batch that we will send to the service. If the messages are too large
 to fit in a single batch, the operation will throw an exception.
@@ -45,19 +45,19 @@ IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the messages
-await sender.SendAsync(messages);
+await sender.SendMessagesAsync(messages);
 ```
 The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object,
 which will allow you to attempt to messages one at a time to the batch using TryAdd. If the message cannot fit in the batch,
 TryAdd will return false.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 ```
 
 ## Peeking a message
@@ -65,7 +65,7 @@ await sender.SendAsync(messageBatch);
 It's also possible to simply peek a message. Peeking a message does not require the message to be locked.
 
 ```C# Snippet:ServiceBusPeek
-ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
+ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
 ```
 
 ### Schedule a message
