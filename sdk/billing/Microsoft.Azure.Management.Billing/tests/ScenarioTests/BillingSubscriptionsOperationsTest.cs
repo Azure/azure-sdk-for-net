@@ -16,10 +16,18 @@ namespace Billing.Tests.ScenarioTests
 {
     public class BillingSubscriptionsOperationsTest : TestBase
     {
-        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string BillingSubscriptionName = "0195fcc8-69cd-4440-852b-237bdae4e36c";
-        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
+        //private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
+        //private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
+        //private const string BillingSubscriptionName = "0195fcc8-69cd-4440-852b-237bdae4e36c";
+        //private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
+        private const string BillingAccountName = "4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31";
+        private const string BillingProfileName = "KKMM-ZUHC-BG7-TGB";
+        private const string BillingSubscriptionName = "ce294754-54f1-41f0-853b-57415ca15600";
+        private const string InvoiceSectionName = "UCAF-IQUR-PJA-TGB";
+        private const string SourceInvoiceSectionId =
+            "/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/UCAF-IQUR-PJA-TGB";
+        private const string DestinationInvoiceSectionId =
+            "/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB";
 
         [Fact]
         public void GetBillingSubscriptionTest()
@@ -117,12 +125,12 @@ namespace Billing.Tests.ScenarioTests
         }
 
         [Fact]
-        public void MoveBillingSubscriptionTest()
+        public void MoveBillingSubscriptionsTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-            var destinationInvoiceSectionId = "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407";
+            //var destinationInvoiceSectionId = "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407";
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -133,51 +141,33 @@ namespace Billing.Tests.ScenarioTests
                 var billingSubscription = billingMgmtClient.BillingSubscriptions.Move(
                     BillingAccountName, new TransferBillingSubscriptionRequestProperties
                     {
-                        DestinationInvoiceSectionId = destinationInvoiceSectionId
+                        DestinationInvoiceSectionId = DestinationInvoiceSectionId
                     });
 
                 // Verify the response
                 Assert.NotNull(billingSubscription);
-                
-                Assert.Contains(billingSubscription.InvoiceSectionId, destinationInvoiceSectionId);
-            }
-        }
+                Assert.Contains(billingSubscription.InvoiceSectionId, DestinationInvoiceSectionId);
 
-        [Fact]
-        public void IsEligibleToMoveBillingSubscriptionTest()
-        {
-            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-            var destinationInvoiceSectionId = "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407";
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                // Get the agreements
-                var validateMove = billingMgmtClient.BillingSubscriptions.ValidateMove(
-                    BillingAccountName, 
-                    new TransferBillingSubscriptionRequestProperties
+                // restore
+                billingSubscription = billingMgmtClient.BillingSubscriptions.Move(
+                    BillingAccountName, new TransferBillingSubscriptionRequestProperties
                     {
-                        DestinationInvoiceSectionId = destinationInvoiceSectionId
+                        DestinationInvoiceSectionId = SourceInvoiceSectionId
                     });
 
                 // Verify the response
-                Assert.NotNull(validateMove);
-                Assert.NotNull(validateMove.IsMoveEligible);
-                Assert.True(validateMove.IsMoveEligible.Value);
+                Assert.NotNull(billingSubscription);
+                Assert.Contains(billingSubscription.InvoiceSectionId, SourceInvoiceSectionId);
             }
         }
 
         [Fact]
-        public void UpdateBillingSubscriptionTest()
+        public void UpdateBillingSubscriptionsTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-            var costCenter = "NewCostCenter";
+            var costCenterNew = "CostCenterNew";
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -189,13 +179,63 @@ namespace Billing.Tests.ScenarioTests
                     BillingAccountName, 
                     new BillingSubscription
                     {
-                        CostCenter = costCenter
+                        CostCenter = costCenterNew
                     });
 
                 // Verify the response
                 Assert.NotNull(updatedBillingsubscription);
                 Assert.NotNull(updatedBillingsubscription.CostCenter);
-                Assert.Equal(updatedBillingsubscription.CostCenter, costCenter);
+                Assert.Equal(updatedBillingsubscription.CostCenter, costCenterNew);
+
+                //restore
+                var costCenterOld = "CostCenterOld";
+                updatedBillingsubscription = billingMgmtClient.BillingSubscriptions.Update(
+                    BillingAccountName,
+                    new BillingSubscription
+                    {
+                        CostCenter = costCenterOld
+                    });
+
+                // Verify the response
+                Assert.NotNull(updatedBillingsubscription);
+                Assert.NotNull(updatedBillingsubscription.CostCenter);
+                Assert.Equal(updatedBillingsubscription.CostCenter, costCenterOld);
+            }
+        }
+
+        [Fact]
+        public void ValidateBillingSubscriptionsMoveEligibilityTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory =
+                Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            
+            //var billingAccountName =
+            //    "4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31";
+            ////var billingProfileName = "KKMM-ZUHC-BG7-TGB";
+            ////var invoiceSectionName = "UCAF-IQUR-PJA-TGB";
+            //var destinationInvoiceSectionId =
+            //    "/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context,
+                    new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+
+                // Get the agreements
+                var validateSubscriptionTransferEligibilityResult = billingMgmtClient.BillingSubscriptions.ValidateMove(
+                    BillingAccountName,
+                    new TransferBillingSubscriptionRequestProperties()
+                    {
+                        DestinationInvoiceSectionId = DestinationInvoiceSectionId
+                    });
+
+                // Verify the response
+                Assert.NotNull(validateSubscriptionTransferEligibilityResult);
+                Assert.NotNull(validateSubscriptionTransferEligibilityResult.IsMoveEligible);
+                Assert.True(validateSubscriptionTransferEligibilityResult.IsMoveEligible.Value);
             }
         }
     }
