@@ -8,6 +8,32 @@ resources:
       endpoint: azure
 
 jobs:
+# Azure Cloud
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
+    ScenarioName: AzureCloud
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+    ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.com' }"
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+
+# AzureUSGovernment
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: textanalytics
+    ScenarioName: AzureUSGovernment
+    SubscriptionConfiguration: $(sub-config-gov-test-resources)
+    ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.us' }"
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+
+# AzureChinaCloud
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: textanalytics
+    ScenarioName: AzureChinaCloud
+    SubscriptionConfiguration: $(sub-config-cn-test-resources)
+    ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn'; textAnalyticsSku = 'S' }"
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
