@@ -31,9 +31,8 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// };
     ///
     /// string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-    /// Response&lt;string&gt; createRelationshipResponse = await client.CreateRelationshipAsync(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, serializedRelationship);
-    /// Console.WriteLine($&quot;Created a digital twin relationship with Id buildingFloorRelationshipId from digital twin with Id buildingTwinId to digital twin with Id floorTwinId. &quot; +
-    ///     $&quot;Response status: {createRelationshipResponse.GetRawResponse().Status}.&quot;);
+    /// await client.CreateRelationshipAsync(&quot;buildingTwinId&quot;, &quot;buildingFloorRelationshipId&quot;, serializedRelationship);
+    /// Console.WriteLine($&quot;Created a digital twin relationship &apos;buildingFloorRelationshipId&apos; from twin &apos;buildingTwinId&apos; to twin &apos;floorTwinId&apos;.&quot;);
     /// </code>
     ///
     /// Here's an example of how to use the BasicRelationship helper class to get and deserialize a relationship.
@@ -43,8 +42,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     /// {
     ///     BasicRelationship basicRelationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(getBasicRelationshipResponse.Value);
-    ///     Console.WriteLine($&quot;Retrieved relationship with Id {basicRelationship.Id} from digital twin with Id {basicRelationship.SourceId}. &quot; +
-    ///         $&quot;Response status: {getBasicRelationshipResponse.GetRawResponse().Status}.\n\t&quot; +
+    ///     Console.WriteLine($&quot;Retrieved relationship &apos;{basicRelationship.Id}&apos; from twin {basicRelationship.SourceId}.\n\t&quot; +
     ///         $&quot;Prop1: {basicRelationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
     ///         $&quot;Prop2: {basicRelationship.CustomProperties[&quot;Prop2&quot;]}&quot;);
     /// }
