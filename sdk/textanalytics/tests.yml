@@ -34,6 +34,6 @@ jobs:
     ServiceDirectory: textanalytics
     ScenarioName: AzureChinaCloud
     SubscriptionConfiguration: $(sub-config-cn-test-resources)
-    ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn' }"
+    ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn'; textAnalyticsSku = 'S' }"
     EnvVars:
       AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn

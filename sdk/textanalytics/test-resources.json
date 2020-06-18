@@ -43,7 +43,7 @@
         "endpointPrefix": {
             "defaultValue": "textanalytics",
             "type": "string"
-        },       
+        },
         "endpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string",
