@@ -16,10 +16,6 @@ namespace Billing.Tests.ScenarioTests
 {
     public class BillingSubscriptionsOperationsTest : TestBase
     {
-        //private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        //private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        //private const string BillingSubscriptionName = "0195fcc8-69cd-4440-852b-237bdae4e36c";
-        //private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
         private const string BillingAccountName = "4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31";
         private const string BillingProfileName = "KKMM-ZUHC-BG7-TGB";
         private const string BillingSubscriptionName = "ce294754-54f1-41f0-853b-57415ca15600";
