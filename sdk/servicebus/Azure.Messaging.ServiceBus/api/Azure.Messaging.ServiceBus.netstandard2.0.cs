@@ -794,7 +794,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         protected void SetReplyTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyTo) { }
         protected void SetReplyToSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyToSessionId) { }
         protected void SetScheduledEnqueueTime(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.DateTimeOffset scheduledEnqueueTime) { }
-        protected static void SetSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string sessionId) { }
+        protected void SetSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string sessionId) { }
         protected void SetTimeToLive(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.TimeSpan timeToLive) { }
         protected void SetTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string to) { }
         protected void SetUserProperty(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string key, object value) { }

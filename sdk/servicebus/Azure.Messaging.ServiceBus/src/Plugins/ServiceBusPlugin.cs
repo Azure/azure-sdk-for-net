@@ -159,7 +159,9 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="message">The message to modify.</param>
         /// <param name="sessionId">The session ID to set on the message.</param>
 
-        protected static void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
+#pragma warning disable CA1822 // Mark members as static
+        protected void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
+#pragma warning restore CA1822 // Mark members as static
         {
             message.SentMessage.SessionId = sessionId;
         }
