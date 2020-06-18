@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ContainerOperations.
+    /// Extension methods for ContainersOperations.
     /// </summary>
-    public static partial class ContainerOperationsExtensions
+    public static partial class ContainersOperationsExtensions
     {
             /// <summary>
             /// Get the logs for a specified container instance.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// The number of lines to show from the tail of the container instance log. If
             /// not provided, all available logs are shown up to 4mb.
             /// </param>
-            public static Logs ListLogs(this IContainerOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?))
+            public static Logs ListLogs(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?))
             {
                 return operations.ListLogsAsync(resourceGroupName, containerGroupName, containerName, tail).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Logs> ListLogsAsync(this IContainerOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Logs> ListLogsAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListLogsWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, tail, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// <param name='containerExecRequest'>
             /// The request for the exec command.
             /// </param>
-            public static ContainerExecResponse ExecuteCommand(this IContainerOperations operations, string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest)
+            public static ContainerExecResponse ExecuteCommand(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest)
             {
                 return operations.ExecuteCommandAsync(resourceGroupName, containerGroupName, containerName, containerExecRequest).GetAwaiter().GetResult();
             }
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContainerExecResponse> ExecuteCommandAsync(this IContainerOperations operations, string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContainerExecResponse> ExecuteCommandAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ExecuteCommandWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, containerExecRequest, null, cancellationToken).ConfigureAwait(false))
                 {

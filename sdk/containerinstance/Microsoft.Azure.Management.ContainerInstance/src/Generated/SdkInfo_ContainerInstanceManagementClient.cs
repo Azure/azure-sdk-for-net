@@ -19,13 +19,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ContainerInstance", "Container", "2018-10-01"),
-                new Tuple<string, string, string>("ContainerInstance", "ContainerGroupUsage", "2018-10-01"),
-                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2018-10-01"),
-                new Tuple<string, string, string>("ContainerInstance", "ListCachedImages", "2018-10-01"),
-                new Tuple<string, string, string>("ContainerInstance", "ListCapabilities", "2018-10-01"),
-                new Tuple<string, string, string>("ContainerInstance", "Operations", "2018-10-01"),
-                new Tuple<string, string, string>("Network", "ServiceAssociationLink", "2018-10-01"),
+                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2019-12-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Containers", "2019-12-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Location", "2019-12-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Operations", "2019-12-01"),
               }.AsEnumerable();
           }
       }
