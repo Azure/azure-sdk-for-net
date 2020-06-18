@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available billing REST API operations.
+        /// Lists the available billing REST API operations.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -219,7 +220,8 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists all of the available billing REST API operations.
+        /// Lists the available billing REST API operations.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

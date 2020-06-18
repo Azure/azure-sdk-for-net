@@ -24,13 +24,14 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingPermissionsOperations
     {
         /// <summary>
-        /// Lists all billing permissions the caller has for a customer.
+        /// Lists the billing permissions the caller has for a customer.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,13 +48,13 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions for the caller under a billing
-        /// account.
+        /// Lists the billing permissions the caller has on a billing account.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,18 +71,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions for the caller under invoice section.
+        /// Lists the billing permissions the caller has on an invoice section.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,15 +100,16 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions the caller has for a billing account.
+        /// Lists the billing permissions the caller has on a billing profile.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,6 +126,98 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the billing permissions the caller has for a customer.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByCustomerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the billing permissions the caller has on a billing account.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByBillingAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the billing permissions the caller has on an invoice section.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByInvoiceSectionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the billing permissions the caller has on a billing profile.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BillingPermissionsProperties>>> ListByBillingProfileNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
