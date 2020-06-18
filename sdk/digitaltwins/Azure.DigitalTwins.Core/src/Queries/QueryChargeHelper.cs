@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core
         ///     foreach (string response in page.Values)
         ///     {
         ///         BasicDigitalTwin twin = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(response);
-        ///         Console.WriteLine($&quot;Found digital twin: {twin.Id}&quot;);
+        ///         Console.WriteLine($&quot;Found digital twin &apos;{twin.Id}&apos;&quot;);
         ///     }
         /// }
         /// </code>
