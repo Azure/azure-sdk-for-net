@@ -113,12 +113,12 @@ namespace ContainerInstance.Tests
                 // Create 2 container groups.
                 var resourceGroup1 = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
                 var containerGroupName1 = TestUtilities.GenerateName("acinetsdk");
-                var containerGroup1 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName1);
+                var containerGroup1 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName1, doNotEncrypt: true);
                 containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup1.Name, containerGroupName1, containerGroup1);
 
                 var resourceGroup2 = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
                 var containerGroupName2 = TestUtilities.GenerateName("acinetsdk");
-                var containerGroup2 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName2);
+                var containerGroup2 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName2, doNotEncrypt: true);
                 containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup2.Name, containerGroupName2, containerGroup2);
 
                 // Verify both container group exist when listing.
@@ -147,12 +147,12 @@ namespace ContainerInstance.Tests
                 // Create 2 container groups.
                 var resourceGroup1 = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
                 var containerGroupName1 = TestUtilities.GenerateName("acinetsdk");
-                var containerGroup1 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName1);
+                var containerGroup1 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName1, doNotEncrypt: true);
                 containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup1.Name, containerGroupName1, containerGroup1);
 
                 var resourceGroup2 = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
                 var containerGroupName2 = TestUtilities.GenerateName("acinetsdk");
-                var containerGroup2 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName2);
+                var containerGroup2 = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName2, doNotEncrypt: true);
                 containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup2.Name, containerGroupName2, containerGroup2);
 
                 // Verify only one exists when listing by resource group.

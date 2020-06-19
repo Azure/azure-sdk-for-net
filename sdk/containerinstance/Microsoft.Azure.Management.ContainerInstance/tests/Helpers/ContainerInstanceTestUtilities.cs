@@ -37,7 +37,7 @@ namespace ContainerInstance.Tests
             });
         }
 
-        public static ContainerGroup CreateTestContainerGroup(string containerGroupName)
+        public static ContainerGroup CreateTestContainerGroup(string containerGroupName, bool doNotEncrypt = false)
         {
             var containers = new Container[]
             {
@@ -79,9 +79,14 @@ namespace ContainerInstance.Tests
 
             var msiIdentity = new ContainerGroupIdentity(type: ResourceIdentityType.SystemAssigned);
 
+            var encryptionProps = doNotEncrypt ? null : new EncryptionProperties(
+                vaultBaseUrl: "https://cloudaci-cloudtest.vault.azure.net/",
+                keyName: "testencryptionkey",
+                keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
+
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
-                location: "eastus",
+                location: "westus",
                 osType: OperatingSystemTypes.Linux,
                 ipAddress: ipAddress,
                 restartPolicy: "Never",
@@ -89,7 +94,8 @@ namespace ContainerInstance.Tests
                 identity: msiIdentity,
                 diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics),
                 sku: "Standard",
-                initContainers: initContainers);
+                initContainers: initContainers,
+                encryptionProperties: encryptionProps);
 
             return containerGroup;
         }
@@ -102,11 +108,15 @@ namespace ContainerInstance.Tests
             Assert.Equal(expected.OsType, actual.OsType);
             Assert.Equal(expected.RestartPolicy, actual.RestartPolicy);
             Assert.Equal(expected.Identity.Type, actual.Identity.Type);
+            Assert.Equal(expected.Sku, actual.Sku);
             Assert.Equal(expected.Diagnostics.LogAnalytics.WorkspaceId, actual.Diagnostics.LogAnalytics.WorkspaceId);
             Assert.NotNull(actual.Containers);
             Assert.Equal(1, actual.Containers.Count);
             Assert.NotNull(actual.IpAddress);
             Assert.NotNull(actual.IpAddress.Ip);
+            Assert.Equal(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
+            Assert.Equal(expected.EncryptionProperties?.KeyVersion, actual.EncryptionProperties?.KeyVersion);
+            Assert.Equal(expected.EncryptionProperties?.VaultBaseUrl, actual.EncryptionProperties?.VaultBaseUrl);
             Assert.Equal(expected.IpAddress.DnsNameLabel, actual.IpAddress.DnsNameLabel);
             Assert.Equal(expected.Containers[0].Name, actual.Containers[0].Name);
             Assert.Equal(expected.Containers[0].Image, actual.Containers[0].Image);
