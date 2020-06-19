@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// overridden to alter the body and the properties of an outgoing message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusMessage"/> to be modified by the plugin.</param>
-        public virtual Task BeforeMessageSend(ServiceBusMessage message)
+        public virtual Task BeforeMessageSendAsync(ServiceBusMessage message)
         {
             return Task.CompletedTask;
         }
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// incoming message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin.</param>
-        public virtual Task AfterMessageReceive(ServiceBusReceivedMessage message)
+        public virtual Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
         {
             return Task.CompletedTask;
         }

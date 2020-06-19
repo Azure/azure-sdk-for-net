@@ -250,7 +250,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         internal class FirstPlugin : ServiceBusPlugin
 #pragma warning restore SA1402 // File may only contain a single type
         {
-            public override Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 message.Properties.Add("FirstSendPlugin", true);
                 return Task.FromResult(message);
@@ -261,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         internal class SecondPlugin : ServiceBusPlugin
 #pragma warning restore SA1402 // File may only contain a single type
         {
-            public override Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 // Ensure that the first plugin actually ran first
                 Assert.True((bool)message.Properties["FirstSendPlugin"]);
@@ -274,14 +274,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         {
             public bool WasCalled;
 
-            public override Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 WasCalled = true;
                 message.Body = new BinaryData("sent");
                 return Task.CompletedTask;
             }
 
-            public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
+            public override Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 Assert.AreEqual("sent", message.Body.ToString());
                 SetBody(message, new BinaryData("received"));
@@ -291,12 +291,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
         internal class SendExceptionPlugin : ServiceBusPlugin
         {
-            public override Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 throw new NotImplementedException();
             }
 
-            public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
+            public override Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 return Task.CompletedTask;
             }
@@ -304,12 +304,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
         internal class ReceiveExceptionPlugin : ServiceBusPlugin
         {
-            public override Task BeforeMessageSend(ServiceBusMessage message)
+            public override Task BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 return Task.CompletedTask;
             }
 
-            public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
+            public override Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 throw new NotImplementedException();
             }

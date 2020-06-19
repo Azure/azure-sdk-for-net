@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         {
             var plugin = new TestPlugin();
             var msg = new ServiceBusReceivedMessage();
-            plugin.AfterMessageReceive(msg);
+            plugin.AfterMessageReceiveAsync(msg);
             Assert.AreEqual("body", msg.Body.ToString());
             Assert.AreEqual("contentType", msg.ContentType);
             Assert.AreEqual("propertyValue", msg.Properties["propertyKey"]);
@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
         internal class TestPlugin : ServiceBusPlugin
         {
-            public override Task AfterMessageReceive(ServiceBusReceivedMessage message)
+            public override Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 SetBody(message, new BinaryData("body"));
                 SetContentType(message, "contentType");

@@ -263,7 +263,7 @@ namespace Azure.Messaging.ServiceBus
                     try
                     {
                         Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.AfterMessageReceive(message).ConfigureAwait(false);
+                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
                         Logger.PluginCallCompleted(pluginType, message.MessageId);
                     }
                     catch (Exception ex)
