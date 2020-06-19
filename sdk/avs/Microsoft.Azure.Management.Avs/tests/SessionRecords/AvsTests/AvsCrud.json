@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourcegroups/avs-sdk-test-rg4505?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlZ3JvdXBzL2F2cy1zZGstdGVzdC1yZzQ1MDU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourcegroups/avs-sdk-test-rg7226?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlZ3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e27cbf2a-e85a-4a35-8556-25e941db1a74"
+          "db89a545-e551-416c-83e9-85c470a9d6ca"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+          "ce0e0e42-d465-450c-baae-3c7ad8a42589"
         ],
         "x-ms-correlation-request-id": [
-          "d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+          "ce0e0e42-d465-450c-baae-3c7ad8a42589"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200612T191533Z:d3385eb6-aae5-4c1a-ab6d-cdd2210e690b"
+          "NORTHEUROPE:20200619T183513Z:ce0e0e42-d465-450c-baae-3c7ad8a42589"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 12 Jun 2020 19:15:32 GMT"
+          "Fri, 19 Jun 2020 18:35:12 GMT"
         ],
         "Content-Length": [
           "194"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg4505\",\r\n  \"name\": \"avs-sdk-test-rg4505\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226\",\r\n  \"name\": \"avs-sdk-test-rg7226\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg4505/providers/Microsoft.AVS/privateClouds?api-version=2019-08-09-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzQ1MDUvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcz9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcz9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fb7b48d8-bc33-41d6-a15a-06858c138cfe"
+          "d4863363-b431-4f6d-8dcb-0cd41b9aa822"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.28928.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.Avs.AvsClient/0.1.0"
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
         ]
       },
       "ResponseHeaders": {
@@ -96,13 +96,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+          "4175ca09-ad63-4ccc-8092-54b1a47def95"
         ],
         "x-ms-correlation-request-id": [
-          "060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+          "4175ca09-ad63-4ccc-8092-54b1a47def95"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200612T191534Z:060b844c-1162-4a96-8dfa-3e0e76ed02e3"
+          "NORTHEUROPE:20200619T183513Z:4175ca09-ad63-4ccc-8092-54b1a47def95"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 12 Jun 2020 19:15:33 GMT"
+          "Fri, 19 Jun 2020 18:35:13 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -125,12 +125,1872 @@
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcz9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d86e6290-9025-4768-8087-7adac69f2428"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-request-id": [
+          "422c281c-254f-4393-ae7f-ab06035b8780"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "c13feb83-3c18-46f4-9fb9-b4ba1100fe03"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183729Z:c13feb83-3c18-46f4-9fb9-b4ba1100fe03"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:28 GMT"
+        ],
+        "Content-Length": [
+          "1540"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247\",\r\n      \"location\": \"centralus\",\r\n      \"name\": \"avs-sdk-test-cloud2247\",\r\n      \"properties\": {\r\n        \"circuit\": {\r\n          \"authorizations\": [],\r\n          \"expressRouteID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er\",\r\n          \"expressRoutePrivatePeeringID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er/peerings/AzurePrivatePeering\",\r\n          \"primarySubnet\": \"192.168.51.8/30\",\r\n          \"secondarySubnet\": \"192.168.51.12/30\"\r\n        },\r\n        \"cluster\": {\r\n          \"clusterID\": 1,\r\n          \"clusterSize\": 4,\r\n          \"hosts\": [\r\n            \"gp-fakehost42.mp01.mock01.vmcp.vs.management\",\r\n            \"gp-fakehost39.mp01.mock01.vmcp.vs.management\",\r\n            \"gp-fakehost50.mp01.mock01.vmcp.vs.management\",\r\n            \"gp-fakehost02.mp01.mock01.vmcp.vs.management\"\r\n          ]\r\n        },\r\n        \"clusters\": [],\r\n        \"endpoints\": {\r\n          \"nsxtManager\": \"https://192.168.48.3/\",\r\n          \"vcsa\": \"https://192.168.48.2/\"\r\n        },\r\n        \"identitySources\": [],\r\n        \"internet\": \"Disabled\",\r\n        \"managementNetwork\": \"192.168.48.0/24\",\r\n        \"networkBlock\": \"192.168.48.0/22\",\r\n        \"nsxtCertificateThumbprint\": \"B9A9474616752565A3FAF23E0A013ECE3DC8B8FF\",\r\n        \"provisioningNetwork\": \"192.168.50.0/24\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"vcenterCertificateThumbprint\": \"BE8EA855AA13D9662A115571636B9B1925C6DB68\",\r\n        \"vmotionNetwork\": \"192.168.49.0/24\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"av20\"\r\n      },\r\n      \"tags\": {},\r\n      \"type\": \"Microsoft.AVS/privateClouds\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcz9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "81ff5b85-b4f9-43ed-b1ea-645229e18d35"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-request-id": [
+          "27977b9e-6347-4dd2-a874-afffc1f37a52"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "d2c07a65-6730-448b-98e6-31aa4a34ba4c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183854Z:d2c07a65-6730-448b-98e6-31aa4a34ba4c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:53 GMT"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3P2FwaS12ZXJzaW9uPTIwMTktMDgtMDktcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"av20\"\r\n  },\r\n  \"properties\": {\r\n    \"cluster\": {\r\n      \"clusterSize\": 4\r\n    },\r\n    \"networkBlock\": \"192.168.48.0/22\"\r\n  },\r\n  \"location\": \"centralus\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "22d301cc-1161-4770-af4e-d3a473cb4225"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "183"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview"
+        ],
+        "x-ms-request-id": [
+          "ab65a0ea-1e67-4116-96c4-72638cb5de0a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "191bab03-57c1-42ae-a72d-0fd065ef5873"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183524Z:191bab03-57c1-42ae-a72d-0fd065ef5873"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:35:24 GMT"
+        ],
+        "Content-Length": [
+          "852"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247\",\r\n  \"location\": \"centralus\",\r\n  \"name\": \"avs-sdk-test-cloud2247\",\r\n  \"properties\": {\r\n    \"cluster\": {\r\n      \"clusterID\": 1,\r\n      \"clusterSize\": 4,\r\n      \"hosts\": [\r\n        \"gp-fakehost42.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost39.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost50.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost02.mp01.mock01.vmcp.vs.management\"\r\n      ]\r\n    },\r\n    \"clusters\": [],\r\n    \"endpoints\": {\r\n      \"nsxtManager\": \"https://192.168.48.3/\",\r\n      \"vcsa\": \"https://192.168.48.2/\"\r\n    },\r\n    \"identitySources\": [],\r\n    \"internet\": \"Disabled\",\r\n    \"managementNetwork\": \"192.168.48.0/24\",\r\n    \"networkBlock\": \"192.168.48.0/22\",\r\n    \"provisioningNetwork\": \"192.168.50.0/24\",\r\n    \"provisioningState\": \"Building\",\r\n    \"vmotionNetwork\": \"192.168.49.0/24\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"av20\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.AVS/privateClouds\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "a95966b0-3d95-40ec-9232-5a799669c1a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "6f5032bd-920d-4196-a9bd-447054714eab"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183535Z:6f5032bd-920d-4196-a9bd-447054714eab"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:35:34 GMT"
+        ],
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 5,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "6d89ec7a-1693-4981-b194-3ff02930d4bd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "78974377-71a7-4bd7-a0bb-743539d30fe2"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183545Z:78974377-71a7-4bd7-a0bb-743539d30fe2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:35:45 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 2.5,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "8c1ec539-e1a7-40fd-bc94-7d984cc2e38f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "b06bde21-550d-41fe-9c1d-f723d6201afa"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183555Z:b06bde21-550d-41fe-9c1d-f723d6201afa"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:35:55 GMT"
+        ],
+        "Content-Length": [
+          "349"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 88.75,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "dfa143c9-77fc-4f39-a0f7-ec785938a6d2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "d1a9d133-1d88-422d-bf9e-ad0f27fcf6c9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183606Z:d1a9d133-1d88-422d-bf9e-ad0f27fcf6c9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:06 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-request-id": [
+          "3119a9e6-7e5c-4a50-bac6-3fe5bdef8fcc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "36c0a67a-8fc4-49ec-b646-8b6bc6ab4f3f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183616Z:36c0a67a-8fc4-49ec-b646-8b6bc6ab4f3f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:15 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-request-id": [
+          "b7b492bb-a484-42c5-bbcb-3cd211822a9b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc8b801b-6c6e-4474-9dba-26b27f9ed481"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183627Z:dc8b801b-6c6e-4474-9dba-26b27f9ed481"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:27 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-request-id": [
+          "aeab3231-a1b6-45cb-ba4f-9c2ab82ce798"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "6db82658-2368-4cc3-87e1-d204401510bd"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183637Z:6db82658-2368-4cc3-87e1-d204401510bd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:36 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-request-id": [
+          "c6695317-4374-495d-84ec-158107f9cb3a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "0d8fe33d-fef6-4f62-a325-f80cf2141ef1"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183647Z:0d8fe33d-fef6-4f62-a325-f80cf2141ef1"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:47 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-request-id": [
+          "05fac762-dfbc-4964-837e-fbeac93421bc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "6a7a9004-81e6-480e-9239-43112d95b3b0"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183657Z:6a7a9004-81e6-480e-9239-43112d95b3b0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:36:56 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-request-id": [
+          "b0cca333-d9f3-44e4-b7be-967281678b33"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "c8cb26f9-cf2e-4e7f-a160-bb2f707dd17b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183708Z:c8cb26f9-cf2e-4e7f-a160-bb2f707dd17b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:07 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-request-id": [
+          "ddec142a-5c35-4aac-9cc9-b8db5b4751b5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "fe6746f8-b897-4270-8ea8-e2c8f9d15a8b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183718Z:fe6746f8-b897-4270-8ea8-e2c8f9d15a8b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:17 GMT"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzRkMjNmODAzLWU1MDctNDFiZi04YjgwLTFlNDQ0Zjc2M2Q4NT9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-request-id": [
+          "807852b4-58bb-433f-a630-cbbfce5ec485"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "4c8bfe8b-25a8-4635-a3a6-4ba8f0a1dec4"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183728Z:4c8bfe8b-25a8-4635-a3a6-4ba8f0a1dec4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:28 GMT"
+        ],
+        "Content-Length": [
+          "1626"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"endTime\": \"2020-06-19T12:37:16.9000331-06:00\",\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"name\": \"4d23f803-e507-41bf-8b80-1e444f763d85\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"circuit\": {\r\n      \"authorizations\": [],\r\n      \"expressRouteID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er\",\r\n      \"expressRoutePrivatePeeringID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er/peerings/AzurePrivatePeering\",\r\n      \"primarySubnet\": \"192.168.51.8/30\",\r\n      \"secondarySubnet\": \"192.168.51.12/30\"\r\n    },\r\n    \"cluster\": {\r\n      \"clusterID\": 1,\r\n      \"clusterSize\": 4,\r\n      \"hosts\": [\r\n        \"gp-fakehost42.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost39.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost50.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost02.mp01.mock01.vmcp.vs.management\"\r\n      ]\r\n    },\r\n    \"clusters\": [],\r\n    \"endpoints\": {\r\n      \"nsxtManager\": \"https://192.168.48.3/\",\r\n      \"vcsa\": \"https://192.168.48.2/\"\r\n    },\r\n    \"identitySources\": [],\r\n    \"internet\": \"Disabled\",\r\n    \"managementNetwork\": \"192.168.48.0/24\",\r\n    \"networkBlock\": \"192.168.48.0/22\",\r\n    \"nsxtCertificateThumbprint\": \"B9A9474616752565A3FAF23E0A013ECE3DC8B8FF\",\r\n    \"provisioningNetwork\": \"192.168.50.0/24\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"vcenterCertificateThumbprint\": \"BE8EA855AA13D9662A115571636B9B1925C6DB68\",\r\n    \"vmotionNetwork\": \"192.168.49.0/24\"\r\n  },\r\n  \"startTime\": \"2020-06-19T12:35:23.6442307-06:00\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3P2FwaS12ZXJzaW9uPTIwMTktMDgtMDktcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-request-id": [
+          "98441163-3f42-45a6-99a2-5c8aca0e0e59"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "32eaacb5-c32d-49c5-8e83-d10c9b40977b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183729Z:32eaacb5-c32d-49c5-8e83-d10c9b40977b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:28 GMT"
+        ],
+        "Content-Length": [
+          "1512"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247\",\r\n  \"location\": \"centralus\",\r\n  \"name\": \"avs-sdk-test-cloud2247\",\r\n  \"properties\": {\r\n    \"circuit\": {\r\n      \"authorizations\": [],\r\n      \"expressRouteID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er\",\r\n      \"expressRoutePrivatePeeringID\": \"/subscriptions/5206f269-120b-41ef-a95b-0dce7109de61/resourceGroups/tnt15-cust-mp01-mock01/providers/Microsoft.Network/expressRouteCircuits/tnt15-cust-mp01-mock01-er/peerings/AzurePrivatePeering\",\r\n      \"primarySubnet\": \"192.168.51.8/30\",\r\n      \"secondarySubnet\": \"192.168.51.12/30\"\r\n    },\r\n    \"cluster\": {\r\n      \"clusterID\": 1,\r\n      \"clusterSize\": 4,\r\n      \"hosts\": [\r\n        \"gp-fakehost42.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost39.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost50.mp01.mock01.vmcp.vs.management\",\r\n        \"gp-fakehost02.mp01.mock01.vmcp.vs.management\"\r\n      ]\r\n    },\r\n    \"clusters\": [],\r\n    \"endpoints\": {\r\n      \"nsxtManager\": \"https://192.168.48.3/\",\r\n      \"vcsa\": \"https://192.168.48.2/\"\r\n    },\r\n    \"identitySources\": [],\r\n    \"internet\": \"Disabled\",\r\n    \"managementNetwork\": \"192.168.48.0/24\",\r\n    \"networkBlock\": \"192.168.48.0/22\",\r\n    \"nsxtCertificateThumbprint\": \"B9A9474616752565A3FAF23E0A013ECE3DC8B8FF\",\r\n    \"provisioningNetwork\": \"192.168.50.0/24\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"vcenterCertificateThumbprint\": \"BE8EA855AA13D9662A115571636B9B1925C6DB68\",\r\n    \"vmotionNetwork\": \"192.168.49.0/24\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"av20\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.AVS/privateClouds\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3P2FwaS12ZXJzaW9uPTIwMTktMDgtMDktcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fcd17cc6-2187-4c93-bcfd-dc22f2685b14"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationresults/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview"
+        ],
+        "x-ms-request-id": [
+          "a994242d-bdd5-4f93-9d0f-45c69b901f76"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "8816ff72-cf3e-4197-a56f-10693c44bb2d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183731Z:8816ff72-cf3e-4197-a56f-10693c44bb2d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:30 GMT"
+        ],
+        "Content-Type": [
+          "text/html"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-request-id": [
+          "51f5d4a7-d2ff-40ff-b259-d42b3718c9ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "d8d78d29-c2da-4ab4-8f8d-92e6b5be00b5"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183741Z:d8d78d29-c2da-4ab4-8f8d-92e6b5be00b5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:40 GMT"
+        ],
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 5,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-request-id": [
+          "40bc06a8-ec55-4656-b112-c7d6bf1ab3e0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a3e1ebc-a84b-4841-8c04-5fe40c106fab"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183751Z:9a3e1ebc-a84b-4841-8c04-5fe40c106fab"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:37:50 GMT"
+        ],
+        "Content-Length": [
+          "346"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 25,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-request-id": [
+          "d9ffaa65-a982-4f5a-8cf4-a58c1c5ea304"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "fece32bb-d2ef-4d80-bfd8-0b2bd8e91ed6"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183802Z:fece32bb-d2ef-4d80-bfd8-0b2bd8e91ed6"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:01 GMT"
+        ],
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 5,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-request-id": [
+          "d54fa60e-0cfd-4069-b1a4-dee833339b1b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "05f97a79-c3ed-4f4b-8929-860686950d09"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183812Z:05f97a79-c3ed-4f4b-8929-860686950d09"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:12 GMT"
+        ],
+        "Content-Length": [
+          "345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 5,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-request-id": [
+          "fb3d39f3-573f-4f9f-9707-b38b109698ba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a58cac7-bd74-4b38-a7dd-4ff412621f29"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183822Z:5a58cac7-bd74-4b38-a7dd-4ff412621f29"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:22 GMT"
+        ],
+        "Content-Length": [
+          "346"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 50,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14979"
+        ],
+        "x-ms-request-id": [
+          "81c82882-879f-4b23-8cdf-c1e33982500d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "81217af8-48a7-4a38-96b8-e280468bd814"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183833Z:81217af8-48a7-4a38-96b8-e280468bd814"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:33 GMT"
+        ],
+        "Content-Length": [
+          "346"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 50,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-request-id": [
+          "dea1be42-7993-4030-a639-29d4160a60dd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "0b85f8e4-9dcb-4e87-8ab0-be976618f0c3"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183843Z:0b85f8e4-9dcb-4e87-8ab0-be976618f0c3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:42 GMT"
+        ],
+        "Content-Length": [
+          "346"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 90,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Building\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnN0YXR1c2VzLzU4ZmMzMjYwLTQ1NjktNDYzZS1hYjZhLTUzZWRjODIyMzVjZD9hcGktdmVyc2lvbj0yMDE5LTA4LTA5LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-request-id": [
+          "770922c1-332e-484b-a994-9ae3aa58560e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b945ddd-a0cb-4a8f-99fd-d4dafe41c17e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183853Z:1b945ddd-a0cb-4a8f-99fd-d4dafe41c17e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:53 GMT"
+        ],
+        "Content-Length": [
+          "394"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"endTime\": \"2020-06-19T12:38:46.8090582-06:00\",\r\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationstatuses/58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"name\": \"58fc3260-4569-463e-ab6a-53edc82235cd\",\r\n  \"percentComplete\": 100,\r\n  \"startTime\": \"2020-06-19T12:37:30.9185224-06:00\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/avs-sdk-test-rg7226/providers/Microsoft.AVS/privateClouds/avs-sdk-test-cloud2247/operationresults/58fc3260-4569-463e-ab6a-53edc82235cd?api-version=2019-08-09-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjYvcHJvdmlkZXJzL01pY3Jvc29mdC5BVlMvcHJpdmF0ZUNsb3Vkcy9hdnMtc2RrLXRlc3QtY2xvdWQyMjQ3L29wZXJhdGlvbnJlc3VsdHMvNThmYzMyNjAtNDU2OS00NjNlLWFiNmEtNTNlZGM4MjIzNWNkP2FwaS12ZXJzaW9uPTIwMTktMDgtMDktcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Avs.AvsClient/1.0.0.preview.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-request-id": [
+          "8ea559f8-5072-46b1-b9fc-849136983649"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "x-ms-correlation-request-id": [
+          "d07a7889-b3ae-4e95-b155-5c0d9508cb02"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183854Z:d07a7889-b3ae-4e95-b155-5c0d9508cb02"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:53 GMT"
+        ],
+        "Content-Length": [
+          "65"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"Resource does not exist\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourcegroups/avs-sdk-test-rg7226?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlZ3JvdXBzL2F2cy1zZGstdGVzdC1yZzcyMjY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "031a88d8-8343-4ac2-87a5-2d045d9ed06e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "99ef400a-9b49-479f-b0fb-b9299af4b17b"
+        ],
+        "x-ms-correlation-request-id": [
+          "99ef400a-9b49-479f-b0fb-b9299af4b17b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183858Z:99ef400a-9b49-479f-b0fb-b9299af4b17b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:38:58 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVmxNNk1rUlRSRXM2TWtSVVJWTlVPakpFVWtjM01qSTJMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "9a4d36d3-91da-4e7e-ab4c-730b7142ab2a"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a4d36d3-91da-4e7e-ab4c-730b7142ab2a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183913Z:9a4d36d3-91da-4e7e-ab4c-730b7142ab2a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:39:13 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVmxNNk1rUlRSRXM2TWtSVVJWTlVPakpFVWtjM01qSTJMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "c881b3d5-4681-4b84-8156-f011ac1278d4"
+        ],
+        "x-ms-correlation-request-id": [
+          "c881b3d5-4681-4b84-8156-f011ac1278d4"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183929Z:c881b3d5-4681-4b84-8156-f011ac1278d4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:39:29 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVmxNNk1rUlRSRXM2TWtSVVJWTlVPakpFVWtjM01qSTJMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "dc6dd24b-55ee-49a9-9bf5-67491825dc01"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc6dd24b-55ee-49a9-9bf5-67491825dc01"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183944Z:dc6dd24b-55ee-49a9-9bf5-67491825dc01"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:39:44 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BVlM6MkRTREs6MkRURVNUOjJEUkc3MjI2LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVmxNNk1rUlRSRXM2TWtSVVJWTlVPakpFVWtjM01qSTJMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "299f55c0-feee-47e7-a73f-652c16b24e7b"
+        ],
+        "x-ms-correlation-request-id": [
+          "299f55c0-feee-47e7-a73f-652c16b24e7b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200619T183944Z:299f55c0-feee-47e7-a73f-652c16b24e7b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 19 Jun 2020 18:39:44 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
     }
   ],
   "Names": {
     "AvsCrud": [
-      "avs-sdk-test-rg4505",
-      "appplatform-sdk-test-cloud2637"
+      "avs-sdk-test-rg7226",
+      "avs-sdk-test-cloud2247"
     ]
   },
   "Variables": {

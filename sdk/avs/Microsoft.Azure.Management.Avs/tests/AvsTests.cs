@@ -3,10 +3,11 @@
 
 using System.Linq;
 using Microsoft.Azure.Management.Avs;
+using Microsoft.Azure.Management.Avs.Models;
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using ResourceGroup = Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup;
 
 namespace Avs.Tests
 {
@@ -17,25 +18,65 @@ namespace Avs.Tests
         {
             using var context = MockContext.Start(this.GetType());
             string rgName = TestUtilities.GenerateName("avs-sdk-test-rg");
-            string cloudName = TestUtilities.GenerateName("appplatform-sdk-test-cloud");
+            string cloudName = TestUtilities.GenerateName("avs-sdk-test-cloud");
             string location = "centralus";
 
             CreateResourceGroup(context, location, rgName);
-            using var testBase = new AvsTestBase(context);
-            var client = testBase.AvsClient;
-            var clouds = client.PrivateClouds.List(rgName);
-            Assert.True(clouds.Count() == 0);
+
+            try
+            {
+                using var testBase = new AvsTestBase(context);
+                var client = testBase.AvsClient;
+
+                var clouds = client.PrivateClouds.List(rgName);
+                Assert.True(clouds.Count() == 0);
+
+                // create a private cloud
+                client.PrivateClouds.CreateOrUpdate(rgName, cloudName, new PrivateCloud
+                {
+                    Location = location,
+                    Sku = new Sku { Name = "av20" },
+                    Properties = new PrivateCloudProperties
+                    {
+                        Cluster = new DefaultClusterProperties
+                        {
+                            ClusterSize = 4,
+                        },
+                        NetworkBlock = "192.168.48.0/22"
+                    }
+                });
+
+                clouds = client.PrivateClouds.List(rgName);
+                Assert.True(clouds.Count() == 1);
+
+                // delete a private cloud
+                client.PrivateClouds.Delete(rgName, cloudName);
+
+                clouds = client.PrivateClouds.List(rgName);
+                Assert.True(clouds.Count() == 0);
+
+            }
+            finally
+            {
+                DeleteResourceGroup(context, rgName);
+            }
         }
 
         private ResourceGroup CreateResourceGroup(MockContext context, string location, string rgName)
         {
-            ResourceManagementClient client = context.GetServiceClient<ResourceManagementClient>();
+            var client = context.GetServiceClient<ResourceManagementClient>();
             return client.ResourceGroups.CreateOrUpdate(
                 rgName,
                 new ResourceGroup
                 {
                     Location = location
                 });
+        }
+
+        private void DeleteResourceGroup(MockContext context, string rgName)
+        {
+            var client = context.GetServiceClient<ResourceManagementClient>();
+            client.ResourceGroups.Delete(rgName);
         }
     }
 }
