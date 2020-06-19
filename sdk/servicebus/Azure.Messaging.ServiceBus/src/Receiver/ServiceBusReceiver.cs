@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Indicates whether the receiver entity is session enabled.
         /// </summary>
-        internal bool IsSessionReceiver { get; private set; }
+        internal bool IsSessionReceiver { get; }
 
         /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
-        internal string Identifier { get; private set; }
+        internal string Identifier { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been disposed.
@@ -84,8 +84,19 @@ namespace Azure.Messaging.ServiceBus
         /// An abstracted Service Bus transport-specific receiver that is associated with the
         /// Service Bus entity gateway; intended to perform delegated operations.
         /// </summary>
-        internal readonly TransportReceiver InnerReceiver;
-        internal readonly EntityScopeFactory _scopeFactory;
+        internal TransportReceiver InnerReceiver => _innerReceiver;
+        private readonly TransportReceiver _innerReceiver;
+
+        /// <summary>
+        /// Responsible for creating entity scopes.
+        /// </summary>
+        internal EntityScopeFactory ScopeFactory => _scopeFactory;
+        private readonly EntityScopeFactory _scopeFactory;
+
+        /// <summary>
+        /// The list of plugins to apply to incoming messages.
+        /// </summary>
+        private readonly IList<ServiceBusPlugin> _plugins;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -100,6 +111,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
+        /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         /// the next available session returned from the service will be used.</param>
@@ -108,6 +120,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default)
         {
@@ -127,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = options.PrefetchCount;
                 EntityPath = entityPath;
                 IsSessionReceiver = isSessionEntity;
-                InnerReceiver = _connection.CreateTransportReceiver(
+                _innerReceiver = _connection.CreateTransportReceiver(
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
                     receiveMode: ReceiveMode,
@@ -136,6 +149,7 @@ namespace Azure.Messaging.ServiceBus
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _plugins = plugins;
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -183,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ReceiveMessageStart(Identifier, maxMessages);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
                 requestedMessageCount: maxMessages);
             scope.Start();
@@ -196,6 +210,7 @@ namespace Azure.Messaging.ServiceBus
                     maxMessages,
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
+                await ApplyPlugins(messages).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -236,6 +251,28 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
+        }
+
+        private async Task ApplyPlugins(IList<ServiceBusReceivedMessage> messages)
+        {
+            foreach (ServiceBusPlugin plugin in _plugins)
+            {
+                string pluginType = plugin.GetType().Name;
+                foreach (ServiceBusReceivedMessage message in messages)
+                {
+                    try
+                    {
+                        Logger.PluginCallStarted(pluginType, message.MessageId);
+                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
+                        Logger.PluginCallCompleted(pluginType, message.MessageId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+                        throw;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -309,7 +346,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
                 requestedMessageCount: maxMessages);
             scope.Start();
@@ -391,7 +428,7 @@ namespace Azure.Messaging.ServiceBus
                 Identifier,
                 1,
                 lockToken);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.CompleteActivityName,
                 lockToken: lockToken);
             scope.Start();
@@ -464,7 +501,7 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.AbandonActivityName,
                 lockToken: lockToken);
             scope.Start();
@@ -623,7 +660,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeadLetterActivityName,
                 lockToken: lockToken);
             scope.Start();
@@ -703,7 +740,7 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageStart(Identifier, 1, lockToken);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeferActivityName,
                 lockToken: lockToken);
             scope.Start();
@@ -785,7 +822,7 @@ namespace Azure.Messaging.ServiceBus
             var sequenceNumbersList = sequenceNumbers.ToList();
 
             Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
+            using DiagnosticScope scope = ScopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
             scope.AddAttribute(
                 DiagnosticProperty.SequenceNumbersAttribute,
                 string.Join(",", sequenceNumbers));
@@ -857,7 +894,7 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewMessageLockStart(Identifier, 1, lockToken);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
                 lockToken: lockToken);
             scope.Start();

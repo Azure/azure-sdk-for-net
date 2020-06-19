@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -88,6 +89,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         private readonly TransportSender _innerSender;
         private readonly EntityScopeFactory _scopeFactory;
+        internal readonly IList<ServiceBusPlugin> _plugins;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
@@ -96,11 +98,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
         /// this <see cref="ServiceBusSender"/>.</param>
         /// <param name="connection">The connection for the sender.</param>
+        /// <param name="plugins">Plugins to apply to outgoing messages.</param>
         ///
         internal ServiceBusSender(
             string entityPath,
             ServiceBusSenderOptions options,
-            ServiceBusConnection connection)
+            ServiceBusConnection connection,
+            IList<ServiceBusPlugin> plugins)
         {
             Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try
@@ -122,6 +126,7 @@ namespace Azure.Messaging.ServiceBus
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _plugins = plugins;
             }
             catch (Exception ex)
             {
@@ -181,7 +186,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 return;
             }
-
+            await ApplyPlugins(messageList).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: messageList.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(messages, DiagnosticProperty.SendActivityName);
@@ -202,6 +207,28 @@ namespace Azure.Messaging.ServiceBus
             }
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageComplete(Identifier);
+        }
+
+        private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
+        {
+            foreach (ServiceBusPlugin plugin in _plugins)
+            {
+                string pluginType = plugin.GetType().Name;
+                foreach (ServiceBusMessage message in messages)
+                {
+                    try
+                    {
+                        Logger.PluginCallStarted(pluginType, message.MessageId);
+                        await plugin.BeforeMessageSendAsync(message).ConfigureAwait(false);
+                        Logger.PluginCallCompleted(pluginType, message.MessageId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+                        throw;
+                    }
+                }
+            }
         }
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
@@ -401,7 +428,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
-
+            await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
                 messageList.Count,
