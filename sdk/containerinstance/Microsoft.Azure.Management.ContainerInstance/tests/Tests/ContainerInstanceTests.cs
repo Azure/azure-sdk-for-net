@@ -70,6 +70,34 @@ namespace ContainerInstance.Tests
         }
 
         /// <summary>
+        /// Test get container instance.
+        /// </summary>
+        [Fact]
+        public void ContainerInstanceDeleteTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
+                var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);
+
+                var resourceGroup = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container group.
+                var containerGroupName = TestUtilities.GenerateName("acinetsdk");
+                var containerGroup = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName);
+
+                // Verify created container group.
+                var createdContainerGroup = containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup.Name, containerGroupName, containerGroup);
+                ContainerInstanceTestUtilities.VerifyContainerGroupProperties(containerGroup, createdContainerGroup);
+
+                // Verifiy delete container group.
+                var deletedContainerGroup = containerInstanceClient.ContainerGroups.Delete(resourceGroup.Name, containerGroupName);
+            }
+        }
+
+        /// <summary>
         /// Test list container instances.
         /// </summary>
         [Fact]

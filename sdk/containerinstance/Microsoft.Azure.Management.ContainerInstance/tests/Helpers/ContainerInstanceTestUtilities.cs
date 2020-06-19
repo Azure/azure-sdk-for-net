@@ -51,9 +51,21 @@ namespace ContainerInstance.Tests
                         new EnvironmentVariable(name: "secretEnv", secureValue: "secretValue1")
                     },
                     livenessProbe: new ContainerProbe(
-                        exec: new ContainerExec(command: new List<string>{ "cat", "/tmp/healthy" }),
+                        exec: new ContainerExec(command: new List<string>{ "ls" }),
                         periodSeconds: 20),
                     resources: new ResourceRequirements(requests: new ResourceRequests(memoryInGB: 1.5, cpu: 1.0)))
+            };
+
+            var initContainers = new InitContainerDefinition[]
+            {
+                new InitContainerDefinition(
+                    name: $"{containerGroupName}init",
+                    image: "alpine",
+                    command: new List<string>() { "/bin/sh", "-c", "sleep 5" },
+                    environmentVariables: new List<EnvironmentVariable>
+                    {
+                        new EnvironmentVariable(name: "secretEnv", secureValue: "secretValue1")
+                    })
             };
 
             var ipAddress = new IpAddress(
@@ -69,13 +81,15 @@ namespace ContainerInstance.Tests
 
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
-                location: "westus",
+                location: "eastus",
                 osType: OperatingSystemTypes.Linux,
                 ipAddress: ipAddress,
                 restartPolicy: "Never",
                 containers: containers,
                 identity: msiIdentity,
-                diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics));
+                diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics),
+                sku: "Standard",
+                initContainers: initContainers);
 
             return containerGroup;
         }
@@ -100,6 +114,8 @@ namespace ContainerInstance.Tests
             Assert.Equal(expected.Containers[0].EnvironmentVariables[0].Name, actual.Containers[0].EnvironmentVariables[0].Name);
             Assert.Equal(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);
             Assert.Equal(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
+            Assert.Equal(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
+            Assert.Equal(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
         }
     }
 }
