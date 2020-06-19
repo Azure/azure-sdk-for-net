@@ -2,6 +2,10 @@
 
 ## Install
 
+### Install the latest Powershell 7
+
+- Make sure you run the script using the latest stable version of [powershell 7](https://github.com/PowerShell/PowerShell/releases)
+
 ### Install the latest Azure CLI package
 
 - If already installed, check latest version:

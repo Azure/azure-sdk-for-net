@@ -8,14 +8,15 @@ param(
     [Parameter(Mandatory)]
     [string] $SubscriptionId,
 
-    [Parameter()]
+    [Parameter(Mandatory)]
+    [ValidateLength(6, 50)]
     [string] $DigitalTwinName,
 
     [Parameter()]
     [string] $AppRegistrationName
 )
 
-Function Connect-AzureSubscription()
+Function Connect-AzureSubscription
 {
     # Ensure the user is logged in
     try
@@ -51,11 +52,6 @@ if (-not $isAdmin)
 Connect-AzureSubscription
 
 $Region = $Region.Replace(' ', '')
-
-if (-not $DigitalTwinName)
-{
-    $DigitalTwinName = $ResourceGroup
-}
 
 if (-not $AppRegistrationName)
 {
@@ -113,25 +109,34 @@ $appSecret = az ad app credential reset --id $appId --years 2 --query 'password'
 $user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("Writing user config file - $fileName`n")
-$appSecretJsonEscaped = ConvertTo-Json $appSecret
+
 $config = @"
 {
-    "DigitalTwinsInstanceHostName": "$dtHostName",
-    "ApplicationId": "$appId",
-    "ClientSecret": $appSecretJsonEscaped,
-    "TestMode":  "Live"
+    "TestMode":  "Live"	
 }
 "@
 
 $config | Out-File "$PSScriptRoot\..\config\$fileName"
 
-$userSettingsFileSuffix = ".test.assets.config.json"
-$userSettingsFileName = "$user$userSettingsFileSuffix"
-$userTestAssetSettingsFileName = "$PSScriptRoot\..\config\$userSettingsFileName"
-if (-not (Test-Path $userTestAssetSettingsFileName))
+$outputfileDir = (Get-Item -Path $PSScriptRoot).Parent.Parent.Parent.Fullname
+$outputFile = Join-Path -Path $outputfileDir -ChildPath "test-resources.json.env"
+$tenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47"
+
+Add-Type -AssemblyName System.Security
+
+$appSecretJsonEscaped = ConvertTo-Json $appSecret
+$environmentText = @"
 {
-    Write-Host "Creating empty user test assets config file - $userSettingsFileName`n"
-    New-Item -ItemType File -Path $userTestAssetSettingsFileName -Value "{}" | Out-Null
+    "DIGITALTWINS_URL": "$dtHostName",
+    "DIGITALTWINS_CLIENT_ID": "$appId",
+    "DIGITALTWINS_CLIENT_SECRET": $appSecretJsonEscaped,
+    "DIGITALTWINS_TENANT_ID":  "$tenantId"
 }
+"@
+
+$bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
+$protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+Write-Host "Test environment settings stored into encrypted $outputFile"
 
 Write-Host "Done!"

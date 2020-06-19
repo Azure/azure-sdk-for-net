@@ -34,9 +34,9 @@ namespace Azure.DigitalTwins.Core.Tests
             DigitalTwinsClient client = GetClient();
 
             string wifiComponentName = "wifiAccessPoint";
-            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.WifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
-            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetSettings.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
+            string wifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomWithWifiModelIdPrefix).ConfigureAwait(false);
+            string roomWithWifiTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomWithWifiTwinIdPrefix).ConfigureAwait(false);
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
 
             try

@@ -28,10 +28,10 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             DigitalTwinsClient client = GetClient();
 
-            string buildingModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.BuildingModelId).ConfigureAwait(false);
-            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.FloorModelId).ConfigureAwait(false);
-            string hvacModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.HvacModelId).ConfigureAwait(false);
-            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.WardModelId).ConfigureAwait(false);
+            string buildingModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.BuildingModelId).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelId).ConfigureAwait(false);
+            string hvacModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.HvacModelId).ConfigureAwait(false);
+            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WardModelId).ConfigureAwait(false);
 
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             DigitalTwinsClient client = GetClient();
 
-            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.WardModelId).ConfigureAwait(false);
+            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WardModelId).ConfigureAwait(false);
 
             // add a model with a single value for displayName and for description, neither of which were defined as a map
             string modelWard = TestAssetsHelper.GetWardModelPayload(wardModelId);
@@ -138,7 +138,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             DigitalTwinsClient client = GetClient();
 
-            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetSettings.Instance.WardModelId).ConfigureAwait(false);
+            string wardModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.WardModelId).ConfigureAwait(false);
 
             string modelWard = TestAssetsHelper.GetWardModelPayload(wardModelId);
 

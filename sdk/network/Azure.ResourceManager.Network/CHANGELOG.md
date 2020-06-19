@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.Network` to `Azure.ResourceManager.Network`
+The package name has been changed from `Microsoft.Azure.Management.Network` to `Azure.ResourceManager.Network`
 
 #### Management Client Changes
 

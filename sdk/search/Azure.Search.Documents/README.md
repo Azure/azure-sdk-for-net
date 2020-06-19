@@ -1,35 +1,38 @@
 # Azure Cognitive Search client library for .NET
 
 [Azure Cognitive Search](https://docs.microsoft.com/azure/search/) is a
-search-as-a-service cloud solution that gives developers APIs and tools for
-adding a rich search experience over private, heterogeneous content in web,
-mobile, and enterprise applications.
+search-as-a-service cloud solution that gives developers APIs and tools
+for adding a rich search experience over private, heterogeneous content
+in web, mobile, and enterprise applications.
 
-The **Azure Cognitive Search service** is well suited for the following
-application scenarios:
+The Azure Cognitive Search service is well suited for the following
+ application scenarios:
 
-- Consolidate varied content types into a single searchable index. Populate the
-  index with your own JSON documents or, if your content is already in Azure,
-  you can create an indexer to pull in data automatically.
-- Import raw content such as text, images, or Office files from Azure Blob
-  Storage or Cosmos DB.
-- Easily implement your own search capabilities similar to commercial web search
-  engines.  Azure Cognitive Search APIs simplify query construction, faceted
-  navigation, filters (including geo-spatial search), synonym mapping, typeahead
-  queries, and relevance tuning.
-- Index unstructured text and extract both text and information from images. AI
-  enrichment enables capabilities such as OCR, entity recognition, key phrase
-  extraction, language detection, text translation, and sentiment analysis.
+* Consolidate varied content types into a single searchable index.
+  To populate an index, you can push JSON documents that contain your content,
+  or if your data is already in Azure, create an indexer to pull in data
+  automatically.
+* Attach skillsets to an indexer to create searchable content from images
+  and large text documents. A skillset leverages AI from Cognitive Services
+  for built-in OCR, entity recognition, key phrase extraction, language
+  detection, text translation, and sentiment analysis. You can also add
+  custom skills to integrate external processing of your content during
+  data ingestion.
+* In a search client application, implement query logic and user experiences
+  similar to commercial web search engines.
 
-Use the **Azure.Search.Documents client library** to:
+Use the Azure.Search.Documents client library to:
 
-- Create and manage search indexes.
-- Upload and update documents in the search index.
-- Manage indexers that pull data from a data source into an index.
-- Query documents in the index with a powerful set of search APIs that support
-  faceted navigation, typeahead queries, suggestions, and geo-spatial search.
-- Enrich your search index with AI skills that add structure or extract meaning
-  from raw documents during indexing.
+* Submit queries for simple and advanced query forms that include fuzzy
+  search, wildcard search, regular expressions.
+* Implement filtered queries for faceted navigation, geospatial search,
+  or to narrow results based on filter criteria.
+* Create and manage search indexes.
+* Upload and update documents in the search index.
+* Create and manage indexers that pull data from Azure into an index.
+* Create and manage skillsets that add AI enrichment to data ingestion.
+* Create and manage analyzers for advanced text analysis or multi-lingual content.
+* Optimize results through scoring profiles to factor in business logic or freshness.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
@@ -63,7 +66,8 @@ See [choosing a pricing tier](https://docs.microsoft.com/azure/search/search-sku
 
 All requests to a search service need an api-key that was generated specifically
 for your service. [The api-key is the sole mechanism for authenticating access to
-your search service endpoint.](https://docs.microsoft.com/azure/search/search-security-api-keys)  You can obtain your api-key from the
+your search service endpoint.](https://docs.microsoft.com/azure/search/search-security-api-keys)
+You can obtain your api-key from the
 [Azure portal](https://portal.azure.com/) or via the Azure CLI:
 
 ```Powershell
@@ -136,26 +140,26 @@ you're brand new to search, you can make a very rough analogy between
 indexes and database tables.)_  The Azure.Search.Documents client library
 exposes operations on these resources through two main client types.
 
-- `SearchClient` helps with:
-  - [Searching](https://docs.microsoft.com/azure/search/search-lucene-query-architecture)
+* `SearchClient` helps with:
+  * [Searching](https://docs.microsoft.com/azure/search/search-lucene-query-architecture)
     your indexed documents using
     [rich queries](https://docs.microsoft.com/azure/search/search-query-overview)
     and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
-  - [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
+  * [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
     partially typed search terms based on documents in the index
-  - [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
-   the most likely matching text in documents as a user types
-  - [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
+  * [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
+    the most likely matching text in documents as a user types
+  * [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
     documents from an index
 
-- `SearchIndexClient` allows you to:
-  - [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
-  - [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
-  - Most of the `SearchServiceClient` functionality is not yet available in our current preview
+* `SearchIndexClient` allows you to:
+  * [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
+  * [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
+  * Most of the `SearchServiceClient` functionality is not yet available in our current preview
 
-- `SearchIndexerClient` allows you to:
-  - [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
-  - [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
+* `SearchIndexerClient` allows you to:
+  * [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
+  * [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
 
 _The `Azure.Search.Documents` client library (v1) is a brand new offering for
 .NET developers who want to use search technology in their applications.  There
@@ -306,6 +310,18 @@ SearchIndex index = new SearchIndex("hotels")
 client.CreateIndex(index);
 ```
 
+### Retrieving a specific document from your index
+
+In addition to querying for documents using keywords and optional filters,
+you can retrieve a specific document from your index if you already know the
+key. You could get the key from a query, for example, and want to show more
+information about it or navigate your customer to that document.
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_GetDocument
+Hotel doc = client.GetDocument<Hotel>("1");
+Console.WriteLine($"{doc.Id}: {doc.Name}");
+```
+
 ### Adding documents to your index
 
 You can `Upload`, `Merge`, `MergeOrUpload`, and `Delete` multiple documents from
@@ -365,9 +381,9 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-- [Go further with Azure.Search.Documents and our samples][samples]
-- [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
-- [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
+* [Go further with Azure.Search.Documents and our samples][samples]
+* [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
+* [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
 

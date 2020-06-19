@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.KeyVault` to `Azure.ResourceManager.KeyVault`
+The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
 
 #### Management Client Changes
 
@@ -48,12 +48,12 @@ using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
 var keyVaultManagementClient = new KeyVaultManagementClient(
-            SubscriptionId,
+            subscriptionId,
             new DefaultAzureCredential(),
             new KeyVaultManagementClientOptions());
-var vaultsClient = keyVaultManagementClient.GetVaultsClient();
+var vaultsOperations = keyVaultManagementClient.Vaults;
 
-var vault = await vaultsClient.StartCreateOrUpdateAsync(
+var vault = await vaultsOperations.StartCreateOrUpdateAsync(
             resourceGroupName,
             vaultName,
             parameters
