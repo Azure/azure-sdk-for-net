@@ -783,8 +783,8 @@ namespace Azure.Messaging.ServiceBus.Plugins
     public abstract partial class ServiceBusPlugin
     {
         protected ServiceBusPlugin() { }
-        public virtual System.Threading.Tasks.Task AfterMessageReceive(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-        public virtual System.Threading.Tasks.Task BeforeMessageSend(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
+        public virtual System.Threading.Tasks.Task AfterMessageReceiveAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
+        public virtual System.Threading.Tasks.Task BeforeMessageSendAsync(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
         protected void SetBody(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Azure.Core.BinaryData body) { }
         protected void SetContentType(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string contentType) { }
         protected void SetCorrelationId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string correlationId) { }
