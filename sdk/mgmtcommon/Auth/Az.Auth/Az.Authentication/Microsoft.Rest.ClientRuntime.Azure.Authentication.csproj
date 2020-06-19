@@ -10,7 +10,7 @@
 	<PackageReleaseNotes>
       <![CDATA[
         Fixes:
-        - Relaxed upped bound for Microsoft.IdentityModel.* dependencies
+        - Relaxed the upped bound for Microsoft.IdentityModel.* dependencies.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
