@@ -109,7 +109,7 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         public QueueServiceClient(string connectionString)
             : this(connectionString, null)
@@ -125,7 +125,7 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -253,7 +253,7 @@ namespace Azure.Storage.Queues
         /// queues may make multiple requests to the service while fetching
         /// all the values.  Queue names are returned in lexicographic order.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-queues1">List Queues</see>
         /// </summary>
         /// <param name="traits">
         /// Optional trait options for shaping the queues.
@@ -280,7 +280,7 @@ namespace Azure.Storage.Queues
         /// queues may make multiple requests to the service while fetching
         /// all the values.  Queue names are returned in lexicographic order.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-queues1">List Queues</see>
         /// </summary>
         /// <param name="traits">
         /// Optional trait options for shaping the queues.
@@ -307,7 +307,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Returns a single segment of containers starting from the specified marker.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-queues1">List Queues</see>
         /// </summary>
         /// <param name="marker">
         /// Marker from the previous request.
@@ -393,7 +393,7 @@ namespace Azure.Storage.Queues
         #region GetProperties
         /// <summary>
         /// Gets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-properties">Get Queue Service Properties</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -410,7 +410,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Gets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-properties">Get Queue Service Properties</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -427,7 +427,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Gets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-properties">Get Queue Service Properties</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -474,7 +474,7 @@ namespace Azure.Storage.Queues
         #region SetProperties
         /// <summary>
         /// Sets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-service-properties">Set Queue Service Properties</see>.
         /// </summary>
         /// <param name="properties">
         /// <see cref="QueueServiceProperties"/>
@@ -496,7 +496,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-service-properties">Set Queue Service Properties</see>.
         /// </summary>
         /// <param name="properties">
         /// <see cref="QueueServiceProperties"/>
@@ -518,7 +518,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets the properties of the queue service.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-service-properties">Set Queue Service Properties</see>.
         /// </summary>
         /// <param name="properties">
         /// <see cref="QueueServiceProperties"/>
@@ -574,7 +574,7 @@ namespace Azure.Storage.Queues
         /// Retrieves statistics related to replication for the Blob service. It is
         /// only available on the secondary location endpoint when read-access
         /// geo-redundant replication is enabled for the storage account.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-stats">Get Queue Service Stats</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -593,7 +593,7 @@ namespace Azure.Storage.Queues
         /// Retrieves statistics related to replication for the Blob service. It is
         /// only available on the secondary location endpoint when read-access
         /// geo-redundant replication is enabled for the storage account.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-stats">Get Queue Service Stats</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -612,7 +612,7 @@ namespace Azure.Storage.Queues
         /// Retrieves statistics related to replication for the Blob service. It is
         /// only available on the secondary location endpoint when read-access
         /// geo-redundant replication is enabled for the storage account.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-service-stats">Get Queue Service Stats</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -660,7 +660,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to create.
@@ -688,7 +688,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to create.
@@ -718,7 +718,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Deletes a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">Delete Queue</see>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to delete.
@@ -738,7 +738,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Deletes a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">Delete Queue</see>.
         /// </summary>
         /// <param name="queueName">
         /// The name of the queue to delete.

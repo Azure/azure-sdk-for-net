@@ -101,7 +101,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -137,7 +137,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">
@@ -317,7 +317,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -327,7 +327,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -370,7 +370,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -380,7 +380,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -628,7 +628,7 @@ namespace Azure.Search.Documents
         #region Search
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -637,7 +637,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -685,7 +685,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -694,7 +694,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -826,7 +826,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -883,7 +883,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -988,7 +988,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1037,7 +1037,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1104,7 +1104,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1158,7 +1158,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type

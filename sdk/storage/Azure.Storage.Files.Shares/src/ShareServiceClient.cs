@@ -101,7 +101,7 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         public ShareServiceClient(string connectionString)
             : this(connectionString, null)
@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -218,7 +218,7 @@ namespace Azure.Storage.Files.Shares
         /// make multiple requests to the service while fetching all the
         /// values.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
+        /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/list-shares">List Shares</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies traits to include in the <see cref="ShareItem"/>s.
@@ -255,7 +255,7 @@ namespace Azure.Storage.Files.Shares
         /// make multiple requests to the service while fetching all the
         /// values.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
+        /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/list-shares">List Shares</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies traits to include in the <see cref="ShareItem"/>s.
@@ -295,7 +295,7 @@ namespace Azure.Storage.Files.Shares
         /// empty to make subsequent calls to <see cref="GetSharesAsync"/>
         /// to continue enumerating the shares segment by segment.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
+        /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/list-shares">List Shares</see>.
         /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -506,7 +506,7 @@ namespace Azure.Storage.Files.Shares
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-service-properties">Set File Service Properties</see>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
         /// <param name="cancellationToken">
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.Shares
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-service-properties">Set File Service Properties</see>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
         /// <param name="cancellationToken">
@@ -568,7 +568,7 @@ namespace Azure.Storage.Files.Shares
         /// the default request version for all incoming requests to the File
         /// service that do not have a version specified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-service-properties">Set File Service Properties</see>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
         /// <param name="async">
@@ -627,7 +627,7 @@ namespace Azure.Storage.Files.Shares
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">Create Share</see>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to create.
@@ -667,7 +667,7 @@ namespace Azure.Storage.Files.Shares
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">Create Share</see>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to create.
@@ -710,7 +710,7 @@ namespace Azure.Storage.Files.Shares
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">Delete Share</see>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.
@@ -743,7 +743,7 @@ namespace Azure.Storage.Files.Shares
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">Delete Share</see>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.

@@ -150,7 +150,7 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="queueName">
         /// The name of the queue in the storage account to reference.
@@ -169,7 +169,7 @@ namespace Azure.Storage.Queues
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="queueName">
         /// The name of the queue in the storage account to reference.
@@ -343,7 +343,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -366,7 +366,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -389,7 +389,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Creates a queue.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
@@ -449,7 +449,7 @@ namespace Azure.Storage.Queues
         /// operation creates a new queue under the specified account.  If the queue already exists, it is
         /// not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this queue.
@@ -479,7 +479,7 @@ namespace Azure.Storage.Queues
         /// operation creates a new queue under the specified account.  If the queue already exists, it is
         /// not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this queue.
@@ -509,7 +509,7 @@ namespace Azure.Storage.Queues
         /// operation creates a new queue under the specified account.  If the queue already exists, it is
         /// not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-queue4">Create Queue</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this queue.
@@ -788,7 +788,7 @@ namespace Azure.Storage.Queues
         #region Delete
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">Delete Queue</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -805,7 +805,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">Delete Queue</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -822,7 +822,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-queue3">Delete Queue</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -875,7 +875,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">Get Queue Metadata</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -893,7 +893,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">Get Queue Metadata</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -911,7 +911,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
         /// Metadata is associated with the queue as name-values pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-metadata">Get Queue Metadata</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -963,7 +963,7 @@ namespace Azure.Storage.Queues
         #region SetMetadata
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -985,7 +985,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-metadata">Set Queue Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// <see cref="Metadata"/>
@@ -1060,7 +1060,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">Get Queue ACL</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -1078,7 +1078,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">Get Queue ACL</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
         /// Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-queue-acl">Get Queue ACL</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1143,7 +1143,7 @@ namespace Azure.Storage.Queues
         #region SetAccessPolicy
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -1165,7 +1165,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// SetAccessPolicyInternal sets stored access policies for the queue that may be used with Shared Access Signatures.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-acl"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-queue-acl">Set Queue ACL</see>.
         /// </summary>
         /// <param name="permissions">
         /// IEnumerable of <see cref="QueueSignedIdentifier"/>
@@ -1239,7 +1239,7 @@ namespace Azure.Storage.Queues
         #region ClearMessages
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">Clear Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>.
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">Clear Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>.
@@ -1273,7 +1273,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Deletes all messages from a queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/clear-messages">Clear Messages</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1338,7 +1338,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1375,7 +1375,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1395,7 +1395,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1428,7 +1428,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1461,7 +1461,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">Put Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Message text.
@@ -1536,7 +1536,7 @@ namespace Azure.Storage.Queues
         #region ReceiveMessages
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -1545,7 +1545,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
@@ -1556,7 +1556,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -1571,7 +1571,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -1587,7 +1587,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1615,7 +1615,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1643,7 +1643,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">Get Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32.
@@ -1722,7 +1722,7 @@ namespace Azure.Storage.Queues
         #region PeekMessages
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
@@ -1745,7 +1745,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
@@ -1768,7 +1768,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">Peek Messages</see>.
         /// </summary>
         /// <param name="maxMessages">
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
@@ -1849,7 +1849,7 @@ namespace Azure.Storage.Queues
         #region DeleteMessage
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1874,7 +1874,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1899,7 +1899,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Permanently removes the specified message from its queue.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-message2">Delete Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to delete.</param>
         /// <param name="popReceipt">
@@ -1957,7 +1957,7 @@ namespace Azure.Storage.Queues
         #region UpdateMessage
         /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">Update Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -1994,7 +1994,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">Update Message</see>.
         /// </summary>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -2031,7 +2031,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">Update Message</see>.
         /// </summary>
         /// <param name="messageText">
         /// Updated message text.

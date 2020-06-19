@@ -24,25 +24,25 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the NIST P-256 elliptic curve, AKA SECG curve SECP256R1
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
         /// </summary>
         public static CertificateKeyCurveName P256 { get; } = new CertificateKeyCurveName("P-256");
 
         /// <summary>
         /// Gets the NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
         /// </summary>
         public static CertificateKeyCurveName P384 { get; } = new CertificateKeyCurveName("P-384");
 
         /// <summary>
         /// Gets the NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
         /// </summary>
         public static CertificateKeyCurveName P521 { get; } = new CertificateKeyCurveName("P-521");
 
         /// <summary>
         /// Gets the SECG SECP256K1 elliptic curve.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/key-vault/keys/about-keys#curve-types">Curve types</see>.
         /// </summary>
         public static CertificateKeyCurveName P256K { get; } = new CertificateKeyCurveName("P-256K");
 

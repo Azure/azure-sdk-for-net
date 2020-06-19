@@ -365,7 +365,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -435,7 +435,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -508,7 +508,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -581,7 +581,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -1168,7 +1168,7 @@ namespace Azure.Storage.Files.DataLake
         /// of paths in this file system.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1213,7 +1213,7 @@ namespace Azure.Storage.Files.DataLake
         /// make multiple requests to the service while fetching all the
         /// values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1261,7 +1261,7 @@ namespace Azure.Storage.Files.DataLake
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
