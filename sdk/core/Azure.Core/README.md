@@ -114,7 +114,7 @@ More on logging in [diagnostics samples](samples/Diagnostics.md)
 
 ### Reporting Errors ```RequestFailedException```
 
-When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an and ErrorCode property with a service-specific error code.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code and an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try
