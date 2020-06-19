@@ -301,7 +301,7 @@ namespace Azure.Storage.Blobs
             if (!string.IsNullOrWhiteSpace(BlobContainerName))
             {
                 path.Append("/").Append(BlobContainerName);
-                if (!string.IsNullOrWhiteSpace(BlobName))
+                if (BlobName != null && BlobName.Length > 0)
                 {
                     path.Append("/").Append(Uri.EscapeDataString(BlobName));
                 }

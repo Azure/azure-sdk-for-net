@@ -316,7 +316,7 @@ namespace Azure.Storage.Test.Shared
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
-            var builder = GetBlobSasBuilder(containerName, blobName);
+            BlobSasBuilder builder = GetBlobSasBuilder(containerName, blobName);
             builder.SetPermissions(
                 BlobSasPermissions.Read |
                 BlobSasPermissions.Add |

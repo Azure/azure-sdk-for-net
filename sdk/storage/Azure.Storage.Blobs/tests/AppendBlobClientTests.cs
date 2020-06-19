@@ -292,7 +292,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateAsync(),
-                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                actualException => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), actualException.ErrorCode)
                 );
         }
 
@@ -478,7 +478,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateIfNotExistsAsync(),
-                actualException => Assert.AreEqual("InvalidUri", actualException.ErrorCode)
+                actualException => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), actualException.ErrorCode)
                 );
         }
 
