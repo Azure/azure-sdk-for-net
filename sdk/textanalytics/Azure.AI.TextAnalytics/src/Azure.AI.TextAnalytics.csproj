@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Text Analytics Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
-    <Version>1.1.0-preview.1</Version>
+    <Version>1.0.1</Version>
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
