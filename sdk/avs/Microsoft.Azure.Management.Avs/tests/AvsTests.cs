@@ -19,6 +19,7 @@ namespace Avs.Tests
             using var context = MockContext.Start(this.GetType());
             string rgName = TestUtilities.GenerateName("avs-sdk-test-rg");
             string cloudName = TestUtilities.GenerateName("avs-sdk-test-cloud");
+            string clusterName = TestUtilities.GenerateName("avs-sdk-test-cluster");
             string location = "centralus";
 
             CreateResourceGroup(context, location, rgName);
@@ -45,6 +46,27 @@ namespace Avs.Tests
                         NetworkBlock = "192.168.48.0/22"
                     }
                 });
+
+                var clusters = client.Clusters.List(rgName, cloudName);
+                Assert.True(clusters.Count() == 0);
+
+                // create a cluster
+                var cluster = client.Clusters.CreateOrUpdate(rgName, cloudName, clusterName, new Cluster
+                {
+                    Properties = new ClusterProperties
+                    {
+                        ClusterSize = 3,
+                    }
+                });
+
+                clusters = client.Clusters.List(rgName, cloudName);
+                Assert.True(clusters.Count() == 1);
+
+                // delete a cluster
+                client.Clusters.Delete(rgName, cloudName, clusterName);
+
+                clusters = client.Clusters.List(rgName, cloudName);
+                Assert.True(clusters.Count() == 0);
 
                 clouds = client.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 1);
