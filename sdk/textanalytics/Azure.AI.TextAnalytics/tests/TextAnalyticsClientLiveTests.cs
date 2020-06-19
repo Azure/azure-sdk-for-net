@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string document = "Este documento está en español";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(document, "COLOMBIA"));
-            Assert.AreEqual("InvalidCountryHint", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
         }
 
         [Test]
@@ -650,7 +650,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeEntitiesBatchAsync(documents));
             Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
         [Test]
@@ -803,7 +803,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
             Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
         [Test]
