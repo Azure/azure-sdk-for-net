@@ -190,21 +190,21 @@ namespace Azure.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="index"></param>
-        public DynamicJson this[int index]
+        /// <param name="arrayIndex"></param>
+        public DynamicJson this[int arrayIndex]
         {
-            get => GetValueAt(index);
-            set => SetValueAt(index, value);
+            get => GetValueAt(arrayIndex);
+            set => SetValueAt(arrayIndex, value);
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="property"></param>
-        public DynamicJson this[string property]
+        /// <param name="propertyName"></param>
+        public DynamicJson this[string propertyName]
         {
-            get => GetPropertyValue(property);
-            set => SetValue(property, value);
+            get => GetPropertyValue(propertyName);
+            set => SetValue(propertyName, value);
         }
 
         private object SetValueAt(int index, object value)
@@ -516,13 +516,13 @@ namespace Azure.Core
             return JsonSerializer.Deserialize<T>(ToString(), options);
         }
 
-        public T Deserialize<T>(JsonObjectSerializer serializer)
+        public T Deserialize<T>(ObjectSerializer serializer)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
             return (T) serializer.Deserialize(stream, typeof(T));
         }
 
-        public async Task<T> DeserializeAsync<T>(JsonObjectSerializer serializer)
+        public async Task<T> DeserializeAsync<T>(ObjectSerializer serializer)
         {
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(ToString()));
             return (T) await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false);

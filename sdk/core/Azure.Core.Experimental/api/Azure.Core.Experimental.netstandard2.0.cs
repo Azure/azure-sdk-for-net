@@ -28,14 +28,14 @@ namespace Azure.Core
     {
         public DynamicJson(string json) { }
         public DynamicJson(System.Text.Json.JsonElement element) { }
-        public Azure.Core.DynamicJson this[int index] { get { throw null; } set { } }
-        public Azure.Core.DynamicJson this[string property] { get { throw null; } set { } }
+        public Azure.Core.DynamicJson this[int arrayIndex] { get { throw null; } set { } }
+        public Azure.Core.DynamicJson this[string propertyName] { get { throw null; } set { } }
         public static Azure.Core.DynamicJson Array() { throw null; }
         public static Azure.Core.DynamicJson Array(params Azure.Core.DynamicJson[] values) { throw null; }
         public static Azure.Core.DynamicJson Array(System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> values) { throw null; }
         public static Azure.Core.DynamicJson Create(System.Text.Json.JsonElement element) { throw null; }
-        public System.Threading.Tasks.Task<T> DeserializeAsync<T>(Azure.Core.JsonObjectSerializer serializer) { throw null; }
-        public T Deserialize<T>(Azure.Core.JsonObjectSerializer serializer) { throw null; }
+        public System.Threading.Tasks.Task<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
         public T Deserialize<T>(System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> EnumerateArray() { throw null; }
         public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Core.DynamicJson>> EnumerateObject() { throw null; }
