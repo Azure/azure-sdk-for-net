@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 {
     public class PluginTests : ServiceBusTestBase
     {
-        private static DateTimeOffset s_now = DateTimeOffset.UtcNow;
+        private static readonly DateTimeOffset s_now = DateTimeOffset.UtcNow;
         [Test]
         public void PluginSetsReceivedMessageProperties()
         {
@@ -36,9 +36,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             Assert.AreEqual("to", msg.To);
         }
 
-        internal class TestPlugin : ServiceBusPlugin
+        private class TestPlugin : ServiceBusPlugin
         {
-            public override Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
+            public override ValueTask AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 SetBody(message, new BinaryData("body"));
                 SetContentType(message, "contentType");
@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 SetSessionId(message, "sessionId");
                 SetTimeToLive(message, TimeSpan.FromSeconds(60));
                 SetTo(message, "to");
-                return Task.CompletedTask;
+                return default;
             }
         }
     }

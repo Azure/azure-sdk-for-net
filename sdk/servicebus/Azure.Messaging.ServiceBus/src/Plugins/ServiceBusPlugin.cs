@@ -17,10 +17,8 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// overridden to alter the body and the properties of an outgoing message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusMessage"/> to be modified by the plugin.</param>
-        public virtual Task BeforeMessageSendAsync(ServiceBusMessage message)
-        {
-            return Task.CompletedTask;
-        }
+        public virtual ValueTask BeforeMessageSendAsync(ServiceBusMessage message) =>
+            default;
 
         /// <summary>
         /// This operation is called after a message is received, but before it is returned to the <see cref="ServiceBusReceiver"/>.
@@ -28,10 +26,8 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// incoming message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin.</param>
-        public virtual Task AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
-        {
-            return Task.CompletedTask;
-        }
+        public virtual ValueTask AfterMessageReceiveAsync(ServiceBusReceivedMessage message) =>
+            default;
 
         /// <summary>
         /// Set the <see cref="ServiceBusReceivedMessage.Body"/>.
@@ -106,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// Sets the <see cref="ServiceBusReceivedMessage.PartitionKey"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
-        /// <param name="partitionKey">The partion key to set on the message.</param>
+        /// <param name="partitionKey">The partition key to set on the message.</param>
 
         protected void SetPartitionKey(ServiceBusReceivedMessage message, string partitionKey)
         {
@@ -140,7 +136,6 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="sessionId">The session ID to set on the message.</param>
-
         protected void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
         {
             message.SentMessage.SessionId = sessionId;
@@ -151,7 +146,6 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="scheduledEnqueueTime">The scheduled enqueue time to set on the message.</param>
-
         protected void SetScheduledEnqueueTime(ServiceBusReceivedMessage message, DateTimeOffset scheduledEnqueueTime)
         {
             message.SentMessage.ScheduledEnqueueTime = scheduledEnqueueTime;
@@ -173,7 +167,6 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="to">The to value to set on the message.</param>
-
         protected void SetTo(ServiceBusReceivedMessage message, string to)
         {
             message.SentMessage.To = to;
@@ -184,7 +177,6 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
-
         protected void SetViaPartitionKey(ServiceBusReceivedMessage message, string viaPartitionKey)
         {
             message.SentMessage.ViaPartitionKey = viaPartitionKey;
