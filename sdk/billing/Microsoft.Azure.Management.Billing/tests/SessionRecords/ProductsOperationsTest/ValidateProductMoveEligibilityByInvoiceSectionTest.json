@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "735623cc-2251-4ed8-8a66-438cd02e061c"
+          "ee798bb1-69a0-4eaa-b751-567f071330c0"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 00:30:35 GMT"
+          "Fri, 19 Jun 2020 00:28:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,7 +42,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "10.6.1264.559"
+          "10.6.1265.560"
         ],
         "api-supported-versions": [
           "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
@@ -54,13 +54,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "562b5886-721c-4d9b-a2a7-1bdb52a808dc"
+          "bda7c380-abaa-41ee-973d-a07a077e0fc7"
         ],
         "x-ms-correlation-request-id": [
-          "562b5886-721c-4d9b-a2a7-1bdb52a808dc"
+          "bda7c380-abaa-41ee-973d-a07a077e0fc7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T003036Z:562b5886-721c-4d9b-a2a7-1bdb52a808dc"
+          "NORTHEUROPE:20200619T002821Z:bda7c380-abaa-41ee-973d-a07a077e0fc7"
         ],
         "X-Content-Type-Options": [
           "nosniff"

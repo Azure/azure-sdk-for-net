@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/WOEH-SLEK-DHR-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ffd1f309-5cd1-4198-8914-59e57ffb2975"
+          "335111ba-221e-442b-8e8e-2a0222c14751"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 19:35:15 GMT"
+          "Fri, 19 Jun 2020 00:29:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,7 +42,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "10.6.1264.559"
+          "10.6.1265.560"
         ],
         "api-supported-versions": [
           "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
@@ -54,13 +54,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "a4ce25eb-0c62-4f4c-a209-890edce26b75"
+          "108d5981-ec1a-4509-b0cf-e4d36a5d3f42"
         ],
         "x-ms-correlation-request-id": [
-          "a4ce25eb-0c62-4f4c-a209-890edce26b75"
+          "108d5981-ec1a-4509-b0cf-e4d36a5d3f42"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T193515Z:a4ce25eb-0c62-4f4c-a209-890edce26b75"
+          "NORTHEUROPE:20200619T002925Z:108d5981-ec1a-4509-b0cf-e4d36a5d3f42"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -85,7 +85,7 @@
       "RequestBody": "{\r\n  \"destinationInvoiceSectionId\": \"/providers/Microsoft.Billing/billingAccounts/4b15e98a-cb13-5f5d-0d2c-64eea298c8d4:277f7747-44f1-446f-88b0-d27d655c60cd_2019-05-31/billingProfiles/KKMM-ZUHC-BG7-TGB/invoiceSections/UCAF-IQUR-PJA-TGB\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bbfd46e5-addc-48fe-89f4-36d5630c1760"
+          "ed55572b-9bda-4347-987a-52bcbe363059"
         ],
         "accept-language": [
           "en-US"
@@ -108,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 18 Jun 2020 19:35:22 GMT"
+          "Fri, 19 Jun 2020 00:29:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -120,7 +120,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "10.6.1264.559"
+          "10.6.1265.560"
         ],
         "api-supported-versions": [
           "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
@@ -132,13 +132,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "f7de1989-2475-453d-93fe-50e5aff7526b"
+          "afa5c3e5-cfb6-472d-8346-b689dcb1f47b"
         ],
         "x-ms-correlation-request-id": [
-          "f7de1989-2475-453d-93fe-50e5aff7526b"
+          "afa5c3e5-cfb6-472d-8346-b689dcb1f47b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200618T193522Z:f7de1989-2475-453d-93fe-50e5aff7526b"
+          "NORTHEUROPE:20200619T002931Z:afa5c3e5-cfb6-472d-8346-b689dcb1f47b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
