@@ -33,34 +33,44 @@ namespace Azure.Data.Tables.Samples
                 var client = serviceClient.GetTableClient(tableName);
 
                 #region Snippet:TablesSample5UpsertEntity
-                // making an entity
+                // Make an entity.
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKey },
                     {"RowKey", rowKey },
                     {"Product", "Markers" },
                     {"Price", 5.00 },
+                    {"Brand", "myCompany" }
                 };
-                client.Upsert(entity); // inserts entity
 
-                entity["Price"] = 6.00;
-                client.Upsert(entity); // updates entity because it exists
+                // Entity doesn't exist in table, so invoking Upsert will simply insert the entity.
+                client.Upsert(entity);
+
+                // Delete an entity property.
+                entity.Remove("Brand");
+
+                // Entity does exist in the table, so invoking Upsert will replace it with the changed entity and delete the "Brand" property.
+                client.Upsert(entity);
                 #endregion
 
                 #region Snippet:TablesSample5UpdateEntity
+                // Query for entities to update.
                 Pageable<IDictionary<string, object>> queryResultsBefore = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
 
                 foreach (IDictionary<string, object> qEntity in queryResultsBefore)
                 {
-                    Console.WriteLine($"The price before updating: ${qEntity["Price"]}");
+                    Console.WriteLine($"The price of {qEntity["Product"]} before updating: ${qEntity["Price"]}");
+                    // Changing property of entity.
                     qEntity["Price"] = 7.00;
+
+                    // Updating to changed entity using its generated eTag.
                     client.Update(qEntity, qEntity["odata.etag"] as string);
                 }
 
                 Pageable<IDictionary<string, object>> queryResultsAfter = client.Query(filter: $"PartitionKey eq '{partitionKey}'");
                 foreach (IDictionary<string, object> qEntity in queryResultsAfter)
                 {
-                    Console.WriteLine($"The price after updating: ${qEntity["Price"]}");
+                    Console.WriteLine($"The price of {qEntity["Product"]} after updating: ${qEntity["Price"]}");
                 }
                 #endregion
             }
