@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
+  "meta": {
+    "autorest_options": {
+      "csharp": "",
+      "reflect-api-versions": "",
+      "use": "https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200617.1/autorest-csharp-v3-3.0.0-dev.20200617.1.tgz",
+      "license-header": "MICROSOFT_MIT_NO_VERSION",
+      "sdkrel:csharp-sdks-folder": "./sdk"
+    },
+    "advanced_options": {
+      "create_sdk_pull_requests": true,
+      "sdk_generation_pull_request_base": "integration_branch",
+      "main_branch": "master"
+    },
+    "version": "0.2.0"
+  }
+}
