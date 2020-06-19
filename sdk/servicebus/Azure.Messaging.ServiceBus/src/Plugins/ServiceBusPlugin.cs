@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
     {
         /// <summary>
         /// This operation is called before a message is sent and can be
-        /// overridden to alter the properties of an outgoing message.
+        /// overridden to alter the body and the properties of an outgoing message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusMessage"/> to be modified by the plugin.</param>
         public virtual Task BeforeMessageSend(ServiceBusMessage message)
