@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         /// <summary>
         /// This operation is called after a message is received, but before it is returned to the <see cref="ServiceBusReceiver"/>.
-        /// It can be overriden to alter the properties of an
+        /// It can be overridden to alter the body and the properties of an
         /// incoming message.
         /// </summary>
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin.</param>
