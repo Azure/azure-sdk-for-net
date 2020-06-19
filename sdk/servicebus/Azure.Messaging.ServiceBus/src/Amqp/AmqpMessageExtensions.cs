@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         private static AmqpMessage ToAmqpDataMessage(this ServiceBusMessage message, bool viaBody)
         {
-            IEnumerable<ReadOnlyMemory<byte>> bodyBytes = viaBody ? new ReadOnlyMemory<byte>[]{ message.Body } : message.GetAmqpDataBody();
+            IEnumerable<ReadOnlyMemory<byte>> bodyBytes = viaBody ? new[] { message.Body.AsBytes() } : message.GetAmqpDataBody();
             IEnumerable<Data> body = bodyBytes.Select(d =>
                 new Data { Value = new ArraySegment<byte>(d.IsEmpty ? Array.Empty<byte>() : d.ToArray()) });
             return AmqpMessage.Create(body);
@@ -84,12 +84,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         // Also returns via the out parameter the flattened collection of bytes.
         // A majority of the time, dataBody will only contain 1 element.
         // The method is optimized for this situation to return nothing and only give back the pre-existing array via the flattened parameter.
-        private static IEnumerable<ReadOnlyMemory<byte>> ConvertAndFlatten(this IEnumerable<Data> dataBody, out byte[] flattened)
+        private static IEnumerable<ReadOnlyMemory<byte>> ConvertAndFlatten(this IEnumerable<Data> dataBody, out byte[] flattened, out int dataCount)
         {
             flattened = null;
             List<byte> flattenedList = null;
             List<ReadOnlyMemory<byte>> dataList = null;
-            var dataCount = 0;
+            dataCount = 0;
             foreach (byte[] byteArray in dataBody.Select(db => db.GetByteArray()).Where(ba => ba != null))
             {
                 // Only the first array is needed if it is the only valid array.
@@ -120,12 +120,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static ServiceBusReceivedMessage ToServiceBusDataMessage(this AmqpMessage message)
         {
-            IEnumerable<ReadOnlyMemory<byte>> dataBody = message.DataBody.ConvertAndFlatten(out byte[] flattened);
+            IEnumerable<ReadOnlyMemory<byte>> dataBody = message.DataBody.ConvertAndFlatten(out byte[] flattened, out int dataCount);
             var transportBody = new AmqpTransportBody
             {
                 Body = new BinaryData(flattened ?? ReadOnlyMemory<byte>.Empty),
                 Data = dataBody,
-                BodyType = dataBody != null ? AmqpBodyType.Data : AmqpBodyType.Unspecified
+                BodyType = dataBody != null ? AmqpBodyType.Data : AmqpBodyType.Unspecified,
+                DataCount = dataCount
             };
 
             return new ServiceBusReceivedMessage { SentMessage = new ServiceBusMessage(transportBody) };
