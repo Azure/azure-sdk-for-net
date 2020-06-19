@@ -201,10 +201,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.IsNotEmpty(amqpTransportBody.Data);
             Assert.AreSame(body, amqpTransportBody.Data);
 
-            await sender.SendAsync(msg);
+            await sender.SendMessageAsync(msg);
 
             var receiver = client.CreateReceiver(scope.QueueName);
-            var received = await receiver.ReceiveAsync();
+            var received = await receiver.ReceiveMessageAsync();
             Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
             var receivedData = received.GetAmqpDataBody();
             Assert.NotNull(receivedData);
@@ -251,10 +251,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.IsNotEmpty(amqpTransportBody.Data);
             Assert.AreSame(body, amqpTransportBody.Data);
 
-            await sender.SendAsync(msg);
+            await sender.SendMessageAsync(msg);
 
             var receiver = client.CreateReceiver(scope.QueueName);
-            var received = await receiver.ReceiveAsync();
+            var received = await receiver.ReceiveMessageAsync();
             Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
             var receivedData = received.GetAmqpDataBody();
             Assert.NotNull(receivedData);
