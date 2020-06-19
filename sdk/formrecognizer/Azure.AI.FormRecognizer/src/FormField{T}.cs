@@ -3,7 +3,7 @@
 
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Samples
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// Represents a field recognized in the input form, where the field's value is of a known type.
