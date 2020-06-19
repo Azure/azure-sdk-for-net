@@ -116,13 +116,13 @@ ServiceBusSender sender = client.CreateSender(queueName);
 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // get the message body as a string
 string body = receivedMessage.Body.ToString();
@@ -131,7 +131,7 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-There are two ways of sending several messages at once. The first way uses the `SendAsync`
+There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync`
 overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of
 the supplied messages in a single message batch that we will send to the service. If the messages are too large
 to fit in a single batch, the operation will throw an exception.
@@ -141,19 +141,19 @@ IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the messages
-await sender.SendAsync(messages);
+await sender.SendMessagesAsync(messages);
 ```
 The second way of doing this is using safe-batching. With safe-batching, you can create a 
 `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the 
 batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 ```
 
 ### Complete a message
@@ -173,16 +173,16 @@ ServiceBusSender sender = client.CreateSender(queueName);
 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive and settle the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // complete the message, thereby deleting it from the service
-await receiver.CompleteAsync(receivedMessage);
+await receiver.CompleteMessageAsync(receivedMessage);
 ```
 
 ### Abandon a message
@@ -190,24 +190,24 @@ await receiver.CompleteAsync(receivedMessage);
 Abandoning a message releases our receiver's lock, which allows the message to be received by this or other receivers.
 
 ```C# Snippet:ServiceBusAbandonMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
-await receiver.AbandonAsync(receivedMessage);
+await receiver.AbandonMessageAsync(receivedMessage);
 ```
 
 ### Defer a message
 
-Deferring a message will prevent it from being received again using the `ReceiveAsync` or `ReceiveBatchAsync` methods.
-Instead, there are separate methods, `ReceiveDeferredMessageAsync` and `ReceiveDeferredMessageBatchAsync` 
+Deferring a message will prevent it from being received again using the `ReceiveMessageAsync` or `ReceiveMessagesAsync` methods.
+Instead, there are separate methods, `ReceiveDeferredMessageAsync` and `ReceiveDeferredMessagesAsync` 
 for receiving deferred messages.
 
 ```C# Snippet:ServiceBusDeferMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // defer the message, thereby preventing the message from being received again without using
 // the received deferred message API.
-await receiver.DeferAsync(receivedMessage);
+await receiver.DeferMessageAsync(receivedMessage);
 
 // receive the deferred message by specifying the service set sequence number of the original
 // received message
@@ -221,14 +221,14 @@ by the service after they have been received a certain number of times. Applicat
 their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
 
 ```C# Snippet:ServiceBusDeadLetterMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterAsync(receivedMessage);
+await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
-ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
+ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 ```
 
 ### Using the Processor
@@ -249,12 +249,12 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions

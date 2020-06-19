@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentProperties parameters)
+        internal HttpMessage CreateCreateRequest(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -167,7 +167,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RoleAssignment>> CreateAsync(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentProperties parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignment>> CreateAsync(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -215,7 +215,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignment> Create(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentProperties parameters, CancellationToken cancellationToken = default)
+        public Response<RoleAssignment> Create(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {

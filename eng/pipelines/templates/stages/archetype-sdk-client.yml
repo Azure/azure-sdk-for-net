@@ -1,8 +1,34 @@
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: azure/azure-sdk-tools
+      endpoint: azure
+      ref: refs/tags/azure-sdk-tools_20200608.1
+    - repository: azure-sdk-build-tools
+      type: git
+      name: internal/azure-sdk-build-tools
+      ref: refs/tags/azure-sdk-build-tools_20200514.1
+
 parameters:
-  Artifacts: []
-  ServiceDirectory: not-specified
-  TargetDocRepoOwner: 'Azure'
-  TargetDocRepoName: 'azure-docs-sdk-dotnet'
+- name: Artifacts
+  type: object
+  default: []
+- name: ArtifactName
+  type: string
+  default: packages
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToBuild
+  type: string
+  default: ''
+- name: TargetDocRepoOwner
+  type: string
+  default: Azure
+- name: TargetDocRepoName
+  type: string
+  default: azure-docs-sdk-dotnet
 
 stages:
   - stage: Build

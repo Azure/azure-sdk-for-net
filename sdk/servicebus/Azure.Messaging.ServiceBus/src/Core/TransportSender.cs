@@ -41,10 +41,10 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
-        public abstract ValueTask<TransportMessageBatch> CreateBatchAsync(
-            CreateBatchOptions options,
+        public abstract ValueTask<TransportMessageBatch> CreateMessageBatchAsync(
+            CreateMessageBatchOptions options,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -76,21 +76,21 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<long> ScheduleMessageAsync(
-            ServiceBusMessage message,
+        public abstract Task<long[]> ScheduleMessagesAsync(
+            IList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumbers"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task CancelScheduledMessageAsync(
-            long sequenceNumber,
+        public abstract Task CancelScheduledMessagesAsync(
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default);
 
         /// <summary>

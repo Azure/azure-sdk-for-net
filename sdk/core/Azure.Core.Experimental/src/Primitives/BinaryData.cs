@@ -174,7 +174,7 @@ namespace Azure.Core
                 Data,
                 out ArraySegment<byte> data))
             {
-                return encoding.GetString(data.Array);
+                return encoding.GetString(data.Array, data.Offset, data.Count);
             }
             return encoding.GetString(Data.ToArray());
         }
@@ -196,7 +196,7 @@ namespace Azure.Core
                 Data,
                 out ArraySegment<byte> data))
             {
-                return new MemoryStream(data.Array);
+                return new MemoryStream(data.Array, data.Offset, data.Count);
             }
             return new MemoryStream(Data.ToArray());
         }

@@ -303,13 +303,13 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             // Changing Last Accessed Time
 
             ServiceBusSender sender = sbClient.CreateSender(queueName);
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "1" });
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "2" });
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "3", ScheduledEnqueueTime = DateTime.UtcNow.AddDays(1) });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "1" });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "2" });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "3", ScheduledEnqueueTime = DateTime.UtcNow.AddDays(1) });
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(queueName);
-            ServiceBusReceivedMessage msg = await receiver.ReceiveAsync();
-            await receiver.DeadLetterAsync(msg.LockToken);
+            ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
+            await receiver.DeadLetterMessageAsync(msg.LockToken);
 
             List<QueueRuntimeInfo> runtimeInfoList = new List<QueueRuntimeInfo>();
             await foreach (QueueRuntimeInfo queueRuntimeInfo in mgmtClient.GetQueuesRuntimeInfoAsync())
@@ -368,13 +368,13 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             // Changing Last Accessed Time
 
             ServiceBusSender sender = sbClient.CreateSender(topicName);
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "1" });
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "2" });
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "3", ScheduledEnqueueTime = DateTime.UtcNow.AddDays(1) });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "1" });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "2" });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "3", ScheduledEnqueueTime = DateTime.UtcNow.AddDays(1) });
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(topicName, subscriptionName);
-            ServiceBusReceivedMessage msg = await receiver.ReceiveAsync();
-            await receiver.DeadLetterAsync(msg.LockToken);
+            ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
+            await receiver.DeadLetterMessageAsync(msg.LockToken);
 
             List<SubscriptionRuntimeInfo> runtimeInfoList = new List<SubscriptionRuntimeInfo>();
             await foreach (SubscriptionRuntimeInfo subscriptionRuntimeInfo in mgmtClient.GetSubscriptionsRuntimeInfoAsync(topicName))
@@ -574,19 +574,19 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             ServiceBusSender sender = sbClient.CreateSender(queueName);
-            await sender.SendAsync(new ServiceBusMessage() { MessageId = "mid" });
+            await sender.SendMessageAsync(new ServiceBusMessage() { MessageId = "mid" });
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(destinationName);
-            ServiceBusReceivedMessage msg = await receiver.ReceiveAsync();
+            ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.DeadLetterAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg.LockToken);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
-            msg = await receiver.ReceiveAsync();
+            msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.CompleteAsync(msg.LockToken);
+            await receiver.CompleteMessageAsync(msg.LockToken);
 
             await mgmtClient.DeleteQueueAsync(queueName);
             await mgmtClient.DeleteQueueAsync(destinationName);

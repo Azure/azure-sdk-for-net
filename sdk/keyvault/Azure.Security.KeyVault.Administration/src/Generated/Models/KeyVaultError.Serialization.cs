@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultError DeserializeKeyVaultError(JsonElement element)
         {
-            Error error = default;
+            KeyVaultServiceError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
             }

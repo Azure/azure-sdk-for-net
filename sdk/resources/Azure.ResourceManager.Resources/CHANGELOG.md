@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.ResourceManager` to `Azure.ResourceManager.Resources`
+The package name has been changed from `Microsoft.Azure.Management.ResourceManager` to `Azure.ResourceManager.Resources`
 
 #### Management Client Changes
 
@@ -94,8 +94,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 var resourcesManagementClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
-var resourceGroupsClient = resourcesManagementClient.GetResourceGroupsClient();
-var deploymentsClient = resourcesManagementClient.GetDeploymentsClient();
+var resourceGroupsClient = resourcesManagementClient.ResourceGroups;
+var deploymentsClient = resourcesManagementClient.Deployments;
 
 var templateString = File.ReadAllText("storage-account.json");
 var parameterString = File.ReadAllText("account-parameters.json");

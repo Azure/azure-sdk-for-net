@@ -25,21 +25,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ await using var client = new ServiceBusClient(connectionString);
                 ServiceBusSender sender = client.CreateSender(queueName);
 
-                await sender.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+                await sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-                ServiceBusReceivedMessage firstMessage = await receiver.ReceiveAsync();
+                ServiceBusReceivedMessage firstMessage = await receiver.ReceiveMessageAsync();
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
-                    await receiver.CompleteAsync(firstMessage);
+                    await sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                    await receiver.CompleteMessageAsync(firstMessage);
                     ts.Complete();
                 }
                 #endregion
 
-                ServiceBusReceivedMessage secondMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                ServiceBusReceivedMessage secondMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
                 Assert.NotNull(secondMessage);
-                await receiver.CompleteAsync(secondMessage);
+                await receiver.CompleteMessageAsync(secondMessage);
             };
         }
 
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ await using var client = new ServiceBusClient(connectionString);
 
                 ServiceBusSender senderA = client.CreateSender(queueA);
-                await senderA.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+                await senderA.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 
                 ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
                 {
@@ -70,22 +70,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 });
 
                 ServiceBusReceiver receiverA = client.CreateReceiver(queueA);
-                ServiceBusReceivedMessage firstMessage = await receiverA.ReceiveAsync();
+                ServiceBusReceivedMessage firstMessage = await receiverA.ReceiveMessageAsync();
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await receiverA.CompleteAsync(firstMessage);
-                    await senderBViaA.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                    await receiverA.CompleteMessageAsync(firstMessage);
+                    await senderBViaA.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
                     ts.Complete();
                 }
                 #endregion
 
-                ServiceBusReceivedMessage secondMessage = await receiverA.ReceiveAsync(TimeSpan.FromSeconds(5));
+                ServiceBusReceivedMessage secondMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
                 Assert.Null(secondMessage);
                 ServiceBusReceiver receiverB = client.CreateReceiver(queueB);
-                secondMessage = await receiverB.ReceiveAsync(TimeSpan.FromSeconds(5));
+                secondMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                 Assert.NotNull(secondMessage);
-                await receiverB.CompleteAsync(secondMessage);
+                await receiverB.CompleteMessageAsync(secondMessage);
             };
         }
     }
