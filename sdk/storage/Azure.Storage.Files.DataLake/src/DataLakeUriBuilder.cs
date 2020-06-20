@@ -357,11 +357,11 @@ namespace Azure.Storage.Files.DataLake
                 {
                     if (DirectoryOrFilePath == "/")
                     {
-                        path.Append(DirectoryOrFilePath);
+                        path.Append(_directoryOrFilePath);
                     }
                     else
                     {
-                        path.Append("/").Append(DirectoryOrFilePath);
+                        path.Append("/").Append(_directoryOrFilePath.EscapePath());
                     }
                 }
             }

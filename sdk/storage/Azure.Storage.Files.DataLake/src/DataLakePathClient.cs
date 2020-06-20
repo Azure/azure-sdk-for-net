@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// DFS Uri
         /// </summary>
-        internal Uri DfsUri => _dfsUri;
+        internal virtual Uri DfsUri => _dfsUri;
 
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
@@ -377,7 +377,11 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
         {
             var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
@@ -386,7 +390,35 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = pipeline;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
+        }
+
+        internal DataLakePathClient(
+            Uri fileSystemUri,
+            string directoryOrFilePath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri)
+            {
+                DirectoryOrFilePath = directoryOrFilePath
+            };
+            _uri = uriBuilder.ToUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = pipeline;
+            _version = version;
+            _clientDiagnostics = clientDiagnostics;
+            _blockBlobClient = BlockBlobClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                Version.AsBlobsVersion(),
+                _clientDiagnostics);
         }
 
         /// <summary>
@@ -443,8 +475,8 @@ namespace Azure.Storage.Files.DataLake
                 var builder = new DataLakeUriBuilder(Uri);
                 _fileSystemName = builder.FileSystemName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
-                _name = builder.LastDirectoryOrFileName;
+                _path = builder.DirectoryOrFilePath.UnescapePath();
+                _name = builder.LastDirectoryOrFileName.UnescapePath();
             }
         }
 

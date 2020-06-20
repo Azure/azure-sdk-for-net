@@ -285,7 +285,7 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrWhiteSpace(ShareName))
             {
                 path.Append("/").Append(ShareName);
-                if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
+                if (!string.IsNullOrWhiteSpace(_directoryOrFilePath))
                 {
                     path.Append("/").Append(_directoryOrFilePath.EscapePath());
                 }
