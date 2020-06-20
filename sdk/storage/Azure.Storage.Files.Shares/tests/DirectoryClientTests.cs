@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares.Test
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             var shareName = new ShareUriBuilder(directory.Uri).ShareName;
             TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
-            TestHelper.AssertCacheableProperty(name, () => directory.Name);
+            Assert.AreEqual(name, directory.Name);
         }
 
         [Test]
