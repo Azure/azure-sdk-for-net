@@ -110,6 +110,8 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
+
+        // Original path given by the user, unecoded.
         private string _directoryOrFilePath;
 
         /// <summary>
@@ -361,6 +363,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
+                        // Encode path.
                         path.Append("/").Append(_directoryOrFilePath.EscapePath());
                     }
                 }

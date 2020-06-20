@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -1597,12 +1598,25 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     // Build destination URI
-                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
                     destUriBuilder.FileSystemName = destinationFileSystem ?? destUriBuilder.FileSystemName;
-                    destUriBuilder.DirectoryOrFilePath = destinationPath;
 
-                    // We will get sas with destPath, if it was provided by the user.
-                    destUriBuilder.Sas = null;
+                    // DataLakeUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
+                    // especially SAS, to be encoded.
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                    }
+                    else
+                    {
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                    }
 
                     // Build destPathClient
                     DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
