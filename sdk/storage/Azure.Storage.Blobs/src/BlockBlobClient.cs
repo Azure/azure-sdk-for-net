@@ -478,7 +478,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 accessTier,
                 cancellationToken).ConfigureAwait(false);
-            }
+        }
 
         /// <summary>
         /// The <see cref="UploadInternal"/> operation creates a new block blob,
@@ -560,7 +560,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: content != null ? content.Length - content.Position : 0,
                         version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,

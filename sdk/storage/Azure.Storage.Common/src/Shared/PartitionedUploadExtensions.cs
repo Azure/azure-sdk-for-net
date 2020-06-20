@@ -28,7 +28,7 @@ namespace Azure.Storage.Shared
             {
                 if (content.CanSeek)
                 {
-                    length = content.Length;
+                    length = content.Length - content.Position;
                     return true;
                 }
             }
