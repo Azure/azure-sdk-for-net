@@ -2092,43 +2092,11 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [LiveOnly]
-        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
-        // so we can't pass connection string validation
         [Test]
-        public async Task GetBlobClient_EncodedBlobNameSas()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            string blobName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
-
-            BlobClient initalBlob = InstrumentClient(test.Container.GetBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
-
-            using var stream = new MemoryStream(data);
-            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
-
-            BlobClient sasBlob = InstrumentClient(
-                GetServiceClient_BlobServiceSas_Blob(
-                    containerName: test.Container.Name,
-                    blobName: blobName)
-                .GetBlobContainerClient(test.Container.Name)
-                .GetBlobClient(blobName));
-
-            // Act
-            Response<BlobProperties> propertiesResponse = await sasBlob.GetPropertiesAsync();
-
-
-            // Assert
-            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
-            Assert.AreEqual(blobName, initalBlob.Name);
-            Assert.AreEqual(blobName, sasBlob.Name);
-        }
-
         [LiveOnly]
         // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
         // so we can't pass connection string validation
-        public async Task GetBlobClient_EncodedBlobNameFromConnectionStringSas()
+        public async Task GetBlobClient_SpecialCharactersUnencoded()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2155,6 +2123,58 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobProperties> propertiesResponse = await sasBlob.GetPropertiesAsync();
 
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            Assert.AreEqual(blobName, blobItems[0].Name);
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+            Assert.AreEqual(blobName, initalBlob.Name);
+            Assert.AreEqual(blobName, sasBlob.Name);
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetBlobClient_SpecialCharactersEncoded()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß";
+
+            BlobClient initalBlob = new BlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            BlobClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: test.Container.Name,
+                    blobName: blobName)
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            // Act
+            Response<BlobProperties> propertiesResponse = await sasBlob.GetPropertiesAsync();
+
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            Assert.AreEqual(blobName, blobItems[0].Name);
 
             // Assert
             Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
