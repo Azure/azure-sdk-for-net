@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.Shares
             get
             {
                 SetNameFieldsIfNull();
-                return _name;
+                return _name.UnescapePath();
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Storage.Files.Shares
             get
             {
                 SetNameFieldsIfNull();
-                return _path;
+                return _path.UnescapePath();
             }
         }
 

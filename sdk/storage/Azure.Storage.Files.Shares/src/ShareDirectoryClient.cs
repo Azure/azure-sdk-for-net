@@ -109,7 +109,7 @@ namespace Azure.Storage.Files.Shares
             get
             {
                 SetNameFieldsIfNull();
-                return _name;
+                return _name.UnescapePath();
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Storage.Files.Shares
             get
             {
                 SetNameFieldsIfNull();
-                return _path;
+                return _path.UnescapePath();
             }
         }
 
@@ -323,7 +323,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         public virtual ShareFileClient GetFileClient(string fileName)
-            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+        {
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+            shareUriBuilder.DirectoryOrFilePath += $"/{fileName}";
+            return new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
 
         /// <summary>
         /// Creates a new <see cref="ShareDirectoryClient"/> object by appending
@@ -334,7 +342,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+            shareUriBuilder.DirectoryOrFilePath += $"/{subdirectoryName}";
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
 
         /// <summary>
         /// Sets the various name fields if they are currently null.

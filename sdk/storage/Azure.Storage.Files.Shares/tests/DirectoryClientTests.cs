@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.Shares.Test
             var builder1 = new ShareUriBuilder(uri1);
             var directoryClient1 = new ShareDirectoryClient(uri1);
             TestHelper.AssertCacheableProperty("dir2", () => directoryClient1.Name);
-            TestHelper.AssertCacheableProperty("dir1/dir2", () => directoryClient1.Path);
+            Assert.AreEqual("dir1/dir2", directoryClient1.Path);
             Assert.AreEqual("dir2", builder1.LastDirectoryOrFileName);
 
             // one directory
@@ -84,7 +84,7 @@ namespace Azure.Storage.Files.Shares.Test
             var builder2 = new ShareUriBuilder(uri2);
             var directoryClient2 = new ShareDirectoryClient(uri2);
             TestHelper.AssertCacheableProperty("dir1", () => directoryClient2.Name);
-            TestHelper.AssertCacheableProperty("dir1", () => directoryClient2.Path);
+            Assert.AreEqual("dir1", directoryClient2.Path);
             Assert.AreEqual("dir1", builder2.LastDirectoryOrFileName);
 
             // directory with trailing slash
@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.Shares.Test
             var builder3 = new ShareUriBuilder(uri3);
             var directoryClient3 = new ShareDirectoryClient(uri3);
             TestHelper.AssertCacheableProperty("dir1", () => directoryClient3.Name);
-            TestHelper.AssertCacheableProperty("dir1", () => directoryClient3.Path);
+            Assert.AreEqual("dir1", directoryClient3.Path);
             Assert.AreEqual("dir1", builder3.LastDirectoryOrFileName);
 
             // no directory
@@ -100,7 +100,7 @@ namespace Azure.Storage.Files.Shares.Test
             var builder4 = new ShareUriBuilder(uri4);
             var directoryClient4 = new ShareDirectoryClient(uri4);
             TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Name);
-            TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Path);
+            Assert.AreEqual(string.Empty, directoryClient4.Path);
             Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
 
         }
@@ -887,6 +887,178 @@ namespace Azure.Storage.Files.Shares.Test
             }
             Assert.AreEqual(1, names.Count);
             Assert.Contains(name, names);
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetFileClient_SpecialCharactersUnescaped()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            string fileName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            string path = $"{test.Directory.Name}/{fileName}";
+            ShareFileClient fileFromDirectoryClient = InstrumentClient(test.Directory.GetFileClient(fileName));
+            Response<ShareFileInfo> createResponse = await fileFromDirectoryClient.CreateAsync(Constants.KB);
+
+            ShareFileClient fileFromConstructor = new ShareFileClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{test.Directory.Name}/{fileName}",
+                GetOptions());
+
+            Response<ShareFileProperties> propertiesResponse = await fileFromConstructor.GetPropertiesAsync();
+
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem shareFileItem in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(shareFileItem);
+            }
+
+            // SAS
+            ShareFileClient sasFile = GetServiceClient_FileServiceSasFile(test.Share.Name, path)
+                .GetShareClient(test.Share.Name)
+                .GetDirectoryClient(test.Directory.Name)
+                .GetFileClient(fileName);
+
+            await sasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(fileName, shareFileItems[0].Name);
+
+            Assert.AreEqual(fileName, fileFromDirectoryClient.Name);
+            Assert.AreEqual(path, fileFromDirectoryClient.Path);
+
+            Assert.AreEqual(fileName, fileFromConstructor.Name);
+            Assert.AreEqual(path, fileFromConstructor.Path);
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetFileClient_SpecialCharactersEscaped()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            string fileName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            string path = $"{test.Directory.Name}/{fileName}";
+            ShareFileClient fileFromDirectoryClient = InstrumentClient(test.Directory.GetFileClient(fileName));
+            Response<ShareFileInfo> createResponse = await fileFromDirectoryClient.CreateAsync(Constants.KB);
+
+            ShareFileClient fileFromConstructor = new ShareFileClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{test.Directory.Name}/{fileName}",
+                GetOptions());
+
+            Response<ShareFileProperties> propertiesResponse = await fileFromConstructor.GetPropertiesAsync();
+
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem shareFileItem in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(shareFileItem);
+            }
+
+            // SAS
+            ShareFileClient sasFile = GetServiceClient_FileServiceSasFile(test.Share.Name, path)
+                .GetShareClient(test.Share.Name)
+                .GetDirectoryClient(test.Directory.Name)
+                .GetFileClient(fileName);
+
+            await sasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(fileName, shareFileItems[0].Name);
+
+            Assert.AreEqual(fileName, fileFromDirectoryClient.Name);
+            Assert.AreEqual(path, fileFromDirectoryClient.Path);
+
+            Assert.AreEqual(fileName, fileFromConstructor.Name);
+            Assert.AreEqual(path, fileFromConstructor.Path);
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetSubDirectoryClient_SpecialCharactersUnescaped()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            string directoryName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            string path = $"{test.Directory.Name}/{directoryName}";
+            ShareDirectoryClient directoryFromDirectoryClient = InstrumentClient(test.Directory.GetSubdirectoryClient(directoryName));
+            Response<ShareDirectoryInfo> createResponse = await directoryFromDirectoryClient.CreateAsync();
+
+            ShareDirectoryClient directoryFromConstructor = new ShareDirectoryClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{test.Directory.Name}/{directoryName}",
+                GetOptions());
+
+            Response<ShareDirectoryProperties> propertiesResponse = await directoryFromConstructor.GetPropertiesAsync();
+
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem shareFileItem in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(shareFileItem);
+            }
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(directoryName, shareFileItems[0].Name);
+
+            Assert.AreEqual(directoryName, directoryFromDirectoryClient.Name);
+            Assert.AreEqual(path, directoryFromDirectoryClient.Path);
+
+            Assert.AreEqual(directoryName, directoryFromConstructor.Name);
+            Assert.AreEqual(path, directoryFromConstructor.Path);
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetSubDirectoryClient_SpecialCharactersEscaped()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            string directoryName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            string path = $"{test.Directory.Name}/{directoryName}";
+            ShareDirectoryClient directoryFromDirectoryClient = InstrumentClient(test.Directory.GetSubdirectoryClient(directoryName));
+            Response<ShareDirectoryInfo> createResponse = await directoryFromDirectoryClient.CreateAsync();
+
+            ShareDirectoryClient directoryFromConstructor = new ShareDirectoryClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{test.Directory.Name}/{directoryName}",
+                GetOptions());
+
+            Response<ShareDirectoryProperties> propertiesResponse = await directoryFromConstructor.GetPropertiesAsync();
+
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem shareFileItem in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(shareFileItem);
+            }
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.AreEqual(directoryName, shareFileItems[0].Name);
+
+            Assert.AreEqual(directoryName, directoryFromDirectoryClient.Name);
+            Assert.AreEqual(path, directoryFromDirectoryClient.Path);
+
+            Assert.AreEqual(directoryName, directoryFromConstructor.Name);
+            Assert.AreEqual(path, directoryFromConstructor.Path);
         }
     }
 }
