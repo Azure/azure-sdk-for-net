@@ -770,6 +770,8 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingShare test = await GetTestShareAsync();
             string directoryName = "!'();[]@&%=+$,#äÄöÖüÜß;";
             ShareDirectoryClient directoryFromShareClient = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+
 
             // Act
             Response<ShareDirectoryInfo> createResponse = await directoryFromShareClient.CreateAsync();
@@ -796,9 +798,11 @@ namespace Azure.Storage.Files.Shares.Test
 
             Assert.AreEqual(directoryName, directoryFromShareClient.Name);
             Assert.AreEqual(directoryName, directoryFromShareClient.Path);
+            Assert.AreEqual(expectedUri, directoryFromShareClient.Uri);
 
             Assert.AreEqual(directoryName, directoryFromConstructor.Name);
             Assert.AreEqual(directoryName, directoryFromConstructor.Path);
+            Assert.AreEqual(expectedUri, directoryFromConstructor.Uri);
         }
 
         [Test]
@@ -811,6 +815,7 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingShare test = await GetTestShareAsync();
             string directoryName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
             ShareDirectoryClient directoryFromShareClient = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.core.windows.net/{test.Share.Name}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
 
             // Act
             Response<ShareDirectoryInfo> createResponse = await directoryFromShareClient.CreateAsync();
@@ -837,9 +842,11 @@ namespace Azure.Storage.Files.Shares.Test
 
             Assert.AreEqual(directoryName, directoryFromShareClient.Name);
             Assert.AreEqual(directoryName, directoryFromShareClient.Path);
+            Assert.AreEqual(expectedUri, directoryFromShareClient.Uri);
 
             Assert.AreEqual(directoryName, directoryFromConstructor.Name);
             Assert.AreEqual(directoryName, directoryFromConstructor.Path);
+            Assert.AreEqual(expectedUri, directoryFromConstructor.Uri);
         }
     }
 }
