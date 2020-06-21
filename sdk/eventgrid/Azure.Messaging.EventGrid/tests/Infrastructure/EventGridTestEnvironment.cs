@@ -11,8 +11,12 @@ namespace Azure.Messaging.EventGrid.Tests
         public EventGridTestEnvironment() : base("eventgrid")
         {
         }
+
+        public const string TopicKeyEnvironmentVariableName = "EVENT_GRID_TOPIC_KEY";
+        public const string TopicEndpointEnvironmentVariableName = "EVENT_GRID_TOPIC_ENDPOINT";
+
         public static EventGridTestEnvironment Instance { get; } = new EventGridTestEnvironment();
-        public string TopicHost => new Uri(GetRecordedVariable("EVENT_GRID_TOPIC_ENDPOINT")).Host;
-        public string TopicKey => GetVariable("EVENT_GRID_TOPIC_KEY");
+        public string TopicHost => new Uri(GetRecordedVariable(TopicEndpointEnvironmentVariableName)).Host;
+        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName);
     }
 }
