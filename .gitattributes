@@ -22,3 +22,7 @@
 # Generated code
 **/Generated/**/*.cs linguist-generated=true
 **/Generated/**/*.csproj linguist-generated=true
+
+# Search index synonym maps require LF line endings
+sdk/search/Azure.Search.Documents/tests/Samples/countries.txt text eol=lf
+
