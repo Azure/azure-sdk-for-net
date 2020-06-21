@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "eventGridTopicName": {
+            "type": "String",
+            "metadata": {
+                "description": "The name of the Event Grid custom topic."
+            }
+        }
+    },
+    "variables": {
+        "apiVersion": "2018-01-01"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.EventGrid/topics",
+            "apiVersion": "[variables('apiVersion')]",
+            "name": "[parameters('eventGridTopicName')]",
+            "location": "[resourceGroup().location]"
+        }
+    ],
+    "outputs": {
+        "EVENT_GRID_TOPIC_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(parameters('eventGridTopicName')).endpoint]"
+        },
+        "EVENT_GRID_TOPIC_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', parameters('eventGridTopicName')), variables('apiVersion')).key1]"
+        }
+    }
+}

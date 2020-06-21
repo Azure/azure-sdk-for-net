@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Template.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionDeletedEvent. </summary>
     internal partial class SubscriptionDeletedEventData

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Template.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Properties of an event published to an Event Grid topic using the CloudEvent 1.0 Schema. </summary>
     public partial class CloudEvent

@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template.Models;
+using Azure.Messaging.EventGrid.Models;
 
-namespace Azure.Template
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> The Service service client. </summary>
     public partial class ServiceClient
@@ -34,6 +35,32 @@ namespace Azure.Template
             RestClient = new ServiceRestClient(clientDiagnostics, pipeline, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="topicEndpoint"></param>
+        /// <param name="credential"></param>
+        public ServiceClient(string topicEndpoint, AzureKeyCredential credential) :
+            this(
+                topicEndpoint,
+                credential,
+                new EventGridClientOptions())
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="topicEndpoint"></param>
+        /// <param name="credential"></param>
+        /// <param name="options"></param>
+        public ServiceClient(string topicEndpoint, AzureKeyCredential credential, EventGridClientOptions options) :
+            this(
+                new ClientDiagnostics(options),
+                HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "aeg-sas-key")))
+        {
         }
 
         /// <summary> Publishes a batch of events to an Azure Event Grid topic. </summary>

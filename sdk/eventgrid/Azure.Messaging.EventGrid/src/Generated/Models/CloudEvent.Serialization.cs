@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     public partial class CloudEvent : IUtf8JsonSerializable
     {
