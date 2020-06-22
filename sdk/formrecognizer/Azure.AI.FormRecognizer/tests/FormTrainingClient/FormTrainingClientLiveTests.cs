@@ -28,6 +28,13 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void FormTrainingClientCannotAuthenticateWithFakeApiKey()
+        {
+            var client = CreateInstrumentedFormTrainingClient(apiKey: "fakeKey");
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetAccountPropertiesAsync());
+        }
+
+        [Test]
         public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateInstrumentedFormTrainingClient(useTokenCredential: true);
