@@ -99,3 +99,17 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 ### OpenTelemetry with Azure Monitor, Zipkin and others
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
+
+## Setting x-ms-client-request-id value sent with requests
+
+By default x-ms-client-request-id header gets a unique value per client method call. If you would like to use a specific value for a set of requests use the `HttpPipeline.CreateClientRequestIdScope` method.
+
+```C# Snippet:ClientRequestId
+var secretClient = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+using (HttpPipeline.CreateClientRequestIdScope("<custom-client-request-id>"))
+{
+    // The HTTP request resulting from the client call would have x-ms-client-request-id value set to <custom-client-request-id>
+    secretClient.GetSecret("<secret-name>");
+}
+```

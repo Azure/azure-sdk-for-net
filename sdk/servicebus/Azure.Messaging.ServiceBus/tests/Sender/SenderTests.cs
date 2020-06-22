@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -233,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
+            var sender = new ServiceBusSender("dummy", null, mockConnection.Object, new ServiceBusPlugin[] { });
             var sendTask = sender.SendMessagesAsync(batch);
 
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");

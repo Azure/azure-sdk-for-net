@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,6 +30,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
         protected readonly EntityScopeFactory _scopeFactory;
+        protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
@@ -38,7 +42,8 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusProcessorOptions processorOptions,
             Func<ProcessMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            IList<ServiceBusPlugin> plugins)
         {
             _connection = connection;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
@@ -51,10 +56,12 @@ namespace Azure.Messaging.ServiceBus
             };
             _maxReceiveWaitTime = _processorOptions.MaxReceiveWaitTime;
             _identifier = identifier;
+            _plugins = plugins;
             Receiver = new ServiceBusReceiver(
                 connection: _connection,
                 entityPath: _entityPath,
                 isSessionEntity: false,
+                plugins: _plugins,
                 options: _receiverOptions);
             _errorHandler = errorHandler;
             _messageHandler = messageHandler;

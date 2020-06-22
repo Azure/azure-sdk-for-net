@@ -114,7 +114,7 @@ More on logging in [diagnostics samples](samples/Diagnostics.md)
 
 ### Reporting Errors ```RequestFailedException```
 
-When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code and an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try
@@ -217,11 +217,12 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
 
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
 [docs]: https://azure.github.io/azure-sdk-for-net/core.html
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
