@@ -232,7 +232,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.MergeAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpsertMergeAsync(originalEntity, "*").ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -244,11 +244,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.MergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpsertMergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.MergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpsertMergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -300,7 +300,7 @@ namespace Azure.Data.Tables.Tests
 
             // Do not provide an ETag to update unconditionally.
 
-            await client.MergeAsync(partialEntity).ConfigureAwait(false);
+            await client.UpsertMergeAsync(partialEntity).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -314,7 +314,7 @@ namespace Azure.Data.Tables.Tests
             // Update just the merged value.
 
             partialEntity[mergepropertyName] = mergeUpdatedValue;
-            await client.MergeAsync(partialEntity).ConfigureAwait(false);
+            await client.UpsertMergeAsync(partialEntity).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -658,7 +658,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.MergeAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpsertMergeAsync(originalEntity, "*").ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -670,11 +670,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.MergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpsertMergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.MergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpsertMergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 

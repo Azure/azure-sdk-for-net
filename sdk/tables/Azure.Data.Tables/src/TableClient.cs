@@ -363,7 +363,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
@@ -405,7 +405,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
@@ -450,10 +450,88 @@ namespace Azure.Data.Tables
         /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpsertMergeAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
+            scope.Start();
+            try
+            {
+                return (await _tableOperations.MergeEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response UpsertMerge(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.MergeEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                          queryOptions: new QueryOptions() { Format = _format },
+                                          cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="etag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string etag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -476,7 +554,7 @@ namespace Azure.Data.Tables
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     ifMatch: eTag,
+                                                     ifMatch: etag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
@@ -488,13 +566,13 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="etag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        public virtual Response Merge(IDictionary<string, object> entity, string etag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -517,7 +595,7 @@ namespace Azure.Data.Tables
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          ifMatch: eTag,
+                                          ifMatch: etag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken).GetRawResponse();
             }

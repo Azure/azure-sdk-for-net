@@ -60,11 +60,11 @@ namespace Azure.Tables.Tests
 
             Assert.That(async () => await client_Instrumented.UpdateAsync(entityWithoutRK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client_Instrumented.MergeAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpsertMergeAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.MergeAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertMergeAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.MergeAsync(entityWithoutRK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertMergeAsync(entityWithoutRK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]
