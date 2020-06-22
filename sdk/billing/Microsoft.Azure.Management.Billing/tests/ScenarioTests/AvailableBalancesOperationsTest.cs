@@ -14,8 +14,8 @@ namespace Billing.Tests.ScenarioTests
 {
     public class AvailableBalancesOperationsTest : TestBase
     {
-        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
+        private const string BillingAccountName = "c017063b-18ad-5e26-f4af-a4d7eff204cb:171df24e-c924-4c58-9daa-a0bdb1686fef_2019-05-31";
+        private const string BillingProfileName = "RZKZ-H3N4-BG7-TGB";
         private const string BillingProfileCurrency = "USD";
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(availableBalance);
-                Assert.Equal(50, availableBalance.Amount.Value);
+                Assert.Equal(372.8, availableBalance.Amount.Value);
                 Assert.Equal(BillingProfileCurrency, availableBalance.Amount.Currency);
             }
         }

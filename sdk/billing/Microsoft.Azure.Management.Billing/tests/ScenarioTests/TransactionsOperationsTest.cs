@@ -15,11 +15,11 @@ namespace Billing.Tests.ScenarioTests
 {
     public class TransactionsOperationsTest : TestBase
     {
-        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string InvoiceId = "G000492901";
-        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
-        private const string TransactionName = "98ce813f-facd-43d4-a8fe-b6958fc0f5cf";
+        private const string BillingAccountName = "c017063b-18ad-5e26-f4af-a4d7eff204cb:171df24e-c924-4c58-9daa-a0bdb1686fef_2019-05-31";
+        private const string BillingProfileName = "RZKZ-H3N4-BG7-TGB";
+        private const string InvoiceId = "T000492114";
+        private const string InvoiceSectionName = "L6E4-BU47-PJA-TGB";
+        private const string TransactionName = "a587112e-5509-4621-b53d-53b1bcd92744";
 
         [Fact]
         public void ListTransactionsByInvoiceTest()
@@ -38,7 +38,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(transactions);
-                Assert.Equal(2, transactions.Count());
+                Assert.Equal(3, transactions.Count());
                 var transaction = Assert.Single(transactions.Where(t => t.Name == TransactionName));
                 Assert.Contains(BillingProfileName, transaction.BillingProfileId);
                 Assert.Contains(InvoiceSectionName, transaction.InvoiceSectionId);
