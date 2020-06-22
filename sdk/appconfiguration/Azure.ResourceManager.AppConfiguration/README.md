@@ -20,7 +20,7 @@ Install-Package Azure.ResourceManager.AppConfiguration -Version 1.0.0-preview.1
 
 To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
 
-## Key Concepts
+## Key concepts
 
 Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
 
