@@ -250,6 +250,22 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartCopyModelFailsWithWrongRegion()
+        {
+            var sourceClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, wrongRegion);
+
+            var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+        }
+
+        [Test]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateInstrumentedFormTrainingClient();
