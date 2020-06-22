@@ -564,6 +564,40 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         // GetDeletedCertificates
         // GetUpdatePolicy
         // IssuerCrud
+
+        [Test]
+        public async Task VerifyGetIssuer()
+        {
+            string issuerName = Recording.GenerateId();
+
+            string providerName = "ssladmin";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName)
+            {
+                AdministratorContacts =
+                {
+                    new AdministratorContact
+                    {
+                        Email = "email@domain.tld",
+                        FirstName ="fName",
+                        LastName = "lName",
+                        Phone = "1234"
+                    },
+                },
+            };
+
+            RegisterForCleanupIssuer(issuerName);
+
+            await Client.CreateIssuerAsync(issuer);
+
+            CertificateIssuer getIssuer = await Client.GetIssuerAsync(issuerName);
+
+            Assert.NotNull(getIssuer);
+            Assert.NotNull(getIssuer.Id);
+            Assert.AreEqual(issuer.Provider, getIssuer.Provider);
+            Assert.AreEqual(issuer.Name, getIssuer.Name);
+        }
+
         // ContactsCrud
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy

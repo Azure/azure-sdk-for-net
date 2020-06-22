@@ -27,6 +27,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
+        private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
+
         public CertificatesTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -80,6 +82,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 await PurgeCertificate(name).ConfigureAwait(false);
             }
+
+            while (_issuerToDelete.TryDequeue(out string name))
+            {
+                await DeleteIssuer(name);
+            }
         }
 
         protected async Task DeleteCertificate(string name)
@@ -94,6 +101,25 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 using (Recording.DisableRecording())
                 {
                     await Client.StartDeleteCertificateAsync(name).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
+
+        protected async Task DeleteIssuer(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.DeleteIssuerAsync(name).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -210,6 +236,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         protected void RegisterForCleanup(string certificateName)
         {
             _certificatesToDelete.Enqueue(certificateName);
+        }
+
+        protected void RegisterForCleanupIssuer(string issuerName)
+        {
+            _issuerToDelete.Enqueue(issuerName);
         }
 
         protected IAsyncDisposable EnsureDeleted(CertificateOperation operation) => new CertificateOperationDeleter(operation);

@@ -1,0 +1,169 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://chriss.vault.azure.net/certificates/issuers/1382212264?api-version=7.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-03e405bbbc545442aa0c87c1577a11fc-bf74dfc89bff0145-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.2-dev.20200622.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f403e7a7d3892ad42687290fd6dba261",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 22 Jun 2020 20:44:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=72.176.254.191;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus2",
+        "x-ms-keyvault-service-version": "1.1.6.0",
+        "x-ms-request-id": "dfc11f4c-4c31-4217-a4cf-0a80c4ebcdd3",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is missing a Bearer or PoP token."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://chriss.vault.azure.net/certificates/issuers/1382212264?api-version=7.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "142",
+        "Content-Type": "application/json",
+        "traceparent": "00-03e405bbbc545442aa0c87c1577a11fc-bf74dfc89bff0145-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.2-dev.20200622.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f403e7a7d3892ad42687290fd6dba261",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "provider": "ssladmin",
+        "org_details": {
+          "admin_details": [
+            {
+              "first_name": "fName",
+              "last_name": "lName",
+              "email": "email@domain.tld",
+              "phone": "1234"
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "292",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 22 Jun 2020 20:44:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=72.176.254.191;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus2",
+        "x-ms-keyvault-service-version": "1.1.6.0",
+        "x-ms-request-id": "11ae646c-3d53-44eb-a696-60a918d651f2",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://chriss.vault.azure.net/certificates/issuers/1382212264",
+        "provider": "ssladmin",
+        "org_details": {
+          "zip": 0,
+          "admin_details": [
+            {
+              "first_name": "fName",
+              "last_name": "lName",
+              "email": "email@domain.tld",
+              "phone": "1234"
+            }
+          ]
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1592858691,
+          "updated": 1592858691
+        }
+      }
+    },
+    {
+      "RequestUri": "https://chriss.vault.azure.net/certificates/issuers/1382212264?api-version=7.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "traceparent": "00-6dc2541ee6890e47a909ddc95d7da40c-ec35ccc1cc5e624a-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.2-dev.20200622.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "6e6704e4bd1810c4ccd79b84a4079950",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "292",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 22 Jun 2020 20:44:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=72.176.254.191;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus2",
+        "x-ms-keyvault-service-version": "1.1.6.0",
+        "x-ms-request-id": "b72bf809-6e9d-49ce-a6cb-0633f572bde1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://chriss.vault.azure.net/certificates/issuers/1382212264",
+        "provider": "ssladmin",
+        "org_details": {
+          "zip": 0,
+          "admin_details": [
+            {
+              "first_name": "fName",
+              "last_name": "lName",
+              "email": "email@domain.tld",
+              "phone": "1234"
+            }
+          ]
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1592858691,
+          "updated": 1592858691
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://chriss.vault.azure.net",
+    "RandomSeed": "658943540"
+  }
+}
