@@ -22,6 +22,8 @@ To create an authenticated client and start interacting with Azure resources, pl
 
 ## Key Concepts
 
+Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+
 ## Documentation
 
 Documentation is available to help you learn how to use this package
@@ -45,6 +47,8 @@ Code samples for using the management library for .NET can be found in the follo
 
 
 ## Next steps
+
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
 ## Contributing
 
