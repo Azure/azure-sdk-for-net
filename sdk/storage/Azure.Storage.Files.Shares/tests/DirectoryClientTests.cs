@@ -76,32 +76,32 @@ namespace Azure.Storage.Files.Shares.Test
             Uri uri1 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/dir2");
             var builder1 = new ShareUriBuilder(uri1);
             var directoryClient1 = new ShareDirectoryClient(uri1);
-            Assert.AreEqual("dir2", directoryClient1.Name);
-            Assert.AreEqual("dir1/dir2", directoryClient1.Path);
+            TestHelper.AssertCacheableProperty("dir2", () => directoryClient1.Name);
+            TestHelper.AssertCacheableProperty("dir1/dir2", () => directoryClient1.Path);
             Assert.AreEqual("dir2", builder1.LastDirectoryOrFileName);
 
             // one directory
             Uri uri2 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1");
             var builder2 = new ShareUriBuilder(uri2);
             var directoryClient2 = new ShareDirectoryClient(uri2);
-            Assert.AreEqual("dir1", directoryClient2.Name);
-            Assert.AreEqual("dir1", directoryClient2.Path);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient2.Name);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient2.Path);
             Assert.AreEqual("dir1", builder2.LastDirectoryOrFileName);
 
             // directory with trailing slash
             Uri uri3 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/");
             var builder3 = new ShareUriBuilder(uri3);
             var directoryClient3 = new ShareDirectoryClient(uri3);
-            Assert.AreEqual("dir1", directoryClient3.Name);
-            Assert.AreEqual("dir1", directoryClient3.Path);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient3.Name);
+            TestHelper.AssertCacheableProperty("dir1", () => directoryClient3.Path);
             Assert.AreEqual("dir1", builder3.LastDirectoryOrFileName);
 
             // no directory
             Uri uri4 = new Uri("http://dummyaccount.file.core.windows.net/share");
             var builder4 = new ShareUriBuilder(uri4);
             var directoryClient4 = new ShareDirectoryClient(uri4);
-            Assert.AreEqual(string.Empty, directoryClient4.Name);
-            Assert.AreEqual(string.Empty, directoryClient4.Path);
+            TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Name);
+            TestHelper.AssertCacheableProperty(string.Empty, () => directoryClient4.Path);
             Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
 
         }
@@ -125,7 +125,7 @@ namespace Azure.Storage.Files.Shares.Test
             TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
             var shareName = new ShareUriBuilder(directory.Uri).ShareName;
             TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
-            Assert.AreEqual(name, directory.Name);
+            TestHelper.AssertCacheableProperty(name, () => directory.Name);
         }
 
         [Test]
