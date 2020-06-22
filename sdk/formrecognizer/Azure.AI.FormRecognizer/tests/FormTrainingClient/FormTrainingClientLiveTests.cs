@@ -105,11 +105,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "invalidPrefix" };
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
-            }
+            operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
         }
