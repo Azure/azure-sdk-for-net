@@ -14,5 +14,9 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="perf/**/*.*" />
+  </ItemGroup>
 
 </Project>

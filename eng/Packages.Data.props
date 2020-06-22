@@ -147,6 +147,8 @@
   <!-- Test only packages -->
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true')">
 
+    <PackageReference Update="Microsoft.CSharp" Version="4.6" />
+
     <!-- Extension packages -->
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
