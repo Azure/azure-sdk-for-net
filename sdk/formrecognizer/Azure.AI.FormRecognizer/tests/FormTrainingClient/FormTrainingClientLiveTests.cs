@@ -32,18 +32,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormTrainingClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
-            }
-
-            // Sanity check to make sure we got an actual response back from the service.
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
             CustomFormModel model = await operation.WaitForCompletionAsync(PollingInterval);
 
+            // Sanity check to make sure we got an actual response back from the service.
             Assert.IsNotNull(model.ModelId);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
@@ -57,14 +51,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            }
-
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
@@ -122,13 +110,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            }
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -200,12 +183,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
 
-            CopyModelOperation operation;
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
-            }
+            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
             await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
@@ -219,6 +197,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public void CopyModelError()
         {
             var sourceClient = CreateInstrumentedFormTrainingClient();
