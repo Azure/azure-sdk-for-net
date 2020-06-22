@@ -213,6 +213,28 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartRecognizeContentCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream, options);
+            }
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            var blankPage = formPages.Single();
+
+            ValidateFormPage(blankPage, includeTextContent: true, expectedPageNumber: 1);
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
+        [Test]
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -419,6 +441,35 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsNotNull(sampleField.ValueText);
                 Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeReceiptsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, options);
+            }
+
+            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankReceipt = recognizedReceipts.Single();
+            var blankForm = blankReceipt.RecognizedForm;
+
+            ValidateRecognizedForm(blankForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         [Test]
@@ -779,6 +830,36 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsNotNull(sampleField.ValueText);
                 Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankForm = recognizedForms.Single();
+
+            ValidateRecognizedForm(blankForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         [Test]
