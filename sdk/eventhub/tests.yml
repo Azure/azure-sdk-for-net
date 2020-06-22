@@ -8,8 +8,33 @@ resources:
       endpoint: azure
 
 jobs:
+# Azure Cloud
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 6
     ServiceDirectory: eventhub
     TimeoutInMinutes: 120
+    ScenarioName: AzureCloud
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+
+# AzureUSGovernment
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: eventhub
+    TimeoutInMinutes: 120
+    ScenarioName: AzureUSGovernment
+    SubscriptionConfiguration: $(sub-config-gov-test-resources)
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+
+# AzureChinaCloud
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: eventhub
+    TimeoutInMinutes: 120
+    ScenarioName: AzureChinaCloud
+    SubscriptionConfiguration: $(sub-config-cn-test-resources)
+    EnvVars:
+      AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn

@@ -100,7 +100,7 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testRunTitle: "${{ parameters.ScenarioName }} $(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
 
