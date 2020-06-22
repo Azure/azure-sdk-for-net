@@ -1,7 +1,8 @@
 trigger: none
 
 
-extends: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
+extends:
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
     jobs:
       # Azure Cloud
