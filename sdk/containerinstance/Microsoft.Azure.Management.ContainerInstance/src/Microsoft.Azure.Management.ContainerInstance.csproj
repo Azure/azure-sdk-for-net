@@ -8,7 +8,7 @@
     <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
     <PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
-    <PackageTags>Microsoft Azure Container Instance Management;Container Instance;2019-12-01;</PackageTags>
+    <PackageTags>Microsoft Azure Container Instance Management;Container Instance;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a release of the Azure Container Instance SDK. Included with this release are Init Containers and Encryption-at-Rest.
