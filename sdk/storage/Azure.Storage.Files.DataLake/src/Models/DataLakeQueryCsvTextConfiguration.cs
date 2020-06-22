@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Field quote.
         /// </summary>
-        public char? FieldQuote { get; set; }
+        public char? QuotationCharacter { get; set; }
 
         /// <summary>
         /// Escape character.

@@ -289,9 +289,9 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(containerItem.Deleted);
-            Assert.IsNotNull(containerItem.Version);
-            Assert.IsNotNull(containerItem.Properties.DeletedTime);
+            Assert.IsTrue(containerItem.IsDeleted);
+            Assert.IsNotNull(containerItem.VersionId);
+            Assert.IsNotNull(containerItem.Properties.DeletedOn);
             Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
@@ -523,7 +523,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 { tagKey, tagValue }
             };
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
             };
@@ -535,15 +535,15 @@ namespace Azure.Storage.Blobs.Test
             await Task.Delay(2000);
 
             // Act
-            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
-            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            List<BlobTagItem> blobs = new List<BlobTagItem>();
+            await foreach (Page<BlobTagItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
 
             // Assert
-            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
-            Assert.AreEqual(tagValue, filterBlob.TagValue);
+            BlobTagItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.IsNotNull(filterBlob);
         }
 
         [Test]
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
                 containerItem.Name,
-                containerItem.Version,
+                containerItem.VersionId,
                 GetNewContainerName());
 
             // Assert

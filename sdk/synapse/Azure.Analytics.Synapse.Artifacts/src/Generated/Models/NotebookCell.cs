@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             CellType = cellType;
             Metadata = metadata;
-            Source = source;
+            Source = source ?? new List<string>();
             Attachments = attachments;
             Outputs = outputs;
             AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Cell-level metadata. </summary>
         public object Metadata { get; set; }
         /// <summary> Contents of the cell, represented as an array of lines. </summary>
-        public IList<string> Source { get; set; }
+        public IList<string> Source { get; }
         /// <summary> Attachments associated with the cell. </summary>
         public object Attachments { get; set; }
         /// <summary> Cell-level output items. </summary>

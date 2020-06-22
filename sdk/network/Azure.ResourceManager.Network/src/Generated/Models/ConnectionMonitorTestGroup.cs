@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             Name = name;
             Disable = disable;
-            TestConfigurations = testConfigurations;
-            Sources = sources;
-            Destinations = destinations;
+            TestConfigurations = testConfigurations ?? new List<string>();
+            Sources = sources ?? new List<string>();
+            Destinations = destinations ?? new List<string>();
         }
 
         /// <summary> The name of the connection monitor test group. </summary>
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Value indicating whether test group is disabled. </summary>
         public bool? Disable { get; set; }
         /// <summary> List of test configuration names. </summary>
-        public IList<string> TestConfigurations { get; set; }
+        public IList<string> TestConfigurations { get; }
         /// <summary> List of source endpoint names. </summary>
-        public IList<string> Sources { get; set; }
+        public IList<string> Sources { get; }
         /// <summary> List of destination endpoint names. </summary>
-        public IList<string> Destinations { get; set; }
+        public IList<string> Destinations { get; }
     }
 }

@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CreatePageBlobOptions options = new CreatePageBlobOptions
+            PageBlobCreateOptions options = new PageBlobCreateOptions
             {
                 Tags = BuildTags()
             };

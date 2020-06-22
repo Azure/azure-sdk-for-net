@@ -51,12 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             get
             {
-                if (ConnectionString != null)
-                {
-                    return new DataSourceCredentials(ConnectionString);
-                }
-
-                return null;
+                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue);
             }
 
             set

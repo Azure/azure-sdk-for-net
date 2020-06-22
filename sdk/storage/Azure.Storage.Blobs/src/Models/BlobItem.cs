@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// IsCurrentVersion.
         /// </summary>
-        public bool? IsCurrentVersion { get; internal set; }
+        public bool? IsLatestVersion { get; internal set; }
 
         /// <summary>
         /// Properties of a blob.

@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteAddressRanges"> A collection of remote address spaces in CIDR format. </param>
         internal TrafficSelectorPolicy(IList<string> localAddressRanges, IList<string> remoteAddressRanges)
         {
-            LocalAddressRanges = localAddressRanges;
-            RemoteAddressRanges = remoteAddressRanges;
+            LocalAddressRanges = localAddressRanges ?? new List<string>();
+            RemoteAddressRanges = remoteAddressRanges ?? new List<string>();
         }
 
         /// <summary> A collection of local address spaces in CIDR format. </summary>
-        public IList<string> LocalAddressRanges { get; set; }
+        public IList<string> LocalAddressRanges { get; }
         /// <summary> A collection of remote address spaces in CIDR format. </summary>
-        public IList<string> RemoteAddressRanges { get; set; }
+        public IList<string> RemoteAddressRanges { get; }
     }
 }

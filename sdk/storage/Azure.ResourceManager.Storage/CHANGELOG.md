@@ -19,7 +19,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.Storage` to `Azure.ResourceManager.Storage`
+The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
 
 #### Management Client Changes
 
@@ -56,7 +56,7 @@ using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 
 var storageManagementClient = new StorageManagementClient(subscriptionId, new DefaultAzureCredential());
-var storageAccountsClient = storageManagementClient.GetStorageAccountsClient();
+var storageAccountsOperations = storageManagementClient.StorageAccounts;
 
 var parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, "westus")
     {
@@ -66,7 +66,7 @@ var parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS)
                 {"key2","value2"}
             }
     };
-var accountResponse = await storageAccountsClient.StartCreateAsync(resourceGroupName, accountName, parameters);
+var accountResponse = await storageAccountsOperations.StartCreateAsync(resourceGroupName, accountName, parameters);
 StorageAccount account = await accountResponse.WaitForCompletionAsync();
 ```
 

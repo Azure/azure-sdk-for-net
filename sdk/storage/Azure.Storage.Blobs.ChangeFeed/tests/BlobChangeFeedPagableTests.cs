@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobChangeFeedClient blobChangeFeedClient = service.GetChangeFeedClient();
-            BlobChangeFeedPagable blobChangeFeedPagable
+            Pageable<BlobChangeFeedEvent> blobChangeFeedPagable
                 = blobChangeFeedClient.GetChanges();
             IList<BlobChangeFeedEvent> list = blobChangeFeedPagable.ToList();
             foreach (BlobChangeFeedEvent e in list)

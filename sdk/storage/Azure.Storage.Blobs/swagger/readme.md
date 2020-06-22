@@ -478,6 +478,7 @@ directive:
 
         $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
         $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
+        $.BlobItemProperties.properties.TagCount.format = "int64";
         delete $.BlobItemProperties.properties.AccessTierChangeTime;
         
         $.BlobItemInternal["x-az-public"] = false;
@@ -1039,6 +1040,25 @@ directive:
     delete $.BlobContainerItem.properties.Metadata;
 ```
 
+### Rename BlobContainerProperties field
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerProperties.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
+```
+
+### Rename BlobContainerItem fields
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerItem.properties.Deleted["x-ms-client-name"] = "IsDeleted";
+    $.BlobContainerItem.properties.Version["x-ms-client-name"] = "VersionId";
+```
+
 ### UserDelegationKey properties
 ``` yaml
 directive:
@@ -1108,8 +1128,7 @@ directive:
 - from: swagger-document
   where: $.parameters.ListContainersInclude
   transform: >
-    $["x-az-public"] = false;
-    $["x-ms-enum"].name = "ListBlobContainersIncludeType"
+    $.items["x-az-public"] = false;
 ```
 
 ### Hide Error models
@@ -1481,17 +1500,58 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
+### Hide FilterBlobSegment
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions
+  where: $.definitions.FilterBlobSegment
   transform: >
-    $.BlobTag["x-az-public"] = false;
-    $.BlobTagSet["x-az-public"] = false;
-    $.BlobTags["x-az-public"] = false;
-    $.BlobItemInternal["x-az-public"] = false;
-    $.FilterBlobSegment["x-az-public"] = false;
+    $["x-az-public"] = false;
+```
+
+### Hide FilterBlobItem
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FilterBlobItem
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobTags
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobTags
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobTag
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobTag
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobItemInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobItemInternal
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide FilterBlobSegment
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FilterBlobSegment
+  transform: >
+    $["x-az-public"] = false;
 ```
 
 ### Make AppendBlobSealResult internal
@@ -1521,6 +1581,31 @@ directive:
   where: $.parameters
   transform: >
     $.BlobExpiryOptions["x-az-public"] = false;
+```
+
+### Rename FilterBlobItem and properties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.FilterBlobItem.properties.ContainerName["x-ms-client-name"] = "BlobContainerName";
+    $.FilterBlobItem.properties.Name["x-ms-client-name"] = "BlobName";
+    delete $.FilterBlobItem.properties.TagValue;
+```
+
+### Rename enums in BlobQueryResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=query"]
+  transform: >
+    $.post.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    $.post.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
+    $.post.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
+    $.post.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    $.post.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
+    $.post.responses["206"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
 ```
 
 ### /{containerName}/{blob}?comp=page&update&fromUrl
