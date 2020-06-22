@@ -98,7 +98,11 @@ namespace Azure.Storage.Files.Shares
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
+            set
+            {
+                ResetUri();
+                _directoryOrFilePath = value;
+            }
         }
         private string _directoryOrFilePath;
 
@@ -198,12 +202,16 @@ namespace Azure.Storage.Files.Shares
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    ShareName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    // Slash not found; path has share name & no directory/file path
+                    ShareName = path.Substring(startIndex);
                 }
                 else
                 {
-                    ShareName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    // The share name is the part between the slashes
+                    ShareName = path.Substring(startIndex, shareEndIndex - startIndex);
+
+                    // The directory/file path name is after the share slash
+                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1).Trim('/');
                 }
             }
 
@@ -277,9 +285,9 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrWhiteSpace(ShareName))
             {
                 path.Append("/").Append(ShareName);
-                if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
+                if (!string.IsNullOrWhiteSpace(_directoryOrFilePath))
                 {
-                    path.Append("/").Append(Uri.EscapeDataString(DirectoryOrFilePath));
+                    path.Append("/").Append(_directoryOrFilePath.EscapePath());
                 }
             }
 

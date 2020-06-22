@@ -1369,8 +1369,14 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
             }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobName = blobName
+            };
+
             return new AppendBlobClient(
-                client.Uri.AppendToPath(blobName),
+                blobUriBuilder.ToUri(),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,

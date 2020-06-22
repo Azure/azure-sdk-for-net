@@ -185,8 +185,31 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakeFileClient(Uri fileUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
-            : base(fileUri, pipeline, version, clientDiagnostics)
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
+        {
+        }
+
+        internal DataLakeFileClient(
+            Uri fileSystemUri,
+            string filePath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileSystemUri,
+                  filePath,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
         {
         }
         #endregion ctors

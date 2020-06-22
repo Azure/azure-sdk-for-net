@@ -389,7 +389,14 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            return new BlobBaseClient(
+                builder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -416,7 +423,14 @@ namespace Azure.Storage.Blobs.Specialized
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            return new BlobBaseClient(
+                builder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -427,7 +441,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (_name == null || _containerName == null || _accountName == null)
             {
                 var builder = new BlobUriBuilder(Uri);
-                _name = builder.BlobName;
+                _name = Uri.UnescapeDataString(builder.BlobName);
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }

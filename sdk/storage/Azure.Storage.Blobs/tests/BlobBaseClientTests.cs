@@ -83,6 +83,19 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            // Act
+            BlobBaseClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: test.Container.Name,
+                    blobName: blobName)
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            propertiesResponse = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
         [Test]

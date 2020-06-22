@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2089,6 +2090,123 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteBlobIfExistsAsync(GetNewBlobName()),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        [TestCase("!*'();[]:@&%=+$,/?#äÄöÖüÜß")]
+        [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
+        [TestCase("my cool blob")]
+        [TestCase("blob")]
+        public async Task GetBlobClient_SpecialCharacters(string blobName)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+
+            BlobClient initalBlob = new BlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            BlobClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: test.Container.Name,
+                    blobName: blobName)
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            // Act
+            Response<BlobProperties> propertiesResponse = await sasBlob.GetPropertiesAsync();
+
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            Assert.AreEqual(blobName, blobItems[0].Name);
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+            Assert.AreEqual(blobName, initalBlob.Name);
+            Assert.AreEqual(expectedUri, initalBlob.Uri);
+
+            Assert.AreEqual(blobName, sasBlob.Name);
+            Assert.AreEqual(expectedUri, initalBlob.Uri);
+        }
+
+        [Test]
+        [TestCase("!*'();[]:@&%=+$,/?#äÄöÖüÜß")]
+        [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
+        [TestCase("my cool blob")]
+        [TestCase("blob")]
+        [LiveOnly]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation
+        public async Task GetBlobClients_SpecialCharacters(string blobName)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+
+            BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
+            BlobClient blobClientFromConnectionString = new BlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            BlockBlobClient blockBlobClientFromContainer = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            BlockBlobClient blockBlobClientFromConnectionString = new BlockBlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            AppendBlobClient appendBlobClientFromContainer = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            AppendBlobClient appendBlobClientFromConnectionString = new AppendBlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            PageBlobClient pageBlobClientFromContainer = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            PageBlobClient pageBlobClientFromConnectionString = new PageBlobClient(
+                TestConfigDefault.ConnectionString,
+                test.Container.Name,
+                blobName,
+                GetOptions());
+
+            // Assert
+            Assert.AreEqual(blobName, blobClientFromContainer.Name);
+            Assert.AreEqual(expectedUri, blobClientFromContainer.Uri);
+            Assert.AreEqual(blobName, blobClientFromConnectionString.Name);
+            Assert.AreEqual(expectedUri, blobClientFromConnectionString.Uri);
+
+            Assert.AreEqual(expectedUri, blockBlobClientFromContainer.Uri);
+            Assert.AreEqual(blobName, blockBlobClientFromContainer.Name);
+            Assert.AreEqual(expectedUri, blockBlobClientFromConnectionString.Uri);
+            Assert.AreEqual(blobName, blockBlobClientFromConnectionString.Name);
+
+            Assert.AreEqual(expectedUri, appendBlobClientFromContainer.Uri);
+            Assert.AreEqual(blobName, appendBlobClientFromContainer.Name);
+            Assert.AreEqual(expectedUri, appendBlobClientFromConnectionString.Uri);
+            Assert.AreEqual(blobName, appendBlobClientFromConnectionString.Name);
+
+            Assert.AreEqual(expectedUri, pageBlobClientFromContainer.Uri);
+            Assert.AreEqual(blobName, pageBlobClientFromContainer.Name);
+            Assert.AreEqual(expectedUri, pageBlobClientFromConnectionString.Uri);
+            Assert.AreEqual(blobName, pageBlobClientFromConnectionString.Name);
         }
 
         #region Secondary Storage

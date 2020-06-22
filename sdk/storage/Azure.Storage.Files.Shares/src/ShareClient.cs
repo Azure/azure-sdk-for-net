@@ -279,7 +279,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetDirectoryClient(string directoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = directoryName
+            };
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
+
 
         /// <summary>
         /// Create a <see cref="ShareDirectoryClient"/> object for the root of the
