@@ -93,7 +93,7 @@ following:
     var resourceClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
     var resourceGroupsClient = resourceClient.GetResourceGroupsClient();
 ```
-From this code snippet, we showed that in order to interact with Resources, we need to create a top-level client first (**ResourcesManagementClient**), then get the corresponding sub-resource client we are interested in, in this case we called **.GetResourceGroupsClient()** to get a ResourceGroupsClient
+From this code snippet, we showed that in order to interact with Resources, we need to create a top-level client first (**ResourcesManagementClient**), then get the corresponding sub-resource client we are interested in, in this case we called **.ResourceGroups** to get a ResourceGroupsOperations
 
 For more information and different authentication approaches using Azure
 Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
