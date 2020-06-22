@@ -1,6 +1,6 @@
 # Release History
 
-## 12.5.0-preview.2 (2020-06)
+## 12.5.0-preview.5 (Unreleased)
 - Added support for service version 2019-12-12.
 - Added support for Blob Tags.
 - Added support for Blob Version.
@@ -12,6 +12,9 @@
 - Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
 - Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
 - Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+
+## 12.5.0-preview.4 (2020-06)
+- This preview contains bug fixes to improve quality.
 
 ## 12.5.0-preview.1 (2020-06)
 - This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.

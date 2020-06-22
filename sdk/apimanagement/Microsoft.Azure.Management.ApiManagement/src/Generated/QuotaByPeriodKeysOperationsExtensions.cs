@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// The value of the Quota counter to be applied on the specified period.
             /// </param>
-            public static void Update(this IQuotaByPeriodKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueContractProperties parameters)
+            public static void Update(this IQuotaByPeriodKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContract parameters)
             {
                 operations.UpdateAsync(resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey, parameters).GetAwaiter().GetResult();
             }
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IQuotaByPeriodKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueContractProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IQuotaByPeriodKeysOperations operations, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContract parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

@@ -63,6 +63,9 @@ namespace Storage.Tests
                     table2 = storageMgmtClient.Table.Get(rgName, accountName, tableName2);
                     Assert.Equal(tableName2, table2.TableName);
 
+                    // Update Table: Update still not update any thing, will add update parameter when add things to update
+                    table = storageMgmtClient.Table.Update(rgName, accountName, tableName);
+
                     //list Table
                     IPage<Table> tables = storageMgmtClient.Table.List(rgName, accountName);
                     Assert.Equal(2, tables.Count());

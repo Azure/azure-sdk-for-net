@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -93,12 +95,14 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionProcessorOptions options)
         {
             _innerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
+                plugins,
                 options.ToProcessorOptions(),
                 options.SessionIds);
         }

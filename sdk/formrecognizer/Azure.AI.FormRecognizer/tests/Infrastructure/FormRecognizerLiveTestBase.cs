@@ -16,7 +16,6 @@ namespace Azure.AI.FormRecognizer.Tests
         public FormRecognizerLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher();
         }
 
         /// <summary>
@@ -55,15 +54,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingClient = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            DisposableTrainedModel trainedModel;
-
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
-            }
-
-            return trainedModel;
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
         }
     }
 }

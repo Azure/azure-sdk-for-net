@@ -172,6 +172,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
         internal const int ScheduleTaskFailedEvent = 95;
 
+        internal const int PluginStartEvent = 96;
+        internal const int PluginCompleteEvent = 97;
+        internal const int PluginExceptionEvent = 98;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -1250,6 +1254,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateControllerExceptionEvent, connectionManager, exception);
+            }
+        }
+        #endregion
+
+        #region plugins
+        [Event(PluginStartEvent, Level = EventLevel.Verbose, Message = "User plugin {0} called on message {1}")]
+        public void PluginCallStarted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginStartEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginCompleteEvent, Level = EventLevel.Verbose, Message = "User plugin {0} completed on message {1}")]
+        public void PluginCallCompleted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginCompleteEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginExceptionEvent, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
+        public void PluginCallException(string pluginName, string messageId, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginExceptionEvent, pluginName, messageId, exception);
             }
         }
         #endregion
