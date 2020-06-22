@@ -570,9 +570,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
             Assert.AreEqual(issuer.Provider, getIssuer.Provider);
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
-            // https://github.com/Azure/azure-sdk-for-net/issues/10905
-            // Assert.AreEqual(issuer.Name, getIssuer.Name);
+            Assert.AreEqual(issuer.Name, getIssuer.Name);
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10905
+
         }
 
         [Test]
@@ -624,9 +624,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.NotNull(issuerPropertie);
                 IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
                 Assert.AreEqual(issuerPropertie.Provider, returnPropertie.Provider);
-                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
-                // https://github.com/Azure/azure-sdk-for-net/issues/10905
-                // Assert.AreEqual(issuerPropertie.Name, returnPropertie.Name);
+                Assert.AreEqual(issuerPropertie.Name, returnPropertie.Name);
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10905
+
             }
         }
 
