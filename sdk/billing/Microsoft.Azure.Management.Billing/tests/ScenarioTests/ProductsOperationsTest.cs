@@ -105,11 +105,42 @@ namespace Billing.Tests.ScenarioTests
         [Fact]
         public void MoveProductByInvoiceSectionTest()
         {
-            // move product
-            this.MovePorductTest(DestinationInvoiceSectionId);
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            // restore
-            this.MovePorductTest(SourceInvoiceSectionId);
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the products
+                var validateProductTransferEligibilityResult = billingMgmtClient.Products.ValidateMove(
+                    BillingAccountName,
+                    ProductName,
+                    new TransferProductRequestProperties
+                    {
+                        DestinationInvoiceSectionId = DestinationInvoiceSectionId
+                    });
+
+                // Verify the response and make sure we can move product to destination InvoiceSection
+                Assert.NotNull(validateProductTransferEligibilityResult);
+                Assert.NotNull(validateProductTransferEligibilityResult.IsMoveEligible);
+                if (validateProductTransferEligibilityResult.IsMoveEligible.Value)
+                {
+                    var movedProduct = billingMgmtClient.Products.Move(
+                        BillingAccountName,
+                        ProductName,
+                        new TransferProductRequestProperties
+                        {
+                            DestinationInvoiceSectionId = DestinationInvoiceSectionId
+                        });
+
+                    // verify response
+                    Assert.NotNull(movedProduct);
+                    Assert.Equal(DestinationInvoiceSectionId, movedProduct.InvoiceSectionId);
+                }
+            }
         }
 
         [Fact]
@@ -181,46 +212,6 @@ namespace Billing.Tests.ScenarioTests
                 Assert.NotNull(productUpdateResult);
                 Assert.NotNull(productUpdateResult.AutoRenew);
                 Assert.Equal(autoRenew, productUpdateResult.AutoRenew);
-            }
-        }
-
-        private void MovePorductTest(string destinationInvoiceSectionId)
-        {
-            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                // Get the products
-                var validateProductTransferEligibilityResult = billingMgmtClient.Products.ValidateMove(
-                    BillingAccountName,
-                    ProductName,
-                    new TransferProductRequestProperties
-                    {
-                        DestinationInvoiceSectionId = destinationInvoiceSectionId
-                    });
-
-                // Verify the response and make sure we can move product to destination InvoiceSection
-                Assert.NotNull(validateProductTransferEligibilityResult);
-                Assert.NotNull(validateProductTransferEligibilityResult.IsMoveEligible);
-                if (validateProductTransferEligibilityResult.IsMoveEligible.Value)
-                {
-                    var movedProduct = billingMgmtClient.Products.Move(
-                         BillingAccountName,
-                         ProductName,
-                         new TransferProductRequestProperties
-                         {
-                             DestinationInvoiceSectionId = destinationInvoiceSectionId
-                         });
-
-                    // verify response
-                    Assert.NotNull(movedProduct);
-                    Assert.Equal(destinationInvoiceSectionId, movedProduct.InvoiceSectionId);
-                }
             }
         }
     }
