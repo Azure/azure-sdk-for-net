@@ -1001,7 +1001,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Service returning 'Unsupported media type' error.")]
+        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -1080,8 +1080,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
-        [Ignore("Service bug: information about the blank page is not being returned.")]
+        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
