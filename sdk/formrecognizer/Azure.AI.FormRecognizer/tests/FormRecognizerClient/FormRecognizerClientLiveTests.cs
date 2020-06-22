@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
+        public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeContentOperation operation;
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
@@ -167,6 +167,96 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
                 Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
 
+                Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeContentAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                operation = await client.StartRecognizeContentFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            var formPage = operation.Value.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(LengthUnit.Pixel, formPage.Unit);
+            Assert.AreEqual(1700, formPage.Width);
+            Assert.AreEqual(2200, formPage.Height);
+            Assert.AreEqual(0, formPage.TextAngle);
+            Assert.AreEqual(54, formPage.Lines.Count);
+
+            var lines = formPage.Lines.ToList();
+
+            for (var lineIndex = 0; lineIndex < lines.Count; lineIndex++)
+            {
+                var line = lines[lineIndex];
+
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                foreach (var item in line.Words)
+                {
+                    Assert.GreaterOrEqual(item.Confidence, 0);
+                }
+            }
+
+            Assert.AreEqual(2, formPage.Tables.Count);
+
+            var sampleTable = formPage.Tables.First();
+
+            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.ColumnCount);
+
+            var cells = sampleTable.Cells.ToList();
+
+            Assert.AreEqual(7, cells.Count);
+
+            var expectedText = new string[4, 3]
+            {
+                { "", "", "" },
+                { "", "SUBTOTAL", "$140.00" },
+                { "", "TAX", "$4.00" },
+                { "Bernie Sanders", "TOTAL", "$144.00" }
+            };
+
+            foreach (var cell in cells)
+            {
+                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
+                Assert.Less(cell.RowIndex, sampleTable.RowCount, $"Cell with text {cell.Text} should have row index less than {sampleTable.RowCount}.");
+                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
+                Assert.Less(cell.ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cell.Text} should have column index less than {sampleTable.ColumnCount}.");
+
+                Assert.AreEqual(1, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of 1.");
+                Assert.AreEqual(1, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of 1.");
+
+                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+
+                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
+                Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
+
+                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
                 Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
             }
         }
