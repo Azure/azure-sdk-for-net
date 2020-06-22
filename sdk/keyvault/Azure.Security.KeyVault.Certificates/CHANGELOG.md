@@ -5,6 +5,8 @@
 ### Fixed
 
 - Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+- Fixed an issue where the issuer name was always null ([#10908](https://github.com/Azure/azure-sdk-for-net/issues/10908))
+- Fixed an issue where GetIssuerAsync would throw for issuers with contact information populated ([#10905](https://github.com/Azure/azure-sdk-for-net/issues/10905))
 
 ## 4.0.1 (2020-03-03)
 
