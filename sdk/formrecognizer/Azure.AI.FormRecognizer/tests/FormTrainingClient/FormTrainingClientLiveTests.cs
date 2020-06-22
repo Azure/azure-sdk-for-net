@@ -102,6 +102,24 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartTrainingFailsWithInvalidPrefix()
+        {
+            var client = CreateInstrumentedFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            TrainingOperation operation;
+
+            var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "invalidPrefix" };
+
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            }
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+        }
+
+        [Test]
         public async Task StartTrainingError()
         {
             var client = CreateInstrumentedFormTrainingClient();
