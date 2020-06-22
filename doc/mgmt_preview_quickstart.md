@@ -91,7 +91,7 @@ following:
     ...
     var subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
     var resourceClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
-    var resourceGroupsClient = resourceClient.GetResourceGroupsClient();
+    var resourceGroupsClient = resourceClient.ResourceGroups;
 ```
 From this code snippet, we showed that in order to interact with Resources, we need to create a top-level client first (**ResourcesManagementClient**), then get the corresponding sub-resource client we are interested in, in this case we called **.ResourceGroups** to get a ResourceGroupsOperations
 
