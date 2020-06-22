@@ -383,7 +383,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
+        public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeReceiptsOperation operation;
