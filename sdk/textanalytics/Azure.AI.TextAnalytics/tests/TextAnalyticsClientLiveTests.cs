@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string document = "Este documento está en español";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(document, "COLOMBIA"));
-            Assert.AreEqual("InvalidCountryHint", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
         }
 
         [Test]
@@ -224,20 +224,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
 
+            CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
-            Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
-            Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
-            Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
-
-            foreach (var sentence in docSentiment.Sentences)
-            {
-                Assert.AreEqual("Positive", sentence.Sentiment.ToString());
-                Assert.IsNotNull(sentence.Text);
-                Assert.AreEqual(document, sentence.Text);
-                Assert.IsNotNull(sentence.ConfidenceScores.Positive);
-                Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
-                Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-            }
+            Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
         }
 
         [Test]
@@ -248,6 +237,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es");
 
+            CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
@@ -263,24 +253,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
-
             foreach (AnalyzeSentimentResult docs in results)
             {
-                DocumentSentiment docSentiment = docs.DocumentSentiment;
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
-
-                foreach (var sentence in docSentiment.Sentences)
-                {
-                    Assert.IsNotNull(sentence.Text);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Positive);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                }
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
         [Test]
@@ -294,6 +273,11 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
 
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
@@ -322,24 +306,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
-
             foreach (AnalyzeSentimentResult docs in results)
             {
-                DocumentSentiment docSentiment = docs.DocumentSentiment;
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
-                Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
-
-                foreach (var sentence in docSentiment.Sentences)
-                {
-                    Assert.IsNotNull(sentence.Text);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Positive);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
-                    Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                }
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
         [Test]
@@ -359,6 +332,11 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
 
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
@@ -650,7 +628,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeEntitiesBatchAsync(documents));
             Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
         [Test]
@@ -803,7 +781,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
             Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
         [Test]
@@ -977,6 +955,28 @@ namespace Azure.AI.TextAnalytics.Tests
             // Re-rotate the API key and make sure it succeeds again
             credential.Update(apiKey);
             await client.DetectLanguageAsync(document);
+        }
+
+        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc)
+        {
+            Assert.IsNotNull(doc.ConfidenceScores.Positive);
+            Assert.IsNotNull(doc.ConfidenceScores.Neutral);
+            Assert.IsNotNull(doc.ConfidenceScores.Negative);
+            Assert.IsTrue(CheckTotalConfidenceScoreValue(doc.ConfidenceScores));
+
+            foreach (var sentence in doc.Sentences)
+            {
+                Assert.IsNotNull(sentence.Text);
+                Assert.IsNotNull(sentence.ConfidenceScores.Positive);
+                Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
+                Assert.IsNotNull(sentence.ConfidenceScores.Negative);
+                Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
+            }
+        }
+
+        private bool CheckTotalConfidenceScoreValue(SentimentConfidenceScores scores)
+        {
+            return scores.Positive + scores.Neutral + scores.Negative == 1d;
         }
     }
 }

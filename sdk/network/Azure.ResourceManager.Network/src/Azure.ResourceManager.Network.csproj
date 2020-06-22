@@ -2,7 +2,10 @@
   <PropertyGroup>
     <Version>1.0.0-preview.1</Version>
     <PackageId>Azure.ResourceManager.Network</PackageId>
-    <Description>Azure management client SDK for Azure resource provider Microsoft.Network</Description>
+    <Description>
+      Azure management client SDK for Azure resource provider Microsoft.Network.
+      This is a beta preview vesion.  This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
+    </Description>
     <PackageTags>azure;management;network</PackageTags>
   </PropertyGroup>
 

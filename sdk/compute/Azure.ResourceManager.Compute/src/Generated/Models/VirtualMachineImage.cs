@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="plan"> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </param>
         /// <param name="osDiskImage"> Contains the os disk image information. </param>
-        /// <param name="dataDiskImages"> . </param>
+        /// <param name="dataDiskImages"> The list of data disk images information. </param>
         /// <param name="automaticOSUpgradeProperties"> Describes automatic OS upgrade properties on the image. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration) : base(id, name, location, tags)
@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         public PurchasePlan Plan { get; set; }
         /// <summary> Contains the os disk image information. </summary>
         public OSDiskImage OsDiskImage { get; set; }
+        /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; set; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
         public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }

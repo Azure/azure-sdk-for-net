@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-preview.4 (2020-06)
+- This preview contains bug fixes to improve quality.
+
 ## 12.5.0-preview.1 (2020-06)
 - This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
 

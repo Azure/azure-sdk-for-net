@@ -1,10 +1,3 @@
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: azure/azure-sdk-tools
-      endpoint: azure
-
 jobs:
   - job: GenerateDocIndex
     variables:
@@ -16,7 +9,7 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
         parameters:
           TargetFolder: '.'
           RootFolder: '.'
@@ -34,7 +27,7 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: eng/pipelines/templates/scripts/mashup-doc-index.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: CopyFiles@2

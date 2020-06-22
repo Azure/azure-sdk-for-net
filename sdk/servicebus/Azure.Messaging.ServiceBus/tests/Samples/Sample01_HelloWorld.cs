@@ -33,13 +33,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 // send the message
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
 
                 // create a receiver that we can use to receive the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 // get the message body as a string
                 string body = receivedMessage.Body.ToString();
@@ -65,13 +65,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 // send the message
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
 
                 // create a receiver that we can use to receive the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 #region Snippet:ServiceBusPeek
-                ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
+                ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
                 #endregion
 
                 // get the message body as a string
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
                 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
                 // send the messages
-                await sender.SendAsync(messages);
+                await sender.SendMessagesAsync(messages);
                 #endregion
                 #endregion
                 #region Snippet:ServiceBusReceiveBatch
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
@@ -146,19 +146,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a message batch that we can send
                 #region Snippet:ServiceBusSendAndReceiveSafeBatch
-                ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
                 // send the message batch
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
                 #endregion
 
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
-                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+                IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
@@ -198,13 +198,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a receiver that we can use to peek the message
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-                Assert.IsNotNull(await receiver.PeekAsync());
+                Assert.IsNotNull(await receiver.PeekMessageAsync());
 
                 // cancel the scheduled messaged, thereby deleting from the service
                 #region Snippet:ServiceBusCancelScheduled
                 await sender.CancelScheduledMessageAsync(seq);
                 #endregion
-                Assert.IsNull(await receiver.PeekAsync());
+                Assert.IsNull(await receiver.PeekMessageAsync());
             }
         }
 

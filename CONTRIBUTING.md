@@ -164,13 +164,13 @@ The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced i
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## Dev Feed
-We publish nightly built packages to a dev feed which can be consumed by adding the dev feed blob storage as a package source in Visual Studio. 
+We publish nightly built packages to a dev feed which can be consumed by adding the dev feed as a package source in Visual Studio. 
 
-Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json` as the source.
+Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
 
 You can also achieve this from the command line.
 
-```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json"```
+```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"```
 
 You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
 

@@ -31,12 +31,12 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Replace(SamplesConstants.RelationshipName, "contains")
                 .Replace(SamplesConstants.RelationshipTargetModelId, "dtmi:samples:SampleFloor;1");
 
-            Response<IReadOnlyList<Models.ModelData>> createBuildingModelResponse = await client.CreateModelsAsync(
+            await client.CreateModelsAsync(
                 new[]
                 {
                     buildingModelPayload
                 });
-            Console.WriteLine($"Created model with Id dtmi:samples:SampleBuilding;1. Response status: {createBuildingModelResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created model 'dtmi:samples:SampleBuilding;1'.");
 
             // Create a floor digital twin model.
             string floorModelPayload = SamplesConstants.TemporaryModelWithRelationshipPayload
@@ -45,12 +45,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Replace(SamplesConstants.RelationshipName, "containedIn")
                 .Replace(SamplesConstants.RelationshipTargetModelId, "dtmi:samples:SampleBuilding;1");
 
-            Response<IReadOnlyList<Models.ModelData>> createFloorModelResponse = await client.CreateModelsAsync(
-                new[]
-                {
-                    floorModelPayload
-                });
-            Console.WriteLine($"Created model with Id dtmi:samples:SampleFloor;1. Response status: {createFloorModelResponse.GetRawResponse().Status}.");
+            await client.CreateModelsAsync(new[] { floorModelPayload });
+            Console.WriteLine($"Created model 'dtmi:samples:SampleFloor;1.'");
 
             // Create a building digital twin.
             var buildingDigitalTwin = new BasicDigitalTwin
@@ -60,8 +56,8 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             string buildingDigitalTwinPayload = JsonSerializer.Serialize(buildingDigitalTwin);
-            Response<string> createBuildingDigitalTwinResponse = await client.CreateDigitalTwinAsync("buildingTwinId", buildingDigitalTwinPayload);
-            Console.WriteLine($"Created a digital twin with Id buildingTwinId. Response status: {createBuildingDigitalTwinResponse.GetRawResponse().Status}.");
+            await client.CreateDigitalTwinAsync("buildingTwinId", buildingDigitalTwinPayload);
+            Console.WriteLine($"Created twin 'buildingTwinId'.");
 
             // Create a floor digital.
             var floorDigitalTwin = new BasicDigitalTwin
@@ -71,10 +67,11 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             string floorDigitalTwinPayload = JsonSerializer.Serialize(floorDigitalTwin);
-            Response<string> createFloorDigitalTwinResponse = await client.CreateDigitalTwinAsync("floorTwinId", floorDigitalTwinPayload);
-            Console.WriteLine($"Created a digital twin with Id floorTwinId. Response status: {createFloorDigitalTwinResponse.GetRawResponse().Status}.");
+            await client.CreateDigitalTwinAsync("floorTwinId", floorDigitalTwinPayload);
+            Console.WriteLine($"Created twin 'floorTwinId'.");
 
             // Create a relationship between building and floor using the BasicRelationship serialization helper.
+
             #region Snippet:DigitalTwinsSampleCreateBasicRelationship
 
             var buildingFloorRelationshipPayload = new BasicRelationship
@@ -91,21 +88,20 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-            Response<string> createRelationshipResponse = await client.CreateRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
-            Console.WriteLine($"Created a digital twin relationship with Id buildingFloorRelationshipId from digital twin with Id buildingTwinId to digital twin with Id floorTwinId. " +
-                $"Response status: {createRelationshipResponse.GetRawResponse().Status}.");
+            await client.CreateRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
+            Console.WriteLine($"Created a digital twin relationship 'buildingFloorRelationshipId' from twin 'buildingTwinId' to twin 'floorTwinId'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicRelationship
 
             // You can get a relationship and deserialize it into a BasicRelationship.
+
             #region Snippet:DigitalTwinsSampleGetBasicRelationship
 
             Response<string> getBasicRelationshipResponse = await client.GetRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
             if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
             {
                 BasicRelationship basicRelationship = JsonSerializer.Deserialize<BasicRelationship>(getBasicRelationshipResponse.Value);
-                Console.WriteLine($"Retrieved relationship with Id {basicRelationship.Id} from digital twin with Id {basicRelationship.SourceId}. " +
-                    $"Response status: {getBasicRelationshipResponse.GetRawResponse().Status}.\n\t" +
+                Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
                     $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
                     $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
             }
@@ -116,6 +112,7 @@ namespace Azure.DigitalTwins.Core.Samples
             // This requires less code or knowledge of the type for interaction.
 
             // Create a relationship between floorTwinId and buildingTwinId using a custom data type.
+
             #region Snippet:DigitalTwinsSampleCreateCustomRelationship
 
             var floorBuildingRelationshipPayload = new CustomRelationship
@@ -130,36 +127,32 @@ namespace Azure.DigitalTwins.Core.Samples
             string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
 
             Response<string> createCustomRelationshipResponse = await client.CreateRelationshipAsync("floorTwinId", "floorBuildingRelationshipId", serializedCustomRelationship);
-            Console.WriteLine($"Created a digital twin relationship with Id floorBuildingRelationshipId from digital twin with Id floorTwinId to digital twin with Id buildingTwinId. " +
-                $"Response status: {createCustomRelationshipResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created a digital twin relationship 'floorBuildingRelationshipId' from twin 'floorTwinId' to twin 'buildingTwinId'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomRelationship
 
             // Getting and deserializing a relationship into a custom data type is extremely easy.
+
             #region Snippet:DigitalTwinsSampleGetCustomRelationship
 
             Response<string> getCustomRelationshipResponse = await client.GetRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
-            if (getCustomRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-            {
-                CustomRelationship getCustomRelationship = JsonSerializer.Deserialize<CustomRelationship>(getCustomRelationshipResponse.Value);
-                Console.WriteLine($"Retrieved and deserialized relationship with Id {getCustomRelationship.Id} from digital twin with Id {getCustomRelationship.SourceId}. " +
-                    $"Response status: {getCustomRelationshipResponse.GetRawResponse().Status}.\n\t" +
-                    $"Prop1: {getCustomRelationship.Prop1}\n\t" +
-                    $"Prop2: {getCustomRelationship.Prop2}");
-            }
+            CustomRelationship getCustomRelationship = JsonSerializer.Deserialize<CustomRelationship>(getCustomRelationshipResponse.Value);
+            Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelationship.Id}' from twin '{getCustomRelationship.SourceId}'.\n\t" +
+                $"Prop1: {getCustomRelationship.Prop1}\n\t" +
+                $"Prop2: {getCustomRelationship.Prop2}");
 
             #endregion Snippet:DigitalTwinsSampleGetCustomRelationship
 
             // Get all relationships in the graph where buildingTwinId is the source of the relationship.
+
             #region Snippet:DigitalTwinsSampleGetAllRelationships
 
             AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
-
             await foreach (var relationshipJson in relationships)
             {
                 BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
-                Console.WriteLine($"Found relationship with Id {relationship.Id} with a digital twin source Id {relationship.SourceId} and " +
-                    $"a digital twin target Id {relationship.TargetId}. \n\t " +
+                Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
+                    $"target {relationship.TargetId}.\n\t" +
                     $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
                     $"Prop2: {relationship.CustomProperties["Prop2"]}");
             }
@@ -167,29 +160,30 @@ namespace Azure.DigitalTwins.Core.Samples
             #endregion Snippet:DigitalTwinsSampleGetAllRelationships
 
             // Get all incoming relationships in the graph where buildingTwinId is the target of the relationship.
+
             #region Snippet:DigitalTwinsSampleGetIncomingRelationships
 
             AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync("buildingTwinId");
 
             await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
             {
-                Console.WriteLine($"Found an incoming relationship with Id {incomingRelationship.RelationshipId} coming from a digital twin with Id {incomingRelationship.SourceId}.");
+                Console.WriteLine($"Found an incoming relationship '{incomingRelationship.RelationshipId}' from '{incomingRelationship.SourceId}'.");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
 
             // Delete the contains relationship, created earlier in the sample code, from building to floor.
-            
+
             #region Snippet:DigitalTwinsSampleDeleteRelationship
 
-            Response deleteBuildingRelationshipResponse = await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
-            Console.WriteLine($"Deleted relationship with Id buildingFloorRelationshipId. Status response: {deleteBuildingRelationshipResponse.Status}.");
+            await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
+            Console.WriteLine($"Deleted relationship 'buildingFloorRelationshipId'.");
 
             #endregion Snippet:DigitalTwinsSampleDeleteRelationship
 
             // Delete the containedIn relationship, created earlier in the sample code, from floor to building.
-            Response deleteFloorRelationshipResponse = await client.DeleteRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
-            Console.WriteLine($"Deleted relationship with Id floorBuildingRelationshipId. Status response: {deleteFloorRelationshipResponse.Status}.");
+            await client.DeleteRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
+            Console.WriteLine($"Deleted relationship 'floorBuildingRelationshipId'.");
 
             // Clean up.
             try
@@ -200,7 +194,7 @@ namespace Azure.DigitalTwins.Core.Samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine($"Failed to delete digital twin due to {ex}.");
+                Console.WriteLine($"Failed to delete twin due to {ex}.");
             }
 
             try
