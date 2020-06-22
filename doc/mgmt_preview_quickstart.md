@@ -180,12 +180,12 @@ namespace AzureCreateVMSample
             var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
             var resourcesClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
  
-            var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
-            var networkInterfaceClient = networkClient.GetNetworkInterfacesClient();
-            var publicIpAddressClient = networkClient.GetPublicIPAddresssesClient();
-            var availabilitySetsClient = computeClient.GetAvailabilitySetsClient();
-            var virtualMachinesClient = computeClient.GetVirtualMachinesClient();
-            var resourceGroupClient = resourcesClient..GetResourceGroupsClient();
+            var virtualNetworksClient = networkClient.VirtualNetworks;
+            var networkInterfaceClient = networkClient.NetworkInterfaces;
+            var publicIpAddressClient = networkClient.PublicIPAddressses;
+            var availabilitySetsClient = computeClient.AvailabilitySets;
+            var virtualMachinesClient = computeClient.VirtualMachines;
+            var resourceGroupClient = resourcesClient.ResourceGroups;
 
             // Create Resource Group
             var resourceGroup = new ResourceGroup(location);
