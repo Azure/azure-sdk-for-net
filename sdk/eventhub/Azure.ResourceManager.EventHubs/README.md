@@ -16,7 +16,7 @@ Install-Package Azure.ResourceManager.EventHubs -Version 1.0.0-preview.1
 
 ## Documentation
 
-Various forms of documentation is available to help you learn how to use this package
+Documentation is available to help you learn how to use this package
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
 - [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
