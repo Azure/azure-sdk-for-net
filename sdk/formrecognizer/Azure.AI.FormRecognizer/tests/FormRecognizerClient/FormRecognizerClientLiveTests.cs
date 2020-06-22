@@ -737,11 +737,14 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeCustomFormsWithLabels(bool useStream)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions { IncludeTextContent = includeTextContent };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -751,13 +754,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
                 }
             }
             else
             {
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
             await operation.WaitForCompletionAsync(PollingInterval);
@@ -765,13 +768,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
 
-            RecognizedForm form = operation.Value.FirstOrDefault();
+            RecognizedForm form = operation.Value.Single();
+
+            ValidateRecognizedForm(form, includeTextContent: includeTextContent,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
             Assert.AreEqual("custom:form", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
