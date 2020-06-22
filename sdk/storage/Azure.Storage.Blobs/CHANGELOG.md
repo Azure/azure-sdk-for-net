@@ -12,6 +12,7 @@
 - Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
 - Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
 - Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
 
 ## 12.5.0-preview.1 (2020-06)
 - This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
