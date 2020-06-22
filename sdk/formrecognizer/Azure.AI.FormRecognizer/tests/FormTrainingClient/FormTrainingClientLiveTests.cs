@@ -207,6 +207,15 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void DeleteModelFailsWhenModelDoesNotExist()
+        {
+            var client = CreateInstrumentedFormTrainingClient();
+            var fakeModelId = "00000000-0000-0000-0000-000000000000";
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
+        }
+
+        [Test]
         public async Task CopyModel()
         {
             var sourceClient = CreateInstrumentedFormTrainingClient();
