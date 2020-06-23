@@ -15,7 +15,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of NatRuleCondition. </summary>
         public NatRuleCondition()
         {
-            RuleConditionType = "NatRuleCondition";
+            RuleConditionType = FirewallPolicyRuleConditionType.NatRuleCondition;
         }
 
         /// <summary> Initializes a new instance of NatRuleCondition. </summary>
