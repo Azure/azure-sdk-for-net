@@ -15,14 +15,4 @@ jobs:
   - ${{ each job in parameters.jobs }}:
     - template: /eng/pipelines/templates/jobs/live-test-job.yml
       parameters:
-        PreSteps: ${{ job.PreSteps }}
-        PostSteps: ${{ job.PostSteps }}
-        EnvVars: ${{ job.EnvVars }}
-        MaxParallel: ${{ job.MaxParallel }}
-        BuildInParallel: ${{ job.BuildInParallel }}
-        TimeoutInMinutes: ${{ job.TimeoutInMinutes }}
-        ArmTemplateParameters: ${{ job.ArmTemplateParameters }}
-        Location: ${{ job.Location }}
-        SubscriptionConfiguration: ${{ job.SubscriptionConfiguration }}
-        ServiceDirectory: ${{ job.ServiceDirectory }}
-        ScenarioName: ${{ job.ScenarioName }}
+        ${{ insert }}: ${{ job }}
