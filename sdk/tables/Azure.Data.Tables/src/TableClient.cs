@@ -234,7 +234,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InsertOrReplaceAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -249,7 +249,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -273,7 +273,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response InsertOrReplace(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -288,7 +288,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -312,11 +312,11 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response> InsertOrReplaceAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -340,11 +340,11 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Upsert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response InsertOrReplace<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -452,7 +452,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to merge.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertMergeAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InsertOrMergeAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -467,7 +467,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
             scope.Start();
             try
             {
@@ -491,7 +491,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to merge.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertMerge(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response InsertOrMerge(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -506,7 +506,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
             scope.Start();
             try
             {
@@ -516,62 +516,6 @@ namespace Azure.Data.Tables
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertMergeAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
-        {
-            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
-            scope.Start();
-            try
-            {
-                return await _tableOperations.MergeEntityAsync(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertMerge<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
-        {
-            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertMerge)}");
-            scope.Start();
-            try
-            {
-                return _tableOperations.MergeEntity(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
