@@ -19400,6 +19400,11 @@ namespace Azure.Storage.Blobs.Models
         public string ErrorDocument404Path { get; set; }
 
         /// <summary>
+        /// Absolute path of the default index page
+        /// </summary>
+        public string DefaultIndexDocumentPath { get; set; }
+
+        /// <summary>
         /// Creates a new BlobStaticWebsite instance
         /// </summary>
         public BlobStaticWebsite() { }
@@ -19432,6 +19437,12 @@ namespace Azure.Storage.Blobs.Models
                     System.Xml.Linq.XName.Get("ErrorDocument404Path", ""),
                     value.ErrorDocument404Path));
             }
+            if (value.DefaultIndexDocumentPath != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("DefaultIndexDocumentPath", ""),
+                    value.DefaultIndexDocumentPath));
+            }
             return _element;
         }
 
@@ -19459,6 +19470,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.ErrorDocument404Path = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DefaultIndexDocumentPath", ""));
+            if (_child != null)
+            {
+                _value.DefaultIndexDocumentPath = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;

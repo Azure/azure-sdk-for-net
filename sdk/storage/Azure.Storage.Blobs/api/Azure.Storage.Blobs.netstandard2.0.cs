@@ -865,6 +865,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobStaticWebsite
     {
         public BlobStaticWebsite() { }
+        public string DefaultIndexDocumentPath { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
         public string ErrorDocument404Path { get { throw null; } set { } }
         public string IndexDocument { get { throw null; } set { } }
