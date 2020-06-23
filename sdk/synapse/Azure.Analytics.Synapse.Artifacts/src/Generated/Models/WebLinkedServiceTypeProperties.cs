@@ -22,7 +22,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Url = url;
-            AuthenticationType = null;
         }
 
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>

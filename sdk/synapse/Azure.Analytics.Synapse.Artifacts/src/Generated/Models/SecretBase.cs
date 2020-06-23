@@ -13,7 +13,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SecretBase. </summary>
         public SecretBase()
         {
-            Type = null;
         }
 
         /// <summary> Initializes a new instance of SecretBase. </summary>
