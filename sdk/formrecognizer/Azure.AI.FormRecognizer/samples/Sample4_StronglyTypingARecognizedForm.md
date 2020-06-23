@@ -1,6 +1,6 @@
 # Strongly-typing a recognized form
 
-This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The pre-trained receipt model will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields' names and types.
+This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The output from the `StartRecognizeReceipts` method will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields' names and types.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,11 +17,25 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
-## Strongly-typing a receipt
+## Creating a wrapper class
 
-`FormField<T>` is a helper class used in this sample as a strongly-typed version of `FormField`. They have the same properties, except for `Value`, which returns a `T` instead of a `FieldValue`.
+Recognized receipts and custom forms are returned as `RecognizedForm` objects from the Form Recognizer client. Even though all recognized information can be obtained from them, sometimes they can be inconvenient to handle and, for this reason, we'll illustrate how to create a wrapper class to make the relevant fields easily accessible.
 
-The known receipt fields returned by the service, such as `MerchantName` and `TransactionDate`, will be strongly-typed and put together into a custom wrapper class called `Receipt`.
+We'll be using a recognized receipt as a sample, so we'll call our wrapper class `Receipt`. To store items listed in the receipt, we'll use a similar wrapper called `ReceiptItem`. To see the full source files, see:
+
+* [Receipt class](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Receipt.cs)
+* [ReceiptItem class](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/ReceiptItem.cs)
+
+The `Receipt` class is composed of multiple `FormField<T>` properties. `FormField<T>` is a class defined in the main Form Recognizer library and used as a strongly-typed version of `FormField`, and it's more convenient to handle since there's no need to perform type checking.
+
+`Receipt` has methods for converting a `FormField` into a strongly-typed `FormField<T>`. These methods are used in the constructor to convert fields we expect the service to return for a receipt, such as `MerchantName` or `TransactionDate`. You can use the same methods when writing a wrapper class for your custom forms, but you need to update the fields' names and types accordingly.
+
+```C# Snippet:FormRecognizerSampleReceiptWrapper
+```
+
+## Accessing fields in the strongly-typed receipt
+
+Here we illustrate how to use the `Receipt` wrapper class described above.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
 RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
@@ -72,8 +86,5 @@ Using `FormField<T>` to make your fields strongly-typed, and populating a custom
 To see the full example source files, see:
 
 * [Strongly typing a recognized form](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_StronglyTypingARecognizedForm.cs)
-* [Receipt class](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Receipt.cs)
-* [ReceiptItem class](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/ReceiptItem.cs)
-* [FormField<T> class](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src/FormField{T}.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

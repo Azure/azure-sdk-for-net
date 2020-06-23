@@ -18,8 +18,12 @@ namespace Azure.AI.FormRecognizer.Samples
         /// Initializes a new instance of the <see cref="Receipt"/> class.
         /// </summary>
         /// <param name="recognizedForm">The form from which information will be extracted to build this receipt.</param>
+        #region Snippet:FormRecognizerSampleReceiptWrapper
         public Receipt(RecognizedForm recognizedForm)
         {
+            // To see the list of the supported fields returned by service and its corresponding types, consult:
+            // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+
             ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
             MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
             MerchantName = ConvertStringField("MerchantName", recognizedForm.Fields);
@@ -33,6 +37,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             Items = ConvertReceiptItems(recognizedForm.Fields);
         }
+        #endregion
 
         /// <summary>
         /// The type of receipt the service identified the submitted receipt to be.
