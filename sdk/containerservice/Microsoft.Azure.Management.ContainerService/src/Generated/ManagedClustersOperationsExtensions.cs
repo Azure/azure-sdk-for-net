@@ -154,7 +154,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,6 +173,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='roleName'>
             /// The name of the role for managed cluster accessProfile resource.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static ManagedClusterAccessProfile GetAccessProfile(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName)
             {
                 return operations.GetAccessProfileAsync(resourceGroupName, resourceName, roleName).GetAwaiter().GetResult();
@@ -178,7 +184,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -195,6 +206,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<ManagedClusterAccessProfile> GetAccessProfileAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAccessProfileWithHttpMessagesAsync(resourceGroupName, resourceName, roleName, null, cancellationToken).ConfigureAwait(false))

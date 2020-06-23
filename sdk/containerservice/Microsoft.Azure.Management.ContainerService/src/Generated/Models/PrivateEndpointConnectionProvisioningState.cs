@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for PrivateEndpointConnectionProvisioningState.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class PrivateEndpointConnectionProvisioningState
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string Succeeded = "Succeeded";
+        public const string Creating = "Creating";
+        public const string Deleting = "Deleting";
+        public const string Failed = "Failed";
     }
 }

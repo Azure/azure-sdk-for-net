@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -496,7 +496,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -651,7 +651,12 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         /// <remarks>
         /// Gets the accessProfile for the specified role name of the managed cluster
-        /// with a specified resource group and name.
+        /// with a specified resource group and name. **WARNING**: This API will be
+        /// deprecated. Instead use
+        /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+        /// or
+        /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+        /// .
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -683,6 +688,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<ManagedClusterAccessProfile>> GetAccessProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, string roleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
@@ -723,7 +729,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleName");
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -945,7 +951,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1165,7 +1171,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1385,7 +1391,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1605,7 +1611,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2001,7 +2007,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 parameters.Validate();
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2248,7 +2254,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             TagsObject parameters = new TagsObject();
             if (tags != null)
             {
@@ -2476,7 +2482,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2686,7 +2692,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 parameters.Validate();
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2899,11 +2905,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3108,7 +3110,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
-            string apiVersion = "2019-10-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

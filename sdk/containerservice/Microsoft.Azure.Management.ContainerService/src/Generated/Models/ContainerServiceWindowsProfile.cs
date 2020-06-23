@@ -76,6 +76,20 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AdminPassword");
             }
+            if (AdminUsername != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(AdminUsername, "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "AdminUsername", "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+                }
+            }
+            if (AdminPassword != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(AdminPassword, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "AdminPassword", "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$");
+                }
+            }
         }
     }
 }
