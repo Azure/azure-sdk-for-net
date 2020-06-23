@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Pfx = pfx;
             Password = password;
-            AuthenticationType = "ClientCertificate";
+            AuthenticationType = WebAuthenticationType.ClientCertificate;
         }
 
         /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>

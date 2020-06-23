@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+
+
 ## 1.0.0-preview.1
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.

@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <PackageId>Azure.ResourceManager.AppConfiguration</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.AppConfiguration.

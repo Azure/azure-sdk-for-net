@@ -3,7 +3,7 @@
   <PropertyGroup>
     <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6223/autorest-3.0.6223.tgz</_AutoRestVersion>
     <_AutoRestCoreVersion>3.0.6283</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200615.2/autorest-csharp-v3-3.0.0-dev.20200615.2.tgz</_AutoRestCSharpVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
@@ -41,6 +41,7 @@
   </ItemGroup>
 
 </Project>
+
 
 
 
