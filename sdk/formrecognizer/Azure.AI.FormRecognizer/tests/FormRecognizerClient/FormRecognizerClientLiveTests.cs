@@ -525,7 +525,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            var form = operation.Value.Single().RecognizedForm;
+            var form = operation.Value.Single();
 
             Assert.NotNull(form);
 
@@ -667,10 +667,9 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
 
-            var blankReceipt = recognizedReceipts.Single();
-            var blankForm = blankReceipt.RecognizedForm;
+            var blankForm = recognizedForms.Single();
 
             ValidateRecognizedForm(blankForm, includeTextContent: true,
                 expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
