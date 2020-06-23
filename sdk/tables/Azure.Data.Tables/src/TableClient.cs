@@ -241,12 +241,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
@@ -280,12 +280,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
@@ -377,12 +377,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
@@ -419,12 +419,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
@@ -459,12 +459,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
@@ -498,12 +498,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
@@ -539,12 +539,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
@@ -581,12 +581,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
