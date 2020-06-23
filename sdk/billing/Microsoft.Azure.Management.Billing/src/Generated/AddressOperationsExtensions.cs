@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class AddressOperationsExtensions
     {
             /// <summary>
-            /// Validates the address.
+            /// Validates an address. Use the operation to validate an address before using
+            /// it as soldTo or a billTo address.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,7 +37,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Validates the address.
+            /// Validates an address. Use the operation to validate an address before using
+            /// it as soldTo or a billTo address.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
