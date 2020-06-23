@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerOperations operations.
+    /// ContainersOperations operations.
     /// </summary>
-    public partial interface IContainerOperations
+    public partial interface IContainersOperations
     {
         /// <summary>
         /// Get the logs for a specified container instance.

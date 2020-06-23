@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerOperations operations.
+    /// ContainersOperations operations.
     /// </summary>
-    internal partial class ContainerOperations : IServiceOperations<ContainerInstanceManagementClient>, IContainerOperations
+    internal partial class ContainersOperations : IServiceOperations<ContainerInstanceManagementClient>, IContainersOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerOperations class.
+        /// Initializes a new instance of the ContainersOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ContainerOperations(ContainerInstanceManagementClient client)
+        internal ContainersOperations(ContainerInstanceManagementClient client)
         {
             if (client == null)
             {
