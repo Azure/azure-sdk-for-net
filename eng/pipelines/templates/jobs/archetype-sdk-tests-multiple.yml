@@ -6,6 +6,9 @@ resources:
       endpoint: azure
       ref: refs/tags/azure-sdk-tools_20200618.1
 
+parameters:
+  jobs: []
+
 jobs:
   - ${{ each job in parameters.jobs }}:
     - template: /eng/pipelines/templates/jobs/live-test-job.yml
