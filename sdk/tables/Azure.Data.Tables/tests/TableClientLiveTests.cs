@@ -298,8 +298,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(originalEntity.TryGetValue(mergepropertyName, out var _), Is.False);
             Assert.That(originalEntity[propertyName], Is.EqualTo(originalValue));
 
-            // Do not provide an ETag to update unconditionally.
-
             await client.InsertOrMergeAsync(partialEntity).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
