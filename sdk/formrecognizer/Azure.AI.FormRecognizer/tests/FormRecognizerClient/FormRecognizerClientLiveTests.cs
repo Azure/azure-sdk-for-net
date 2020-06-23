@@ -34,8 +34,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
+        /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedFormRecognizerClient(bool useTokenCredential = false)
+        private FormRecognizerClient CreateInstrumentedFormRecognizerClient(bool useTokenCredential = false, string apiKey = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
@@ -47,11 +48,23 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
                 client = new FormRecognizerClient(endpoint, credential, options);
             }
 
             return InstrumentClient(client);
+        }
+
+        [Test]
+        public void FormRecognizerClientCannotAuthenticateWithFakeApiKey()
+        {
+            var client = CreateInstrumentedFormRecognizerClient(apiKey: "fakeKey");
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
+            }
         }
 
         [Test]
@@ -82,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
+        public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeContentOperation operation;
@@ -121,7 +134,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
@@ -174,6 +187,96 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeContentAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                operation = await client.StartRecognizeContentFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            var formPage = operation.Value.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(LengthUnit.Pixel, formPage.Unit);
+            Assert.AreEqual(1700, formPage.Width);
+            Assert.AreEqual(2200, formPage.Height);
+            Assert.AreEqual(0, formPage.TextAngle);
+            Assert.AreEqual(54, formPage.Lines.Count);
+
+            var lines = formPage.Lines.ToList();
+
+            for (var lineIndex = 0; lineIndex < lines.Count; lineIndex++)
+            {
+                var line = lines[lineIndex];
+
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                foreach (var item in line.Words)
+                {
+                    Assert.GreaterOrEqual(item.Confidence, 0);
+                }
+            }
+
+            Assert.AreEqual(2, formPage.Tables.Count);
+
+            var sampleTable = formPage.Tables.First();
+
+            Assert.AreEqual(4, sampleTable.RowCount);
+            Assert.AreEqual(3, sampleTable.ColumnCount);
+
+            var cells = sampleTable.Cells.ToList();
+
+            Assert.AreEqual(7, cells.Count);
+
+            var expectedText = new string[4, 3]
+            {
+                { "", "", "" },
+                { "", "SUBTOTAL", "$140.00" },
+                { "", "TAX", "$4.00" },
+                { "Bernie Sanders", "TOTAL", "$144.00" }
+            };
+
+            foreach (var cell in cells)
+            {
+                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
+                Assert.Less(cell.RowIndex, sampleTable.RowCount, $"Cell with text {cell.Text} should have row index less than {sampleTable.RowCount}.");
+                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
+                Assert.Less(cell.ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cell.Text} should have column index less than {sampleTable.ColumnCount}.");
+
+                Assert.AreEqual(1, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of 1.");
+                Assert.AreEqual(1, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of 1.");
+
+                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+
+                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
+                Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
+
+                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
+                Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -210,6 +313,28 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.AreEqual(expectedText, sampleLine.Text);
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeContentCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream, options);
+            }
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            var blankPage = formPages.Single();
+
+            ValidateFormPage(blankPage, includeTextContent: true, expectedPageNumber: 1);
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         [Test]
@@ -271,7 +396,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
+        public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeReceiptsOperation operation;
@@ -377,6 +502,114 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeReceiptsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptPng);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeReceiptsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptPng);
+                operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single().RecognizedForm;
+
+            Assert.NotNull(form);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the receipt. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:receipt", form.FormType);
+
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("ReceiptType"));
+            Assert.True(form.Fields.ContainsKey("MerchantAddress"));
+            Assert.True(form.Fields.ContainsKey("MerchantName"));
+            Assert.True(form.Fields.ContainsKey("MerchantPhoneNumber"));
+            Assert.True(form.Fields.ContainsKey("TransactionDate"));
+            Assert.True(form.Fields.ContainsKey("TransactionTime"));
+            Assert.True(form.Fields.ContainsKey("Items"));
+            Assert.True(form.Fields.ContainsKey("Subtotal"));
+            Assert.True(form.Fields.ContainsKey("Tax"));
+            Assert.True(form.Fields.ContainsKey("Tip"));
+            Assert.True(form.Fields.ContainsKey("Total"));
+
+            Assert.AreEqual("Itemized", form.Fields["ReceiptType"].Value.AsString());
+            Assert.AreEqual("Contoso Contoso", form.Fields["MerchantName"].Value.AsString());
+            Assert.AreEqual("123 Main Street Redmond, WA 98052", form.Fields["MerchantAddress"].Value.AsString());
+            Assert.AreEqual("987-654-3210", form.Fields["MerchantPhoneNumber"].ValueText.Text);
+
+            var date = form.Fields["TransactionDate"].Value.AsDate();
+            var time = form.Fields["TransactionTime"].Value.AsTime();
+
+            Assert.AreEqual(10, date.Day);
+            Assert.AreEqual(6, date.Month);
+            Assert.AreEqual(2020, date.Year);
+
+            Assert.AreEqual(13, time.Hours);
+            Assert.AreEqual(59, time.Minutes);
+            Assert.AreEqual(0, time.Seconds);
+
+            var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
+            {
+                (1, "Cappuccino", null, 2.20f),
+                (1, "BACON & EGGS", null, 9.50f)
+            };
+
+            // Include a bit of tolerance when comparing float types.
+
+            var items = form.Fields["Items"].Value.AsList();
+
+            Assert.AreEqual(expectedItems.Count, items.Count);
+
+            for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
+            {
+                var receiptItemInfo = items[itemIndex].Value.AsDictionary();
+
+                receiptItemInfo.TryGetValue("Quantity", out var quantityField);
+                receiptItemInfo.TryGetValue("Name", out var nameField);
+                receiptItemInfo.TryGetValue("Price", out var priceField);
+                receiptItemInfo.TryGetValue("TotalPrice", out var totalPriceField);
+
+                var quantity = quantityField == null ? null : (float?)quantityField.Value.AsFloat();
+                var name = nameField == null ? null : nameField.Value.AsString();
+                var price = priceField == null ? null : (float?)priceField.Value.AsFloat();
+                var totalPrice = totalPriceField == null ? null : (float?)totalPriceField.Value.AsFloat();
+
+                var expectedItem = expectedItems[itemIndex];
+
+                Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Name, name, $"Name mismatch in item with index {itemIndex}.");
+                Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
+                Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
+            }
+
+            Assert.That(form.Fields["Subtotal"].Value.AsFloat(), Is.EqualTo(11.70).Within(0.0001));
+            Assert.That(form.Fields["Tax"].Value.AsFloat(), Is.EqualTo(1.17).Within(0.0001));
+            Assert.That(form.Fields["Tip"].Value.AsFloat(), Is.EqualTo(1.63).Within(0.0001));
+            Assert.That(form.Fields["Total"].Value.AsFloat(), Is.EqualTo(14.50).Within(0.0001));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -419,6 +652,35 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsNotNull(sampleField.ValueText);
                 Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeReceiptsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, options);
+            }
+
+            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankReceipt = recognizedReceipts.Single();
+            var blankForm = blankReceipt.RecognizedForm;
+
+            ValidateRecognizedForm(blankForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         [Test]
@@ -488,11 +750,14 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeCustomFormsWithLabels(bool useStream)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions { IncludeTextContent = includeTextContent };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -502,13 +767,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
                 }
             }
             else
             {
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
             await operation.WaitForCompletionAsync(PollingInterval);
@@ -516,13 +781,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
 
-            RecognizedForm form = operation.Value.FirstOrDefault();
+            RecognizedForm form = operation.Value.Single();
+
+            ValidateRecognizedForm(form, includeTextContent: includeTextContent,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
             Assert.AreEqual("custom:form", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -612,7 +878,9 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -620,10 +888,18 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
+            if (useStream)
             {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipageBlank);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
@@ -683,11 +959,14 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions { IncludeTextContent = includeTextContent };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
@@ -697,13 +976,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
                 }
             }
             else
             {
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
             await operation.WaitForCompletionAsync(PollingInterval);
@@ -711,13 +990,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
 
-            RecognizedForm form = operation.Value.FirstOrDefault();
+            RecognizedForm form = operation.Value.Single();
+
+            ValidateRecognizedForm(form, includeTextContent: includeTextContent,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
 
             //testing that we shuffle things around correctly so checking only once per property
 
             Assert.AreEqual("form-0", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -734,7 +1014,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Service returning 'Unsupported media type' error.")]
+        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -782,8 +1062,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Service bug: information about the blank page is not being returned.")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage()
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -791,10 +1070,50 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankForm = recognizedForms.Single();
+
+            ValidateRecognizedForm(blankForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipageBlank);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
