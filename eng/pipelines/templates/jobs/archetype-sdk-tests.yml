@@ -6,7 +6,52 @@ resources:
       endpoint: azure
       ref: refs/tags/azure-sdk-tools_20200618.1
 
+parameters:
+  - name: PreSteps
+    type: object
+    default: []
+  - name: PostSteps
+    type: object
+    default: []
+  - name: EnvVars
+    type: object
+    default: {}
+  - name: MaxParallel
+    type: number
+    default: 0
+  - name: BuildInParallel
+    type: boolean
+    default: true
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+  - name: ArmTemplateParameters
+    type: string
+    default: '@{}'
+  - name: Location
+    type: string
+    default: ''
+  - name: SubscriptionConfiguration
+    type: string
+    default: $(sub-config-azure-cloud-test-resources)
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: ScenarioName
+    type: string
+    default: AzureCloud
+
 jobs:
   - template: /eng/pipelines/templates/jobs/live-test-job.yml
     parameters:
-      ${{ insert }}: ${{ parameters }}
+      PreSteps: ${{ parameters.PreSteps }}
+      PostSteps: ${{ parameters.PostSteps }}
+      EnvVars: ${{ parameters.EnvVars }}
+      MaxParallel: ${{ parameters.MaxParallel }}
+      BuildInParallel: ${{ parameters.BuildInParallel }}
+      TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+      ArmTemplateParameters: ${{ parameters.ArmTemplateParameters }}
+      Location: ${{ parameters.Location }}
+      SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      ScenarioName: ${{ parameters.ScenarioName }}
