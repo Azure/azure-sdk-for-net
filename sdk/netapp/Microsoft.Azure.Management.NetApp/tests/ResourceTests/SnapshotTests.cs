@@ -20,6 +20,7 @@ namespace NetApp.Tests.ResourceTests
         [Fact]
         public void CreateDeleteSnapshot()
         {
+            asd
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -174,7 +175,7 @@ namespace NetApp.Tests.ResourceTests
                 dict.Add("Tag1", "Value1");
 
                 // Now try and modify it
-                //SnapshotPatch object was removed and not supported 
+                //SnapshotPatch object was removed and not supported
                 var snapshotPatch = new object();
                 var exception = Record.Exception(() => netAppMgmtClient.Snapshots.Update(snapshotPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1));
                 Assert.NotNull(exception);
@@ -205,7 +206,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal(snapshot.Name, ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1 + '/' + ResourceUtils.snapshotName1);
 
                 // create the second snapshot
-                ResourceUtils.CreateSnapshot(netAppMgmtClient,volumeName:ResourceUtils.volumeName1, snapshotName: ResourceUtils.snapshotName2);
+                ResourceUtils.CreateSnapshot(netAppMgmtClient, volumeName: ResourceUtils.volumeName1, snapshotName: ResourceUtils.snapshotName2);
 
                 var snapshot2 = netAppMgmtClient.Snapshots.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName2);
                 Assert.Equal(snapshot2.Name, ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1 + '/' + ResourceUtils.snapshotName2);
@@ -215,10 +216,10 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal(2, snapshotsBefore.Count());
                 //Revert the volume
                 netAppMgmtClient.Volumes.Revert(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, new VolumeRevert(snapshot2.SnapshotId));
-                
+
                 var snapshotsAfter = netAppMgmtClient.Snapshots.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
                 Assert.Equal(ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1, volume.Name);
-                
+
                 // clean up
                 foreach (var snap in snapshotsAfter)
                 {
