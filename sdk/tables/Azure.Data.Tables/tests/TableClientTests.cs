@@ -54,7 +54,7 @@ namespace Azure.Tables.Tests
 
             Assert.That(async () => await client_Instrumented.UpdateAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
 
             Assert.That(async () => await client_Instrumented.UpdateAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
@@ -74,7 +74,7 @@ namespace Azure.Tables.Tests
 
             Assert.That(async () => await client_Instrumented.MergeAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.MergeAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.MergeAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
 
             Assert.That(async () => await client_Instrumented.MergeAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 

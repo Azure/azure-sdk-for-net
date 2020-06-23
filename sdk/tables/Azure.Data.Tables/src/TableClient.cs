@@ -584,12 +584,13 @@ namespace Azure.Data.Tables
         /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
-        /// <param name="etag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string etag, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
+            Argument.AssertNotNull(eTag, nameof(eTag));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -610,7 +611,7 @@ namespace Azure.Data.Tables
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     ifMatch: etag,
+                                                     ifMatch: eTag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
             }
@@ -625,12 +626,13 @@ namespace Azure.Data.Tables
         /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
-        /// <param name="etag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Merge(IDictionary<string, object> entity, string etag, CancellationToken cancellationToken = default)
+        public virtual Response Merge(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
+            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
@@ -651,7 +653,7 @@ namespace Azure.Data.Tables
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          ifMatch: etag,
+                                          ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken).GetRawResponse();
             }
