@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        Introduce a new api to unregiter feature.
+        Introduce a new api to unregister features.
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
