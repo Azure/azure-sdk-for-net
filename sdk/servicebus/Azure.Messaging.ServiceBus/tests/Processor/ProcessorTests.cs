@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
@@ -33,6 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
@@ -45,6 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -59,6 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -75,6 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -98,6 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 GetMockedConnection(),
                 "entityPath",
                 false,
+                new ServiceBusPlugin[] { },
                 new ServiceBusProcessorOptions());
 
             Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -208,34 +215,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockReceiver = new Mock<ServiceBusReceiver>();
 
             mockReceiver
-                .Setup(receiver => receiver.AbandonAsync(
+                .Setup(receiver => receiver.AbandonMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeferAsync(
+                .Setup(receiver => receiver.DeferMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.CompleteAsync(
+                .Setup(receiver => receiver.CompleteMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             mockReceiver
-                .Setup(receiver => receiver.DeadLetterAsync(
+                .Setup(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),

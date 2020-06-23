@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
+            await _receiver.AbandonMessageAsync(message, propertiesToModify, cancellationToken)
             .ConfigureAwait(false);
             message.IsSettled = true;
         }
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.CompleteAsync(
+            await _receiver.CompleteMessageAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus
             string deadLetterErrorDescription = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeadLetterAsync(
+            await _receiver.DeadLetterMessageAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeadLetterAsync(
+            await _receiver.DeadLetterMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeferAsync(
+            await _receiver.DeferMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)

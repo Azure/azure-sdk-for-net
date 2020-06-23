@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -37,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
 
         /// <summary>The set of default starting positions for partitions being processed; these are collected at initialization and are surfaced as checkpoints to override defaults on a partition-specific basis.</summary>
-        private readonly Dictionary<string, EventPosition> PartitionStartingPositionDefaults = new Dictionary<string, EventPosition>();
+        private readonly ConcurrentDictionary<string, EventPosition> PartitionStartingPositionDefaults = new ConcurrentDictionary<string, EventPosition>();
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly SemaphoreSlim ProcessorStatusGuard = new SemaphoreSlim(1, 1);
@@ -239,10 +240,7 @@ namespace Azure.Messaging.EventHubs
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        public new string Identifier
-        {
-            get => base.Identifier;
-        }
+        public new string Identifier => base.Identifier;
 
         /// <summary>
         ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
@@ -890,7 +888,7 @@ namespace Azure.Messaging.EventHubs
                 await _partitionClosingAsync(eventArgs).ConfigureAwait(false);
             }
 
-            PartitionStartingPositionDefaults.Remove(partition.PartitionId);
+            PartitionStartingPositionDefaults.TryRemove(partition.PartitionId, out var _);
         }
 
         /// <summary>
@@ -937,7 +935,7 @@ namespace Azure.Messaging.EventHubs
                        EventHubName = EventHubName,
                        ConsumerGroup = ConsumerGroup,
                        PartitionId = partition,
-                       StartingPosition = PartitionStartingPositionDefaults[partition]
+                       StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partition, out EventPosition position) ? position : DefaultStartingPosition
                     };
                 }
             }

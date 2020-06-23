@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -155,22 +156,25 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
+        private readonly IList<ServiceBusPlugin> _plugins;
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
-        /// <param name="entityPath"></param>
-        /// <param name="isSessionEntity"></param>
-        /// <param name="sessionIds"></param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="options"></param>
+        /// <param name="entityPath">The queue name or subscription path to process messages from.</param>
+        /// <param name="isSessionEntity">Whether or not the processor is associated with a session entity.</param>
+        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        /// <param name="sessionIds">An optional set of session Ids to limit processing to.</param>
         ///
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusProcessorOptions options,
             string[] sessionIds = default)
         {
@@ -207,6 +211,7 @@ namespace Azure.Messaging.ServiceBus
             IsSessionProcessor = isSessionEntity;
             _sessionIds = sessionIds ?? Array.Empty<string>();
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+            _plugins = plugins;
         }
 
         /// <summary>
@@ -386,7 +391,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Optional event that can be set to be notified when a session is about to be closed for processing.
-        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
+        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out so there are currently no messages
         /// available to be received for the session.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -491,7 +496,8 @@ namespace Azure.Messaging.ServiceBus
                             _processSessionMessageAsync,
                             _processErrorAsync,
                             MaxConcurrentAcceptSessionsSemaphore,
-                            _scopeFactory));
+                            _scopeFactory,
+                            _plugins));
                 }
             }
             else
@@ -505,7 +511,8 @@ namespace Azure.Messaging.ServiceBus
                         _options,
                         _processMessageAsync,
                         _processErrorAsync,
-                        _scopeFactory));
+                        _scopeFactory,
+                        _plugins));
             }
         }
 

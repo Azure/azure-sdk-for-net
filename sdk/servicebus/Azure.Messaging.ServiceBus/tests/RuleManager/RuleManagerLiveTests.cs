@@ -210,7 +210,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 await SendMessages(client, scope.TopicName);
 
                 var receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
-                var messages = await receiver.ReceiveBatchAsync(Orders.Length, TimeSpan.FromSeconds(10));
+                var messages = await receiver.ReceiveMessagesAsync(Orders.Length, TimeSpan.FromSeconds(10));
                 Assert.AreEqual(0, messages.Count());
             }
         }
@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                     { "priority", Orders[i].Priority }
                 }
                 };
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
             }
         }
 
@@ -564,7 +564,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
             var remainingMessages = expectedOrders.Count();
             while (remainingMessages > 0)
             {
-                foreach (var item in await receiver.ReceiveBatchAsync(Orders.Length).ConfigureAwait(false))
+                foreach (var item in await receiver.ReceiveMessagesAsync(Orders.Length).ConfigureAwait(false))
                 {
                     receivedMessages.Add(item);
                     messageEnum.MoveNext();

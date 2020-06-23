@@ -11,10 +11,11 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
+        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
+
         public FormRecognizerLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher();
         }
 
         /// <summary>
@@ -22,8 +23,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
+        /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        protected FormTrainingClient CreateInstrumentedFormTrainingClient(bool useTokenCredential = false)
+        protected FormTrainingClient CreateInstrumentedFormTrainingClient(bool useTokenCredential = false, string apiKey = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
@@ -35,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
                 client = new FormTrainingClient(endpoint, credential, options);
             }
 
@@ -53,15 +55,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingClient = CreateInstrumentedFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            DisposableTrainedModel trainedModel;
-
-            // TODO: sanitize body and enable body recording here.
-            using (Recording.DisableRequestBodyRecording())
-            {
-                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels);
-            }
-
-            return trainedModel;
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
         }
     }
 }

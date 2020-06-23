@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             RetentionInterval = retentionInterval;
             AzPowerShellVersion = azPowerShellVersion;
-            Kind = "AzurePowerShell";
+            Kind = ScriptType.AzurePowerShell;
         }
 
         /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>

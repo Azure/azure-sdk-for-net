@@ -135,8 +135,7 @@
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
-    <ProjectReference Include="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.csproj" />
-
+ 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

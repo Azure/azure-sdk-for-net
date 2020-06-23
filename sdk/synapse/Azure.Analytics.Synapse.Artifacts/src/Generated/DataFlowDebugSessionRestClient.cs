@@ -385,7 +385,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
