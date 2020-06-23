@@ -10,6 +10,8 @@ namespace Azure.Messaging.EventGrid.Tests
         public EventGridLiveTestBase(bool isAsync) : base(isAsync /*, RecordedTestMode.Record */)
         {
             Sanitizer = new EventGridRecordedTestSanitizer();
+            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.TopicKeyEnvironmentVariableName);
+            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.DomainKeyEnvironmentVariableName);
         }
     }
 }

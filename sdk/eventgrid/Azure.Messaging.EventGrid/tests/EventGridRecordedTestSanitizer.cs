@@ -27,15 +27,5 @@ namespace Azure.Messaging.EventGrid.Tests
                 headers[SasTokenName] = sasToken.Select(s => SanitizeValue).ToArray();
             }
         }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
-            {
-                EventGridTestEnvironment.TopicKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.DomainKeyEnvironmentVariableName => SanitizeValue,
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
-        }
     }
 }

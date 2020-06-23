@@ -5,8 +5,8 @@
         "baseName": {
             "type": "String"
         }
-	},
-	"variables": {
+    },
+    "variables": {
         "apiVersion": "2020-04-01-preview",
         "eventGridTopicName": "[concat(parameters('baseName'), 'topic')]",
         "eventGridDomainName": "[concat(parameters('baseName'), 'domain')]"
@@ -18,30 +18,30 @@
             "name": "[variables('eventGridTopicName')]",
             "location": "[resourceGroup().location]"
         },
-		{
+        {
         "name": "[variables('eventGridDomainName')]",
-		"type": "Microsoft.EventGrid/domains",
-		"apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.EventGrid/domains",
+        "apiVersion": "[variables('apiVersion')]",
         "location": "[resourceGroup().location]",
-		"properties": {}
-		} 
+        "properties": {}
+        } 
     ],
-	"outputs": {
-		"EVENT_GRID_TOPIC_ENDPOINT": {
-			"type": "string",
-			"value": "[reference(variables('eventGridTopicName')).endpoint]"
-		},
-		"EVENT_GRID_TOPIC_KEY": {
-			"type": "string",
-			"value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('eventGridTopicName')), variables('apiVersion')).key1]"
-		},
-		"EVENT_GRID_DOMAIN_ENDPOINT": {
-			"type": "string",
-			"value": "[reference(variables('eventGridDomainName')).endpoint]"
-		},
-		"EVENT_GRID_DOMAIN_KEY": {
-			"type": "string",
-			"value": "[listKeys(resourceId('Microsoft.EventGrid/domains', variables('eventGridDomainName')), variables('apiVersion')).key1]"
-		}
-	}
+    "outputs": {
+        "EVENT_GRID_TOPIC_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('eventGridTopicName')).endpoint]"
+        },
+        "EVENT_GRID_TOPIC_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('eventGridTopicName')), variables('apiVersion')).key1]"
+        },
+        "EVENT_GRID_DOMAIN_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('eventGridDomainName')).endpoint]"
+        },
+        "EVENT_GRID_DOMAIN_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/domains', variables('eventGridDomainName')), variables('apiVersion')).key1]"
+        }
+    }
 }
