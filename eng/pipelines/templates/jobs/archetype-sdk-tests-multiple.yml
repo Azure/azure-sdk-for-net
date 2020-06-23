@@ -7,7 +7,9 @@ resources:
       ref: refs/tags/azure-sdk-tools_20200618.1
 
 parameters:
-  jobs: []
+  - name: jobs
+    type: object
+    default: []
 
 jobs:
   - ${{ each job in parameters.jobs }}:
