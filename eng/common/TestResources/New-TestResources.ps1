@@ -360,6 +360,7 @@ foreach ($templateFile in $templateFiles) {
 		
 		#verify if environment variables are set
 		$env
+		Get-ChildItem env:
     }
 
     $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
