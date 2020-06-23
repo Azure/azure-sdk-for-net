@@ -34,6 +34,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectLanguageTest()
         {
+            string authorityHost = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
             TextAnalyticsClient client = GetClient();
             string document = "This is written in English.";
 
@@ -42,6 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("English", language.Name);
             Assert.AreEqual("en", language.Iso6391Name);
             Assert.AreEqual(1.0, language.ConfidenceScore);
+            Assert.AreEqual("aaaaaaa", authorityHost);
         }
 
         [Test]
