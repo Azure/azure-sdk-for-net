@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
             BlobCorsRule[] originalCors = properties.Cors.ToArray();
             properties.Cors =
                 new[]
@@ -389,7 +389,7 @@ namespace Azure.Storage.Blobs.Test
             await service.SetPropertiesAsync(properties);
 
             // Assert
-            properties = (await service.GetPropertiesAsync()).Value;
+            properties = await service.GetPropertiesAsync();
             Assert.AreEqual(1, properties.Cors.Count());
             Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
 
@@ -398,6 +398,40 @@ namespace Azure.Storage.Blobs.Test
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_StaticWebsite()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceProperties properties = await service.GetPropertiesAsync();
+            BlobStaticWebsite originalBlobStaticWebsite = properties.StaticWebsite;
+
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index.html";
+
+            properties.StaticWebsite = new BlobStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.StaticWebsite.Enabled);
+            Assert.AreEqual(errorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(defaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+
+            // Cleanup
+            properties.StaticWebsite = originalBlobStaticWebsite;
+            await service.SetPropertiesAsync(properties);
         }
 
         [Test]
