@@ -66,7 +66,7 @@ string synonymMapPath = "countries.txt";
 SynonymMap synonyms;
 using (StreamReader file = File.OpenText(synonymMapPath))
 {
-    synonyms = new SynonymMap(synonymMapName, file);
+synonyms = new SynonymMap(synonymMapName, file);
 }
 
 await indexClient.CreateSynonymMapAsync(synonyms);
@@ -143,11 +143,11 @@ about all available skills.
 // Translate English descriptions to French.
 // See https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
 TextTranslationSkill translationSkill = new TextTranslationSkill(
-    new[]
+    inputs: new[]
     {
         new InputFieldMappingEntry("text") { Source = "/document/description" }
     },
-    new[]
+    outputs: new[]
     {
         new OutputFieldMappingEntry("translatedText") { TargetName = "descriptionFrTranslated" }
     },
@@ -161,13 +161,13 @@ TextTranslationSkill translationSkill = new TextTranslationSkill(
 // Use the human-translated French description if available; otherwise, use the translated description.
 // See https://docs.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
 ConditionalSkill conditionalSkill = new ConditionalSkill(
-    new[]
+    inputs: new[]
     {
         new InputFieldMappingEntry("condition") { Source = "= $(/document/descriptionFr) == null" },
         new InputFieldMappingEntry("whenTrue") { Source = "/document/descriptionFrTranslated" },
         new InputFieldMappingEntry("whenFalse") { Source = "/document/descriptionFr" }
     },
-    new[]
+    outputs: new[]
     {
         new OutputFieldMappingEntry("output") { TargetName = "descriptionFrFinal"}
     })
@@ -248,7 +248,7 @@ await foreach (SearchResult<Hotel> result in results.GetResultsAsync())
 
     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
     Console.WriteLine($"  Description (English): {hotel.Description}");
-    Console.WriteLine($"  Description (French): {hotel.DescriptionFr}");
+    Console.WriteLine($"  Description (French):  {hotel.DescriptionFr}");
 }
 ```
 

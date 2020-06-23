@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    public class HelloWorld : SearchTestBase
+    public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -183,10 +183,11 @@ namespace Azure.Search.Documents.Tests.Samples
                 /*@@*/ synonymMapPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "countries.txt");
 
                 SynonymMap synonyms;
-                using (StreamReader file = File.OpenText(synonymMapPath))
-                {
-                    synonyms = new SynonymMap(synonymMapName, file);
-                }
+                //@@using (StreamReader file = File.OpenText(synonymMapPath))
+                //@@{
+                //@@    synonyms = new SynonymMap(synonymMapName, file);
+                //@@}
+                /*@@*/ synonyms = new SynonymMap(synonymMapName, CountriesSolrSynonymMap);
 
                 await indexClient.CreateSynonymMapAsync(synonyms);
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
@@ -253,11 +254,11 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Translate English descriptions to French.
                 // See https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
                 TextTranslationSkill translationSkill = new TextTranslationSkill(
-                    new[]
+                    inputs: new[]
                     {
                         new InputFieldMappingEntry("text") { Source = "/document/description" }
                     },
-                    new[]
+                    outputs: new[]
                     {
                         new OutputFieldMappingEntry("translatedText") { TargetName = "descriptionFrTranslated" }
                     },
@@ -271,13 +272,13 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Use the human-translated French description if available; otherwise, use the translated description.
                 // See https://docs.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
                 ConditionalSkill conditionalSkill = new ConditionalSkill(
-                    new[]
+                    inputs: new[]
                     {
                         new InputFieldMappingEntry("condition") { Source = "= $(/document/descriptionFr) == null" },
                         new InputFieldMappingEntry("whenTrue") { Source = "/document/descriptionFrTranslated" },
                         new InputFieldMappingEntry("whenFalse") { Source = "/document/descriptionFr" }
                     },
-                    new[]
+                    outputs: new[]
                     {
                         new OutputFieldMappingEntry("output") { TargetName = "descriptionFrFinal"}
                     })
@@ -364,7 +365,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
                     Console.WriteLine($"  Description (English): {hotel.Description}");
-                    Console.WriteLine($"  Description (French): {hotel.DescriptionFr}");
+                    Console.WriteLine($"  Description (French):  {hotel.DescriptionFr}");
                 }
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
 
