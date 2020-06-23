@@ -31,6 +31,24 @@ The `Receipt` class is composed of multiple `FormField<T>` properties. `FormFiel
 `Receipt` has methods for converting a `FormField` into a strongly-typed `FormField<T>`. These methods are used in the constructor to convert fields we expect the service to return for a receipt, such as `MerchantName` or `TransactionDate`. You can use the same methods when writing a wrapper class for your custom forms, but you need to update the fields' names and types accordingly.
 
 ```C# Snippet:FormRecognizerSampleReceiptWrapper
+public Receipt(RecognizedForm recognizedForm)
+{
+    // To see the list of the supported fields returned by service and its corresponding types, consult:
+    // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+
+    ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
+    MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
+    MerchantName = ConvertStringField("MerchantName", recognizedForm.Fields);
+    MerchantPhoneNumber = ConvertPhoneNumberField("MerchantPhoneNumber", recognizedForm.Fields);
+    Subtotal = ConvertFloatField("Subtotal", recognizedForm.Fields);
+    Tax = ConvertFloatField("Tax", recognizedForm.Fields);
+    Tip = ConvertFloatField("Tip", recognizedForm.Fields);
+    Total = ConvertFloatField("Total", recognizedForm.Fields);
+    TransactionDate = ConvertDateField("TransactionDate", recognizedForm.Fields);
+    TransactionTime = ConvertTimeField("TransactionTime", recognizedForm.Fields);
+
+    Items = ConvertReceiptItems(recognizedForm.Fields);
+}
 ```
 
 ## Accessing fields in the strongly-typed receipt
