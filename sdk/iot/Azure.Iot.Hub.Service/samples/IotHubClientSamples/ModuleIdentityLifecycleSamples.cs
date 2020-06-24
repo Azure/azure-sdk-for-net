@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Models;
 
@@ -30,22 +32,19 @@ namespace Azure.Iot.Hub.Service.Samples
             ModuleIdentity moduleIdentity = await CreateModuleIdentityAsync(deviceIdentity, moduleId);
 
             // List all modules within the device.
-            await ListAllModulesAsync();
+            await ListAllModulesAsync(deviceIdentity);
 
             // Get the Module Identity.
-            await GetModuleIdentityAsync();
+            moduleIdentity = await GetModuleIdentityAsync(deviceIdentity, moduleIdentity.ModuleId);
 
             // Update Module Identity.
-            await UpdateModuleIdentityAsync();
+            moduleIdentity = await UpdateModuleIdentityAsync(moduleIdentity);
 
             // Get Module Twin,
-            await GetModuleTwinAsync();
+            TwinData moduleTwin = await GetModuleTwinAsync(moduleIdentity);
 
             // Update Module Twin.
-            await UpdateModuleTwinAsync();
-
-            // Invoke a method on the ModuleTwin
-            await InvokeMethodAsync();
+            await UpdateModuleTwinAsync(moduleTwin);
 
             // Delete the module identity
             await DeleteModuleIdentityAsync(moduleIdentity);
@@ -75,7 +74,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the device identity.
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
-                SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{deviceId}'");
+                SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{deviceId}', ETag: '{response.Value.Etag}'");
 
                 return response.Value;
             }
@@ -109,7 +108,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the module identity.
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
-                SampleLogger.PrintSuccess($"Successfully created a new module identity with Id: '{moduleId}'");
+                SampleLogger.PrintSuccess($"Successfully created a new module identity with Id: '{moduleId}', ETag: '{response.Value.Etag}'");
 
                 return response.Value;
             }
@@ -120,34 +119,149 @@ namespace Azure.Iot.Hub.Service.Samples
             }
         }
 
-        public Task ListAllModulesAsync()
+        /// <summary>
+        /// List all modules within a Device
+        /// </summary>
+        /// <param name="deviceIdentity">Device Identity to query</param>
+        public async Task<IReadOnlyList<ModuleIdentity>> ListAllModulesAsync(DeviceIdentity deviceIdentity)
         {
-            return Task.CompletedTask;
+            SampleLogger.PrintHeader("LIST ALL MODULES");
+
+            try
+            {
+                Console.WriteLine($"Listing all modules in device with Id: '{deviceIdentity.DeviceId}'\n");
+
+                Response<IReadOnlyList<ModuleIdentity>> response = await IoTHubServiceClient.Modules.GetIdentitiesAsync(deviceIdentity.DeviceId);
+
+                foreach (ModuleIdentity moduleIdentity in response.Value)
+                {
+                    SampleLogger.PrintSuccess($"\t- Module Id: '{moduleIdentity.ModuleId}', Device Id: '{moduleIdentity.DeviceId}', ETag: '{moduleIdentity.Etag}'");
+                }
+
+                return response.Value;
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to list module identities due to:\n{ex}");
+                throw;
+            }
         }
 
-        public Task GetModuleIdentityAsync()
+        /// <summary>
+        /// Get a module identity
+        /// </summary>
+        /// <param name="deviceIdentity">The device identity module belongs to.</param>
+        /// <param name="moduleId">The unique identifier of the module to get.</param>
+        public async Task<ModuleIdentity> GetModuleIdentityAsync(DeviceIdentity deviceIdentity, string moduleId)
         {
-            return Task.CompletedTask;
+            SampleLogger.PrintHeader("GET A MODULE");
+
+            try
+            {
+                Console.WriteLine($"Getting module identity with Id: '{moduleId}'\n");
+
+                Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceIdentity.DeviceId, moduleId);
+
+                ModuleIdentity moduleIdentity = response.Value;
+
+                SampleLogger.PrintSuccess($"\t- Module Id: '{moduleIdentity.ModuleId}', Device Id: '{moduleIdentity.DeviceId}', ETag: '{moduleIdentity.Etag}'");
+
+                return moduleIdentity;
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to get a module identity due to:\n{ex}");
+                throw;
+            }
+        }
+        
+        /// <summary>
+        /// Update a module identity
+        /// </summary>
+        /// <param name="moduleIdentity">Module identity to be updated.</param>
+        public async Task<ModuleIdentity> UpdateModuleIdentityAsync(ModuleIdentity moduleIdentity)
+        {
+            SampleLogger.PrintHeader("UPDATE A MODULE");
+
+            try
+            {
+                Console.WriteLine($"Updating module identity with Id: '{moduleIdentity.ModuleId}'. Setting 'ManagedBy' property to: '{Environment.UserName}'\n");
+                moduleIdentity.ManagedBy = Environment.UserName;
+
+                Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
+
+                ModuleIdentity updatedModule = response.Value;
+                
+                SampleLogger.PrintSuccess($"Successfully updated module identity with Id: '{updatedModule.ModuleId}', ManagedBy: '{updatedModule.ManagedBy}', ETag: '{updatedModule.Etag}'");
+                
+                return updatedModule;
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to update a module identity due to:\n{ex}");
+                throw;
+            }
         }
 
-        public Task UpdateModuleIdentityAsync()
+        /// <summary>
+        /// Get module twin.
+        /// </summary>
+        /// <param name="moduleIdentity">The module identity.</param>
+        public async Task<TwinData> GetModuleTwinAsync(ModuleIdentity moduleIdentity)
         {
-            return Task.CompletedTask;
+            SampleLogger.PrintHeader("GET A MODULE TWIN");
+
+            try
+            {
+                Console.WriteLine($"Getting module twin with Id: '{moduleIdentity.ModuleId}'\n");
+
+                Response<TwinData> response = await IoTHubServiceClient.Modules.GetTwinAsync(moduleIdentity.DeviceId, moduleIdentity.ModuleId);
+
+                SampleLogger.PrintSuccess($"\t- Module Twin Status: '{response.Value.Status}', ETag: '{response.Value.Etag}'");
+
+                return response.Value;
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to get a module twin due to:\n{ex}");
+                throw;
+            }
         }
 
-        public Task GetModuleTwinAsync()
+        /// <summary>
+        /// Update a module twin desired properties
+        /// </summary>
+        /// <param name="moduleTwin">Module twin.</param>
+        public async Task<TwinData> UpdateModuleTwinAsync(TwinData moduleTwin)
         {
-            return Task.CompletedTask;
-        }
+            SampleLogger.PrintHeader("UPDATE A MODULE TWIN");
 
-        public Task UpdateModuleTwinAsync()
-        {
-            return Task.CompletedTask;
-        }
+            string userPropName = "user";
 
-        public Task InvokeMethodAsync()
-        {
-            return Task.CompletedTask;
+            try
+            {
+                Console.WriteLine($"Updating module twin with Id: '{moduleTwin.ModuleId}'. Setting Desired property {userPropName} to: '{Environment.UserName}'\n");
+
+                moduleTwin.Properties.Desired.Add(new KeyValuePair<string, object>(userPropName, Environment.UserName));
+
+                Response<TwinData> response = await IoTHubServiceClient.Modules.UpdateTwinAsync(moduleTwin, IfMatchPrecondition.UnconditionalIfMatch);
+
+                TwinData updatedTwin = response.Value;
+
+                var userPropValue = (string) updatedTwin.Properties.Desired
+                    .Where(p => p.Key == userPropName)
+                    .First()
+                    .Value;
+
+                SampleLogger.PrintSuccess($"Successfully updated module twin with Id: '{updatedTwin.ModuleId}' ETag: '{updatedTwin.Etag}', {userPropName}: '{userPropValue}'");
+
+                return updatedTwin;
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to update a module identity due to:\n{ex}");
+                throw;
+            }
         }
 
         /// <summary>

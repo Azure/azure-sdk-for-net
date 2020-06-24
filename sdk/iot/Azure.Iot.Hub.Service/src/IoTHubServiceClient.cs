@@ -95,7 +95,7 @@ namespace Azure.Iot.Hub.Service
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _registryManagerRestClient = new RegistryManagerRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, null, options.GetVersionString());
+            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _deviceMethodRestClient = new DeviceMethodRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
             Devices = new DevicesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
