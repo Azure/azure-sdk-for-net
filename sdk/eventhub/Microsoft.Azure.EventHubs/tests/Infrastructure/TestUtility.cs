@@ -28,15 +28,6 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static readonly Lazy<string> EventHubsSecretInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.EventHubsSecretEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
-        private static readonly Lazy<string> AuthorityHostInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.AuthorityHostEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
-        private static readonly Lazy<string> ServiceManagementUrlInstance =
-            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.ServiceManagementUrlEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
-        private static readonly Lazy<string> StorageEndpointSuffixInstance =
-           new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.StorageEndpointSuffixEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
-
         private static readonly Lazy<EventHubScope.AzureResourceProperties> ActiveEventHubsNamespace =
             new Lazy<EventHubScope.AzureResourceProperties>(CreateNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -64,12 +55,6 @@ namespace Microsoft.Azure.EventHubs.Tests
         internal static string EventHubsClient => EventHubsClientInstance.Value;
 
         internal static string EventHubsSecret => EventHubsSecretInstance.Value;
-
-        internal static string AuthorityHost => AuthorityHostInstance.Value;
-
-        internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value;
-
-        internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value;
 
         internal static string GetEntityConnectionString(string entityName) =>
             new EventHubsConnectionStringBuilder(EventHubsConnectionString) { EntityPath = entityName }.ToString();

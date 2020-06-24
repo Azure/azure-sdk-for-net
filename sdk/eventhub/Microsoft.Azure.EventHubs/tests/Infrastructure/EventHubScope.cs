@@ -173,7 +173,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
                 var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ TestUtility.StorageEndpointSuffix }");
+                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
             }
         }
 
@@ -229,8 +229,8 @@ namespace Microsoft.Azure.EventHubs.Tests
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
 
-         private static bool ShouldRetry(Exception ex) =>
-            ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
+        private static bool ShouldRetry(Exception ex) =>
+           ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
 
         private static bool IsRetriableException(Exception ex)
         {
@@ -274,8 +274,8 @@ namespace Microsoft.Azure.EventHubs.Tests
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }/{ TestUtility.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential);
+                var context = new AuthenticationContext($"https://login.windows.net/{ TestUtility.EventHubsTenant }");
+                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
