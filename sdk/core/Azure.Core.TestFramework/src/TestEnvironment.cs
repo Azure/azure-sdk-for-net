@@ -34,6 +34,12 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("Unexpected error, repository root not found");
             }
 
+            var sdkDirectory = Path.Combine(RepositoryRoot, "sdk", serviceName);
+            if (!Directory.Exists(sdkDirectory))
+            {
+                throw new InvalidOperationException($"SDK directory {sdkDirectory} not found");
+            }
+
             var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
             if (File.Exists(testEnvironmentFile))
             {

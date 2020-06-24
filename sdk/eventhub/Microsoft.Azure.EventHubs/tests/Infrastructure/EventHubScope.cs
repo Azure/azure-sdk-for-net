@@ -274,7 +274,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }{ TestUtility.EventHubsTenant }");
+                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }/{ TestUtility.EventHubsTenant }");
                 var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
