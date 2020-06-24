@@ -250,6 +250,11 @@ namespace Azure.Storage.Blobs.Models
         public bool IsSealed { get; internal set; }
 
         /// <summary>
+        /// If this blob is in rehydreate pending state, this indicates the rehydrate priority.
+        /// </summary>
+        public RehydratePriority? RehydratePriority { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         public BlobProperties()

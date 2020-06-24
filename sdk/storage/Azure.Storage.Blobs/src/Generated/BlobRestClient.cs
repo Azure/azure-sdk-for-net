@@ -4661,6 +4661,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.IsSealed = bool.Parse(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-rehydrate-priority", out _header))
+                        {
+                            _value.RehydratePriority = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -18114,6 +18118,11 @@ namespace Azure.Storage.Blobs.Models
         public bool? IsSealed { get; internal set; }
 
         /// <summary>
+        /// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+        /// </summary>
+        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag? ETag { get; internal set; }
@@ -18304,6 +18313,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.IsSealed = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("RehydratePriority", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.RehydratePriority = (Azure.Storage.Blobs.Models.RehydratePriority)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.RehydratePriority), _child.Value, false);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -18346,7 +18360,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            string copyStatusDescription = default,
+            bool? serverEncrypted = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -18362,8 +18376,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
             System.Uri copySource = default,
             string copyProgress = default,
+            string copyStatusDescription = default,
             long? contentLength = default,
-            bool? serverEncrypted = default,
             bool? incrementalCopy = default,
             string destinationSnapshot = default,
             int? remainingRetentionDays = default,
@@ -18375,6 +18389,7 @@ namespace Azure.Storage.Blobs.Models
             long? tagCount = default,
             System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
+            Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
             Azure.ETag? eTag = default,
             System.DateTimeOffset? createdOn = default,
             System.DateTimeOffset? copyCompletedOn = default,
@@ -18384,7 +18399,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopyStatusDescription = copyStatusDescription,
+                ServerEncrypted = serverEncrypted,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -18400,8 +18415,8 @@ namespace Azure.Storage.Blobs.Models
                 CopyStatus = copyStatus,
                 CopySource = copySource,
                 CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
                 ContentLength = contentLength,
-                ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
                 DestinationSnapshot = destinationSnapshot,
                 RemainingRetentionDays = remainingRetentionDays,
@@ -18413,6 +18428,7 @@ namespace Azure.Storage.Blobs.Models
                 TagCount = tagCount,
                 ExpiresOn = expiresOn,
                 IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
                 ETag = eTag,
                 CreatedOn = createdOn,
                 CopyCompletedOn = copyCompletedOn,
@@ -18854,6 +18870,11 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob has been sealed
         /// </summary>
         public bool IsSealed { get; internal set; }
+
+        /// <summary>
+        /// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+        /// </summary>
+        public string RehydratePriority { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobPropertiesInternal instance
