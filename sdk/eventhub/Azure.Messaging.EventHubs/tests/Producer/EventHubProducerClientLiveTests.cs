@@ -47,6 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
         public async Task ProducerWithNoOptionsCanSend(EventHubsTransportType transportType)
         {
+	    Assert.AreEqual("aaaaa", EventHubsTestEnvironment.Instance.AuthorityHost);
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
@@ -59,6 +60,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+	
+	[Test]
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ProducerWithNoOptionsCanSend1(EventHubsTransportType transportType)
+        {
+	    Assert.AreEqual("bbbbbbbb", EventHubsTestEnvironment.Instance.ServiceManagementUrl);
+        }
 
         /// <summary>
         ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
@@ -70,6 +79,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
         public async Task ProducerWithOptionsCanSend(EventHubsTransportType transportType)
         {
+	    Assert.AreEqual("bbbbbbb", EventHubsTestEnvironment.Instance.ServiceManagementUrl);
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);

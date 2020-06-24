@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters)).ConfigureAwait(false);
 
                 StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name)).ConfigureAwait(false);
-                return new StorageTestEnvironment.StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net", shouldRemoveAtCompletion: true);
+                return new StorageTestEnvironment.StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ EventHubsTestEnvironment.Instance.StorageEndpointSuffix }", shouldRemoveAtCompletion: true);
             }
         }
 
