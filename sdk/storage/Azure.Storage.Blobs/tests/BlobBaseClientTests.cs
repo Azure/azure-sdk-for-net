@@ -2454,6 +2454,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task GetPropertiesAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority, propertiesResponse.Value.RehydratePriority);
+        }
+
+        [Test]
         public async Task GetPropertiesAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

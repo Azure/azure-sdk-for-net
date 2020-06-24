@@ -265,6 +265,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset expiresOn = default,
             DateTimeOffset createdOn = default,
             bool isSealed = default,
+            RehydratePriority? rehydratePriority = default,
             byte[] contentHash = default)
         {
             return new BlobProperties()
@@ -308,6 +309,7 @@ namespace Azure.Storage.Blobs.Models
                 ExpiresOn = expiresOn,
                 CreatedOn = createdOn,
                 IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
                 ContentHash = contentHash,
             };
         }

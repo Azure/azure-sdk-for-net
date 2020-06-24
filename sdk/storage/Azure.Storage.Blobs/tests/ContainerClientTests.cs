@@ -1579,6 +1579,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task ListBlobsFlatSegmentAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blockBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blockBlob.UploadAsync(stream);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority, blobItems[0].Properties.RehydratePriority);
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
@@ -1829,6 +1861,38 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
             Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task ListBlobsHierarchySegmentAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blockBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blockBlob.UploadAsync(stream);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority, blobItems[0].Blob.Properties.RehydratePriority);
         }
 
         [Test]

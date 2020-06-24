@@ -146,6 +146,7 @@ namespace Azure.Storage.Blobs
                 TagCount = properties.TagCount,
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,
+                RehydratePriority = properties.RehydratePriority.ToRehydratePriority(),
             };
 
         /// <summary>
@@ -234,6 +235,23 @@ namespace Azure.Storage.Blobs
             }
 
             return list;
+        }
+
+        internal static RehydratePriority? ToRehydratePriority(this string rehydratePriority)
+        {
+            if (rehydratePriority == null)
+            {
+                return null;
+            }
+
+            if (rehydratePriority == RehydratePriority.High.ToString())
+            {
+                return RehydratePriority.High;
+            }
+            else
+            {
+                return RehydratePriority.Standard;
+            }
         }
     }
 }
