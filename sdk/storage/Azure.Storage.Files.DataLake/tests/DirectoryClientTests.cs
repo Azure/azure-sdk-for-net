@@ -2542,5 +2542,45 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, file.BlobUri);
             Assert.AreEqual(dfsUri, file.DfsUri);
         }
+
+        [Test]
+        public async Task CreateSubDirectoryAndFileAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeFileClient file = await subdirectory.CreateFileAsync(fileName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}", file.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}", file.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndSubDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string lowerSubDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeDirectoryClient lowerSubDirectory = await subdirectory.CreateSubDirectoryAsync(lowerSubDirectoryName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
+        }
     }
 }
