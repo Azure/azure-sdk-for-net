@@ -41,14 +41,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// from the first few seconds of the video.</param>
         /// <param name="label">An optional label for the codec. The label can
         /// be used to control muxing behavior.</param>
-        /// <param name="keyFrameInterval">The distance between two key frames,
-        /// thereby defining a group of pictures (GOP). The value should be a
-        /// non-zero integer in the range [1, 30] seconds, specified in ISO
-        /// 8601 format. The default is 2 seconds (PT2S).</param>
+        /// <param name="keyFrameInterval">The distance between two key frames.
+        /// The value should be non-zero in the range [0.5, 20] seconds,
+        /// specified in ISO 8601 format. The default is 2 seconds(PT2S). Note
+        /// that this setting is ignored if VideoSyncMode.Passthrough is set,
+        /// where the KeyFrameInterval value will follow the input source
+        /// setting.</param>
         /// <param name="stretchMode">The resizing mode - how the input video
         /// will be resized to fit the desired output resolution(s). Default is
         /// AutoSize. Possible values include: 'None', 'AutoSize',
         /// 'AutoFit'</param>
+        /// <param name="syncMode">The Video Sync Mode. Possible values
+        /// include: 'Auto', 'Passthrough', 'Cfr', 'Vfr'</param>
         /// <param name="step">The intervals at which thumbnails are generated.
         /// The value can be in absolute timestamp (ISO 8601, e.g: PT05S for
         /// one image every 5 seconds), or a frame count (For example, 30 for
@@ -60,8 +64,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// relative value (For example, 100%).</param>
         /// <param name="layers">A collection of output JPEG image layers to be
         /// produced by the encoder.</param>
-        public JpgImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string step = default(string), string range = default(string), IList<JpgLayer> layers = default(IList<JpgLayer>))
-            : base(start, label, keyFrameInterval, stretchMode, step, range)
+        public JpgImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), VideoSyncMode? syncMode = default(VideoSyncMode?), string step = default(string), string range = default(string), IList<JpgLayer> layers = default(IList<JpgLayer>))
+            : base(start, label, keyFrameInterval, stretchMode, syncMode, step, range)
         {
             Layers = layers;
             CustomInit();

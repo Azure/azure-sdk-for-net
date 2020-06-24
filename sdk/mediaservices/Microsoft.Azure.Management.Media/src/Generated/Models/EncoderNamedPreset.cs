@@ -30,21 +30,21 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Produces an MP4 file where the video is encoded with H.264 codec at
         /// 2200 kbps and a picture height of 480 pixels, and the stereo audio
-        /// is encoded with AAC-LC codec at 64 kbps.
+        /// is encoded with AAC-LC codec at 128 kbps.
         /// </summary>
         public static readonly EncoderNamedPreset H264SingleBitrateSD = "H264SingleBitrateSD";
 
         /// <summary>
         /// Produces an MP4 file where the video is encoded with H.264 codec at
         /// 4500 kbps and a picture height of 720 pixels, and the stereo audio
-        /// is encoded with AAC-LC codec at 64 kbps.
+        /// is encoded with AAC-LC codec at 128 kbps.
         /// </summary>
         public static readonly EncoderNamedPreset H264SingleBitrate720p = "H264SingleBitrate720p";
 
         /// <summary>
         /// Produces an MP4 file where the video is encoded with H.264 codec at
         /// 6750 kbps and a picture height of 1080 pixels, and the stereo audio
-        /// is encoded with AAC-LC codec at 64 kbps.
+        /// is encoded with AAC-LC codec at 128 kbps.
         /// </summary>
         public static readonly EncoderNamedPreset H264SingleBitrate1080p = "H264SingleBitrate1080p";
 
@@ -91,21 +91,21 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Produces a set of 8 GOP-aligned MP4 files, ranging from 6000 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 1080p and
-        /// goes down to 360p.
+        /// goes down to 180p.
         /// </summary>
         public static readonly EncoderNamedPreset H264MultipleBitrate1080p = "H264MultipleBitrate1080p";
 
         /// <summary>
         /// Produces a set of 6 GOP-aligned MP4 files, ranging from 3400 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 720p and
-        /// goes down to 360p.
+        /// goes down to 180p.
         /// </summary>
         public static readonly EncoderNamedPreset H264MultipleBitrate720p = "H264MultipleBitrate720p";
 
         /// <summary>
-        /// Produces a set of 5 GOP-aligned MP4 files, ranging from 1600kbps to
+        /// Produces a set of 5 GOP-aligned MP4 files, ranging from 1900kbps to
         /// 400 kbps, and stereo AAC audio. Resolution starts at 480p and goes
-        /// down to 360p.
+        /// down to 240p.
         /// </summary>
         public static readonly EncoderNamedPreset H264MultipleBitrateSD = "H264MultipleBitrateSD";
 

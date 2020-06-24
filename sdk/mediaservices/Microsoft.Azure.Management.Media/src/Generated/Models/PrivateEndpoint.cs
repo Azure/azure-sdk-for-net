@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The API error.
+    /// The Private Endpoint resource.
     /// </summary>
-    public partial class ApiError
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public ApiError()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="error">The error properties.</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="id">The ARM identifier for Private Endpoint</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            Error = error;
+            Id = id;
             CustomInit();
         }
 
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error properties.
+        /// Gets the ARM identifier for Private Endpoint
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ODataError Error { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

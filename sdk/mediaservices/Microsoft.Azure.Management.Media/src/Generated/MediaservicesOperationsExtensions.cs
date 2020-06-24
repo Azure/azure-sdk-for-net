@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<SubscriptionMediaService> ListBySubscription(this IMediaservicesOperations operations)
+            public static IPage<MediaService> ListBySubscription(this IMediaservicesOperations operations)
             {
                 return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionMediaService>> ListBySubscriptionAsync(this IMediaservicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MediaService>> ListBySubscriptionAsync(this IMediaservicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='accountName'>
             /// The Media Services account name.
             /// </param>
-            public static SubscriptionMediaService GetBySubscription(this IMediaservicesOperations operations, string accountName)
+            public static MediaService GetBySubscription(this IMediaservicesOperations operations, string accountName)
             {
                 return operations.GetBySubscriptionAsync(accountName).GetAwaiter().GetResult();
             }
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionMediaService> GetBySubscriptionAsync(this IMediaservicesOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MediaService> GetBySubscriptionAsync(this IMediaservicesOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetBySubscriptionWithHttpMessagesAsync(accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SubscriptionMediaService> ListBySubscriptionNext(this IMediaservicesOperations operations, string nextPageLink)
+            public static IPage<MediaService> ListBySubscriptionNext(this IMediaservicesOperations operations, string nextPageLink)
             {
                 return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionMediaService>> ListBySubscriptionNextAsync(this IMediaservicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MediaService>> ListBySubscriptionNextAsync(this IMediaservicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

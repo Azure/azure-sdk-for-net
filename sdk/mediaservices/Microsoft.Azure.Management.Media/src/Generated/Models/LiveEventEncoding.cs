@@ -29,11 +29,22 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEventEncoding class.
         /// </summary>
-        /// <param name="encodingType">The encoding type for Live Event.  This
-        /// value is specified at creation time and cannot be updated. Possible
+        /// <param name="encodingType">The encoding type for Live Event. This
+        /// value is specified at creation time and cannot be updated. When
+        /// encodingType is set to None, the service simply passes through the
+        /// incoming video and audio layer(s) to the output. When encodingType
+        /// is set to Standard or Premium1080p, a live encoder transcodes the
+        /// incoming stream into multiple bit rates or layers. See
+        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
+        /// information. The encodingType of Basic is obsolete – if specified,
+        /// the service will treat this as a Standard Live Event. Possible
         /// values include: 'None', 'Basic', 'Standard', 'Premium1080p'</param>
-        /// <param name="presetName">The encoding preset name.  This value is
-        /// specified at creation time and cannot be updated.</param>
+        /// <param name="presetName">The optional encoding preset name, used
+        /// when encodingType is not None. This value is specified at creation
+        /// time and cannot be updated. If the encodingType is set to Standard,
+        /// then the default preset name is ‘Default720p’. Else if the
+        /// encodingType is set to Premium1080p, the default preset is
+        /// ‘Default1080p’.</param>
         public LiveEventEncoding(LiveEventEncodingType? encodingType = default(LiveEventEncodingType?), string presetName = default(string))
         {
             EncodingType = encodingType;
@@ -47,16 +58,26 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the encoding type for Live Event.  This value is
-        /// specified at creation time and cannot be updated. Possible values
-        /// include: 'None', 'Basic', 'Standard', 'Premium1080p'
+        /// Gets or sets the encoding type for Live Event. This value is
+        /// specified at creation time and cannot be updated. When encodingType
+        /// is set to None, the service simply passes through the incoming
+        /// video and audio layer(s) to the output. When encodingType is set to
+        /// Standard or Premium1080p, a live encoder transcodes the incoming
+        /// stream into multiple bit rates or layers. See
+        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
+        /// information. The encodingType of Basic is obsolete – if specified,
+        /// the service will treat this as a Standard Live Event. Possible
+        /// values include: 'None', 'Basic', 'Standard', 'Premium1080p'
         /// </summary>
         [JsonProperty(PropertyName = "encodingType")]
         public LiveEventEncodingType? EncodingType { get; set; }
 
         /// <summary>
-        /// Gets or sets the encoding preset name.  This value is specified at
-        /// creation time and cannot be updated.
+        /// Gets or sets the optional encoding preset name, used when
+        /// encodingType is not None. This value is specified at creation time
+        /// and cannot be updated. If the encodingType is set to Standard, then
+        /// the default preset name is ‘Default720p’. Else if the encodingType
+        /// is set to Premium1080p, the default preset is ‘Default1080p’.
         /// </summary>
         [JsonProperty(PropertyName = "presetName")]
         public string PresetName { get; set; }
