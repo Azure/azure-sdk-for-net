@@ -357,10 +357,6 @@ foreach ($templateFile in $templateFiles) {
             Write-Host "`n"
             $key = $null
         }
-		
-		#verify if environment variables are set
-		$env
-		Get-ChildItem env:
     }
 
     $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
