@@ -1231,6 +1231,75 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_ForceFlag()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Add file as superuser
+            DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                forceFlag = true
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                progressHandler: null,
+                options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    progressHandler: null),
+                    e => { });
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1473,6 +1542,75 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_ForceFlag()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Add file as superuser
+            DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                forceFlag = true
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
+                accessControlList: AccessControlList,
+                progressHandler: null,
+                options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.UpdateAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    progressHandler: null),
+                    e => { });
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1711,6 +1849,75 @@ namespace Azure.Storage.Files.DataLake.Tests
             StringAssert.Contains(file4.Name, failure.Name);
             Assert.IsFalse(failure.IsDirectory);
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_ForceFlag()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+            await directory.CreateAsync();
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+
+            // Add file as superuser
+            DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                forceFlag = true
+            };
+
+            // Act
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
+                accessControlList: RemoveAccessControlList,
+                progressHandler: null,
+                options);
+
+            // Assert
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.IsNull(result.ContinuationToken);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_Error()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            await test.FileSystem.GetRootDirectoryClient().SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.RemoveAccessControlRecursiveAsync(
+                    accessControlList: RemoveAccessControlList,
+                    progressHandler: null),
+                    e => { });
         }
 
         [Test]

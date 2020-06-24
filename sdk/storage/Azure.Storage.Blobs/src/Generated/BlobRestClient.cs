@@ -4661,6 +4661,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.IsSealed = bool.Parse(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-rehydrate-priority", out _header))
+                        {
+                            _value.RehydratePriority = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -5312,7 +5316,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5434,7 +5438,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -14158,7 +14162,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -14283,7 +14287,7 @@ namespace Azure.Storage.Blobs
             /// <param name="contentLanguage">Content language for given resource</param>
             /// <param name="contentDisposition">Content disposition for given resource</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -18114,6 +18118,11 @@ namespace Azure.Storage.Blobs.Models
         public bool? IsSealed { get; internal set; }
 
         /// <summary>
+        /// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+        /// </summary>
+        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag? ETag { get; internal set; }
@@ -18304,6 +18313,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.IsSealed = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("RehydratePriority", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.RehydratePriority = (Azure.Storage.Blobs.Models.RehydratePriority)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.RehydratePriority), _child.Value, false);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -18346,7 +18360,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            string copyStatusDescription = default,
+            bool? serverEncrypted = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -18362,8 +18376,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
             System.Uri copySource = default,
             string copyProgress = default,
+            string copyStatusDescription = default,
             long? contentLength = default,
-            bool? serverEncrypted = default,
             bool? incrementalCopy = default,
             string destinationSnapshot = default,
             int? remainingRetentionDays = default,
@@ -18375,6 +18389,7 @@ namespace Azure.Storage.Blobs.Models
             int? tagCount = default,
             System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
+            Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
             Azure.ETag? eTag = default,
             System.DateTimeOffset? createdOn = default,
             System.DateTimeOffset? copyCompletedOn = default,
@@ -18384,7 +18399,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopyStatusDescription = copyStatusDescription,
+                ServerEncrypted = serverEncrypted,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -18400,8 +18415,8 @@ namespace Azure.Storage.Blobs.Models
                 CopyStatus = copyStatus,
                 CopySource = copySource,
                 CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
                 ContentLength = contentLength,
-                ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
                 DestinationSnapshot = destinationSnapshot,
                 RemainingRetentionDays = remainingRetentionDays,
@@ -18413,6 +18428,7 @@ namespace Azure.Storage.Blobs.Models
                 TagCount = tagCount,
                 ExpiresOn = expiresOn,
                 IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
                 ETag = eTag,
                 CreatedOn = createdOn,
                 CopyCompletedOn = copyCompletedOn,
@@ -18854,6 +18870,11 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob has been sealed
         /// </summary>
         public bool IsSealed { get; internal set; }
+
+        /// <summary>
+        /// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+        /// </summary>
+        public string RehydratePriority { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobPropertiesInternal instance
@@ -19400,6 +19421,11 @@ namespace Azure.Storage.Blobs.Models
         public string ErrorDocument404Path { get; set; }
 
         /// <summary>
+        /// Absolute path of the default index page
+        /// </summary>
+        public string DefaultIndexDocumentPath { get; set; }
+
+        /// <summary>
         /// Creates a new BlobStaticWebsite instance
         /// </summary>
         public BlobStaticWebsite() { }
@@ -19432,6 +19458,12 @@ namespace Azure.Storage.Blobs.Models
                     System.Xml.Linq.XName.Get("ErrorDocument404Path", ""),
                     value.ErrorDocument404Path));
             }
+            if (value.DefaultIndexDocumentPath != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("DefaultIndexDocumentPath", ""),
+                    value.DefaultIndexDocumentPath));
+            }
             return _element;
         }
 
@@ -19459,6 +19491,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.ErrorDocument404Path = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DefaultIndexDocumentPath", ""));
+            if (_child != null)
+            {
+                _value.DefaultIndexDocumentPath = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
