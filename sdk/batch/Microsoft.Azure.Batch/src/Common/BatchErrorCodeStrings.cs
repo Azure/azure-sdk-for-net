@@ -599,34 +599,56 @@ namespace Microsoft.Azure.Batch.Common
     /// </summary>
     public static class PoolResizeErrorCodes
     {
-        /// <summary>
-        /// The account has reached its quota of compute nodes.
-        /// </summary>
-        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
-
-        /// <summary>
-        /// An error occurred while trying to allocate the desired number of compute nodes.
-        /// </summary>
-        public const string AllocationFailed = "AllocationFailed";
-
-        /// <summary>
-        /// The Batch service was unable to allocate the desired number of compute nodes within the resize timeout.
-        /// </summary>
-        public const string AllocationTimedOut = "AllocationTimedout";
-
-        /// <summary>
-        /// An error occurred when removing compute nodes from the pool.
-        /// </summary>
-        public const string RemoveNodesFailed = "RemoveNodesFailed";
-
-        /// <summary>
-        /// The user stopped the resize operation.
-        /// </summary>
         public const string ResizeStopped = "ResizeStopped";
 
-        /// <summary>
-        /// The reason for the failure is not known.
-        /// </summary>
+        public const string RemoveNodesFailed = "RemoveNodesFailed";
+
+        public const string AllocationTimedout = "AllocationTimedout";
+
+        public const string AllocationFailed = "AllocationFailed";
+
+        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
+
+        public const string AccountLowPriorityCoreQuotaReached = "AccountLowPriorityCoreQuotaReached";
+
+        public const string MissingPublisherPropertyInMarketPlacePlan = "MissingPublisherPropertyInMarketPlacePlan";
+
+        public const string OverconstrainedAllocationRequestError = "OverconstrainedAllocationRequestError";
+
+        public const string CommunicationEnabledPoolReachedMaxVMCount = "CommunicationEnabledPoolReachedMaxVMCount";
+
+        public const string AccountSpotCoreQuotaReached = "AccountSpotCoreQuotaReached";
+
+        public const string FailedIdentityOperation = "FailedIdentityOperation";
+
+        public const string DiskEncryptionFailure = "DiskEncryptionFailure";
+
+        public const string DependentResourceNotFound = "DependentResourceNotFound";
+
+        public const string OperationsRestrictedByPolicy = "OperationsRestrictedByPolicy";
+
+        public const string OperationsOnPublicIPRestrictedByPolicy = "OperationsOnPublicIPRestrictedByPolicy";
+
+        public const string OperationsOnImageRestrictedByPolicy = "OperationsOnImageRestrictedByPolicy";
+
+        public const string OperationsOnNetworkSecurityGroupRestrictedByPolicy = "OperationsOnNetworkSecurityGroupRestrictedByPolicy";
+
+        public const string OperationsOnLoadBalancerRestrictedByPolicy = "OperationsOnLoadBalancerRestrictedByPolicy";
+
+        public const string OperationsOnVirtualNetworkRestrictedByPolicy = "OperationsOnVirtualNetworkRestrictedByPolicy";
+
+        public const string OperationsOnPrivateLinkRestrictedByPolicy = "OperationsOnPrivateLinkRestrictedByPolicy";
+
+        public const string OperationsOnPrivateEndpointRestrictedByPolicy = "OperationsOnPrivateEndpointRestrictedByPolicy";
+
+        public const string IncompatibleVMSize = "IncompatibleVMSize";
+
+        public const string IncomptabileForAcceleratedNetworking = "IncomptabileForAcceleratedNetworking";
+
+        public const string UnsupportedVMSize = "UnsupportedVMSize";
+
+        public const string VMSizeNotSupportedBySubscription = "VMSizeNotSupportedBySubscription";
+
         public const string Unknown = "Unknown";
     }
 
