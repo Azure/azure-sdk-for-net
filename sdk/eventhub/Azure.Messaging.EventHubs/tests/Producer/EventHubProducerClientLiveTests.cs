@@ -61,14 +61,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 	
-	[Test]
-        [TestCase(EventHubsTransportType.AmqpTcp)]
-        [TestCase(EventHubsTransportType.AmqpWebSockets)]
-        public async Task ProducerWithNoOptionsCanSend1(EventHubsTransportType transportType)
-        {
-	    Assert.AreEqual("bbbbbbbb", EventHubsTestEnvironment.Instance.ServiceManagementUrl);
-        }
-
         /// <summary>
         ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.
