@@ -66,7 +66,8 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets the tags to be applied to the imported certificate.
+        /// Gets the tags to be applied to the imported certificate. Although this collection cannot be set, it can be modified
+        ///  or initialized with a collection initializer.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
