@@ -24,15 +24,15 @@ namespace Azure.AI.FormRecognizer.Samples
             string receiptUri = FormRecognizerTestEnvironment.CreateUriString("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-            RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
             // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
 
-            foreach (RecognizedReceipt receipt in receipts)
+            foreach (RecognizedForm receipt in receipts)
             {
                 FormField merchantNameField;
-                if (receipt.RecognizedForm.Fields.TryGetValue("MerchantName", out merchantNameField))
+                if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
                 {
                     if (merchantNameField.Value.Type == FieldValueType.String)
                     {
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
 
                 FormField transactionDateField;
-                if (receipt.RecognizedForm.Fields.TryGetValue("TransactionDate", out transactionDateField))
+                if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
                 {
                     if (transactionDateField.Value.Type == FieldValueType.Date)
                     {
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
 
                 FormField itemsField;
-                if (receipt.RecognizedForm.Fields.TryGetValue("Items", out itemsField))
+                if (receipt.Fields.TryGetValue("Items", out itemsField))
                 {
                     if (itemsField.Value.Type == FieldValueType.List)
                     {
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
 
                 FormField totalField;
-                if (receipt.RecognizedForm.Fields.TryGetValue("Total", out totalField))
+                if (receipt.Fields.TryGetValue("Total", out totalField))
                 {
                     if (totalField.Value.Type == FieldValueType.Float)
                     {

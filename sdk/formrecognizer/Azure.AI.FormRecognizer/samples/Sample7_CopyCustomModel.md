@@ -68,6 +68,6 @@ Console.WriteLine($"Copied modelID => {newModel.ModelId}");
 
 
 To see the full example source files, see:
-* [Copy custom models](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample7_CopyModel.cs)
+* [Copy custom models](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample8_CopyModel.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
