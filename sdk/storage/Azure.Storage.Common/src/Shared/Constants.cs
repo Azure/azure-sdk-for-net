@@ -395,6 +395,7 @@ namespace Azure.Storage
                 public const char Process = 'p';
                 public const char Create = 'c';
                 public const char Tag = 't';
+                public const char FilterByTags = 'f';
             }
 
             internal static class Parameters

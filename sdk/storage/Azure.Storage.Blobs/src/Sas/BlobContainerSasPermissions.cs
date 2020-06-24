@@ -52,6 +52,11 @@ namespace Azure.Storage.Sas
         Tag = 64,
 
         /// <summary>
+        /// Indicates that deleting a Blob Version is permitted.
+        /// </summary>
+        DeleteBlobVersion = 128,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -93,6 +98,10 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobContainerSasPermissions.Delete) == BlobContainerSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & BlobContainerSasPermissions.DeleteBlobVersion) == BlobContainerSasPermissions.DeleteBlobVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
             }
             if ((permissions & BlobContainerSasPermissions.List) == BlobContainerSasPermissions.List)
             {

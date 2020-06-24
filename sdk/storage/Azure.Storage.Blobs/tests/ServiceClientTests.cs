@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -566,7 +567,7 @@ namespace Azure.Storage.Blobs.Test
             string expression = $"\"{tagKey}\"='{tagValue}'";
 
             // It takes a few seconds for Filter Blobs to pick up new changes
-            await Task.Delay(2000);
+            await Delay(2000);
 
             // Act
             List<BlobTagItem> blobs = new List<BlobTagItem>();
@@ -582,9 +583,51 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task FindBlobsByTagAsync_Error()
+        [TestCase(AccountSasPermissions.Filter)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task FindBlobsByTagAsync_AccountSas(AccountSasPermissions accountSasPermissions)
         {
             // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Delay(2000);
+
+            // Act
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
+            List<BlobTagItem> blobs = new List<BlobTagItem>();
+            await foreach (Page<BlobTagItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            BlobTagItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.IsNotNull(filterBlob);
+        }
+
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync_Error()
+        {
             // Arrange
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
