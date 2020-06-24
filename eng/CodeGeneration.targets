@@ -16,7 +16,6 @@
     <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
-    <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
@@ -36,21 +35,12 @@
     <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory)" />
   </Target>
 
+  <PropertyGroup Condition="'$(_GenerateCode)' == 'true'">
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
     <Compile Include="$(_AutoRestSharedCodeDirectory)/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>
-
-
-
-
-
-
-
-
-
-
-
-
-
