@@ -1,6 +1,29 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    ServiceDirectory: formrecognizer
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: formrecognizer
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.com'; location = 'westus2' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+
+      # AzureUSGovernment
+      - ServiceDirectory: formrecognizer
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.us'; location = 'usgovvirginia' }"
+        EnvVars:
+        AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+
+      # AzureChinaCloud
+      - ServiceDirectory: formrecognizer
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn'; location = 'chinaeast2' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
