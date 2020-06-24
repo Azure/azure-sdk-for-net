@@ -21,27 +21,27 @@ namespace Azure.Iot.Hub.Service
         private readonly DeviceMethodRestClient _deviceMethodRestClient;
 
         /// <summary>
-        /// place holder for Devices
+        /// place holder for Devices.
         /// </summary>
         public virtual DevicesClient Devices { get; private set; }
 
         /// <summary>
-        /// place holder for Modules
+        /// place holder for Modules.
         /// </summary>
         public virtual ModulesClient Modules { get; private set; }
 
         /// <summary>
-        /// place holder for Statistics
+        /// place holder for Statistics.
         /// </summary>
         public virtual StatisticsClient Statistics { get; private set; }
 
         /// <summary>
-        /// place holder for Messages
+        /// place holder for Messages.
         /// </summary>
         public virtual CloudToDeviceMessagesClient Messages { get; private set; }
 
         /// <summary>
-        /// place holder for Files
+        /// place holder for Files.
         /// </summary>
         public virtual FilesClient Files { get; private set; }
 
@@ -144,7 +144,7 @@ namespace Azure.Iot.Hub.Service
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _registryManagerRestClient = new RegistryManagerRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
-            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, null, options.GetVersionString());
+            _twinRestClient = new TwinRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
             _deviceMethodRestClient = new DeviceMethodRestClient(_clientDiagnostics, _httpPipeline, _endpoint, options.GetVersionString());
 
             Devices = new DevicesClient(_registryManagerRestClient, _twinRestClient, _deviceMethodRestClient);
