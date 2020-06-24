@@ -11,34 +11,28 @@
 namespace Microsoft.Azure.Management.Avs.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The properties of a default cluster
+    /// The properties of a cluster that may be updated
     /// </summary>
-    public partial class DefaultClusterProperties
+    public partial class ClusterUpdateProperties
     {
         /// <summary>
-        /// Initializes a new instance of the DefaultClusterProperties class.
+        /// Initializes a new instance of the ClusterUpdateProperties class.
         /// </summary>
-        public DefaultClusterProperties()
+        public ClusterUpdateProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultClusterProperties class.
+        /// Initializes a new instance of the ClusterUpdateProperties class.
         /// </summary>
-        /// <param name="clusterId">The identity</param>
         /// <param name="clusterSize">The cluster size</param>
-        /// <param name="hosts">The hosts</param>
-        public DefaultClusterProperties(int? clusterId = default(int?), int? clusterSize = default(int?), IList<string> hosts = default(IList<string>))
+        public ClusterUpdateProperties(int? clusterSize = default(int?))
         {
-            ClusterId = clusterId;
             ClusterSize = clusterSize;
-            Hosts = hosts;
             CustomInit();
         }
 
@@ -48,22 +42,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the identity
-        /// </summary>
-        [JsonProperty(PropertyName = "clusterId")]
-        public int? ClusterId { get; private set; }
-
-        /// <summary>
         /// Gets or sets the cluster size
         /// </summary>
         [JsonProperty(PropertyName = "clusterSize")]
         public int? ClusterSize { get; set; }
-
-        /// <summary>
-        /// Gets the hosts
-        /// </summary>
-        [JsonProperty(PropertyName = "hosts")]
-        public IList<string> Hosts { get; private set; }
 
     }
 }

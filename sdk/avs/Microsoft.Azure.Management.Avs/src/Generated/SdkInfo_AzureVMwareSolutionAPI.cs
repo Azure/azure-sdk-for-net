@@ -19,10 +19,12 @@ namespace Microsoft.Azure.Management.Avs
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("AVS", "Clusters", "2019-08-09-preview"),
-                new Tuple<string, string, string>("AVS", "Locations", "2019-08-09-preview"),
-                new Tuple<string, string, string>("AVS", "Operations", "2019-08-09-preview"),
-                new Tuple<string, string, string>("AVS", "PrivateClouds", "2019-08-09-preview"),
+                new Tuple<string, string, string>("AVS", "Authorizations", "2020-03-20"),
+                new Tuple<string, string, string>("AVS", "Clusters", "2020-03-20"),
+                new Tuple<string, string, string>("AVS", "HcxEnterpriseSites", "2020-03-20"),
+                new Tuple<string, string, string>("AVS", "Locations", "2020-03-20"),
+                new Tuple<string, string, string>("AVS", "Operations", "2020-03-20"),
+                new Tuple<string, string, string>("AVS", "PrivateClouds", "2020-03-20"),
               }.AsEnumerable();
           }
       }

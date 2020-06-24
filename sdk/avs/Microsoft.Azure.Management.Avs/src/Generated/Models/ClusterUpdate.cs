@@ -10,31 +10,32 @@
 
 namespace Microsoft.Azure.Management.Avs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Api error.
+    /// An update of a cluster resource
     /// </summary>
-    public partial class ApiErrorBase
+    [Rest.Serialization.JsonTransformation]
+    public partial class ClusterUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the ApiErrorBase class.
+        /// Initializes a new instance of the ClusterUpdate class.
         /// </summary>
-        public ApiErrorBase()
+        public ClusterUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiErrorBase class.
+        /// Initializes a new instance of the ClusterUpdate class.
         /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Error message</param>
-        public ApiErrorBase(string code = default(string), string message = default(string))
+        /// <param name="clusterSize">The cluster size</param>
+        public ClusterUpdate(int? clusterSize = default(int?))
         {
-            Code = code;
-            Message = message;
+            ClusterSize = clusterSize;
             CustomInit();
         }
 
@@ -44,16 +45,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code
+        /// Gets or sets the cluster size
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "properties.clusterSize")]
+        public int? ClusterSize { get; set; }
 
     }
 }
