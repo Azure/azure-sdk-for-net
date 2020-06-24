@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -19,6 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
@@ -33,6 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
@@ -44,6 +47,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -57,6 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -76,6 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -104,6 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedConnection(),
                 "entityPath",
+                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;

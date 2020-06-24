@@ -15,6 +15,7 @@ pr:
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
     - sdk/automation/Microsoft.Azure.Management.Automation
+    - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Commerce.Admin

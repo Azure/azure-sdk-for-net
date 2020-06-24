@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Tests
             : base()
         {
             JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)

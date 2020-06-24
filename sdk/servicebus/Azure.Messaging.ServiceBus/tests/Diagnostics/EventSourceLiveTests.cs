@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Tests.Plugins;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -203,6 +204,59 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(TimeSpan.FromSeconds(2));
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDeclaredEvent);
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDischargedEvent);
+            };
+        }
+
+        [Test]
+        public async Task LogsPluginEvents()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.SendReceivePlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                ServiceBusMessage message = GetMessage();
+                await sender.SendMessageAsync(message);
+                _listener.SingleEventById(ServiceBusEventSource.PluginStartEvent);
+                _listener.SingleEventById(ServiceBusEventSource.PluginCompleteEvent);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
+                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginCompleteEvent).Count());
+            };
+        }
+
+        [Test]
+        public async Task LogsPluginExceptionEvents()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.SendExceptionPlugin());
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                ServiceBusMessage message = GetMessage();
+                Assert.That(
+                    async () => await sender.SendMessageAsync(message),
+                    Throws.InstanceOf<NotImplementedException>());
+                _listener.SingleEventById(ServiceBusEventSource.PluginStartEvent);
+                _listener.SingleEventById(ServiceBusEventSource.PluginExceptionEvent);
+
+                options = new ServiceBusClientOptions();
+                options.AddPlugin(new PluginLiveTests.ReceiveExceptionPlugin());
+                client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(message);
+                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
+                Assert.AreEqual(1, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                Assert.That(
+                    async () => await receiver.ReceiveMessageAsync(),
+                    Throws.InstanceOf<NotImplementedException>());
+                Assert.AreEqual(3, _listener.EventsById(ServiceBusEventSource.PluginStartEvent).Count());
+                Assert.AreEqual(2, _listener.EventsById(ServiceBusEventSource.PluginExceptionEvent).Count());
             };
         }
     }

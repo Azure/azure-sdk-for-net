@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Receiver
+namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class ProcessorLiveTests : ServiceBusLiveTestBase
     {

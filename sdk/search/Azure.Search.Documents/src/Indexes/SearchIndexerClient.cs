@@ -139,6 +139,9 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexerDataSourceConnection dataSourceConnection,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
             try
@@ -169,6 +172,9 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexerDataSourceConnection dataSourceConnection,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
             try
@@ -205,6 +211,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
             try
@@ -243,6 +252,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
             try
@@ -272,11 +284,17 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default) => DeleteDataSourceConnection(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return DeleteDataSourceConnection(
                 dataSourceConnectionName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a data source connection.
@@ -288,12 +306,18 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default) => await DeleteDataSourceConnectionAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return await DeleteDataSourceConnectionAsync(
                 dataSourceConnectionName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes a data source connection.
@@ -310,11 +334,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response DeleteDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteDataSourceConnection(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            return DeleteDataSourceConnection(
                 dataSourceConnection?.Name,
                 dataSourceConnection?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a data source connection.
@@ -331,12 +361,18 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteDataSourceConnectionAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+
+            return await DeleteDataSourceConnectionAsync(
                 dataSourceConnection?.Name,
                 dataSourceConnection?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
@@ -397,6 +433,9 @@ namespace Azure.Search.Documents.Indexes
             string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();
             try
@@ -424,6 +463,9 @@ namespace Azure.Search.Documents.Indexes
             string dataSourceConnectionName,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();
             try
@@ -631,6 +673,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
             try
@@ -669,6 +714,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
             try
@@ -698,11 +746,17 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteIndexer(
             string indexerName,
-            CancellationToken cancellationToken = default) => DeleteIndexer(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return DeleteIndexer(
                 indexerName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -714,12 +768,18 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return await DeleteIndexerAsync(
                 indexerName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -736,11 +796,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response DeleteIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteIndexer(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return DeleteIndexer(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes an indexer.
@@ -757,12 +823,18 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response> DeleteIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(indexer, nameof(indexer));
+
+            return await DeleteIndexerAsync(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteIndexer(
             string indexerName,
@@ -1222,6 +1294,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
             try
@@ -1260,6 +1335,9 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
             try
@@ -1289,11 +1367,17 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteSkillset(
             string skillsetName,
-            CancellationToken cancellationToken = default) => DeleteSkillset(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return DeleteSkillset(
                 skillsetName,
                 null,
                 false,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1305,12 +1389,18 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return await DeleteSkillsetAsync(
                 skillsetName,
                 null,
                 false,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1327,11 +1417,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response DeleteSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteSkillset(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return DeleteSkillset(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a skillset.
@@ -1348,12 +1444,18 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response> DeleteSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // The REST client uses a different parameter name that would be confusing to reference.
+            Argument.AssertNotNull(skillset, nameof(skillset));
+
+            return await DeleteSkillsetAsync(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteSkillset(
             string skillsetName,

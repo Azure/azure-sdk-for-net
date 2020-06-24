@@ -42,12 +42,12 @@ namespace Microsoft.Azure.EventHubs.Tests
                 if (instance == await Task.WhenAny(instance, Task.Delay(timeout, timeoutTokenSource.Token)))
                 {
                     timeoutTokenSource.Cancel();
-                    instance.GetAwaiter().GetResult();
+                    await instance;
                     return;
                 }
             }
 
-            // A timeout occured.  Perform the needed actions to request cancellation, allow the task to
+            // A timeout occurred.  Perform the needed actions to request cancellation, allow the task to
             // complete unobserved, and to signal the caller.
             cancellationToken?.Cancel();
 
@@ -90,11 +90,11 @@ namespace Microsoft.Azure.EventHubs.Tests
                 if (instance == await Task.WhenAny(instance, Task.Delay(timeout, timeoutTokenSource.Token)))
                 {
                     timeoutTokenSource.Cancel();
-                    return instance.GetAwaiter().GetResult();
+                    return await instance;
                 }
             }
 
-            // A timeout occured.  Perform the needed actions to request cancellation, allow the task to
+            // A timeout occurred.  Perform the needed actions to request cancellation, allow the task to
             // complete unobserved, and to signal the caller.
             cancellationToken?.Cancel();
 
