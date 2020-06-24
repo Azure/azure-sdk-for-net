@@ -106,6 +106,22 @@ namespace Azure.Core.TestFramework
         public string ClientId => GetRecordedVariable("CLIENT_ID");
 
         /// <summary>
+        ///   The authority host of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string AuthorityHost => GetRecordedVariable("AZURE_AUTHORITY_HOST");
+
+
+        /// <summary>
+        ///   The service management Url of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string ServiceManagementUrl => GetRecordedVariable("SERVICE_MANAGEMENT_URL");
+
+        /// <summary>
+        ///   The storage account endpoint suffix of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
