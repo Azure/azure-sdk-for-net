@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual DataLakeFileClient GetFileClient(string fileName)
             => new DataLakeFileClient(
                 Uri,
-                $"{Name}/{fileName}",
+                $"{Path}/{fileName}",
                 Pipeline,
                 Version,
                 ClientDiagnostics);
@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
             => new DataLakeDirectoryClient(
                 Uri,
-                $"{Name}/{subdirectoryName}",
+                $"{Path}/{subdirectoryName}",
                 Pipeline,
                 Version,
                 ClientDiagnostics);
