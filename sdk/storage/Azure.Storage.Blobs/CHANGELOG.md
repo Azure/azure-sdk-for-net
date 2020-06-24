@@ -9,6 +9,7 @@
 - Added support for Append Seal.
 - Added support for Jumbo Blobs.
 - Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
 - Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
 - Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
 - Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
