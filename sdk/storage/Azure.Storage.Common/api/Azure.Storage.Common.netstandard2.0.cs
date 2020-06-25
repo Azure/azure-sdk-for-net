@@ -76,6 +76,9 @@ namespace Azure.Storage.Sas
         Create = 32,
         Update = 64,
         Process = 128,
+        Tag = 256,
+        Filter = 512,
+        DeleteVersion = 1024,
     }
     [System.FlagsAttribute]
     public enum AccountSasResourceTypes
