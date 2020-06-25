@@ -247,7 +247,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
-        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentiesAsync(
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentitiesAsync(
             IEnumerable<DeviceIdentity> deviceIdentities,
             BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
             CancellationToken cancellationToken = default)
@@ -278,7 +278,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
-        public virtual Response<BulkRegistryOperationResponse> UpdateIdenties(
+        public virtual Response<BulkRegistryOperationResponse> UpdateIdentities(
             IEnumerable<DeviceIdentity> deviceIdentities,
             BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
             CancellationToken cancellationToken = default)
