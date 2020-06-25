@@ -25,20 +25,22 @@ namespace Azure.AI.FormRecognizer.Samples
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
 
-            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained with labels
-            CustomFormModel modelWithLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                RecognizedFormCollection formsWithLabels = await client.StartRecognizeCustomForms(modelWithLabels.ModelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelTrainedWithLabels.ModelId, stream).WaitForCompletionAsync();
 
-                // With a form recognized by a model trained with labels, the 'field.Name' key will be its
-                // training-time label. Note that Label data is not returned for model trained with labels.
-                Console.WriteLine("---------Recognizing forms with models trained with labels---------");
-                foreach (RecognizedForm form in formsWithLabels)
+                // With a form recognized by a model trained with labels, the 'field.Name' key will be the label
+                // that you gave it at training time.
+                // Note that Label data is not returned for model trained with labels, as the trained model
+                // contains this information and therefore the service returns the value of the recognized label.
+                Console.WriteLine("---------Recognizing forms using models trained with labels---------");
+                foreach (RecognizedForm form in forms)
                 {
                     Console.WriteLine($"Form of type: {form.FormType}");
                     foreach (FormField field in form.Fields.Values)
@@ -52,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 // Find a specific labeled field.
                 // For this particular sample, we will look for the known training-time label 'VendorName'.
                 Console.WriteLine("Find the value for a specific labeled field:");
-                foreach (RecognizedForm form in formsWithLabels)
+                foreach (RecognizedForm form in forms)
                 {
                     if (form.Fields.TryGetValue("VendorName", out FormField field))
                     {
@@ -70,19 +72,20 @@ namespace Azure.AI.FormRecognizer.Samples
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
 
-            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained without labels
-            CustomFormModel modelWithoutLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                RecognizedFormCollection formsWithoutLabels = await client.StartRecognizeCustomForms(modelWithoutLabels.ModelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelTrainedWithoutLabels.ModelId, stream).WaitForCompletionAsync();
 
-                // With a form recognized by a model trained without labels, the 'field.Name' property will be denoted by a numeric index.
-                Console.WriteLine("---------Recognizing forms with models trained without labels---------");
-                foreach (RecognizedForm form in formsWithoutLabels)
+                // With a form recognized by a model trained without labels, the 'field.Name' property will be denoted
+                // by a numeric index.
+                Console.WriteLine("---------Recognizing forms using models trained without labels---------");
+                foreach (RecognizedForm form in forms)
                 {
                     Console.WriteLine($"Form of type: {form.FormType}");
                     foreach (FormField field in form.Fields.Values)
@@ -102,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 // Find the value of a specific unlabeled field.
                 // For this particular sample, we will look for the value of field 'Vendor Name'.
                 Console.WriteLine("Find the value for a specific unlabeled field:");
-                foreach (RecognizedForm form in formsWithoutLabels)
+                foreach (RecognizedForm form in forms)
                 {
                     foreach (FormField field in form.Fields.Values)
                     {
