@@ -15,6 +15,7 @@
 - Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
 - Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
 - Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
 
 ## 12.5.0-preview.4 (2020-06)
 - This preview contains bug fixes to improve quality.

@@ -200,6 +200,8 @@ namespace Azure.Storage.Blobs.Models
         Storage = 0,
         BlobStorage = 1,
         StorageV2 = 2,
+        FileStorage = 3,
+        BlockBlobStorage = 4,
     }
     public partial class AppendBlobCreateOptions
     {
