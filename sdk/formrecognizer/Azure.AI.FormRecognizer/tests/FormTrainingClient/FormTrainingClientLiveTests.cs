@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartTraining(bool singlePage, bool labeled)
         {
             var client = CreateInstrumentedFormTrainingClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             await operation.WaitForCompletionAsync(PollingInterval);
