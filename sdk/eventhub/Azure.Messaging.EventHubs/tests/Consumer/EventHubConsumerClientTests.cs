@@ -884,20 +884,22 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadEventsFromPartitionAsyncPublishesEventsWithOneIteratorAndMultipleBatches()
         {
+            var batchSize = 100;
             var events = new List<EventData>();
             var transportConsumer = new PublishingTransportConsumerMock(events);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var readOptions = new ReadEventOptions { CacheEventCount = batchSize };
             var receivedEvents = new List<EventData>();
 
             events.AddRange(
-                Enumerable.Range(0, (GetBackgroundPublishReceiveBatchSize(consumer) * 3))
+                Enumerable.Range(0, (batchSize * 3))
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
             );
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
-            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromSequenceNumber(123), cancellation.Token))
+            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromSequenceNumber(123), readOptions, cancellation.Token))
             {
                 receivedEvents.Add(partitionEvent.Data);
 
@@ -919,19 +921,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadEventsFromPartitionAsyncPublishesEventsWithMultipleIteratorsAndMultipleBatches()
         {
-            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5) };
             var events = new List<EventData>();
             var partition = "0";
+            var batchSize = 50;
             var position = EventPosition.FromSequenceNumber(453);
             var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(5), CacheEventCount = batchSize };
             var firstSubscriberEvents = new List<EventData>();
             var secondSubscriberEvents = new List<EventData>();
             var firstCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
             var secondCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             events.AddRange(
-                Enumerable.Range(0, (GetBackgroundPublishReceiveBatchSize(consumer) * 3))
+                Enumerable.Range(0, (batchSize * 3))
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event Number { index }")))
             );
 
@@ -2105,7 +2108,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(15));
-            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, ex => capturedException = ex, cancellation.Token);
+            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, 50, ex => capturedException = ex, cancellation.Token);
 
             // Allow publishing to continue until the timeout is reached or until the right number of events was
             // written.  If publishing sends duplicate events, there will be a mismatch when comparing the event
@@ -2179,7 +2182,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(2));
-            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, ex => capturedException = ex, cancellation.Token);
+            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, 100, ex => capturedException = ex, cancellation.Token);
 
             // Allow publishing to continue until the timeout is reached or until the right number of events was
             // written.  If publishing sends duplicate events, there will be a mismatch when comparing the event
@@ -2230,26 +2233,13 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                         TransportConsumer transportConsumer,
                                                                         Channel<PartitionEvent> channel,
                                                                         PartitionContext partitionContext,
+                                                                        int receiveBatchSize,
                                                                         Action<Exception> notifyException,
                                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventHubConsumerClient)
                     .GetMethod("StartBackgroundChannelPublishingAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(consumer, new object[] { transportConsumer, channel, partitionContext, notifyException, cancellationToken });
-
-        /// <summary>
-        ///   Retrieves the number of background publish event batch size for a consumer, using its private field.
-        /// </summary>
-        ///
-        /// <param name="consumer">The consumer to retrieve the channels for.</param>
-        ///
-        /// <returns>The size of the batch that is received when publishing events in the background.</returns>
-        ///
-        private int GetBackgroundPublishReceiveBatchSize(EventHubConsumerClient consumer) =>
-            (int)
-                typeof(EventHubConsumerClient)
-                    .GetField("BackgroundPublishReceiveBatchSize", BindingFlags.Static | BindingFlags.NonPublic)
-                    .GetValue(consumer);
+                    .Invoke(consumer, new object[] { transportConsumer, channel, partitionContext, receiveBatchSize, notifyException, cancellationToken });
 
         /// <summary>
         ///   Allows for observation of operations performed by the consumer for testing purposes.

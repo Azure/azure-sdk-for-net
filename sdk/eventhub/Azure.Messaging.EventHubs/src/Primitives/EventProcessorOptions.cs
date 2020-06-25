@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -93,9 +94,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
-        ///   whether a processing is currently active, intended to help maximize throughput by allowing the event processor to read
-        ///   from a local cache rather than waiting on a service request.
+        ///   The number of events that will be eagerly requested from the Event Hubs service and staged locally without regard to
+        ///   whether the processor is currently active, intended to help maximize throughput by buffering service operations rather than
+        ///   readers needing to wait for service operations to complete.
         /// </summary>
         ///
         /// <value>
@@ -103,6 +104,21 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
         ///   Event Hubs.
         /// </value>
+        ///
+        /// <remarks>
+        ///   The size of the prefetch count has an influence on the efficiency of reading events from the Event Hubs service.  The
+        ///   larger the size of the cache, the more efficiently service operations can be buffered in the background to
+        ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
+        ///
+        ///   For scenarios where the size of events is small and many events are flowing through the system, requesting more
+        ///   events in a batch and using a higher <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, requesting
+        ///   fewer events in a batch and using a smaller <see cref="PrefetchCount"/> may help manage resource use without
+        ///   incurring a non-trivial cost to throughput.
+        ///
+        ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
+        ///   times as large as the number of events in a batch to allow for efficient buffering of service operations.
+        /// </remarks>
         ///
         public int PrefetchCount
         {
@@ -190,6 +206,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <seealso cref="EventProcessor{TPartition}.ListCheckpointsAsync"/>
         ///
         public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
+
+        /// <summary>
+        ///   The strategy that an event processor will use to make decisions about
+        ///   partition ownership when performing load balancing to share work with
+        ///   other event processors.
+        /// </summary>
+        ///
+        /// <seealso cref="Processor.LoadBalancingStrategy" />
+        ///
+        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Balanced;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

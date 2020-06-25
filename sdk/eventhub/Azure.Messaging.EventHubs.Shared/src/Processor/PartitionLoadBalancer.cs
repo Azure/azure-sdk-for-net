@@ -13,7 +13,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
-    ///   Handles all load balancing concerns for an EventProcessorClient including claiming, stealing, and relinquishing ownership.
+    ///   Handles all load balancing concerns for an event processor including claiming, stealing, and relinquishing ownership.
     /// </summary>
     ///
     internal class PartitionLoadBalancer
