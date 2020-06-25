@@ -150,7 +150,7 @@ namespace Azure.Search.Documents.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                        ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -198,7 +198,7 @@ namespace Azure.Search.Documents.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                        ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                         ["address"] = new SearchDocument()
                         {
                             ["streetAddress"] = "677 5th Ave",
@@ -883,7 +883,7 @@ namespace Azure.Search.Documents.Tests
                     ["smokingAllowed"] = true,
                     ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     ["rating"] = 4L,
-                    ["location"] = TestExtensions.CreatePoint(-73.975403, 40.760586),
+                    ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
                     ["address"] = new SearchDocument
                     {
                         ["streetAddress"] = "677 5th Ave",
