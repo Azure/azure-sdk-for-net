@@ -705,19 +705,14 @@ namespace Microsoft.Azure.Batch.Common
         public const string OperationsOnPrivateEndpointRestrictedByPolicy = "OperationsOnPrivateEndpointRestrictedByPolicy";
         
         /// <summary>
-        /// Requested VM size is not compatible.
+        /// Requested VM size is not compatible with requested configuration.
         /// </summary>
         public const string IncompatibleVMSize = "IncompatibleVMSize";
         
         /// <summary>
-        /// Desired number of nodes could not be allocated due to a stop resize operation
-        /// </summary>
-        public const string UnsupportedVMSize = "UnsupportedVMSize";
-        
-        /// <summary>
         /// Requested VM size is not supported.
         /// </summary>
-        public const string VMSizeNotSupportedBySubscription = "VMSizeNotSupportedBySubscription";
+        public const string UnsupportedVMSize = "UnsupportedVMSize";
         
         /// <summary>
         /// The reason for the failure is not known.
