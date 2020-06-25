@@ -7,7 +7,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service.Samples
 {
     /// <summary>
-    /// This sample goes through the lifecycle of a Module Identity for a device
+    /// This sample goes through the lifecycle of a Module Identity for a device.
     /// </summary>
     internal class ModuleIdentityLifecycleSamples
     {
