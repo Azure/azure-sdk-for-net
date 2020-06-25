@@ -1255,6 +1255,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            // Add directory as superuser
+            DataLakeDirectoryClient subdirectory3 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateSubDirectoryAsync(GetNewDirectoryName());
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
@@ -1270,7 +1280,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1566,6 +1576,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            // Add directory as superuser
+            DataLakeDirectoryClient subdirectory3 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateSubDirectoryAsync(GetNewDirectoryName());
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
@@ -1581,7 +1601,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1877,6 +1897,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await test.FileSystem.GetDirectoryClient(directory.Name)
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file5 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file6 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateFileAsync(GetNewFileName());
+            // Add directory as superuser
+            DataLakeDirectoryClient subdirectory3 = await test.FileSystem.GetDirectoryClient(directory.Name)
+                .GetSubDirectoryClient(subdirectory2.Name)
+                .CreateSubDirectoryAsync(GetNewDirectoryName());
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
@@ -1892,7 +1922,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
             Assert.AreEqual(3, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(1, result.Counters.FailedChangesCount);
+            Assert.AreEqual(4, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
