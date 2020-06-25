@@ -3,7 +3,7 @@
   <!-- Azure.Core.Experimental feature flags -->
   <PropertyGroup>
     <!-- Enable everything by default -->
-    <UseAzureCoreExperimental Condition="'$(UseAzureCoreExperimental)' == ''">true</UseAzureCoreExperimental>
+    <UseAzureCoreExperimental Condition="'$(UseAzureCoreExperimental)' == ''">false</UseAzureCoreExperimental>
 
     <!-- Use Azure.Core.Experimental's Spatial features -->
     <!-- (Note: a number of tests will need re-recording if you disable) -->
@@ -15,7 +15,7 @@
     <DefineConstants Condition="'$(UseAzureCoreExperimentalSerializer)' == 'true'">EXPERIMENTAL_SERIALIZER;$(DefineConstants)</DefineConstants>
 
     <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
-    <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">false</UseAzureCoreExperimentalDynamic>
+    <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->

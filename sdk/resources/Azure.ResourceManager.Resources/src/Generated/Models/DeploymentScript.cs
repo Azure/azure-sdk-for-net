@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             Identity = identity;
             Location = location;
-            Kind = "DeploymentScript";
+            Kind = new ScriptType("DeploymentScript");
         }
 
         /// <summary> Initializes a new instance of DeploymentScript. </summary>

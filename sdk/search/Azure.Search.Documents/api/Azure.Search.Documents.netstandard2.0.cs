@@ -56,7 +56,6 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2019_05_06_Preview) { }
-        public Azure.Core.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -1966,8 +1965,6 @@ namespace Azure.Search.Documents.Models
         public System.Collections.Generic.IReadOnlyList<long> GetInt64Collection(string key) { throw null; }
         public Azure.Search.Documents.Models.SearchDocument GetObject(string key) { throw null; }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchDocument> GetObjectCollection(string key) { throw null; }
-        public Azure.Core.Spatial.PointGeometry GetPoint(string key) { throw null; }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.PointGeometry> GetPointCollection(string key) { throw null; }
         public string GetString(string key) { throw null; }
         public System.Collections.Generic.IReadOnlyList<string> GetStringCollection(string key) { throw null; }
         public bool Remove(string key) { throw null; }
@@ -2006,7 +2003,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits) { throw null; }
         public static Azure.Search.Documents.Models.SearchSuggestion<T> SearchSuggestion<T>(T document, string text) { throw null; }
-        public static Azure.Search.Documents.Models.SuggestResults<T> SuggestResults<T>(System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchSuggestion<T>> results, double? coverage) { throw null; }
+        public static Azure.Search.Documents.Models.SuggestResults<T> SuggestResults<T>(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchSuggestion<T>> results, double? coverage) { throw null; }
     }
     public enum SearchQueryType
     {
@@ -2049,7 +2046,7 @@ namespace Azure.Search.Documents.Models
     {
         internal SuggestResults() { }
         public double? Coverage { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchSuggestion<T>> Results { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchSuggestion<T>> Results { get { throw null; } }
     }
     public partial class ValueFacetResult<T>
     {

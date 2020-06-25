@@ -188,15 +188,15 @@ Recognize data from US sales receipts using a prebuilt model.
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
-    RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+    RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
 
     // To see the list of the supported fields returned by service and its corresponding types, consult:
     // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
 
-    foreach (RecognizedReceipt receipt in receipts)
+    foreach (RecognizedForm receipt in receipts)
     {
         FormField merchantNameField;
-        if (receipt.RecognizedForm.Fields.TryGetValue("MerchantName", out merchantNameField))
+        if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
         {
             if (merchantNameField.Value.Type == FieldValueType.String)
             {
@@ -207,7 +207,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         }
 
         FormField transactionDateField;
-        if (receipt.RecognizedForm.Fields.TryGetValue("TransactionDate", out transactionDateField))
+        if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
         {
             if (transactionDateField.Value.Type == FieldValueType.Date)
             {
@@ -218,7 +218,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         }
 
         FormField itemsField;
-        if (receipt.RecognizedForm.Fields.TryGetValue("Items", out itemsField))
+        if (receipt.Fields.TryGetValue("Items", out itemsField))
         {
             if (itemsField.Value.Type == FieldValueType.List)
             {
@@ -257,7 +257,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         }
 
         FormField totalField;
-        if (receipt.RecognizedForm.Fields.TryGetValue("Total", out totalField))
+        if (receipt.Fields.TryGetValue("Total", out totalField))
         {
             if (totalField.Value.Type == FieldValueType.Float)
             {
@@ -360,7 +360,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 ```C# Snippet:FormRecognizerBadRequest
 try
 {
-    RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+    RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
 }
 catch (RequestFailedException e)
 {
@@ -448,11 +448,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [recognize_content]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample1_RecognizeFormContent.md
-[recognize_receipts]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeReceipts.md
-[recognize_custom_forms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeCustomForms.md
-[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_TrainModel.md
-[manage_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_ManageCustomModels.md
-[copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_CopyCustomModel.md
+[recognize_custom_forms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeCustomForms.md
+[recognize_receipts]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeReceipts.md
+[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md
+[manage_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample6_ManageCustomModels.md
+[copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

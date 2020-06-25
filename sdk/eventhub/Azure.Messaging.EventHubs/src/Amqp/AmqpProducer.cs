@@ -324,7 +324,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             var failedAttemptCount = 0;
             var logPartition = PartitionId ?? partitionKey;
-            var messageHash = default(string);
+            var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var stopWatch = ValueStopwatch.StartNew();
 
             TimeSpan? retryDelay;
@@ -339,13 +339,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                     try
                     {
                         using AmqpMessage batchMessage = messageFactory();
-                        messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                         // Creation of the link happens without explicit knowledge of the cancellation token
                         // used for this operation; validate the token state before attempting link creation and
                         // again after the operation completes to provide best efforts in respecting it.
 
-                        EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
+                        EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, operationId);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
@@ -356,7 +355,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new EventHubsException(EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
+                            throw new EventHubsException(EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, operationId, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.
@@ -387,7 +386,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
+                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, operationId, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -415,12 +414,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
+                EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, operationId, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
+                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, operationId, failedAttemptCount);
             }
         }
 

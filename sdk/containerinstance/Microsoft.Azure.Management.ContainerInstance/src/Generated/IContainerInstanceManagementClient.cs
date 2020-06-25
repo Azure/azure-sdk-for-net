@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// </summary>
@@ -85,54 +81,14 @@ namespace Microsoft.Azure.Management.ContainerInstance
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IContainerGroupUsageOperations.
+        /// Gets the ILocationOperations.
         /// </summary>
-        IContainerGroupUsageOperations ContainerGroupUsage { get; }
+        ILocationOperations Location { get; }
 
         /// <summary>
-        /// Gets the IContainerOperations.
+        /// Gets the IContainersOperations.
         /// </summary>
-        IContainerOperations Container { get; }
-
-        /// <summary>
-        /// Gets the IServiceAssociationLinkOperations.
-        /// </summary>
-        IServiceAssociationLinkOperations ServiceAssociationLink { get; }
-
-        /// <summary>
-        /// Get the list of cached images.
-        /// </summary>
-        /// <remarks>
-        /// Get the list of cached images on specific OS type for a
-        /// subscription in a region.
-        /// </remarks>
-        /// <param name='location'>
-        /// The identifier for the physical azure location.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<CachedImagesListResult>> ListCachedImagesWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get the list of capabilities of the location.
-        /// </summary>
-        /// <remarks>
-        /// Get the list of CPU/memory/GPU capabilities of a region.
-        /// </remarks>
-        /// <param name='location'>
-        /// The identifier for the physical azure location.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<CapabilitiesListResult>> ListCapabilitiesWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IContainersOperations Containers { get; }
 
     }
 }
