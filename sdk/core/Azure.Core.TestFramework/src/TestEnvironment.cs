@@ -43,9 +43,18 @@ namespace Azure.Core.TestFramework
             var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
             if (File.Exists(testEnvironmentFile))
             {
-                var json = JsonDocument.Parse(
-                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
-                );
+                byte[] bytes = File.ReadAllBytes(testEnvironmentFile);
+
+                JsonDocument json;
+
+                if (bytes.AsSpan().IndexOf((byte)0) == -1)
+                {
+                    json = JsonDocument.Parse(bytes);
+                }
+                else
+                {
+                    json = JsonDocument.Parse(ProtectedData.Unprotect(bytes, null, DataProtectionScope.CurrentUser));
+                }
 
                 foreach (var property in json.RootElement.EnumerateObject())
                 {
