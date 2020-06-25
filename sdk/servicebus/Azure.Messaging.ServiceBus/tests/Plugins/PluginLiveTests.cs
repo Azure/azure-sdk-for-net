@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Plugins;
@@ -246,6 +247,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             }
         }
 
+        [Test]
+        public async Task CanOverrideProcess()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var first = new ProcessPlugin() { IsFirst = true };
+                var second = new ProcessPlugin();
+                options.AddPlugin(first);
+                options.AddPlugin(second);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await receiver.ReceiveMessageAsync();
+                Assert.IsTrue(first.SendCalled);
+                Assert.IsTrue(first.ReceiveCalled);
+                Assert.IsTrue(second.SendCalled);
+                Assert.IsTrue(second.ReceiveCalled);
+            }
+        }
+
 #pragma warning disable SA1402 // File may only contain a single type
         private class FirstPlugin : ServiceBusPlugin
 #pragma warning restore SA1402 // File may only contain a single type
@@ -312,6 +337,46 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             public override ValueTask AfterMessageReceiveAsync(ServiceBusReceivedMessage message)
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        internal class ProcessPlugin : ServiceBusPlugin
+        {
+            public bool IsFirst { get; set; }
+            public bool SendCalled { get; set; }
+            public bool ReceiveCalled { get; set; }
+            internal override ValueTask ProcessSendAsync(ServiceBusMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+            {
+                SendCalled = true;
+                if (IsFirst)
+                {
+                    message.Properties.Add("sendFirst", true);
+                }
+                else
+                {
+                }
+                var start = DateTimeOffset.UtcNow;
+                ProcessSendNextAsync(message, pipeline);
+                var end = DateTimeOffset.Now;
+                Assert.IsTrue(end > start);
+                return default;
+            }
+            internal override ValueTask ProcessReceiveAsync(ServiceBusReceivedMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+            {
+                ReceiveCalled = true;
+                if (IsFirst)
+                {
+                    SetUserProperty(message, "receiveFirst", true);
+                }
+                else
+                {
+                    Assert.True((bool)message.Properties["receiveFirst"]);
+                }
+                var start = DateTimeOffset.UtcNow;
+                ProcessReceiveNextAsync(message, pipeline);
+                var end = DateTimeOffset.Now;
+                Assert.IsTrue(end > start);
+                return default;
             }
         }
     }

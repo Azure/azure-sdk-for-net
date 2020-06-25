@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         private readonly TransportSender _innerSender;
         private readonly EntityScopeFactory _scopeFactory;
-        internal readonly IList<ServiceBusPlugin> _plugins;
+        private readonly ServiceBusPipeline _pipeline;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-                _plugins = plugins;
+                _pipeline = new ServiceBusPipeline(plugins.ToArray());
             }
             catch (Exception ex)
             {
@@ -186,7 +186,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 return;
             }
-            await ApplyPlugins(messageList).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: messageList.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(messages, DiagnosticProperty.SendActivityName);
@@ -194,6 +193,10 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
+                foreach (ServiceBusMessage message in messages)
+                {
+                    await _pipeline.ProcessSendAsync(message).ConfigureAwait(false);
+                }
                 await _innerSender.SendAsync(
                     messageList,
                     cancellationToken).ConfigureAwait(false);
@@ -209,27 +212,27 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusPlugin plugin in _plugins)
-            {
-                string pluginType = plugin.GetType().Name;
-                foreach (ServiceBusMessage message in messages)
-                {
-                    try
-                    {
-                        Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.BeforeMessageSendAsync(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(pluginType, message.MessageId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-                        throw;
-                    }
-                }
-            }
-        }
+        //private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
+        //{
+        //    foreach (ServiceBusPolicy plugin in _plugins)
+        //    {
+        //        string pluginType = plugin.GetType().Name;
+        //        foreach (ServiceBusMessage message in messages)
+        //        {
+        //            try
+        //            {
+        //                Logger.PluginCallStarted(pluginType, message.MessageId);
+        //                await plugin.ProcessOutgoingAsync(message, _plugins).ConfigureAwait(false);
+        //                Logger.PluginCallCompleted(pluginType, message.MessageId);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+        //                throw;
+        //            }
+        //        }
+        //    }
+        //}
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
@@ -428,7 +431,6 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
-            await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
                 messageList.Count,
@@ -445,6 +447,7 @@ namespace Azure.Messaging.ServiceBus
                 foreach (ServiceBusMessage message in messageList)
                 {
                     message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
+                    await _pipeline.ProcessSendAsync(message).ConfigureAwait(false);
                 }
                 sequenceNumbers = await _innerSender.ScheduleMessagesAsync(messageList, cancellationToken).ConfigureAwait(false);
             }

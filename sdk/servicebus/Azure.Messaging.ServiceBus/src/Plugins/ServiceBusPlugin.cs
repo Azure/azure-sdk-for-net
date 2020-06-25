@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus.Plugins
 {
@@ -12,6 +13,9 @@ namespace Azure.Messaging.ServiceBus.Plugins
     /// </summary>
     public abstract class ServiceBusPlugin
     {
+
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
         /// <summary>
         /// This operation is called before a message is sent and can be
         /// overridden to alter the body and the properties of an outgoing message.
@@ -28,6 +32,58 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to be modified by the plugin.</param>
         public virtual ValueTask AfterMessageReceiveAsync(ServiceBusReceivedMessage message) =>
             default;
+
+        internal virtual ValueTask ProcessSendAsync(ServiceBusMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+        {
+            string pluginType = GetType().Name;
+            try
+            {
+                Logger.PluginCallStarted(pluginType, message.ToString());
+                BeforeMessageSendAsync(message);
+                Logger.PluginCallCompleted(pluginType, message.MessageId);
+            }
+            catch (Exception ex)
+            {
+                Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+                throw;
+            }
+            return ProcessSendNextAsync(message, pipeline);
+        }
+
+        internal static ValueTask ProcessSendNextAsync(ServiceBusMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+        {
+            if (pipeline.Length > 0)
+            {
+                return pipeline.Span[0].ProcessSendAsync(message, pipeline.Slice(1));
+            }
+            return default;
+        }
+
+        internal virtual ValueTask ProcessReceiveAsync(ServiceBusReceivedMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+        {
+            string pluginType = GetType().Name;
+            try
+            {
+                Logger.PluginCallStarted(pluginType, message.ToString());
+                AfterMessageReceiveAsync(message);
+                Logger.PluginCallCompleted(pluginType, message.MessageId);
+            }
+            catch (Exception ex)
+            {
+                Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
+                throw;
+            }
+            return ProcessReceiveNextAsync(message, pipeline);
+        }
+
+        internal static ValueTask ProcessReceiveNextAsync(ServiceBusReceivedMessage message, ReadOnlyMemory<ServiceBusPlugin> pipeline)
+        {
+            if (pipeline.Length > 0)
+            {
+                return pipeline.Span[0].ProcessReceiveAsync(message, pipeline.Slice(1));
+            }
+            return default;
+        }
 
         /// <summary>
         /// Set the <see cref="ServiceBusReceivedMessage.Body"/>.

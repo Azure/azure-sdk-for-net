@@ -92,11 +92,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal EntityScopeFactory ScopeFactory => _scopeFactory;
         private readonly EntityScopeFactory _scopeFactory;
-
-        /// <summary>
-        /// The list of plugins to apply to incoming messages.
-        /// </summary>
-        private readonly IList<ServiceBusPlugin> _plugins;
+        private readonly ServiceBusPipeline _pipeline;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -149,7 +145,7 @@ namespace Azure.Messaging.ServiceBus
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-                _plugins = plugins;
+                _pipeline = new ServiceBusPipeline(plugins.ToArray());
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -210,7 +206,10 @@ namespace Azure.Messaging.ServiceBus
                     maxMessages,
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
-                await ApplyPlugins(messages).ConfigureAwait(false);
+                foreach (ServiceBusReceivedMessage message in messages)
+                {
+                    await _pipeline.ProcessReceiveAsync(message).ConfigureAwait(false);
+                }
             }
             catch (Exception exception)
             {
@@ -251,28 +250,6 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
-        }
-
-        private async Task ApplyPlugins(IList<ServiceBusReceivedMessage> messages)
-        {
-            foreach (ServiceBusPlugin plugin in _plugins)
-            {
-                string pluginType = plugin.GetType().Name;
-                foreach (ServiceBusReceivedMessage message in messages)
-                {
-                    try
-                    {
-                        Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(pluginType, message.MessageId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-                        throw;
-                    }
-                }
-            }
         }
 
         /// <summary>
