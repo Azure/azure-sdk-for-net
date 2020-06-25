@@ -40,21 +40,21 @@ namespace Azure.Iot.Hub.Service.Samples
             // Update Module Identity.
             await UpdateModuleIdentityAsync(deviceId, moduleId);
 
-            // Get Module Twin,
+            // Get Module Twin.
             await GetModuleTwinAsync(deviceId, moduleId);
 
             // Update Module Twin.
             await UpdateModuleTwinAsync(deviceId, moduleId);
 
-            // Delete the module identity
+            // Delete the module identity.
             await DeleteModuleIdentityAsync(deviceId, moduleId);
 
-            // Delete the device (cleanup)
+            // Delete the device (cleanup).
             await DeleteDeviceIdentityAsync(deviceId);
         }
 
         /// <summary>
-        /// Creates a new device identity
+        /// Creates a new device identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<DeviceIdentity> CreateDeviceIdentityAsync(string deviceId)
@@ -85,7 +85,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Creates a new module identity
+        /// Creates a new module identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device.</param>
         /// <param name="moduleId">Unique identifier of the new module.</param>
@@ -119,9 +119,9 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// List all module identities within a device
+        /// List all module identities within a device.
         /// </summary>
-        /// <param name="deviceId">Unique identifier of the device to query</param>
+        /// <param name="deviceId">Unique identifier of the device to query.</param>
         public async Task<IReadOnlyList<ModuleIdentity>> ListAllModulesAsync(string deviceId)
         {
             SampleLogger.PrintHeader("LIST ALL MODULES");
@@ -147,7 +147,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Get a module identity
+        /// Get a module identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
         /// <param name="moduleId">Unique identifier of the module to get.</param>
@@ -175,7 +175,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Update a module identity
+        /// Update a module identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
         /// <param name="moduleId">Unique identifier of the module to be updated.</param>
@@ -235,7 +235,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Update a module twin desired properties
+        /// Update a module twin desired properties.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
         /// <param name="moduleId">Unique identifier of the module to be updated.</param>
@@ -277,7 +277,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Deletes a module identity
+        /// Deletes a module identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
         /// <param name="moduleId">Unique identifier of the module to be updated.</param>
@@ -287,13 +287,13 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
-                // Get the module identity first
+                // Get the module identity first.
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
                 ModuleIdentity moduleIdentity = getResponse.Value;
 
                 Console.WriteLine($"Deleting module identity: DeviceId: '{moduleIdentity.DeviceId}', ModuleId: '{moduleIdentity.ModuleId}', ETag: '{moduleIdentity.Etag}'");
 
-                // We use UnconditionalIfMatch to force delete the Module Identity (disregard the IfMatch ETag)
+                // We use UnconditionalIfMatch to force delete the Module Identity (disregard the IfMatch ETag).
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
                 SampleLogger.PrintSuccess($"Successfully deleted module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}'");
@@ -305,7 +305,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Deletes a device identity
+        /// Deletes a device identity.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task DeleteDeviceIdentityAsync(string deviceId)
@@ -314,13 +314,13 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
-                // Get the device identity first
+                // Get the device identity first.
                 Response<DeviceIdentity> getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
                 DeviceIdentity deviceIdentity = getResponse.Value;
 
                 Console.WriteLine($"Deleting device identity with Id: '{deviceIdentity.DeviceId}'");
 
-                // We use UnconditionalIfMatch to force delete the Device Identity (disregard the IfMatch ETag)
+                // We use UnconditionalIfMatch to force delete the Device Identity (disregard the IfMatch ETag).
                 Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
                 SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
