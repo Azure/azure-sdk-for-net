@@ -77,11 +77,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// the model ID can be obtained. Upon disposal, the model will be deleted.
         /// </summary>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="useMultipageFiles">Whether or not to use multipage files for training.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels)
+        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, bool useMultipageFiles = false)
         {
             var trainingClient = CreateFormTrainingClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(useMultipageFiles ? TestEnvironment.MultipageBlobContainerSasUrl : TestEnvironment.BlobContainerSasUrl);
 
             return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval);
         }

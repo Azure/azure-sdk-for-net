@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -251,7 +250,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "File is not available in GitHub yet.")]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -283,8 +282,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleLine = formPage.Lines[3];
-                var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+                var sampleLine = formPage.Lines[1];
+                var expectedText = pageIndex == 0 ? "Vendor Registration" : "Vendor Details:";
 
                 Assert.AreEqual(expectedText, sampleLine.Text);
             }
@@ -597,7 +596,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "File is not available in GitHub yet.")]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -634,11 +633,17 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedForm.Fields["MerchantName"];
-                var expectedValueText = formIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+                if (formIndex == 0)
+                {
+                    var sampleField = recognizedForm.Fields["MerchantAddress"];
 
-                Assert.IsNotNull(sampleField.ValueText);
-                Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
+                    Assert.IsNotNull(sampleField.ValueText);
+                    Assert.AreEqual("2345 Dogwood Lane Birch, Kansas 98123", sampleField.ValueText.Text);
+                }
+                else if (formIndex == 1)
+                {
+                    Assert.IsFalse(recognizedForm.Fields.TryGetValue("MerchantAddress", out _));
+                }
             }
         }
 
@@ -804,14 +809,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "File is not available in GitHub yet.")]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, useMultipageFiles: true);
 
             if (useStream)
             {
@@ -834,16 +839,23 @@ namespace Azure.AI.FormRecognizer.Tests
             ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                 expectedFirstPageNumber: 1, expectedLastPageNumber: 2);
 
-            // Add fields assertions when https://github.com/Azure/azure-sdk-for-net/issues/12139
-            // is solved.
+            // Check some values to make sure that fields from both pages are being populated.
 
-            // Basic sanity test to make sure pages are ordered correctly.
+            Assert.AreEqual("Jamie@southridgevideo.com", recognizedForm.Fields["Contact"].Value.AsString());
+            Assert.AreEqual("Southridge Video", recognizedForm.Fields["CompanyName"].Value.AsString());
+            Assert.AreEqual("$1,500", recognizedForm.Fields["Gold"].Value.AsString());
+            Assert.AreEqual("$1,000", recognizedForm.Fields["Bronze"].Value.AsString());
+
+            Assert.AreEqual(2, recognizedForm.Pages.Count);
 
             for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
                 var formPage = recognizedForm.Pages[pageIndex];
-                var sampleLine = formPage.Lines[3];
-                var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+
+                // Basic sanity test to make sure pages are ordered correctly.
+
+                var sampleLine = formPage.Lines[1];
+                var expectedText = pageIndex == 0 ? "Vendor Registration" : "Vendor Details:";
 
                 Assert.AreEqual(expectedText, sampleLine.Text);
             }
@@ -1013,7 +1025,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
+        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
@@ -1021,7 +1033,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, useMultipageFiles: true);
 
             if (useStream)
             {
@@ -1051,11 +1063,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedForm.Fields["field-0"];
-                var expectedValueText = formIndex == 0 ? "300.00" : "3000.00";
+                var sampleField = recognizedForm.Fields["field-2"];
+                var expectedLabelText = formIndex == 0 ? "__Tokens__1" : "Contact:";
+                var expectedValueText = formIndex == 0 ? "Vendor Registration" : "Jamie@southridgevideo.com";
 
                 Assert.IsNotNull(sampleField.LabelText);
-                Assert.AreEqual("Subtotal:", sampleField.LabelText.Text);
+                Assert.AreEqual(expectedLabelText, sampleField.LabelText.Text);
                 Assert.IsNotNull(sampleField.ValueText);
                 Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
             }
@@ -1272,11 +1285,7 @@ namespace Azure.AI.FormRecognizer.Tests
                     Assert.NotNull(cell.Text);
                     Assert.NotNull(cell.TextContent);
 
-                    if (includeTextContent)
-                    {
-                        Assert.Greater(cell.TextContent.Count, 0);
-                    }
-                    else
+                    if (!includeTextContent)
                     {
                         Assert.AreEqual(0, cell.TextContent.Count);
                     }
