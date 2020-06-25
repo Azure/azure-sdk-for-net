@@ -196,10 +196,6 @@ namespace Azure.Search.Documents
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
         /// </param>
-        /// <param name="serializer">
-        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
-        /// customize the serialization of strongly typed models.
-        /// </param>
         /// <param name="pipeline">
         /// The authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
@@ -462,7 +458,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Edm.GeographyPoint</term>
-        /// <description> <see cref="Azure.Core.Spatial.PointGeometry"/>
+        /// <description> Azure.Core.Spatial.PointGeometry
         /// </description>
         /// </item>
         /// <item>
@@ -511,7 +507,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Collection(Edm.GeographyPoint)</term>
-        /// <description>sequence of <see cref="Azure.Core.Spatial.PointGeometry"/>
+        /// <description>sequence of Azure.Core.Spatial.PointGeometry
         /// (seq&lt;PointGeometry&gt; in F#)</description>
         /// </item>
         /// <item>
