@@ -295,8 +295,9 @@ namespace Azure.Storage.Files.DataLake.Models
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct AccessControlChangeOptions
     {
+        private int _dummyPrimitive;
         public int? BatchSize { get { throw null; } set { } }
-        public bool? forceFlag { get { throw null; } set { } }
+        public bool ContinueOnFailure { get { throw null; } set { } }
         public int? MaxBatches { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

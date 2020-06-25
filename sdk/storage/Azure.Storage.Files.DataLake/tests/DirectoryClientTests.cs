@@ -1258,7 +1258,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                continueOnFailure = true
+                ContinueOnFailure = true
             };
 
             // Act
@@ -1269,8 +1269,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1569,7 +1569,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                continueOnFailure = true
+                ContinueOnFailure = true
             };
 
             // Act
@@ -1580,8 +1580,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1880,7 +1880,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                continueOnFailure = true
+                ContinueOnFailure = true
             };
 
             // Act
@@ -1891,8 +1891,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
-            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 

@@ -25,7 +25,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional. If set to false, the operation will terminate quickly on encountering user failures. If true, the operation will ignore
         /// user failures and proceed with the operation on other sub-entities of the directory.
         /// </summary>
-        public bool continueOnFailure { get; set; }
-
+        public bool ContinueOnFailure { get; set; }
     }
 }
