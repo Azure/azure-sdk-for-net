@@ -56,7 +56,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Creates a new device identity
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier</param>
+        /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<DeviceIdentity> CreateDeviceIdentityAsync(string deviceId)
         {
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITY");
@@ -87,8 +87,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Creates a new module identity
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier</param>
-        /// <param name="moduleId">Module identity identifier for the new module identity</param>
+        /// <param name="deviceId">Unique identifier of the device.</param>
+        /// <param name="moduleId">Unique identifier of the new module.</param>
         public async Task<ModuleIdentity> CreateModuleIdentityAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("CREATE MODULE IDENTITY");
@@ -121,7 +121,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// List all module identities within a device
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier to query</param>
+        /// <param name="deviceId">Unique identifier of the device to query</param>
         public async Task<IReadOnlyList<ModuleIdentity>> ListAllModulesAsync(string deviceId)
         {
             SampleLogger.PrintHeader("LIST ALL MODULES");
@@ -149,8 +149,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Get a module identity
         /// </summary>
-        /// <param name="deviceId">The device identity unique identifier the module belongs to.</param>
-        /// <param name="moduleId">The unique identifier of the module to get.</param>
+        /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
+        /// <param name="moduleId">Unique identifier of the module to get.</param>
         public async Task<ModuleIdentity> GetModuleIdentityAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("GET A MODULE");
@@ -177,8 +177,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Update a module identity
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier the module belongs to.</param>
-        /// <param name="moduleId">Module identity unique identifier to be updated.</param>
+        /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
+        /// <param name="moduleId">Unique identifier of the module to be updated.</param>
         public async Task<ModuleIdentity> UpdateModuleIdentityAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("UPDATE A MODULE");
@@ -211,8 +211,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Get module twin.
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier the module belongs to.</param>
-        /// <param name="moduleId">Module identity unique identifier to be updated.</param>
+        /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
+        /// <param name="moduleId">Unique identifier of the module to be updated.</param>
         public async Task<TwinData> GetModuleTwinAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("GET A MODULE TWIN");
@@ -237,8 +237,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Update a module twin desired properties
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier the module belongs to.</param>
-        /// <param name="moduleId">Module identity unique identifier to be updated.</param>
+        /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
+        /// <param name="moduleId">Unique identifier of the module to be updated.</param>
         public async Task<TwinData> UpdateModuleTwinAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("UPDATE A MODULE TWIN");
@@ -279,8 +279,8 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Deletes a module identity
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier the module belongs to.</param>
-        /// <param name="moduleId">Module identity unique identifier to be updated.</param>
+        /// <param name="deviceId">Unique identifier of the device the module belongs to.</param>
+        /// <param name="moduleId">Unique identifier of the module to be updated.</param>
         public async Task DeleteModuleIdentityAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("DELETE MODULE IDENTITY");
@@ -307,7 +307,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Deletes a device identity
         /// </summary>
-        /// <param name="deviceId">Device identity unique identifier.</param>
+        /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task DeleteDeviceIdentityAsync(string deviceId)
         {
             SampleLogger.PrintHeader("DELETE DEVICE IDENTITY");
