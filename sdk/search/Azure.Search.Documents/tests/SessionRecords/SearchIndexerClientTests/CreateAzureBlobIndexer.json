@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -36,7 +36,7 @@
         "elapsed-time": "50",
         "ETag": "W/\u00220x8D8079E59DAB1A7\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027frgsqbma\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027frgsqbma\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -63,7 +63,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -93,7 +93,7 @@
         "elapsed-time": "1546",
         "ETag": "W/\u00220x8D8079E5AAED6F2\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -118,7 +118,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)?api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -176,7 +176,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -246,7 +246,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.run?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.run?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -276,7 +276,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -346,7 +346,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027mqmuncer\u0027)/search.status?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -429,7 +429,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027oaqoatsp\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027oaqoatsp\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -462,7 +462,7 @@
       "ResponseBody": "\uFEFF10"
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027oaqoatsp\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027oaqoatsp\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -136,7 +136,7 @@
         "elapsed-time": "756",
         "ETag": "W/\u00220x8D7F31DA513EDAE\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",

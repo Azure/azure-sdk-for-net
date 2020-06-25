@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -10040,7 +10040,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -19989,7 +19989,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -24038,11 +24038,11 @@
             "hotelId": "1899"
           }
         ],
-        "@odata.nextLink": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2019-05-06-Preview"
+        "@odata.nextLink": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2020-06-30"
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -28091,11 +28091,11 @@
             "hotelId": "998"
           }
         ],
-        "@odata.nextLink": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2019-05-06-Preview"
+        "@odata.nextLink": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2020-06-30"
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -28142,7 +28142,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fecfwled\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

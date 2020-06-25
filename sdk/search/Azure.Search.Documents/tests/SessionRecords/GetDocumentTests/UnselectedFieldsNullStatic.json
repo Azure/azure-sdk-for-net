@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -105,7 +105,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -138,7 +138,7 @@
       "ResponseBody": "{\u0022hotelName\u0022:\u0022Countryside Hotel\u0022,\u0022description\u0022:\u0022Save up to 50% off traditional hotels.  Free WiFi, great location near downtown, full kitchen, washer \u0026 dryer, 24/7 support, bowling alley, fitness center and more.\u0022,\u0022address\u0022:{\u0022city\u0022:\u0022Durham\u0022},\u0022rooms\u0022:[{\u0022baseRate\u0022:2.44},{\u0022baseRate\u0022:7.69}]}"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027mfcflcgs\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

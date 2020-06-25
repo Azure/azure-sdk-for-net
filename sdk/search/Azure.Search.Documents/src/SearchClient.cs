@@ -225,7 +225,7 @@ namespace Azure.Search.Documents
             Debug.Assert(pipeline != null);
             Debug.Assert(diagnostics != null);
             Debug.Assert(
-                SearchClientOptions.ServiceVersion.V2019_05_06_Preview <= version &&
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
                 version <= SearchClientOptions.LatestVersion);
 
             Endpoint = endpoint;

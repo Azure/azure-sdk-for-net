@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -64,7 +64,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -97,7 +97,7 @@
       "ResponseBody": "\uFEFF2"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -149,7 +149,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -182,7 +182,7 @@
       "ResponseBody": "\uFEFF2"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -229,7 +229,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -292,7 +292,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -325,7 +325,7 @@
       "ResponseBody": "\uFEFF3"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs(\u00272\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs(\u00272\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -372,7 +372,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -435,7 +435,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -468,7 +468,7 @@
       "ResponseBody": "\uFEFF1"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -519,7 +519,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -552,7 +552,7 @@
       "ResponseBody": "\uFEFF0"
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027hruwhqjq\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

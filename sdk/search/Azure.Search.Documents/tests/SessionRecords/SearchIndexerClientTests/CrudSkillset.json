@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -179,7 +179,7 @@
         "elapsed-time": "111",
         "ETag": "W/\u00220x8D813EE266AFD29\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -394,7 +394,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -790,7 +790,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -1028,7 +1028,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -1058,7 +1058,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?$select=name\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?$select=name\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -1094,7 +1094,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027ogagrbye\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027ogagrbye\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

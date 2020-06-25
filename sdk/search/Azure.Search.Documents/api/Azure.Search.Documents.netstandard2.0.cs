@@ -55,11 +55,11 @@ namespace Azure.Search.Documents
     }
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
-        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2019_05_06_Preview) { }
+        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2020_06_30) { }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
-            V2019_05_06_Preview = 1,
+            V2020_06_30 = 1,
         }
     }
     public static partial class SearchFilter

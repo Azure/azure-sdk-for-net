@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -30,7 +30,7 @@
         "elapsed-time": "20",
         "ETag": "W/\u00220x8D7F31E07B4FF4F\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -95,7 +95,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -141,7 +141,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps?$select=name\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps?$select=name\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -179,7 +179,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
@@ -218,7 +218,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",

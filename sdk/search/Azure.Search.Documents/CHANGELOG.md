@@ -2,9 +2,11 @@
 
 ## 11.0.0-preview.5 (Unreleased)
 
-### Minor Changes
+### Changed
 
 - Changed version to 11.0.0.
+- Removed preview version `SearchClientOptions.ServiceVersion.V2019_05_06_Preview`
+  and added version `SearchClientOptions.ServiceVersion.V2020_06_30`.
 
 ## 1.0.0-preview.4 (2020-06-09)
 
