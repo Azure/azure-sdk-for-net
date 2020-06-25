@@ -1356,15 +1356,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> UploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Upload<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Upload documents to the index as a batch.
@@ -1404,16 +1415,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> UploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Upload<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge documents to the index as a batch.
@@ -1453,15 +1475,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> MergeDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Merge<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge documents to the index as a batch.
@@ -1501,16 +1534,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> MergeDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Merge<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge or upload documents to the index as a batch.
@@ -1550,15 +1594,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> MergeOrUploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.MergeOrUpload<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge or upload documents to the index as a batch.
@@ -1598,16 +1653,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.MergeOrUpload<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch.
@@ -1647,15 +1713,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> DeleteDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Delete<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch.
@@ -1695,16 +1772,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Delete<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch given only their keys.
@@ -1739,16 +1827,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> DeleteDocuments(
             string keyName,
             IEnumerable<string> keyValues,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments(
-                IndexDocumentsBatch.Delete(keyName, keyValues),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch given only their keys.
@@ -1783,17 +1882,28 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync(
             string keyName,
             IEnumerable<string> keyValues,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync(
-                IndexDocumentsBatch.Delete(keyName, keyValues),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         #endregion Index Documents Conveniences
     }
 }
