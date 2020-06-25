@@ -251,7 +251,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<TwinData> getResponse = await IoTHubServiceClient.Modules.GetTwinAsync(deviceId, moduleId);
                 TwinData moduleTwin = getResponse.Value;
 
-                Console.WriteLine($"Updating module twin: DeviceId: '{moduleId}', ModuleId: '{moduleTwin.ModuleId}', ETag: '{moduleTwin.Etag}'");
+                Console.WriteLine($"Updating module twin: DeviceId: '{moduleId}', ModuleId: '{moduleId}', ETag: '{moduleTwin.Etag}'");
                 Console.WriteLine($"Setting a new desired property {userPropName} to: '{Environment.UserName}'");
 
                 moduleTwin.Properties.Desired.Add(new KeyValuePair<string, object>(userPropName, Environment.UserName));
@@ -265,7 +265,7 @@ namespace Azure.Iot.Hub.Service.Samples
                     .First()
                     .Value;
 
-                SampleLogger.PrintSuccess($"Successfully updated module twin: DeviceId: '{deviceId}', ModuleId: '{updatedTwin.ModuleId}', desired property: [{userPropName}: '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
+                SampleLogger.PrintSuccess($"Successfully updated module twin: DeviceId: '{deviceId}', ModuleId: '{moduleId}', desired property: [{userPropName}: '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
 
                 return updatedTwin;
             }
@@ -291,12 +291,12 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
                 ModuleIdentity moduleIdentity = getResponse.Value;
 
-                Console.WriteLine($"Deleting module identity: DeviceId: '{deviceId}', ModuleId: '{moduleIdentity.ModuleId}', ETag: '{moduleIdentity.Etag}'");
+                Console.WriteLine($"Deleting module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}', ETag: '{moduleIdentity.Etag}'");
 
                 // We use UnconditionalIfMatch to force delete the Module Identity (disregard the IfMatch ETag)
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
 
-                SampleLogger.PrintSuccess($"Successfully deleted module identity: DeviceId: '{deviceId}', ModuleId: '{moduleIdentity.ModuleId}'");
+                SampleLogger.PrintSuccess($"Successfully deleted module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}'");
             }
             catch (Exception ex)
             {
