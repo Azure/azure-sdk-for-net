@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the tags to be applied to the imported certificate. Although this collection cannot be set, it can be modified
-        ///  or initialized with a collection initializer.
+        ///  or initialized with a <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/how-to-initialize-a-dictionary-with-a-collection-initializer">collection initializer</see>.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
