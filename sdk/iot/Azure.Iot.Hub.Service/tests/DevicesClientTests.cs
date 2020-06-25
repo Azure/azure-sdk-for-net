@@ -118,6 +118,87 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
+        /// <summary>
+        /// Test bulk Device creation.
+        /// In this test we create 10 brand new devices and expect them all to be created with no issues.
+        /// </summary>
+        [Test]
+        public async Task Devices_BulkCreation()
+        {
+            string testDeviceprefix = $"bulkDevice";
+
+            IEnumerable<DeviceIdentity> devices = CreateMultipleDevices(testDeviceprefix, 10);
+
+            IoTHubServiceClient client = GetClient();
+
+            // Wrap all the operations in a try block to be able to cleanup in case of any failure.
+            try
+            {
+                // CREATE ALL DEVICES
+                Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
+
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+            }
+            finally
+            {
+                await Cleanup(client, devices);
+            }
+        }
+
+        /// <summary>
+        /// Test bulk Device creation.
+        /// 9 out of 10 devices are going to be brand new. One device alreadyExists.
+        /// </summary>
+        [Test]
+        [Ignore("DeviceRegistryOperationError cannot be parsed since service sends integer instead of a string")]
+        public async Task Devices_BulkCreation_OneAlreadyExists()
+        {
+            string testDeviceprefix = $"bulkDevice";
+            string existingDeviceName = $"{testDeviceprefix}{GetRandom()}";
+
+            IoTHubServiceClient client = GetClient();
+            // We first create a single device.
+            IList<DeviceIdentity> devices = CreateMultipleDevices(testDeviceprefix, 9);
+
+            // Wrap all the operations in a try block to be able to cleanup in case of any failure.
+            try
+            {
+                var response = await client.Devices.CreateOrUpdateIdentityAsync(new DeviceIdentity { DeviceId = existingDeviceName });
+
+                // Add the existing device to the list of devices to be bulk created.
+                devices.Add(response.Value);
+
+                // CREATE ALL DEVICES
+                Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
+
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+            }
+            finally
+            {
+                await Cleanup(client, devices);
+            }
+        }
+
+        private IList<DeviceIdentity> CreateMultipleDevices(string testDeviceprefix, int deviceCount)
+        {
+            List<DeviceIdentity> deviceList = new List<DeviceIdentity>();
+
+            for (int i = 0; i < deviceCount; i++)
+            {
+                deviceList.Add(new DeviceIdentity { DeviceId = $"{testDeviceprefix}{GetRandom()}" });
+            }
+
+            return deviceList;
+        }
+
+        private async Task Cleanup(IoTHubServiceClient client, IEnumerable<DeviceIdentity> devices)
+        {
+            foreach (var device in devices)
+            {
+                await Cleanup(client, device);
+            }
+        }
+
         private async Task Cleanup(IoTHubServiceClient client, DeviceIdentity device)
         {
             // cleanup
