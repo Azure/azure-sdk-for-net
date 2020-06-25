@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -37,8 +38,12 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// The sequence of suggestions returned by the query.
         /// </summary>
-        public IList<SearchSuggestion<T>> Results { get; internal set; } =
-            new List<SearchSuggestion<T>>();
+        internal List<SearchSuggestion<T>> _results = new List<SearchSuggestion<T>>();
+
+        /// <summary>
+        /// The sequence of suggestions returned by the query.
+        /// </summary>
+        public IReadOnlyList<SearchSuggestion<T>> Results => _results;
 
         /// <summary>
         /// Initializes a new instance of the SuggestResults class.
@@ -97,7 +102,7 @@ namespace Azure.Search.Documents.Models
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                        suggestions.Results.Add(suggestion);
+                        suggestions._results.Add(suggestion);
                     }
                 }
             }
@@ -109,15 +114,20 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of SearchResult. </summary>
         /// <typeparam name="T">
-        /// The .NET type that maps to the index schema. Instances of this type can
-        /// be retrieved as documents from the index.
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="results"></param>
-        /// <param name="coverage"></param>
+        /// <param name="results">
+        /// The sequence of suggestions returned by the query.
+        /// </param>
+        /// <param name="coverage">
+        /// A value indicating the percentage of the index that was included in
+        /// the query, or null if minimumCoverage was not set in the request.
+        /// </param>
         /// <returns>A new SuggestResults instance for mocking.</returns>
         public static SuggestResults<T> SuggestResults<T>(
-            IList<SearchSuggestion<T>> results,
+            IReadOnlyList<SearchSuggestion<T>> results,
             double? coverage) =>
-            new SuggestResults<T>() { Coverage = coverage, Results = results };
+            new SuggestResults<T>() { Coverage = coverage, _results = results?.ToList() };
     }
 }
