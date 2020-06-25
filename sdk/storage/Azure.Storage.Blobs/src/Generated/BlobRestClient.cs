@@ -15254,7 +15254,17 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// StorageV2
         /// </summary>
-        StorageV2
+        StorageV2,
+
+        /// <summary>
+        /// FileStorage
+        /// </summary>
+        FileStorage,
+
+        /// <summary>
+        /// BlockBlobStorage
+        /// </summary>
+        BlockBlobStorage
     }
 }
 #endregion enum AccountKind
