@@ -13,6 +13,9 @@ namespace Azure.Iot.Hub.Service.Tests
 {
     public class DevicesClientTests : E2eTestBase
     {
+        private const int BULK_DEVICE_COUNT = 10;
+        private TimeSpan QUERY_RETRY_LIMIT = TimeSpan.FromSeconds(10);
+
         public DevicesClientTests(bool isAsync)
             : base(isAsync)
         {
@@ -34,7 +37,7 @@ namespace Azure.Iot.Hub.Service.Tests
             // Wrap all the operations in a try block to be able to cleanup in case of any failure.
             try
             {
-                // CREATE A DEVICE
+                // Create a device
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new Models.DeviceIdentity
                     {
@@ -43,7 +46,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 device = createResponse.Value;
 
-                // GET DEVICE
+                // Get device
                 // Get the device and compare ETag values (should remain unchanged);
                 Response<DeviceIdentity> getResponse = await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false);
 
@@ -51,7 +54,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 device = getResponse.Value;
 
-                // UPDATE DEVICE
+                // Update a device
                 device.Status = DeviceStatus.Disabled;
 
                 // TODO: (azabbasi) We should leave the IfMatchPrecondition to be the default value once we know more about the fix.
@@ -59,7 +62,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 updateResponse.Value.Status.Should().Be(DeviceStatus.Disabled, "Device should have been disabled");
 
-                // DELETE DEVICE
+                // Delete the device
                 // Deleting the device happens in the finally block as cleanup.
             }
             finally
@@ -83,7 +86,7 @@ namespace Azure.Iot.Hub.Service.Tests
             // Wrap all the operations in a try block to be able to cleanup in case of any failure.
             try
             {
-                // CREATE A DEVICE
+                // Create a device
                 // Creating a device also creates a twin for the device.
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new Models.DeviceIdentity
@@ -93,13 +96,13 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 device = createResponse.Value;
 
-                // GET DEVICE TWIN
+                // Get the device twin
                 Response<TwinData> getResponse = await client.Devices.GetTwinAsync(testDeviceName).ConfigureAwait(false);
                 TwinData deviceTwin = getResponse.Value;
 
                 deviceTwin.DeviceId.Should().BeEquivalentTo(testDeviceName, "DeviceId on the Twin should match that of the device.");
 
-                // UPDATE DEVICE TWIN
+                // Update device twin
                 string propName = "username";
                 string propValue = "userA";
                 deviceTwin.Properties.Desired.Add(new KeyValuePair<string, object>(propName, propValue));
@@ -109,7 +112,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 updateResponse.Value.Properties.Desired.Where(p => p.Key == propName).First().Value.Should().Be(propValue, "Desired property value is incorrect.");
 
-                // DELETE DEVICE
+                // Delete the device
                 // Deleting the device happens in the finally block as cleanup.
             }
             finally
@@ -120,21 +123,21 @@ namespace Azure.Iot.Hub.Service.Tests
 
         /// <summary>
         /// Test bulk Device creation.
-        /// In this test we create 10 brand new devices and expect them all to be created with no issues.
+        /// In this test we create multiple brand new devices and expect them all to be created with no issues.
         /// </summary>
         [Test]
         public async Task Devices_BulkCreation()
         {
             string testDeviceprefix = $"bulkDevice";
 
-            IEnumerable<DeviceIdentity> devices = CreateMultipleDevices(testDeviceprefix, 10);
+            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT);
 
             IoTHubServiceClient client = GetClient();
 
             // Wrap all the operations in a try block to be able to cleanup in case of any failure.
             try
             {
-                // CREATE ALL DEVICES
+                // Create all devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
 
                 Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
@@ -147,7 +150,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
         /// <summary>
         /// Test bulk Device creation.
-        /// 9 out of 10 devices are going to be brand new. One device alreadyExists.
+        /// All but one devices are going to be brand new. One device alreadyExists.
         /// </summary>
         [Test]
         [Ignore("DeviceRegistryOperationError cannot be parsed since service sends integer instead of a string")]
@@ -157,18 +160,18 @@ namespace Azure.Iot.Hub.Service.Tests
             string existingDeviceName = $"{testDeviceprefix}{GetRandom()}";
 
             IoTHubServiceClient client = GetClient();
-            // We first create a single device.
-            IList<DeviceIdentity> devices = CreateMultipleDevices(testDeviceprefix, 9);
+            IList<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT-1);
 
             // Wrap all the operations in a try block to be able to cleanup in case of any failure.
             try
             {
-                var response = await client.Devices.CreateOrUpdateIdentityAsync(new DeviceIdentity { DeviceId = existingDeviceName });
+                // We first create a single device.
+                Response<DeviceIdentity> response = await client.Devices.CreateOrUpdateIdentityAsync(new DeviceIdentity { DeviceId = existingDeviceName });
 
                 // Add the existing device to the list of devices to be bulk created.
                 devices.Add(response.Value);
 
-                // CREATE ALL DEVICES
+                // Create all devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
 
                 Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
@@ -179,7 +182,101 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
-        private IList<DeviceIdentity> CreateMultipleDevices(string testDeviceprefix, int deviceCount)
+        /// <summary>
+        /// Test bulk device and twin creation.
+        /// </summary>
+        [Test]
+        public async Task Devices_BulkCreation_DeviceWithTwin()
+        {
+            string testDeviceprefix = $"bulkDeviceWithTwin";
+
+            IoTHubServiceClient client = GetClient();
+
+            IDictionary<string, object> desiredProperties = new Dictionary<string, object>
+            {
+                { "user", "userA" }
+            };
+
+            // We will build multiple devices and all of them with the same desired properties for convenience.
+            IDictionary<DeviceIdentity, TwinData> devicesAndTwins = BuildDevicesAndTwins(testDeviceprefix, BULK_DEVICE_COUNT, desiredProperties);
+
+            // Wrap all the operations in a try block to be able to cleanup in case of any failure.
+            try
+            {
+                // Create all devices with twins
+                Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesWithTwinAsync(devicesAndTwins).ConfigureAwait(false);
+
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+            }
+            finally
+            {
+                await Cleanup(client, devicesAndTwins.Keys);
+            }
+        }
+
+        /// <summary>
+        /// Test query by getting all twins.
+        /// </summary>
+        [Test]
+        public async Task Devices_Query_GetTwins()
+        {
+            string testDeviceprefix = $"bulkDevice";
+
+            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT);
+
+            IoTHubServiceClient client = GetClient();
+
+            // Wrap all the operations in a try block to be able to cleanup in case of any failure.
+            try
+            {
+                // Create all devices
+                Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
+
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+
+                // We will retry the operation since it can take some time for the query to match what was recently created.
+                int matchesFound = 0;
+                DateTimeOffset startTime = DateTime.UtcNow;
+
+                while (
+                    matchesFound != BULK_DEVICE_COUNT
+                    && DateTime.UtcNow - startTime < QUERY_RETRY_LIMIT)
+                {
+                    matchesFound = 0;
+                    AsyncPageable<TwinData> twins = client.Devices.GetTwinsAsync();
+
+                    // We will verify we have twins for all recently created devices.
+                    await foreach (TwinData twin in twins)
+                    {
+                        if (devices.Any(d => d.DeviceId.Equals(twin.DeviceId, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            matchesFound++;
+                        }
+                    }
+                }
+
+                matchesFound.Should().Be(BULK_DEVICE_COUNT, "Number of matching devices must be equal to count of recently created devices.");
+            }
+            finally
+            {
+                await Cleanup(client, devices);
+            }
+        }
+
+        private IDictionary<DeviceIdentity, TwinData> BuildDevicesAndTwins(string testDeviceprefix, int deviceCount, IDictionary<string, object> desiredProperties)
+        {
+            IList<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, deviceCount);
+            IDictionary<DeviceIdentity, TwinData> devicesAndTwins = new Dictionary<DeviceIdentity, TwinData>();
+
+            foreach (DeviceIdentity device in devices)
+            {
+                devicesAndTwins.Add(device, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+            }
+
+            return devicesAndTwins;
+        }
+
+        private IList<DeviceIdentity> BuildMultipleDevices(string testDeviceprefix, int deviceCount)
         {
             List<DeviceIdentity> deviceList = new List<DeviceIdentity>();
 
@@ -193,9 +290,16 @@ namespace Azure.Iot.Hub.Service.Tests
 
         private async Task Cleanup(IoTHubServiceClient client, IEnumerable<DeviceIdentity> devices)
         {
-            foreach (var device in devices)
+            try
             {
-                await Cleanup(client, device);
+                if (devices.Any())
+                {
+                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional);
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Test clean up failed: {ex.Message}");
             }
         }
 
