@@ -1258,7 +1258,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                forceFlag = true
+                continueOnFailure = true
             };
 
             // Act
@@ -1569,7 +1569,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                forceFlag = true
+                continueOnFailure = true
             };
 
             // Act
@@ -1880,7 +1880,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                forceFlag = true
+                continueOnFailure = true
             };
 
             // Act

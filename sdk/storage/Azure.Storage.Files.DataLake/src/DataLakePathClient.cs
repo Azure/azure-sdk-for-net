@@ -2424,6 +2424,7 @@ namespace Azure.Storage.Files.DataLake
                                     acl: accessControlList,
                                     async: async,
                                     continuation: continuationToken,
+                                    forceFlag: options.continueOnFailure ? true : (bool?) default,
                                     cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
 
