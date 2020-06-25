@@ -30,36 +30,10 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        /// <summary>
-        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
-        /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedFormRecognizerClient(bool useTokenCredential = false, string apiKey = default)
-        {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            FormRecognizerClient client;
-
-            if (useTokenCredential)
-            {
-                client = new FormRecognizerClient(endpoint, TestEnvironment.Credential, options);
-            }
-            else
-            {
-                var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
-                client = new FormRecognizerClient(endpoint, credential, options);
-            }
-
-            return InstrumentClient(client);
-        }
-
         [Test]
         public void FormRecognizerClientCannotAuthenticateWithFakeApiKey()
         {
-            var client = CreateInstrumentedFormRecognizerClient(apiKey: "fakeKey");
+            var client = CreateFormRecognizerClient(apiKey: "fakeKey");
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             using (Recording.DisableRequestBodyRecording())
@@ -71,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
-            var client = CreateInstrumentedFormRecognizerClient(useTokenCredential: true);
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
             RecognizeContentOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
@@ -98,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
             if (useStream)
@@ -190,7 +164,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
             if (useStream)
@@ -280,7 +254,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
             if (useStream)
@@ -319,7 +293,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeContentCanParseBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeContentOperation operation;
 
@@ -341,7 +315,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
@@ -380,7 +354,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeContentThrowsForDamagedFile()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
@@ -397,7 +371,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
@@ -412,7 +386,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeReceiptsOperation operation;
 
             if (useStream)
@@ -518,7 +492,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeReceiptsOperation operation;
 
             if (useStream)
@@ -626,7 +600,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeReceiptsOperation operation;
 
@@ -671,7 +645,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeReceiptsOperation operation;
 
@@ -699,7 +673,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeReceiptsOperation operation;
 
@@ -748,7 +722,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeReceiptsThrowsForDamagedFile()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
@@ -765,7 +739,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
@@ -782,7 +756,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, false)]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeTextContent)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions { IncludeTextContent = includeTextContent };
             RecognizeCustomFormsOperation operation;
 
@@ -833,7 +807,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -878,7 +852,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -908,7 +882,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -956,7 +930,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
             // Use Form_<id>.<ext> files for training with labels.
@@ -991,7 +965,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, false)]
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeTextContent)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions { IncludeTextContent = includeTextContent };
             RecognizeCustomFormsOperation operation;
 
@@ -1043,7 +1017,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -1090,7 +1064,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -1122,7 +1096,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
@@ -1183,7 +1157,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsThrowsForDamagedFile(bool useTrainingLabels)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
@@ -1205,7 +1179,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
-            var client = CreateInstrumentedFormRecognizerClient();
+            var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
