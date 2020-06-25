@@ -1,0 +1,278 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "708",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f433bd356157a36988a95da1517f36a2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDevice998842311\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1584729345\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice2096480809\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1263270320\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1255465691\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice226997166\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1851598639\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice304169616\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1765744542\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022},{\u0022id\u0022:\u0022bulkDevice1552665253\u0022,\u0022importMode\u0022:\u0022create\u0022,\u0022status\u0022:\u0022enabled\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "5d0ae470-ba00-4665-83e2-051f87c67007"
+      },
+      "ResponseBody": {
+        "isSuccessful": true,
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice998842311?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "fc65f2b361975233a4f9dacf64e3522c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "10767151-9909-4add-bb0b-25ca9a447b80"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1584729345?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "8eb4537045a93af26ca352850825b0aa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "222dcff2-9f65-40a0-835c-9de12900ce30"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice2096480809?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3dfa3979a22ad40e8ae04f5e87993ea5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "dad3f0f1-e5c8-4ca5-b2cf-edb0ca4e72cb"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1263270320?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "fd303157a7ca6ef8ff2b90f30ead497e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "e9340746-b7b4-4958-b88b-f078df5a81f4"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1255465691?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "2b562f4815e9ce0244e004c8f593b2d3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "35169ad9-7b05-45d9-8636-4db4a1a646a2"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice226997166?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d72ead64b3f5d1e0408b3dfe111bc5dc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "4b3eb7df-4bbc-4634-bbb3-cfabb8ceed8c"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1851598639?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5715d096134342bc2e61b8eaa330796b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "d6017c92-aa2e-4a8e-b80b-8037612dc811"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice304169616?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "618ebd79717f95894f84ea5dd703bc29",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "b12ac859-d478-4a2d-a4a5-79fcd8fc5936"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1765744542?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "2432281a5a7e5190f1eca993faf52e10",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "adc38151-68f8-485a-aea7-4165e2148ffa"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azade2ehub33.azure-devices.net/devices/bulkDevice1552665253?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200624.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5485d112648c245d478008be285f6a2b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 25 Jun 2020 00:01:11 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "03258119-1aff-4282-b7c1-09e13b45e0bc"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "IOT_HUB_CONNECTION_STRING": "HostName=AzadE2EHub33.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "RandomSeed": "1122923319"
+  }
+}
