@@ -212,28 +212,6 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        //private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
-        //{
-        //    foreach (ServiceBusPolicy plugin in _plugins)
-        //    {
-        //        string pluginType = plugin.GetType().Name;
-        //        foreach (ServiceBusMessage message in messages)
-        //        {
-        //            try
-        //            {
-        //                Logger.PluginCallStarted(pluginType, message.MessageId);
-        //                await plugin.ProcessOutgoingAsync(message, _plugins).ConfigureAwait(false);
-        //                Logger.PluginCallCompleted(pluginType, message.MessageId);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-        //                throw;
-        //            }
-        //        }
-        //    }
-        //}
-
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
             InstrumentMessages(messages);
