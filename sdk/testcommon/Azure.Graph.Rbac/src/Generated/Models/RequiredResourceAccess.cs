@@ -24,7 +24,7 @@ namespace Azure.Graph.Rbac.Models
                 throw new ArgumentNullException(nameof(resourceAccess));
             }
 
-            ResourceAccess = resourceAccess.ToArray();
+            ResourceAccess = resourceAccess.ToList();
             AdditionalProperties = new Dictionary<string, object>();
         }
 

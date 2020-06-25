@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             CellType = cellType;
             Metadata = metadata;
-            Source = source.ToArray();
+            Source = source.ToList();
             AdditionalProperties = new Dictionary<string, object>();
         }
 

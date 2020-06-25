@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Expression = expression;
-            Activities = activities.ToArray();
+            Activities = activities.ToList();
             Type = "Until";
         }
 
