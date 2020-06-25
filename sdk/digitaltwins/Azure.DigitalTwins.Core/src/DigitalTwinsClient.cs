@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -479,46 +481,8 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         /// </example>
         public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
-        {
-            if (digitalTwinId == null)
-            {
-                throw new ArgumentNullException(nameof(digitalTwinId));
-            }
-
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<RelationshipCollection> response = await _dtRestClient.ListRelationshipsAsync(digitalTwinId, relationshipName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<RelationshipCollection> response = await _dtRestClient.ListRelationshipsNextPageAsync(nextLink, digitalTwinId, relationshipName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            => PageableHelpers.CreateAsyncEnumerable(GetRelationshipsImplAsync(true, digitalTwinId, relationshipName, cancellationToken),
+                _clientDiagnostics, $"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
 
         /// <summary>
         /// Gets all the relationships on a digital twin by iterating through a collection synchronously.
@@ -540,45 +504,27 @@ namespace Azure.DigitalTwins.Core
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(GetRelationshipsImplAsync(false, digitalTwinId, relationshipName, cancellationToken).EnsureSyncEnumerable(),
+                _clientDiagnostics, $"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
+
+        private async IAsyncEnumerable<Page<string>> GetRelationshipsImplAsync(bool async, string digitalTwinId, string relationshipName, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            if (digitalTwinId == null)
-            {
-                throw new ArgumentNullException(nameof(digitalTwinId));
-            }
+            Argument.AssertNotNull(digitalTwinId, nameof(digitalTwinId));
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<RelationshipCollection> response = _dtRestClient.ListRelationships(digitalTwinId, relationshipName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
+            Response<RelationshipCollection> response = async
+                ? await _dtRestClient.ListRelationshipsAsync(digitalTwinId, relationshipName, cancellationToken).ConfigureAwait(false)
+                : _dtRestClient.ListRelationships(digitalTwinId, relationshipName, cancellationToken);
 
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<RelationshipCollection> response = _dtRestClient.ListRelationshipsNextPage(nextLink, digitalTwinId, relationshipName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
+            yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            while (!string.IsNullOrEmpty(response.Value.NextLink))
+            {
+                response = async
+                    ? await _dtRestClient.ListRelationshipsNextPageAsync(response.Value.NextLink, digitalTwinId, relationshipName, cancellationToken).ConfigureAwait(false)
+                    : _dtRestClient.ListRelationshipsNextPage(response.Value.NextLink, digitalTwinId, relationshipName, cancellationToken);
+
+                yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }
         }
 
         /// <summary>
@@ -607,41 +553,8 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         /// </example>
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<IncomingRelationship>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<IncomingRelationshipCollection> response = await _dtRestClient.ListIncomingRelationshipsAsync(digitalTwinId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            async Task<Page<IncomingRelationship>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
-                scope.Start();
-                try
-                {
-                    Response<IncomingRelationshipCollection> response = await _dtRestClient.ListIncomingRelationshipsNextPageAsync(nextLink, digitalTwinId, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            => PageableHelpers.CreateAsyncEnumerable(GetIncomingRelationshipsImplAsync(true, digitalTwinId, cancellationToken),
+                _clientDiagnostics, "DigitalTwinsGeneratedClient.ListIncomingRelationships");
 
         /// <summary>
         /// Gets all the relationships referencing a digital twin as a target by iterating through a collection synchronously.
@@ -662,40 +575,25 @@ namespace Azure.DigitalTwins.Core
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Pageable<IncomingRelationship> GetIncomingRelationships(string digitalTwinId, CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(GetIncomingRelationshipsImplAsync(false, digitalTwinId, cancellationToken).EnsureSyncEnumerable(),
+                _clientDiagnostics, "DigitalTwinsGeneratedClient.ListIncomingRelationships");
+
+        private async IAsyncEnumerable<Page<IncomingRelationship>> GetIncomingRelationshipsImplAsync(bool async, string digitalTwinId, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            Page<IncomingRelationship> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsGeneratedClient.ListIncomingRelationships");
-                scope.Start();
-                try
-                {
-                    Response<IncomingRelationshipCollection> response = _dtRestClient.ListIncomingRelationships(digitalTwinId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            Response<IncomingRelationshipCollection> response = async
+                ? await _dtRestClient.ListIncomingRelationshipsAsync(digitalTwinId, cancellationToken).ConfigureAwait(false)
+                : _dtRestClient.ListIncomingRelationships(digitalTwinId, cancellationToken);
 
-            Page<IncomingRelationship> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsGeneratedClient.ListIncomingRelationships");
-                scope.Start();
-                try
-                {
-                    Response<IncomingRelationshipCollection> response = _dtRestClient.ListIncomingRelationshipsNextPage(nextLink, digitalTwinId, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            while (!string.IsNullOrEmpty(response.Value.NextLink))
+            {
+                response = async
+                    ? await _dtRestClient.ListIncomingRelationshipsNextPageAsync(response.Value.NextLink, digitalTwinId, cancellationToken).ConfigureAwait(false)
+                    : _dtRestClient.ListIncomingRelationshipsNextPage(response.Value.NextLink, digitalTwinId, cancellationToken);
+
+                yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }
         }
 
         /// <summary>
@@ -953,41 +851,8 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         /// </example>
         public virtual AsyncPageable<ModelData> GetModelsAsync(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ModelData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
-                scope.Start();
-                try
-                {
-                    Response<PagedModelDataCollection> response = await _dtModelsRestClient.ListAsync(dependenciesFor, includeModelDefinition, options, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<ModelData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
-                scope.Start();
-                try
-                {
-                    Response<PagedModelDataCollection> response = await _dtModelsRestClient.ListNextPageAsync(nextLink, dependenciesFor, includeModelDefinition, options, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            => PageableHelpers.CreateAsyncEnumerable(GetModelsImplAsync(true, dependenciesFor, includeModelDefinition, options, cancellationToken),
+                _clientDiagnostics, "DigitalTwinModelsClient.List");
 
         /// <summary>
         /// Gets the list of models by iterating through a collection synchronously.
@@ -1007,40 +872,27 @@ namespace Azure.DigitalTwins.Core
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Pageable<ModelData> GetModels(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(GetModelsImplAsync(false, dependenciesFor, includeModelDefinition, options, cancellationToken).EnsureSyncEnumerable(),
+                _clientDiagnostics, "DigitalTwinModelsClient.List");
+
+        private async IAsyncEnumerable<Page<ModelData>> GetModelsImplAsync(bool async, IEnumerable<string> dependenciesFor, bool includeModelDefinition, GetModelsOptions options, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            Page<ModelData> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
-                scope.Start();
-                try
-                {
-                    Response<PagedModelDataCollection> response = _dtModelsRestClient.List(dependenciesFor, includeModelDefinition, options, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            var dependenciesList = dependenciesFor?.ToList();
 
-            Page<ModelData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
-                scope.Start();
-                try
-                {
-                    Response<PagedModelDataCollection> response = _dtModelsRestClient.ListNextPage(nextLink, dependenciesFor, includeModelDefinition, options, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            Response<PagedModelDataCollection> response = async
+                ? await _dtModelsRestClient.ListAsync(dependenciesList, includeModelDefinition, options, cancellationToken).ConfigureAwait(false)
+                : _dtModelsRestClient.List(dependenciesList, includeModelDefinition, options, cancellationToken);
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+
+            while (!string.IsNullOrEmpty(response.Value.NextLink))
+            {
+                response = async
+                    ? await _dtModelsRestClient.ListNextPageAsync(response.Value.NextLink, dependenciesList, includeModelDefinition, options, cancellationToken).ConfigureAwait(false)
+                    : _dtModelsRestClient.ListNextPage(response.Value.NextLink, dependenciesList, includeModelDefinition, options, cancellationToken);
+
+                yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }
         }
 
         /// <summary>
@@ -1328,51 +1180,8 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         /// </example>
         public virtual AsyncPageable<string> QueryAsync(string query, CancellationToken cancellationToken = default)
-        {
-            // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
-            // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var querySpecification = new QuerySpecification
-                    {
-                        Query = query
-                    };
-                    Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Items, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var querySpecification = new QuerySpecification
-                    {
-                        ContinuationToken = nextLink
-                    };
-                    Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Items, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            => PageableHelpers.CreateAsyncEnumerable(QueryImplAsync(true, query, cancellationToken),
+                _clientDiagnostics, $"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
 
         /// <summary>
         /// Queries for digital twins by iterating through a collection synchronously.
@@ -1393,50 +1202,37 @@ namespace Azure.DigitalTwins.Core
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Pageable<string> Query(string query, CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(QueryImplAsync(false, query, cancellationToken).EnsureSyncEnumerable(),
+                _clientDiagnostics, $"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
+
+        private async IAsyncEnumerable<Page<string>> QueryImplAsync(bool async, string query, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
-            // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            var querySpecification = new QuerySpecification
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var querySpecification = new QuerySpecification
-                    {
-                        Query = query
-                    };
-                    Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, cancellationToken);
-                    return Page.FromValues(response.Value.Items, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
+                Query = query
+            };
 
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+            ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> response = async
+                ? await _queryClient.QueryTwinsAsync(querySpecification, cancellationToken).ConfigureAwait(false)
+                : _queryClient.QueryTwins(querySpecification, cancellationToken);
+            var continuationToken = response.Value.ContinuationToken;
+
+            yield return Page.FromValues(response.Value.Items, continuationToken, response.GetRawResponse());
+
+            while (!string.IsNullOrEmpty(continuationToken))
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-                scope.Start();
-                try
+                querySpecification = new QuerySpecification
                 {
-                    var querySpecification = new QuerySpecification
-                    {
-                        ContinuationToken = nextLink
-                    };
-                    Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, cancellationToken);
-                    return Page.FromValues(response.Value.Items, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
+                    ContinuationToken = continuationToken
+                };
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                response = async
+                    ? await _queryClient.QueryTwinsAsync(querySpecification, cancellationToken).ConfigureAwait(false)
+                    : _queryClient.QueryTwins(querySpecification, cancellationToken);
+                continuationToken = response.Value.ContinuationToken;
+
+                yield return Page.FromValues(response.Value.Items, continuationToken, response.GetRawResponse());
+            }
         }
 
         /// <summary>.
@@ -1461,41 +1257,8 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         /// </example>
         public virtual AsyncPageable<EventRoute> GetEventRoutesAsync(EventRoutesListOptions options = default, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<EventRoute>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
-                scope.Start();
-                try
-                {
-                    Response<EventRouteCollection> response = await _eventRoutesRestClient.ListAsync(options, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<EventRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
-                scope.Start();
-                try
-                {
-                    Response<EventRouteCollection> response = await _eventRoutesRestClient.ListNextPageAsync(nextLink, options, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            => PageableHelpers.CreateAsyncEnumerable(GetEventRoutesImplAsync(true, options, cancellationToken),
+                _clientDiagnostics, "EventRoutesClient.List");
 
         /// <summary>.
         /// Lists the event routes in a digital twins instance by iterating through a collection synchronously.
@@ -1513,40 +1276,25 @@ namespace Azure.DigitalTwins.Core
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Pageable<EventRoute> GetEventRoutes(EventRoutesListOptions options = default, CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(GetEventRoutesImplAsync(false, options, cancellationToken).EnsureSyncEnumerable(),
+                _clientDiagnostics, "EventRoutesClient.List");
+
+        private async IAsyncEnumerable<Page<EventRoute>> GetEventRoutesImplAsync(bool async, EventRoutesListOptions options, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            Page<EventRoute> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
-                scope.Start();
-                try
-                {
-                    Response<EventRouteCollection> response = _eventRoutesRestClient.List(options, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            Response<EventRouteCollection> response = async
+                ? await _eventRoutesRestClient.ListAsync(options, cancellationToken).ConfigureAwait(false)
+                : _eventRoutesRestClient.List(options, cancellationToken);
 
-            Page<EventRoute> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
-                scope.Start();
-                try
-                {
-                    Response<EventRouteCollection> response = _eventRoutesRestClient.ListNextPage(nextLink, options, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
+            yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            while (!string.IsNullOrEmpty(response.Value.NextLink))
+            {
+                response = async
+                    ? await _eventRoutesRestClient.ListNextPageAsync(response.Value.NextLink, options, cancellationToken).ConfigureAwait(false)
+                    : _eventRoutesRestClient.ListNextPage(response.Value.NextLink, options, cancellationToken);
+
+                yield return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }
         }
 
         /// <summary>

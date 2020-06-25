@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -231,20 +233,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
-        {
-            Page<CustomFormModelInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                Response<Models_internal> response =  ServiceClient.ListCustomModels(cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
-            }
-            Page<CustomFormModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                Response<Models_internal> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+        public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateAsyncEnumerable(GetCustomModelsImplAsync(true, cancellationToken));
 
         /// <summary>
         /// Gets a collection of items describing the models trained on this Cognitive Services Account
@@ -253,19 +243,26 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
+            => PageableHelpers.CreateEnumerable(GetCustomModelsImplAsync(false, cancellationToken).EnsureSyncEnumerable());
+
+        private async IAsyncEnumerable<Page<CustomFormModelInfo>> GetCustomModelsImplAsync(bool async, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            async Task<Page<CustomFormModelInfo>> FirstPageFunc(int? pageSizeHint)
+            Response<Models_internal> response = async
+                ? await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false)
+                : ServiceClient.ListCustomModels(cancellationToken);
+
+            yield return GetPage(response);
+            while (!string.IsNullOrEmpty(response.Value.NextLink))
             {
-                Response<Models_internal> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                response = async
+                    ? await ServiceClient.ListCustomModelsNextPageAsync(response.Value.NextLink, cancellationToken).ConfigureAwait(false)
+                    : ServiceClient.ListCustomModelsNextPage(response.Value.NextLink, cancellationToken);
+                yield return GetPage(response);
             }
-            async Task<Page<CustomFormModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                Response<Models_internal> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+
+            static Page<CustomFormModelInfo> GetPage(Response<Models_internal> response)
+                => Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
         }
 
         /// <summary>
