@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
             string pluginType = GetType().Name;
             try
             {
-                Logger.PluginCallStarted(pluginType, message.ToString());
+                Logger.PluginCallStarted(pluginType, message.MessageId);
                 BeforeMessageSendAsync(message);
                 Logger.PluginCallCompleted(pluginType, message.MessageId);
             }
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
             string pluginType = GetType().Name;
             try
             {
-                Logger.PluginCallStarted(pluginType, message.ToString());
+                Logger.PluginCallStarted(pluginType, message.MessageId);
                 AfterMessageReceiveAsync(message);
                 Logger.PluginCallCompleted(pluginType, message.MessageId);
             }
