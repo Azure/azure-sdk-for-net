@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -38,12 +39,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// The sequence of suggestions returned by the query.
         /// </summary>
-        internal List<SearchSuggestion<T>> _results = new List<SearchSuggestion<T>>();
-
-        /// <summary>
-        /// The sequence of suggestions returned by the query.
-        /// </summary>
-        public IReadOnlyList<SearchSuggestion<T>> Results => _results;
+        public IReadOnlyList<SearchSuggestion<T>> Results { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the SuggestResults class.
@@ -91,6 +87,7 @@ namespace Azure.Search.Documents.Models
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
+                    List<SearchSuggestion<T>> results = new List<SearchSuggestion<T>>();
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {
                         SearchSuggestion<T> suggestion = await SearchSuggestion<T>.DeserializeAsync(
@@ -102,8 +99,9 @@ namespace Azure.Search.Documents.Models
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                        suggestions._results.Add(suggestion);
+                        results.Add(suggestion);
                     }
+                    suggestions.Results = new ReadOnlyCollection<SearchSuggestion<T>>(results);
                 }
             }
             return suggestions;
@@ -128,6 +126,6 @@ namespace Azure.Search.Documents.Models
         public static SuggestResults<T> SuggestResults<T>(
             IReadOnlyList<SearchSuggestion<T>> results,
             double? coverage) =>
-            new SuggestResults<T>() { Coverage = coverage, _results = results?.ToList() };
+            new SuggestResults<T>() { Coverage = coverage, Results = results };
     }
 }
