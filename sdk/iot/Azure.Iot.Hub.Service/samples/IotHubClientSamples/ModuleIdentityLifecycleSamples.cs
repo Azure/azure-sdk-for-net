@@ -73,7 +73,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
-                SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{deviceId}', ETag: '{response.Value.Etag}'");
+                SampleLogger.PrintSuccess($"Successfully create a new device identity with Id: '{response.Value.DeviceId}', ETag: '{response.Value.Etag}'");
 
                 return response.Value;
             }
@@ -107,7 +107,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 // Call APIs to create the module identity.
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
-                SampleLogger.PrintSuccess($"Successfully created a new module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}', ETag: '{response.Value.Etag}'");
+                SampleLogger.PrintSuccess($"Successfully created a new module identity: DeviceId: '{deviceId}', ModuleId: '{response.Value.ModuleId}', ETag: '{response.Value.Etag}'");
 
                 return response.Value;
             }
@@ -188,7 +188,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
 
                 ModuleIdentity moduleIdentity = getResponse.Value;
-                Console.WriteLine($"Current module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}', ManagedBy: '{moduleIdentity.ManagedBy ?? "N/A"}', ETag: '{moduleIdentity.Etag}'");
+                Console.WriteLine($"Current module identity: DeviceId: '{moduleIdentity.DeviceId}', ModuleId: '{moduleIdentity.ModuleId}', ManagedBy: '{moduleIdentity.ManagedBy ?? "N/A"}', ETag: '{moduleIdentity.Etag}'");
 
                 Console.WriteLine($"Updating module identity with Id: '{moduleIdentity.ModuleId}'. Setting 'ManagedBy' property to: '{Environment.UserName}'");
                 moduleIdentity.ManagedBy = Environment.UserName;
@@ -197,7 +197,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 ModuleIdentity updatedModule = response.Value;
                 
-                SampleLogger.PrintSuccess($"Successfully updated module identity: DeviceId: '{deviceId}', ModuleId: '{updatedModule.ModuleId}', ManagedBy: '{updatedModule.ManagedBy}', ETag: '{updatedModule.Etag}'");
+                SampleLogger.PrintSuccess($"Successfully updated module identity: DeviceId: '{updatedModule.DeviceId}', ModuleId: '{updatedModule.ModuleId}', ManagedBy: '{updatedModule.ManagedBy}', ETag: '{updatedModule.Etag}'");
                 
                 return updatedModule;
             }
@@ -223,7 +223,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 Response<TwinData> response = await IoTHubServiceClient.Modules.GetTwinAsync(deviceId, moduleId);
 
-                SampleLogger.PrintSuccess($"\t- Module Twin: DeviceId: '{deviceId}', ModuleId: '{moduleId}', Status: '{response.Value.Status}', ETag: '{response.Value.Etag}'");
+                SampleLogger.PrintSuccess($"\t- Module Twin: DeviceId: '{response.Value.DeviceId}', ModuleId: '{response.Value.ModuleId}', Status: '{response.Value.Status}', ETag: '{response.Value.Etag}'");
 
                 return response.Value;
             }
@@ -251,7 +251,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<TwinData> getResponse = await IoTHubServiceClient.Modules.GetTwinAsync(deviceId, moduleId);
                 TwinData moduleTwin = getResponse.Value;
 
-                Console.WriteLine($"Updating module twin: DeviceId: '{moduleId}', ModuleId: '{moduleId}', ETag: '{moduleTwin.Etag}'");
+                Console.WriteLine($"Updating module twin: DeviceId: '{moduleTwin.DeviceId}', ModuleId: '{moduleTwin.ModuleId}', ETag: '{moduleTwin.Etag}'");
                 Console.WriteLine($"Setting a new desired property {userPropName} to: '{Environment.UserName}'");
 
                 moduleTwin.Properties.Desired.Add(new KeyValuePair<string, object>(userPropName, Environment.UserName));
@@ -265,7 +265,7 @@ namespace Azure.Iot.Hub.Service.Samples
                     .First()
                     .Value;
 
-                SampleLogger.PrintSuccess($"Successfully updated module twin: DeviceId: '{deviceId}', ModuleId: '{moduleId}', desired property: [{userPropName}: '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
+                SampleLogger.PrintSuccess($"Successfully updated module twin: DeviceId: '{updatedTwin.DeviceId}', ModuleId: '{updatedTwin.ModuleId}', desired property: [{userPropName}: '{userPropValue}'], ETag: '{updatedTwin.Etag}',");
 
                 return updatedTwin;
             }
@@ -291,7 +291,7 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<ModuleIdentity> getResponse = await IoTHubServiceClient.Modules.GetIdentityAsync(deviceId, moduleId);
                 ModuleIdentity moduleIdentity = getResponse.Value;
 
-                Console.WriteLine($"Deleting module identity: DeviceId: '{deviceId}', ModuleId: '{moduleId}', ETag: '{moduleIdentity.Etag}'");
+                Console.WriteLine($"Deleting module identity: DeviceId: '{moduleIdentity.DeviceId}', ModuleId: '{moduleIdentity.ModuleId}', ETag: '{moduleIdentity.Etag}'");
 
                 // We use UnconditionalIfMatch to force delete the Module Identity (disregard the IfMatch ETag)
                 Response response = await IoTHubServiceClient.Modules.DeleteIdentityAsync(moduleIdentity, IfMatchPrecondition.UnconditionalIfMatch);
