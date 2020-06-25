@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(matchValues));
             }
 
-            MatchVariables = matchVariables.ToArray();
+            MatchVariables = matchVariables.ToList();
             Operator = @operator;
-            MatchValues = matchValues.ToArray();
+            MatchValues = matchValues.ToList();
         }
 
         /// <summary> Initializes a new instance of MatchCondition. </summary>

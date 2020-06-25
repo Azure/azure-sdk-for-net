@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
-            Skills = skills.ToArray();
+            Skills = skills.ToList();
         }
 
         /// <summary> Initializes a new instance of SearchIndexerSkillset. </summary>

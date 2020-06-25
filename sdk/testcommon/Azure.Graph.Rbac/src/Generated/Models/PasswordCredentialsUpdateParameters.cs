@@ -23,7 +23,7 @@ namespace Azure.Graph.Rbac.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of PasswordCredentialsUpdateParameters. </summary>

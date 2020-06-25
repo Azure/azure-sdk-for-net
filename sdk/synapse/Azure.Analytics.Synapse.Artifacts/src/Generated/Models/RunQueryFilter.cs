@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Operand = operand;
             Operator = @operator;
-            Values = values.ToArray();
+            Values = values.ToList();
         }
 
         /// <summary> Initializes a new instance of RunQueryFilter. </summary>

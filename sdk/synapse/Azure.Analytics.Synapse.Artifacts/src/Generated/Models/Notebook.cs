@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Metadata = metadata;
             Nbformat = nbformat;
             NbformatMinor = nbformatMinor;
-            Cells = cells.ToArray();
+            Cells = cells.ToList();
             AdditionalProperties = new Dictionary<string, object>();
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Management.Storage.Models
             }
 
             TimeToRestore = timeToRestore;
-            BlobRanges = blobRanges.ToArray();
+            BlobRanges = blobRanges.ToList();
         }
 
         /// <summary> Initializes a new instance of BlobRestoreParameters. </summary>

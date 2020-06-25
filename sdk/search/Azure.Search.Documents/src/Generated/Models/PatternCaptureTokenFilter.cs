@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(patterns));
             }
 
-            Patterns = patterns.ToArray();
+            Patterns = patterns.ToList();
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
