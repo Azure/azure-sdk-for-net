@@ -17,9 +17,5 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public IEnumerable<IList> Sequence { get; set; }
 
         public object Value { get; set; }
-
-        // This will only be set on received messages.
-        // On sent messages, we do not check the amount of Data elements provided.
-        public int DataCount { get; set; }
     }
 }

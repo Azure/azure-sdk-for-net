@@ -187,46 +187,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             var sender = client.CreateSender(scope.QueueName);
-
             var bodyBytes = new byte[] { 1, 2, 3, 4, 5 };
             var body = new[] { new ReadOnlyMemory<byte>(bodyBytes) };
+
             var msg = sender.CreateAmqpDataMessage(body);
             Assert.AreEqual(AmqpBodyType.Data, msg.GetAmqpBodyType());
-            Assert.AreEqual(default(BinaryData), msg.TransportBody.Body);
+            Assert.Null(msg.GetAmqpValueBody());
+            Assert.Null(msg.GetAmqpSequenceBody());
+            Assert.AreEqual(bodyBytes, msg.Body.AsBytes().ToArray());
+
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
             Assert.NotNull(amqpTransportBody);
             Assert.Null(amqpTransportBody.Value);
             Assert.Null(amqpTransportBody.Sequence);
-            Assert.NotNull(amqpTransportBody.Data);
-            Assert.IsNotEmpty(amqpTransportBody.Data);
-            Assert.AreSame(body, amqpTransportBody.Data);
+            Assert.Null(amqpTransportBody.Data);
 
+            var data = msg.GetAmqpDataBody().ToArray();
+            Assert.IsNotEmpty(data);
+            Assert.AreEqual(bodyBytes, data[0].ToArray());
             await sender.SendMessageAsync(msg);
 
             var receiver = client.CreateReceiver(scope.QueueName);
             var received = await receiver.ReceiveMessageAsync();
-            Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
-            var receivedData = received.GetAmqpDataBody();
-            Assert.NotNull(receivedData);
-            var receivedDataArray = receivedData.ToArray();
-            Assert.IsNotEmpty(receivedDataArray);
-            var receivedDataBytes = receivedDataArray[0].ToArray();
-            Assert.AreEqual(bodyBytes.Length, receivedDataBytes.Length);
-            Assert.AreEqual(bodyBytes[0], receivedDataBytes[0]);
-            Assert.AreEqual(bodyBytes[1], receivedDataBytes[1]);
-            Assert.AreEqual(bodyBytes[2], receivedDataBytes[2]);
-            Assert.AreEqual(bodyBytes[3], receivedDataBytes[3]);
-            Assert.AreEqual(bodyBytes[4], receivedDataBytes[4]);
-
             Assert.Null(received.GetAmqpValueBody());
             Assert.Null(received.GetAmqpSequenceBody());
-            var receivedBodyByes = received.Body.AsBytes().ToArray();
-            Assert.AreEqual(receivedBodyByes.Length, receivedDataBytes.Length);
-            Assert.AreEqual(receivedBodyByes[0], receivedDataBytes[0]);
-            Assert.AreEqual(receivedBodyByes[1], receivedDataBytes[1]);
-            Assert.AreEqual(receivedBodyByes[2], receivedDataBytes[2]);
-            Assert.AreEqual(receivedBodyByes[3], receivedDataBytes[3]);
-            Assert.AreEqual(receivedBodyByes[4], receivedDataBytes[4]);
+            Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
+            Assert.AreEqual(bodyBytes, received.Body.AsBytes().ToArray());
+
+            var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
+            Assert.NotNull(receivedTransportBody);
+            Assert.Null(receivedTransportBody.Value);
+            Assert.Null(receivedTransportBody.Sequence);
+            Assert.Null(receivedTransportBody.Data);
+
+            var receivedDataArray = received.GetAmqpDataBody().ToArray();
+            Assert.IsNotEmpty(receivedDataArray);
+            Assert.AreEqual(bodyBytes, receivedDataArray[0].ToArray());
         }
 
         [Test]
@@ -236,59 +232,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             var sender = client.CreateSender(scope.QueueName);
-
             var bodyBytes1 = new byte[] { 1, 2, 3, 4, 5 };
             var bodyBytes2 = new byte[] { 6, 7, 8, 9, 10 };
             var body = new[] { new ReadOnlyMemory<byte>(bodyBytes1), new ReadOnlyMemory<byte>(bodyBytes2) };
+            var bodyBytesAll = bodyBytes1.Concat(bodyBytes2).ToArray();
+
             var msg = sender.CreateAmqpDataMessage(body);
             Assert.AreEqual(AmqpBodyType.Data, msg.GetAmqpBodyType());
-            Assert.AreEqual(default(BinaryData), msg.TransportBody.Body);
+            Assert.Null(msg.GetAmqpValueBody());
+            Assert.Null(msg.GetAmqpSequenceBody());
+            Assert.AreEqual(bodyBytesAll, msg.Body.AsBytes().ToArray());
+
             var amqpTransportBody = msg.TransportBody as AmqpTransportBody;
             Assert.NotNull(amqpTransportBody);
             Assert.Null(amqpTransportBody.Value);
             Assert.Null(amqpTransportBody.Sequence);
             Assert.NotNull(amqpTransportBody.Data);
-            Assert.IsNotEmpty(amqpTransportBody.Data);
-            Assert.AreSame(body, amqpTransportBody.Data);
+            var dataInternal = amqpTransportBody.Data.ToArray();
+            Assert.IsNotEmpty(dataInternal);
+            Assert.AreEqual(bodyBytes1, dataInternal[0].ToArray());
+            Assert.AreEqual(bodyBytes2, dataInternal[1].ToArray());
 
+            var data = msg.GetAmqpDataBody().ToArray();
+            Assert.IsNotEmpty(data);
+            Assert.AreEqual(bodyBytes1, data[0].ToArray());
+            Assert.AreEqual(bodyBytes2, data[1].ToArray());
             await sender.SendMessageAsync(msg);
 
             var receiver = client.CreateReceiver(scope.QueueName);
             var received = await receiver.ReceiveMessageAsync();
-            Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
-            var receivedData = received.GetAmqpDataBody();
-            Assert.NotNull(receivedData);
-            var receivedDataArray = receivedData.ToArray();
-            Assert.IsNotEmpty(receivedDataArray);
-            var receivedDataBytes1 = receivedDataArray[0].ToArray();
-            Assert.AreEqual(bodyBytes1.Length, receivedDataBytes1.Length);
-            Assert.AreEqual(bodyBytes1[0], receivedDataBytes1[0]);
-            Assert.AreEqual(bodyBytes1[1], receivedDataBytes1[1]);
-            Assert.AreEqual(bodyBytes1[2], receivedDataBytes1[2]);
-            Assert.AreEqual(bodyBytes1[3], receivedDataBytes1[3]);
-            Assert.AreEqual(bodyBytes1[4], receivedDataBytes1[4]);
-            var receivedDataBytes2 = receivedDataArray[1].ToArray();
-            Assert.AreEqual(bodyBytes2.Length, receivedDataBytes2.Length);
-            Assert.AreEqual(bodyBytes2[0], receivedDataBytes2[0]);
-            Assert.AreEqual(bodyBytes2[1], receivedDataBytes2[1]);
-            Assert.AreEqual(bodyBytes2[2], receivedDataBytes2[2]);
-            Assert.AreEqual(bodyBytes2[3], receivedDataBytes2[3]);
-            Assert.AreEqual(bodyBytes2[4], receivedDataBytes2[4]);
-
             Assert.Null(received.GetAmqpValueBody());
             Assert.Null(received.GetAmqpSequenceBody());
-            var receivedBodyByes = received.Body.AsBytes().ToArray();
-            Assert.AreEqual(receivedBodyByes.Length, receivedDataBytes1.Length + receivedDataBytes2.Length);
-            Assert.AreEqual(receivedBodyByes[0], receivedDataBytes1[0]);
-            Assert.AreEqual(receivedBodyByes[1], receivedDataBytes1[1]);
-            Assert.AreEqual(receivedBodyByes[2], receivedDataBytes1[2]);
-            Assert.AreEqual(receivedBodyByes[3], receivedDataBytes1[3]);
-            Assert.AreEqual(receivedBodyByes[4], receivedDataBytes1[4]);
-            Assert.AreEqual(receivedBodyByes[5], receivedDataBytes2[0]);
-            Assert.AreEqual(receivedBodyByes[6], receivedDataBytes2[1]);
-            Assert.AreEqual(receivedBodyByes[7], receivedDataBytes2[2]);
-            Assert.AreEqual(receivedBodyByes[8], receivedDataBytes2[3]);
-            Assert.AreEqual(receivedBodyByes[9], receivedDataBytes2[4]);
+            Assert.AreEqual(AmqpBodyType.Data, received.GetAmqpBodyType());
+            Assert.AreEqual(bodyBytesAll, received.Body.AsBytes().ToArray());
+
+            var receivedTransportBody = received.SentMessage.TransportBody as AmqpTransportBody;
+            Assert.NotNull(receivedTransportBody);
+            Assert.Null(receivedTransportBody.Value);
+            Assert.Null(receivedTransportBody.Sequence);
+            Assert.NotNull(receivedTransportBody.Data);
+            var receivedDataInternal = receivedTransportBody.Data.ToArray();
+            Assert.IsNotEmpty(receivedDataInternal);
+            Assert.AreEqual(bodyBytes1, receivedDataInternal[0].ToArray());
+            Assert.AreEqual(bodyBytes2, receivedDataInternal[1].ToArray());
+
+            var receivedDataArray = received.GetAmqpDataBody().ToArray();
+            Assert.IsNotEmpty(receivedDataArray);
+            Assert.AreEqual(bodyBytes1, receivedDataArray[0].ToArray());
+            Assert.AreEqual(bodyBytes2, receivedDataArray[1].ToArray());
         }
     }
 }

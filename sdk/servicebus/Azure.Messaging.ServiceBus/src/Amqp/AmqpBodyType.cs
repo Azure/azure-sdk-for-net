@@ -9,10 +9,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
     public enum AmqpBodyType
     {
         /// <summary>
-        /// The type of body for the message could not be determined based on the information in the message.
-        /// </summary>
-        Unspecified,
-        /// <summary>
         /// The Data body.
         /// </summary>
         Data,

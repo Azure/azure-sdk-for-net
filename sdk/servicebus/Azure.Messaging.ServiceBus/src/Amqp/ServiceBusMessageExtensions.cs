@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="message">The message to use.</param>
         /// <returns>Returns the Data body of the AMQP message.</returns>
         public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusMessage message) =>
-            ((AmqpTransportBody)message.TransportBody).Data;
+            ((AmqpTransportBody)message.TransportBody).Data ?? new[]{ message.TransportBody.Body.AsBytes() };
 
         /// <summary>
         /// Gets the Sequence body type from an AMQP <see cref="ServiceBusMessage"/>.

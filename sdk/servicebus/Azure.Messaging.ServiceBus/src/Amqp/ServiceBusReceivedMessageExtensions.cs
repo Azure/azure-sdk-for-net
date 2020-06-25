@@ -17,30 +17,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="message">The message to use.</param>
         /// <returns>Returns the body type of the AMQP message.</returns>
-        public static AmqpBodyType GetAmqpBodyType(this ServiceBusReceivedMessage message)
-        {
-            var transportBody = (AmqpTransportBody)message.SentMessage.TransportBody;
-            // If DataCount is greater than 0, it means that data was received, and the message is non-Sequence/Value.
-            // This won't be greater than 0 on user-constructed Data messages, but it will be on received Data messages.
-            // The actual AmqpBodyType will be Unspecified on received Data messages with 0 or 1 data elements.
-            // Therefore, a received message can be converted to a sent message, and the AmqpBodyType will be correct for that process.
-            // However, we let the user know the actual AmqpBodyType here as they would expect.
-            return transportBody.DataCount > 0 ? AmqpBodyType.Data : message.SentMessage.GetAmqpBodyType();
-        }
+        public static AmqpBodyType GetAmqpBodyType(this ServiceBusReceivedMessage message) =>
+            message.SentMessage.GetAmqpBodyType();
 
         /// <summary>
         /// Gets the Data body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
         /// <returns>Returns the Data body of the AMQP message.</returns>
-        public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusReceivedMessage message)
-        {
-            var transportBody = (AmqpTransportBody)message.SentMessage.TransportBody;
-            // If it has 1 data element, Data will not be populated. However, we want to provide the data to the user like it is populated.
-            // If it has 0 data elements, Data will be null, which is what we want to return.
-            // If it has more than 1 data element, Data should be populated, which is what we want to return.
-            return transportBody.DataCount == 1 ? new[] { transportBody.Body.AsBytes() } : transportBody.Data;
-        }
+        public static IEnumerable<ReadOnlyMemory<byte>> GetAmqpDataBody(this ServiceBusReceivedMessage message) =>
+            message.SentMessage.GetAmqpDataBody();
 
         /// <summary>
         /// Gets the Sequence body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
