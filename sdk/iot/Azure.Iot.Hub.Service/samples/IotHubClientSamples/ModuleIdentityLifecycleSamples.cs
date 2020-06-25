@@ -56,7 +56,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Creates a new device identity
         /// </summary>
-        /// <param name="deviceId">Device Id for the device identity</param>
+        /// <param name="deviceId">Device identity unique identifier</param>
         public async Task<DeviceIdentity> CreateDeviceIdentityAsync(string deviceId)
         {
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITY");
@@ -88,7 +88,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// Creates a new module identity
         /// </summary>
         /// <param name="deviceId">Device identity unique identifier</param>
-        /// <param name="moduleId">Module Id for the module identity</param>
+        /// <param name="moduleId">Module identity identifier for the new module identity</param>
         public async Task<ModuleIdentity> CreateModuleIdentityAsync(string deviceId, string moduleId)
         {
             SampleLogger.PrintHeader("CREATE MODULE IDENTITY");
@@ -119,7 +119,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// List all modules within a Device
+        /// List all module identities within a device
         /// </summary>
         /// <param name="deviceId">Device identity unique identifier to query</param>
         public async Task<IReadOnlyList<ModuleIdentity>> ListAllModulesAsync(string deviceId)
