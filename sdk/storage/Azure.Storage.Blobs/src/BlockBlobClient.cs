@@ -29,11 +29,12 @@ namespace Azure.Storage.Blobs.Specialized
     /// comprised of blocks, each of which is identified by a block ID. You
     /// create or modify a block blob by writing a set of blocks and
     /// committing them by their block IDs. Each block can be a different
-    /// size, up to a maximum of 100 MB (4 MB for requests using REST versions
+    /// size, up to a maximum of 4,000 MB (100 MB for requests using REST
+    /// versions before 2019-12-12 and 4 MB for requests using REST versions
     /// before 2016-05-31), and a block blob can include up to 50,000 blocks.
-    /// The maximum size of a block blob is therefore slightly more than 4.75
-    /// TB (100 MB X 50,000 blocks).  If you are writing a block blob that is
-    /// no more than 256 MB in size, you can upload it in its entirety with a
+    /// The maximum size of a block blob is therefore approximately 190.73 TiB
+    /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
+    /// no more than 5,000 MB in size, you can upload it in its entirety with a
     /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
@@ -70,8 +71,8 @@ namespace Azure.Storage.Blobs.Specialized
     /// usually uses base-64 encoding to normalize strings into equal lengths.
     /// When using base-64 encoding, the pre-encoded string must be 64 bytes
     /// or less.  Block ID values can be duplicated in different blobs.  A
-    /// blob can have up to 100,000 uncommitted blocks, but their total size
-    /// cannot exceed 200,000 MB.
+    /// blob can have up to 100,000 uncommitted blocks, with a max total size
+    /// of appoximately 381.46 TiB (4,000 MB x 100,000 blocks)
     ///
     /// If you write a block for a blob that does not exist, a new block blob
     /// is created, with a length of zero bytes.  This blob will appear in
