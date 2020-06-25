@@ -17,6 +17,8 @@ namespace Azure.AI.FormRecognizer.Samples
     {
         /// This sample demonstrates the differences in output that arise when StartRecognizeCustomForms
         /// is called with custom models trained with labels and without labels.
+        /// For this sample, you can use the training forms found in https://aka.ms/azsdk/formrecognizer/docs/trainingdocs
+
         /// For more information see https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/overview#custom-models
 
         [Test]
