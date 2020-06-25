@@ -18,5 +18,40 @@ namespace Azure.Search.Documents.Tests.Utilities
             string actual = source.CommaJoin();
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase(null, new string[] { })]
+        [TestCase("a", new[] { "a" })]
+        [TestCase("a,b", new[] { "a", "b" })]
+        [TestCase("a, b", new[] { "a", " b" })]
+        [TestCase(",b", new[] { "", "b" })]
+        [TestCase("a,b,c", new[] { "a", "b", "c" })]
+        public void CommaSplitBasic(string source, string[] expected)
+        {
+            CollectionAssert.AreEqual(expected, SearchExtensions.CommaSplit(source));
+        }
+
+        [TestCase("BaseRate asc", new[] { "BaseRate asc" })]
+        [TestCase("Rating desc,BaseRate", new[] { "Rating desc", "BaseRate" })]
+        [TestCase(
+            "Rating desc,geo.distance(Location, geography'POINT(-122.131577 47.678581)') asc",
+            new[]
+            {
+                "Rating desc",
+                "geo.distance(Location, geography'POINT(-122.131577 47.678581)') asc"
+            })]
+        [TestCase(
+            "search.score() desc,Rating desc,geo.distance(Location, geography'POINT(-122.131577 47.678581)') asc",
+            new[]
+            {
+                "search.score() desc",
+                "Rating desc",
+                "geo.distance(Location, geography'POINT(-122.131577 47.678581)') asc"
+            })]
+        [TestCase("'inside literal , ( )'','", new[] { "'inside literal , ( )'','" })]
+        [TestCase(",BaseRate asc", new[] { "BaseRate asc" })]
+        public void CommaSplitClauses(string odata, string[] expected)
+        {
+            CollectionAssert.AreEqual(expected, SearchExtensions.CommaSplit(odata, hasODataFunctions: true));
+        }
     }
 }

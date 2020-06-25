@@ -130,7 +130,7 @@ namespace Azure.Search.Documents
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
-            set => OrderBy = SearchExtensions.CommaSplit(value);
+            set => OrderBy = SearchExtensions.CommaSplit(value, hasODataFunctions: true);
         }
         #pragma warning restore CA1822
 

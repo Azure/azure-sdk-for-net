@@ -353,6 +353,33 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task OrderByWithFunctions()
+        {
+            string simple = "rating desc";
+            string func = "geo.distance(location, geography'POINT(-122.0 49.0)')";
+            string token = null;
+
+            // Get a continuation token
+            const int size = 2001;
+            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    "*",
+                    new SearchOptions { OrderBy = { simple, func } });
+            await foreach (Page<SearchResult<Hotel>> page in response.Value.GetResultsAsync().AsPages(pageSizeHint: 1))
+            {
+                token = page.ContinuationToken;
+                break;
+            }
+
+            // Turn the continuation token back into options
+            SearchOptions options = new SearchOptions(token);
+            Assert.AreEqual(2, options.OrderBy.Count);
+            Assert.AreEqual(simple, options.OrderBy[0]);
+            Assert.AreEqual(func, options.OrderBy[1]);
+        }
+
+        [Test]
         public async Task SelectedFields()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

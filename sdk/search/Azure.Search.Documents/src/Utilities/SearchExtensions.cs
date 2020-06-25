@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -68,12 +69,62 @@ namespace Azure.Search.Documents
         /// Split a collection of strings by commas.
         /// </summary>
         /// <param name="value">The value to split.</param>
+        /// <param name="hasODataFunctions">Whether nested OData functions should be ignored.</param>
         /// <returns>A collection of individual values.</returns>
-        public static IList<string> CommaSplit(string value) =>
-            string.IsNullOrEmpty(value) ?
+        public static IList<string> CommaSplit(string value, bool hasODataFunctions = false)
+        {
+            return string.IsNullOrEmpty(value) ?
                 new List<string>() :
-                // TODO: #10600 - Verify we don't need to worry about escaping
-                new List<string>(value.Split(','));
+                new List<string>(hasODataFunctions ? GetClauses() : value.Split(','));
+
+            // See https://docs.microsoft.com/azure/search/search-query-odata-orderby and
+            // https://docs.microsoft.com/en-us/azure/search/search-query-odata-syntax-reference
+            IEnumerable<string> GetClauses()
+            {
+                int start = 0;          // Start of the current clause
+                int end = 0;            // End of the current clause
+                bool inString = false;  // Whether we're in a literal string
+                int parens = 0;         // Depth of nested parentheses
+                for (; end < value.Length; end++)
+                {
+                    switch (value[end])
+                    {
+                        case '\'':
+                            // Don't worry about escaping because OData just
+                            // doubles up the single quotes to escape, but
+                            // that's also the same as two adjacent strings for
+                            // our purposes.
+                            inString = !inString;
+                            break;
+                        case '(':
+                            if (!inString) { parens++; }
+                            break;
+                        case ')':
+                            if (!inString) { parens--; }
+                            break;
+                        case ',':
+                            // Only split when we're between clauses, not in
+                            // strings or functions
+                            if (!inString && parens == 0)
+                            {
+                                // Don't return empty strings
+                                if (end > start)
+                                {
+                                    yield return value.Substring(start, end - start);
+                                }
+                                start = end + 1;
+                            }
+                            break;
+                    }
+                }
+                if (end > start)
+                {
+                    yield return value.Substring(start, end - start);
+                }
+                Debug.Assert(!inString);
+                Debug.Assert(parens == 0);
+            }
+        }
 
         /// <summary>
         /// Copy from a source stream to a destination either synchronously or
