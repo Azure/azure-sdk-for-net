@@ -3463,13 +3463,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text to be detected in the image. In future
-        /// versions, when language parameter is not passed, language detection will be
-        /// used to determine the language. However, in the current version, missing
-        /// language parameter will cause English to be used. To ensure that your
-        /// document is always parsed in English without the use of language detection
-        /// in the future, pass “en” in the language parameter. Possible values
-        /// include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'
+        /// The BCP-47 language code of the text in the document. Currently, only
+        /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+        /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+        /// language identification and multilanguage documents, so only provide a
+        /// language code if you would like to force the documented to be processed as
+        /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+        /// 'it', 'nl', 'pt'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3793,13 +3793,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// An image stream.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text to be detected in the image. In future
-        /// versions, when language parameter is not passed, language detection will be
-        /// used to determine the language. However, in the current version, missing
-        /// language parameter will cause English to be used. To ensure that your
-        /// document is always parsed in English without the use of language detection
-        /// in the future, pass “en” in the language parameter. Possible values
-        /// include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'
+        /// The BCP-47 language code of the text in the document. Currently, only
+        /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+        /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+        /// language identification and multilanguage documents, so only provide a
+        /// language code if you would like to force the documented to be processed as
+        /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+        /// 'it', 'nl', 'pt'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
