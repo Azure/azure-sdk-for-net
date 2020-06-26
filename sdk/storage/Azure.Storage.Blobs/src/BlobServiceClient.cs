@@ -1463,7 +1463,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContainerClient> UndeleteBlobContainer(
+        internal virtual Response<BlobContainerClient> UndeleteBlobContainer(
             string deletedContainerName,
             string deletedContainerVersion,
             string destinationContainerName = default,
@@ -1502,7 +1502,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+        internal virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
             string destinationContainerName = default,
