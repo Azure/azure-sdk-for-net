@@ -16,6 +16,7 @@ namespace Azure.Data.Tables
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly ServiceRestClient _serviceOperations;
+        private readonly ServiceRestClient _secondaryServiceOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
@@ -51,6 +52,7 @@ namespace Azure.Data.Tables
 
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
+            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
             HttpPipeline pipeline;
 
             if (policy == default)
@@ -65,6 +67,7 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
             _version = options.VersionString;
 
             string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
@@ -335,6 +338,42 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _serviceOperations.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TableServiceStats>> GetTableServiceStatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = await _secondaryServiceOperations.GetStatisticsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TableServiceStats> GetTableServiceStats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = _secondaryServiceOperations.GetStatistics(cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
