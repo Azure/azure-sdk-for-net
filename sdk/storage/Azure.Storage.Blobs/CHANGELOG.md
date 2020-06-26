@@ -4,7 +4,6 @@
 - Added support for service version 2019-12-12.
 - Added support for Blob Tags.
 - Added support for Blob Version.
-- Added support for Blob Container Soft Delete.
 - Added support for Object Replication Service.
 - Added support for Append Seal.
 - Added support for Jumbo Blobs.
