@@ -5,6 +5,8 @@
 ### Renames
 - Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
 - Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
+- Parameters `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
 
 ### Other breaking changes
 
