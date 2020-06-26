@@ -343,5 +343,37 @@ namespace Azure.Data.Tables
                 throw;
             }
         }
+
+        public virtual async Task<Response<TableServiceStats>> GetTableServiceStatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = await _serviceOperations.GetStatisticsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        public virtual Response<TableServiceStats> GetTableServiceStats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = _serviceOperations.GetStatistics(cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

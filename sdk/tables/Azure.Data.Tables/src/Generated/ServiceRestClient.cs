@@ -18,6 +18,7 @@ namespace Azure.Data.Tables
     internal partial class ServiceRestClient
     {
         private string url;
+        private string secondaryUrl;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -40,6 +41,7 @@ namespace Azure.Data.Tables
             }
 
             this.url = url;
+            this.secondaryUrl = url.Insert(url.IndexOf('.'), "-secondary");
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -201,7 +203,7 @@ namespace Azure.Data.Tables
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(secondaryUrl, false);
             uri.AppendPath("/", false);
             uri.AppendQuery("restype", "service", true);
             uri.AppendQuery("comp", "stats", true);

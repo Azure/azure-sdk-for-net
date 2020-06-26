@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableServiceClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         /// <summary>
@@ -120,6 +120,16 @@ namespace Azure.Data.Tables.Tests
 
             // Test each property
             CompareTableServiceProperties(responseToChange, changedResponse);
+        }
+
+        [Test]
+        public async Task GetTableServiceStatsReturnsStats()
+        {
+            // Get statistics
+            TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);
+
+            // Test that the secondary location is live
+            Assert.AreEqual(new GeoReplicationStatusType("live"), stats.GeoReplication.Status);
         }
 
         private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
