@@ -212,6 +212,7 @@ namespace Azure.Storage
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
+            public const string SnapshotParameterName = "sharesnapshot";
 
             internal static class Lease
             {

@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.Test
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.file.core.windows.net/share?snapshot=2011-03-09T01:42:34.9360000Z";
+            var uriString = "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z";
             var originalUri = new UriBuilder(uriString);
 
             // Act
