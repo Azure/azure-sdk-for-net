@@ -257,7 +257,7 @@
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
                     var domains = client.GetDomainsAsync().Result;
-                    Assert.Equal(12, domains.Count);
+                    Assert.Equal(14, domains.Count);
 
                     var foodDomain = domains.FirstOrDefault(d => d.Id == ProjectBuilderHelper.FoodDomain);
                     Assert.NotNull(foodDomain);
@@ -653,6 +653,10 @@
                 {
                     ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
+#if RECORD_MODE
+                    // Give time for the predictio nto show up.
+                    Thread.Sleep(5000);
+#endif
                     var token = new PredictionQueryToken()
                     {
                         OrderBy = "Newest",
@@ -1043,6 +1047,70 @@
                     Assert.Equal(client.GetTaggedImageCount(importProject.Id), client.GetTaggedImageCount(project.ProjectId));
                     Assert.Equal(client.GetTags(importProject.Id).Count, client.GetTags(project.ProjectId).Count);
                     Assert.Equal(client.GetIterations(importProject.Id).Count, client.GetIterations(project.ProjectId).Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void GetArtifacts()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "GetArtifacts", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var images = await client.GetImagesAsync(project.ProjectId);
+                    var imageData = await client.GetArtifactAsync(project.ProjectId, images[0].OriginalImageUri);
+                    Assert.NotNull(imageData);
+                }
+            }
+        }
+
+        [Fact]
+        public async void GetImagesAndCount()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "GetImagesAndCount", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var imageData = await client.GetImageCountAsync(project.ProjectId, null, taggingStatus: "All");
+                    Assert.Equal(10, imageData);
+
+                    var images = await client.GetImagesAsync(project.ProjectId, null, null, taggingStatus: "All", null, null, 5, 0);
+                    Assert.Equal(5, images.Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void UpdateImageMetadata()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "UpdateImageMetadata", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var images = await client.GetImagesAsync(project.ProjectId, null, null, taggingStatus: "All", null, null, 1, 0);
+                    Assert.Equal(1, images.Count);
+
+                    var metadata = new Dictionary<string, string>()
+                    {
+                        { "type", "unit test" },
+                        { "value", "30" }
+                    };
+                    var results = await client.UpdateImageMetadataAsync(project.ProjectId, new Guid[] { images[0].Id }, metadata);
+                    Assert.True(results.IsBatchSuccessful);
+                    Assert.Equal(1, results.Images.Count);
+                    Assert.Equal(metadata.Keys.Count, results.Images[0].Metadata.Keys.Count);
+                    Assert.Equal(metadata["type"], results.Images[0].Metadata["type"]);
+                    Assert.Equal(metadata["value"], results.Images[0].Metadata["value"]);
                 }
             }
         }
