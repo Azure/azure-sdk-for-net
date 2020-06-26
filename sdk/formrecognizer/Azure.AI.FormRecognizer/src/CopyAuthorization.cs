@@ -37,10 +37,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Deserializes an opaque string into a <see cref="CopyAuthorization"/> object.
         /// </summary>
-        /// <param name="accessToken">Opaque string with the access token information for a specific model.</param>
-        public static CopyAuthorization FromJson(string accessToken)
+        /// <param name="copyAuthorization">Opaque string with the copy authorization information for a specific model.</param>
+        public static CopyAuthorization FromJson(string copyAuthorization)
         {
-            CopyAuthorizationParse parse = JsonSerializer.Deserialize<CopyAuthorizationParse>(accessToken);
+            CopyAuthorizationParse parse = JsonSerializer.Deserialize<CopyAuthorizationParse>(copyAuthorization);
             return new CopyAuthorization(
                 parse.modelId,
                 parse.accessToken,
