@@ -132,10 +132,10 @@ Assign a role to a service principal. This will require a role definition id fro
 
 ```C# Snippet:CreateRoleAssignment
 
-// Replace <roleDefinitionId> with a role definition Id from the definitions returned above
+// Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
 var definitionIdToAssign = <roleDefinitionId>;
 
-// Replace <objectId> with the service principal object id from the Create/Get credentials section
+// Replace <objectId> with the service principal object id from the Create/Get credentials section above
 var servicePrincipalObjectId = <objectId>;
 
 var properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
@@ -198,10 +198,6 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
-[crypto_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/src/Cryptography/CryptographyClient.cs
-[key_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Keys/
-[key_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples
-[key_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/src
 [keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [JWK]: https://tools.ietf.org/html/rfc7517
