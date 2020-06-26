@@ -2479,7 +2479,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(rehydratePriority, propertiesResponse.Value.RehydratePriority);
+            Assert.AreEqual(rehydratePriority.HasValue ? rehydratePriority.Value.ToString() : null, propertiesResponse.Value.RehydratePriority);
         }
 
         [Test]
