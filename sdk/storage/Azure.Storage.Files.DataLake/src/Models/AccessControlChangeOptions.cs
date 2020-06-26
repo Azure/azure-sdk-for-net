@@ -20,5 +20,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Empty value indicates that maximum number of batches in unbound and operation continues till end.
         /// </summary>
         public int? MaxBatches { get; set; }
+
+        /// <summary>
+        /// Optional. If set to false, the operation will terminate quickly on encountering user failures. If true, the operation will ignore
+        /// user failures and proceed with the operation on other sub-entities of the directory.
+        /// </summary>
+        public bool ContinueOnFailure { get; set; }
     }
 }
