@@ -134,7 +134,7 @@ The following section provides several code snippets illustrating common pattern
 Recognize text and table data, along with their bounding box coordinates, from documents.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+FormPageCollection formPages = await client.StartRecognizeContentFromUri(invoiceUri).WaitForCompletionAsync();
 foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
@@ -163,7 +163,7 @@ Recognize and extract form fields and other content from your custom forms, usin
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, formUri).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
@@ -283,8 +283,8 @@ CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Requested on: {model.RequestedOn}");
-Console.WriteLine($"    Completed on: {model.CompletedOn}");
+Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
@@ -320,8 +320,8 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
-    Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
+    Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
+    Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account

@@ -33,8 +33,8 @@ CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Requested on: {model.RequestedOn}");
-Console.WriteLine($"    Completed on: {model.CompletedOn}");
+Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
@@ -68,8 +68,8 @@ CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Requested on: {model.RequestedOn}");
-Console.WriteLine($"    Completed on: {model.CompletedOn}");
+Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {

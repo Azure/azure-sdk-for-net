@@ -21,10 +21,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string receiptUri = FormRecognizerTestEnvironment.CreateUriString("contoso-receipt.jpg");
+            Uri receiptUri = FormRecognizerTestEnvironment.CreateUri("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+            RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
             // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult

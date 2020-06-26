@@ -69,8 +69,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.RequestedOn);
-            Assert.IsNotNull(model.CompletedOn);
+            Assert.IsNotNull(model.TrainingStartedOn);
+            Assert.IsNotNull(model.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(0, model.Errors.Count);
@@ -158,8 +158,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
             Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
-            Assert.AreEqual(trainedModel.RequestedOn, resultModel.RequestedOn);
-            Assert.AreEqual(trainedModel.CompletedOn, resultModel.CompletedOn);
+            Assert.AreEqual(trainedModel.TrainingStartedOn, resultModel.TrainingStartedOn);
+            Assert.AreEqual(trainedModel.TrainingCompletedOn, resultModel.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
             Assert.AreEqual(trainedModel.Status, resultModel.Status);
             Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
@@ -193,8 +193,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
-            Assert.IsNotNull(modelInfo.RequestedOn);
-            Assert.IsNotNull(modelInfo.CompletedOn);
+            Assert.IsNotNull(modelInfo.TrainingStartedOn);
+            Assert.IsNotNull(modelInfo.TrainingCompletedOn);
             Assert.IsNotNull(modelInfo.Status);
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
@@ -235,8 +235,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CustomFormModelInfo modelCopied = operation.Value;
 
-            Assert.IsNotNull(modelCopied.CompletedOn);
-            Assert.IsNotNull(modelCopied.RequestedOn);
+            Assert.IsNotNull(modelCopied.TrainingCompletedOn);
+            Assert.IsNotNull(modelCopied.TrainingStartedOn);
             Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
             Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
         }

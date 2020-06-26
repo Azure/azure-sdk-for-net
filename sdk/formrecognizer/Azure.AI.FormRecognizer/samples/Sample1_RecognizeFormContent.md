@@ -22,7 +22,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize the content from a given file at a URI, use the `StartRecognizeContentFromUri` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+FormPageCollection formPages = await client.StartRecognizeContentFromUri(invoiceUri).WaitForCompletionAsync();
 foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");

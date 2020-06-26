@@ -2,7 +2,14 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
-### Breaking changes
+### Renames
+- Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
+- Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
+- Parameter `accessToken` in `CopyAuthorization.FromJson` has been renamed to `copyAuthorization`.
+
+### Other breaking changes
 
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 - `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
