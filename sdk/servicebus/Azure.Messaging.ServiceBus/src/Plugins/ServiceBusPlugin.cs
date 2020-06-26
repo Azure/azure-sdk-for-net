@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
     /// <summary>
     /// This class provides methods that can be overridden to manipulate messages for custom plugin functionality.
     /// </summary>
-    public abstract class ServiceBusPlugin
+    internal abstract class ServiceBusPlugin
     {
         /// <summary>
         /// This operation is called before a message is sent and can be
