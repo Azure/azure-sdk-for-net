@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task FormRecognizerClientThrowsWithInvalidEndpoint()
+        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();
 

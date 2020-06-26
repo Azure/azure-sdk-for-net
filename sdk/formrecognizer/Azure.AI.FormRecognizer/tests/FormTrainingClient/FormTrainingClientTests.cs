@@ -39,22 +39,6 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
-        [Test]
-        public async Task FormTrainingClientThrowsWithInvalidEndpoint()
-        {
-            var client = CreateInstrumentedClient();
-
-            try
-            {
-                await client.GetAccountPropertiesAsync();
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
-        }
-
         /// <summary>
         /// Verifies functionality of the <see cref="FormTrainingClient"/> constructors.
         /// </summary>
@@ -106,6 +90,22 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
+        }
+
+        [Test]
+        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                await client.GetAccountPropertiesAsync();
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         [Test]
