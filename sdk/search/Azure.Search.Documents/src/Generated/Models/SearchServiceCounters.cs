@@ -19,8 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="dataSourceCounter"> Total number of data sources. </param>
         /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter)
         {
             if (documentCounter == null)
             {
@@ -46,10 +45,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new ArgumentNullException(nameof(synonymMapCounter));
             }
-            if (skillsetCounter == null)
-            {
-                throw new ArgumentNullException(nameof(skillsetCounter));
-            }
 
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
@@ -57,7 +52,6 @@ namespace Azure.Search.Documents.Indexes.Models
             DataSourceCounter = dataSourceCounter;
             StorageSizeCounter = storageSizeCounter;
             SynonymMapCounter = synonymMapCounter;
-            SkillsetCounter = skillsetCounter;
         }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
@@ -72,7 +66,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
         public SearchResourceCounter SynonymMapCounter { get; }
-        /// <summary> Total number of skillsets. </summary>
-        public SearchResourceCounter SkillsetCounter { get; }
     }
 }
