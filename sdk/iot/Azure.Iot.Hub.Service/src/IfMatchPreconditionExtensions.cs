@@ -26,9 +26,9 @@ namespace Azure.Iot.Hub.Service
             {
                 return "*";
             }
-            else //precondition == IfMatchPrecondition.Unconditional
+            else
             {
-                return "\"null\"";
+                return null;
             }
         }
     }
