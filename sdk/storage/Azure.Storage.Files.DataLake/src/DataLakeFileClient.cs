@@ -1528,7 +1528,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Append"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
-        /// Append is currently limited to 100 MB per request.  To upload large files all at once, consider using <see cref="Upload(Stream)"/>.
+        /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="Upload(Stream)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -1605,7 +1605,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="AppendAsync"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
-        /// Append is currently limited to 100 MB per request.  To upload large files all at once, consider using <see cref="UploadAsync(Stream)"/>.
+        /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="UploadAsync(Stream)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
