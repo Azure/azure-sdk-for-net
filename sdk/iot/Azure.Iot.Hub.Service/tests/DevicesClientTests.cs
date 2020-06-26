@@ -77,6 +77,58 @@ namespace Azure.Iot.Hub.Service.Tests
         }
 
         /// <summary>
+        /// Test the logic for ETag if-match header
+        /// </summary>
+        [Test]
+        public async Task DevicesClient_UpdateDevice_EtagDoesNotMatch()
+        {
+            string testDeviceId = $"UpdateWithETag{GetRandom()}";
+
+            DeviceIdentity device = null;
+            IoTHubServiceClient client = GetClient();
+
+            try
+            {
+                // Create a device
+                Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
+                    new Models.DeviceIdentity
+                    {
+                        DeviceId = testDeviceId
+                    }).ConfigureAwait(false);
+
+                // Store the device object to later update it with invalid ETag
+                device = createResponse.Value;
+
+                // Update the device to get a new ETag value.
+                device.Status = DeviceStatus.Disabled;
+                Response<DeviceIdentity> getResponse = await client.Devices.CreateOrUpdateIdentityAsync(device).ConfigureAwait(false);
+                DeviceIdentity updatedDevice = getResponse.Value;
+
+                Assert.AreNotEqual(updatedDevice.Etag, device.Etag, "ETag should have been updated.");
+
+                // Perform another update using the old device object to verify precondition fails.
+                device.Status = DeviceStatus.Enabled;
+                try
+                {
+                    Response<DeviceIdentity> updateResponse = await client.Devices.CreateOrUpdateIdentityAsync(device).ConfigureAwait(false);
+                    Assert.Fail($"Update call with outdated ETag should fail with 412 (PreconditionFailed)");
+                }
+                // We will catch the exception and verify status is 412 (PreconditionfFailed)
+                catch (RequestFailedException ex)
+                {
+                    Assert.AreEqual(412, ex.Status, $"Expected the update to fail with http status code 412 (PreconditionFailed)");
+                }
+
+                // Perform the same update and ignore the ETag value by providing UnconditionalIfMatch precondition
+                await client.Devices.CreateOrUpdateIdentityAsync(device, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+            }
+            finally
+            {
+                await Cleanup(client, device);
+            }
+        }
+
+        /// <summary>
         /// Test basic operations of a Device Twin.
         /// </summary>
         [Test]
@@ -191,7 +243,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 // Make the API call to disable devices.
                 Response<BulkRegistryOperationResponse> updateResponse =
-                    await client.Devices.UpdateIdentitiesAsync(listOfDevicesToUpdate, BulkIfMatchPrecondition.Unconditional)
+                    await client.Devices.UpdateIdentitiesAsync(listOfDevicesToUpdate, BulkIfMatchPrecondition.UnconditionalfMatch)
                     .ConfigureAwait(false);
 
                 // TODO: (azabbasi) Once the issue with the error parsing is resolved, include the error message in the message of the assert statement.
@@ -370,7 +422,7 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 if (devices != null && devices.Any())
                 {
-                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional);
+                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.UnconditionalfMatch);
                 }
             }
             catch (Exception ex)

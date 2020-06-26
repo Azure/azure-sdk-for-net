@@ -20,7 +20,7 @@ namespace Azure.Iot.Hub.Service
         {
             if (precondition == IfMatchPrecondition.IfMatch)
             {
-                return ETag;
+                return $"\"{ETag}\"";
             }
             else if (precondition == IfMatchPrecondition.UnconditionalIfMatch)
             {
@@ -28,7 +28,7 @@ namespace Azure.Iot.Hub.Service
             }
             else //precondition == IfMatchPrecondition.Unconditional
             {
-                return null;
+                return "\"null\"";
             }
         }
     }

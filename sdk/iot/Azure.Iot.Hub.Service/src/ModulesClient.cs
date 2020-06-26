@@ -42,7 +42,7 @@ namespace Azure.Iot.Hub.Service
         /// Create a module identity.
         /// </summary>
         /// <param name="moduleIdentity">The module identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(
@@ -59,7 +59,7 @@ namespace Azure.Iot.Hub.Service
         /// Create a module identity.
         /// </summary>
         /// <param name="moduleIdentity">The module identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<ModuleIdentity> CreateOrUpdateIdentity(
@@ -123,7 +123,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Delete a single module identity.
         /// </summary>
-        /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
@@ -140,7 +140,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Delete a single module identity.
         /// </summary>
-        /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
