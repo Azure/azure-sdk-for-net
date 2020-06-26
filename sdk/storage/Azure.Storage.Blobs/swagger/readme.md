@@ -1640,4 +1640,13 @@ directive:
     delete $.enum
 ```
 
+### Make BlobItemInternal ObjectReplicationMetadata XML value to OrMetadata
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobItemInternal
+  transform: >
+    $.properties.ObjectReplicationMetadata.xml = { "name":  "OrMetadata" };
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)

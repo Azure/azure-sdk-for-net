@@ -60,7 +60,10 @@ namespace Azure.Storage.Blobs
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
                     : null,
-                Tags = blobItemInternal.BlobTags.ToTagDictionary()
+                Tags = blobItemInternal.BlobTags.ToTagDictionary(),
+                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
+                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
+                    : null
             };
         }
 
@@ -182,7 +185,7 @@ namespace Azure.Storage.Blobs
                 int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
                 if (policyIndex > -1)
                 {
-                    OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule
+                    OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
                     {
                         RuleId = ParsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus) Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
@@ -191,7 +194,58 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
-                    NewRuleStatus.Add(new ObjectReplicationRule
+                    NewRuleStatus.Add(new ObjectReplicationRule()
+                    {
+                        RuleId = ParsedIds[1],
+                        ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                    });
+                    OrProperties.Add(new ObjectReplicationPolicy()
+                    {
+                        PolicyId = ParsedIds[0],
+                        Rules = NewRuleStatus
+                    });
+                }
+            }
+            return OrProperties;
+        }
+
+        /// <summary>
+        /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID for source blobs.
+        /// </summary>
+        /// <param name="OrMetadata">
+        /// Unparsed Object Replication headers.
+        /// For source blobs, the dictionary will contain keys that are prefixed with "or-" and followed by the
+        /// policy id and rule id separated by a underscore (e.g. or-policyId_ruleId).
+        /// The value of this metadata key will be the replication status (e.g. Complete, Failed).
+        /// </param>
+        /// <returns>
+        /// If the blob has object replication policy(s) applied and is the source blob, this method will return a
+        /// List of <see cref="ObjectReplicationPolicy"/>, which contains the Policy ID and the respective
+        /// rule(s) and replication status(s) for each policy.
+        /// </returns>
+        internal static IList<ObjectReplicationPolicy> ParseObjectReplicationMetadata(this IDictionary<string, string> OrMetadata)
+        {
+            List<ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
+            foreach (KeyValuePair<string, string> status in OrMetadata)
+            {
+                string[] ParsedIds = status.Key.Split('_');
+                if (ParsedIds[0].StartsWith("or-", System.StringComparison.InvariantCulture))
+                {
+                    ParsedIds[0] = ParsedIds[0].Substring("or-".Length);
+                }
+                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
+                if (policyIndex > -1)
+                {
+                    OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule()
+                    {
+                        RuleId = ParsedIds[1],
+                        ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                    });
+                }
+                else
+                {
+                    IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
+                    NewRuleStatus.Add(new ObjectReplicationRule()
                     {
                         RuleId = ParsedIds[1],
                         ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)

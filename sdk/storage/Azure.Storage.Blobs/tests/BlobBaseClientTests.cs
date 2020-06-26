@@ -594,7 +594,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Details.VersionId);
         }
 
-        // TODO: Recorded Only
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
@@ -604,7 +604,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
             BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
 
-            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
             BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 
@@ -3086,7 +3086,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        // TODO: Recorded Only
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
@@ -3096,7 +3096,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
             BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
 
-            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
             BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 

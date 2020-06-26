@@ -17950,7 +17950,7 @@ namespace Azure.Storage.Blobs.Models
                 _value.BlobTags = Azure.Storage.Blobs.Models.BlobTags.FromXml(_child);
             }
             _value.ObjectReplicationMetadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("ObjectReplicationMetadata", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("OrMetadata", ""));
             if (_child != null)
             {
                 foreach (System.Xml.Linq.XElement _pair in _child.Elements())
