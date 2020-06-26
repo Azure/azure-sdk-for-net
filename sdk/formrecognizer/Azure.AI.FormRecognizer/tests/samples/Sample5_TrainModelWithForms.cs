@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine($"    Model Id: {model.ModelId}");
             Console.WriteLine($"    Model Status: {model.Status}");
             Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
-            Console.WriteLine($"    Training model Completed on: {model.TrainingCompletedOn}");
+            Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
             foreach (CustomFormSubmodel submodel in model.Submodels)
             {
