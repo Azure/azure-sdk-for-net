@@ -8,6 +8,10 @@
 - Removed preview version `SearchClientOptions.ServiceVersion.V2019_05_06_Preview`
   and added version `SearchClientOptions.ServiceVersion.V2020_06_30`.
 
+### Removed
+
+- Removed `SearchServiceCounters.SkillsetCounter`.
+
 ## 1.0.0-preview.4 (2020-06-09)
 
 ### Added

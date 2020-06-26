@@ -161,6 +161,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
             Environment.SetEnvironmentVariable("STORAGE_CONTAINER", resources.BlobContainerName);
+            Environment.SetEnvironmentVariable("COGNITIVE_SERVICES_KEY", resources.CognitiveServicesKey);
 
             // Define clean up tasks to be invoked in reverse order added.
             Stack<Func<Task>> cleanUpTasks = new Stack<Func<Task>>();
@@ -294,8 +295,8 @@ namespace Azure.Search.Documents.Tests.Samples
                     skillsetName,
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
-                    //@@CognitiveServicesAccount =  new CognitiveServicesAccountKey(Environment.GetEnvironmentVariable("COGNITIVE_KEY"))
-                    /*@@*/ CognitiveServicesAccount = new DefaultCognitiveServicesAccount() // This works for our very small hotel data set.
+                    CognitiveServicesAccount =  new CognitiveServicesAccountKey(
+                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY"))
                 };
 
                 await indexerClient.CreateSkillsetAsync(skillset);
@@ -346,8 +347,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 // index is deleted when our SearchResources goes out of scope.
                 cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
 
-                // Wait a bit to make sure documents are indexed.
-                await DelayAsync(TimeSpan.FromSeconds(5));
+                // Wait till the indexer is done.
+                await WaitForIndexingAsync(indexerClient, indexerName);
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
                 // Get a SearchClient from the SearchIndexClient to share its pipeline.
