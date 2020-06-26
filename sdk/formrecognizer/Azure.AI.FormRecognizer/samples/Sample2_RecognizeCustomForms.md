@@ -24,7 +24,7 @@ To recognize form fields and other content from your custom forms from a given f
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, formUri).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
