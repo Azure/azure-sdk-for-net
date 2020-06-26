@@ -219,12 +219,12 @@ namespace Azure.Storage.Files.Shares
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.File.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Constants.SnapshotParameterName);
+                paramsMap.Remove(Constants.File.SnapshotParameterName);
             }
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
@@ -296,7 +296,7 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                query.Append(Constants.File.SnapshotParameterName).Append("=").Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))

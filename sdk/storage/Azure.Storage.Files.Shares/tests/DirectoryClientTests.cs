@@ -459,6 +459,42 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task GetPropertiesAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateAsync();
+
+            Response<ShareSnapshotInfo> createSnapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient = test.Share.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+            ShareDirectoryClient snapshotDirectoryClient = snapshotShareClient.GetDirectoryClient(directory.Name);
+
+            // Act
+            Response<ShareDirectoryProperties> getPropertiesResponse = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(getPropertiesResponse.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_SnapshotFailed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateAsync();
+
+            ShareClient snapshotShareClient = test.Share.WithSnapshot("2020-06-26T00:49:21.0000000Z");
+            ShareDirectoryClient snapshotDirectoryClient = snapshotShareClient.GetDirectoryClient(directory.Name);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                snapshotShareClient.GetPropertiesAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
         public async Task SetPropertiesAsync_FilePermission()
         {
             await using DisposingShare test = await GetTestShareAsync();

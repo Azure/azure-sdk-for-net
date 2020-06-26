@@ -546,6 +546,46 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task GetPropertiesAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(maxSize: Constants.KB);
+
+            Response<ShareSnapshotInfo> createSnapshotResponse = await test.Share.CreateSnapshotAsync();
+            ShareClient snapshotShareClient = test.Share.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+
+            ShareFileClient snapshotFileClient = snapshotShareClient.GetDirectoryClient(test.Directory.Name).GetFileClient(file.Name);
+
+            // Act
+            Response<ShareFileProperties> getPropertiesResponse = await snapshotFileClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(getPropertiesResponse.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_SnapshotFailed()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(maxSize: Constants.KB);
+
+            ShareClient snapshotShareClient = test.Share.WithSnapshot("2020-06-26T00:49:21.0000000Z");
+
+            ShareFileClient snapshotFileClient = snapshotShareClient.GetDirectoryClient(test.Directory.Name).GetFileClient(file.Name);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                snapshotFileClient.GetPropertiesAsync(),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetPropertiesAsync_NoLease()
         {
