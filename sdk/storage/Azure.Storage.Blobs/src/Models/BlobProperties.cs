@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// If this blob is in rehydreate pending state, this indicates the rehydrate priority.
         /// </summary>
-        public RehydratePriority? RehydratePriority { get; internal set; }
+        public string RehydratePriority { get; internal set; }
 
         /// <summary>
         /// Constructor.

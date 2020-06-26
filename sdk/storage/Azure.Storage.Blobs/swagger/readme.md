@@ -228,7 +228,6 @@ directive:
     $.get.responses["200"]["x-az-response-name"] = "FlattenedContainerItem";
     $.get.responses["200"]["x-az-public"] = false;
     $.put.responses["201"]["x-az-response-name"] = "BlobContainerInfo";
-
 ```
 
 ### BlobPublicAccess
@@ -603,6 +602,15 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.RehydratePriority
+  transform: >
+    $["x-ms-enum"].modelAsString = false;
+```
+
+### RehydratePriority
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.RehydratePriority
   transform: >
     $["x-ms-enum"].modelAsString = false;
 ```
