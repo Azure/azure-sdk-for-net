@@ -26,6 +26,6 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 
 ## Advanced samples
 - [Strongly-typing a recognized form](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md)
-- [Differentiate output models trained with and without labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample9_DifferentiateOutputModelsTrainedWithAndWithoutLabels.cs)
+- [Differentiate output models trained with and without labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample10_DifferentiateOutputModelsTrainedWithAndWithoutLabels.cs)
 - [Copy a custom model between Form Recognizer resources](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md)
-- [Bounding Box](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample8_BoundingBox.cs)
+- [Bounding Box](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample9_BoundingBox.cs)
