@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2152,7 +2153,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobVersionSasPermissions.Delete,
                 sasVersion: Constants.DefaultSasVersion);
             BlobBaseClient versionBlob = new BlobBaseClient(
-                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
             Response response = await versionBlob.DeleteAsync();
 
@@ -2175,7 +2176,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.Name,
                 BlobSasPermissions.Read);
             BlobBaseClient versionBlob = new BlobBaseClient(
-                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 versionBlob.DeleteAsync(),
@@ -2205,7 +2206,7 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 Constants.DefaultSasVersion);
             BlobBaseClient versionBlob = new BlobBaseClient(
-                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
             Response response = await versionBlob.DeleteAsync();
 
@@ -2235,12 +2236,150 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 sasVersion: Constants.DefaultSasVersion);
             BlobBaseClient versionBlob = new BlobBaseClient(
-                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 versionBlob.DeleteAsync(),
                 e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_VersionBlobSAS(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_VersionBlobIdentitySAS(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                userDelegationKey,
+                oauthService.AccountName,
+                Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobContainerSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_VersionContainerSAS(BlobContainerSasPermissions blobContainerSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetContainerSas(
+                test.Container.Name,
+                blobContainerSasPermissions,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobContainerSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_VersionContainerIdentitySAS(BlobContainerSasPermissions blobContainerSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                blobContainerSasPermissions,
+                userDelegationKey,
+                oauthService.AccountName,
+                Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(AccountSasPermissions.DeleteVersion)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task DeleteAsync_VersionAccountSAS(AccountSasPermissions accountSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(
+                accountSasResourceTypes: AccountSasResourceTypes.All,
+                accountSasPermissions: AccountSasPermissions.All);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
         }
 
         [Test]
@@ -4432,7 +4571,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.Name,
                 BlobSasPermissions.Tag,
                 sasVersion: Constants.DefaultSasVersion);
-            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4454,7 +4593,7 @@ namespace Azure.Storage.Blobs.Test
                 test.Container.Name, blob.Name,
                 BlobSasPermissions.Read,
                 sasVersion: Constants.DefaultSasVersion);
-            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4487,7 +4626,7 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 sasVersion: Constants.DefaultSasVersion);
 
-            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4522,7 +4661,7 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 sasVersion: Constants.DefaultSasVersion);
 
-            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4542,7 +4681,7 @@ namespace Azure.Storage.Blobs.Test
                 test.Container.Name,
                 BlobContainerSasPermissions.Tag,
                 sasVersion: Constants.DefaultSasVersion);
-            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4564,7 +4703,7 @@ namespace Azure.Storage.Blobs.Test
                 test.Container.Name,
                 BlobContainerSasPermissions.Read,
                 sasVersion: Constants.DefaultSasVersion);
-            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4596,7 +4735,7 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 sasVersion: Constants.DefaultSasVersion);
 
-            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4630,7 +4769,7 @@ namespace Azure.Storage.Blobs.Test
                 oauthService.AccountName,
                 sasVersion: Constants.DefaultSasVersion);
 
-            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
 
@@ -4638,6 +4777,27 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasBlob.SetTagsAsync(tags),
                 e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(AccountSasPermissions.Tag)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task GetSetTagsAsync_AccountSas(AccountSasPermissions accountSasPermissions)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
         }
 
         [Test]

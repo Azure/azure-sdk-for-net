@@ -1364,6 +1364,7 @@ namespace Azure.Storage.Sas
         Delete = 16,
         List = 32,
         Tag = 64,
+        DeleteBlobVersion = 128,
     }
     public partial class BlobSasBuilder
     {
@@ -1410,6 +1411,7 @@ namespace Azure.Storage.Sas
         Write = 8,
         Delete = 16,
         Tag = 32,
+        DeleteBlobVersion = 64,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {

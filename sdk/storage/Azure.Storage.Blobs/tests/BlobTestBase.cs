@@ -182,7 +182,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials: sharedKeyCredentials)}"),
                     GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -278,26 +278,23 @@ namespace Azure.Storage.Test.Shared
                     TestConfigDefault.AccountName,
                     TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(
+            AccountSasResourceTypes accountSasResourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions accountSasPermissions = AccountSasPermissions.All,
+            StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
+                ResourceTypes = accountSasResourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
                 Version = ToSasVersion(_serviceVersion)
             };
-            builder.SetPermissions(
-                AccountSasPermissions.Read |
-                AccountSasPermissions.Add |
-                AccountSasPermissions.Create |
-                AccountSasPermissions.Write |
-                AccountSasPermissions.Delete |
-                AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            builder.SetPermissions(accountSasPermissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
