@@ -35,7 +35,7 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_IdentityLifecycle()
         {
-            string testDeviceName = $"IdentityLifecycleDevice{GetRandom()}";
+            string testDeviceId = $"IdentityLifecycleDevice{GetRandom()}";
 
             DeviceIdentity device = null;
             IoTHubServiceClient client = GetClient();
@@ -46,14 +46,14 @@ namespace Azure.Iot.Hub.Service.Tests
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new Models.DeviceIdentity
                     {
-                        DeviceId = testDeviceName
+                        DeviceId = testDeviceId
                     }).ConfigureAwait(false);
 
                 device = createResponse.Value;
 
                 // Get device
                 // Get the device and compare ETag values (should remain unchanged);
-                Response<DeviceIdentity> getResponse = await client.Devices.GetIdentityAsync(testDeviceName).ConfigureAwait(false);
+                Response<DeviceIdentity> getResponse = await client.Devices.GetIdentityAsync(testDeviceId).ConfigureAwait(false);
 
                 getResponse.Value.Etag.Should().BeEquivalentTo(device.Etag, "ETag value should not have changed.");
 
@@ -82,7 +82,7 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_DeviceTwinLifecycle()
         {
-            string testDeviceName = $"TwinLifecycleDevice{GetRandom()}";
+            string testDeviceId = $"TwinLifecycleDevice{GetRandom()}";
 
             DeviceIdentity device = null;
 
@@ -95,16 +95,16 @@ namespace Azure.Iot.Hub.Service.Tests
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new Models.DeviceIdentity
                     {
-                        DeviceId = testDeviceName
+                        DeviceId = testDeviceId
                     }).ConfigureAwait(false);
 
                 device = createResponse.Value;
 
                 // Get the device twin
-                Response<TwinData> getResponse = await client.Devices.GetTwinAsync(testDeviceName).ConfigureAwait(false);
+                Response<TwinData> getResponse = await client.Devices.GetTwinAsync(testDeviceId).ConfigureAwait(false);
                 TwinData deviceTwin = getResponse.Value;
 
-                deviceTwin.DeviceId.Should().BeEquivalentTo(testDeviceName, "DeviceId on the Twin should match that of the device.");
+                deviceTwin.DeviceId.Should().BeEquivalentTo(testDeviceId, "DeviceId on the Twin should match that of the device.");
 
                 // Update device twin
                 string propName = "username";
@@ -143,7 +143,7 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Create all devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
 
-                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with errors");
             }
             finally
             {
@@ -194,7 +194,8 @@ namespace Azure.Iot.Hub.Service.Tests
                     await client.Devices.UpdateIdentitiesAsync(listOfDevicesToUpdate, BulkIfMatchPrecondition.Unconditional)
                     .ConfigureAwait(false);
 
-                Assert.IsTrue(updateResponse.Value.IsSuccessful, "Bulk device update must be successful");
+                // TODO: (azabbasi) Once the issue with the error parsing is resolved, include the error message in the message of the assert statement.
+                Assert.IsTrue(updateResponse.Value.IsSuccessful, "Bulk device update ended with errors");
 
                 // Verify the devices status is updated.
                 deviceOne = (await client.Devices.GetIdentityAsync(deviceOne.DeviceId)).Value;
@@ -234,7 +235,8 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Create all devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
 
-                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+                // TODO: (azabbasi) Once the issue with the error parsing is resolved, include the error message in the message of the assert statement.
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation failed with errors");
             }
             finally
             {
@@ -267,7 +269,8 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Create all devices with twins
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesWithTwinAsync(devicesAndTwins).ConfigureAwait(false);
 
-                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with an error");
+                // TODO: (azabbasi) Once the issue with the error parsing is resolved, include the error message in the message of the assert statement.
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with errors");
 
                 // Verify that the desired properties were set
                 // For quicker test run, we will only verify the first device on the list.
@@ -299,7 +302,7 @@ namespace Azure.Iot.Hub.Service.Tests
                 // Create all devices
                 Response<BulkRegistryOperationResponse> createResponse = await client.Devices.CreateIdentitiesAsync(devices).ConfigureAwait(false);
 
-                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation must be successful");
+                Assert.IsTrue(createResponse.Value.IsSuccessful, "Bulk device creation ended with errors");
 
                 // We will retry the operation since it can take some time for the query to match what was recently created.
                 int matchesFound = 0;
@@ -327,7 +330,8 @@ namespace Azure.Iot.Hub.Service.Tests
                     await Task.Delay(_queryRetryInterval);
                 }
 
-                matchesFound.Should().Be(BULK_DEVICE_COUNT, "Number of matching devices must be equal to the number of recently created devices.");
+                matchesFound.Should().Be(BULK_DEVICE_COUNT, "Timed out waiting for all the bulk created devices to be query-able." +
+                    " Number of matching devices must be equal to the number of recently created devices.");
             }
             finally
             {

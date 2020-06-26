@@ -21,16 +21,16 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
-        "ETag": "\u0022NDEzNzI4MjY2\u0022",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
+        "ETag": "\u0022ODgxODE4MTE4\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "9825ff00-3534-49d2-ab34-fada7e6029c3"
+        "x-ms-request-id": "e4f88911-069a-4b90-a030-1c365d2e2b62"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice2112406490",
-        "generationId": "637287169546884392",
-        "etag": "NDEzNzI4MjY2",
+        "generationId": "637287333714452458",
+        "etag": "ODgxODE4MTE4",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -40,8 +40,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gLClG\u002BOAi/o8lq4khlCqxcSuhP3uoY5RNAZjGLpqFss=",
-            "secondaryKey": "B2rgJLE4i8zMI/A\u002Bar\u002BOM5gV/1KEP8lLpAxQP3wqYJg="
+            "primaryKey": "pvgoJXTrmUGeVT/wH05vFkNrl1slbbDIkETJKMdMUpg=",
+            "secondaryKey": "MtQnhuR3aGmJfMUMuzlbUy7BqUBEXVTi1WEcvdra5Ag="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -71,15 +71,15 @@
       "ResponseHeaders": {
         "Content-Length": "589",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c1d7d3b0-9bb2-41fc-a87a-342754abae05"
+        "x-ms-request-id": "8e850c97-0ba0-4eef-97f5-2386e357b2ff"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice2112406490",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "NDEzNzI4MjY2",
+        "deviceEtag": "ODgxODE4MTE4",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -94,13 +94,13 @@
         "properties": {
           "desired": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.6884392Z"
+              "$lastUpdated": "2020-06-26T01:56:11.4452458Z"
             },
             "$version": 1
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.6884392Z"
+              "$lastUpdated": "2020-06-26T01:56:11.4452458Z"
             },
             "$version": 1
           }
@@ -130,21 +130,21 @@
         "properties": {
           "desired": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.6884392Z"
+              "$lastUpdated": "2020-06-26T01:56:11.4452458Z"
             },
             "$version": 1,
             "username": "userA"
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.6884392Z"
+              "$lastUpdated": "2020-06-26T01:56:11.4452458Z"
             },
             "$version": 1
           }
         },
         "etag": "AAAAAAAAAAE=",
         "version": 2,
-        "deviceEtag": "NDEzNzI4MjY2",
+        "deviceEtag": "ODgxODE4MTE4",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00.0000000Z",
         "connectionState": "Disconnected",
@@ -160,15 +160,15 @@
       "ResponseHeaders": {
         "Content-Length": "715",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "24a5f07f-6cb7-47f7-b9a3-64767b76e76c"
+        "x-ms-request-id": "7c15c690-6baf-42be-91e5-bcd8e0077165"
       },
       "ResponseBody": {
         "deviceId": "TwinLifecycleDevice2112406490",
         "etag": "AAAAAAAAAAI=",
-        "deviceEtag": "NDEzNzI4MjY2",
+        "deviceEtag": "ODgxODE4MTE4",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -184,10 +184,10 @@
           "desired": {
             "username": "userA",
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.7509423Z",
+              "$lastUpdated": "2020-06-26T01:56:11.5077261Z",
               "$lastUpdatedVersion": 2,
               "username": {
-                "$lastUpdated": "2020-06-25T21:22:34.7509423Z",
+                "$lastUpdated": "2020-06-26T01:56:11.5077261Z",
                 "$lastUpdatedVersion": 2
               }
             },
@@ -195,7 +195,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.6884392Z"
+              "$lastUpdated": "2020-06-26T01:56:11.4452458Z"
             },
             "$version": 1
           }
@@ -222,10 +222,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "d2699661-0472-48e5-8888-7e9f9fec2f60"
+        "x-ms-request-id": "17fc2821-b95c-4860-aa21-491bd723f5c9"
       },
       "ResponseBody": []
     }

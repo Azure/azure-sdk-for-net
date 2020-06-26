@@ -21,16 +21,16 @@
       "ResponseHeaders": {
         "Content-Length": "616",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
-        "ETag": "\u0022MzUyNDgyOTcy\u0022",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
+        "ETag": "\u0022MTk2OTgyOTA=\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "8a531da8-b4f3-4a1f-9823-0f5968fcbe63"
+        "x-ms-request-id": "341b56a1-d2d3-4d28-a3a3-11d2930d416b"
       },
       "ResponseBody": {
         "deviceId": "IdentityLifecycleDevice726366390",
-        "generationId": "637287169548767689",
-        "etag": "MzUyNDgyOTcy",
+        "generationId": "637287333716616178",
+        "etag": "MTk2OTgyOTA=",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -40,8 +40,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "SPBwax8Jf4EKRB\u002BuNDm4mb/9hFFgd5RnBn\u002B9cjrRGrk=",
-            "secondaryKey": "PhxO8sHwTnUSGZC8ZTRd\u002BCgmWZO64eQ6b8vRS75w1Dg="
+            "primaryKey": "A570Al6wGshmeA65KQagnIN/hZyEBpfYH7aB2CGoey8=",
+            "secondaryKey": "1UTLKjL3QP4rHcP/RV4sHL0ddC0WLn\u002BO1SVoux\u002B8FAw="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -71,16 +71,16 @@
       "ResponseHeaders": {
         "Content-Length": "619",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
-        "ETag": "\u0022MzUyNDgyOTcy\u0022",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
+        "ETag": "\u0022MTk2OTgyOTA=\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "f800787e-26dc-4d01-ad86-91085c36383a"
+        "x-ms-request-id": "68147e0e-2eb3-4ae4-b088-55d74aa2ee68"
       },
       "ResponseBody": {
         "deviceId": "IdentityLifecycleDevice726366390",
-        "generationId": "637287169548767689",
-        "etag": "MzUyNDgyOTcy",
+        "generationId": "637287333716616178",
+        "etag": "MTk2OTgyOTA=",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -90,8 +90,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "SPBwax8Jf4EKRB\u002BuNDm4mb/9hFFgd5RnBn\u002B9cjrRGrk=",
-            "secondaryKey": "PhxO8sHwTnUSGZC8ZTRd\u002BCgmWZO64eQ6b8vRS75w1Dg="
+            "primaryKey": "A570Al6wGshmeA65KQagnIN/hZyEBpfYH7aB2CGoey8=",
+            "secondaryKey": "1UTLKjL3QP4rHcP/RV4sHL0ddC0WLn\u002BO1SVoux\u002B8FAw="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -109,7 +109,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "588",
+        "Content-Length": "583",
         "Content-Type": "application/json",
         "If-Match": "*",
         "User-Agent": [
@@ -121,8 +121,8 @@
       },
       "RequestBody": {
         "deviceId": "IdentityLifecycleDevice726366390",
-        "generationId": "637287169548767689",
-        "etag": "MzUyNDgyOTcy",
+        "generationId": "637287333716616178",
+        "etag": "MTk2OTgyOTA=",
         "connectionState": "Disconnected",
         "status": "disabled",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00.0000000Z",
@@ -131,8 +131,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "SPBwax8Jf4EKRB\u002BuNDm4mb/9hFFgd5RnBn\u002B9cjrRGrk=",
-            "secondaryKey": "PhxO8sHwTnUSGZC8ZTRd\u002BCgmWZO64eQ6b8vRS75w1Dg="
+            "primaryKey": "A570Al6wGshmeA65KQagnIN/hZyEBpfYH7aB2CGoey8=",
+            "secondaryKey": "1UTLKjL3QP4rHcP/RV4sHL0ddC0WLn\u002BO1SVoux\u002B8FAw="
           },
           "x509Thumbprint": {},
           "type": "sas"
@@ -145,27 +145,27 @@
       "ResponseHeaders": {
         "Content-Length": "628",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
-        "ETag": "\u0022MzUyNDgyOTcz\u0022",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
+        "ETag": "\u0022MTk2OTgyOTE=\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "d3040bee-ed96-4cd5-8d3d-205a6408ba78"
+        "x-ms-request-id": "63e19e9a-0f9c-43d4-9189-ecc13ab7e6d2"
       },
       "ResponseBody": {
         "deviceId": "IdentityLifecycleDevice726366390",
-        "generationId": "637287169548767689",
-        "etag": "MzUyNDgyOTcz",
+        "generationId": "637287333716616178",
+        "etag": "MTk2OTgyOTE=",
         "connectionState": "Disconnected",
         "status": "disabled",
         "statusReason": null,
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
-        "statusUpdatedTime": "2020-06-25T21:22:34.9249407Z",
+        "statusUpdatedTime": "2020-06-26T01:56:11.7231697Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "SPBwax8Jf4EKRB\u002BuNDm4mb/9hFFgd5RnBn\u002B9cjrRGrk=",
-            "secondaryKey": "PhxO8sHwTnUSGZC8ZTRd\u002BCgmWZO64eQ6b8vRS75w1Dg="
+            "primaryKey": "A570Al6wGshmeA65KQagnIN/hZyEBpfYH7aB2CGoey8=",
+            "secondaryKey": "1UTLKjL3QP4rHcP/RV4sHL0ddC0WLn\u002BO1SVoux\u002B8FAw="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -195,10 +195,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "ed859d98-6b40-4ae8-834d-2f4ea0df3355"
+        "x-ms-request-id": "1af67601-d4b4-4d2a-8e1b-c10c672c895d"
       },
       "ResponseBody": []
     }

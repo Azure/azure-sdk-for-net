@@ -19,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:33 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "00387c70-c353-431c-9cc4-f9ee8dbd6dae"
+        "x-ms-request-id": "5b22606d-ce17-45e7-b88b-4558db69cdcc"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -47,15 +47,15 @@
       "ResponseHeaders": {
         "Content-Length": "690",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:33 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "d9e07d35-aac3-479a-8c93-181d894e3fe6"
+        "x-ms-request-id": "f8f6fe2d-8b76-4f9e-b8e2-89e021ec28fe"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceWithTwin1109223729",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MzExNDk5OTY2",
+        "deviceEtag": "ODc2NzcxMTYy",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -82,7 +82,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.2986318Z"
+              "$lastUpdated": "2020-06-26T01:56:11.0678743Z"
             },
             "$version": 1
           }
@@ -111,10 +111,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "5288df20-a7d9-43d5-89b3-4b679aecdbbc"
+        "x-ms-request-id": "8bb6734d-3fe6-43a3-93ce-5ba6c87a03c0"
       },
       "ResponseBody": {
         "isSuccessful": true,

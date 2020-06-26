@@ -19,10 +19,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "761fc800-2344-40f1-b663-0ec8f7dd7cc0"
+        "x-ms-request-id": "a2f670ae-6c39-4a39-81c5-9476023e93da"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -47,15 +47,15 @@
       "ResponseHeaders": {
         "Content-Length": "689",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "47928cbf-2842-46cf-991d-69e2fdf2b6ea"
+        "x-ms-request-id": "44bcee85-6ec6-4aef-afdc-78ab3670d423"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceWithTwin304767959",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MzExNDk5OTY2",
+        "deviceEtag": "NjY3MTkzMTQ0",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -82,7 +82,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-06-25T21:22:34.2986318Z"
+              "$lastUpdated": "2020-06-26T01:56:11.0991571Z"
             },
             "$version": 1
           }
@@ -111,10 +111,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Jun 2020 21:22:34 GMT",
+        "Date": "Fri, 26 Jun 2020 01:56:10 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "0366bf7b-e5f6-435f-8192-7fa599fc71e3"
+        "x-ms-request-id": "224a03f8-9bc9-479f-afa6-17336f86aa33"
       },
       "ResponseBody": {
         "isSuccessful": true,
