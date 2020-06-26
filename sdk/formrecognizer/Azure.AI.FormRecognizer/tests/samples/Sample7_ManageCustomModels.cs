@@ -37,8 +37,8 @@ namespace Azure.AI.FormRecognizer.Samples
                 Console.WriteLine($"Custom Model Info:");
                 Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
                 Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
-                Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
+                Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
+                Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
             }
 
             // Create a new model to store in the account

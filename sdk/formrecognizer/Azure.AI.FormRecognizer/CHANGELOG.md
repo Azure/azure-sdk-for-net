@@ -2,7 +2,11 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
-### Breaking changes
+### Renames
+- Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+
+### Other breaking changes
 
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 - `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
