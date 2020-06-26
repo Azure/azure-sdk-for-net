@@ -430,10 +430,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     public enum AmqpBodyType
     {
-        Unspecified = 0,
-        Data = 1,
-        Sequence = 2,
-        Value = 3,
+        Data = 0,
+        Sequence = 1,
+        Value = 2,
     }
     public static partial class ServiceBusMessageExtensions
     {
