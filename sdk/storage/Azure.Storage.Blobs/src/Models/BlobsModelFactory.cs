@@ -555,7 +555,8 @@ namespace Azure.Storage.Blobs.Models
            string versionId = default,
            bool? isLatestVersion = default,
            IDictionary<string, string> metadata = default,
-           IDictionary<string, string> tags = default)
+           IDictionary<string, string> tags = default,
+           List<ObjectReplicationPolicy> objectReplicationSourcePolicies = default)
         {
             return new BlobItem()
             {
@@ -566,7 +567,8 @@ namespace Azure.Storage.Blobs.Models
                 VersionId = versionId,
                 IsLatestVersion = isLatestVersion,
                 Metadata = metadata,
-                Tags = tags
+                Tags = tags,
+                ObjectReplicationSourceProperties = objectReplicationSourcePolicies
             };
         }
 
