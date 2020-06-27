@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 17.1.0
+
+- Support Create or Update Storage Account with MinimumTlsVersion, AllowBlobPublicAccess
+
 ### Changes in 17.0.0
 
 - Support Table and Queue create/get/list/remove

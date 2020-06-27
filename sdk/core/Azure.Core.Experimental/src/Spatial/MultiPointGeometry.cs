@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
-        public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, DefaultProperties)
+        public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, null, DefaultProperties)
         {
         }
 
@@ -23,8 +23,9 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
-        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
-        public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryProperties properties): base(properties)
+        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
+        public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(points, nameof(points));
 

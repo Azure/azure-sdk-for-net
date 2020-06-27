@@ -451,7 +451,7 @@ namespace Azure.AI.TextAnalytics
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
-            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores", warnings);
+            var documentSentiment = ReadDocumentSentiment(documentElement, "confidenceScores", warnings);
 
             return new AnalyzeSentimentResult(
                     ReadDocumentId(documentElement),

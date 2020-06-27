@@ -234,22 +234,22 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InsertOrReplaceAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -273,22 +273,22 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response InsertOrReplace(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -312,11 +312,11 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response> InsertOrReplaceAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -340,11 +340,11 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Upsert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response InsertOrReplace<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
             scope.Start();
             try
             {
@@ -363,7 +363,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
@@ -377,12 +377,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
@@ -405,7 +405,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
@@ -419,12 +419,12 @@ namespace Azure.Data.Tables
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
@@ -450,22 +450,101 @@ namespace Azure.Data.Tables
         /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InsertOrMergeAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
+            }
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
+            scope.Start();
+            try
+            {
+                return (await _tableOperations.MergeEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response InsertOrMerge(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
+            }
+
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.MergeEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                          queryOptions: new QueryOptions() { Format = _format },
+                                          cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entity, nameof(entity));
+            Argument.AssertNotNull(eTag, nameof(eTag));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
@@ -488,25 +567,26 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
         /// </summary>
         /// <param name="entity">The entity to merge.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        public virtual Response Merge(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
+            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
 
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
-                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
             }
 
             if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
             {
-                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");

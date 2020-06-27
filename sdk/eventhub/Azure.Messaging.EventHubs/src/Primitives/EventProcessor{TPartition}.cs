@@ -1305,6 +1305,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var partition = new TPartition { PartitionId = partitionId };
             var operationDescription = Resources.OperationClaimOwnership;
+            var startingPosition = Options.DefaultStartingPosition;
             var cancellationSource = default(CancellationTokenSource);
 
             try
@@ -1322,8 +1323,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 operationDescription = Resources.OperationClaimOwnership;
 
                 // Determine the starting position for processing the partition.
-
-                var startingPosition = Options.DefaultStartingPosition;
 
                 foreach (var checkpoint in checkpoints)
                 {
@@ -1361,7 +1360,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
             }
         }
 

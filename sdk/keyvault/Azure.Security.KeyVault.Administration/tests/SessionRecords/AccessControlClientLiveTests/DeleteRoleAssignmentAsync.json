@@ -5,8 +5,8 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200617.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "90089dd99809a512d432fd1a0d8f4b26",
         "x-ms-return-client-request-id": "true"
@@ -18,7 +18,7 @@
         "Content-Type": "application/json",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+        "x-ms-request-id": "7a0bdfa8-b0eb-11ea-9d3b-0242ac12000a"
       },
       "ResponseBody": "OK"
     },
@@ -28,8 +28,8 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200617.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "90089dd99809a512d432fd1a0d8f4b26",
         "x-ms-return-client-request-id": "true"
@@ -37,12 +37,12 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4256",
+        "Content-Length": "5517",
         "Content-Type": "application/json",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+        "x-ms-request-id": "7a0bdfa8-b0eb-11ea-9d3b-0242ac12000a"
       },
       "ResponseBody": {
         "value": [
@@ -56,19 +56,18 @@
               "description": "",
               "permissions": [
                 {
-                  "actions": [
-                    "Microsoft.KeyVault/managedHsm/keys/read",
-                    "Microsoft.KeyVault/managedHsm/keys/write",
-                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read",
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read/action",
+                    "Microsoft.KeyVault/managedHsm/keys/write/action",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read/action",
                     "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action",
                     "Microsoft.KeyVault/managedHsm/keys/backup/action",
                     "Microsoft.KeyVault/managedHsm/keys/restore/action",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/read",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/write",
-                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read"
-                  ],
-                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/read/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/write/action",
+                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read/action",
                     "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/wrap/action",
@@ -100,15 +99,14 @@
               "description": "",
               "permissions": [
                 {
-                  "actions": [
-                    "Microsoft.KeyVault/managedHsm/keys/read",
-                    "Microsoft.KeyVault/managedHsm/keys/write",
-                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read",
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read/action",
+                    "Microsoft.KeyVault/managedHsm/keys/write/action",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read/action",
                     "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action",
                     "Microsoft.KeyVault/managedHsm/keys/backup/action",
-                    "Microsoft.KeyVault/managedHsm/keys/restore/action"
-                  ],
-                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/restore/action",
                     "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/sign/action",
@@ -140,12 +138,12 @@
               "description": "",
               "permissions": [
                 {
-                  "actions": [
-                    "Microsoft.KeyVault/managedHsm/keys/read",
-                    "Microsoft.KeyVault/managedHsm/keys/write",
-                    "Microsoft.KeyVault/managedHsm/keys/backup/action"
-                  ],
+                  "actions": [],
                   "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read/action",
+                    "Microsoft.KeyVault/managedHsm/keys/write/action",
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action",
+                    "Microsoft.KeyVault/managedHsm/keys/create",
                     "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
                     "Microsoft.KeyVault/managedHsm/keys/wrap/action",
@@ -172,18 +170,67 @@
               "description": "",
               "permissions": [
                 {
-                  "actions": [
-                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/read",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/write",
-                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete"
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/roleDefinitions/read/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/read/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/write/action",
+                    "Microsoft.KeyVault/managedHsm/roleAssignments/delete/action"
                   ],
-                  "dataActions": [],
                   "notActions": [],
                   "notDataActions": []
                 }
               ],
               "roleName": "Azure Key Vault Managed HSM Policy Administrator",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/2c18b078-7c48-4d3a-af88-5a3a1b3f82b3",
+            "name": "2c18b078-7c48-4d3a-af88-5a3a1b3f82b3",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read/action",
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read/action"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Crypto Auditor",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/33413926-3206-4cdd-b39a-83574fe37a17",
+            "name": "33413926-3206-4cdd-b39a-83574fe37a17",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/keys/read/action",
+                    "Microsoft.KeyVault/managedHsm/keys/wrap/action",
+                    "Microsoft.KeyVault/managedHsm/keys/unwrap/action"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Azure Key Vault Managed HSM Crypto Service Encryption",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -196,19 +243,21 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "181",
+        "Content-Length": "196",
         "Content-Type": "application/json",
-        "Request-Id": "|3e6cb387-4eecfa4a673ebe60.",
+        "traceparent": "00-7427b92b69836743a1dbdf959a9368e5-4d40873686202a48-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200617.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ffce91e513374f917bd26e76b166002d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
-        "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d"
+        "properties": {
+          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
+          "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d"
+        }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -217,7 +266,7 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+        "x-ms-request-id": "7a0bdfa8-b0eb-11ea-9d3b-0242ac12000a"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
@@ -235,10 +284,10 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|3e6cb388-4eecfa4a673ebe60.",
+        "traceparent": "00-5fb6c9f270d86749b5b5b5843ae1331b-5c5826b3211c1d42-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200617.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "3d63015b5be35d7e1461862d46efbe59",
         "x-ms-return-client-request-id": "true"
@@ -251,7 +300,7 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
+        "x-ms-request-id": "7a0bdfa8-b0eb-11ea-9d3b-0242ac12000a"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",

@@ -39,7 +39,6 @@ Global
 		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{b404190b-c1d4-4655-99d4-45cb6532806b}*SharedItemsImports = 5
 		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{c361b52f-cd94-465d-aa79-1b2c0461a166}*SharedItemsImports = 5
 		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{e74dabdd-50b0-475c-b83a-44465cf5515c}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{ee1064ed-c892-4763-b8c9-9be2a768251b}*SharedItemsImports = 5
 		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{f2e6bd61-6a15-4f1b-a1a4-43e2af274ad5}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

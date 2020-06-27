@@ -6,12 +6,12 @@
     <PropertyGroup>
         <Description>Microsoft Azure Attestation Library</Description>
         <AssemblyName>Microsoft.Azure.Management.Attestation</AssemblyName>
-        <Version>0.11.0-preview</Version>
+        <Version>0.12.0-preview</Version>
         <PackageId>Microsoft.Azure.Management.Attestation</PackageId>
         <PackageTags>Management.Attestation;Attestation;recommendations;</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a public release of the Azure Attestation SDK. Included with this release is the ability to manage Attestation service locations and tags.
+                This is a public release of the Azure Attestation SDK. Included with this release is the ability to manage Attestation service default providers.
             ]]>
         </PackageReleaseNotes>
         <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(commonWords));
             }
 
-            CommonWords = commonWords.ToArray();
+            CommonWords = commonWords.ToList();
             ODataType = "#Microsoft.Azure.Search.CommonGramTokenFilter";
         }
 

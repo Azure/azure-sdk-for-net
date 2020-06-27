@@ -28,6 +28,7 @@
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->

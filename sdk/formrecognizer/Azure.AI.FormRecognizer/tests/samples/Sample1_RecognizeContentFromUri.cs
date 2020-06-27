@@ -20,11 +20,11 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceUri = FormRecognizerTestEnvironment.CreateUriString("Invoice_1.pdf");
+            Uri invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 
-            FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+            FormPageCollection formPages = await client.StartRecognizeContentFromUri(invoiceUri).WaitForCompletionAsync();
             foreach (FormPage page in formPages)
             {
                 Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");

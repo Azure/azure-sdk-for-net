@@ -33,7 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the PredictionQueryResult class.
         /// </summary>
         /// <param name="token">Prediction Query Token.</param>
-        /// <param name="results">Result of an prediction request.</param>
+        /// <param name="results">Result of an image prediction
+        /// request.</param>
         public PredictionQueryResult(PredictionQueryToken token = default(PredictionQueryToken), IList<StoredImagePrediction> results = default(IList<StoredImagePrediction>))
         {
             Token = token;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public PredictionQueryToken Token { get; set; }
 
         /// <summary>
-        /// Gets result of an prediction request.
+        /// Gets result of an image prediction request.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
         public IList<StoredImagePrediction> Results { get; private set; }

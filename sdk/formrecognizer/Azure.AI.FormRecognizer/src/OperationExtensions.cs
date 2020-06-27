@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="IReadOnlyList{T}"/>
         /// containing the recognized receipts.</returns>
-        public static async Task<Response<RecognizedReceiptCollection>> WaitForCompletionAsync(this Task<RecognizeReceiptsOperation> operation, CancellationToken cancellationToken = default)
+        public static async Task<Response<RecognizedFormCollection>> WaitForCompletionAsync(this Task<RecognizeReceiptsOperation> operation, CancellationToken cancellationToken = default)
         {
             var o = await operation.ConfigureAwait(false);
             return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
 
             Priority = priority;
             RuleType = ruleType;
-            MatchConditions = matchConditions.ToArray();
+            MatchConditions = matchConditions.ToList();
             Action = action;
         }
 

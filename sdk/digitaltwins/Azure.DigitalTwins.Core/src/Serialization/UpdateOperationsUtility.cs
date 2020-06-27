@@ -14,14 +14,13 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// </remarks>
     /// <example>
     /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
-    /// // Update Component1 by replacing the property ComponentProp1 value
+    /// // Update Component1 by replacing the property ComponentProp1 value,
+    /// // using an optional utility to build the payload.
     /// var componentUpdateUtility = new UpdateOperationsUtility();
     /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
     /// string updatePayload = componentUpdateUtility.Serialize();
-    ///
-    /// Response&lt;string&gt; response = await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
-    ///
-    /// Console.WriteLine($&quot;Updated component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}&quot;);
+    /// await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
+    /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
     /// </code>
     /// </example>
     public class UpdateOperationsUtility

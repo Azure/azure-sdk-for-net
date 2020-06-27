@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.Samples
                         Environment.Exit(1);
                     });
 
-            // Instantiate the client            
+            // Instantiate the client
             DigitalTwinsClient dtClient = GetDigitalTwinsClient(
                     options.TenantId,
                     options.ClientId,
@@ -60,7 +60,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// Illustrates how to construct a <see cref="DigitalTwinsClient"/>, using the <see cref="DefaultAzureCredential"/>
         /// implementation of <see cref="Azure.Core.TokenCredential"/>.
-        /// </summary>        
+        /// </summary>
         /// <param name="adtEndpoint">The endpoint of the digital twins instance.</param>
         private static DigitalTwinsClient GetDigitalTwinsClient(string tenantId, string clientId, string clientSecret, string adtEndpoint)
         {
@@ -74,7 +74,7 @@ namespace Azure.DigitalTwins.Core.Samples
             // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
             // It attempts to use multiple credential types in an order until it finds a working credential.
             var tokenCredential = new DefaultAzureCredential();
-            
+
             var client = new DigitalTwinsClient(
                 new Uri(adtEndpoint),
                 tokenCredential);
@@ -82,6 +82,6 @@ namespace Azure.DigitalTwins.Core.Samples
             #endregion Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
 
             return client;
-        }       
+        }
     }
 }

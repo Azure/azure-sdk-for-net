@@ -22,30 +22,32 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class AgreementsOperationsExtensions
     {
             /// <summary>
-            /// Lists all agreements for a billing account.
+            /// Lists the agreements for a billing account.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the participants.
             /// </param>
-            public static AgreementListResult ListByBillingAccount(this IAgreementsOperations operations, string billingAccountName, string expand = default(string))
+            public static IPage<Agreement> ListByBillingAccount(this IAgreementsOperations operations, string billingAccountName, string expand = default(string))
             {
                 return operations.ListByBillingAccountAsync(billingAccountName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all agreements for a billing account.
+            /// Lists the agreements for a billing account.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the participants.
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgreementListResult> ListByBillingAccountAsync(this IAgreementsOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Agreement>> ListByBillingAccountAsync(this IAgreementsOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -62,16 +64,17 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the agreement by name.
+            /// Gets an agreement by ID.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='agreementName'>
-            /// Agreement Id.
+            /// The ID that uniquely identifies an agreement.
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the participants.
@@ -82,16 +85,17 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the agreement by name.
+            /// Gets an agreement by ID.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='agreementName'>
-            /// Agreement Id.
+            /// The ID that uniquely identifies an agreement.
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the participants.
@@ -102,6 +106,42 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<Agreement> GetAsync(this IAgreementsOperations operations, string billingAccountName, string agreementName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, agreementName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the agreements for a billing account.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Agreement> ListByBillingAccountNext(this IAgreementsOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the agreements for a billing account.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Agreement>> ListByBillingAccountNextAsync(this IAgreementsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
