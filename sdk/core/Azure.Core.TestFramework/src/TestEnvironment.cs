@@ -121,6 +121,11 @@ namespace Azure.Core.TestFramework
         public string ServiceManagementUrl => GetRecordedVariable("SERVICE_MANAGEMENT_URL");
 
         /// <summary>
+        ///   The resource manager of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string ResourceManager => GetRecordedVariable("RESOURCE_MANAGER");
+
+        /// <summary>
         ///   The storage account endpoint suffix of the cloud to use during Live tests. Recorded.
         /// </summary>
         public string StorageEndpointSuffix => GetRecordedVariable("STORAGE_ENDPOINT_SUFFIX");

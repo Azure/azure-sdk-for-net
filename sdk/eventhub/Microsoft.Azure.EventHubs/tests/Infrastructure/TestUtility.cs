@@ -34,6 +34,9 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static readonly Lazy<string> ServiceManagementUrlInstance =
             new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.ServiceManagementUrlEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
+        private static readonly Lazy<string> ResourceManagerInstance =
+            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.ResourceManagerEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
+
         private static readonly Lazy<string> StorageEndpointSuffixInstance =
            new Lazy<string>(() => ReadEnvironmentVariable(TestConstants.StorageEndpointSuffixEnvironmentVariableName), LazyThreadSafetyMode.PublicationOnly);
 
@@ -68,6 +71,8 @@ namespace Microsoft.Azure.EventHubs.Tests
         internal static string AuthorityHost => AuthorityHostInstance.Value;
 
         internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value;
+
+        internal static string ResourceManager => ResourceManagerInstance.Value;
 
         internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value;
 
