@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
+                new Tuple<string, string, string>("Security", "AlertsSuppressionRules", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Assessments", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AssessmentsMetadata", "2020-01-01"),
@@ -30,10 +31,13 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "Automations", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "ComplianceResults", "2017-08-01"),
                 new Tuple<string, string, string>("Security", "Compliances", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "Connectors", "2020-01-01-preview"),
                 new Tuple<string, string, string>("Security", "DeviceSecurityGroups", "2019-08-01"),
-                new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2015-06-01-preview"),
-                new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2020-01-01"),
+                new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "InformationProtectionPolicies", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "IotAlertTypes", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IotAlerts", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolution", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionAnalytics", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionsAnalyticsAggregatedAlert", "2019-08-01"),
@@ -45,8 +49,11 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceControls", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceStandards", "2019-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecureScoreControlDefinitions", "2020-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecureScoreControls", "2020-01-01-preview"),
+                new Tuple<string, string, string>("Security", "SecureScores", "2020-01-01-preview"),
                 new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
-                new Tuple<string, string, string>("Security", "ServerVulnerabilityAssessment", "2019-01-01-preview"),
+                new Tuple<string, string, string>("Security", "ServerVulnerabilityAssessment", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Settings", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "SubAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
@@ -55,16 +62,5 @@ namespace Microsoft.Azure.Management.Security
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "(empty)";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\GitHub\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "4bfc60521b88d21c9cd4c44cc367e080ecc4af81";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
