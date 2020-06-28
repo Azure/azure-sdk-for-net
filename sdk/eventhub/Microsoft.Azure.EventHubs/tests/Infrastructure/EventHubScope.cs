@@ -164,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"neteventhubstrackone{ Guid.NewGuid().ToString("D").Substring(0, 4) }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName));
             }
@@ -274,8 +274,8 @@ namespace Microsoft.Azure.EventHubs.Tests
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestUtility.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }/{ TestUtility.EventHubsTenant }");
+                var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
