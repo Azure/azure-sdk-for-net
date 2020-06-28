@@ -61,7 +61,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var eventHubNamespace = TestUtility.EventHubsNamespace;
             var token = await AquireManagementTokenAsync();
-            var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
+            var client = new EventHubManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
 
             try
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
+            using (var client = new EventHubManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
             {
                 var eventHub = new Eventhub(partitionCount: partitionCount);
                 eventHub = await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"net-eventhubs-track-one-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
                 ;
