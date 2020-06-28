@@ -165,7 +165,7 @@ When you interact with the Azure Key Vault administration library using the .NET
 
 For example, if you try to retrieve a role assignment that doesn't exist in your Azure Key Vault, a `404` error is returned, indicating "Not Found".
 
-```C# Snippet:NotFound
+```C# Snippet:RoleAssignmentNotFound
 try
 {
     RoleAssignment roleAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, "invalid-name");;
@@ -174,6 +174,20 @@ catch (RequestFailedException ex)
 {
     Console.WriteLine(ex.ToString());
 }
+```
+
+```
+Azure.RequestFailedException: Service request failed.
+Status: 404 (Not Found)
+
+Content:
+{"error":{"code":"RoleAssignmentNotFound","message":"Requested role assignment not found (Activity ID: a67f09f4-b68e-11ea-bd6d-0242ac120006)"}}
+
+Headers:
+X-Content-Type-Options: REDACTED
+x-ms-request-id: a67f09f4-b68e-11ea-bd6d-0242ac120006
+Content-Length: 143
+Content-Type: application/json
 ```
 
 ## Next steps
