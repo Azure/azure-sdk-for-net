@@ -173,7 +173,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
                 var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
+                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ TestUtility.StorageEndpointSuffix }");
             }
         }
 
