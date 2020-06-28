@@ -225,7 +225,7 @@ namespace Azure.Core.Tests
             {
                 return new TestClient();
             }
-            public virtual Operations SubProperty { get; set; } = new Operations();
+            public virtual Operations SubProperty => new Operations();
         }
 
         public class Operations
