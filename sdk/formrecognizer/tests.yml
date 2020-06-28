@@ -18,7 +18,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.us'; location = 'usgovvirginia' }"
         EnvVars:
-        AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
 
       # AzureChinaCloud
       - ServiceDirectory: formrecognizer
