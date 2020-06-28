@@ -48,7 +48,7 @@ namespace Azure.Core.TestFramework
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
-            string name = new string(testAdapter.Name.Where(c => !s_invalidChars.Contains(c)).ToArray());
+            string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
