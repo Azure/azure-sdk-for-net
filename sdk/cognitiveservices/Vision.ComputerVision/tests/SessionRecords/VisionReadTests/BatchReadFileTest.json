@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.0/read/core/asyncBatchAnalyze",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvY29yZS9hc3luY0JhdGNoQW5hbHl6ZQ==",
+      "RequestUri": "/vision/v3.0/read/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL3JlYWQvYW5hbHl6ZQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
       "RequestHeaders": {
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Operation-Location": [
-          "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/read/operations/213313c8-eb1d-41dc-82eb-69a566532ddd"
+          "https://westcentralus.api.cognitive.microsoft.com/vision/v3.0/read/analyzeResults/213313c8-eb1d-41dc-82eb-69a566532ddd"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -61,7 +61,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/vision/v2.0/read/operations/213313c8-eb1d-41dc-82eb-69a566532ddd",
+      "RequestUri": "/vision/v3.0/read/analyzeResults/213313c8-eb1d-41dc-82eb-69a566532ddd",
       "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvb3BlcmF0aW9ucy8yMTMzMTNjOC1lYjFkLTQxZGMtODJlYi02OWE1NjY1MzJkZGQ=",
       "RequestMethod": "GET",
       "RequestBody": "",

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ComputerVisionSDK.Tests
 {
-    public class VisionBatchReadFileTests : BaseTests
+    public class VisionReadTests : BaseTests
     {
         static private ReadOperationResult GetRecognitionResultWithPolling(IComputerVisionClient client, string operationLocation)
         {
@@ -18,11 +18,11 @@ namespace ComputerVisionSDK.Tests
 
             for (int remainingTries = 10; remainingTries > 0; remainingTries--)
             {
-                ReadOperationResult result = client.GetReadOperationResultAsync(operationId).Result;
+                ReadOperationResult result = client.GetReadResultAsync(new Guid(operationId)).Result;
 
-                Assert.True(result.Status != TextOperationStatusCodes.Failed);
+                Assert.True(result.Status != OperationStatusCodes.Failed);
 
-                if (result.Status == TextOperationStatusCodes.Succeeded)
+                if (result.Status == OperationStatusCodes.Succeeded)
                 {
                     return result;
                 }
@@ -34,7 +34,7 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
-        public void BatchReadFileTest()
+        public void ReadTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -44,19 +44,19 @@ namespace ComputerVisionSDK.Tests
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
-                    BatchReadFileHeaders headers = client.BatchReadFileAsync(imageUrl).Result;
+                    ReadHeaders headers = client.ReadAsync(imageUrl).Result;
 
                     Assert.NotNull(headers.OperationLocation);
 
                     ReadOperationResult readOperationResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
 
                     Assert.NotNull(readOperationResult);
-                    Assert.Equal(TextOperationStatusCodes.Succeeded, readOperationResult.Status);
+                    Assert.Equal(OperationStatusCodes.Succeeded, readOperationResult.Status);
 
-                    Assert.NotNull(readOperationResult.RecognitionResults);
-                    Assert.Equal(1, readOperationResult.RecognitionResults.Count);
+                    Assert.NotNull(readOperationResult.AnalyzeResult);
+                    Assert.Equal(1, readOperationResult.AnalyzeResult.ReadResults.Count);
 
-                    var recognitionResult = readOperationResult.RecognitionResults[0];
+                    var recognitionResult = readOperationResult.AnalyzeResult.ReadResults[0];
 
                     Assert.Equal(1, recognitionResult.Page);
                     Assert.Equal(250, recognitionResult.Width);
@@ -75,7 +75,7 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
-        public void BatchReadFileInStreamTest()
+        public void ReadFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -84,19 +84,19 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
                 {
-                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream).Result;
+                    ReadInStreamHeaders headers = client.ReadInStreamWithHttpMessagesAsync(stream).Result.Headers;
 
                     Assert.NotNull(headers.OperationLocation);
 
                     ReadOperationResult readOperationResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
 
                     Assert.NotNull(readOperationResult);
-                    Assert.Equal(TextOperationStatusCodes.Succeeded, readOperationResult.Status);
+                    Assert.Equal(OperationStatusCodes.Succeeded, readOperationResult.Status);
 
-                    Assert.NotNull(readOperationResult.RecognitionResults);
-                    Assert.Equal(1, readOperationResult.RecognitionResults.Count);
+                    Assert.NotNull(readOperationResult.AnalyzeResult);
+                    Assert.Equal(1, readOperationResult.AnalyzeResult.ReadResults.Count);
 
-                    var recognitionResult = readOperationResult.RecognitionResults[0];
+                    var recognitionResult = readOperationResult.AnalyzeResult.ReadResults[0];
 
                     Assert.Equal(1, recognitionResult.Page);
                     Assert.Equal(1000, recognitionResult.Width);
@@ -123,19 +123,19 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("menu.pdf"), FileMode.Open))
                 {
-                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream).Result;
+                    ReadInStreamHeaders headers = client.ReadInStreamWithHttpMessagesAsync(stream).Result.Headers;
 
                     Assert.NotNull(headers.OperationLocation);
 
                     ReadOperationResult readOperationResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
 
                     Assert.NotNull(readOperationResult);
-                    Assert.Equal(TextOperationStatusCodes.Succeeded, readOperationResult.Status);
+                    Assert.Equal(OperationStatusCodes.Succeeded, readOperationResult.Status);
 
-                    Assert.NotNull(readOperationResult.RecognitionResults);
-                    Assert.Equal(1, readOperationResult.RecognitionResults.Count);
+                    Assert.NotNull(readOperationResult.AnalyzeResult);
+                    Assert.Equal(1, readOperationResult.AnalyzeResult.ReadResults.Count);
 
-                    var recognitionResult = readOperationResult.RecognitionResults[0];
+                    var recognitionResult = readOperationResult.AnalyzeResult.ReadResults[0];
 
                     Assert.Equal(1, recognitionResult.Page);
                     Assert.Equal(8.5, recognitionResult.Width);

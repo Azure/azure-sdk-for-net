@@ -17,26 +17,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// An object representing a recognized text region
+    /// Text extracted from a page in the input document.
     /// </summary>
-    public partial class TextRecognitionResult
+    public partial class ReadResult
     {
         /// <summary>
-        /// Initializes a new instance of the TextRecognitionResult class.
+        /// Initializes a new instance of the ReadResult class.
         /// </summary>
-        public TextRecognitionResult()
+        public ReadResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TextRecognitionResult class.
+        /// Initializes a new instance of the ReadResult class.
         /// </summary>
-        /// <param name="lines">A list of recognized text lines.</param>
         /// <param name="page">The 1-based page number of the recognition
         /// result.</param>
-        /// <param name="clockwiseOrientation">The orientation of the image in
-        /// degrees in the clockwise direction. Range between [0, 360).</param>
+        /// <param name="angle">The orientation of the image in degrees in the
+        /// clockwise direction. Range between [-180, 180).</param>
         /// <param name="width">The width of the image in pixels or the PDF in
         /// inches.</param>
         /// <param name="height">The height of the image in pixels or the PDF
@@ -44,10 +43,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="unit">The unit used in the Width, Height and
         /// BoundingBox. For images, the unit is 'pixel'. For PDF, the unit is
         /// 'inch'. Possible values include: 'pixel', 'inch'</param>
-        public TextRecognitionResult(IList<Line> lines, int? page = default(int?), double? clockwiseOrientation = default(double?), double? width = default(double?), double? height = default(double?), TextRecognitionResultDimensionUnit? unit = default(TextRecognitionResultDimensionUnit?))
+        /// <param name="lines">A list of recognized text lines.</param>
+        /// <param name="language">The BCP-47 language code of the recognized
+        /// text page.</param>
+        public ReadResult(int page, double angle, double width, double height, TextRecognitionResultDimensionUnit unit, IList<Line> lines, string language = default(string))
         {
             Page = page;
-            ClockwiseOrientation = clockwiseOrientation;
+            Language = language;
+            Angle = angle;
             Width = width;
             Height = height;
             Unit = unit;
@@ -64,27 +67,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets the 1-based page number of the recognition result.
         /// </summary>
         [JsonProperty(PropertyName = "page")]
-        public int? Page { get; set; }
+        public int Page { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BCP-47 language code of the recognized text page.
+        /// </summary>
+        [JsonProperty(PropertyName = "language")]
+        public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets the orientation of the image in degrees in the
-        /// clockwise direction. Range between [0, 360).
+        /// clockwise direction. Range between [-180, 180).
         /// </summary>
-        [JsonProperty(PropertyName = "clockwiseOrientation")]
-        public double? ClockwiseOrientation { get; set; }
+        [JsonProperty(PropertyName = "angle")]
+        public double Angle { get; set; }
 
         /// <summary>
         /// Gets or sets the width of the image in pixels or the PDF in inches.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
-        public double? Width { get; set; }
+        public double Width { get; set; }
 
         /// <summary>
         /// Gets or sets the height of the image in pixels or the PDF in
         /// inches.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
-        public double? Height { get; set; }
+        public double Height { get; set; }
 
         /// <summary>
         /// Gets or sets the unit used in the Width, Height and BoundingBox.
@@ -92,7 +101,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Possible values include: 'pixel', 'inch'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public TextRecognitionResultDimensionUnit? Unit { get; set; }
+        public TextRecognitionResultDimensionUnit Unit { get; set; }
 
         /// <summary>
         /// Gets or sets a list of recognized text lines.
@@ -111,6 +120,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             if (Lines == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Lines");
+            }
+            if (Lines != null)
+            {
+                foreach (var element in Lines)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
