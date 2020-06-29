@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventsCanBeReadByOneProcessorClientUsingAnIdentityCredential()
         {
             // Setup the environment.
-
+            Assert.AreEqual("aaaaaaaaaaa", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace);
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
