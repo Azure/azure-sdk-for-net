@@ -15,7 +15,11 @@ namespace Azure.AI.FormRecognizer.Models
             ReadResult_internal readResult = readResults[pageIndex];
 
             PageNumber = readResult.Page;
-            TextAngle = readResult.Angle;
+
+            // Workaround because the service can sometimes return angles between 180 and 360 (bug).
+            // Currently tracked by: https://github.com/Azure/azure-sdk-for-net/issues/12319
+            TextAngle = readResult.Angle <= 180.0f ? readResult.Angle : readResult.Angle - 360.0f;
+
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
