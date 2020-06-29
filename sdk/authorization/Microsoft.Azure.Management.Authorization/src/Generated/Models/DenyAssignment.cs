@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
     public partial class DenyAssignment
     {
         /// <summary>
-        /// Initializes a new instance of the DenyAssignment class. 
+        /// Initializes a new instance of the DenyAssignment class.
         /// </summary>
         public DenyAssignment()
         {
