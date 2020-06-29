@@ -193,7 +193,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                                                                           string resourceGroupName,
                                                                           string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(new Uri(TestUtility.ResourceManager), new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 var resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
