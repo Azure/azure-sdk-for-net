@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Reducer = reducer;
             Input = input;
             Output = output;
-            FilePaths = filePaths.ToArray();
+            FilePaths = filePaths.ToList();
             Type = "HDInsightStreaming";
         }
 

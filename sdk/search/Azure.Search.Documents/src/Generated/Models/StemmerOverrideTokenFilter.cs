@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(rules));
             }
 
-            Rules = rules.ToArray();
+            Rules = rules.ToList();
             ODataType = "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
 

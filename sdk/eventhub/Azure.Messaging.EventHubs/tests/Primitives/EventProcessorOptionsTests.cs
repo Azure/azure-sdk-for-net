@@ -92,6 +92,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorOptions.MaximumWaitTime" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumWaitTimeAllowsNull()
+        {
+            var options = new EventProcessorOptions();
+            Assert.That(() => options.MaximumWaitTime = null, Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorOptions.PrefetchCount" />
         ///   property.
         /// </summary>
@@ -103,6 +115,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountIsValidated(int count)
         {
             Assert.That(() => new EventProcessorOptions { PrefetchCount = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorOptions.PrefetchCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchCountAllowsZero()
+        {
+            Assert.That(() => new EventProcessorOptions { PrefetchCount = 0 }, Throws.Nothing);
         }
 
         /// <summary>

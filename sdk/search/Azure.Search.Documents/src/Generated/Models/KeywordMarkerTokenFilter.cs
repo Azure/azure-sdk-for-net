@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(keywords));
             }
 
-            Keywords = keywords.ToArray();
+            Keywords = keywords.ToList();
             ODataType = "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
         }
 

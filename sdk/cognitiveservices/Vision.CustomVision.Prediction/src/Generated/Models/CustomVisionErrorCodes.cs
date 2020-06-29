@@ -28,10 +28,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string BadRequestProjectUnknownClassification = "BadRequestProjectUnknownClassification";
         public const string BadRequestProjectUnsupportedDomainTypeChange = "BadRequestProjectUnsupportedDomainTypeChange";
         public const string BadRequestProjectUnsupportedExportPlatform = "BadRequestProjectUnsupportedExportPlatform";
+        public const string BadRequestProjectImagePreprocessingSettings = "BadRequestProjectImagePreprocessingSettings";
+        public const string BadRequestProjectDuplicated = "BadRequestProjectDuplicated";
         public const string BadRequestIterationName = "BadRequestIterationName";
         public const string BadRequestIterationNameNotUnique = "BadRequestIterationNameNotUnique";
         public const string BadRequestIterationDescription = "BadRequestIterationDescription";
         public const string BadRequestIterationIsNotTrained = "BadRequestIterationIsNotTrained";
+        public const string BadRequestIterationValidationFailed = "BadRequestIterationValidationFailed";
         public const string BadRequestWorkspaceCannotBeModified = "BadRequestWorkspaceCannotBeModified";
         public const string BadRequestWorkspaceNotDeletable = "BadRequestWorkspaceNotDeletable";
         public const string BadRequestTagName = "BadRequestTagName";
@@ -39,14 +42,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string BadRequestTagDescription = "BadRequestTagDescription";
         public const string BadRequestTagType = "BadRequestTagType";
         public const string BadRequestMultipleNegativeTag = "BadRequestMultipleNegativeTag";
+        public const string BadRequestMultipleGeneralProductTag = "BadRequestMultipleGeneralProductTag";
         public const string BadRequestImageTags = "BadRequestImageTags";
         public const string BadRequestImageRegions = "BadRequestImageRegions";
         public const string BadRequestNegativeAndRegularTagOnSameImage = "BadRequestNegativeAndRegularTagOnSameImage";
+        public const string BadRequestUnsupportedDomain = "BadRequestUnsupportedDomain";
         public const string BadRequestRequiredParamIsNull = "BadRequestRequiredParamIsNull";
         public const string BadRequestIterationIsPublished = "BadRequestIterationIsPublished";
         public const string BadRequestInvalidPublishName = "BadRequestInvalidPublishName";
         public const string BadRequestInvalidPublishTarget = "BadRequestInvalidPublishTarget";
         public const string BadRequestUnpublishFailed = "BadRequestUnpublishFailed";
+        public const string BadRequestIterationNotPublished = "BadRequestIterationNotPublished";
         public const string BadRequestSubscriptionApi = "BadRequestSubscriptionApi";
         public const string BadRequestExceedProjectLimit = "BadRequestExceedProjectLimit";
         public const string BadRequestExceedIterationPerProjectLimit = "BadRequestExceedIterationPerProjectLimit";
@@ -60,6 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string BadRequestImageUrl = "BadRequestImageUrl";
         public const string BadRequestImageFormat = "BadRequestImageFormat";
         public const string BadRequestImageSizeBytes = "BadRequestImageSizeBytes";
+        public const string BadRequestImageDimensions = "BadRequestImageDimensions";
         public const string BadRequestImageExceededCount = "BadRequestImageExceededCount";
         public const string BadRequestTrainingNotNeeded = "BadRequestTrainingNotNeeded";
         public const string BadRequestTrainingNotNeededButTrainingPipelineUpdated = "BadRequestTrainingNotNeededButTrainingPipelineUpdated";
@@ -82,6 +89,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string BadRequestPredictionResultsExceededCount = "BadRequestPredictionResultsExceededCount";
         public const string BadRequestPredictionInvalidApplicationName = "BadRequestPredictionInvalidApplicationName";
         public const string BadRequestPredictionInvalidQueryParameters = "BadRequestPredictionInvalidQueryParameters";
+        public const string BadRequestInvalidImportToken = "BadRequestInvalidImportToken";
+        public const string BadRequestExportWhileTraining = "BadRequestExportWhileTraining";
+        public const string BadRequestImageMetadataKey = "BadRequestImageMetadataKey";
+        public const string BadRequestImageMetadataValue = "BadRequestImageMetadataValue";
+        public const string BadRequestOperationNotSupported = "BadRequestOperationNotSupported";
+        public const string BadRequestInvalidArtifactUri = "BadRequestInvalidArtifactUri";
+        public const string BadRequestCustomerManagedKeyRevoked = "BadRequestCustomerManagedKeyRevoked";
         public const string BadRequestInvalid = "BadRequestInvalid";
         public const string UnsupportedMediaType = "UnsupportedMediaType";
         public const string Forbidden = "Forbidden";
@@ -107,10 +121,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string Conflict = "Conflict";
         public const string ConflictInvalid = "ConflictInvalid";
         public const string ErrorUnknown = "ErrorUnknown";
+        public const string ErrorIterationCopyFailed = "ErrorIterationCopyFailed";
+        public const string ErrorPreparePerformanceMigrationFailed = "ErrorPreparePerformanceMigrationFailed";
         public const string ErrorProjectInvalidWorkspace = "ErrorProjectInvalidWorkspace";
         public const string ErrorProjectInvalidPipelineConfiguration = "ErrorProjectInvalidPipelineConfiguration";
         public const string ErrorProjectInvalidDomain = "ErrorProjectInvalidDomain";
         public const string ErrorProjectTrainingRequestFailed = "ErrorProjectTrainingRequestFailed";
+        public const string ErrorProjectImportRequestFailed = "ErrorProjectImportRequestFailed";
         public const string ErrorProjectExportRequestFailed = "ErrorProjectExportRequestFailed";
         public const string ErrorFeaturizationServiceUnavailable = "ErrorFeaturizationServiceUnavailable";
         public const string ErrorFeaturizationQueueTimeout = "ErrorFeaturizationQueueTimeout";
@@ -127,6 +144,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         public const string ErrorPrediction = "ErrorPrediction";
         public const string ErrorPredictionStorage = "ErrorPredictionStorage";
         public const string ErrorRegionProposal = "ErrorRegionProposal";
+        public const string ErrorUnknownBaseModel = "ErrorUnknownBaseModel";
         public const string ErrorInvalid = "ErrorInvalid";
     }
 }

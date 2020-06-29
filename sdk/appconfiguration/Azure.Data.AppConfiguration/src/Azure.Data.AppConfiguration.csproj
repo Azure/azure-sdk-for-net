@@ -5,7 +5,7 @@
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
     <Version>1.1.0-preview.1</Version>
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
-    <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
+    <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

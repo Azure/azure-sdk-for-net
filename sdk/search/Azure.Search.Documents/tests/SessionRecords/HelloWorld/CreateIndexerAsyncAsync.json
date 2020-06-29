@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "5201",
         "Content-Type": "application/json",
-        "traceparent": "00-8bffaf53821011409d8482ee1ffc6d4b-db97c0cfa9b7304d-00",
+        "traceparent": "00-8b592788d3f01040afd82f9238fb4040-4ec318b00b827347-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "ba38d5451a7aadea001f98d4a4cdd32c",
@@ -27,11 +27,11 @@
         "client-request-id": "ba38d545-1a7a-adea-001f-98d4a4cdd32c",
         "Content-Length": "5342",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 23 Jun 2020 18:03:49 GMT",
-        "elapsed-time": "37",
-        "ETag": "W/\u00220x8D8179FC8169468\u0022",
+        "Date": "Fri, 26 Jun 2020 07:20:10 GMT",
+        "elapsed-time": "33",
+        "ETag": "W/\u00220x8D819A15D3326C0\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps(\u0027yawilrdj\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps(\u0027yawilrdj\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -39,19 +39,19 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "ba38d545-1a7a-adea-001f-98d4a4cdd32c"
       },
-      "ResponseBody": "{\u0022@odata.context\u0022:\u0022https://azs-net-heathsrchtst.search.windows.net/$metadata#synonymmaps/$entity\u0022,\u0022@odata.etag\u0022:\u0022\\\u00220x8D8179FC8169468\\\u0022\u0022,\u0022name\u0022:\u0022yawilrdj\u0022,\u0022format\u0022:\u0022solr\u0022,\u0022synonyms\u0022:\u0022Afghanistan,AF,AFG\\n\\u00c5land Islands,AX,ALA\\nAlbania,AL,ALB\\nAlgeria,DZ,DZA\\nAmerican Samoa,AS,ASM\\nAndorra,AD,AND\\nAngola,AO,AGO\\nAnguilla,AI,AIA\\nAntarctica,AQ,ATA\\nAntigua and Barbuda,AG,ATG\\nArgentina,AR,ARG\\nArmenia,AM,ARM\\nAruba,AW,ABW\\nAustralia,AU,AUS\\nAustria,AT,AUT\\nAzerbaijan,AZ,AZE\\nBahamas,BS,BHS\\nBahrain,BH,BHR\\nBangladesh,BD,BGD\\nBarbados,BB,BRB\\nBelarus,BY,BLR\\nBelgium,BE,BEL\\nBelize,BZ,BLZ\\nBenin,BJ,BEN\\nBermuda,BM,BMU\\nBhutan,BT,BTN\\nBolivia,Plurinational State of Bolivia,BO,BOL\\nBonaire,Sint Eustatius and Saba,BQ,BES\\nBosnia and Herzegovina,BA,BIH\\nBotswana,BW,BWA\\nBouvet Island,BV,BVT\\nBrazil,BR,BRA\\nBritish Indian Ocean Territory,IO,IOT\\nBrunei Darussalam,BN,BRN\\nBulgaria,BG,BGR\\nBurkina Faso,BF,BFA\\nBurundi,BI,BDI\\nCabo Verde,CV,CPV\\nCambodia,KH,KHM\\nCameroon,CM,CMR\\nCanada,CA,CAN\\nCayman Islands,KY,CYM\\nCentral African Republic,CF,CAF\\nChad,TD,TCD\\nChile,CL,CHL\\nChina,CN,CHN\\nChristmas Island,CX,CXR\\nCocos (Keeling) Islands,CC,CCK\\nColombia,CO,COL\\nComoros,KM,COM\\nCongo,CG,COG\\nDemocratic Republic of the Congo,CD,COD\\nCook Islands,CK,COK\\nCosta Rica,CR,CRI\\nC\\u00f4te d\u0027Ivoire,CI,CIV\\nCroatia,HR,HRV\\nCuba,CU,CUB\\nCura\\u00e7ao,CW,CUW\\nCyprus,CY,CYP\\nCzechia,CZ,CZE\\nDenmark,DK,DNK\\nDjibouti,DJ,DJI\\nDominica,DM,DMA\\nDominican Republic,DO,DOM\\nEcuador,EC,ECU\\nEgypt,EG,EGY\\nEl Salvador,SV,SLV\\nEquatorial Guinea,GQ,GNQ\\nEritrea,ER,ERI\\nEstonia,EE,EST\\nEswatini,SZ,SWZ\\nEthiopia,ET,ETH\\nFalkland Islands (Malvinas),FK,FLK\\nFaroe Islands,FO,FRO\\nFiji,FJ,FJI\\nFinland,FI,FIN\\nFrance,FR,FRA\\nFrench Guiana,GF,GUF\\nFrench Polynesia,PF,PYF\\nFrench Southern Territories,TF,ATF\\nGabon,GA,GAB\\nGambia,GM,GMB\\nGeorgia,GE,GEO\\nGermany,DE,DEU\\nGhana,GH,GHA\\nGibraltar,GI,GIB\\nGreece,GR,GRC\\nGreenland,GL,GRL\\nGrenada,GD,GRD\\nGuadeloupe,GP,GLP\\nGuam,GU,GUM\\nGuatemala,GT,GTM\\nGuernsey,GG,GGY\\nGuinea,GN,GIN\\nGuinea-Bissau,GW,GNB\\nGuyana,GY,GUY\\nHaiti,HT,HTI\\nHeard Island and McDonald Islands,HM,HMD\\nHoly See,VA,VAT\\nHonduras,HN,HND\\nHong Kong,HK,HKG\\nHungary,HU,HUN\\nIceland,IS,ISL\\nIndia,IN,IND\\nIndonesia,ID,IDN\\nIran,Islamic Republic of Iran,IR,IRN\\nIraq,IQ,IRQ\\nIreland,IE,IRL\\nIsle of Man,IM,IMN\\nIsrael,IL,ISR\\nItaly,IT,ITA\\nJamaica,JM,JAM\\nJapan,JP,JPN\\nJersey,JE,JEY\\nJordan,JO,JOR\\nKazakhstan,KZ,KAZ\\nKenya,KE,KEN\\nKiribati,KI,KIR\\nDemocratic People\u0027s Republic of Korea,KP,PRK\\nKorea,Republic of Korea,KR,KOR\\nKuwait,KW,KWT\\nKyrgyzstan,KG,KGZ\\nLao People\u0027s Democratic Republic,LA,LAO\\nLatvia,LV,LVA\\nLebanon,LB,LBN\\nLesotho,LS,LSO\\nLiberia,LR,LBR\\nLibya,LY,LBY\\nLiechtenstein,LI,LIE\\nLithuania,LT,LTU\\nLuxembourg,LU,LUX\\nMacao,MO,MAC\\nMadagascar,MG,MDG\\nMalawi,MW,MWI\\nMalaysia,MY,MYS\\nMaldives,MV,MDV\\nMali,ML,MLI\\nMalta,MT,MLT\\nMarshall Islands,MH,MHL\\nMartinique,MQ,MTQ\\nMauritania,MR,MRT\\nMauritius,MU,MUS\\nMayotte,YT,MYT\\nMexico,MX,MEX\\nMicronesia,Federated States of Micronesia,FM,FSM\\nMoldova,Republic of Moldova,MD,MDA\\nMonaco,MC,MCO\\nMongolia,MN,MNG\\nMontenegro,ME,MNE\\nMontserrat,MS,MSR\\nMorocco,MA,MAR\\nMozambique,MZ,MOZ\\nMyanmar,MM,MMR\\nNamibia,NA,NAM\\nNauru,NR,NRU\\nNepal,NP,NPL\\nNetherlands,NL,NLD\\nNew Caledonia,NC,NCL\\nNew Zealand,NZ,NZL\\nNicaragua,NI,NIC\\nNiger,NE,NER\\nNigeria,NG,NGA\\nNiue,NU,NIU\\nNorfolk Island,NF,NFK\\nNorth Macedonia,MK,MKD\\nNorthern Mariana Islands,MP,MNP\\nNorway,NO,NOR\\nOman,OM,OMN\\nPakistan,PK,PAK\\nPalau,PW,PLW\\nPalestine,State of Palestine,PS,PSE\\nPanama,PA,PAN\\nPapua New Guinea,PG,PNG\\nParaguay,PY,PRY\\nPeru,PE,PER\\nPhilippines,PH,PHL\\nPitcairn,PN,PCN\\nPoland,PL,POL\\nPortugal,PT,PRT\\nPuerto Rico,PR,PRI\\nQatar,QA,QAT\\nR\\u00e9union,RE,REU\\nRomania,RO,ROU\\nRussia,Russian Federation,RU,RUS\\nRwanda,RW,RWA\\nSaint Barth\\u00e9lemy,BL,BLM\\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\\nSaint Kitts and Nevis,KN,KNA\\nSaint Lucia,LC,LCA\\nSaint Martin (French part),MF,MAF\\nSaint Pierre and Miquelon,PM,SPM\\nSaint Vincent and the Grenadines,VC,VCT\\nSamoa,WS,WSM\\nSan Marino,SM,SMR\\nSao Tome and Principe,ST,STP\\nSaudi Arabia,SA,SAU\\nSenegal,SN,SEN\\nSerbia,RS,SRB\\nSeychelles,SC,SYC\\nSierra Leone,SL,SLE\\nSingapore,SG,SGP\\nSint Maarten (Dutch part),SX,SXM\\nSlovakia,SK,SVK\\nSlovenia,SI,SVN\\nSolomon Islands,SB,SLB\\nSomalia,SO,SOM\\nSouth Africa,ZA,ZAF\\nSouth Georgia and the South Sandwich Islands,GS,SGS\\nSouth Sudan,SS,SSD\\nSpain,ES,ESP\\nSri Lanka,LK,LKA\\nSudan,SD,SDN\\nSuriname,SR,SUR\\nSvalbard and Jan Mayen,SJ,SJM\\nSweden,SE,SWE\\nSwitzerland,CH,CHE\\nSyrian Arab Republic,SY,SYR\\nTaiwan,Province of China,TW,TWN\\nTajikistan,TJ,TJK\\nTanzania,United Republic of Tanzania,TZ,TZA\\nThailand,TH,THA\\nTimor-Leste,TL,TLS\\nTogo,TG,TGO\\nTokelau,TK,TKL\\nTonga,TO,TON\\nTrinidad and Tobago,TT,TTO\\nTunisia,TN,TUN\\nTurkey,TR,TUR\\nTurkmenistan,TM,TKM\\nTurks and Caicos Islands,TC,TCA\\nTuvalu,TV,TUV\\nUganda,UG,UGA\\nUkraine,UA,UKR\\nUnited Arab Emirates,AE,ARE\\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\\nUnited States of America,US,USA\\nUnited States Minor Outlying Islands,UM,UMI\\nUruguay,UY,URY\\nUzbekistan,UZ,UZB\\nVanuatu,VU,VUT\\nVenezuela (Bolivarian Republic of),VE,VEN\\nViet Nam,VN,VNM\\nVirgin Islands (British),VG,VGB\\nVirgin Islands (U.S.),VI,VIR\\nWallis and Futuna,WF,WLF\\nWestern Sahara,EH,ESH\\nYemen,YE,YEM\\nZambia,ZM,ZMB\\nZimbabwe,ZW,ZWE\\n\u0022,\u0022encryptionKey\u0022:null}"
+      "ResponseBody": "{\u0022@odata.context\u0022:\u0022https://azs-net-heathsrchtst.search.windows.net/$metadata#synonymmaps/$entity\u0022,\u0022@odata.etag\u0022:\u0022\\\u00220x8D819A15D3326C0\\\u0022\u0022,\u0022name\u0022:\u0022yawilrdj\u0022,\u0022format\u0022:\u0022solr\u0022,\u0022synonyms\u0022:\u0022Afghanistan,AF,AFG\\n\\u00c5land Islands,AX,ALA\\nAlbania,AL,ALB\\nAlgeria,DZ,DZA\\nAmerican Samoa,AS,ASM\\nAndorra,AD,AND\\nAngola,AO,AGO\\nAnguilla,AI,AIA\\nAntarctica,AQ,ATA\\nAntigua and Barbuda,AG,ATG\\nArgentina,AR,ARG\\nArmenia,AM,ARM\\nAruba,AW,ABW\\nAustralia,AU,AUS\\nAustria,AT,AUT\\nAzerbaijan,AZ,AZE\\nBahamas,BS,BHS\\nBahrain,BH,BHR\\nBangladesh,BD,BGD\\nBarbados,BB,BRB\\nBelarus,BY,BLR\\nBelgium,BE,BEL\\nBelize,BZ,BLZ\\nBenin,BJ,BEN\\nBermuda,BM,BMU\\nBhutan,BT,BTN\\nBolivia,Plurinational State of Bolivia,BO,BOL\\nBonaire,Sint Eustatius and Saba,BQ,BES\\nBosnia and Herzegovina,BA,BIH\\nBotswana,BW,BWA\\nBouvet Island,BV,BVT\\nBrazil,BR,BRA\\nBritish Indian Ocean Territory,IO,IOT\\nBrunei Darussalam,BN,BRN\\nBulgaria,BG,BGR\\nBurkina Faso,BF,BFA\\nBurundi,BI,BDI\\nCabo Verde,CV,CPV\\nCambodia,KH,KHM\\nCameroon,CM,CMR\\nCanada,CA,CAN\\nCayman Islands,KY,CYM\\nCentral African Republic,CF,CAF\\nChad,TD,TCD\\nChile,CL,CHL\\nChina,CN,CHN\\nChristmas Island,CX,CXR\\nCocos (Keeling) Islands,CC,CCK\\nColombia,CO,COL\\nComoros,KM,COM\\nCongo,CG,COG\\nDemocratic Republic of the Congo,CD,COD\\nCook Islands,CK,COK\\nCosta Rica,CR,CRI\\nC\\u00f4te d\u0027Ivoire,CI,CIV\\nCroatia,HR,HRV\\nCuba,CU,CUB\\nCura\\u00e7ao,CW,CUW\\nCyprus,CY,CYP\\nCzechia,CZ,CZE\\nDenmark,DK,DNK\\nDjibouti,DJ,DJI\\nDominica,DM,DMA\\nDominican Republic,DO,DOM\\nEcuador,EC,ECU\\nEgypt,EG,EGY\\nEl Salvador,SV,SLV\\nEquatorial Guinea,GQ,GNQ\\nEritrea,ER,ERI\\nEstonia,EE,EST\\nEswatini,SZ,SWZ\\nEthiopia,ET,ETH\\nFalkland Islands (Malvinas),FK,FLK\\nFaroe Islands,FO,FRO\\nFiji,FJ,FJI\\nFinland,FI,FIN\\nFrance,FR,FRA\\nFrench Guiana,GF,GUF\\nFrench Polynesia,PF,PYF\\nFrench Southern Territories,TF,ATF\\nGabon,GA,GAB\\nGambia,GM,GMB\\nGeorgia,GE,GEO\\nGermany,DE,DEU\\nGhana,GH,GHA\\nGibraltar,GI,GIB\\nGreece,GR,GRC\\nGreenland,GL,GRL\\nGrenada,GD,GRD\\nGuadeloupe,GP,GLP\\nGuam,GU,GUM\\nGuatemala,GT,GTM\\nGuernsey,GG,GGY\\nGuinea,GN,GIN\\nGuinea-Bissau,GW,GNB\\nGuyana,GY,GUY\\nHaiti,HT,HTI\\nHeard Island and McDonald Islands,HM,HMD\\nHoly See,VA,VAT\\nHonduras,HN,HND\\nHong Kong,HK,HKG\\nHungary,HU,HUN\\nIceland,IS,ISL\\nIndia,IN,IND\\nIndonesia,ID,IDN\\nIran,Islamic Republic of Iran,IR,IRN\\nIraq,IQ,IRQ\\nIreland,IE,IRL\\nIsle of Man,IM,IMN\\nIsrael,IL,ISR\\nItaly,IT,ITA\\nJamaica,JM,JAM\\nJapan,JP,JPN\\nJersey,JE,JEY\\nJordan,JO,JOR\\nKazakhstan,KZ,KAZ\\nKenya,KE,KEN\\nKiribati,KI,KIR\\nDemocratic People\u0027s Republic of Korea,KP,PRK\\nKorea,Republic of Korea,KR,KOR\\nKuwait,KW,KWT\\nKyrgyzstan,KG,KGZ\\nLao People\u0027s Democratic Republic,LA,LAO\\nLatvia,LV,LVA\\nLebanon,LB,LBN\\nLesotho,LS,LSO\\nLiberia,LR,LBR\\nLibya,LY,LBY\\nLiechtenstein,LI,LIE\\nLithuania,LT,LTU\\nLuxembourg,LU,LUX\\nMacao,MO,MAC\\nMadagascar,MG,MDG\\nMalawi,MW,MWI\\nMalaysia,MY,MYS\\nMaldives,MV,MDV\\nMali,ML,MLI\\nMalta,MT,MLT\\nMarshall Islands,MH,MHL\\nMartinique,MQ,MTQ\\nMauritania,MR,MRT\\nMauritius,MU,MUS\\nMayotte,YT,MYT\\nMexico,MX,MEX\\nMicronesia,Federated States of Micronesia,FM,FSM\\nMoldova,Republic of Moldova,MD,MDA\\nMonaco,MC,MCO\\nMongolia,MN,MNG\\nMontenegro,ME,MNE\\nMontserrat,MS,MSR\\nMorocco,MA,MAR\\nMozambique,MZ,MOZ\\nMyanmar,MM,MMR\\nNamibia,NA,NAM\\nNauru,NR,NRU\\nNepal,NP,NPL\\nNetherlands,NL,NLD\\nNew Caledonia,NC,NCL\\nNew Zealand,NZ,NZL\\nNicaragua,NI,NIC\\nNiger,NE,NER\\nNigeria,NG,NGA\\nNiue,NU,NIU\\nNorfolk Island,NF,NFK\\nNorth Macedonia,MK,MKD\\nNorthern Mariana Islands,MP,MNP\\nNorway,NO,NOR\\nOman,OM,OMN\\nPakistan,PK,PAK\\nPalau,PW,PLW\\nPalestine,State of Palestine,PS,PSE\\nPanama,PA,PAN\\nPapua New Guinea,PG,PNG\\nParaguay,PY,PRY\\nPeru,PE,PER\\nPhilippines,PH,PHL\\nPitcairn,PN,PCN\\nPoland,PL,POL\\nPortugal,PT,PRT\\nPuerto Rico,PR,PRI\\nQatar,QA,QAT\\nR\\u00e9union,RE,REU\\nRomania,RO,ROU\\nRussia,Russian Federation,RU,RUS\\nRwanda,RW,RWA\\nSaint Barth\\u00e9lemy,BL,BLM\\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\\nSaint Kitts and Nevis,KN,KNA\\nSaint Lucia,LC,LCA\\nSaint Martin (French part),MF,MAF\\nSaint Pierre and Miquelon,PM,SPM\\nSaint Vincent and the Grenadines,VC,VCT\\nSamoa,WS,WSM\\nSan Marino,SM,SMR\\nSao Tome and Principe,ST,STP\\nSaudi Arabia,SA,SAU\\nSenegal,SN,SEN\\nSerbia,RS,SRB\\nSeychelles,SC,SYC\\nSierra Leone,SL,SLE\\nSingapore,SG,SGP\\nSint Maarten (Dutch part),SX,SXM\\nSlovakia,SK,SVK\\nSlovenia,SI,SVN\\nSolomon Islands,SB,SLB\\nSomalia,SO,SOM\\nSouth Africa,ZA,ZAF\\nSouth Georgia and the South Sandwich Islands,GS,SGS\\nSouth Sudan,SS,SSD\\nSpain,ES,ESP\\nSri Lanka,LK,LKA\\nSudan,SD,SDN\\nSuriname,SR,SUR\\nSvalbard and Jan Mayen,SJ,SJM\\nSweden,SE,SWE\\nSwitzerland,CH,CHE\\nSyrian Arab Republic,SY,SYR\\nTaiwan,Province of China,TW,TWN\\nTajikistan,TJ,TJK\\nTanzania,United Republic of Tanzania,TZ,TZA\\nThailand,TH,THA\\nTimor-Leste,TL,TLS\\nTogo,TG,TGO\\nTokelau,TK,TKL\\nTonga,TO,TON\\nTrinidad and Tobago,TT,TTO\\nTunisia,TN,TUN\\nTurkey,TR,TUR\\nTurkmenistan,TM,TKM\\nTurks and Caicos Islands,TC,TCA\\nTuvalu,TV,TUV\\nUganda,UG,UGA\\nUkraine,UA,UKR\\nUnited Arab Emirates,AE,ARE\\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\\nUnited States of America,US,USA\\nUnited States Minor Outlying Islands,UM,UMI\\nUruguay,UY,URY\\nUzbekistan,UZ,UZB\\nVanuatu,VU,VUT\\nVenezuela (Bolivarian Republic of),VE,VEN\\nViet Nam,VN,VNM\\nVirgin Islands (British),VG,VGB\\nVirgin Islands (U.S.),VI,VIR\\nWallis and Futuna,WF,WLF\\nWestern Sahara,EH,ESH\\nYemen,YE,YEM\\nZambia,ZM,ZMB\\nZimbabwe,ZW,ZWE\\n\u0022,\u0022encryptionKey\u0022:null}"
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "1593",
         "Content-Type": "application/json",
-        "traceparent": "00-4b9c4dcfccdd354ba05c2ecde6976404-2f3839c7f17f0f4b-00",
+        "traceparent": "00-495e38476b959f409ba2f78898b7c93a-e8fb248e711aef40-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "84dd3b3d143880dbad8758997d3a0019",
@@ -177,13 +177,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "84dd3b3d-1438-80db-ad87-58997d3a0019",
-        "Content-Length": "2625",
+        "Content-Length": "2696",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 23 Jun 2020 18:03:50 GMT",
-        "elapsed-time": "984",
-        "ETag": "W/\u00220x8D8179FC8B67D5A\u0022",
+        "Date": "Fri, 26 Jun 2020 07:20:12 GMT",
+        "elapsed-time": "612",
+        "ETag": "W/\u00220x8D819A15DA956A0\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -193,7 +193,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8179FC8B67D5A\u0022",
+        "@odata.etag": "\u00220x8D819A15DA956A0\u0022",
         "name": "gcwrdvqd",
         "defaultScoringProfile": null,
         "fields": [
@@ -354,20 +354,24 @@
         "tokenFilters": [],
         "charFilters": [],
         "encryptionKey": null,
-        "similarity": null
+        "similarity": {
+          "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
+          "k1": null,
+          "b": null
+        }
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "219",
         "Content-Type": "application/json",
-        "traceparent": "00-41a7e07e84311347b57870952f8487d8-c75cc56a38cafe4c-00",
+        "traceparent": "00-0b779ffc4c775f4bacda818d9731f6b5-8f2e6ae19d4e2a4c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "2df914cb39a8104e9ed27d3f3d6575eb",
@@ -380,20 +384,20 @@
           "connectionString": "DefaultEndpointsProtocol=https;AccountName=heathsrchtststg;AccountKey=Sanitized;EndpointSuffix=core.windows.net"
         },
         "container": {
-          "name": "yqeacgan"
+          "name": "yukwtixa"
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "2df914cb-39a8-104e-9ed2-7d3f3d6575eb",
-        "Content-Length": "360",
+        "Content-Length": "381",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 23 Jun 2020 18:03:50 GMT",
-        "elapsed-time": "151",
-        "ETag": "W/\u00220x8D8179FC8DA3AAF\u0022",
+        "Date": "Fri, 26 Jun 2020 07:20:12 GMT",
+        "elapsed-time": "75",
+        "ETag": "W/\u00220x8D819A15DE92A69\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027gvdfhoer\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027gvdfhoer\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -403,7 +407,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#datasources/$entity",
-        "@odata.etag": "\u00220x8D8179FC8DA3AAF\u0022",
+        "@odata.etag": "\u00220x8D819A15DE92A69\u0022",
         "name": "gvdfhoer",
         "description": null,
         "type": "azureblob",
@@ -412,24 +416,25 @@
           "connectionString": null
         },
         "container": {
-          "name": "yqeacgan",
+          "name": "yukwtixa",
           "query": null
         },
         "dataChangeDetectionPolicy": null,
-        "dataDeletionDetectionPolicy": null
+        "dataDeletionDetectionPolicy": null,
+        "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "807",
+        "Content-Length": "823",
         "Content-Type": "application/json",
-        "traceparent": "00-f2e0944f2c9ee645ae3c86459b50d4e7-46c0ccbd11df4745-00",
+        "traceparent": "00-4cc6d6ad7eb9734482fda4c011ece8ba-40f382eed0b10a47-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "e8e8b7973be6df4e6412b9231badd774",
@@ -484,20 +489,21 @@
           }
         ],
         "cognitiveServices": {
-          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+          "key": "Sanitized",
+          "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey"
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "e8e8b797-3be6-df4e-6412-b9231badd774",
-        "Content-Length": "1191",
+        "Content-Length": "1228",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 23 Jun 2020 18:03:50 GMT",
-        "elapsed-time": "115",
-        "ETag": "W/\u00220x8D8179FC90A2FE4\u0022",
+        "Date": "Fri, 26 Jun 2020 07:20:12 GMT",
+        "elapsed-time": "79",
+        "ETag": "W/\u00220x8D819A15DFF9CBC\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027jnayotai\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027jnayotai\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -507,7 +513,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D8179FC90A2FE4\u0022",
+        "@odata.etag": "\u00220x8D819A15DFF9CBC\u0022",
         "name": "jnayotai",
         "description": null,
         "skills": [
@@ -568,23 +574,25 @@
           }
         ],
         "cognitiveServices": {
-          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
-          "description": null
+          "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+          "description": null,
+          "key": "Sanitized"
         },
-        "knowledgeStore": null
+        "knowledgeStore": null,
+        "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "436",
         "Content-Type": "application/json",
-        "traceparent": "00-d9e7af13c55f8240ae9347fd05a580e1-93cb31b9590d3e4c-00",
+        "traceparent": "00-557bb134e4bad847a1c11a5be2f4204e-7b8e0df1fb320c43-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "feb763c6ba369056658a96f151652962",
@@ -628,13 +636,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "feb763c6-ba36-9056-658a-96f151652962",
-        "Content-Length": "1006",
+        "Content-Length": "1014",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 23 Jun 2020 18:03:51 GMT",
-        "elapsed-time": "372",
-        "ETag": "W/\u00220x8D8179FC943C464\u0022",
+        "Date": "Fri, 26 Jun 2020 07:20:13 GMT",
+        "elapsed-time": "356",
+        "ETag": "W/\u00220x8D819A15E38DFAB\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027vobrrqph\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027vobrrqph\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -644,7 +652,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#indexers/$entity",
-        "@odata.etag": "\u00220x8D8179FC943C464\u0022",
+        "@odata.etag": "\u00220x8D819A15E38DFAB\u0022",
         "name": "vobrrqph",
         "description": null,
         "dataSourceName": "gvdfhoer",
@@ -695,23 +703,109 @@
             "mappingFunction": null
           }
         ],
-        "cache": null
+        "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027vobrrqph\u0027)/search.status?api-version=2020-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-caf52b212411b443927599681d3b9f11-aecbfb3381395044-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "2bda9d8351ac96d041b2e42b3f03b0d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5",
+        "Content-Length": "2409",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 26 Jun 2020 07:20:23 GMT",
+        "elapsed-time": "13",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.IndexerExecutionInfo",
+        "name": "vobrrqph",
+        "status": "running",
+        "lastResult": {
+          "status": "success",
+          "errorMessage": null,
+          "startTime": "2020-06-26T07:20:14.464Z",
+          "endTime": "2020-06-26T07:20:16.089Z",
+          "itemsProcessed": 10,
+          "itemsFailed": 0,
+          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222020-06-26T07:20:14.48Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222020-06-26T07:19:44.4805567\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222020-06-26T07:19:44.4805567\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "errors": [],
+          "warnings": [
+            {
+              "key": "localId=6\u0026documentKey=6",
+              "name": "Enrichment.ConditionalSkill.descriptionFrConditional",
+              "message": "Skill executed but may have unexpected results because one or more skill input was invalid.",
+              "details": "Optional skill input is missing. Name: \u0027whenFalse\u0027, Source: \u0027/document/descriptionFr\u0027.\r\nExpression language parsing issues:\nMissing value \u0027/document/descriptionFr\u0027.",
+              "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2106385"
+            }
+          ],
+          "metrics": null
+        },
+        "executionHistory": [
+          {
+            "status": "success",
+            "errorMessage": null,
+            "startTime": "2020-06-26T07:20:14.464Z",
+            "endTime": "2020-06-26T07:20:16.089Z",
+            "itemsProcessed": 10,
+            "itemsFailed": 0,
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222020-06-26T07:20:14.48Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222020-06-26T07:19:44.4805567\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222020-06-26T07:19:44.4805567\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "errors": [],
+            "warnings": [
+              {
+                "key": "localId=6\u0026documentKey=6",
+                "name": "Enrichment.ConditionalSkill.descriptionFrConditional",
+                "message": "Skill executed but may have unexpected results because one or more skill input was invalid.",
+                "details": "Optional skill input is missing. Name: \u0027whenFalse\u0027, Source: \u0027/document/descriptionFr\u0027.\r\nExpression language parsing issues:\nMissing value \u0027/document/descriptionFr\u0027.",
+                "documentationLink": "https://go.microsoft.com/fwlink/?linkid=2106385"
+              }
+            ],
+            "metrics": null
+          }
+        ],
+        "limits": {
+          "maxRunTime": "PT1H",
+          "maxDocumentExtractionSize": 16777216,
+          "maxDocumentContentCharactersToExtract": 32768
+        }
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "58",
         "Content-Type": "application/json",
-        "traceparent": "00-c949d47b13f0fb408e80b4afb085f432-44780363260a4e42-00",
+        "traceparent": "00-d82481dfc4734545b157f91365127d42-d8c627da084e7345-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "2bda9d8351ac96d041b2e42b3f03b0d5",
+        "x-ms-client-request-id": "8321fddb5083aaa8bc28be9017e623d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -722,59 +816,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5",
-        "Content-Length": "982",
+        "client-request-id": "8321fddb-5083-aaa8-bc28-be9017e623d2",
+        "Content-Length": "980",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Tue, 23 Jun 2020 18:03:57 GMT",
-        "elapsed-time": "79",
+        "Date": "Fri, 26 Jun 2020 07:20:23 GMT",
+        "elapsed-time": "110",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "2bda9d83-51ac-96d0-41b2-e42b3f03b0d5"
-      },
-      "ResponseBody": "{\u0022value\u0022:[{\u0022@search.score\u0022:0.57106817,\u0022hotelId\u0022:\u00226\u0022,\u0022hotelName\u0022:null,\u0022description\u0022:\u0022Surprisingly expensive. Model suites have an ocean-view.\u0022,\u0022descriptionFr\u0022:\u0022\\u00c9tonnamment cher. Les suites mod\\u00e8les ont une vue sur l\\u2019oc\\u00e9an.\u0022,\u0022tags\u0022:[],\u0022address\u0022:null},{\u0022@search.score\u0022:0.12690403,\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022address\u0022:null}]}"
-    },
-    {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027vobrrqph\u0027)?api-version=2019-05-06-Preview",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json; odata.metadata=minimal",
-        "api-key": "Sanitized",
-        "traceparent": "00-4e3d65b7bcef4546a696a48156dc8ad4-142b8f840de94d40-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "8321fddb5083aaa8bc28be9017e623d2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "8321fddb-5083-aaa8-bc28-be9017e623d2",
-        "Date": "Tue, 23 Jun 2020 18:03:57 GMT",
-        "elapsed-time": "51",
-        "Expires": "-1",
-        "Pragma": "no-cache",
         "request-id": "8321fddb-5083-aaa8-bc28-be9017e623d2",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "8321fddb-5083-aaa8-bc28-be9017e623d2"
       },
-      "ResponseBody": []
+      "ResponseBody": "{\u0022value\u0022:[{\u0022@search.score\u0022:7.2570066,\u0022hotelId\u0022:\u00226\u0022,\u0022hotelName\u0022:null,\u0022description\u0022:\u0022Surprisingly expensive. Model suites have an ocean-view.\u0022,\u0022descriptionFr\u0022:\u0022\\u00c9tonnamment cher. Les suites mod\\u00e8les ont une vue sur l\\u2019oc\\u00e9an.\u0022,\u0022tags\u0022:[],\u0022address\u0022:null},{\u0022@search.score\u0022:1.5997614,\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022address\u0022:null}]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027jnayotai\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexers(\u0027vobrrqph\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-62998ea194cb5945a7f08458f917af35-d925a3cb62e59a4a-00",
+        "traceparent": "00-5eb15683de56eb469c031b6880580fd0-d8af63ee23538d4f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "2028981fb0e6743e9321bd83d62a5061",
@@ -785,8 +850,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "2028981f-b0e6-743e-9321-bd83d62a5061",
-        "Date": "Tue, 23 Jun 2020 18:03:57 GMT",
-        "elapsed-time": "69",
+        "Date": "Fri, 26 Jun 2020 07:20:24 GMT",
+        "elapsed-time": "267",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "2028981f-b0e6-743e-9321-bd83d62a5061",
@@ -796,14 +861,14 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027gvdfhoer\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/skillsets(\u0027jnayotai\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-0ba4968f8d89b4468cc139ce433ddd7a-4465defa91984e43-00",
+        "traceparent": "00-af31842ef13ba445bb06c884946cfa50-1a2327055dc51b48-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "5315c0daa64333def4306e84923f7f5a",
@@ -814,8 +879,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "5315c0da-a643-33de-f430-6e84923f7f5a",
-        "Date": "Tue, 23 Jun 2020 18:03:57 GMT",
-        "elapsed-time": "70",
+        "Date": "Fri, 26 Jun 2020 07:20:24 GMT",
+        "elapsed-time": "91",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "5315c0da-a643-33de-f430-6e84923f7f5a",
@@ -825,14 +890,14 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/datasources(\u0027gvdfhoer\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-ee2872bd533a884fa6a1ff7ad6f415b8-8476fc8b96d40449-00",
+        "traceparent": "00-363ab5ef49615b4ca5506922656cb9da-9868c439767fb345-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a70c118f90da2beebeadef629225d492",
@@ -843,8 +908,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "a70c118f-90da-2bee-bead-ef629225d492",
-        "Date": "Tue, 23 Jun 2020 18:03:58 GMT",
-        "elapsed-time": "865",
+        "Date": "Fri, 26 Jun 2020 07:20:24 GMT",
+        "elapsed-time": "30",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "a70c118f-90da-2bee-bead-ef629225d492",
@@ -854,14 +919,14 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps(\u0027yawilrdj\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027gcwrdvqd\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-631ca383dd1f924284663bd3c8ccafac-6a90094607ee1d47-00",
+        "traceparent": "00-5e978c7e0886b14abf46e91c4d7fac86-eb442e08a35f3841-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200623.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "57b65dd7cfd0788eb9f52bb641bae154",
@@ -872,8 +937,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "57b65dd7-cfd0-788e-b9f5-2bb641bae154",
-        "Date": "Tue, 23 Jun 2020 18:03:58 GMT",
-        "elapsed-time": "14",
+        "Date": "Fri, 26 Jun 2020 07:20:24 GMT",
+        "elapsed-time": "269",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "57b65dd7-cfd0-788e-b9f5-2bb641bae154",
@@ -881,12 +946,42 @@
         "x-ms-client-request-id": "57b65dd7-cfd0-788e-b9f5-2bb641bae154"
       },
       "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/synonymmaps(\u0027yawilrdj\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-a46a7913dd3a54489a9f782b9678ef11-82ecb8716ce08f41-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "c4f462a2a91d4987d1e99596b67ca0cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "c4f462a2-a91d-4987-d1e9-9596b67ca0cf",
+        "Date": "Fri, 26 Jun 2020 07:20:24 GMT",
+        "elapsed-time": "24",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "c4f462a2-a91d-4987-d1e9-9596b67ca0cf",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "c4f462a2-a91d-4987-d1e9-9596b67ca0cf"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
-    "BlobContainerName": "yqeacgan",
+    "BlobContainerName": "yukwtixa",
     "RandomSeed": "1201831244",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_COGNITIVE_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst",
     "SEARCH_STORAGE_KEY": "Sanitized",
     "SEARCH_STORAGE_NAME": "heathsrchtststg"

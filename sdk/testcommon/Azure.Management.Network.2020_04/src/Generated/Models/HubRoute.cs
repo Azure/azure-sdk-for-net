@@ -45,7 +45,7 @@ namespace Azure.Management.Network.Models
 
             Name = name;
             DestinationType = destinationType;
-            Destinations = destinations.ToArray();
+            Destinations = destinations.ToList();
             NextHopType = nextHopType;
             NextHop = nextHop;
         }

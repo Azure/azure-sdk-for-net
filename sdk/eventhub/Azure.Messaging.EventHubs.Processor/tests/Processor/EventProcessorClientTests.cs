@@ -165,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             description = "{{ internal testing constructor }}";
             expectedOptions = new EventProcessorOptions();
-            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), expectedOptions);
+            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
         }
@@ -1406,7 +1406,9 @@ namespace Azure.Messaging.EventHubs.Tests
                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
                Identifier = "OMG, HAI!",
                MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true
+               TrackLastEnqueuedEventProperties = true,
+               LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
+               PrefetchCount = 9990
             };
 
             var defaultOptions = new EventProcessorOptions();
@@ -1419,23 +1421,14 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(clientOptions.RetryOptions.MaximumRetries), "The retry options should have been set.");
             Assert.That(processorOptions.Identifier, Is.EqualTo(clientOptions.Identifier), "The identifier should have been set.");
             Assert.That(processorOptions.MaximumWaitTime, Is.EqualTo(clientOptions.MaximumWaitTime), "The maximum wait time should have been set.");
-            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flack for last event tracking should have been set.");
+            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
+            Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
+            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
 
             Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
             Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(defaultOptions.LoadBalancingUpdateInterval), "The load balancing interval should not have been set.");
             Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(defaultOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should not have been set.");
-            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The prefetch count should not have been set.");
         }
-
-        /// <summary>
-        ///   Converts an Event Hubs connection into a factory function, returning the <paramref name="connection"/>.
-        /// </summary>
-        ///
-        /// <param name="connection">The connection to return from the factory.</param>
-        ///
-        /// <returns>A factory function, returning the <paramref name="connection" />.</returns>
-        ///
-        private static Func<EventHubConnection> ToConnectionFactory(EventHubConnection connection) => () => connection;
 
         /// <summary>
         ///   Retrieves the StorageManager for the processor client using its private accessor.
@@ -1500,7 +1493,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                               string eventHubName,
                                               TokenCredential credential,
                                               EventHubConnection connection,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnection = connection;
             }

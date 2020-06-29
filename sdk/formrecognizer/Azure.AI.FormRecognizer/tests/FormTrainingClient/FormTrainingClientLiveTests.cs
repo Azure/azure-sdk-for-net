@@ -30,14 +30,14 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormTrainingClientCannotAuthenticateWithFakeApiKey()
         {
-            var client = CreateInstrumentedFormTrainingClient(apiKey: "fakeKey");
+            var client = CreateFormTrainingClient(apiKey: "fakeKey");
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetAccountPropertiesAsync());
         }
 
         [Test]
         public async Task FormTrainingClientCanAuthenticateWithTokenCredential()
         {
-            var client = CreateInstrumentedFormTrainingClient(useTokenCredential: true);
+            var client = CreateFormTrainingClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
@@ -52,12 +52,14 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartTraining(bool labeled)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartTraining(bool singlePage, bool labeled)
         {
-            var client = CreateInstrumentedFormTrainingClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             await operation.WaitForCompletionAsync(PollingInterval);
@@ -67,8 +69,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.RequestedOn);
-            Assert.IsNotNull(model.CompletedOn);
+            Assert.IsNotNull(model.TrainingStartedOn);
+            Assert.IsNotNull(model.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(0, model.Errors.Count);
@@ -97,15 +99,28 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartTrainingSucceedsWithValidPrefix()
+        {
+            var client = CreateFormTrainingClient();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "subfolder" };
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
+        }
+
+        [Test]
         public async Task StartTrainingFailsWithInvalidPrefix()
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            TrainingOperation operation;
 
             var filter = new TrainingFileFilter { IncludeSubFolders = true, Prefix = "invalidPrefix" };
-
-            operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, filter);
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
         }
@@ -113,7 +128,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartTrainingError()
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
@@ -129,7 +144,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task TrainingOps(bool labeled)
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
@@ -143,8 +158,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModel resultModel = await client.GetCustomModelAsync(trainedModel.ModelId);
 
             Assert.AreEqual(trainedModel.ModelId, resultModel.ModelId);
-            Assert.AreEqual(trainedModel.RequestedOn, resultModel.RequestedOn);
-            Assert.AreEqual(trainedModel.CompletedOn, resultModel.CompletedOn);
+            Assert.AreEqual(trainedModel.TrainingStartedOn, resultModel.TrainingStartedOn);
+            Assert.AreEqual(trainedModel.TrainingCompletedOn, resultModel.TrainingCompletedOn);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
             Assert.AreEqual(trainedModel.Status, resultModel.Status);
             Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
@@ -178,8 +193,8 @@ namespace Azure.AI.FormRecognizer.Tests
             CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
-            Assert.IsNotNull(modelInfo.RequestedOn);
-            Assert.IsNotNull(modelInfo.CompletedOn);
+            Assert.IsNotNull(modelInfo.TrainingStartedOn);
+            Assert.IsNotNull(modelInfo.TrainingCompletedOn);
             Assert.IsNotNull(modelInfo.Status);
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
@@ -195,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void DeleteModelFailsWhenModelDoesNotExist()
         {
-            var client = CreateInstrumentedFormTrainingClient();
+            var client = CreateFormTrainingClient();
             var fakeModelId = "00000000-0000-0000-0000-000000000000";
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteModelAsync(fakeModelId));
@@ -204,8 +219,8 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task CopyModel()
         {
-            var sourceClient = CreateInstrumentedFormTrainingClient();
-            var targetClient = CreateInstrumentedFormTrainingClient();
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
@@ -220,8 +235,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CustomFormModelInfo modelCopied = operation.Value;
 
-            Assert.IsNotNull(modelCopied.CompletedOn);
-            Assert.IsNotNull(modelCopied.RequestedOn);
+            Assert.IsNotNull(modelCopied.TrainingCompletedOn);
+            Assert.IsNotNull(modelCopied.TrainingStartedOn);
             Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
             Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
         }
@@ -230,8 +245,8 @@ namespace Azure.AI.FormRecognizer.Tests
         [Ignore("Issue: https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public void CopyModelError()
         {
-            var sourceClient = CreateInstrumentedFormTrainingClient();
-            var targetClient = CreateInstrumentedFormTrainingClient();
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
@@ -243,8 +258,8 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartCopyModelFailsWithWrongRegion()
         {
-            var sourceClient = CreateInstrumentedFormTrainingClient();
-            var targetClient = CreateInstrumentedFormTrainingClient();
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
 
@@ -259,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task GetCopyAuthorization()
         {
-            var targetClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
@@ -275,7 +290,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
-            var targetClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
