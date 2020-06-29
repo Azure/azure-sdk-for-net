@@ -42,7 +42,10 @@ namespace Azure.Iot.Hub.Service
         /// Create a module identity.
         /// </summary>
         /// <param name="moduleIdentity">The module identity to create or update.</param>
-        /// <param name="precondition">The condition on which to perform this operation. In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation.
+        /// In case of create, the condition must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.
+        /// In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(
@@ -59,7 +62,10 @@ namespace Azure.Iot.Hub.Service
         /// Create a module identity.
         /// </summary>
         /// <param name="moduleIdentity">The module identity to create or update.</param>
-        /// <param name="precondition">The condition on which to perform this operation. In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation.
+        /// In case of create, the condition must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.
+        /// In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<ModuleIdentity> CreateOrUpdateIdentity(
