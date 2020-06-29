@@ -357,7 +357,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.
         /// This information can be found in the Properties section of the Form Recognizer resource in the Azure Portal.</param>
         /// <param name="resourceRegion">Location of the target Form Recognizer resource.
-        /// This information can be found in the Properties section of the Form Recognizer resource in the Azure Portal.</param>
+        /// This information can be found in the Keys and Endpoint section of the Form Recognizer resource in the Azure Portal.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
@@ -374,8 +374,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
-        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
-        /// <param name="resourceRegion">Location of the target Form Recognizer resource</param>
+        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.
+        /// This information can be found in the Properties section of the Form Recognizer resource in the Azure Portal.</param>
+        /// <param name="resourceRegion">Location of the target Form Recognizer resource.
+        /// This information can be found in the Keys and Endpoint section of the Form Recognizer resource in the Azure Portal.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
