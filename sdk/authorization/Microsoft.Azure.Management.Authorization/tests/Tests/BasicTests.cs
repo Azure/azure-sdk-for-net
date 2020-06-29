@@ -737,6 +737,99 @@ namespace Authorization.Tests
         }
 
         [Fact]
+        public void RoleAssignmentNegativeTestCondition()
+        {
+            bool threwException = false;
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                try
+                {
+                    // Create
+                    var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                }
+                catch (CloudException e)
+                {
+                    Assert.Contains("The specified role assignment ConditionVersion", e.Message);
+                    Assert.Contains("is not supported", e.Message);
+                    threwException = true;
+                }
+                Assert.True(threwException,"Test failed to throw exception when expected");
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentNegativeTestConditionVersion()
+        {
+            bool threwException = false;
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    ConditionVersion = "2.0"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                try
+                {
+                    // Create
+                    var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal("When 'Condition' property is not set 'ConditionVersion' property also must not be set.", e.Message);
+                    threwException = true;
+                }
+                Assert.True(threwException, "Test failed to throw exception when expected");
+            }
+        }
+
+        [Fact]
         public void RoleAssignmentMaxVersion1_0Test()
         {
 
@@ -898,7 +991,6 @@ namespace Authorization.Tests
         //    }
         //}
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleDefinitionsByIdTests()
         {
@@ -983,7 +1075,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
         [Fact]
         public void RoleDefinitionUpdateTests()
         {
