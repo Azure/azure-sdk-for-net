@@ -28,8 +28,8 @@ namespace Azure.Management.Network.Models
                 throw new ArgumentNullException(nameof(remoteAddressRanges));
             }
 
-            LocalAddressRanges = localAddressRanges.ToArray();
-            RemoteAddressRanges = remoteAddressRanges.ToArray();
+            LocalAddressRanges = localAddressRanges.ToList();
+            RemoteAddressRanges = remoteAddressRanges.ToList();
         }
 
         /// <summary> Initializes a new instance of TrafficSelectorPolicy. </summary>

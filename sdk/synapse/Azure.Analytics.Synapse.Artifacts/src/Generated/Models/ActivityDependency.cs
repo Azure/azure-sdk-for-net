@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Activity = activity;
-            DependencyConditions = dependencyConditions.ToArray();
+            DependencyConditions = dependencyConditions.ToList();
             AdditionalProperties = new Dictionary<string, object>();
         }
 

@@ -20,10 +20,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string receiptUri = FormRecognizerTestEnvironment.CreateUriString("contoso-receipt.jpg");
+            Uri receiptUri = FormRecognizerTestEnvironment.CreateUri("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
-            RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+            RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
 
             foreach (RecognizedForm recognizedForm in recognizedForms)
             {

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027htffewvo\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200615.1",
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "f3ceff4513b1ace31223fc6345609397",
@@ -20,8 +20,8 @@
         "client-request-id": "f3ceff45-13b1-ace3-1223-fc6345609397",
         "Content-Length": "940",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Tue, 16 Jun 2020 00:02:38 GMT",
-        "elapsed-time": "69",
+        "Date": "Fri, 26 Jun 2020 06:25:32 GMT",
+        "elapsed-time": "10",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -35,8 +35,7 @@
   ],
   "Variables": {
     "RandomSeed": "509178331",
-    "SearchIndexName": "htffewvo",
-    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SearchIndexName": "josgoidr",
     "SEARCH_QUERY_API_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }

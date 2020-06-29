@@ -12,8 +12,8 @@ we should merge the Service and Index swagger files together but for now we
 copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 input-file:
-- $(this-folder)/swagger/searchindex.json
-- $(this-folder)/swagger/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bc7853cb4d824bb6c310344dcc1b5f77cbe6bdd/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks

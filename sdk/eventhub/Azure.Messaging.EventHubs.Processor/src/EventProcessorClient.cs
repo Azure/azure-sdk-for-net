@@ -31,20 +31,20 @@ namespace Azure.Messaging.EventHubs
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
     {
-        /// <summary>The number of events to request as the maximum size for batches read from a partition.</summary>
-        private const int ReadBatchSize = 15;
-
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
         private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
+
+        /// <summary>The set of default options for the processor.</summary>
+        private static readonly EventProcessorClientOptions DefaultClientOptions = new EventProcessorClientOptions();
+
+        /// <summary>The default starting position for the processor.</summary>
+        private readonly EventPosition DefaultStartingPosition = new EventProcessorOptions().DefaultStartingPosition;
 
         /// <summary>The set of default starting positions for partitions being processed; these are collected at initialization and are surfaced as checkpoints to override defaults on a partition-specific basis.</summary>
         private readonly ConcurrentDictionary<string, EventPosition> PartitionStartingPositionDefaults = new ConcurrentDictionary<string, EventPosition>();
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly SemaphoreSlim ProcessorStatusGuard = new SemaphoreSlim(1, 1);
-
-        /// <summary>The active default starting position for the processor.</summary>
-        private readonly EventPosition DefaultStartingPosition = new EventProcessorOptions().DefaultStartingPosition;
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
         private Func<PartitionInitializingEventArgs, Task> _partitionInitializingAsync;
@@ -364,7 +364,7 @@ namespace Azure.Messaging.EventHubs
                                     string consumerGroup,
                                     string connectionString,
                                     string eventHubName,
-                                    EventProcessorClientOptions clientOptions) : base(ReadBatchSize, consumerGroup, connectionString, eventHubName, CreateOptions(clientOptions))
+                                    EventProcessorClientOptions clientOptions) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, connectionString, eventHubName, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs
                                     string fullyQualifiedNamespace,
                                     string eventHubName,
                                     TokenCredential credential,
-                                    EventProcessorClientOptions clientOptions = default) : base(ReadBatchSize, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
+                                    EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
@@ -405,6 +405,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
         /// <param name="credential">An Azure identity credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
@@ -416,8 +417,9 @@ namespace Azure.Messaging.EventHubs
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
+                                      int cacheEventCount,
                                       TokenCredential credential,
-                                      EventProcessorOptions clientOptions) : base(ReadBatchSize, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));
 
@@ -988,7 +990,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private static EventProcessorOptions CreateOptions(EventProcessorClientOptions clientOptions)
         {
-            clientOptions ??= new EventProcessorClientOptions();
+            clientOptions ??= DefaultClientOptions;
 
             return new EventProcessorOptions
             {
@@ -996,7 +998,9 @@ namespace Azure.Messaging.EventHubs
                 RetryOptions = clientOptions.RetryOptions.Clone(),
                 Identifier = clientOptions.Identifier,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
-                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
+                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties,
+                LoadBalancingStrategy = clientOptions.LoadBalancingStrategy,
+                PrefetchCount = clientOptions.PrefetchCount
             };
         }
 
