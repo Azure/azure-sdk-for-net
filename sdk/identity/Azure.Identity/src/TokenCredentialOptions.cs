@@ -20,5 +20,12 @@ namespace Azure.Identity
             get { return _authorityHost ?? (EnvironmentVariables.AuthorityHost != null ? new Uri(EnvironmentVariables.AuthorityHost) : KnownAuthorityHosts.AzureCloud); }
             set { _authorityHost = value; }
         }
+
+        /// <summary>
+        /// Returns a <see cref="TimeSpan"/> value representing the amount of time to subtract from the token expiry time, whereupon
+        /// attempts will be made to refresh the token. By default this will occur two minutes prior to the expiry of the token.
+        /// The default value is 2 seconds.
+        /// </summary>
+        public TimeSpan TokenRefreshOffset { get; set; }
     }
 }
