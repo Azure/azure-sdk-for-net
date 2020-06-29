@@ -11,8 +11,10 @@ namespace Azure.Iot.Hub.Service.Samples
     /// </summary>
     internal class DeviceIdentityLifecycleSamples
     {
+        public const int MAX_RANDOM_VALUE = 200;
+        public const int BULK_DEVICE_COUNT = 5;
+        
         public readonly IoTHubServiceClient IoTHubServiceClient;
-        public const int MaxRandomValue = 200;
         public readonly Random Random = new Random();
 
         public DeviceIdentityLifecycleSamples(IoTHubServiceClient client)
@@ -22,9 +24,18 @@ namespace Azure.Iot.Hub.Service.Samples
 
         public async Task RunSampleAsync()
         {
-            SampleLogger.PrintHeader("RUNNING DEVICE IDENTITY LIFECYCLE SAMPLES");
+            await RunSingleDeviceLifecycleSamplesAsync();
+            await RunBulkDeviceLifecycleSamplesAsync();
+        }
 
-            string deviceId = $"device{Random.Next(MaxRandomValue)}";
+        /// <summary>
+        /// Go through lifecycle of a single device identity.
+        /// </summary>
+        public async Task RunSingleDeviceLifecycleSamplesAsync()
+        {
+            SampleLogger.PrintHeader("RUNNING SINLE DEVICE IDENTITY LIFECYCLE SAMPLES");
+
+            string deviceId = $"device{Random.Next(MAX_RANDOM_VALUE)}";
 
             // Create a DeviceIdentity.
             await CreateDeviceIdentityAsync(deviceId);
@@ -43,6 +54,46 @@ namespace Azure.Iot.Hub.Service.Samples
 
             // Delete the device (cleanup).
             await DeleteDeviceIdentityAsync(deviceId);
+        }
+
+        public async Task RunBulkDeviceLifecycleSamplesAsync()
+        {
+            SampleLogger.PrintHeader("RUNNING SINLE DEVICE IDENTITY LIFECYCLE SAMPLES");
+            string devicesPrefix = $"bulkDevice";
+
+            IEnumerable<DeviceIdentity> listOfDevices = BuildMultipleDevices(devicesPrefix, BULK_DEVICE_COUNT);
+            
+            // Create device identities in a single bulk operation.
+            await CreateDevicesInBulkAsync(listOfDevices);
+        }
+
+        public async Task CreateDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
+        {
+            SampleLogger.PrintHeader("CREATE DEVICE IDENTITIES IN BULK");
+
+            try
+            {
+                Console.WriteLine($"Creating {listOfDevices.Count()} devices");
+                Response<BulkRegistryOperationResponse> createResponse = await IoTHubServiceClient.Devices.CreateIdentitiesAsync(listOfDevices);
+
+                BulkRegistryOperationResponse operationResponse = createResponse.Value;
+
+                if (operationResponse.IsSuccessful ?? false)
+                {
+                    SampleLogger.PrintSuccess($"Successfully created {listOfDevices.Count()} devices.");
+                }
+                else
+                {
+                    // TODO:(azabbasi) Print all the errors and warnings (this cannot be tested due to an issue with the swagger document)
+                    // Refer to: https://msazure.visualstudio.com/One/_workitems/edit/7536750
+                    SampleLogger.PrintWarning($"Not all devices were created successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to create device identities in bulk due to:\n{ex}");
+                throw;
+            }
         }
 
         /// <summary>
@@ -226,6 +277,21 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
+        }
+
+        private IEnumerable<DeviceIdentity> BuildMultipleDevices(string devicesPrefix, int deviceCount)
+        {
+            IList<DeviceIdentity> listOfDevices = new List<DeviceIdentity>();
+
+            for (int i = 0; i < deviceCount; i++)
+            {
+                listOfDevices.Add(new DeviceIdentity
+                {
+                    DeviceId = $"{devicesPrefix}{Random.Next()}"
+                });
+            }
+
+            return listOfDevices;
         }
     }
 }
