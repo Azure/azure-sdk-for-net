@@ -65,6 +65,7 @@ namespace Azure.Iot.Hub.Service.Samples
         public async Task RunBulkDeviceLifecycleSamplesAsync()
         {
             SampleLogger.PrintHeader("RUNNING BULK DEVICE IDENTITY LIFECYCLE SAMPLES");
+
             string devicesPrefix = $"bulkDevice";
 
             IEnumerable<DeviceIdentity> listOfDevices = BuildMultipleDevices(devicesPrefix, BULK_DEVICE_COUNT);
@@ -113,7 +114,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<DeviceIdentity> GetDeviceIdentityAsync(string deviceId)
         {
-            SampleLogger.PrintHeader("GET A DEVICE");
+            SampleLogger.PrintHeader("GET A DEVICE IDENTITY");
 
             try
             {
@@ -140,7 +141,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<DeviceIdentity> UpdateDeviceIdentityAsync(string deviceId)
         {
-            SampleLogger.PrintHeader("UPDATE A DEVICE");
+            SampleLogger.PrintHeader("UPDATE A DEVICE IDENTITY");
 
             try
             {
