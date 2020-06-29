@@ -62,7 +62,7 @@
           "type": "string",
           "value": "[concat('https://', reference(variables('iotHubResourceId'), '2020-03-01').hostName)]"
         },
-        "IOT_HUB_CONNECTIONSTRING":{
+        "IOT_HUB_CONNECTION_STRING":{
             "type": "string",
             "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', parameters('baseName')), '2020-03-01').hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', parameters('baseName')), '2020-03-01').value[0].primaryKey)]"
         }
