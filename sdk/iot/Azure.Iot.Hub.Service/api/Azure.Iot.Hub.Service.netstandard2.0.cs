@@ -2,7 +2,7 @@ namespace Azure.Iot.Hub.Service
 {
     public enum BulkIfMatchPrecondition
     {
-        UnconditionalfMatch = 0,
+        Unconditional = 0,
         IfMatch = 1,
     }
     public partial class CloudToDeviceMessagesClient
