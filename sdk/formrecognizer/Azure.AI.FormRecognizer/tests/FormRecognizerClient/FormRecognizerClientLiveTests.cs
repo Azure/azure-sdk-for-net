@@ -1025,7 +1025,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
