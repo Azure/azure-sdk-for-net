@@ -7,8 +7,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "60",
         "Content-Type": "application/json",
+        "If-Match": "\u0022\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "641381e4f4e82e72fdd64d15ec9f16ee",
@@ -22,16 +23,16 @@
       "ResponseHeaders": {
         "Content-Length": "610",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
-        "ETag": "\u0022OTk1ODY5OTA1\u0022",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
+        "ETag": "\u0022MTU3NTc4OTU1\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "a9a984ce-c808-4aaf-be6d-5973568fda3b"
+        "x-ms-request-id": "57403830-4861-472f-9e4a-3dadb7146fc0"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate2058308758",
-        "generationId": "637287333712883247",
-        "etag": "OTk1ODY5OTA1",
+        "generationId": "637290465270736398",
+        "etag": "MTU3NTc4OTU1",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -41,8 +42,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "hYey5mF0mI6gG6PwlxEn8bmiGFFeijZ9PydIIhrNEv8=",
-            "secondaryKey": "mFJSIX36LRy/OYDVdK8JsSKrglMU6wSzFtPfMgcvTJI="
+            "primaryKey": "8y4ukRz\u002B6Exo2daJoCsXiv7ykvegTkBlGmMgxlJGjQw=",
+            "secondaryKey": "enT6Q4OCgm6DWE36uV6aY8P7A/ge9PijFQ5zDqWSvRQ="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -62,8 +63,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "60",
         "Content-Type": "application/json",
+        "If-Match": "\u0022\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "3e1134d9471886feac1982596376afac",
@@ -77,16 +79,16 @@
       "ResponseHeaders": {
         "Content-Length": "610",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
-        "ETag": "\u0022MTU3NjM5NTk=\u0022",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
+        "ETag": "\u0022NDE2MzY4MTQ=\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "9553cce4-ae4e-4ac8-851b-4f2aeb2eee1c"
+        "x-ms-request-id": "085b3bbc-475a-4b0e-9d24-8171d8aadf07"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate1689940095",
-        "generationId": "637287333713508409",
-        "etag": "MTU3NjM5NTk=",
+        "generationId": "637290465271673796",
+        "etag": "NDE2MzY4MTQ=",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -96,8 +98,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "deWEbVKqEGK52ym2zElSFoh9MQFZlGKCOwS810AQgJY=",
-            "secondaryKey": "TmN22L\u002BtIhD\u002BnT6s77jHvXpYSgxGFrxpbVOvLPC8gOY="
+            "primaryKey": "PJEquZf6Sb6NkorAlqsGEuft3sUdvx8YSWq3nkJWi8c=",
+            "secondaryKey": "awa04P3e4nYzxpTkYbBN1I8tUpVwGtf\u002BlJYjHA0PSDU="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -118,21 +120,21 @@
         "Content-Length": "659",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2f40eae5d092ea9e0fe7504fb5c8118a",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate2058308758\u0022,\u0022eTag\u0022:\u0022OTk1ODY5OTA1\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022hYey5mF0mI6gG6PwlxEn8bmiGFFeijZ9PydIIhrNEv8=\u0022,\u0022secondaryKey\u0022:\u0022mFJSIX36LRy/OYDVdK8JsSKrglMU6wSzFtPfMgcvTJI=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}},{\u0022id\u0022:\u0022bulkDeviceUpdate1689940095\u0022,\u0022eTag\u0022:\u0022MTU3NjM5NTk=\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022deWEbVKqEGK52ym2zElSFoh9MQFZlGKCOwS810AQgJY=\u0022,\u0022secondaryKey\u0022:\u0022TmN22L\\u002BtIhD\\u002BnT6s77jHvXpYSgxGFrxpbVOvLPC8gOY=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}}]",
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate2058308758\u0022,\u0022eTag\u0022:\u0022MTU3NTc4OTU1\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u00228y4ukRz\\u002B6Exo2daJoCsXiv7ykvegTkBlGmMgxlJGjQw=\u0022,\u0022secondaryKey\u0022:\u0022enT6Q4OCgm6DWE36uV6aY8P7A/ge9PijFQ5zDqWSvRQ=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}},{\u0022id\u0022:\u0022bulkDeviceUpdate1689940095\u0022,\u0022eTag\u0022:\u0022NDE2MzY4MTQ=\u0022,\u0022importMode\u0022:\u0022update\u0022,\u0022status\u0022:\u0022disabled\u0022,\u0022authentication\u0022:{\u0022symmetricKey\u0022:{\u0022primaryKey\u0022:\u0022PJEquZf6Sb6NkorAlqsGEuft3sUdvx8YSWq3nkJWi8c=\u0022,\u0022secondaryKey\u0022:\u0022awa04P3e4nYzxpTkYbBN1I8tUpVwGtf\\u002BlJYjHA0PSDU=\u0022},\u0022x509Thumbprint\u0022:{},\u0022type\u0022:\u0022sas\u0022},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "aebbaad5-1608-4416-ad0f-f0fdba0cfdae"
+        "x-ms-request-id": "bf0dd4d4-6431-466a-99bd-ddd62d9c64be"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -146,7 +148,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c655ea9f58983acb15de3cdaefd49a5f",
@@ -157,27 +159,27 @@
       "ResponseHeaders": {
         "Content-Length": "622",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
-        "ETag": "\u0022OTk1ODY5OTA2\u0022",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
+        "ETag": "\u0022MTU3NTc4OTU2\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c6631196-3cb9-4abd-91a3-1ec37924ffd6"
+        "x-ms-request-id": "045dac5d-33e2-49aa-9ac7-1e05a31b5134"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate2058308758",
-        "generationId": "637287333712883247",
-        "etag": "OTk1ODY5OTA2",
+        "generationId": "637290465270736398",
+        "etag": "MTU3NTc4OTU2",
         "connectionState": "Disconnected",
         "status": "disabled",
         "statusReason": null,
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
-        "statusUpdatedTime": "2020-06-26T01:56:11.3763003Z",
+        "statusUpdatedTime": "2020-06-29T16:55:27.2091047Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "hYey5mF0mI6gG6PwlxEn8bmiGFFeijZ9PydIIhrNEv8=",
-            "secondaryKey": "mFJSIX36LRy/OYDVdK8JsSKrglMU6wSzFtPfMgcvTJI="
+            "primaryKey": "8y4ukRz\u002B6Exo2daJoCsXiv7ykvegTkBlGmMgxlJGjQw=",
+            "secondaryKey": "enT6Q4OCgm6DWE36uV6aY8P7A/ge9PijFQ5zDqWSvRQ="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -196,7 +198,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b407689dbed608ed95262e31f6aed0e3",
@@ -207,27 +209,27 @@
       "ResponseHeaders": {
         "Content-Length": "622",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
-        "ETag": "\u0022MTU3NjM5NjA=\u0022",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
+        "ETag": "\u0022NDE2MzY4MTU=\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "82a4739a-9c97-42b5-a5b2-5aa7f0ecce69"
+        "x-ms-request-id": "854cbd14-c6ee-4e1d-94b2-715742f1bfae"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceUpdate1689940095",
-        "generationId": "637287333713508409",
-        "etag": "MTU3NjM5NjA=",
+        "generationId": "637290465271673796",
+        "etag": "NDE2MzY4MTU=",
         "connectionState": "Disconnected",
         "status": "disabled",
         "statusReason": null,
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
-        "statusUpdatedTime": "2020-06-26T01:56:11.3763003Z",
+        "statusUpdatedTime": "2020-06-29T16:55:27.2091047Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "deWEbVKqEGK52ym2zElSFoh9MQFZlGKCOwS810AQgJY=",
-            "secondaryKey": "TmN22L\u002BtIhD\u002BnT6s77jHvXpYSgxGFrxpbVOvLPC8gOY="
+            "primaryKey": "PJEquZf6Sb6NkorAlqsGEuft3sUdvx8YSWq3nkJWi8c=",
+            "secondaryKey": "awa04P3e4nYzxpTkYbBN1I8tUpVwGtf\u002BlJYjHA0PSDU="
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -248,21 +250,21 @@
         "Content-Length": "161",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200625.1",
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200629.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "79baf707e8218d141f051ab494c4fa3b",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate2058308758\u0022,\u0022eTag\u0022:\u0022OTk1ODY5OTA1\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDeviceUpdate1689940095\u0022,\u0022eTag\u0022:\u0022MTU3NjM5NTk=\u0022,\u0022importMode\u0022:\u0022delete\u0022}]",
+      "RequestBody": "[{\u0022id\u0022:\u0022bulkDeviceUpdate2058308758\u0022,\u0022eTag\u0022:\u0022MTU3NTc4OTU1\u0022,\u0022importMode\u0022:\u0022delete\u0022},{\u0022id\u0022:\u0022bulkDeviceUpdate1689940095\u0022,\u0022eTag\u0022:\u0022NDE2MzY4MTQ=\u0022,\u0022importMode\u0022:\u0022delete\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 01:56:11 GMT",
+        "Date": "Mon, 29 Jun 2020 16:55:26 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "684e2a82-77a0-4177-9ce0-0eee596ad147"
+        "x-ms-request-id": "f789941a-2fcb-4e27-b6aa-b2bd6d324a3b"
       },
       "ResponseBody": {
         "isSuccessful": true,

@@ -43,9 +43,8 @@ namespace Azure.Iot.Hub.Service
     }
     public enum IfMatchPrecondition
     {
-        Unconditional = 0,
-        UnconditionalIfMatch = 1,
-        IfMatch = 2,
+        UnconditionalIfMatch = 0,
+        IfMatch = 1,
     }
     public partial class IoTHubServiceClient
     {

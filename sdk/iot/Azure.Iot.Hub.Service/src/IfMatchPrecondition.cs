@@ -9,12 +9,6 @@ namespace Azure.Iot.Hub.Service
     public enum IfMatchPrecondition
     {
         /// <summary>
-        /// Perform this operation regardless of if the provided resource matches the service's representation
-        /// of the object. This will cause the HTTP request to be sent with no ifMatch header. The service will never respond with a 412 error code with this setting.
-        /// </summary>
-        Unconditional,
-
-        /// <summary>
         /// Perform this operation as long as the provided resource exists in the service. This will cause the HTTP request to be sent with an ifMatch header with value "*". For create or update
         /// operations, if the resource does not exist, then the service will not execute the operation and will respond to the request with a 412 error code. For delete operations, if the resource
         /// does not exist, then the service will respond to the request with a 412 status code.
