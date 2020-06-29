@@ -18,15 +18,12 @@ namespace Azure.Iot.Hub.Service
         /// <returns>The ifMatch header value.</returns>
         internal static string GetIfMatchHeaderValue(IfMatchPrecondition precondition, string ETag)
         {
-            switch (precondition)
+            return precondition switch
             {
-                case IfMatchPrecondition.IfMatch:
-                    return $"\"{ETag}\"";
-                case IfMatchPrecondition.UnconditionalIfMatch:
-                    return "*";
-                default:
-                    return null;
-            }
+                IfMatchPrecondition.IfMatch => $"\"{ETag}\"",
+                IfMatchPrecondition.UnconditionalIfMatch => "*",
+                _ => null,
+            };
         }
     }
 }
