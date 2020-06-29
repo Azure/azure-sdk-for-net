@@ -100,9 +100,9 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 
 `FormRecognizerClient` provides operations for:
 
- - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects.
- - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `FormPage` objects.
- - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects.
+ - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects. See example [Recognize Custom Forms](#recognize-custom-forms).
+ - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
+ - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizedForm` objects. See example [Recognize Receipts](#recognize-receipts).
 
 ### FormTrainingClient
 
@@ -112,6 +112,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
 - Copying a custom model from one Form Recognizer resource to another.
+
+See examples for [Train a Model](#train-a-model) and [Manage Custom Models](#manage-custom-models).
 
 Please note that models can also be trained using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
@@ -275,7 +277,7 @@ Train a machine-learned model on your own form types. The resulting model will b
 
 ```C# Snippet:FormRecognizerSample4TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();

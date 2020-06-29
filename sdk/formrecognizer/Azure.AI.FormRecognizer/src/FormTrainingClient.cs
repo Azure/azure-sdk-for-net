@@ -107,7 +107,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
+        /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -131,7 +132,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
+        /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -352,11 +354,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
-        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
-        /// <param name="resourceRegion">Location of the target Form Recognizer resource</param>
+        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.
+        /// This information can be found in the Properties section of the Form Recognizer resource in the Azure Portal.</param>
+        /// <param name="resourceRegion">Location of the target Form Recognizer resource.
+        /// This information can be found in the Properties section of the Form Recognizer resource in the Azure Portal.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
-        /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
+        /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
         [ForwardsClientCalls]
         public virtual Response<CopyAuthorization> GetCopyAuthorization(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {
@@ -374,7 +378,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="resourceRegion">Location of the target Form Recognizer resource</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
-        /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
+        /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {

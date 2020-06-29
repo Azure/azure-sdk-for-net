@@ -21,10 +21,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSample5TrainModelWithFormsAndLabels
             // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-            // https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
             // For instructions to create a label file for your training forms, please see:
-            // https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
