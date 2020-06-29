@@ -58,42 +58,14 @@ namespace Azure.Iot.Hub.Service.Samples
 
         public async Task RunBulkDeviceLifecycleSamplesAsync()
         {
-            SampleLogger.PrintHeader("RUNNING SINLE DEVICE IDENTITY LIFECYCLE SAMPLES");
+            SampleLogger.PrintHeader("RUNNING BULK DEVICE IDENTITY LIFECYCLE SAMPLES");
             string devicesPrefix = $"bulkDevice";
 
             IEnumerable<DeviceIdentity> listOfDevices = BuildMultipleDevices(devicesPrefix, BULK_DEVICE_COUNT);
             
             // Create device identities in a single bulk operation.
             await CreateDevicesInBulkAsync(listOfDevices);
-        }
-
-        public async Task CreateDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
-        {
-            SampleLogger.PrintHeader("CREATE DEVICE IDENTITIES IN BULK");
-
-            try
-            {
-                Console.WriteLine($"Creating {listOfDevices.Count()} devices");
-                Response<BulkRegistryOperationResponse> createResponse = await IoTHubServiceClient.Devices.CreateIdentitiesAsync(listOfDevices);
-
-                BulkRegistryOperationResponse operationResponse = createResponse.Value;
-
-                if (operationResponse.IsSuccessful ?? false)
-                {
-                    SampleLogger.PrintSuccess($"Successfully created {listOfDevices.Count()} devices.");
-                }
-                else
-                {
-                    // TODO:(azabbasi) Print all the errors and warnings (this cannot be tested due to an issue with the swagger document)
-                    // Refer to: https://msazure.visualstudio.com/One/_workitems/edit/7536750
-                    SampleLogger.PrintWarning($"Not all devices were created successfully.");
-                }
-            }
-            catch (Exception ex)
-            {
-                SampleLogger.FatalError($"Failed to create device identities in bulk due to:\n{ex}");
-                throw;
-            }
+            await DeleteDevicesInBulkAsync(listOfDevices);
         }
 
         /// <summary>
@@ -272,6 +244,63 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
 
                 SampleLogger.PrintSuccess($"Successfully deleted device identity with Id: '{deviceIdentity.DeviceId}'");
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
+            }
+        }
+        public async Task CreateDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
+        {
+            SampleLogger.PrintHeader("CREATE DEVICE IDENTITIES IN BULK");
+
+            try
+            {
+                Console.WriteLine($"Creating {listOfDevices.Count()} devices");
+                Response<BulkRegistryOperationResponse> createResponse = await IoTHubServiceClient.Devices.CreateIdentitiesAsync(listOfDevices);
+
+                BulkRegistryOperationResponse operationResponse = createResponse.Value;
+
+                if (operationResponse.IsSuccessful ?? false)
+                {
+                    SampleLogger.PrintSuccess($"Successfully created {listOfDevices.Count()} devices.");
+                    Console.WriteLine($"List of created device identities:\n{string.Join(", ", listOfDevices.Select(s => $"'{s.DeviceId}'"))}");
+                }
+                else
+                {
+                    // TODO:(azabbasi) Print all the errors and warnings (this cannot be tested due to an issue with the swagger document)
+                    // Refer to: https://msazure.visualstudio.com/One/_workitems/edit/7536750
+                    SampleLogger.PrintWarning($"Not all devices were created successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to create device identities in bulk due to:\n{ex}");
+                throw;
+            }
+        }
+
+        public async Task DeleteDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
+        {
+            SampleLogger.PrintHeader("DELETE DEVICE IDENTITIES IN BULK");
+
+            Console.WriteLine($"Deleting the following device identities:\n{string.Join(", ", listOfDevices.Select(s => $"'{s.DeviceId}'"))}");
+
+            try
+            {
+                Response<BulkRegistryOperationResponse> deleteResponse = await IoTHubServiceClient.Devices.DeleteIdentitiesAsync(listOfDevices, BulkIfMatchPrecondition.Unconditional);
+                BulkRegistryOperationResponse operationResponse = deleteResponse.Value;
+
+                if (operationResponse.IsSuccessful ?? false)
+                {
+                    SampleLogger.PrintSuccess($"Successfully deleted device identities:\n{string.Join(", ", listOfDevices.Select(s => $"'{s.DeviceId}'"))}");
+                }
+                else
+                {
+                    // TODO:(azabbasi) Print all the errors and warnings (this cannot be tested due to an issue with the swagger document)
+                    // Refer to: https://msazure.visualstudio.com/One/_workitems/edit/7536750
+                    SampleLogger.PrintWarning($"Not all devices were deleted successfully.");
+                }
             }
             catch (Exception ex)
             {
