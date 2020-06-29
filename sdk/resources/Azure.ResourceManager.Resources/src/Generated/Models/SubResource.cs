@@ -23,6 +23,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

@@ -83,11 +83,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Enable ApiCompat  -->
-  <ItemGroup>
-    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" BuildReference="false" Condition="'$(EnableApiCompat)' == 'true'" />
-  </ItemGroup>
-
   <PropertyGroup>
     <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
@@ -116,11 +111,6 @@
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
-  <!--Generate Assembly Attributes file in IntermediateOutputPath -->
-  <PropertyGroup>
-    <TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)</TargetFrameworkMonikerAssemblyAttributesPath>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
     <!-- Find all Azure projects -->
     <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
@@ -140,8 +130,7 @@
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
-    <ProjectReference Include="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.csproj" />
-
+ 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -164,7 +153,7 @@
     <PackageReference Include="Moq" />
   </ItemGroup>
   <!-- *********** END OF Management Client Library Override section ************* -->
-    
+
   <!-- Added layer of checks to make sure we correctly switched to project references -->
   <Target Name="VerifyProjectReferencesReferences" AfterTargets="Build">
     <ItemGroup>
@@ -179,10 +168,13 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
-   <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(EnableApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+  <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(ApiCompatVersion)' != '' and '$(DesignTimeBuild)' != 'true'">
     <MSBuild
       Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
-      Properties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)"
+      Properties="TargetPackageName=$(PackageId);
+                  TargetPackageVersion=$(ApiCompatVersion);
+                  TargetOutputPath=$(IntermediateOutputPath);
+                  BaseIntermediateOutputPath=$(BaseIntermediateOutputPath)\ApiCompat\"
       Targets="ApiCompatVerification"
      />
   </Target>

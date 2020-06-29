@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +12,8 @@ using Azure.Core.Pipeline;
 using Azure.Core.Spatial;
 #endif
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -20,7 +23,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
@@ -172,6 +175,62 @@ namespace Azure.Search.Documents.Tests
             {
                 string location = path != null ? " at path " + path : "";
                 Assert.AreEqual(e, a, $"Expected value `{e}`{location}, not `{a}`.");
+            }
+        }
+
+        /// <summary>
+        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="SearchIndexerClient"/> to use for requests.</param>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 1 minute.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForIndexingAsync(
+            SearchIndexerClient client,
+            string indexerName,
+            TimeSpan? timeout = null)
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            timeout ??= TimeSpan.FromMinutes(5);
+
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
+
+            while (true)
+            {
+                await DelayAsync(delay, cancellationToken: cts.Token);
+
+                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
+                    indexerName,
+                    cancellationToken: cts.Token);
+
+                if (status.Status == IndexerStatus.Running)
+                {
+                    if (status.LastResult?.Status == IndexerExecutionStatus.Success)
+                    {
+                        return;
+                    }
+                    else if (status.LastResult?.Status == IndexerExecutionStatus.TransientFailure &&
+                        status.LastResult is IndexerExecutionResult lastResult)
+                    {
+                        TestContext.WriteLine($"Transient error: {lastResult.ErrorMessage}");
+                    }
+                }
+                else if (status.Status == IndexerStatus.Error &&
+                    status.LastResult is IndexerExecutionResult lastResult)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Error: {lastResult.ErrorMessage}");
+
+                    if (lastResult.Errors?.Count > 0)
+                    {
+                        foreach (SearchIndexerError error in lastResult.Errors)
+                        {
+                            sb.AppendLine($" ---> {error.ErrorMessage}");
+                        }
+                    }
+
+                    Assert.Fail(sb.ToString());
+                }
             }
         }
     }

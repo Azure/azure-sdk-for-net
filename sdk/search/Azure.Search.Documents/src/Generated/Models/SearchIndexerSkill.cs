@@ -34,8 +34,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Identifies the concrete type of the skill. </summary>
         internal string ODataType { get; set; }
-        /// <summary> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </summary>
-        public string Name { get; set; }
         /// <summary> The description of the skill which describes the inputs, outputs, and usage of the skill. </summary>
         public string Description { get; set; }
         /// <summary> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </summary>

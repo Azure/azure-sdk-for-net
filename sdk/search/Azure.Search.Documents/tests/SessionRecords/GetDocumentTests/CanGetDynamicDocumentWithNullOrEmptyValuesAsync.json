@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-yehjncgb.search.windows.net/indexes(\u0027sybvelrm\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-yehjncgb.search.windows.net/indexes(\u0027sybvelrm\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "api-key": "Sanitized",
@@ -66,7 +66,7 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-yehjncgb.search.windows.net/indexes(\u0027sybvelrm\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-yehjncgb.search.windows.net/indexes(\u0027sybvelrm\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "api-key": "Sanitized",

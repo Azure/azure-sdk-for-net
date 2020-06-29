@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ResourceLinkResult(IReadOnlyList<ResourceLink> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<ResourceLink>();
             NextLink = nextLink;
         }
 

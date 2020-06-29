@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.7.2-preview</Version>
+		<Version>3.7.3-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        Resolve bugs in 3.4.0-preview. This is a public release of the Azure Resource Manager SDK. This release introduces tags to Put Deployment and Get Deployment of 2019-10-01 api-version and Get Subscription of 2020-01-01 api-version.
+        Introduce a new api to unregister features.
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

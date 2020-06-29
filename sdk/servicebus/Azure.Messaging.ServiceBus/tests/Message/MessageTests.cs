@@ -41,16 +41,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         [Test]
-        public void SetMessageBodyAsString()
+        public void SetMessageBodyToString()
         {
             var messageBody = "some message";
             var message = new ServiceBusMessage(messageBody);
-            Assert.AreEqual(message.Body.AsString(), messageBody);
-            Assert.AreEqual(message.Body.AsString(), messageBody);
+            Assert.AreEqual(message.Body.ToString(), messageBody);
+            Assert.AreEqual(message.Body.ToString(), messageBody);
 
             message = new ServiceBusMessage(messageBody, Encoding.UTF32);
-            Assert.AreEqual(message.Body.AsString(Encoding.UTF32), messageBody);
-            Assert.AreNotEqual(message.Body.AsString(), messageBody);
+            Assert.AreEqual(message.Body.ToString(Encoding.UTF32), messageBody);
+            Assert.AreNotEqual(message.Body.ToString(), messageBody);
         }
     }
 }

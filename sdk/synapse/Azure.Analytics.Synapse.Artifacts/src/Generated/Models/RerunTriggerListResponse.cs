@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal RerunTriggerListResponse(IReadOnlyList<RerunTriggerResource> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<RerunTriggerResource>();
             NextLink = nextLink;
         }
 
         /// <summary> List of rerun triggers. </summary>
-        public IReadOnlyList<RerunTriggerResource> Value { get; set; }
+        public IReadOnlyList<RerunTriggerResource> Value { get; }
         /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
         public string NextLink { get; }
     }

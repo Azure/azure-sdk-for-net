@@ -53,574 +53,289 @@ namespace Azure.Management.Network
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of ApplicationGatewaysClient. </summary>
-        public virtual ApplicationGatewaysClient GetApplicationGatewaysClient()
-        {
-            return new ApplicationGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ApplicationSecurityGroupsClient. </summary>
-        public virtual ApplicationSecurityGroupsClient GetApplicationSecurityGroupsClient()
-        {
-            return new ApplicationSecurityGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AvailableDelegationsClient. </summary>
-        public virtual AvailableDelegationsClient GetAvailableDelegationsClient()
-        {
-            return new AvailableDelegationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AvailableResourceGroupDelegationsClient. </summary>
-        public virtual AvailableResourceGroupDelegationsClient GetAvailableResourceGroupDelegationsClient()
-        {
-            return new AvailableResourceGroupDelegationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AvailableServiceAliasesClient. </summary>
-        public virtual AvailableServiceAliasesClient GetAvailableServiceAliasesClient()
-        {
-            return new AvailableServiceAliasesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AzureFirewallsClient. </summary>
-        public virtual AzureFirewallsClient GetAzureFirewallsClient()
-        {
-            return new AzureFirewallsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AzureFirewallFqdnTagsClient. </summary>
-        public virtual AzureFirewallFqdnTagsClient GetAzureFirewallFqdnTagsClient()
-        {
-            return new AzureFirewallFqdnTagsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of BastionHostsClient. </summary>
-        public virtual BastionHostsClient GetBastionHostsClient()
-        {
-            return new BastionHostsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ServiceClient. </summary>
-        public virtual ServiceClient GetServiceClient()
-        {
-            return new ServiceClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of DdosCustomPoliciesClient. </summary>
-        public virtual DdosCustomPoliciesClient GetDdosCustomPoliciesClient()
-        {
-            return new DdosCustomPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of DdosProtectionPlansClient. </summary>
-        public virtual DdosProtectionPlansClient GetDdosProtectionPlansClient()
-        {
-            return new DdosProtectionPlansClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AvailableEndpointServicesClient. </summary>
-        public virtual AvailableEndpointServicesClient GetAvailableEndpointServicesClient()
-        {
-            return new AvailableEndpointServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCircuitAuthorizationsClient. </summary>
-        public virtual ExpressRouteCircuitAuthorizationsClient GetExpressRouteCircuitAuthorizationsClient()
-        {
-            return new ExpressRouteCircuitAuthorizationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCircuitPeeringsClient. </summary>
-        public virtual ExpressRouteCircuitPeeringsClient GetExpressRouteCircuitPeeringsClient()
-        {
-            return new ExpressRouteCircuitPeeringsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCircuitConnectionsClient. </summary>
-        public virtual ExpressRouteCircuitConnectionsClient GetExpressRouteCircuitConnectionsClient()
-        {
-            return new ExpressRouteCircuitConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PeerExpressRouteCircuitConnectionsClient. </summary>
-        public virtual PeerExpressRouteCircuitConnectionsClient GetPeerExpressRouteCircuitConnectionsClient()
-        {
-            return new PeerExpressRouteCircuitConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCircuitsClient. </summary>
-        public virtual ExpressRouteCircuitsClient GetExpressRouteCircuitsClient()
-        {
-            return new ExpressRouteCircuitsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteServiceProvidersClient. </summary>
-        public virtual ExpressRouteServiceProvidersClient GetExpressRouteServiceProvidersClient()
-        {
-            return new ExpressRouteServiceProvidersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCrossConnectionsClient. </summary>
-        public virtual ExpressRouteCrossConnectionsClient GetExpressRouteCrossConnectionsClient()
-        {
-            return new ExpressRouteCrossConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteCrossConnectionPeeringsClient. </summary>
-        public virtual ExpressRouteCrossConnectionPeeringsClient GetExpressRouteCrossConnectionPeeringsClient()
-        {
-            return new ExpressRouteCrossConnectionPeeringsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRoutePortsLocationsClient. </summary>
-        public virtual ExpressRoutePortsLocationsClient GetExpressRoutePortsLocationsClient()
-        {
-            return new ExpressRoutePortsLocationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRoutePortsClient. </summary>
-        public virtual ExpressRoutePortsClient GetExpressRoutePortsClient()
-        {
-            return new ExpressRoutePortsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteLinksClient. </summary>
-        public virtual ExpressRouteLinksClient GetExpressRouteLinksClient()
-        {
-            return new ExpressRouteLinksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of FirewallPoliciesClient. </summary>
-        public virtual FirewallPoliciesClient GetFirewallPoliciesClient()
-        {
-            return new FirewallPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of FirewallPolicyRuleGroupsClient. </summary>
-        public virtual FirewallPolicyRuleGroupsClient GetFirewallPolicyRuleGroupsClient()
-        {
-            return new FirewallPolicyRuleGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of IpAllocationsClient. </summary>
-        public virtual IpAllocationsClient GetIpAllocationsClient()
-        {
-            return new IpAllocationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of IpGroupsClient. </summary>
-        public virtual IpGroupsClient GetIpGroupsClient()
-        {
-            return new IpGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancersClient. </summary>
-        public virtual LoadBalancersClient GetLoadBalancersClient()
-        {
-            return new LoadBalancersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerBackendAddressPoolsClient. </summary>
-        public virtual LoadBalancerBackendAddressPoolsClient GetLoadBalancerBackendAddressPoolsClient()
-        {
-            return new LoadBalancerBackendAddressPoolsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerFrontendIPConfigurationsClient. </summary>
-        public virtual LoadBalancerFrontendIPConfigurationsClient GetLoadBalancerFrontendIPConfigurationsClient()
-        {
-            return new LoadBalancerFrontendIPConfigurationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of InboundNatRulesClient. </summary>
-        public virtual InboundNatRulesClient GetInboundNatRulesClient()
-        {
-            return new InboundNatRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerLoadBalancingRulesClient. </summary>
-        public virtual LoadBalancerLoadBalancingRulesClient GetLoadBalancerLoadBalancingRulesClient()
-        {
-            return new LoadBalancerLoadBalancingRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerOutboundRulesClient. </summary>
-        public virtual LoadBalancerOutboundRulesClient GetLoadBalancerOutboundRulesClient()
-        {
-            return new LoadBalancerOutboundRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerNetworkInterfacesClient. </summary>
-        public virtual LoadBalancerNetworkInterfacesClient GetLoadBalancerNetworkInterfacesClient()
-        {
-            return new LoadBalancerNetworkInterfacesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LoadBalancerProbesClient. </summary>
-        public virtual LoadBalancerProbesClient GetLoadBalancerProbesClient()
-        {
-            return new LoadBalancerProbesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NatGatewaysClient. </summary>
-        public virtual NatGatewaysClient GetNatGatewaysClient()
-        {
-            return new NatGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkInterfacesClient. </summary>
-        public virtual NetworkInterfacesClient GetNetworkInterfacesClient()
-        {
-            return new NetworkInterfacesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkInterfaceIPConfigurationsClient. </summary>
-        public virtual NetworkInterfaceIPConfigurationsClient GetNetworkInterfaceIPConfigurationsClient()
-        {
-            return new NetworkInterfaceIPConfigurationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkInterfaceLoadBalancersClient. </summary>
-        public virtual NetworkInterfaceLoadBalancersClient GetNetworkInterfaceLoadBalancersClient()
-        {
-            return new NetworkInterfaceLoadBalancersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkInterfaceTapConfigurationsClient. </summary>
-        public virtual NetworkInterfaceTapConfigurationsClient GetNetworkInterfaceTapConfigurationsClient()
-        {
-            return new NetworkInterfaceTapConfigurationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkProfilesClient. </summary>
-        public virtual NetworkProfilesClient GetNetworkProfilesClient()
-        {
-            return new NetworkProfilesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkSecurityGroupsClient. </summary>
-        public virtual NetworkSecurityGroupsClient GetNetworkSecurityGroupsClient()
-        {
-            return new NetworkSecurityGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of SecurityRulesClient. </summary>
-        public virtual SecurityRulesClient GetSecurityRulesClient()
-        {
-            return new SecurityRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of DefaultSecurityRulesClient. </summary>
-        public virtual DefaultSecurityRulesClient GetDefaultSecurityRulesClient()
-        {
-            return new DefaultSecurityRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkVirtualAppliancesClient. </summary>
-        public virtual NetworkVirtualAppliancesClient GetNetworkVirtualAppliancesClient()
-        {
-            return new NetworkVirtualAppliancesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of NetworkWatchersClient. </summary>
-        public virtual NetworkWatchersClient GetNetworkWatchersClient()
-        {
-            return new NetworkWatchersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PacketCapturesClient. </summary>
-        public virtual PacketCapturesClient GetPacketCapturesClient()
-        {
-            return new PacketCapturesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ConnectionMonitorsClient. </summary>
-        public virtual ConnectionMonitorsClient GetConnectionMonitorsClient()
-        {
-            return new ConnectionMonitorsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of FlowLogsClient. </summary>
-        public virtual FlowLogsClient GetFlowLogsClient()
-        {
-            return new FlowLogsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PrivateEndpointsClient. </summary>
-        public virtual PrivateEndpointsClient GetPrivateEndpointsClient()
-        {
-            return new PrivateEndpointsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of AvailablePrivateEndpointTypesClient. </summary>
-        public virtual AvailablePrivateEndpointTypesClient GetAvailablePrivateEndpointTypesClient()
-        {
-            return new AvailablePrivateEndpointTypesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PrivateDnsZoneGroupsClient. </summary>
-        public virtual PrivateDnsZoneGroupsClient GetPrivateDnsZoneGroupsClient()
-        {
-            return new PrivateDnsZoneGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PrivateLinkServicesClient. </summary>
-        public virtual PrivateLinkServicesClient GetPrivateLinkServicesClient()
-        {
-            return new PrivateLinkServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PublicIPAddressesClient. </summary>
-        public virtual PublicIPAddressesClient GetPublicIPAddressesClient()
-        {
-            return new PublicIPAddressesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of PublicIPPrefixesClient. </summary>
-        public virtual PublicIPPrefixesClient GetPublicIPPrefixesClient()
-        {
-            return new PublicIPPrefixesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of RouteFiltersClient. </summary>
-        public virtual RouteFiltersClient GetRouteFiltersClient()
-        {
-            return new RouteFiltersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of RouteFilterRulesClient. </summary>
-        public virtual RouteFilterRulesClient GetRouteFilterRulesClient()
-        {
-            return new RouteFilterRulesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of RouteTablesClient. </summary>
-        public virtual RouteTablesClient GetRouteTablesClient()
-        {
-            return new RouteTablesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of RoutesClient. </summary>
-        public virtual RoutesClient GetRoutesClient()
-        {
-            return new RoutesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of SecurityPartnerProvidersClient. </summary>
-        public virtual SecurityPartnerProvidersClient GetSecurityPartnerProvidersClient()
-        {
-            return new SecurityPartnerProvidersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of BgpServiceCommunitiesClient. </summary>
-        public virtual BgpServiceCommunitiesClient GetBgpServiceCommunitiesClient()
-        {
-            return new BgpServiceCommunitiesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ServiceEndpointPoliciesClient. </summary>
-        public virtual ServiceEndpointPoliciesClient GetServiceEndpointPoliciesClient()
-        {
-            return new ServiceEndpointPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ServiceEndpointPolicyDefinitionsClient. </summary>
-        public virtual ServiceEndpointPolicyDefinitionsClient GetServiceEndpointPolicyDefinitionsClient()
-        {
-            return new ServiceEndpointPolicyDefinitionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ServiceTagsClient. </summary>
-        public virtual ServiceTagsClient GetServiceTagsClient()
-        {
-            return new ServiceTagsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of UsagesClient. </summary>
-        public virtual UsagesClient GetUsagesClient()
-        {
-            return new UsagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualNetworksClient. </summary>
-        public virtual VirtualNetworksClient GetVirtualNetworksClient()
-        {
-            return new VirtualNetworksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of SubnetsClient. </summary>
-        public virtual SubnetsClient GetSubnetsClient()
-        {
-            return new SubnetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ResourceNavigationLinksClient. </summary>
-        public virtual ResourceNavigationLinksClient GetResourceNavigationLinksClient()
-        {
-            return new ResourceNavigationLinksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ServiceAssociationLinksClient. </summary>
-        public virtual ServiceAssociationLinksClient GetServiceAssociationLinksClient()
-        {
-            return new ServiceAssociationLinksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualNetworkPeeringsClient. </summary>
-        public virtual VirtualNetworkPeeringsClient GetVirtualNetworkPeeringsClient()
-        {
-            return new VirtualNetworkPeeringsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualNetworkGatewaysClient. </summary>
-        public virtual VirtualNetworkGatewaysClient GetVirtualNetworkGatewaysClient()
-        {
-            return new VirtualNetworkGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualNetworkGatewayConnectionsClient. </summary>
-        public virtual VirtualNetworkGatewayConnectionsClient GetVirtualNetworkGatewayConnectionsClient()
-        {
-            return new VirtualNetworkGatewayConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of LocalNetworkGatewaysClient. </summary>
-        public virtual LocalNetworkGatewaysClient GetLocalNetworkGatewaysClient()
-        {
-            return new LocalNetworkGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualNetworkTapsClient. </summary>
-        public virtual VirtualNetworkTapsClient GetVirtualNetworkTapsClient()
-        {
-            return new VirtualNetworkTapsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualRoutersClient. </summary>
-        public virtual VirtualRoutersClient GetVirtualRoutersClient()
-        {
-            return new VirtualRoutersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualRouterPeeringsClient. </summary>
-        public virtual VirtualRouterPeeringsClient GetVirtualRouterPeeringsClient()
-        {
-            return new VirtualRouterPeeringsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualWansClient. </summary>
-        public virtual VirtualWansClient GetVirtualWansClient()
-        {
-            return new VirtualWansClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnSitesClient. </summary>
-        public virtual VpnSitesClient GetVpnSitesClient()
-        {
-            return new VpnSitesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnSiteLinksClient. </summary>
-        public virtual VpnSiteLinksClient GetVpnSiteLinksClient()
-        {
-            return new VpnSiteLinksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnSitesConfigurationClient. </summary>
-        public virtual VpnSitesConfigurationClient GetVpnSitesConfigurationClient()
-        {
-            return new VpnSitesConfigurationClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnServerConfigurationsClient. </summary>
-        public virtual VpnServerConfigurationsClient GetVpnServerConfigurationsClient()
-        {
-            return new VpnServerConfigurationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualHubsClient. </summary>
-        public virtual VirtualHubsClient GetVirtualHubsClient()
-        {
-            return new VirtualHubsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of HubVirtualNetworkConnectionsClient. </summary>
-        public virtual HubVirtualNetworkConnectionsClient GetHubVirtualNetworkConnectionsClient()
-        {
-            return new HubVirtualNetworkConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnGatewaysClient. </summary>
-        public virtual VpnGatewaysClient GetVpnGatewaysClient()
-        {
-            return new VpnGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnConnectionsClient. </summary>
-        public virtual VpnConnectionsClient GetVpnConnectionsClient()
-        {
-            return new VpnConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnSiteLinkConnectionsClient. </summary>
-        public virtual VpnSiteLinkConnectionsClient GetVpnSiteLinkConnectionsClient()
-        {
-            return new VpnSiteLinkConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnLinkConnectionsClient. </summary>
-        public virtual VpnLinkConnectionsClient GetVpnLinkConnectionsClient()
-        {
-            return new VpnLinkConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of P2SVpnGatewaysClient. </summary>
-        public virtual P2SVpnGatewaysClient GetP2SVpnGatewaysClient()
-        {
-            return new P2SVpnGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient. </summary>
-        public virtual VpnServerConfigurationsAssociatedWithVirtualWanClient GetVpnServerConfigurationsAssociatedWithVirtualWanClient()
-        {
-            return new VpnServerConfigurationsAssociatedWithVirtualWanClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of VirtualHubRouteTableV2SClient. </summary>
-        public virtual VirtualHubRouteTableV2SClient GetVirtualHubRouteTableV2SClient()
-        {
-            return new VirtualHubRouteTableV2SClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteGatewaysClient. </summary>
-        public virtual ExpressRouteGatewaysClient GetExpressRouteGatewaysClient()
-        {
-            return new ExpressRouteGatewaysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of ExpressRouteConnectionsClient. </summary>
-        public virtual ExpressRouteConnectionsClient GetExpressRouteConnectionsClient()
-        {
-            return new ExpressRouteConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of HubRouteTablesClient. </summary>
-        public virtual HubRouteTablesClient GetHubRouteTablesClient()
-        {
-            return new HubRouteTablesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
-
-        /// <summary> Creates a new instance of WebApplicationFirewallPoliciesClient. </summary>
-        public virtual WebApplicationFirewallPoliciesClient GetWebApplicationFirewallPoliciesClient()
-        {
-            return new WebApplicationFirewallPoliciesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ApplicationGatewaysOperations. </summary>
+        public virtual ApplicationGatewaysOperations ApplicationGateways => new ApplicationGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ApplicationSecurityGroupsOperations. </summary>
+        public virtual ApplicationSecurityGroupsOperations ApplicationSecurityGroups => new ApplicationSecurityGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AvailableDelegationsOperations. </summary>
+        public virtual AvailableDelegationsOperations AvailableDelegations => new AvailableDelegationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AvailableResourceGroupDelegationsOperations. </summary>
+        public virtual AvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations => new AvailableResourceGroupDelegationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AvailableServiceAliasesOperations. </summary>
+        public virtual AvailableServiceAliasesOperations AvailableServiceAliases => new AvailableServiceAliasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AzureFirewallsOperations. </summary>
+        public virtual AzureFirewallsOperations AzureFirewalls => new AzureFirewallsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AzureFirewallFqdnTagsOperations. </summary>
+        public virtual AzureFirewallFqdnTagsOperations AzureFirewallFqdnTags => new AzureFirewallFqdnTagsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of BastionHostsOperations. </summary>
+        public virtual BastionHostsOperations BastionHosts => new BastionHostsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServiceOperations. </summary>
+        public virtual ServiceOperations Service => new ServiceOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DdosCustomPoliciesOperations. </summary>
+        public virtual DdosCustomPoliciesOperations DdosCustomPolicies => new DdosCustomPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DdosProtectionPlansOperations. </summary>
+        public virtual DdosProtectionPlansOperations DdosProtectionPlans => new DdosProtectionPlansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AvailableEndpointServicesOperations. </summary>
+        public virtual AvailableEndpointServicesOperations AvailableEndpointServices => new AvailableEndpointServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCircuitAuthorizationsOperations. </summary>
+        public virtual ExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations => new ExpressRouteCircuitAuthorizationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCircuitPeeringsOperations. </summary>
+        public virtual ExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings => new ExpressRouteCircuitPeeringsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCircuitConnectionsOperations. </summary>
+        public virtual ExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections => new ExpressRouteCircuitConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PeerExpressRouteCircuitConnectionsOperations. </summary>
+        public virtual PeerExpressRouteCircuitConnectionsOperations PeerExpressRouteCircuitConnections => new PeerExpressRouteCircuitConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCircuitsOperations. </summary>
+        public virtual ExpressRouteCircuitsOperations ExpressRouteCircuits => new ExpressRouteCircuitsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteServiceProvidersOperations. </summary>
+        public virtual ExpressRouteServiceProvidersOperations ExpressRouteServiceProviders => new ExpressRouteServiceProvidersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCrossConnectionsOperations. </summary>
+        public virtual ExpressRouteCrossConnectionsOperations ExpressRouteCrossConnections => new ExpressRouteCrossConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteCrossConnectionPeeringsOperations. </summary>
+        public virtual ExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings => new ExpressRouteCrossConnectionPeeringsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRoutePortsLocationsOperations. </summary>
+        public virtual ExpressRoutePortsLocationsOperations ExpressRoutePortsLocations => new ExpressRoutePortsLocationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRoutePortsOperations. </summary>
+        public virtual ExpressRoutePortsOperations ExpressRoutePorts => new ExpressRoutePortsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteLinksOperations. </summary>
+        public virtual ExpressRouteLinksOperations ExpressRouteLinks => new ExpressRouteLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of FirewallPoliciesOperations. </summary>
+        public virtual FirewallPoliciesOperations FirewallPolicies => new FirewallPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of FirewallPolicyRuleGroupsOperations. </summary>
+        public virtual FirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups => new FirewallPolicyRuleGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of IpAllocationsOperations. </summary>
+        public virtual IpAllocationsOperations IpAllocations => new IpAllocationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of IpGroupsOperations. </summary>
+        public virtual IpGroupsOperations IpGroups => new IpGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancersOperations. </summary>
+        public virtual LoadBalancersOperations LoadBalancers => new LoadBalancersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerBackendAddressPoolsOperations. </summary>
+        public virtual LoadBalancerBackendAddressPoolsOperations LoadBalancerBackendAddressPools => new LoadBalancerBackendAddressPoolsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerFrontendIPConfigurationsOperations. </summary>
+        public virtual LoadBalancerFrontendIPConfigurationsOperations LoadBalancerFrontendIPConfigurations => new LoadBalancerFrontendIPConfigurationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of InboundNatRulesOperations. </summary>
+        public virtual InboundNatRulesOperations InboundNatRules => new InboundNatRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerLoadBalancingRulesOperations. </summary>
+        public virtual LoadBalancerLoadBalancingRulesOperations LoadBalancerLoadBalancingRules => new LoadBalancerLoadBalancingRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerOutboundRulesOperations. </summary>
+        public virtual LoadBalancerOutboundRulesOperations LoadBalancerOutboundRules => new LoadBalancerOutboundRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerNetworkInterfacesOperations. </summary>
+        public virtual LoadBalancerNetworkInterfacesOperations LoadBalancerNetworkInterfaces => new LoadBalancerNetworkInterfacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LoadBalancerProbesOperations. </summary>
+        public virtual LoadBalancerProbesOperations LoadBalancerProbes => new LoadBalancerProbesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NatGatewaysOperations. </summary>
+        public virtual NatGatewaysOperations NatGateways => new NatGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkInterfacesOperations. </summary>
+        public virtual NetworkInterfacesOperations NetworkInterfaces => new NetworkInterfacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkInterfaceIPConfigurationsOperations. </summary>
+        public virtual NetworkInterfaceIPConfigurationsOperations NetworkInterfaceIPConfigurations => new NetworkInterfaceIPConfigurationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkInterfaceLoadBalancersOperations. </summary>
+        public virtual NetworkInterfaceLoadBalancersOperations NetworkInterfaceLoadBalancers => new NetworkInterfaceLoadBalancersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkInterfaceTapConfigurationsOperations. </summary>
+        public virtual NetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations => new NetworkInterfaceTapConfigurationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkProfilesOperations. </summary>
+        public virtual NetworkProfilesOperations NetworkProfiles => new NetworkProfilesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkSecurityGroupsOperations. </summary>
+        public virtual NetworkSecurityGroupsOperations NetworkSecurityGroups => new NetworkSecurityGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SecurityRulesOperations. </summary>
+        public virtual SecurityRulesOperations SecurityRules => new SecurityRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DefaultSecurityRulesOperations. </summary>
+        public virtual DefaultSecurityRulesOperations DefaultSecurityRules => new DefaultSecurityRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkVirtualAppliancesOperations. </summary>
+        public virtual NetworkVirtualAppliancesOperations NetworkVirtualAppliances => new NetworkVirtualAppliancesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of NetworkWatchersOperations. </summary>
+        public virtual NetworkWatchersOperations NetworkWatchers => new NetworkWatchersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PacketCapturesOperations. </summary>
+        public virtual PacketCapturesOperations PacketCaptures => new PacketCapturesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ConnectionMonitorsOperations. </summary>
+        public virtual ConnectionMonitorsOperations ConnectionMonitors => new ConnectionMonitorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of FlowLogsOperations. </summary>
+        public virtual FlowLogsOperations FlowLogs => new FlowLogsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
+
+        /// <summary> Returns an instance of PrivateEndpointsOperations. </summary>
+        public virtual PrivateEndpointsOperations PrivateEndpoints => new PrivateEndpointsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of AvailablePrivateEndpointTypesOperations. </summary>
+        public virtual AvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes => new AvailablePrivateEndpointTypesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PrivateDnsZoneGroupsOperations. </summary>
+        public virtual PrivateDnsZoneGroupsOperations PrivateDnsZoneGroups => new PrivateDnsZoneGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PrivateLinkServicesOperations. </summary>
+        public virtual PrivateLinkServicesOperations PrivateLinkServices => new PrivateLinkServicesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PublicIPAddressesOperations. </summary>
+        public virtual PublicIPAddressesOperations PublicIPAddresses => new PublicIPAddressesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PublicIPPrefixesOperations. </summary>
+        public virtual PublicIPPrefixesOperations PublicIPPrefixes => new PublicIPPrefixesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RouteFiltersOperations. </summary>
+        public virtual RouteFiltersOperations RouteFilters => new RouteFiltersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RouteFilterRulesOperations. </summary>
+        public virtual RouteFilterRulesOperations RouteFilterRules => new RouteFilterRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RouteTablesOperations. </summary>
+        public virtual RouteTablesOperations RouteTables => new RouteTablesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RoutesOperations. </summary>
+        public virtual RoutesOperations Routes => new RoutesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SecurityPartnerProvidersOperations. </summary>
+        public virtual SecurityPartnerProvidersOperations SecurityPartnerProviders => new SecurityPartnerProvidersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of BgpServiceCommunitiesOperations. </summary>
+        public virtual BgpServiceCommunitiesOperations BgpServiceCommunities => new BgpServiceCommunitiesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServiceEndpointPoliciesOperations. </summary>
+        public virtual ServiceEndpointPoliciesOperations ServiceEndpointPolicies => new ServiceEndpointPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServiceEndpointPolicyDefinitionsOperations. </summary>
+        public virtual ServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions => new ServiceEndpointPolicyDefinitionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServiceTagsOperations. </summary>
+        public virtual ServiceTagsOperations ServiceTags => new ServiceTagsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of UsagesOperations. </summary>
+        public virtual UsagesOperations Usages => new UsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworksOperations. </summary>
+        public virtual VirtualNetworksOperations VirtualNetworks => new VirtualNetworksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SubnetsOperations. </summary>
+        public virtual SubnetsOperations Subnets => new SubnetsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ResourceNavigationLinksOperations. </summary>
+        public virtual ResourceNavigationLinksOperations ResourceNavigationLinks => new ResourceNavigationLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServiceAssociationLinksOperations. </summary>
+        public virtual ServiceAssociationLinksOperations ServiceAssociationLinks => new ServiceAssociationLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworkPeeringsOperations. </summary>
+        public virtual VirtualNetworkPeeringsOperations VirtualNetworkPeerings => new VirtualNetworkPeeringsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworkGatewaysOperations. </summary>
+        public virtual VirtualNetworkGatewaysOperations VirtualNetworkGateways => new VirtualNetworkGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworkGatewayConnectionsOperations. </summary>
+        public virtual VirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections => new VirtualNetworkGatewayConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LocalNetworkGatewaysOperations. </summary>
+        public virtual LocalNetworkGatewaysOperations LocalNetworkGateways => new LocalNetworkGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworkTapsOperations. </summary>
+        public virtual VirtualNetworkTapsOperations VirtualNetworkTaps => new VirtualNetworkTapsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualRoutersOperations. </summary>
+        public virtual VirtualRoutersOperations VirtualRouters => new VirtualRoutersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualRouterPeeringsOperations. </summary>
+        public virtual VirtualRouterPeeringsOperations VirtualRouterPeerings => new VirtualRouterPeeringsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualWansOperations. </summary>
+        public virtual VirtualWansOperations VirtualWans => new VirtualWansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnSitesOperations. </summary>
+        public virtual VpnSitesOperations VpnSites => new VpnSitesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnSiteLinksOperations. </summary>
+        public virtual VpnSiteLinksOperations VpnSiteLinks => new VpnSiteLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnSitesConfigurationOperations. </summary>
+        public virtual VpnSitesConfigurationOperations VpnSitesConfiguration => new VpnSitesConfigurationOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnServerConfigurationsOperations. </summary>
+        public virtual VpnServerConfigurationsOperations VpnServerConfigurations => new VpnServerConfigurationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualHubsOperations. </summary>
+        public virtual VirtualHubsOperations VirtualHubs => new VirtualHubsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of HubVirtualNetworkConnectionsOperations. </summary>
+        public virtual HubVirtualNetworkConnectionsOperations HubVirtualNetworkConnections => new HubVirtualNetworkConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnGatewaysOperations. </summary>
+        public virtual VpnGatewaysOperations VpnGateways => new VpnGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnConnectionsOperations. </summary>
+        public virtual VpnConnectionsOperations VpnConnections => new VpnConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnSiteLinkConnectionsOperations. </summary>
+        public virtual VpnSiteLinkConnectionsOperations VpnSiteLinkConnections => new VpnSiteLinkConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnLinkConnectionsOperations. </summary>
+        public virtual VpnLinkConnectionsOperations VpnLinkConnections => new VpnLinkConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of P2SVpnGatewaysOperations. </summary>
+        public virtual P2SVpnGatewaysOperations P2SVpnGateways => new P2SVpnGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VpnServerConfigurationsAssociatedWithVirtualWanOperations. </summary>
+        public virtual VpnServerConfigurationsAssociatedWithVirtualWanOperations VpnServerConfigurationsAssociatedWithVirtualWan => new VpnServerConfigurationsAssociatedWithVirtualWanOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualHubRouteTableV2SOperations. </summary>
+        public virtual VirtualHubRouteTableV2SOperations VirtualHubRouteTableV2S => new VirtualHubRouteTableV2SOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteGatewaysOperations. </summary>
+        public virtual ExpressRouteGatewaysOperations ExpressRouteGateways => new ExpressRouteGatewaysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ExpressRouteConnectionsOperations. </summary>
+        public virtual ExpressRouteConnectionsOperations ExpressRouteConnections => new ExpressRouteConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of HubRouteTablesOperations. </summary>
+        public virtual HubRouteTablesOperations HubRouteTables => new HubRouteTablesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of WebApplicationFirewallPoliciesOperations. </summary>
+        public virtual WebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies => new WebApplicationFirewallPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

@@ -58,7 +58,9 @@
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
         "searchApiVersion": "2020-03-13",
         "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
-        "storageApiVersion": "2019-06-01"
+        "storageApiVersion": "2019-06-01",
+        "cognitiveServicesAccountName": "[concat(parameters('baseName'), 'cog')]",
+        "cognitiveServicesApiVersion": "2017-04-18"
     },
     "resources": [
         {
@@ -92,6 +94,22 @@
                 "name": "Standard_LRS"
             },
             "kind": "BlobStorage"
+        },
+        {
+            "name": "[variables('cognitiveServicesAccountName')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "[variables('cognitiveServicesApiVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "CognitiveServices",
+            "properties": {
+                "apiProperties": {
+                    "statisticsEnabled": false
+                },
+                "publicNetworkAccess": "Enabled"
+            }
         }
     ],
     "outputs": {
@@ -114,6 +132,10 @@
         "SEARCH_STORAGE_KEY": {
             "type": "string",
             "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
+        },
+        "SEARCH_COGNITIVE_KEY": {
+            "type": "string",
+            "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
         }
     }
 }

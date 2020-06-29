@@ -23,17 +23,17 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(publicKeys));
             }
 
-            PublicKeys = publicKeys.ToArray();
+            PublicKeys = publicKeys.ToList();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
         /// <param name="publicKeys"> the list of SSH public keys used to authenticate with Linux-based VMs. </param>
         internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys)
         {
-            PublicKeys = publicKeys;
+            PublicKeys = publicKeys ?? new List<ContainerServiceSshPublicKey>();
         }
 
         /// <summary> the list of SSH public keys used to authenticate with Linux-based VMs. </summary>
-        public IList<ContainerServiceSshPublicKey> PublicKeys { get; set; }
+        public IList<ContainerServiceSshPublicKey> PublicKeys { get; }
     }
 }

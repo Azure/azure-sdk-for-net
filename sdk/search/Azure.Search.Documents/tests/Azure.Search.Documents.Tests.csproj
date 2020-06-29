@@ -32,6 +32,10 @@
     <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Samples\HelloWorld.Data.cs" DependentUpon="Samples\HelloWorld.cs" />
+  </ItemGroup>
+
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

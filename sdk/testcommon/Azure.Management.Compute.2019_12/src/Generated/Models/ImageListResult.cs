@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </param>
         internal ImageListResult(IReadOnlyList<Image> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<Image>();
             NextLink = nextLink;
         }
 

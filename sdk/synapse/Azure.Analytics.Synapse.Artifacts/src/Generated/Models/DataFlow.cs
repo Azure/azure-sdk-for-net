@@ -15,7 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
-            Type = null;
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>

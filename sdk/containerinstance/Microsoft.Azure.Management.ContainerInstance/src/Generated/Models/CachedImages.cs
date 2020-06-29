@@ -32,10 +32,8 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         /// <param name="osType">The OS type of the cached image.</param>
         /// <param name="image">The cached image name.</param>
-        /// <param name="id">The resource Id of the cached image.</param>
-        public CachedImages(string osType, string image, string id = default(string))
+        public CachedImages(string osType, string image)
         {
-            Id = id;
             OsType = osType;
             Image = image;
             CustomInit();
@@ -45,12 +43,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the resource Id of the cached image.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the OS type of the cached image.

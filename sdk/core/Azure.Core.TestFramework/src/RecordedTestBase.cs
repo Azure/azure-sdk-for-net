@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -17,6 +19,8 @@ namespace Azure.Core.TestFramework
         public TestRecording Recording { get; private set; }
 
         public RecordedTestMode Mode { get; }
+
+        private static readonly HashSet<char> s_invalidChars = new HashSet<char>(Path.GetInvalidFileNameChars());
 
 #if DEBUG
         /// <summary>
@@ -40,11 +44,11 @@ namespace Azure.Core.TestFramework
             Mode = mode;
         }
 
-        private string GetSessionFilePath(string name = null)
+        private string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
-            name ??= testAdapter.Name;
+            string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";

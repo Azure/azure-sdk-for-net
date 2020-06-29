@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+
+
 ## 1.0.0-preview.1
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
@@ -19,7 +22,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.ResourceManager` to `Azure.ResourceManager.Resources`
+The package name has been changed from `Microsoft.Azure.Management.ResourceManager` to `Azure.ResourceManager.Resources`
 
 #### Management Client Changes
 
@@ -94,8 +97,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 var resourcesManagementClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
-var resourceGroupsClient = resourcesManagementClient.GetResourceGroupsClient();
-var deploymentsClient = resourcesManagementClient.GetDeploymentsClient();
+var resourceGroupsClient = resourcesManagementClient.ResourceGroups;
+var deploymentsClient = resourcesManagementClient.Deployments;
 
 var templateString = File.ReadAllText("storage-account.json");
 var parameterString = File.ReadAllText("account-parameters.json");

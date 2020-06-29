@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Management.Billing
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. The current version
-        /// is 2019-10-01-preview.
+        /// The version of the API to be used with the client request. The current
+        /// version is 2020-05-01.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID that uniquely identifies an Azure subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IPaymentMethodsOperations.
-        /// </summary>
-        public virtual IPaymentMethodsOperations PaymentMethods { get; private set; }
-
-        /// <summary>
         /// Gets the IAddressOperations.
         /// </summary>
         public virtual IAddressOperations Address { get; private set; }
@@ -95,6 +90,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAvailableBalancesOperations.
         /// </summary>
         public virtual IAvailableBalancesOperations AvailableBalances { get; private set; }
+
+        /// <summary>
+        /// Gets the IInstructionsOperations.
+        /// </summary>
+        public virtual IInstructionsOperations Instructions { get; private set; }
 
         /// <summary>
         /// Gets the IBillingProfilesOperations.
@@ -127,19 +127,14 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IProductsOperations Products { get; private set; }
 
         /// <summary>
-        /// Gets the ITransactionsOperations.
-        /// </summary>
-        public virtual ITransactionsOperations Transactions { get; private set; }
-        
-        /// <summary>
         /// Gets the IInvoicesOperations.
         /// </summary>
         public virtual IInvoicesOperations Invoices { get; private set; }
 
         /// <summary>
-        /// Gets the IPriceSheetOperations.
+        /// Gets the ITransactionsOperations.
         /// </summary>
-        public virtual IPriceSheetOperations PriceSheet { get; private set; }
+        public virtual ITransactionsOperations Transactions { get; private set; }
 
         /// <summary>
         /// Gets the IPoliciesOperations.
@@ -413,18 +408,17 @@ namespace Microsoft.Azure.Management.Billing
         private void Initialize()
         {
             BillingAccounts = new BillingAccountsOperations(this);
-            PaymentMethods = new PaymentMethodsOperations(this);
             Address = new AddressOperations(this);
             AvailableBalances = new AvailableBalancesOperations(this);
+            Instructions = new InstructionsOperations(this);
             BillingProfiles = new BillingProfilesOperations(this);
             Customers = new CustomersOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
             BillingPermissions = new BillingPermissionsOperations(this);
             BillingSubscriptions = new BillingSubscriptionsOperations(this);
             Products = new ProductsOperations(this);
-            Transactions = new TransactionsOperations(this);
             Invoices = new InvoicesOperations(this);
-            PriceSheet = new PriceSheetOperations(this);
+            Transactions = new TransactionsOperations(this);
             Policies = new PoliciesOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
             Operations = new Operations(this);
@@ -432,7 +426,7 @@ namespace Microsoft.Azure.Management.Billing
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-10-01-preview";
+            ApiVersion = "2020-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
