@@ -152,6 +152,11 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken = default)
         {
+            if (content == default)
+            {
+                throw Errors.ArgumentNull(nameof(content));
+            }
+
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
             // some strategies are unavailable if we don't know the stream length, and some can still work
@@ -447,14 +452,6 @@ namespace Azure.Storage
         /// </summary>
         private static long? GetLengthOrDefault(Stream content)
         {
-            if (content == null)
-            {
-                /* Returning 0 instead of default puts us on the quick and clean one-shot upload,
-                 * which produces more consistent fail state with how a 1-1 method on the convenience
-                 * layer would fail.
-                 */
-                return 0;
-            }
             try
             {
                 if (content.CanSeek)
@@ -481,8 +478,10 @@ namespace Azure.Storage
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             // The minimum amount of data we'll accept from a stream before
-            // splitting another block.
-            long acceptableBlockSize = blockSize / 2;
+            // splitting another block. Code that sets `blockSize` will always
+            // set it to a positive number. Min() only avoids edge case where
+            // user sets their block size to 1.
+            long acceptableBlockSize = Math.Max(1, blockSize / 2);
 
             // if we know the data length, assert boundaries before spending resources uploading beyond service capabilities
             if (streamLength.HasValue)
