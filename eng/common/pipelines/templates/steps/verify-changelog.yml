@@ -1,0 +1,25 @@
+parameters:
+- name: PackageName
+  type: string
+  default: 'not-specified'
+- name: ServiceName
+  type: string
+  default: 'not-specified'
+- name: ForRelease
+  type: boolean
+  default: false
+
+steps:
+  - task: Powershell@2
+    inputs:
+      filePath: /eng/common/scripts/Verify-ChangeLog.ps1
+      arguments: >
+        -PackageName ${{ parameters.PackageName }}
+        -ServiceName ${{ parameters.ServiceName }}
+        -RepoRoot $(Build.SourcesDirectory)
+        -RepoName $(Build.Repository.Name)
+        -ForRelease ${{ parameters.ForRelease }}
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Verify ChangeLog / Release Notes
+    continueOnError: false
