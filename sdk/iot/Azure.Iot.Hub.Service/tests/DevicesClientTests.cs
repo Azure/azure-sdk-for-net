@@ -243,7 +243,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
                 // Make the API call to disable devices.
                 Response<BulkRegistryOperationResponse> updateResponse =
-                    await client.Devices.UpdateIdentitiesAsync(listOfDevicesToUpdate, BulkIfMatchPrecondition.UnconditionalfMatch)
+                    await client.Devices.UpdateIdentitiesAsync(listOfDevicesToUpdate, BulkIfMatchPrecondition.Unconditional)
                     .ConfigureAwait(false);
 
                 // TODO: (azabbasi) Once the issue with the error parsing is resolved, include the error message in the message of the assert statement.
@@ -422,7 +422,7 @@ namespace Azure.Iot.Hub.Service.Tests
             {
                 if (devices != null && devices.Any())
                 {
-                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.UnconditionalfMatch);
+                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional);
                 }
             }
             catch (Exception ex)

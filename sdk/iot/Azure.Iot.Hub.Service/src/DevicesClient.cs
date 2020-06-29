@@ -265,7 +265,7 @@ namespace Azure.Iot.Hub.Service
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
@@ -296,7 +296,7 @@ namespace Azure.Iot.Hub.Service
                                 ? ExportImportDeviceStatus.Disabled
                                 : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
@@ -319,7 +319,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Id = x.DeviceId,
                     ETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.Delete
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
@@ -344,7 +344,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Id = x.DeviceId,
                     ETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.Delete
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
@@ -505,7 +505,7 @@ namespace Azure.Iot.Hub.Service
                     Tags = x.Tags,
                     Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
@@ -530,7 +530,7 @@ namespace Azure.Iot.Hub.Service
                     Tags = x.Tags,
                     Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.UnconditionalfMatch
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
                         ? ExportImportDeviceImportMode.UpdateTwin
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 });

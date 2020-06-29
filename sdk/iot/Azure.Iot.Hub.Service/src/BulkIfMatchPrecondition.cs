@@ -11,7 +11,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Perform this operation regardless of if the provided resource's ETag matches the service's ETag.
         /// </summary>
-        UnconditionalfMatch,
+        Unconditional,
 
         /// <summary>
         /// Perform this operation only if the resource exists in the service, and the provided resource's ETag
