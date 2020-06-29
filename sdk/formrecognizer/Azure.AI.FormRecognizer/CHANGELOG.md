@@ -3,6 +3,7 @@
 ## 1.0.0-preview.4 (Unreleased)
 
 ### Renames
+
 - Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
 - Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
 - Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.

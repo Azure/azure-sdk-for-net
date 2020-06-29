@@ -19,7 +19,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 ## Recognize receipts from a URI
 
-To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method. The returned value is a collection of `RecognizedReceipt` objects -- one for each page in the submitted document.
+To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
 RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
@@ -105,7 +105,7 @@ foreach (RecognizedForm receipt in receipts)
 
 ## Recognize receipts from a given file
 
-To recognize receipts from a given file, use the `StartRecognizeReceipts` method. The returned value is a collection of `RecognizedReceipt` objects -- one for each page in the submitted document.
+To recognize receipts from a given file, use the `StartRecognizeReceipts` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeReceiptFromFile
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
