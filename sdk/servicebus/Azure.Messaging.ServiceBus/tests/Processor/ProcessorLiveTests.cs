@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var message = args.Message;
                         if (!autoComplete)
                         {
-                            await args.CompleteAsync(message, args.CancellationToken);
+                            await args.CompleteMessageAsync(message, args.CancellationToken);
                         }
                         Interlocked.Increment(ref messageCt);
                     }
@@ -134,16 +134,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         switch (numThreads)
                         {
                             case 1:
-                                await args.CompleteAsync(message, args.CancellationToken);
+                                await args.CompleteMessageAsync(message, args.CancellationToken);
                                 break;
                             case 5:
-                                await args.AbandonAsync(message);
+                                await args.AbandonMessageAsync(message);
                                 break;
                             case 10:
-                                await args.DeadLetterAsync(message);
+                                await args.DeadLetterMessageAsync(message);
                                 break;
                             case 20:
-                                await args.DeferAsync(message);
+                                await args.DeferMessageAsync(message);
                                 break;
                         }
                         Interlocked.Increment(ref messageCt);
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var lockedUntil = message.LockedUntil;
                         await Task.Delay(lockDuration);
                         Assert.That(message.LockedUntil > lockedUntil, $"{lockedUntil},{DateTime.UtcNow}");
-                        await args.CompleteAsync(message, args.CancellationToken);
+                        await args.CompleteMessageAsync(message, args.CancellationToken);
                         Interlocked.Increment(ref messageCt);
                     }
                     finally
@@ -286,7 +286,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
                         Assert.That(
-                            async () => await args.CompleteAsync(message, args.CancellationToken),
+                            async () => await args.CompleteMessageAsync(message, args.CancellationToken),
                             Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageLockLost));
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
@@ -514,19 +514,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     switch (settleMethod)
                     {
                         case "Abandon":
-                            await args.AbandonAsync(args.Message);
+                            await args.AbandonMessageAsync(args.Message);
                             break;
                         case "Complete":
-                            await args.CompleteAsync(args.Message);
+                            await args.CompleteMessageAsync(args.Message);
                             break;
                         case "Defer":
-                            await args.DeferAsync(args.Message);
+                            await args.DeferMessageAsync(args.Message);
                             break;
                         case "Deadletter":
-                            await args.DeadLetterAsync(args.Message);
+                            await args.DeadLetterMessageAsync(args.Message);
                             break;
                         case "DeadletterOverload":
-                            await args.DeadLetterAsync(args.Message, "reason");
+                            await args.DeadLetterMessageAsync(args.Message, "reason");
                             break;
                     }
                     throw new TestException();
