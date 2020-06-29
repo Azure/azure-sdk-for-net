@@ -268,7 +268,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.UploadAsync(stream),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
