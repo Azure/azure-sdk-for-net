@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
+        /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
+        /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
