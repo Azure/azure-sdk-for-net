@@ -32,6 +32,9 @@ namespace Azure.Iot.Hub.Service.Samples
 
             // Run the samples
             var moduleIdentityLifecycleSamples = new ModuleIdentityLifecycleSamples(hubClient);
+            var deviceIdentityLifecycleSamples = new DeviceIdentityLifecycleSamples(hubClient);
+
+            await deviceIdentityLifecycleSamples.RunSampleAsync();
             await moduleIdentityLifecycleSamples.RunSampleAsync();
         }
     }

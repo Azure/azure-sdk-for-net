@@ -22,6 +22,8 @@ namespace Azure.Iot.Hub.Service.Samples
 
         public async Task RunSampleAsync()
         {
+            SampleLogger.PrintHeader("RUNNING MODULE IDENTITY LIFECYCLE SAMPLES");
+
             string deviceId = $"device{Random.Next(MaxRandomValue)}";
             string moduleId = $"module{Random.Next(MaxRandomValue)}";
 
