@@ -44,7 +44,7 @@ namespace Azure.Iot.Hub.Service
         /// Create or update a device identity.
         /// </summary>
         /// <param name="deviceIdentity">the device identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(
@@ -61,7 +61,7 @@ namespace Azure.Iot.Hub.Service
         /// Create or update a device identity.
         /// </summary>
         /// <param name="deviceIdentity">the device identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<DeviceIdentity> CreateOrUpdateIdentity(
