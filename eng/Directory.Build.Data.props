@@ -35,10 +35,6 @@
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-  </PropertyGroup>
-
   <PropertyGroup>
     <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
@@ -51,6 +47,10 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
