@@ -43,8 +43,8 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create or update a device identity.
         /// </summary>
-        /// <param name="deviceIdentity">the device identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.</param>
+        /// <param name="deviceIdentity">the device identity to create or update.</param>
+        /// <param name="precondition">The condition on which to perform this operation. In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(
@@ -60,8 +60,8 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create or update a device identity.
         /// </summary>
-        /// <param name="deviceIdentity">the device identity to create.</param>
-        /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.IfMatch"/>.</param>
+        /// <param name="deviceIdentity">the device identity to create or update.</param>
+        /// <param name="precondition">The condition on which to perform this operation. In case of update, if no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<DeviceIdentity> CreateOrUpdateIdentity(
@@ -99,7 +99,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Delete a single device identity.
         /// </summary>
-        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
+        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>."/>.</param>
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
