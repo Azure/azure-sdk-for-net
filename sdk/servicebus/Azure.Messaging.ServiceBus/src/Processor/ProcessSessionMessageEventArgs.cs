@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task AbandonAsync(
+        public async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task CompleteAsync(
+        public async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus
         /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
-        public async Task DeadLetterAsync(
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus
         /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
-        public async Task DeadLetterAsync(
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task DeferAsync(
+        public async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
