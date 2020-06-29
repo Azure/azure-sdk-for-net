@@ -836,13 +836,10 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("my cool directory")]
         [TestCase("directory")]
-        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
-        // so we can't pass connection string validation
         public async Task GetDirectoryClient_SpecialCharacters(string directoryName)
         {
             // Arrange

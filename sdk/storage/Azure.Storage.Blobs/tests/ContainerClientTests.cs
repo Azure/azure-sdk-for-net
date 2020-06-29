@@ -2199,9 +2199,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly]
-        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
-        // so we can't pass connection string validation
         [TestCase("!*'();[]:@&%=+$,/?#äÄöÖüÜß")]
         [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
         [TestCase("my cool blob")]
@@ -2256,9 +2253,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
         [TestCase("my cool blob")]
         [TestCase("blob")]
-        [LiveOnly]
-        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
-        // so we can't pass connection string validation
         public async Task GetBlobClients_SpecialCharacters(string blobName)
         {
             // Arrange

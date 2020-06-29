@@ -63,9 +63,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
-        // so we can't pass connection string validation"
-        [LiveOnly]
         public async Task Ctor_ConnectionStringEscapeBlobName()
         {
             // Arrange
