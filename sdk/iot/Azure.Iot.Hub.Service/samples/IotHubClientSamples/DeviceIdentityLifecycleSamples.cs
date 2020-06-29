@@ -24,7 +24,10 @@ namespace Azure.Iot.Hub.Service.Samples
 
         public async Task RunSampleAsync()
         {
+            // Run lifecycle samples that interact with a single device identity.
             await RunSingleDeviceLifecycleSamplesAsync();
+
+            // Run lifecycle samples that interact with multiple device identities in bulk.
             await RunBulkDeviceLifecycleSamplesAsync();
         }
 
@@ -56,6 +59,9 @@ namespace Azure.Iot.Hub.Service.Samples
             await DeleteDeviceIdentityAsync(deviceId);
         }
 
+        /// <summary>
+        /// Go through lifecycle of multiple device identities using bulk operations.
+        /// </summary>
         public async Task RunBulkDeviceLifecycleSamplesAsync()
         {
             SampleLogger.PrintHeader("RUNNING BULK DEVICE IDENTITY LIFECYCLE SAMPLES");
@@ -63,8 +69,10 @@ namespace Azure.Iot.Hub.Service.Samples
 
             IEnumerable<DeviceIdentity> listOfDevices = BuildMultipleDevices(devicesPrefix, BULK_DEVICE_COUNT);
             
-            // Create device identities in a single bulk operation.
+            // Create device identities using bulk operations.
             await CreateDevicesInBulkAsync(listOfDevices);
+
+            // Delete device identities using bulk operations.
             await DeleteDevicesInBulkAsync(listOfDevices);
         }
 
@@ -250,6 +258,11 @@ namespace Azure.Iot.Hub.Service.Samples
                 SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
         }
+
+        /// <summary>
+        /// Creates multiple device identities in a single bulk operation.
+        /// </summary>
+        /// <param name="listOfDevices">List of device identities to create.</param>
         public async Task CreateDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
         {
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITIES IN BULK");
@@ -280,6 +293,10 @@ namespace Azure.Iot.Hub.Service.Samples
             }
         }
 
+        /// <summary>
+        /// Deletes multiple device identities in a single bulk operation.
+        /// </summary>
+        /// <param name="listOfDevices">List of device identities to delete.</param>
         public async Task DeleteDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
         {
             SampleLogger.PrintHeader("DELETE DEVICE IDENTITIES IN BULK");
