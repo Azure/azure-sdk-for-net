@@ -32,6 +32,11 @@ namespace Azure.Storage.Blobs
         private readonly bool _isIPStyleUri;
 
         /// <summary>
+        /// Whether the Uri is an emulator-style Uri (i.e. it is an IP Uri or the domain does not include Constants.Blob.UriSubdomain).
+        /// </summary>
+        private readonly bool _isEmulatorStyleUri;
+
+        /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
         /// </summary>
@@ -173,9 +178,15 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                if (uri.IsHostIPEndPointStyle())
+                _isIPStyleUri = uri.IsHostIPEndPointStyle();
+                _isEmulatorStyleUri = (_isIPStyleUri || (
+                        !uri.Host.Contains(Constants.Blob.UriSubDomain) &&
+                        !uri.Host.Contains(Constants.File.UriSubDomain) && // Ensure host is not for wrong service
+                        !uri.Host.Contains(Constants.Queue.UriSubDomain) && // Ensure host is not for wrong service
+                        !uri.Host.EndsWith(".", StringComparison.InvariantCulture) // Ensure host is not "<account>."
+                ));
+                if (_isEmulatorStyleUri)
                 {
-                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
@@ -278,7 +289,7 @@ namespace Azure.Storage.Blobs
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isEmulatorStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
