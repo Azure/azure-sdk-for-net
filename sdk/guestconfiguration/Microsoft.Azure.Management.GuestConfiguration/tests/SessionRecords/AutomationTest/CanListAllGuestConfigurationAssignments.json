@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2018-11-20",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2020-06-25",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HZVdpbjIwMjAwNTA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzP2FwaS12ZXJzaW9uPTIwMTgtMTEtMjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
