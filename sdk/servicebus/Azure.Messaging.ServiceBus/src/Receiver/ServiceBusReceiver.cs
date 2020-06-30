@@ -231,8 +231,10 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Receive messages as an asynchronous enumerable. Messages will be received from the queue as
-        /// the IAsyncEnumerable is iterated.
+        /// Receives messages as an asynchronous enumerable from the entity using <see cref="ReceiveMode"/> mode.
+        /// <see cref="ReceiveMode"/> defaults to PeekLock mode. Messages will be received from the entity as
+        /// the IAsyncEnumerable is iterated. If no messages are available, this method will continue polling
+        /// until methods are available, i.e. it will never return null.
         /// </summary>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
