@@ -183,7 +183,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
-        public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
            int maxMessages,
            TimeSpan? maxWaitTime = default,
            CancellationToken cancellationToken = default)
@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus
                 requestedMessageCount: maxMessages);
             scope.Start();
 
-            IList<ServiceBusReceivedMessage> messages = null;
+            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
 
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.Messaging.ServiceBus
             return null;
         }
 
-        private async Task ApplyPlugins(IList<ServiceBusReceivedMessage> messages)
+        private async Task ApplyPlugins(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             foreach (ServiceBusPlugin plugin in _plugins)
             {
@@ -321,8 +321,8 @@ namespace Azure.Messaging.ServiceBus
         /// Also, unlike <see cref="ReceiveMessageAsync(TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
         /// </remarks>
         ///
-        /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
-        public virtual async Task<IList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+        /// <returns>An <see cref="IReadOnlyList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             int maxMessages,
             long? fromSequenceNumber = default,
             CancellationToken cancellationToken = default) =>
@@ -338,7 +338,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages">The maximum number of messages that will be fetched.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
-        private async Task<IList<ServiceBusReceivedMessage>> PeekMessagesInternalAsync(
+        private async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesInternalAsync(
             long? sequenceNumber,
             int maxMessages,
             CancellationToken cancellationToken)
@@ -351,7 +351,7 @@ namespace Azure.Messaging.ServiceBus
                 requestedMessageCount: maxMessages);
             scope.Start();
 
-            IList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
+            IReadOnlyList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
             try
             {
                 messages = await InnerReceiver.PeekMessagesAsync(
@@ -812,7 +812,7 @@ namespace Azure.Messaging.ServiceBus
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         /// <seealso cref="DeferMessageAsync(string, IDictionary{string, object}, CancellationToken)"/>
-        public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
@@ -828,7 +828,7 @@ namespace Azure.Messaging.ServiceBus
                 string.Join(",", sequenceNumbers));
             scope.Start();
 
-            IList<ServiceBusReceivedMessage> deferredMessages = null;
+            IReadOnlyList<ServiceBusReceivedMessage> deferredMessages = null;
             try
             {
                 deferredMessages = await InnerReceiver.ReceiveDeferredMessagesAsync(
