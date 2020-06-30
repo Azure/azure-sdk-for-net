@@ -12,13 +12,13 @@ parameters:
 steps:
   - task: Powershell@2
     inputs:
-      filePath: /eng/common/scripts/Verify-ChangeLog.ps1
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLog.ps1
       arguments: >
         -PackageName ${{ parameters.PackageName }}
         -ServiceName ${{ parameters.ServiceName }}
         -RepoRoot $(Build.SourcesDirectory)
         -RepoName $(Build.Repository.Name)
-        -ForRelease ${{ parameters.ForRelease }}
+        -ForRelease $${{ parameters.ForRelease }}
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLog / Release Notes

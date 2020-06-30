@@ -19,4 +19,4 @@ if ([System.String]::IsNullOrEmpty($Language))
 }
 
 $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceName $ServiceName -Language $Language -RepoRoot $RepoRoot
-Confirm-ChangeLog -ChangeLogLocation $PackageProp.pkgChangeLogPath -VersionString $PackageProp.pkgReadMePath -ForRelease $ForRelease
+Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.pkgChangeLogPath -VersionString $PackageProp.pkgVersion -ForRelease $ForRelease
