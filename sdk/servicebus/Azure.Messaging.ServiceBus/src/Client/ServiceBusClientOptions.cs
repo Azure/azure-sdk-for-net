@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus
         /// incoming/outgoing messages.
         /// </summary>
         /// <param name="plugin">The plugin instance to register.</param>
-        public void AddPlugin(ServiceBusPlugin plugin)
+        internal void AddPlugin(ServiceBusPlugin plugin)
         {
             Argument.AssertNotNull(plugin, nameof(plugin));
             Plugins.Add(plugin);

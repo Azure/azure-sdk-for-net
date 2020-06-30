@@ -2,6 +2,9 @@
 
 ## 1.1.0-preview.1 (Unreleased)
 
+
+## 1.0.1 (2020-06-23)
+
 ### Fixes
 - The document confidence scores for analyze sentiment now contains the values the Text Analytics service returns ([12889](https://github.com/Azure/azure-sdk-for-net/issues/12889)).
 - `TextAnalyticsErrorCode` casing is now pascal case instead of camel case ([12888](https://github.com/Azure/azure-sdk-for-net/issues/12888)).

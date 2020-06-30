@@ -1,7 +1,16 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 11.0.0-preview.5 (Unreleased)
 
+### Changed
+
+- Changed version to 11.0.0.
+- Removed preview version `SearchClientOptions.ServiceVersion.V2019_05_06_Preview`
+  and added version `SearchClientOptions.ServiceVersion.V2020_06_30`.
+
+### Removed
+
+- Removed `SearchServiceCounters.SkillsetCounter`.
 
 ## 1.0.0-preview.4 (2020-06-09)
 
@@ -26,7 +35,6 @@
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
 - `SearchClient.IndexDocuments` now throws an `AggregateException` wrapping all the `RequestFailedException`s in the batch.
 - Removed `dynamic` support from `SearchDocument` for the time being.
-
 
 ## 1.0.0-preview.3 (2020-05-05)
 

@@ -16,10 +16,10 @@ parameters:
 steps:
 - pwsh: |
     git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
-    
+
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-    
+
       Write-Host "git checkout smoke-test"
       git checkout smoke-test
     } finally {
@@ -33,14 +33,14 @@ steps:
   inputs:
     targetType: filePath
     filePath: ${{ parameters.ScriptDirectory }}/update-docs-metadata.ps1
-    arguments: > 
-      -ArtifactLocation ${{parameters.ArtifactLocation}} 
-      -Repository ${{parameters.PackageRepository}} 
-      -ReleaseSHA ${{parameters.ReleaseSha}} 
-      -RepoId ${{parameters.RepoId}} 
-      -WorkDirectory '${{parameters.WorkingDirectory}}' 
-      -DocRepoLocation "${{parameters.WorkingDirectory}}/repo" 
-      -Language "${{parameters.Language}}" 
+    arguments: >
+      -ArtifactLocation ${{ parameters.ArtifactLocation }}
+      -Repository ${{ parameters.PackageRepository }}
+      -ReleaseSHA ${{ parameters.ReleaseSha }}
+      -RepoId ${{ parameters.RepoId }}
+      -WorkDirectory "${{ parameters.WorkingDirectory }}"
+      -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
+      -Language "${{parameters.Language}}"
       -DocRepoContentLocation ${{ parameters.DocRepoDestinationPath }}
     pwsh: true
   env:
@@ -54,5 +54,5 @@ steps:
     CommitMsg: "Update readme content for ${{ parameters.ArtifactName }}"
     PRTitle: "Docs.MS Readme Update."
     BaseBranchName: smoke-test
-    WorkingDirectory: ${{parameters.WorkingDirectory}}/repo
-    ScriptDirectory: ${{parameters.WorkingDirectory}}/${{parameters.ScriptDirectory}}
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+    ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}

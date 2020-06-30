@@ -13,16 +13,16 @@ namespace Azure.AI.FormRecognizer.Training
         internal CustomFormModelInfo(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
-            RequestedOn = modelInfo.CreatedDateTime;
-            CompletedOn = modelInfo.LastUpdatedDateTime;
+            TrainingStartedOn = modelInfo.CreatedDateTime;
+            TrainingCompletedOn = modelInfo.LastUpdatedDateTime;
             Status = modelInfo.Status;
         }
 
-        internal CustomFormModelInfo(string modelId, DateTimeOffset requestedOn, DateTimeOffset completedOn, CustomFormModelStatus status)
+        internal CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status)
         {
             ModelId = modelId;
-            RequestedOn = requestedOn;
-            CompletedOn = completedOn;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
             Status = status;
         }
 
@@ -37,13 +37,13 @@ namespace Azure.AI.FormRecognizer.Training
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the training model request started.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
-        public DateTimeOffset RequestedOn { get; }
+        public DateTimeOffset TrainingStartedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTimeOffset CompletedOn { get; }
+        public DateTimeOffset TrainingCompletedOn { get; }
     }
 }

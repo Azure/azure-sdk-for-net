@@ -37,9 +37,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroupName = "$Default";
 
-        /// <summary>The size of event batch requested by the background publishing operation used for subscriptions.</summary>
-        private const int BackgroundPublishReceiveBatchSize = 50;
-
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
@@ -391,8 +388,10 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             try
             {
-                eventChannel = CreateEventChannel((BackgroundPublishReceiveBatchSize * 4));
-                cancelPublishingAsync = await PublishPartitionEventsToChannelAsync(partitionId, startingPosition, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, eventChannel, cancellationSource).ConfigureAwait(false);
+                var channelSize = options.CacheEventCount * 4L;
+
+                eventChannel = CreateEventChannel((int)Math.Min(channelSize, int.MaxValue));
+                cancelPublishingAsync = await PublishPartitionEventsToChannelAsync(partitionId, startingPosition, options.TrackLastEnqueuedEventProperties, options.CacheEventCount, options.OwnerLevel, (uint)options.PrefetchCount, eventChannel, cancellationSource).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -538,7 +537,9 @@ namespace Azure.Messaging.EventHubs.Consumer
                 // Determine the partitions for the Event Hub and create the shared channel.
 
                 var partitions = await GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
-                eventChannel = CreateEventChannel((BackgroundPublishReceiveBatchSize * partitions.Length * 2));
+
+                var channelSize = options.CacheEventCount * partitions.Length * 2L;
+                eventChannel = CreateEventChannel((int)Math.Min(channelSize, int.MaxValue));
 
                 // Start publishing for all partitions.
 
@@ -546,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                 for (var index = 0; index < partitions.Length; ++index)
                 {
-                    publishingTasks[index] = PublishPartitionEventsToChannelAsync(partitions[index], startingPosition, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, eventChannel, cancellationSource);
+                    publishingTasks[index] = PublishPartitionEventsToChannelAsync(partitions[index], startingPosition, options.TrackLastEnqueuedEventProperties, options.CacheEventCount, options.OwnerLevel, (uint)options.PrefetchCount, eventChannel, cancellationSource);
                 }
 
                 // Capture the callbacks to cancel publishing for all events.
@@ -712,7 +713,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="partitionId">The identifier of the partition from which events should be read.</param>
         /// <param name="startingPosition">The position within the partition's event stream that reading should begin from.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="receiveBatchSize">The batch size to use when receiving events.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="prefetchCount">The count of events requested eagerly and queued without regard to whether a read was requested.</param>
         /// <param name="channel">The channel to which events should be published.</param>
         /// <param name="publishingCancellationSource">A cancellation source which can be used for signaling publication to stop.</param>
         ///
@@ -726,7 +729,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         private async Task<Func<Task>> PublishPartitionEventsToChannelAsync(string partitionId,
                                                                             EventPosition startingPosition,
                                                                             bool trackLastEnqueuedEventProperties,
+                                                                            int receiveBatchSize,
                                                                             long? ownerLevel,
+                                                                            uint prefetchCount,
                                                                             Channel<PartitionEvent> channel,
                                                                             CancellationTokenSource publishingCancellationSource)
         {
@@ -788,7 +793,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel);
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {
@@ -815,6 +820,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                     transportConsumer,
                     channel,
                     new PartitionContext(partitionId, transportConsumer),
+                    receiveBatchSize,
                     exceptionCallback,
                     publishingCancellationSource.Token
                 );
@@ -838,6 +844,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="transportConsumer">The consumer to use for receiving events.</param>
         /// <param name="channel">The channel to which received events should be published.</param>
         /// <param name="partitionContext">The context that represents the partition from which events being received.</param>
+        /// <param name="receiveBatchSize">The batch size to use when receiving events.</param>
         /// <param name="notifyException">An action to be invoked when an exception is encountered during publishing.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to signal the request to cancel the background publishing.</param>
         ///
@@ -846,6 +853,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private Task StartBackgroundChannelPublishingAsync(TransportConsumer transportConsumer,
                                                            Channel<PartitionEvent> channel,
                                                            PartitionContext partitionContext,
+                                                           int receiveBatchSize,
                                                            Action<Exception> notifyException,
                                                            CancellationToken cancellationToken) =>
             Task.Run(async () =>
@@ -865,7 +873,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                         if (receivedItems == default)
                         {
-                            receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
+                            receivedItems = await transportConsumer.ReceiveAsync(receiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
                         }
 
                         foreach (EventData item in receivedItems)

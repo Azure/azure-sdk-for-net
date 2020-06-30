@@ -32,11 +32,11 @@ namespace Azure.Messaging.ServiceBus
         internal ProcessMessageEventArgs() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusReceivedMessage Message { get { throw null; } }
-        public System.Threading.Tasks.Task AbandonAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task CompleteAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeadLetterAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeadLetterAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeferAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeferMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ProcessSessionEventArgs : System.EventArgs
     {
@@ -54,11 +54,11 @@ namespace Azure.Messaging.ServiceBus
         public Azure.Messaging.ServiceBus.ServiceBusReceivedMessage Message { get { throw null; } }
         public string SessionId { get { throw null; } }
         public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
-        public System.Threading.Tasks.Task AbandonAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task CompleteAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeadLetterAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeadLetterAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task DeferAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task DeferMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<byte[]> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SetSessionStateAsync(byte[] sessionState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -101,7 +101,6 @@ namespace Azure.Messaging.ServiceBus
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
-        public void AddPlugin(Azure.Messaging.ServiceBus.Plugins.ServiceBusPlugin plugin) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -776,29 +775,6 @@ namespace Azure.Messaging.ServiceBus.Management
         public static bool operator ==(Azure.Messaging.ServiceBus.Management.TrueRuleFilter left, Azure.Messaging.ServiceBus.Management.TrueRuleFilter right) { throw null; }
         public static bool operator !=(Azure.Messaging.ServiceBus.Management.TrueRuleFilter left, Azure.Messaging.ServiceBus.Management.TrueRuleFilter right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Messaging.ServiceBus.Plugins
-{
-    public abstract partial class ServiceBusPlugin
-    {
-        protected ServiceBusPlugin() { }
-        public virtual System.Threading.Tasks.ValueTask AfterMessageReceiveAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask BeforeMessageSendAsync(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
-        protected void SetBody(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Azure.Core.BinaryData body) { }
-        protected void SetContentType(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string contentType) { }
-        protected void SetCorrelationId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string correlationId) { }
-        protected void SetLabel(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string label) { }
-        protected void SetMessageId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string messageId) { }
-        protected void SetPartitionKey(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string partitionKey) { }
-        protected void SetReplyTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyTo) { }
-        protected void SetReplyToSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string replyToSessionId) { }
-        protected void SetScheduledEnqueueTime(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.DateTimeOffset scheduledEnqueueTime) { }
-        protected void SetSessionId(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string sessionId) { }
-        protected void SetTimeToLive(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.TimeSpan timeToLive) { }
-        protected void SetTo(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string to) { }
-        protected void SetUserProperty(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string key, object value) { }
-        protected void SetViaPartitionKey(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string viaPartitionKey) { }
     }
 }
 namespace Microsoft.Extensions.Azure

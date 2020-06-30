@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(instanceIds));
             }
 
-            InstanceIds = instanceIds.ToArray();
+            InstanceIds = instanceIds.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMInstanceRequiredIDs. </summary>

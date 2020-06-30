@@ -10,8 +10,6 @@ param (
   $UploadLatest=1
 )
 
-Write-Host "> $PSCommandPath $args"
-
 $Language = $Language.ToLower()
 
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string

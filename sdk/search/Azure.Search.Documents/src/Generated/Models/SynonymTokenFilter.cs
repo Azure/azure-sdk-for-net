@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(synonyms));
             }
 
-            Synonyms = synonyms.ToArray();
+            Synonyms = synonyms.ToList();
             ODataType = "#Microsoft.Azure.Search.SynonymTokenFilter";
         }
 

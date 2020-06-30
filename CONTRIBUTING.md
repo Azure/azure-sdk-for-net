@@ -11,6 +11,7 @@
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
 - Install **.NET Core 3.1.101 SDK** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
+- Install [NodeJS](https://nodejs.org/en/) (13.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 

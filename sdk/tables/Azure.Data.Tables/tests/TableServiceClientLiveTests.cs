@@ -122,6 +122,16 @@ namespace Azure.Data.Tables.Tests
             CompareTableServiceProperties(responseToChange, changedResponse);
         }
 
+        [Test]
+        public async Task GetTableServiceStatsReturnsStats()
+        {
+            // Get statistics
+            TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);
+
+            // Test that the secondary location is live
+            Assert.AreEqual(new GeoReplicationStatusType("live"), stats.GeoReplication.Status);
+        }
+
         private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
         {
             Assert.AreEqual(expected.Logging.Read, actual.Logging.Read);

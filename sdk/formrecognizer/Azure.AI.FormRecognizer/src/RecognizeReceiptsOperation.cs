@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing values from receipts.
     /// </summary>
-    public class RecognizeReceiptsOperation : Operation<RecognizedReceiptCollection>
+    public class RecognizeReceiptsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceRestClient _serviceClient;
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private RecognizedReceiptCollection _value;
+        private RecognizedFormCollection _value;
 
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override RecognizedReceiptCollection Value
+        public override RecognizedFormCollection Value
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizedReceiptCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override ValueTask<Response<RecognizedReceiptCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
+                    _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                     _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
@@ -192,14 +192,14 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedReceiptCollection ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
         {
-            List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
+            List<RecognizedForm> receipts = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
+                receipts.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
-            return new RecognizedReceiptCollection(receipts);
+            return new RecognizedFormCollection(receipts);
         }
     }
 }
