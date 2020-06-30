@@ -175,6 +175,15 @@ that you can [import into your own index from the Azure portal.](https://docs.mi
 These are just a few of the basics - please [check out our Samples][samples] for
 much more.
 
+* [Querying](#querying)
+  * [Use C# types for search results](#use-c-types-for-search-results)
+  * [Use `SearchDocument` like a dictionary for search results](#use-searchdocument-like-a-dictionary-for-search-results)
+  * [SearchOptions](#searchoptions)
+* [Creating an index](#creating-an-index)
+* [Adding documents to your index](#adding-documents-to-your-index)
+* [Retrieving a specific document from your index](#retrieving-a-specific-document-from-your-index)
+* [Async APIs](#async-apis)
+
 ### Querying
 
 Let's start by importing our namespaces.
@@ -201,7 +210,7 @@ SearchClient client = new SearchClient(endpoint, indexName, credential);
 There are two ways to interact with the data returned from a search query.
 Let's explore them with a search for a "luxury" hotel.
 
-#### Use C# types for Search Results
+#### Use C# types for search results
 
 We can decorate our own C# types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
 
@@ -230,7 +239,7 @@ foreach (SearchResult<Hotel> result in response.GetResults())
 If you're working with a search index and know the schema, creating C# types
 is recommended.
 
-#### Use `SearchDocument` like a dictionary for Search Results
+#### Use `SearchDocument` like a dictionary for search results
 
 If you don't have your own type for search results, `SearchDocument` can be
 used instead.  Here we perform the search, enumerate over the results, and
