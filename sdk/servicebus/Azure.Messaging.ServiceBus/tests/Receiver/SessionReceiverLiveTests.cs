@@ -831,9 +831,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(5));
                         try
                         {
+                            await Task.Delay(TimeSpan.FromSeconds(5), cts.Token);
                             await receiver.RenewSessionLockAsync(cts.Token);
                         }
                         catch (TaskCanceledException) { }
