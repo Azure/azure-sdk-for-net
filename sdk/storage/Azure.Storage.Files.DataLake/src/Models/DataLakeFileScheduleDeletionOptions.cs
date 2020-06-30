@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Parameters for Schedule Deletion.
     /// </summary>
-    public class DataLakeFileScheduleDeletionOptions
+    internal class DataLakeFileScheduleDeletionOptions
     {
         /// <summary>
         /// Duration before file should be deleted.
