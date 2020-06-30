@@ -1,5 +1,8 @@
 # Release History
 
+## 2.1.0-preview.1 (Unreleased)
+
+
 ## 2.0.0 (unreleased)
 ### Changed
 - Updated CustomVisionPredictionClient to take in a credentials class for use with different types of authentication credentials. The client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
