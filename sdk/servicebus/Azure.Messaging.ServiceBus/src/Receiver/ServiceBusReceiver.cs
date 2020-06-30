@@ -194,6 +194,10 @@ namespace Azure.Messaging.ServiceBus
             {
                 Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
             }
+            if (PrefetchCount > 0 && maxMessages > PrefetchCount)
+            {
+                Logger.MaxMessagesExceedsPrefetch(Identifier, PrefetchCount, maxMessages);
+            }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ReceiveMessageStart(Identifier, maxMessages);

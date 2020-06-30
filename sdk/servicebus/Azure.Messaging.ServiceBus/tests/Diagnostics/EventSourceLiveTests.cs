@@ -106,6 +106,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeStartEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeCompleteEvent, e => e.Payload.Contains(nameof(ServiceBusReceiver)) && e.Payload.Contains(receiver.Identifier));
 
+                Assert.IsFalse(_listener.EventsById(ServiceBusEventSource.MaxMessagesExceedsPrefetchEvent).Any());
+                receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { PrefetchCount = 10 });
+                await receiver.ReceiveMessagesAsync(20, TimeSpan.FromSeconds(1));
+                _listener.SingleEventById(ServiceBusEventSource.MaxMessagesExceedsPrefetchEvent, e => e.Payload.Contains(receiver.Identifier));
+
                 await sender.DisposeAsync();
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeStartEvent, e => e.Payload.Contains(nameof(ServiceBusSender)) && e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeCompleteEvent, e => e.Payload.Contains(nameof(ServiceBusSender)) && e.Payload.Contains(sender.Identifier));
