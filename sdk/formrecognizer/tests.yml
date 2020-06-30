@@ -19,11 +19,13 @@ extends:
         ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.us'; location = 'usgovvirginia' }"
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
-
+      
       # AzureChinaCloud
-      - ServiceDirectory: formrecognizer
-        ScenarioName: AzureChinaCloud
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn'; location = 'chinaeast2' }"
-        EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+      # According to https://azure.microsoft.com/en-us/global-infrastructure/services/?products=cognitive-services&regions=china-non-regional,china-north,china-north-2,china-east,china-east-2
+      # Formrecognizer is not available in China cloud currently.
+      #- ServiceDirectory: formrecognizer
+      #  ScenarioName: AzureChinaCloud
+      #  SubscriptionConfiguration: $(sub-config-cn-test-resources)
+      #  ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.cn'; location = 'chinaeast2' }"
+      #  EnvVars:
+      #    AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
