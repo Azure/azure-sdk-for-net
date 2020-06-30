@@ -11,7 +11,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are VM model change to add a property related to in-guest VM patching, adding Disallowed property to VirtualMachineImage, adding SecurityProfile for supporting the Host Encryption in VM/VMSS, adding RetrieveBootDiagnosticsData API for VM and VMSS, adding AccessPatches API, adding ExtensionsTimeBudget property to VM and VMSS, and update of dedicated host group automatic placement.
+        This is a public release of the Azure Compute SDK. Included with this release are VM model change to add a property related to in-guest VM patching, adding Disallowed property to VirtualMachineImage, adding SecurityProfile for supporting the Host Encryption in VM/VMSS, adding RetrieveBootDiagnosticsData API for VM and VMSS, adding AccessPatches API, adding ExtensionsTimeBudget property to VM and VMSS, updating dedicated host group automatic placement, and adding EncryptionType to DiskEncryptionSetUpdateProperties.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
