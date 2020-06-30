@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
@@ -131,6 +132,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task ReceiveIterator()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCount = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var messages = GetMessages(messageCount);
+                var secondSet = GetMessages(messageCount);
+                await sender.SendMessagesAsync(messages);
+                _ = Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(
+                    async _ => await sender.SendMessagesAsync(secondSet));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromMinutes(1));
+                messages.AddRange(secondSet);
+
+                int ct = 0;
+                try
+                {
+                    await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
+                    {
+                        Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
+                        await receiver.CompleteMessageAsync(msg.LockToken);
+                        ct++;
+                    }
+                }
+                catch (TaskCanceledException) { }
+                Assert.AreEqual(messageCount * 2, ct);
             }
         }
 
