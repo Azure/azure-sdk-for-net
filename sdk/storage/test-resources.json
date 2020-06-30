@@ -5,6 +5,13 @@
         "baseName": {
             "type": "String"
         },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
@@ -23,6 +30,7 @@
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
+        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
         "encryption": {
             "services": {
@@ -138,7 +146,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "[variables('mgmtApiVersion')]",
+            "apiVersion": "[variables('keyvaultApiVersion')]",
             "name": "[variables('keyvaultName')]",
             "location": "[variables('location')]",
             "properties": {
@@ -146,8 +154,10 @@
                     "family": "A",
                     "name": "premium"
                 },
+                "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
                     {
+                        "tenantId": "[parameters('tenantId')]",
                         "objectId": "[parameters('testApplicationOid')]",
                         "permissions": {
                             "keys": [

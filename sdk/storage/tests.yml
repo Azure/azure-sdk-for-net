@@ -6,3 +6,4 @@ extends:
     ServiceDirectory: storage
     BuildInParallel: false
     TimeoutInMinutes: 300
+    Location: westus
