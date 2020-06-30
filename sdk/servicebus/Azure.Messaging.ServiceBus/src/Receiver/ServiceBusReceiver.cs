@@ -250,6 +250,9 @@ namespace Azure.Messaging.ServiceBus
                 }
                 yield return msg;
             }
+
+            // Surface the TCE to ensure deterministic behavior when cancelling.
+            throw new TaskCanceledException();
         }
 
         /// <summary>
