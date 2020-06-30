@@ -42,6 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13126")]
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
