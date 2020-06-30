@@ -73,6 +73,11 @@ namespace Azure.Iot.Hub.Service.Samples
             // Create device identities using bulk operations.
             await CreateDevicesInBulkAsync(listOfDevices);
 
+            // Update device identities using bulk operations.
+            await UpdateDevicesInBulkAsync(listOfDevices);
+
+            await GetDeviceTwinsAsync();
+
             // Delete device identities using bulk operations.
             await DeleteDevicesInBulkAsync(listOfDevices);
         }
@@ -293,6 +298,78 @@ namespace Azure.Iot.Hub.Service.Samples
                 throw;
             }
         }
+
+        /// <summary>
+        /// Updates multiple device identities in a single bulk operation.
+        /// </summary>
+        /// <param name="listOfDevices">List of device identities to update.</param>
+        public async Task UpdateDevicesInBulkAsync(IEnumerable<DeviceIdentity> listOfDevices)
+        {
+            SampleLogger.PrintHeader("UPDATE DEVICE IDENTITIES IN BULK");
+
+            try
+            {
+                Console.WriteLine($"Updating {listOfDevices.Count()} devices");
+
+                foreach(var device in listOfDevices)
+                {
+                    device.Status = DeviceStatus.Disabled;
+                }
+
+                Console.WriteLine($"Setting 'Status' property to '{DeviceStatus.Disabled}' on {listOfDevices.Count()} device identities");
+
+                // Since we did not get the list of devices from the service, we have to use UnconditionalIfMatch precondition to force the update.
+                Response<BulkRegistryOperationResponse> updateResponse = await IoTHubServiceClient.Devices.UpdateIdentitiesAsync(listOfDevices, BulkIfMatchPrecondition.Unconditional);
+
+                BulkRegistryOperationResponse operationResponse = updateResponse.Value;
+
+                if (operationResponse.IsSuccessful ?? false)
+                {
+                    SampleLogger.PrintSuccess($"Successfully updated {listOfDevices.Count()} devices.");
+                }
+                else
+                {
+                    // TODO:(azabbasi) Print all the errors and warnings (this cannot be tested due to an issue with the swagger document)
+                    // Refer to: https://msazure.visualstudio.com/One/_workitems/edit/7536750
+                    SampleLogger.PrintWarning($"Not all devices were created successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to update device identities in bulk due to:\n{ex}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all device twins in IoT Hub.
+        /// </summary>
+        public async Task GetDeviceTwinsAsync()
+        {
+            SampleLogger.PrintHeader("GET DEVICE TWINS");
+
+            try
+            {
+                // Since we did not get the list of devices from the service, we have to use UnconditionalIfMatch precondition to force the update.
+                AsyncPageable<TwinData> updateResponse = IoTHubServiceClient.Devices.GetTwinsAsync();
+
+                AsyncPageable<TwinData> twins = IoTHubServiceClient.Devices.GetTwinsAsync();
+
+                SampleLogger.PrintSuccess($"Successfully fetched all device twins");
+
+                // We will verify we have twins for all recently created devices.
+                await foreach (TwinData twin in twins)
+                {
+                    SampleLogger.PrintSuccess($"\t- Device Twin Id: '{twin.DeviceId}', ETag: '{twin.Etag}', Number of desired properties: {twin.Properties.Desired.Count}");
+                }
+            }
+            catch (Exception ex)
+            {
+                SampleLogger.FatalError($"Failed to get all device twins due to:\n{ex}");
+                throw;
+            }
+        }
+
 
         /// <summary>
         /// Deletes multiple device identities in a single bulk operation.
