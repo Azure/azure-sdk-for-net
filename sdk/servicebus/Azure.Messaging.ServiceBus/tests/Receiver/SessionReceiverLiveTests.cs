@@ -573,7 +573,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
-                IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
+                IReadOnlyList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
 
                 var messageList = messages.ToList();
                 Assert.AreEqual(messageList.Count, deferedMessages.Count);

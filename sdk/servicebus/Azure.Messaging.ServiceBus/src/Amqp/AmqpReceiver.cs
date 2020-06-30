@@ -204,12 +204,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
-        public override async Task<IList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+        public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
             CancellationToken cancellationToken)
         {
-            IList<ServiceBusReceivedMessage> messages = null;
+            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
             await _retryPolicy.RunOperation(async (timeout) =>
             {
                 messages = await ReceiveMessagesAsyncInternal(
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The list of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
         ///
-        private async Task<IList<ServiceBusReceivedMessage>> ReceiveMessagesAsyncInternal(
+        private async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsyncInternal(
             int maxMessages,
             TimeSpan? maxWaitTime,
             TimeSpan timeout,
@@ -793,14 +793,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Also, unlike <see cref="ReceiveMessagesAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns></returns>
-        public override async Task<IList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+        public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             long? sequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default)
         {
 
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
-            IList<ServiceBusReceivedMessage> messages = null;
+            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
 
             await _retryPolicy.RunOperation(
                 async (timeout) =>
@@ -824,7 +824,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<IList<ServiceBusReceivedMessage>> PeekMessagesInternalAsync(
+        private async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesInternalAsync(
             long sequenceNumber,
             int messageCount,
             TimeSpan timeout,
@@ -1140,11 +1140,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public override async Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IList<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            IList<ServiceBusReceivedMessage> messages = null;
+            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
             await _retryPolicy.RunOperation(
                 async (timeout) => messages = await ReceiveDeferredMessagesAsyncInternal(
                     sequenceNumbers.ToArray(),
@@ -1154,7 +1154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return messages;
         }
 
-        internal virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsyncInternal(
+        internal virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsyncInternal(
             long[] sequenceNumbers,
             TimeSpan timeout)
         {
