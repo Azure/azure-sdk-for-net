@@ -17,7 +17,7 @@ namespace Azure.Core.TestFramework
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
-        private static readonly string[] s_sanitizedHeaders = { "Authorization" };
+        public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
 
         public virtual string SanitizeUri(string uri)
         {
@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
 
         public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
-            foreach (var header in s_sanitizedHeaders)
+            foreach (var header in SanitizedHeaders)
             {
                 if (headers.ContainsKey(header))
                 {

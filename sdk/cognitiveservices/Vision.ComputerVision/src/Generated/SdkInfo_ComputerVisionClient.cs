@@ -19,31 +19,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImage", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageByDomain", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageByDomainInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "BatchReadFile", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "BatchReadFileInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "DescribeImage", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "DescribeImageInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjects", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjectsInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnail", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnailInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterest", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterestInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GetReadOperationResult", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "GetTextOperationResult", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "ListModels", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "RecognizePrintedText", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "RecognizePrintedTextInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "RecognizeText", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "RecognizeTextInStream", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "TagImage", "2.1"),
-                new Tuple<string, string, string>("ComputerVisionClient", "TagImageInStream", "2.1"),
+
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\threis\\src\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "496d55d8616e9f4172d3753459045b001762d39f";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

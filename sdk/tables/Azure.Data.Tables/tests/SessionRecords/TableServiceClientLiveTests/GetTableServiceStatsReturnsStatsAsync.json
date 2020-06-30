@@ -1,0 +1,118 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://algernon.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "33",
+        "Content-Type": "application/json; odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-fd84d000e7fb924380e74a1fa027351d-ee6f25be1a818140-00",
+        "User-Agent": [
+          "azsdk-net-Data.Tables/1.0.0-dev.20200626.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "d031a3d3d225457cd6b912f21dde3c68",
+        "x-ms-date": "Fri, 26 Jun 2020 22:26:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": {
+        "TableName": "testtableocizqdw9"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
+        "Date": "Fri, 26 Jun 2020 22:26:53 GMT",
+        "Location": "https://algernon.table.core.windows.net/Tables(\u0027testtableocizqdw9\u0027)",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d031a3d3d225457cd6b912f21dde3c68",
+        "x-ms-request-id": "3658a10d-8002-005c-5d08-4ccab5000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://algernon.table.core.windows.net/$metadata#Tables/@Element",
+        "odata.type": "algernon.Tables",
+        "odata.id": "https://algernon.table.core.windows.net/Tables(\u0027testtableocizqdw9\u0027)",
+        "odata.editLink": "Tables(\u0027testtableocizqdw9\u0027)",
+        "TableName": "testtableocizqdw9"
+      }
+    },
+    {
+      "RequestUri": "https://algernon-secondary.table.core.windows.net/?restype=service\u0026comp=stats",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-556829effc470040a2dee3d70cf162d8-457a20546f5fd54c-00",
+        "User-Agent": [
+          "azsdk-net-Data.Tables/1.0.0-dev.20200626.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "b8db4973504832b3bb38a539b01c4848",
+        "x-ms-date": "Fri, 26 Jun 2020 22:26:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Fri, 26 Jun 2020 22:26:54 GMT",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "b8db4973504832b3bb38a539b01c4848",
+        "x-ms-request-id": "32087942-1002-0013-2408-4cda86000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceStats\u003E\u003CGeoReplication\u003E\u003CStatus\u003Elive\u003C/Status\u003E\u003CLastSyncTime\u003EFri, 26 Jun 2020 22:25:13 GMT\u003C/LastSyncTime\u003E\u003C/GeoReplication\u003E\u003C/StorageServiceStats\u003E"
+    },
+    {
+      "RequestUri": "https://algernon.table.core.windows.net/Tables(\u0027testtableocizqdw9\u0027)",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-348d921e2ec78c41bae0ce1f57bcef5e-ad50c45d243bf445-00",
+        "User-Agent": [
+          "azsdk-net-Data.Tables/1.0.0-dev.20200626.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "29c502364d75d83d4b345a7babccd838",
+        "x-ms-date": "Fri, 26 Jun 2020 22:26:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 26 Jun 2020 22:26:54 GMT",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "29c502364d75d83d4b345a7babccd838",
+        "x-ms-request-id": "3658a115-8002-005c-6308-4ccab5000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "300920630",
+    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "",
+    "TABLES_STORAGE_ACCOUNT_NAME": "algernon"
+  }
+}

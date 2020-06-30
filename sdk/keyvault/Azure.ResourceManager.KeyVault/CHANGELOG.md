@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+
+
 ## 1.0.0-preview.1
 
 This package follows the new Azure SDK guidelines which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
@@ -19,7 +22,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
-The package name has been changed from `Microsoft.Azure.ResourceManager.KeyVault` to `Azure.ResourceManager.KeyVault`
+The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
 
 #### Management Client Changes
 
@@ -48,12 +51,12 @@ using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
 var keyVaultManagementClient = new KeyVaultManagementClient(
-            SubscriptionId,
+            subscriptionId,
             new DefaultAzureCredential(),
             new KeyVaultManagementClientOptions());
-var vaultsClient = keyVaultManagementClient.GetVaultsClient();
+var vaultsOperations = keyVaultManagementClient.Vaults;
 
-var vault = await vaultsClient.StartCreateOrUpdateAsync(
+var vault = await vaultsOperations.StartCreateOrUpdateAsync(
             resourceGroupName,
             vaultName,
             parameters

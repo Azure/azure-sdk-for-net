@@ -8,3 +8,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "Azure.Core.Experimental ships adapters for System.Text.Json", Scope = "type", Target = "~T:Azure.Core.JsonObjectSerializer")]
 [assembly: SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "Azure.Core.Experimental ships adapters for System.Text.Json", Scope = "type", Target = "~T:Azure.Core.Spatial.GeometryJsonConverter")]
+[assembly: SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "Azure.Core.Experimental ships adapters for System.Text.Json", Scope = "type", Target = "~T:Azure.Core.DynamicJson")]

@@ -39,12 +39,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {
+            Client = GetClient();
+
             // in record mode we reset the challenge cache before each test so that the challenge call
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }

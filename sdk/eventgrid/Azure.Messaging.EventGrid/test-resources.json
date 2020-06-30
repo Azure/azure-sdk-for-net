@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "String"
+        }
+    },
+    "variables": {
+        "apiVersion": "2020-04-01-preview",
+        "eventGridTopicName": "[concat(parameters('baseName'), 'topic')]",
+        "eventGridDomainName": "[concat(parameters('baseName'), 'domain')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.EventGrid/topics",
+            "apiVersion": "[variables('apiVersion')]",
+            "name": "[variables('eventGridTopicName')]",
+            "location": "[resourceGroup().location]"
+        },
+        {
+        "name": "[variables('eventGridDomainName')]",
+        "type": "Microsoft.EventGrid/domains",
+        "apiVersion": "[variables('apiVersion')]",
+        "location": "[resourceGroup().location]",
+        "properties": {}
+        } 
+    ],
+    "outputs": {
+        "EVENT_GRID_TOPIC_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('eventGridTopicName')).endpoint]"
+        },
+        "EVENT_GRID_TOPIC_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('eventGridTopicName')), variables('apiVersion')).key1]"
+        },
+        "EVENT_GRID_DOMAIN_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(variables('eventGridDomainName')).endpoint]"
+        },
+        "EVENT_GRID_DOMAIN_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.EventGrid/domains', variables('eventGridDomainName')), variables('apiVersion')).key1]"
+        }
+    }
+}

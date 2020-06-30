@@ -221,7 +221,7 @@ namespace Azure.Graph.Rbac
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);

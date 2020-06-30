@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             LockLevel = lockLevel;
-            Authorizations = authorizations.ToArray();
+            Authorizations = authorizations.ToList();
         }
 
         /// <summary> Initializes a new instance of ApplicationDefinition. </summary>

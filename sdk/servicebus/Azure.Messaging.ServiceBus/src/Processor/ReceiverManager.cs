@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,6 +30,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
         protected readonly EntityScopeFactory _scopeFactory;
+        protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
@@ -38,7 +42,8 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusProcessorOptions processorOptions,
             Func<ProcessMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
-            EntityScopeFactory scopeFactory)
+            EntityScopeFactory scopeFactory,
+            IList<ServiceBusPlugin> plugins)
         {
             _connection = connection;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
@@ -51,10 +56,12 @@ namespace Azure.Messaging.ServiceBus
             };
             _maxReceiveWaitTime = _processorOptions.MaxReceiveWaitTime;
             _identifier = identifier;
+            _plugins = plugins;
             Receiver = new ServiceBusReceiver(
                 connection: _connection,
                 entityPath: _entityPath,
                 isSessionEntity: false,
+                plugins: _plugins,
                 options: _receiverOptions);
             _errorHandler = errorHandler;
             _messageHandler = messageHandler;
@@ -84,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await Receiver.ReceiveAsync(
+                    ServiceBusReceivedMessage message = await Receiver.ReceiveMessageAsync(
                         _maxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
@@ -170,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
                     // don't pass the processor cancellation token
                     // as we want in flight autocompletion to be able
                     // to finish
-                    await Receiver.CompleteAsync(
+                    await Receiver.CompleteMessageAsync(
                         message.LockToken,
                         CancellationToken.None)
                         .ConfigureAwait(false);
@@ -202,7 +209,7 @@ namespace Azure.Messaging.ServiceBus
                         // don't pass the processor cancellation token
                         // as we want in flight abandon to be able
                         // to finish even if user stopped processing
-                        await Receiver.AbandonAsync(
+                        await Receiver.AbandonMessageAsync(
                             message.LockToken,
                             cancellationToken: CancellationToken.None)
                             .ConfigureAwait(false);

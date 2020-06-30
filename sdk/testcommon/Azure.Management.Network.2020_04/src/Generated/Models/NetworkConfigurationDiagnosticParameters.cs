@@ -29,7 +29,7 @@ namespace Azure.Management.Network.Models
             }
 
             TargetResourceId = targetResourceId;
-            Profiles = profiles.ToArray();
+            Profiles = profiles.ToList();
         }
 
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticParameters. </summary>

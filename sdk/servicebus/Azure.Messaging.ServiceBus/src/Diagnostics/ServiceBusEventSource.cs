@@ -172,6 +172,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
         internal const int ScheduleTaskFailedEvent = 95;
 
+        internal const int PluginStartEvent = 96;
+        internal const int PluginCompleteEvent = 97;
+        internal const int PluginExceptionEvent = 98;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -264,19 +268,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ReceiveDeferredMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
+        [Event(ReceiveDeferredMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, SequenceNumbers = {2}")]
         public void ReceiveDeferredMessageStartCore(string identifier, int messageCount, string sequenceNumbers)
         {
             WriteEvent(ReceiveDeferredMessageStartEvent, identifier, messageCount, sequenceNumbers);
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, int messageCount, IEnumerable<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                ReceiveDeferredMessageStartCore(identifier, messageCount, formattedSequenceNumbers);
+                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
             }
         }
 
@@ -329,17 +333,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #endregion
 
         #region Scheduling
-        [Event(ScheduleMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        public virtual void ScheduleMessageStart(string identifier, string scheduledEnqueueTime)
+        [Event(ScheduleMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. MessageCount = {1}, ScheduleTimeUtc = {2}")]
+        public virtual void ScheduleMessagesStart(string identifier, int messageCount, string scheduledEnqueueTime)
         {
             if (IsEnabled())
             {
-                WriteEvent(ScheduleMessageStartEvent, identifier, scheduledEnqueueTime);
+                WriteEvent(ScheduleMessageStartEvent, identifier, messageCount, scheduledEnqueueTime);
             }
         }
 
         [Event(ScheduleMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync done.")]
-        public virtual void ScheduleMessageComplete(string identifier)
+        public virtual void ScheduleMessagesComplete(string identifier)
         {
             if (IsEnabled())
             {
@@ -348,7 +352,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ScheduleMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
-        public virtual void ScheduleMessageException(string identifier, string exception)
+        public virtual void ScheduleMessagesException(string identifier, string exception)
         {
             if (IsEnabled())
             {
@@ -356,17 +360,27 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CancelScheduledMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. SequenceNumber = {1}")]
-        public virtual void CancelScheduledMessageStart(string identifier, long sequenceNumber)
+        [NonEvent]
+        public virtual void CancelScheduledMessagesStart(string identifier, long[] sequenceNumbers)
         {
             if (IsEnabled())
             {
-                WriteEvent(CancelScheduledMessageStartEvent, identifier, sequenceNumber);
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
+                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
+            }
+        }
+
+        [Event(CancelScheduledMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. MessageCount = {1}, SequenceNumbers = {2}")]
+        public virtual void CancelScheduledMessagesStartCore(string identifier, int messageCount, string sequenceNumbers)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CancelScheduledMessageStartEvent, identifier, messageCount, sequenceNumbers);
             }
         }
 
         [Event(CancelScheduledMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync done.")]
-        public virtual void CancelScheduledMessageComplete(string identifier)
+        public virtual void CancelScheduledMessagesComplete(string identifier)
         {
             if (IsEnabled())
             {
@@ -375,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CancelScheduledMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
-        public virtual void CancelScheduledMessageException(string identifier, string exception)
+        public virtual void CancelScheduledMessagesException(string identifier, string exception)
         {
             if (IsEnabled())
             {
@@ -1240,6 +1254,35 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(CreateControllerExceptionEvent, connectionManager, exception);
+            }
+        }
+        #endregion
+
+        #region plugins
+        [Event(PluginStartEvent, Level = EventLevel.Verbose, Message = "User plugin {0} called on message {1}")]
+        public void PluginCallStarted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginStartEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginCompleteEvent, Level = EventLevel.Verbose, Message = "User plugin {0} completed on message {1}")]
+        public void PluginCallCompleted(string pluginName, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginCompleteEvent, pluginName, messageId);
+            }
+        }
+
+        [Event(PluginExceptionEvent, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
+        public void PluginCallException(string pluginName, string messageId, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PluginExceptionEvent, pluginName, messageId, exception);
             }
         }
         #endregion

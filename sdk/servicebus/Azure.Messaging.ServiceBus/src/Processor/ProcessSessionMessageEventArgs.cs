@@ -100,12 +100,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task AbandonAsync(
+        public async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _sessionReceiver.AbandonAsync(message, propertiesToModify, cancellationToken)
+            await _sessionReceiver.AbandonMessageAsync(message, propertiesToModify, cancellationToken)
                 .ConfigureAwait(false);
             message.IsSettled = true;
         }
@@ -122,11 +122,11 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task CompleteAsync(
+        public async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            await _sessionReceiver.CompleteAsync(
+            await _sessionReceiver.CompleteMessageAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
@@ -149,13 +149,13 @@ namespace Azure.Messaging.ServiceBus
         /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
-        public async Task DeadLetterAsync(
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
             CancellationToken cancellationToken = default)
         {
-            await _sessionReceiver.DeadLetterAsync(
+            await _sessionReceiver.DeadLetterMessageAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
@@ -179,12 +179,12 @@ namespace Azure.Messaging.ServiceBus
         /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
-        public async Task DeadLetterAsync(
+        public async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _sessionReceiver.DeadLetterAsync(
+            await _sessionReceiver.DeadLetterMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
@@ -202,18 +202,18 @@ namespace Azure.Messaging.ServiceBus
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
-        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
+        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessagesAsync(IEnumerable{long}, CancellationToken)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task DeferAsync(
+        public async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _sessionReceiver.DeferAsync(
+            await _sessionReceiver.DeferMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)

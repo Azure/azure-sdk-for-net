@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(url));
             }
 
-            AuthenticationType = "Anonymous";
+            AuthenticationType = WebAuthenticationType.Anonymous;
         }
 
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>

@@ -409,7 +409,8 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// Starts all containers in a container group.
             /// </summary>
             /// <remarks>
-            /// Starts all containers in a container group.
+            /// Starts all containers in a container group. Compute resources will be
+            /// allocated and billing will start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -429,7 +430,8 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// Starts all containers in a container group.
             /// </summary>
             /// <remarks>
-            /// Starts all containers in a container group.
+            /// Starts all containers in a container group. Compute resources will be
+            /// allocated and billing will start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -501,6 +503,56 @@ namespace Microsoft.Azure.Management.ContainerInstance
             }
 
             /// <summary>
+            /// Delete the specified container group.
+            /// </summary>
+            /// <remarks>
+            /// Delete the specified container group in the specified subscription and
+            /// resource group. The operation does not delete other resources provided by
+            /// the user, such as volumes.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            public static ContainerGroup BeginDelete(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName)
+            {
+                return operations.BeginDeleteAsync(resourceGroupName, containerGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete the specified container group.
+            /// </summary>
+            /// <remarks>
+            /// Delete the specified container group in the specified subscription and
+            /// resource group. The operation does not delete other resources provided by
+            /// the user, such as volumes.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ContainerGroup> BeginDeleteAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restarts all containers in a container group.
             /// </summary>
             /// <remarks>
@@ -549,7 +601,8 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// Starts all containers in a container group.
             /// </summary>
             /// <remarks>
-            /// Starts all containers in a container group.
+            /// Starts all containers in a container group. Compute resources will be
+            /// allocated and billing will start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -569,7 +622,8 @@ namespace Microsoft.Azure.Management.ContainerInstance
             /// Starts all containers in a container group.
             /// </summary>
             /// <remarks>
-            /// Starts all containers in a container group.
+            /// Starts all containers in a container group. Compute resources will be
+            /// allocated and billing will start.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

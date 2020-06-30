@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="description">Gets or sets the description of the
         /// tag.</param>
         /// <param name="type">Gets or sets the type of the tag. Possible
-        /// values include: 'Regular', 'Negative'</param>
+        /// values include: 'Regular', 'Negative', 'GeneralProduct'</param>
         /// <param name="id">Gets the Tag ID.</param>
         /// <param name="imageCount">Gets the number of images with this
         /// tag.</param>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// Gets or sets the type of the tag. Possible values include:
-        /// 'Regular', 'Negative'
+        /// 'Regular', 'Negative', 'GeneralProduct'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new ArgumentNullException(nameof(accessPolicies));
             }
 
-            AccessPolicies = accessPolicies.ToArray();
+            AccessPolicies = accessPolicies.ToList();
         }
 
         /// <summary> Initializes a new instance of VaultAccessPolicyProperties. </summary>

@@ -15,7 +15,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of NetworkRuleCondition. </summary>
         public NetworkRuleCondition()
         {
-            RuleConditionType = "NetworkRuleCondition";
+            RuleConditionType = FirewallPolicyRuleConditionType.NetworkRuleCondition;
         }
 
         /// <summary> Initializes a new instance of NetworkRuleCondition. </summary>

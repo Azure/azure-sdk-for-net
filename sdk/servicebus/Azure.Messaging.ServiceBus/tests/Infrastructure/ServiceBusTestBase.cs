@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             for (int i = 0; i < count; i++)
             {
-                Assert.That(() => batch.TryAdd(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                Assert.That(() => batch.TryAddMessage(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
             }
 
             return batch;

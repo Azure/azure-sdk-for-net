@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <PublishDepsFilePath>$(IntermediateOutputPath)\azure-sdk-deps.json</PublishDepsFilePath>
+    <SdkRootPath>..\sdk</SdkRootPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ExcludeProjects Include="$(SdkRootPath)\**\*Test*.csproj" />
+    <IncludeProjects Include="$(SdkRootPath)\*\Azure.*\src\Azure.*.csproj" />
+    <ProjectReference Include="@(IncludeProjects)" Exclude="@(ExcludeProjects)" />
+  </ItemGroup>
+
+  <Target Name="ListProjects">
+    <Message Importance="High" Text="List of projects included:" />
+    <Message Importance="High" Text="%(ProjectReference.Filename)" />
+  </Target>
+
+  <Target Name="GenerateDepsFile" DependsOnTargets="ListProjects;Restore;GeneratePublishDependencyFile" />
+
+</Project>

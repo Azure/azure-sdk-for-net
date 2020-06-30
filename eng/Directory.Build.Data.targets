@@ -111,11 +111,6 @@
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
-  <!--Generate Assembly Attributes file in IntermediateOutputPath -->
-  <PropertyGroup>
-    <TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)</TargetFrameworkMonikerAssemblyAttributesPath>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
     <!-- Find all Azure projects -->
     <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
@@ -135,8 +130,7 @@
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
-    <ProjectReference Include="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.csproj" />
-
+ 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

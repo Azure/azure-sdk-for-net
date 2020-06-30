@@ -579,7 +579,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                               string eventHubName,
                                               TokenCredential credential,
                                               Func<EventHubConnection> connectionFactory,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnectionFactory = connectionFactory;
             }
