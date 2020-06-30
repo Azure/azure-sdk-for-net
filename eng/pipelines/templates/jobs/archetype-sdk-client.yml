@@ -80,6 +80,12 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+      - ${{ each artifact in parameters.Artifacts }}:
+        - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+          parameters:
+            PackageName: ${{artifact.name}}
+            ServiceName: ${{parameters.ServiceDirectory}}
+            ForRelease: false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
