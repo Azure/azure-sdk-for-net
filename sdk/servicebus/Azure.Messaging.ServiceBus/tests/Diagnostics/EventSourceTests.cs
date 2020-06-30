@@ -358,6 +358,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         receiver.Identifier,
                         1),
                 Times.Once);
+            mockLogger
+            .Verify(
+                log => log.MaxMessagesExceedsPrefetch(
+                    receiver.Identifier,
+                    receiver.PrefetchCount,
+                    1),
+                Times.Never);
         }
 
         [Test]
@@ -382,7 +389,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 "queueName",
                 false,
                 new ServiceBusPlugin[] { },
-                new ServiceBusReceiverOptions())
+                new ServiceBusReceiverOptions()
+                {
+                    PrefetchCount = maxMessages - 1
+                })
             {
                 Logger = mockLogger.Object
             };
@@ -394,6 +404,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     log => log.ReceiveMessageStart(
                         receiver.Identifier,
                         // the amount requested
+                        maxMessages),
+                Times.Once);
+
+            mockLogger
+                .Verify(
+                    log => log.MaxMessagesExceedsPrefetch(
+                        receiver.Identifier,
+                        receiver.PrefetchCount,
                         maxMessages),
                 Times.Once);
             mockLogger
