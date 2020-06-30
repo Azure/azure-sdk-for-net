@@ -76,6 +76,7 @@ namespace Azure.Iot.Hub.Service.Samples
             // Update device identities using bulk operations.
             await UpdateDevicesInBulkAsync(listOfDevices);
 
+            // Get all device twins in IoT-Hub
             await GetDeviceTwinsAsync();
 
             // Delete device identities using bulk operations.
