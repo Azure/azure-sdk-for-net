@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     internal partial class QuerySpecification : IUtf8JsonSerializable
     {
