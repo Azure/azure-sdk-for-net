@@ -85,9 +85,9 @@ function Confirm-ChangeLogEntry {
     [boolean]$ForRelease = $false
   )
 
-  $changeLogEntries = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
+  $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
 
-  if ([System.String]::IsNullOrEmpty($changeLogEntries.ReleaseStatus)) {
+  if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus)) {
     Write-Host ("##[error]Changelog '{0}' has wrong release note title" -f $ChangeLogLocation)
     Write-Host "##[info]Ensure the release date is included i.e. (yyyy-MM-dd) or (Unreleased) if not yet released"
     exit 1
@@ -95,19 +95,20 @@ function Confirm-ChangeLogEntry {
 
   if ($ForRelease -eq $True) {
     $CurrentDate = Get-Date -Format "yyyy-MM-dd"
-    if ($changeLogEntries.ReleaseStatus -ne "($CurrentDate)") {
+    if ($changeLogEntry.ReleaseStatus -ne "($CurrentDate)") {
       Write-Host ("##[warning]Incorrect Date: Please use the current date in the Changelog '{0}' before releasing the package" -f $ChangeLogLocation)
       exit 1
     }
 
-    if ([System.String]::IsNullOrWhiteSpace($changeLogEntries.ReleaseContent)) {
+    if ([System.String]::IsNullOrWhiteSpace($changeLogEntry.ReleaseContent)) {
       Write-Host ("##[error]Empty Release Notes for '{0}' in '{1}'" -f $VersionString, $ChangeLogLocation)
       Write-Host "##[info]Please ensure there is a release notes entry before releasing the package."
       exit 1
     }
   }
 
-  Write-Host ($changeLogEntries | Format-Table | Out-String)
+  Write-Host $changeLogEntry.ReleaseTitle
+  Write-Host $changeLogEntry.ReleaseContent
 }
  
 Export-ModuleMember -Function 'Get-ChangeLogEntries'
