@@ -21,6 +21,7 @@
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
+        "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
         "location": "[resourceGroup().location]",
         "encryption": {
             "services": {
@@ -133,6 +134,13 @@
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[parameters('keyvaultName')]",
+            "location": "[parameters('location')]",
+            "properties": {}
         }
     ],
   "outputs": {
@@ -176,5 +184,9 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
+    "KEYVAULT_URI":{
+      "type": "string",
+      "value": "[variables('azureKeyVaultUrl')]"
+    }
   }
 }
