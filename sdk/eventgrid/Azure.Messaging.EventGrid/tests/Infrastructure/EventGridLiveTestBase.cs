@@ -7,11 +7,16 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridLiveTestBase : RecordedTestBase<EventGridTestEnvironment>
     {
-        public EventGridLiveTestBase(bool isAsync) : base(isAsync /*, RecordedTestMode.Record */)
+        // These constants should eventually go in our product code, as they will be needed when creating
+        // the AzureKeyCredential.
+        public const string SasKeyName = "aeg-sas-key";
+        public const string SasTokenName = "aeg-sas-token";
+
+        public EventGridLiveTestBase(bool isAsync) : base(isAsync)
         {
             Sanitizer = new EventGridRecordedTestSanitizer();
-            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.TopicKeyEnvironmentVariableName);
-            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.DomainKeyEnvironmentVariableName);
+            Sanitizer.SanitizedHeaders.Add(SasKeyName);
+            Sanitizer.SanitizedHeaders.Add(SasTokenName);
         }
     }
 }

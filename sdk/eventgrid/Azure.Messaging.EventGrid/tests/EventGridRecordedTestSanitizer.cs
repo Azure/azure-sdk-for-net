@@ -9,23 +9,15 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridRecordedTestSanitizer : RecordedTestSanitizer
     {
-        // These constants should eventually go in our product code, as they will be needed when creating
-        // the AzureKeyCredential.
-        public const string SasKeyName = "aeg-sas-key";
-        public const string SasTokenName = "aeg-sas-token";
 
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
+        public override string SanitizeVariable(string variableName, string environmentVariableValue)
         {
-            base.SanitizeHeaders(headers);
-
-            if (headers.TryGetValue(SasKeyName, out var sasKey))
+            return variableName switch
             {
-                headers[SasKeyName] = sasKey.Select(s => SanitizeValue).ToArray();
-            }
-            if (headers.TryGetValue(SasTokenName, out var sasToken))
-            {
-                headers[SasTokenName] = sasToken.Select(s => SanitizeValue).ToArray();
-            }
+                EventGridTestEnvironment.TopicKeyEnvironmentVariableName => SanitizeValue,
+                EventGridTestEnvironment.DomainKeyEnvironmentVariableName => SanitizeValue,
+                _ => base.SanitizeVariable(variableName, environmentVariableValue)
+            };
         }
     }
 }
