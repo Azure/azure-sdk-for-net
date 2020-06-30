@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
     /// subscriptions/resources into an organizational hierarchy and centrally
     /// manage access control, policies, alerting and reporting for those
     /// resources.
+    ///
     /// </summary>
     public partial interface IManagementGroupsAPIClient : System.IDisposable
     {
@@ -54,19 +55,48 @@ namespace Microsoft.Azure.Management.ManagementGroups
         string ApiVersion { get; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The id of the operation result. Possible values include: 'create',
+        /// 'delete'
+        /// </summary>
+        string OperationResultId { get; set; }
+
+        /// <summary>
+        /// Number of entities to skip over when retrieving results. Passing
+        /// this in will override $skipToken.
+        /// </summary>
+        int? Skip { get; set; }
+
+        /// <summary>
+        /// Number of elements to return when retrieving results. Passing this
+        /// in will override $skipToken.
+        /// </summary>
+        int? Top { get; set; }
+
+        /// <summary>
+        /// Page continuation token is only used if a previous operation
+        /// returned a partial result.
+        /// If a previous response contains a nextLink element, the value of
+        /// the nextLink element will include a token parameter that specifies
+        /// a starting point to use for subsequent calls.
+        ///
+        /// </summary>
+        string Skiptoken { get; set; }
+
+        /// <summary>
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -80,6 +110,11 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Gets the IManagementGroupSubscriptionsOperations.
         /// </summary>
         IManagementGroupSubscriptionsOperations ManagementGroupSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IHierarchySettingsOperations.
+        /// </summary>
+        IHierarchySettingsOperations HierarchySettings { get; }
 
         /// <summary>
         /// Gets the IOperations.

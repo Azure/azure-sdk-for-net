@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
         /// <param name="type">The type of the resource.  For example,
-        /// /providers/Microsoft.Management/managementGroups</param>
+        /// Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="tenantId">The AAD Tenant ID associated with the
@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// management group.</param>
         /// <param name="details">Details</param>
         /// <param name="children">The list of children.</param>
-        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
+        /// <param name="path">The path from the root to the current
+        /// group.</param>
+        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>), IList<ManagementGroupPathElement> path = default(IList<ManagementGroupPathElement>))
         {
             Id = id;
             Type = type;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
             Roles = roles;
             Details = details;
             Children = children;
+            Path = path;
             CustomInit();
         }
 
@@ -78,7 +81,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
 
         /// <summary>
         /// Gets the type of the resource.  For example,
-        /// /providers/Microsoft.Management/managementGroups
+        /// Microsoft.Management/managementGroups
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
@@ -121,6 +124,12 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.children")]
         public IList<ManagementGroupChildInfo> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path from the root to the current group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.path")]
+        public IList<ManagementGroupPathElement> Path { get; set; }
 
     }
 }
