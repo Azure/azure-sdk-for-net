@@ -254,7 +254,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             // Surface the TCE to ensure deterministic behavior when cancelling.
-            throw new TaskCanceledException();
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         /// <summary>
