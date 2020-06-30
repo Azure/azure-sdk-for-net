@@ -46,7 +46,7 @@ namespace Azure.Iot.Hub.Service.Samples
             // Get the device identity.
             await GetDeviceIdentityAsync(deviceId);
 
-            // Update Module Identity.
+            // Update device Identity.
             await UpdateDeviceIdentityAsync(deviceId);
 
             // Get Device Twin.
@@ -175,7 +175,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Get module twin.
+        /// Get device twin.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<TwinData> GetDeviceTwinAsync(string deviceId)
@@ -200,7 +200,7 @@ namespace Azure.Iot.Hub.Service.Samples
         }
 
         /// <summary>
-        /// Update a module twin desired properties.
+        /// Update a device twin desired properties.
         /// </summary>
         /// <param name="deviceId">Unique identifier of the device.</param>
         public async Task<TwinData> UpdateDeviceTwinAsync(string deviceId)
@@ -211,11 +211,11 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
-                // Get the device module
+                // Get the device
                 Response<TwinData> getResponse = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
                 TwinData deviceTwin = getResponse.Value;
 
-                Console.WriteLine($"Updating module twin: DeviceId: '{deviceTwin.DeviceId}', ETag: '{deviceTwin.Etag}'");
+                Console.WriteLine($"Updating device twin: DeviceId: '{deviceTwin.DeviceId}', ETag: '{deviceTwin.Etag}'");
                 Console.WriteLine($"Setting a new desired property {userPropName} to: '{Environment.UserName}'");
 
                 deviceTwin.Properties.Desired.Add(new KeyValuePair<string, object>(userPropName, Environment.UserName));
