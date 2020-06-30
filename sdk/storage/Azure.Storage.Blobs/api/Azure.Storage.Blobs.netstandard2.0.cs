@@ -530,11 +530,6 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum BlobExpirationOffset
-    {
-        CreationTime = 0,
-        Now = 1,
-    }
     public partial class BlobGeoReplication
     {
         internal BlobGeoReplication() { }
@@ -743,15 +738,6 @@ namespace Azure.Storage.Blobs.Models
         public BlobRetentionPolicy() { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
-    }
-    public partial class BlobScheduleDeletionOptions
-    {
-        public BlobScheduleDeletionOptions() { }
-        public BlobScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
-        public BlobScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Blobs.Models.BlobExpirationOffset setRelativeTo) { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobExpirationOffset? SetExpiryRelativeTo { get { throw null; } }
-        public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class BlobServiceProperties
     {

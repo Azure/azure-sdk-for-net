@@ -335,12 +335,6 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static BlobExpirationOffset ToBlobExpirationOffset(
-            this DataLakeFileExpirationOrigin setExpiryRelativeTo)
-            => setExpiryRelativeTo == DataLakeFileExpirationOrigin.Now
-            ? BlobExpirationOffset.Now
-            : BlobExpirationOffset.CreationTime;
-
         internal static BlobQueryOptions ToBlobQueryOptions(this DataLakeQueryOptions options)
         {
             if (options == null)
@@ -413,42 +407,6 @@ namespace Azure.Storage.Files.DataLake
                 IsFatal = error.IsFatal,
                 Position = error.Position
             };
-        }
-
-        internal static string EscapePath(this string path)
-        {
-            if (path == null)
-            {
-                return null;
-            }
-
-            path = path.Trim('/');
-            string[] split = path.Split('/');
-
-            for (int i = 0; i < split.Length; i++)
-            {
-                split[i] = Uri.EscapeDataString(split[i]);
-            }
-
-            return string.Join("/", split);
-        }
-
-        internal static string UnescapePath(this string path)
-        {
-            if (path == null)
-            {
-                return null;
-            }
-
-            path = path.Trim('/');
-            string[] split = path.Split('/');
-
-            for (int i = 0; i < split.Length; i++)
-            {
-                split[i] = Uri.UnescapeDataString(split[i]);
-            }
-
-            return string.Join("/", split);
         }
     }
 }
