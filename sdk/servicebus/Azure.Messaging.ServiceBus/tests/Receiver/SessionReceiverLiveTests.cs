@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -800,6 +802,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 returnedSessionState = await receiver.GetSessionStateAsync();
                 returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
+            }
+        }
+
+        [Test]
+        public async Task ReceiveIteratorUserCanMaintainSessionLock()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: lockDuration))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCount = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var messages = GetMessages(messageCount, "sessionId");
+                var secondSet = GetMessages(messageCount, "sessionId");
+                await sender.SendMessagesAsync(messages);
+                _ = Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(
+                    async _ => await sender.SendMessagesAsync(secondSet));
+
+                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromMinutes(1));
+                messages.AddRange(secondSet);
+                _ = RenewLock();
+
+                async Task RenewLock()
+                {
+                    while (!cts.Token.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5), cts.Token);
+                            await receiver.RenewSessionLockAsync(cts.Token);
+                        }
+                        catch (TaskCanceledException) { }
+                    }
+                }
+
+                int ct = 0;
+
+                try
+                {
+                    await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
+                    {
+                        Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
+                        await receiver.CompleteMessageAsync(msg.LockToken);
+                        ct++;
+                        if (ct == messageCount)
+                        {
+                            await Task.Delay(lockDuration);
+                        }
+                    }
+                }
+                catch (TaskCanceledException) { }
+                Assert.AreEqual(messageCount * 2, ct);
             }
         }
     }

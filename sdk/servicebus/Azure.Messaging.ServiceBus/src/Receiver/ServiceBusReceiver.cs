@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -227,6 +228,33 @@ namespace Azure.Messaging.ServiceBus
             scope.SetMessageData(messages);
 
             return messages;
+        }
+
+        /// <summary>
+        /// Receives messages as an asynchronous enumerable from the entity using <see cref="ReceiveMode"/> mode.
+        /// <see cref="ReceiveMode"/> defaults to PeekLock mode. Messages will be received from the entity as
+        /// the IAsyncEnumerable is iterated. If no messages are available, this method will continue polling
+        /// until messages are available, i.e. it will never return null.
+        /// </summary>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        /// <returns>The message received.</returns>
+        public virtual async IAsyncEnumerable<ServiceBusReceivedMessage> ReceiveMessagesAsync(
+            [EnumeratorCancellation]
+            CancellationToken cancellationToken = default)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var msg = await ReceiveMessageAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (msg == null)
+                {
+                    continue;
+                }
+                yield return msg;
+            }
+
+            // Surface the TCE to ensure deterministic behavior when cancelling.
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         /// <summary>
