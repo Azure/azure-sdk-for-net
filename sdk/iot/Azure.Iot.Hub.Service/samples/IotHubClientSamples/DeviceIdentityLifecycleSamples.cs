@@ -159,9 +159,9 @@ namespace Azure.Iot.Hub.Service.Samples
                 Console.WriteLine($"Updating device identity with Id: '{deviceIdentity.DeviceId}'. Setting 'Status' to: '{DeviceStatus.Disabled}'");
                 deviceIdentity.Status = DeviceStatus.Disabled;
 
-                Response<DeviceIdentity> response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
+                Response<DeviceIdentity> updateResponse = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
 
-                DeviceIdentity updatedDevice = response.Value;
+                DeviceIdentity updatedDevice = updateResponse.Value;
 
                 SampleLogger.PrintSuccess($"Successfully updated device identity: DeviceId: '{updatedDevice.DeviceId}', Status: '{updatedDevice.Status}', ETag: '{updatedDevice.Etag}'");
 
