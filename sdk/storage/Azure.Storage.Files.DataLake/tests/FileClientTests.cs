@@ -368,7 +368,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -2930,6 +2930,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Not released yet")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ScheduleDeletionAsync_Relative()
         {
@@ -2958,6 +2959,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Not released yet")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ScheduleDeletionAsync_RelativeToFileCreationTime()
         {
@@ -2977,6 +2979,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Not released yet")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ScheduleDeletionAsync_Error()
         {
@@ -2995,6 +2998,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Not released yet")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ScheduleDeletionAsync_Absolute()
         {
@@ -3015,6 +3019,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Not released yet")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task ScheduleDeletionAsync_RemoveExpiry()
         {
