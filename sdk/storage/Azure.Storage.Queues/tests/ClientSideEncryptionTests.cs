@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -491,11 +491,15 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [TestCase("any old message")]
+        [TestCase("\"aa\"")] // real world example
+        [TestCase("{\"key1\":\"value1\",\"key2\":\"value2\"}")] // more typical json object, but not the actual schema we're looking for
+        [TestCase("{\"EncryptedMessageContents\":\"value1\",\"key2\":\"value2\"}")] // one required piece but not the other
+        [TestCase("{\"EncryptionData\":{},\"key2\":\"value2\"}")] // one required piece but not the other
+        [TestCase("ᛁᚳ᛫ᛗᚨᚷ᛫ᚷᛚᚨᛋ᛫ᛖᚩᛏᚪᚾ᛫ᚩᚾᛞ᛫ᚻᛁᛏ᛫ᚾᛖ᛫ᚻᛖᚪᚱᛗᛁᚪᚧ᛫ᛗᛖ")]
         [LiveOnly] // cannot seed content encryption key
-        public async Task ReadPlaintextMessage()
+        public async Task ReadPlaintextMessage(string message)
         {
-            var message = "any old message";
             var mockKey = GetIKeyEncryptionKey().Object;
             var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
