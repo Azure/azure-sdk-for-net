@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// Template Spec object.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TemplateSpecModel : AzureResourceBase
+    public partial class TemplateSpec : AzureResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the TemplateSpecModel class.
+        /// Initializes a new instance of the TemplateSpec class.
         /// </summary>
-        public TemplateSpecModel()
+        public TemplateSpec()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TemplateSpecModel class.
+        /// Initializes a new instance of the TemplateSpec class.
         /// </summary>
         /// <param name="location">The location of the Template Spec. It cannot
         /// be changed after Template Spec creation. It must be one of the
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="description">Template Spec description.</param>
         /// <param name="displayName">Template Spec display name.</param>
         /// <param name="tags">Resource tags.</param>
-        public TemplateSpecModel(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string displayName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TemplateSpec(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string displayName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             Location = location;

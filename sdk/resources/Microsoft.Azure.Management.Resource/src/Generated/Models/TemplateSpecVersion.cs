@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// Template Spec Version object.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TemplateSpecVersionModel : AzureResourceBase
+    public partial class TemplateSpecVersion : AzureResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the TemplateSpecVersionModel class.
+        /// Initializes a new instance of the TemplateSpecVersion class.
         /// </summary>
-        public TemplateSpecVersionModel()
+        public TemplateSpecVersion()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TemplateSpecVersionModel class.
+        /// Initializes a new instance of the TemplateSpecVersion class.
         /// </summary>
         /// <param name="location">The location of the Template Spec Version.
         /// It must match the location of the parent Template Spec.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="template">The Azure Resource Manager template
         /// content.</param>
         /// <param name="tags">Resource tags.</param>
-        public TemplateSpecVersionModel(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<TemplateSpecArtifact> artifacts = default(IList<TemplateSpecArtifact>), string description = default(string), object template = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TemplateSpecVersion(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<TemplateSpecArtifact> artifacts = default(IList<TemplateSpecArtifact>), string description = default(string), object template = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             Location = location;

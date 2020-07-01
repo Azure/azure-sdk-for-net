@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TemplateSpecVersionModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionModel templateSpecVersionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TemplateSpecVersion>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersion templateSpecVersionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TemplateSpecVersionModel>();
+            var _result = new AzureOperationResponse<TemplateSpecVersion>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersionModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersion>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersionModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersion>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TemplateSpecVersionModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TemplateSpecVersion>> UpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TemplateSpecVersionModel>();
+            var _result = new AzureOperationResponse<TemplateSpecVersion>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersionModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersion>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TemplateSpecVersionModel>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TemplateSpecVersion>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -799,7 +799,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TemplateSpecVersionModel>();
+            var _result = new AzureOperationResponse<TemplateSpecVersion>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -812,7 +812,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersionModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TemplateSpecVersion>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1086,7 +1086,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TemplateSpecVersionModel>>> ListWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TemplateSpecVersion>>> ListWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1245,7 +1245,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<TemplateSpecVersionModel>>();
+            var _result = new AzureOperationResponse<IPage<TemplateSpecVersion>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1258,7 +1258,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TemplateSpecVersionModel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TemplateSpecVersion>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1304,7 +1304,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TemplateSpecVersionModel>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TemplateSpecVersion>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1413,7 +1413,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<TemplateSpecVersionModel>>();
+            var _result = new AzureOperationResponse<IPage<TemplateSpecVersion>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1426,7 +1426,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TemplateSpecVersionModel>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TemplateSpecVersion>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

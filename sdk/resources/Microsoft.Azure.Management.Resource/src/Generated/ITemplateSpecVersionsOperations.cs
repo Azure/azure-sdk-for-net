@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TemplateSpecVersionModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionModel templateSpecVersionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TemplateSpecVersion>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersion templateSpecVersionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates Template Spec Version tags with specified values.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TemplateSpecVersionModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TemplateSpecVersion>> UpdateWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a Template Spec version from a specific Template Spec.
         /// </summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TemplateSpecVersionModel>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TemplateSpecVersion>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a specific version from a Template Spec. When operation
         /// completes, status code 200 returned without content.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TemplateSpecVersionModel>>> ListWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TemplateSpecVersion>>> ListWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the Template Spec versions in the specified Template
         /// Spec.
@@ -187,6 +187,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TemplateSpecVersionModel>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TemplateSpecVersion>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
