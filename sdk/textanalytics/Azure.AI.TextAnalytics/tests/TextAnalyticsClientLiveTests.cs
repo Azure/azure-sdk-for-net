@@ -543,7 +543,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore ("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/11567")]
         public async Task RecognizeEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();

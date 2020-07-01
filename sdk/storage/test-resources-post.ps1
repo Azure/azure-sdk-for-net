@@ -22,6 +22,7 @@ $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
 $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
+$KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -32,6 +33,7 @@ $content =
   <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
+  <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
   <TenantConfigurations>
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
@@ -115,6 +117,16 @@ $content =
       <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
+  <KeyVaultConfigurations>
+    <KeyVaultConfiguration>
+      <VaultName>ClientsideEncryptionKeyvault</VaultName>
+      <VaultEndpoint>$KeyVaultUri</VaultEndpoint>
+      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+    </KeyVaultConfiguration>
+  </KeyVaultConfigurations>
 </TestConfigurations>"
 
 # Construct the test configuration path to use based on the devops build variable for artifact staging directory

@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
@@ -1282,7 +1282,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1326,7 +1326,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1370,7 +1370,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1517,7 +1517,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1574,7 +1574,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1690,7 +1690,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
@@ -1749,7 +1749,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
@@ -2182,7 +2182,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// determine if the copy has completed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
+        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to
@@ -2288,7 +2288,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// to determine if thecopy has completed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
+        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to
@@ -2395,7 +2395,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// copy has completed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/incremental-snapshots"/>.
+        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to

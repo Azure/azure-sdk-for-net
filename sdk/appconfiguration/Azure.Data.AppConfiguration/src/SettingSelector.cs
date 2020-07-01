@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration
     /// configuration store, and optionally allows indicating which fields of
     /// each setting to retrieve.</para>
     /// <para>Literals or filters may be specified for keys and labels.</para>
-    /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.</para>
+    /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering">Filtering</see>.</para>
     /// </summary>
     public class SettingSelector
     {

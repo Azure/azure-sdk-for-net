@@ -15,6 +15,10 @@
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 - `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
 
+### Fixes
+
+- Fixed a bug in which the `FormPage.TextAngle` property sometimes fell out of the (-180, 180] range ([#13082](https://github.com/Azure/azure-sdk-for-net/issues/13082)).
+
 ## 1.0.0-preview.3 (06-10-2020)
 
 ### Renames
