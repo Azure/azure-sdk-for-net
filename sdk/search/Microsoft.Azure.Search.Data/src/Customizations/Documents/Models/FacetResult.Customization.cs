@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <typeparam name="T">
         /// A type that matches the type of the field to which the facet was applied. Valid types include
-        /// <see cref="System.DateTimeOffset">DateTimeOffset</c>, <see cref="System.Double" />, and
+        /// <see cref="System.DateTimeOffset" />, <see cref="System.Double" />, and
         /// <see cref="System.Int64" /> (long in C#, int64 in F#).
         /// </typeparam>
         /// <returns>A new strongly-typed range facet instance.</returns>

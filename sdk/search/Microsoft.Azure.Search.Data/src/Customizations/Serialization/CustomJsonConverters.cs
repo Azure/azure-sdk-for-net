@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search.Serialization.Internal
 
         /// <summary>
         /// Creates a new converter that deserializes JSON objects and arrays to .NET types instead
-        /// of <see cref="JObject">JObject</c> and <see cref="JArray" />.
+        /// of <see cref="JObject" /> and <see cref="JArray" />.
         /// </summary>
         /// <returns>A JSON converter.</returns>
         public static JsonConverter CreateDocumentConverter() => new DocumentConverter();

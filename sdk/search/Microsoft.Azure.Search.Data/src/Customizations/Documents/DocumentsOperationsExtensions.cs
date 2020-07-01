@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Cognitive Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />DocumentSearchResult.ContinuationToken</c>
+        /// See <see cref="DocumentSearchResult&lt;T&gt;.ContinuationToken" />
         /// for more information.
         /// </para>
         /// <para>

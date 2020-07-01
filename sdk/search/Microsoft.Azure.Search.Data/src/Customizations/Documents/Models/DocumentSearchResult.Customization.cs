@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search.Models
         /// </para>
         /// <para>
         /// Note that this property is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top">Top</c> and <see cref="SearchParameters.Skip" />
+        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
         /// search parameters.
         /// </para>
         /// </remarks>
