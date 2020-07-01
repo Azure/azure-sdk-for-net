@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that we are not able to upsert an entity to the table.
 
-            Assert.That(async () => await sasTableclient.UpsertEntityAsync(TableClient.UpdateMode.Replace, CreateTableEntities("partition", 1).First()), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), UpdateMode.Replace), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
         }
 
         /// <summary>
@@ -129,14 +129,14 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
             var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             entityToUpdate[propertyName] = updatedValue;
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entityToUpdate).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entityToUpdate, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -167,7 +167,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -176,7 +176,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -188,11 +188,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -223,7 +223,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -232,7 +232,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -244,11 +244,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -287,7 +287,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -298,7 +298,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(originalEntity.TryGetValue(mergepropertyName, out var _), Is.False);
             Assert.That(originalEntity[propertyName], Is.EqualTo(originalValue));
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Merge, partialEntity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(partialEntity, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -312,7 +312,7 @@ namespace Azure.Data.Tables.Tests
             // Update just the merged value.
 
             partialEntity[mergepropertyName] = mergeUpdatedValue;
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Merge, partialEntity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(partialEntity, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -344,7 +344,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -363,7 +363,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity again.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -427,7 +427,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToInsert)
             {
-                await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+                await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -472,7 +472,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToInsert)
             {
-                await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+                await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -553,14 +553,14 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
             var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             entityToUpdate[propertyName] = updatedValue;
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entityToUpdate).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entityToUpdate, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -591,7 +591,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -600,7 +600,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -612,11 +612,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Replace, updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -647,7 +647,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -656,7 +656,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -668,11 +668,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(TableClient.UpdateMode.Merge, updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -700,7 +700,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -719,7 +719,7 @@ namespace Azure.Data.Tables.Tests
 
             // Insert the new entity again.
 
-            await client.UpsertEntityAsync(TableClient.UpdateMode.Replace, entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 

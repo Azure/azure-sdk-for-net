@@ -27,11 +27,6 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
-        public enum UpdateMode
-        {
-            Merge,
-            Replace
-        }
 
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
         {
@@ -129,9 +124,9 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.InsertEntityAsync(_table,
-                                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
                 dict.CastAndRemoveAnnotations();
@@ -159,9 +154,9 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.InsertEntity(_table,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
 
                 var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
                 dict.CastAndRemoveAnnotations();
@@ -189,9 +184,9 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.InsertEntityAsync(_table,
-                                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
@@ -217,9 +212,9 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.InsertEntity(_table,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
@@ -231,20 +226,17 @@ namespace Azure.Data.Tables
             }
         }
 
-
-
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync(UpdateMode mode, IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpsertEntityAsync(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
-            //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
@@ -262,20 +254,24 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
-                                                            partitionKey as string,
-                                                            rowKey as string,
-                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                            queryOptions: new QueryOptions() { Format = _format },
-                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    return await _tableOperations.MergeEntityAsync(_table,
-                                                            partitionKey as string,
-                                                            rowKey as string,
-                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                            queryOptions: new QueryOptions() { Format = _format },
-                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -288,15 +284,14 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity(UpdateMode mode, IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response UpsertEntity(IDictionary<string, object> entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
-            //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
@@ -314,20 +309,24 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
-                                                 partitionKey as string,
-                                                 rowKey as string,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return _tableOperations.MergeEntity(_table,
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return _tableOperations.MergeEntity(_table,
-                                                 partitionKey as string,
-                                                 rowKey as string,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -340,11 +339,11 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync<T>(UpdateMode mode, T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response> UpsertEntityAsync<T>(T entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
@@ -355,20 +354,24 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
+                        entity.PartitionKey,
+                        entity.RowKey,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                        entity.PartitionKey,
+                        entity.RowKey,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    return await _tableOperations.MergeEntityAsync(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -381,11 +384,11 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity<T>(UpdateMode mode, T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response UpsertEntity<T>(T entity, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
@@ -396,20 +399,24 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                        entity.PartitionKey,
+                        entity.RowKey,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return _tableOperations.MergeEntity(_table,
+                        entity.PartitionKey,
+                        entity.RowKey,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return _tableOperations.MergeEntity(_table,
-                                                 entity.PartitionKey,
-                                                 entity.RowKey,
-                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                 queryOptions: new QueryOptions() { Format = _format },
-                                                 cancellationToken: cancellationToken);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -422,12 +429,12 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync(UpdateMode mode, IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateEntityAsync(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -450,22 +457,26 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return await _tableOperations.UpdateEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     ifMatch: eTag,
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        ifMatch: eTag,
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        ifMatch: eTag,
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    return await _tableOperations.MergeEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     ifMatch: eTag,
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -478,12 +489,12 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists.
         /// </summary>
-        /// <param name="mode"></param>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity(UpdateMode mode, IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        public virtual Response UpdateEntity(IDictionary<string, object> entity, string eTag, UpdateMode mode = UpdateMode.Merge, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -506,22 +517,26 @@ namespace Azure.Data.Tables
                 if (mode == UpdateMode.Replace)
                 {
                     return _tableOperations.UpdateEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
-                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          ifMatch: eTag,
-                                          queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken);
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        ifMatch: eTag,
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
+                }
+                else if (mode == UpdateMode.Merge)
+                {
+                    return _tableOperations.MergeEntity(_table,
+                        partitionKey as string,
+                        rowKey as string,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        ifMatch: eTag,
+                        queryOptions: new QueryOptions() { Format = _format },
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return _tableOperations.MergeEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
-                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          ifMatch: eTag,
-                                          queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken);
+                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
             catch (Exception ex)
@@ -728,8 +743,8 @@ namespace Azure.Data.Tables
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
             }, async (continuationToken, _) =>
             {
                 var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
@@ -742,8 +757,8 @@ namespace Azure.Data.Tables
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
             });
             }
             catch (Exception ex)
@@ -794,13 +809,13 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.QueryEntities(_table,
-                            queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                            cancellationToken: cancellationToken);
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        cancellationToken: cancellationToken);
 
                     return Page.FromValues(
-                            response.Value.Value.ToTableEntityList<T>(),
-                            CreateContinuationTokenFromHeaders(response.Headers),
-                            response.GetRawResponse());
+                        response.Value.Value.ToTableEntityList<T>(),
+                        CreateContinuationTokenFromHeaders(response.Headers),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -823,8 +838,8 @@ namespace Azure.Data.Tables
                         cancellationToken: cancellationToken);
 
                     return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                                        CreateContinuationTokenFromHeaders(response.Headers),
-                                        response.GetRawResponse());
+                        CreateContinuationTokenFromHeaders(response.Headers),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -851,11 +866,11 @@ namespace Azure.Data.Tables
             try
             {
                 return await _tableOperations.DeleteEntityAsync(_table,
-                                                     partitionKey,
-                                                     rowKey,
-                                                     ifMatch: eTag,
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                    partitionKey,
+                    rowKey,
+                    ifMatch: eTag,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -881,11 +896,11 @@ namespace Azure.Data.Tables
             try
             {
                 return _tableOperations.DeleteEntity(_table,
-                                          partitionKey,
-                                          rowKey,
-                                          ifMatch: eTag,
-                                          queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken);
+                    partitionKey,
+                    rowKey,
+                    ifMatch: eTag,
+                    queryOptions: new QueryOptions() { Format = _format },
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
