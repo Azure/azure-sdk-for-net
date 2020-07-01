@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search
     public class IsRetrievableAttribute : Attribute
     {
         /// <summary>
-        /// Indicates that the specified value should be used for the <c cref="Field.IsRetrievable">IsRetrievable</c>
+        /// Indicates that the specified value should be used for the <see cref="Field.IsRetrievable" />
         /// flag of the target field.
         /// </summary>
         /// <param name="isRetrievable"><c>true</c> if the target field should be included in

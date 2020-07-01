@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Search.Models
         /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
         /// </remarks>
         /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <param name="extractionMode">A <c cref="BlobExtractionMode">BlobExtractionMode</c> value specifying what to index.</param>
+        /// <param name="extractionMode">A <see cref="BlobExtractionMode" /> value specifying what to index.</param>
         /// <returns>The IndexingParameters instance.</returns>
         public static IndexingParameters SetBlobExtractionMode(this IndexingParameters parameters, BlobExtractionMode extractionMode) =>
             Configure(parameters, "dataToExtract", (string)extractionMode);
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata">BlobExtractionMode.StorageMetadata</c> blob extraction mode will be
+        /// Specifies that <see cref="BlobExtractionMode.StorageMetadata" /> blob extraction mode will be
         /// automatically used for blobs of unsupported content types. This behavior is enabled by default.
         /// </summary>
         /// <remarks>
