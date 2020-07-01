@@ -6,4 +6,5 @@ extends:
     ServiceDirectory: storage
     BuildInParallel: false
     TimeoutInMinutes: 300
-    Location: westus
+    Location: canadacentral
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
