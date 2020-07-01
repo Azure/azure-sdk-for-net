@@ -16,7 +16,7 @@ namespace Azure.Storage.Sas
     /// parameters.  It includes components used by all Azure Storage resources
     /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+    /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">Create a service SAS</see>.
     /// </summary>
     public partial class SasQueryParameters
     {

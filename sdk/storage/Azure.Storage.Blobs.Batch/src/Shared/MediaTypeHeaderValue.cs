@@ -22,7 +22,7 @@ using System.Text;
 namespace Azure.Core.Http.Multipart
 {
     /// <summary>
-    /// Representation of the media type header. See <see href="https://tools.ietf.org/html/rfc6838"/>.
+    /// Representation of the media type header. See <see href="https://tools.ietf.org/html/rfc6838">Media Type Specifications and Registration Procedures</see>.
     /// </summary>
     internal class MediaTypeHeaderValue
     {
@@ -248,7 +248,7 @@ namespace Azure.Core.Http.Multipart
         /// <example>
         /// For the media type <c>"application/json"</c>, the property gives the value <c>"application"</c>.
         /// </example>
-        /// <remarks>See <see href="https://tools.ietf.org/html/rfc6838#section-4.2"/> for more details on the type.</remarks>
+        /// <remarks>See <see href="https://tools.ietf.org/html/rfc6838#section-4.2">Naming Requirements</see> for more details on the type.</remarks>
         public StringSegment Type
         {
             get
@@ -264,7 +264,7 @@ namespace Azure.Core.Http.Multipart
         /// For the media type <c>"application/vnd.example+json"</c>, the property gives the value
         /// <c>"vnd.example+json"</c>.
         /// </example>
-        /// <remarks>See <see href="https://tools.ietf.org/html/rfc6838#section-4.2"/> for more details on the subtype.</remarks>
+        /// <remarks>See <see href="https://tools.ietf.org/html/rfc6838#section-4.2">Naming Requirements</see> for more details on the subtype.</remarks>
         public StringSegment SubType
         {
             get

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
         /// characters and you want to use it to populate a key field in your search index, use this function. 
         /// </para>
         /// <para>
-        /// For details on the encoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/>.
+        /// For details on the encoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see>.
         /// Calling this method is the same as calling <c cref="Base64Encode(bool)"/> with <c>useHttpServerUtilityUrlTokenEncode</c> set to <c>true</c>.
         /// </para>
         /// </remarks>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search.Models
         /// Creates a field mapping function that performs URL-safe Base64 encoding of the input string. Assumes that
         /// the input is UTF-8 encoded.
         /// </summary>
-        /// <param name="useHttpServerUtilityUrlTokenEncode">Determines how Base64 encoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/> for details.</param>
+        /// <param name="useHttpServerUtilityUrlTokenEncode">Determines how Base64 encoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see> for details.</param>
         /// <remarks>
         /// Sample use case: Only URL-safe characters can appear in a search document key (because customers
         /// must be able to address the document using the Lookup API, for example). If your data contains URL-unsafe
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Search.Models
         /// use this function to turn the encoded data back into "regular" strings when populating your search index. 
         /// </para>
         /// <para>
-        /// For details on the decoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/>.
+        /// For details on the decoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see>.
         /// Calling this method is the same as calling <c cref="Base64Decode(bool)"/> with <c>useHttpServerUtilityUrlTokenDecode</c> set to <c>true</c>.
         /// </para>
         /// </remarks>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Search.Models
         /// Creates a field mapping function that performs Base64 decoding of the input string. The input is assumed
         /// to a URL-safe Base64-encoded string. 
         /// </summary>
-        /// <param name="useHttpServerUtilityUrlTokenDecode">Determines how Base64 decoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/> for details.</param>
+        /// <param name="useHttpServerUtilityUrlTokenDecode">Determines how Base64 decoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings">Field mappings and transformations using Azure Cognitive Search indexers</see> for details.</param>
         /// <remarks>
         /// Sample use case: Blob custom metadata values must be ASCII-encoded. You can use Base64 encoding to
         /// represent arbitrary Unicode strings in blob custom metadata. However, to make search meaningful, you can
