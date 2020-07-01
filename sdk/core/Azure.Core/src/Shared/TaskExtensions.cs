@@ -8,12 +8,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {
+        public static T WaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+        {
+            try
+            {
+                task.Wait(cancellationToken);
+            }
+            catch (Exception)
+            {
+                // ignore exception here to rethrow it later
+            }
+
+            return task.GetAwaiter().GetResult();
+        }
+
+        public static WithCancellationAwaitable<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+            => new WithCancellationAwaitable<T>(task, cancellationToken);
+
         public static T EnsureCompleted<T>(this Task<T> task)
         {
 #if DEBUG
@@ -132,6 +150,70 @@ namespace Azure.Core.Pipeline
 #pragma warning disable AZC0107 // Do not call public asynchronous method in synchronous scope.
             public void Dispose() => _asyncEnumerator.DisposeAsync().EnsureCompleted();
 #pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
+        }
+
+        public readonly struct WithCancellationAwaitable<T>
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable<T> _awaitable;
+
+            public WithCancellationAwaitable(Task<T> task, CancellationToken cancellationToken)
+            {
+                _awaitable = task.ConfigureAwait(false);
+                _cancellationToken = cancellationToken;
+            }
+
+            public WithCancellationAwaiter<T> GetAwaiter() => new WithCancellationAwaiter<T>(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
+        public readonly struct WithCancellationAwaiter<T> : ICriticalNotifyCompletion
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter _taskAwaiter;
+
+            public WithCancellationAwaiter(ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter awaiter, CancellationToken cancellationToken)
+            {
+                _taskAwaiter = awaiter;
+                _cancellationToken = cancellationToken;
+            }
+
+            public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
+
+            public void OnCompleted(Action continuation)
+                => _taskAwaiter.OnCompleted(CreateContinuation(continuation));
+
+            public void UnsafeOnCompleted(Action continuation)
+                => _taskAwaiter.UnsafeOnCompleted(CreateContinuation(continuation));
+
+            public T GetResult()
+            {
+                Debug.Assert(IsCompleted);
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
+                return _taskAwaiter.GetResult();
+            }
+
+            private Action CreateContinuation(in Action originalContinuation)
+            {
+                if (!_cancellationToken.CanBeCanceled || _taskAwaiter.IsCompleted)
+                {
+                    return originalContinuation;
+                }
+
+                CancellationTokenRegistration registration = _cancellationToken.Register(originalContinuation);
+                Action reference = originalContinuation;
+                return () =>
+                {
+                    Action continuation = Interlocked.Exchange(ref reference, null);
+                    if (continuation != null)
+                    {
+                        registration.Dispose();
+                        continuation();
+                    }
+                };
+            }
         }
     }
 }

@@ -13,25 +13,11 @@ namespace Azure.Core
     public abstract class TokenCredential
     {
         /// <summary>
-        /// Create the instance of a <see cref="TokenCredential"/>.
-        /// </summary>
-        protected TokenCredential() : this (TimeSpan.FromMinutes(2)) { }
-
-        /// <summary>
-        /// Create the instance of a <see cref="TokenCredential"/>.
-        /// </summary>
-        /// <param name="tokenRefreshOffset">A <see cref="TimeSpan"/> value representing the amount of time to subtract from the token expiry time, whereupon attempts will be made to refresh the token.</param>
-        protected TokenCredential(TimeSpan tokenRefreshOffset)
-        {
-            TokenRefreshOffset = tokenRefreshOffset;
-        }
-
-        /// <summary>
         /// Returns a <see cref="TimeSpan"/> value representing the amount of time to subtract from the token expiry time, whereupon
         /// attempts will be made to refresh the token. By default this will occur two minutes prior to the expiry of the token.
         /// </summary>
         /// <returns>The duration value representing the amount of time to subtract from the token expiry time.</returns>
-        protected internal TimeSpan TokenRefreshOffset { get; }
+        public virtual TokenRefreshOptions TokenRefreshOffset { get; } = new TokenRefreshOptions(TimeSpan.FromMinutes(2));
 
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.

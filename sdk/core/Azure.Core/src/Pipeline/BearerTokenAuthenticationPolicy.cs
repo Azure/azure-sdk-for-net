@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,22 +13,13 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// </summary>
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private readonly object _syncObj;
-
         private readonly TokenCredential _credential;
 
         private readonly string[] _scopes;
 
-        private TokenState _tokenState;
-
-        private string? _headerValue;
-        private SemaphoreSlim? _headerSemaphore;
-        private DateTimeOffset _refreshOn;
-        private DateTimeOffset _expiresOn;
+        private readonly AccessTokenCache _accessTokenCache;
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -50,7 +42,7 @@ namespace Azure.Core.Pipeline
 
             _credential = credential;
             _scopes = scopes.ToArray();
-            _syncObj = new object();
+            _accessTokenCache = new AccessTokenCache(_credential.TokenRefreshOffset.Offset);
         }
 
         /// <inheritdoc />
@@ -73,29 +65,30 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            (string? headerValue, SemaphoreSlim? semaphore) = UpdateTokenState();
+            (string? headerValue, Task<string>? pending) = _accessTokenCache.UpdateTokenState();
             if (headerValue == default)
             {
-                if (semaphore != null)
+                if (pending != null)
                 {
-                    if (async)
-                    {
-                        await semaphore.WaitAsync(message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        semaphore.Wait(message.CancellationToken);
-                    }
-
-                    headerValue = GetConcurrentlySetHeaderValue();
+                    headerValue = async
+                        ? await pending.WithCancellation(message.CancellationToken)
+                        : pending.WaitWithCancellation(message.CancellationToken);
                 }
                 else
                 {
-                    AccessToken token = async
-                        ? await _credential.GetTokenAsync(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken).ConfigureAwait(false)
-                        : _credential.GetToken(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken);
+                    try
+                    {
+                        AccessToken token = async
+                            ? await _credential.GetTokenAsync(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken).ConfigureAwait(false)
+                            : _credential.GetToken(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken);
 
-                    headerValue = SetHeaderValue(token);
+                        headerValue = _accessTokenCache.SaveToken(token, default);
+                    }
+                    catch (Exception e)
+                    {
+                        _accessTokenCache.SaveToken(default, e);
+                        throw;
+                    }
                 }
             }
 
@@ -114,65 +107,92 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private string? GetConcurrentlySetHeaderValue()
+        private class AccessTokenCache
         {
-            lock (_syncObj)
+            private readonly object _syncObj = new object();
+            private readonly TimeSpan _tokenRefreshOffset;
+
+            private TokenState _tokenState;
+            private string? _headerValue;
+            private TaskCompletionSource<string>? _pendingTcs;
+            private DateTimeOffset _refreshOn;
+            private DateTimeOffset _expiresOn;
+
+            public AccessTokenCache(TimeSpan tokenRefreshOffset)
             {
-                _headerSemaphore?.Release(1);
-                return _headerValue;
+                _tokenRefreshOffset = tokenRefreshOffset;
             }
-        }
 
-        private string? SetHeaderValue(in AccessToken token)
-        {
-            var offset = _credential.TokenRefreshOffset;
-            lock (_syncObj)
+            public string? SaveToken(AccessToken token, Exception? exception)
             {
-                _headerValue = "Bearer " + token.Token;
-                _refreshOn = token.ExpiresOn - offset;
-                _expiresOn = token.ExpiresOn;
-                _tokenState = TokenState.Valid;
+                string? headerValue;
+                TaskCompletionSource<string>? pendingTcs;
 
-                _headerSemaphore?.Release(1);
-                return _headerValue;
+                lock (_syncObj)
+                {
+                    if (!string.IsNullOrEmpty(token.Token))
+                    {
+                        _headerValue = "Bearer " + token.Token;
+                        _refreshOn = token.ExpiresOn - _tokenRefreshOffset;
+                        _expiresOn = token.ExpiresOn;
+                        _tokenState = TokenState.Valid;
+                    }
+                    else
+                    {
+                        _headerValue = default;
+                        _refreshOn = default;
+                        _expiresOn = default;
+                        _tokenState = TokenState.Invalid;
+                    }
+
+                    pendingTcs = _pendingTcs;
+                    headerValue = _headerValue;
+                    _pendingTcs = null;
+                }
+
+                if (pendingTcs != null)
+                {
+                    if (headerValue != null)
+                    {
+                        pendingTcs.SetResult(headerValue);
+                    }
+                    else
+                    {
+                        pendingTcs.SetException(exception ?? new InvalidOperationException());
+                    }
+                }
+
+                return headerValue;
             }
-        }
 
-        private (string? headerValue, SemaphoreSlim? semaphore) UpdateTokenState()
-        {
-            lock (_syncObj)
+            public (string? headerValue, Task<string>? pendingTask) UpdateTokenState()
             {
-                switch (_tokenState) {
-                    case TokenState.Invalid:
-                        _tokenState = TokenState.Pending;
-                        ResetSemaphore(_headerSemaphore);
-                        return (null, null);
-                    case TokenState.Pending:
-                        _headerSemaphore ??= new SemaphoreSlim(0, 1);
-                        return (null, _headerSemaphore);
-                    case TokenState.Valid when DateTimeOffset.UtcNow >= _refreshOn:
-                        _tokenState = DateTimeOffset.UtcNow >= _expiresOn ? TokenState.Pending : TokenState.AboutToExpire;
-                        ResetSemaphore(_headerSemaphore);
-                        return (null, null);
-                    case TokenState.Valid:
-                        return (_headerValue, null);
-                    case TokenState.AboutToExpire when DateTimeOffset.UtcNow >= _expiresOn:
+                lock (_syncObj)
+                {
+                    if (DateTimeOffset.UtcNow >= _expiresOn && _tokenState != TokenState.Pending)
+                    {
                         _tokenState = TokenState.Pending;
                         _headerValue = null;
-                        ResetSemaphore(_headerSemaphore);
                         return (null, null);
-                    case TokenState.AboutToExpire:
-                        return (_headerValue, null);
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
+                    }
 
-            static void ResetSemaphore(SemaphoreSlim? semaphore)
-            {
-                if (semaphore != null && semaphore.CurrentCount == 1)
-                {
-                    semaphore.Wait();
+                    if (DateTimeOffset.UtcNow >= _refreshOn && _tokenState == TokenState.Valid)
+                    {
+                        _tokenState = TokenState.AboutToExpire;
+                        return (null, null);
+                    }
+
+                    switch (_tokenState) {
+                        case TokenState.Pending:
+                            _pendingTcs ??= new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+                            return (null, _pendingTcs.Task);
+                        case TokenState.Valid:
+                            return (_headerValue, null);
+                        case TokenState.AboutToExpire:
+                            return (_headerValue, null);
+                        default:
+                            throw new InvalidOperationException("Unexpected value");
+                    }
                 }
             }
         }

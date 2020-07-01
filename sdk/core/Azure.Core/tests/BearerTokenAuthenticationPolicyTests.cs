@@ -143,13 +143,138 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth1Value, auth2Value);
         }
 
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_TokenAlmostExpired()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1"));
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string authValue));
+
+            requestMre.Reset();
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2"));
+            requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/3"));
+            responseMre.Set();
+
+            await requestTask;
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4"));
+
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth2Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
+
+            Assert.AreEqual(authValue, auth1Value);
+            Assert.AreNotEqual(authValue, auth2Value);
+            Assert.AreEqual(auth2Value, auth3Value);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_TokenExpired()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string authValue));
+
+            await Task.Delay(2_000);
+
+            requestMre.Reset();
+            responseMre.Reset();
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/1"));
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2"));
+            requestMre.Wait();
+            responseMre.Set();
+
+            await Task.WhenAll(firstRequestTask, secondRequestTask);
+
+            Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth2Value));
+
+            Assert.AreNotEqual(authValue, auth1Value);
+            Assert.AreEqual(auth1Value, auth2Value);
+        }
+
+        [Test]
+        public void BearerTokenAuthenticationPolicy_OneHundredConcurrentCallsFailed()
+        {
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                Thread.Sleep(100);
+                throw new InvalidOperationException("Error");
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(Enumerable.Range(0, 100).Select(i => new MockResponse(200)).ToArray());
+            var requestTasks = new Task<Response>[100];
+
+            for (int i = 0; i < requestTasks.Length; i++)
+            {
+                requestTasks[i] = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            }
+
+            Assert.CatchAsync(async () => await Task.WhenAll(requestTasks));
+
+            foreach (Task<Response> task in requestTasks)
+            {
+                Assert.IsTrue(task.IsFaulted);
+            }
+        }
+
+        [Test]
+        public void BearerTokenAuthenticationPolicy_GatedConcurrentCallsFailed()
+        {
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                throw new InvalidOperationException("Error");
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            requestMre.Wait();
+            responseMre.Set();
+
+            Assert.CatchAsync(async () => await Task.WhenAll(firstRequestTask, secondRequestTask));
+
+            Assert.IsTrue(firstRequestTask.IsFaulted);
+            Assert.IsTrue(secondRequestTask.IsFaulted);
+            Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+        }
+
         private class TokenCredentialStub : TokenCredential
         {
             public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync)
-                : this(handler, isAsync, TimeSpan.FromMinutes(2)) { }
-
-            public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync, TimeSpan tokenRefreshOffset)
-                : base(tokenRefreshOffset)
             {
                 if (isAsync)
                 {
