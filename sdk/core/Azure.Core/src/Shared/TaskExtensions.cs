@@ -26,7 +26,9 @@ namespace Azure.Core.Pipeline
                 // ignore exception here to rethrow it later
             }
 
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             return task.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
         public static WithCancellationAwaitable<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
