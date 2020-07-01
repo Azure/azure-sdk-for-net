@@ -1,6 +1,6 @@
 # Azure Storage libraries for .NET
 
-Azure Storage is a Microsoft-managed service providing cloud storage that is highly available, secure, durable, scalable, and redundant.  Azure Storage includes Blobs (objects), Queues, and Files.
+Azure Storage is a Microsoft-managed service providing cloud storage that is highly available, secure, durable, scalable, and redundant.  Azure Storage includes Blobs (objects), Queues, and Files. To understand more about the intent behind these v12 client libraries visit our Tech Community blog post, [Announcing the Azure Storage v12 Client Libraries](https://techcommunity.microsoft.com/t5/azure-storage/announcing-the-azure-storage-v12-client-libraries/ba-p/1482394).
 
 - [Azure.Storage.Blobs][blobs] is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data that does not adhere to a particular data model or definition, such as text or binary data.
 
