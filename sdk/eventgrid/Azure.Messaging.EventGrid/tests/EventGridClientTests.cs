@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventGrid.Customization;
+using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
 using NUnit.Framework;
 
@@ -25,10 +25,11 @@ namespace Azure.Messaging.EventGrid.Tests
         public async Task CanPublishEvent()
         {
             EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
-            EventGridClient client = InstrumentClient(new EventGridClient(
-                                            new Uri(TestEnvironment.TopicHost),
-                                            new AzureKeyCredential(TestEnvironment.TopicKey),
-                                            options));
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
             await client.PublishEventsAsync(GetEventsList());
         }
 
@@ -38,7 +39,14 @@ namespace Azure.Messaging.EventGrid.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                eventsList.Add(new EventGridEvent(Recording.Random.NewGuid().ToString(), $"Subject-{i}", "hello", "Microsoft.MockPublisher.TestEvent", Recording.Now, "1.0"));
+                eventsList.Add(
+                    new EventGridEvent(
+                        Recording.Random.NewGuid().ToString(),
+                        $"Subject-{i}",
+                        "hello",
+                        "Microsoft.MockPublisher.TestEvent",
+                        Recording.Now,
+                        "1.0"));
             }
 
             return eventsList;

@@ -11,15 +11,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventGrid.Models;
 
-namespace Azure.Messaging.EventGrid.Customization
+namespace Azure.Messaging.EventGrid
 {
+    /// <summary>
+    /// Client used to interact with the Event Grid service
+    /// </summary>
     public class EventGridClient
     {
         private readonly ServiceRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _hostName;
-        private const string SasKeyName = "aeg-sas-key";
-        //private const string SasTokenName = "aeg-sas-token";
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
         protected EventGridClient()
@@ -41,14 +42,15 @@ namespace Azure.Messaging.EventGrid.Customization
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridClientOptions();
             _hostName = endpoint.Host;
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, SasKeyName));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
         {
