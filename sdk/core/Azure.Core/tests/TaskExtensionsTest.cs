@@ -13,6 +13,65 @@ namespace Azure.Core.Tests
     public class TaskExtensionsTest
     {
         [Test]
+        public async Task TaskExtensions_WaitWithCancellationDefault()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var waitTask = Task.Run(() => tcs.Task.WaitWithCancellation(default));
+            Assert.AreEqual(false, waitTask.IsCompleted);
+
+            tcs.SetResult(8);
+            var result = await waitTask;
+
+            Assert.AreEqual(8, result);
+        }
+
+        [Test]
+        public async Task TaskExtensions_WaitWithCancellationCompleted()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var cts = new CancellationTokenSource();
+            tcs.SetResult(8);
+            cts.Cancel();
+
+            var result = await Task.Run(() => tcs.Task.WaitWithCancellation(cts.Token));
+            Assert.AreEqual(8, result);
+        }
+
+        [Test]
+        public void TaskExtensions_WaitWithCancellationCanceled()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            Assert.Catch<OperationCanceledException>(() => tcs.Task.WaitWithCancellation(cts.Token));
+        }
+
+        [Test]
+        public void TaskExtensions_WaitWithCancellationCanceledAfterWait()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var cts = new CancellationTokenSource();
+            var waitTask = Task.Run(() => tcs.Task.WaitWithCancellation(cts.Token));
+            Assert.AreEqual(false, waitTask.IsCompleted);
+
+            cts.Cancel();
+            Assert.CatchAsync<OperationCanceledException>(async () => await waitTask);
+        }
+
+        [Test]
+        public void TaskExtensions_WaitWithCancellationFailedAfterWait()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var cts = new CancellationTokenSource();
+            var waitTask = Task.Run(() => tcs.Task.WaitWithCancellation(cts.Token));
+            Assert.AreEqual(false, waitTask.IsCompleted);
+
+            tcs.SetException(new OperationCanceledException("Error"));
+            Assert.CatchAsync<OperationCanceledException>(async () => await waitTask, "Error");
+        }
+
+        [Test]
         public void TaskExtensions_WithCancellationDefault()
         {
             var tcs = new TaskCompletionSource<int>();
@@ -76,6 +135,26 @@ namespace Azure.Core.Tests
             Assert.AreEqual(true, continuationCalled);
             Assert.AreEqual(true, awaiter.IsCompleted);
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
+        }
+
+        [Test]
+        public void TaskExtensions_WithCancellationFailedAfterContinuationScheduled()
+        {
+            var tcs = new TaskCompletionSource<int>();
+            var cts = new CancellationTokenSource();
+            var awaiter = tcs.Task.WithCancellation(cts.Token).GetAwaiter();
+            var continuationCalled = false;
+
+            Assert.AreEqual(false, awaiter.IsCompleted);
+            awaiter.UnsafeOnCompleted(() => continuationCalled = true);
+
+            Assert.AreEqual(false, awaiter.IsCompleted);
+            Assert.AreEqual(false, continuationCalled);
+            tcs.SetException(new OperationCanceledException("Error"));
+
+            Assert.AreEqual(true, continuationCalled);
+            Assert.AreEqual(true, awaiter.IsCompleted);
+            Assert.Catch<OperationCanceledException>(() => awaiter.GetResult(), "Error");
         }
     }
 }
