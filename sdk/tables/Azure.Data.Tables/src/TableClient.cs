@@ -27,6 +27,11 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
+        public enum UpdateMode
+        {
+            Merge,
+            Replace
+        }
 
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
         {
@@ -116,10 +121,10 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
             scope.Start();
             try
             {
@@ -146,10 +151,10 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        public virtual Response<ReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
             scope.Start();
             try
             {
@@ -176,10 +181,10 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        public virtual async Task<Response<T>> InsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
             scope.Start();
             try
             {
@@ -204,10 +209,10 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        public virtual Response<T> Insert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
             scope.Start();
             try
             {
@@ -231,10 +236,11 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> InsertOrReplaceAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpsertEntityAsync(UpdateMode mode, IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -249,16 +255,28 @@ namespace Azure.Data.Tables
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
             scope.Start();
             try
             {
-                return await _tableOperations.UpdateEntityAsync(_table,
+                if (mode == UpdateMode.Replace)
+                {
+                    return await _tableOperations.UpdateEntityAsync(_table,
                                                             partitionKey as string,
                                                             rowKey as string,
                                                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                             queryOptions: new QueryOptions() { Format = _format },
                                                             cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                                                            partitionKey as string,
+                                                            rowKey as string,
+                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                            queryOptions: new QueryOptions() { Format = _format },
+                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -270,10 +288,11 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response InsertOrReplace(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual Response UpsertEntity(UpdateMode mode, IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
 
@@ -288,16 +307,28 @@ namespace Azure.Data.Tables
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
             scope.Start();
             try
             {
-                return _tableOperations.UpdateEntity(_table,
+                if (mode == UpdateMode.Replace)
+                {
+                    return _tableOperations.UpdateEntity(_table,
                                                  partitionKey as string,
                                                  rowKey as string,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    return _tableOperations.MergeEntity(_table,
+                                                 partitionKey as string,
+                                                 rowKey as string,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken);
+                }
             }
             catch (Exception ex)
             {
@@ -309,23 +340,36 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> InsertOrReplaceAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual async Task<Response> UpsertEntityAsync<T>(UpdateMode mode, T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
             scope.Start();
             try
             {
-                return await _tableOperations.UpdateEntityAsync(_table,
-                                                            entity.PartitionKey,
-                                                            entity.RowKey,
-                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                            queryOptions: new QueryOptions() { Format = _format },
-                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (mode == UpdateMode.Replace)
+                {
+                    return await _tableOperations.UpdateEntityAsync(_table,
+                                                 entity.PartitionKey,
+                                                 entity.RowKey,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                                                 entity.PartitionKey,
+                                                 entity.RowKey,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -337,23 +381,36 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response InsertOrReplace<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Response UpsertEntity<T>(UpdateMode mode, T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrReplace)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpsertEntity)}");
             scope.Start();
             try
             {
-                return _tableOperations.UpdateEntity(_table,
+                if (mode == UpdateMode.Replace)
+                {
+                    return _tableOperations.UpdateEntity(_table,
                                                  entity.PartitionKey,
                                                  entity.RowKey,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
+                }
+                else
+                {
+                    return _tableOperations.MergeEntity(_table,
+                                                 entity.PartitionKey,
+                                                 entity.RowKey,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken);
+                }
             }
             catch (Exception ex)
             {
@@ -365,11 +422,12 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateEntityAsync(UpdateMode mode, IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -385,17 +443,30 @@ namespace Azure.Data.Tables
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
             {
-                return await _tableOperations.UpdateEntityAsync(_table,
+                if (mode == UpdateMode.Replace)
+                {
+                    return await _tableOperations.UpdateEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      ifMatch: eTag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await _tableOperations.MergeEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                     ifMatch: eTag,
+                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -407,11 +478,12 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Replaces the specified table entity, if it exists.
         /// </summary>
+        /// <param name="mode"></param>
         /// <param name="entity">The entity to update.</param>
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Update(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        public virtual Response UpdateEntity(UpdateMode mode, IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -427,179 +499,30 @@ namespace Azure.Data.Tables
                 throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
             }
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
             {
-                return _tableOperations.UpdateEntity(_table,
+                if (mode == UpdateMode.Replace)
+                {
+                    return _tableOperations.UpdateEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> InsertOrMergeAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
-            scope.Start();
-            try
-            {
-                return (await _tableOperations.MergeEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response InsertOrMerge(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(InsertOrMerge)}");
-            scope.Start();
-            try
-            {
-                return _tableOperations.MergeEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
-                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNull(eTag, nameof(eTag));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
-            scope.Start();
-            try
-            {
-                return (await _tableOperations.MergeEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     ifMatch: eTag,
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists.
-        /// </summary>
-        /// <param name="entity">The entity to merge.</param>
-        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Merge(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
-
-            //TODO: Create Resource strings
-            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingPartitionKey, nameof(entity));
-            }
-
-            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
-            {
-                throw new ArgumentException(TableConstants.ExceptionMessages.MissingRowKey, nameof(entity));
-            }
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
-            scope.Start();
-            try
-            {
-                return _tableOperations.MergeEntity(_table,
+                }
+                else
+                {
+                    return _tableOperations.MergeEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken).GetRawResponse();
+                                          cancellationToken: cancellationToken);
+                }
             }
             catch (Exception ex)
             {

@@ -308,7 +308,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToInsert)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
@@ -410,7 +410,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToInsert)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String

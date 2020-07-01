@@ -173,7 +173,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToInsert)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToInsert)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
         }
 
