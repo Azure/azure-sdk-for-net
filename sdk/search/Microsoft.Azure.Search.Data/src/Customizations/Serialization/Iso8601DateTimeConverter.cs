@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// explicitly included in the JSON. It also ensures that any time zone information in the JSON is taken into account when
     /// deserializing to a new <see cref="System.DateTime" /> instance. For example, if the JSON value's time component
     /// is noon and its time zone is UTC-8, the deserialized <see cref="System.DateTime" /> instance's time will be 8 PM
-    /// and its <see cref="System.DateTime.Kind">Kind</c> will be <see cref="System.DateTimeKind.Utc" />.
+    /// and its <see cref="System.DateTime.Kind" /> will be <see cref="System.DateTimeKind.Utc" />.
     /// </remarks>
     internal class Iso8601DateTimeConverter : JsonConverter
     {

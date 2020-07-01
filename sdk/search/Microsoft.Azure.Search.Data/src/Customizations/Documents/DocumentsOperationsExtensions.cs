@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Search
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top">Top</c> and <see cref="SearchParameters.Skip" />
+        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
         /// parameters to the
         /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
         /// method.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Search
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top">Top</c> and <see cref="SearchParameters.Skip" />
+        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
         /// parameters to the
         /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
         /// method.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Search
         /// </para>
         /// <para>
         /// Note that this method is not meant to help you implement paging of search results. You can implement
-        /// paging using the <see cref="SearchParameters.Top">Top</c> and <see cref="SearchParameters.Skip" />
+        /// paging using the <see cref="SearchParameters.Top" /> and <see cref="SearchParameters.Skip" />
         /// parameters to the
         /// <see cref="IDocumentsOperations.SearchWithHttpMessagesAsync&lt;T&gt;(string, SearchParameters, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)" />
         /// method.
