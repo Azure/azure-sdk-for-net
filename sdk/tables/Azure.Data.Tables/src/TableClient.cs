@@ -111,11 +111,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Inserts a Table Entity into the Table.
+        /// Creates a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to insert.</param>
+        /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The inserted Table entity.</returns>
+        /// <returns>The created Table entity.</returns>
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -141,11 +141,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Inserts a Table Entity into the Table.
+        /// Creates a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to insert.</param>
+        /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The inserted Table entity.</returns>
+        /// <returns>The created Table entity.</returns>
         public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -171,11 +171,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Inserts a Table Entity into the Table.
+        /// Creates a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to insert.</param>
+        /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The inserted Table entity.</returns>
+        /// <returns>The created Table entity.</returns>
         public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -199,11 +199,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Inserts a Table Entity into the Table.
+        /// Creates a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to insert.</param>
+        /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The inserted Table entity.</returns>
+        /// <returns>The created Table entity.</returns>
         public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -227,7 +227,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
@@ -282,7 +282,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
@@ -337,7 +337,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
@@ -382,7 +382,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="mode">An enum that determines which upsert operation to perform.</param>
