@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         /// <summary>
         /// Tells the indexer to assume that blobs should be parsed as text files in UTF-8 encoding.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text"/> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text">Indexing plain text</see> for details.
         /// </summary>
         /// <param name="parameters">The <see cref="IndexingParameters"/> to configure.</param>
         /// <returns>The <see cref="IndexingParameters"/> instance.</returns>
@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         /// <summary>
         /// Tells the indexer to assume that blobs should be parsed as text files in the desired encoding.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text"/> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text">Indexing plain text</see> for details.
         /// </summary>
         /// <param name="parameters">The <see cref="IndexingParameters"/> to configure.</param>
         /// <param name="encoding">Encoding used to read the text stored in blobs.</param>

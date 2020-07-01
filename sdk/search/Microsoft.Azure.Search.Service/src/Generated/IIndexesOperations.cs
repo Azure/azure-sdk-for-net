@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Creates a new search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/create-index">Create Index</see>.
         /// </summary>
         /// <param name='index'>
         /// The definition of the index to create.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<Index>> CreateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all indexes available for a search service.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/list-indexes">List Indexes</see>.
         /// </summary>
         /// <param name='select'>
         /// Selects which properties of the index definitions to retrieve.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new search index or updates an index if it already
         /// exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/update-index">Update Index</see>.
         /// </summary>
         /// <param name='indexName'>
         /// The definition of the index to create or update.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a search index and all the documents it contains.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/delete-index">Delete Index</see>.
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to delete.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves an index definition.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/get-index">Get Index</see>.
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index to retrieve.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Returns statistics for the given index, including a document count
         /// and storage usage.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index-Statistics" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/get-index-statistics">Get Index Statistics</see>.
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index for which to retrieve statistics.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<IndexGetStatisticsResult>> GetStatisticsWithHttpMessagesAsync(string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Shows how an analyzer breaks text into tokens.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/test-analyzer" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/test-analyzer">Analyze Text</see>.
         /// </summary>
         /// <param name='indexName'>
         /// The name of the index for which to test an analyzer.

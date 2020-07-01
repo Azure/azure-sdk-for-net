@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         /// <param name="connectionString">
         /// The IoT Hub connection string, with either "iothubowner", "service", "registryRead" or "registryReadWrite" policy, as applicable.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-security#access-control-and-permissions"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security#access-control-and-permissions">Access control and permissions</see>.
         /// </param>
         public IoTHubServiceClient(string connectionString)
             : this(connectionString, new IoTHubServiceClientOptions())
@@ -75,7 +75,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         /// <param name="connectionString">
         /// The IoT Hub connection string, with either "iothubowner", "service", "registryRead" or "registryReadWrite" policy, as applicable.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-security#access-control-and-permissions"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security#access-control-and-permissions">Access control and permissions</see>.
         /// </param>
         /// <param name="options">
         /// Options that allow configuration of requests sent to the IoT Hub service.
