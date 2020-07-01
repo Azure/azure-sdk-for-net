@@ -72,7 +72,7 @@ namespace Azure.Data.Tables
         /// Creates the table in the storage account.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
         public virtual Response<TableItem> Create(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
@@ -93,7 +93,7 @@ namespace Azure.Data.Tables
         /// Creates the table in the storage account.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
         public virtual async Task<Response<TableItem>> CreateAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
@@ -116,6 +116,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -146,6 +147,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -176,6 +178,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -204,6 +207,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
+        /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
         public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
