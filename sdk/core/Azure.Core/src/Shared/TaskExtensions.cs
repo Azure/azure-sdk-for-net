@@ -186,10 +186,10 @@ namespace Azure.Core.Pipeline
             public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
 
             public void OnCompleted(Action continuation)
-                => _taskAwaiter.OnCompleted(CreateContinuation(continuation));
+                => _taskAwaiter.OnCompleted(WrapContinuation(continuation));
 
             public void UnsafeOnCompleted(Action continuation)
-                => _taskAwaiter.UnsafeOnCompleted(CreateContinuation(continuation));
+                => _taskAwaiter.UnsafeOnCompleted(WrapContinuation(continuation));
 
             public T GetResult()
             {
@@ -201,24 +201,35 @@ namespace Azure.Core.Pipeline
                 return _taskAwaiter.GetResult();
             }
 
-            private Action CreateContinuation(in Action originalContinuation)
+            private Action WrapContinuation(in Action originalContinuation)
+                => _cancellationToken.CanBeCanceled
+                    ? new ContinuationWrapper(originalContinuation, _cancellationToken).Continuation
+                    : originalContinuation;
+
+            private class ContinuationWrapper
             {
-                if (!_cancellationToken.CanBeCanceled)
+                private Action _originalContinuation;
+                private readonly CancellationTokenRegistration _registration;
+
+                public ContinuationWrapper(Action originalContinuation, CancellationToken cancellationToken)
                 {
-                    return originalContinuation;
+                    Action continuation = ContinuationImplementation;
+                    _originalContinuation = originalContinuation;
+                    _registration = cancellationToken.Register(continuation);
+                    Continuation = continuation;
                 }
 
-                CancellationTokenRegistration registration = _cancellationToken.Register(originalContinuation);
-                Action reference = originalContinuation;
-                return () =>
+                public Action Continuation { get; }
+
+                private void ContinuationImplementation()
                 {
-                    Action continuation = Interlocked.Exchange(ref reference, null);
-                    if (continuation != null)
+                    Action originalContinuation = Interlocked.Exchange(ref _originalContinuation, null);
+                    if (originalContinuation != null)
                     {
-                        registration.Dispose();
-                        continuation();
+                        _registration.Dispose();
+                        originalContinuation();
                     }
-                };
+                }
             }
         }
     }
