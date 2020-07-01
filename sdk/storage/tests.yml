@@ -7,3 +7,4 @@ extends:
     BuildInParallel: false
     TimeoutInMinutes: 300
     Location: westus
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
