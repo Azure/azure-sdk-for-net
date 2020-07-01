@@ -9,12 +9,12 @@ namespace Azure.Core
         public BinaryData(string data) { throw null; }
         public BinaryData(string data, System.Text.Encoding encoding) { throw null; }
         public System.ReadOnlyMemory<byte> AsBytes() { throw null; }
-        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
-        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromSerializableAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.BinaryData FromSerializable<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromSerializableAsync<T>(T data, Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.BinaryData FromSerializable<T>(T data, Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -34,8 +34,8 @@ namespace Azure.Core
         public static Azure.Core.DynamicJson Array(params Azure.Core.DynamicJson[] values) { throw null; }
         public static Azure.Core.DynamicJson Array(System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> values) { throw null; }
         public static Azure.Core.DynamicJson Create(System.Text.Json.JsonElement element) { throw null; }
-        public System.Threading.Tasks.Task<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
-        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public System.Threading.Tasks.Task<T> DeserializeAsync<T>(Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T Deserialize<T>(Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public T Deserialize<T>(System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Core.DynamicJson> EnumerateArray() { throw null; }
         public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.Core.DynamicJson>> EnumerateObject() { throw null; }
@@ -72,8 +72,8 @@ namespace Azure.Core
         public static implicit operator Azure.Core.DynamicJson (float value) { throw null; }
         public static implicit operator Azure.Core.DynamicJson (string? value) { throw null; }
         public static Azure.Core.DynamicJson Parse(string json) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.DynamicJson> SerializeAsync<T>(T value, Azure.Core.ObjectSerializer serializer) { throw null; }
-        public static Azure.Core.DynamicJson Serialize<T>(T value, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.DynamicJson> SerializeAsync<T>(T value, Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.DynamicJson Serialize<T>(T value, Azure.Core.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.DynamicJson Serialize<T>(T value, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public System.Text.Json.JsonElement ToJsonElement() { throw null; }
@@ -84,18 +84,18 @@ namespace Azure.Core
     {
         public JsonObjectSerializer() { }
         public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
-        public override object Deserialize(System.IO.Stream stream, System.Type returnType) { throw null; }
-        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType) { throw null; }
-        public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType) { }
-        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType) { throw null; }
+        public override object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
+        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class ObjectSerializer
     {
         protected ObjectSerializer() { }
-        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType);
-        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType);
-        public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType);
-        public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType);
+        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
+        public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
     }
 }
 namespace Azure.Core.Spatial

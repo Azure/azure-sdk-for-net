@@ -112,11 +112,13 @@ namespace Azure.Core
         /// <param name="data">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         public static BinaryData FromSerializable<T>(
             T data,
-            ObjectSerializer serializer) =>
-            FromSerializableAsync<T>(data, serializer, false).EnsureCompleted();
+            ObjectSerializer serializer,
+            CancellationToken cancellationToken = default) =>
+            FromSerializableAsync<T>(data, serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
@@ -126,28 +128,29 @@ namespace Azure.Core
         /// <param name="data">The data to use.</param>
         /// <param name="serializer">The serializer to serialize
         /// the data.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        /// TODO - add cancellation token support
-        /// once ObjectSerializer.SerializeAsync adds it.
         public static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
-            ObjectSerializer serializer) =>
-            await FromSerializableAsync<T>(data, serializer, true).ConfigureAwait(false);
+            ObjectSerializer serializer,
+            CancellationToken cancellationToken = default) =>
+            await FromSerializableAsync<T>(data, serializer, true, cancellationToken).ConfigureAwait(false);
 
         private static async Task<BinaryData> FromSerializableAsync<T>(
             T data,
             ObjectSerializer serializer,
-            bool async)
+            bool async,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(serializer, nameof(serializer));
             using var memoryStream = new MemoryStream();
             if (async)
             {
-                await serializer.SerializeAsync(memoryStream, data, typeof(T)).ConfigureAwait(false);
+                await serializer.SerializeAsync(memoryStream, data, typeof(T), cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                serializer.Serialize(memoryStream, data, typeof(T));
+                serializer.Serialize(memoryStream, data, typeof(T), cancellationToken);
             }
             return new BinaryData(memoryStream.ToArray());
         }
@@ -208,9 +211,10 @@ namespace Azure.Core
         /// converted to.</typeparam>
         /// <param name="serializer">The serializer to use
         /// when deserializing the data.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data converted to the specified type.</returns>
-        public T Deserialize<T>(ObjectSerializer serializer) =>
-            DeserializeAsync<T>(serializer, false).EnsureCompleted();
+        public T Deserialize<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            DeserializeAsync<T>(serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Converts the BinaryData to the specified type.
@@ -219,30 +223,32 @@ namespace Azure.Core
         /// converted to.</typeparam>
         /// <param name="serializer">The serializer to use
         /// when deserializing the data.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
         /// TODO - add cancellation token support
         /// once ObjectSerializer.DeserializeAsync adds it.
-        public async ValueTask<T> DeserializeAsync<T>(
-            ObjectSerializer serializer) =>
-            await DeserializeAsync<T>(serializer, true).ConfigureAwait(false);
+        public async ValueTask<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
+            await DeserializeAsync<T>(serializer, true, cancellationToken).ConfigureAwait(false);
 
         private async ValueTask<T> DeserializeAsync<T>(
             ObjectSerializer serializer,
-            bool async)
+            bool async,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(serializer, nameof(serializer));
             if (async)
             {
                 return (T)await serializer.DeserializeAsync(
                     ToStream(),
-                    typeof(T))
+                    typeof(T),
+                    cancellationToken)
                     .ConfigureAwait(false);
             }
             else
             {
-                return (T)serializer.Deserialize(ToStream(), typeof(T));
+                return (T)serializer.Deserialize(ToStream(), typeof(T), cancellationToken);
             }
         }
 
