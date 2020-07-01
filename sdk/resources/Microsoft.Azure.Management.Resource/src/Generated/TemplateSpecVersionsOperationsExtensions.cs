@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecVersionModel'>
             /// Template Spec Version supplied to the operation.
             /// </param>
-            public static TemplateSpecVersionModel CreateOrUpdate(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionModel templateSpecVersionModel)
+            public static TemplateSpecVersion CreateOrUpdate(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersion templateSpecVersionModel)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionModel).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateSpecVersionModel> CreateOrUpdateAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionModel templateSpecVersionModel, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TemplateSpecVersion> CreateOrUpdateAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersion templateSpecVersionModel, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionModel, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecVersionUpdateModel'>
             /// Template Spec Version resource with the tags to be updated.
             /// </param>
-            public static TemplateSpecVersionModel Update(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel))
+            public static TemplateSpecVersion Update(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel))
             {
                 return operations.UpdateAsync(resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionUpdateModel).GetAwaiter().GetResult();
             }
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateSpecVersionModel> UpdateAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TemplateSpecVersion> UpdateAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = default(TemplateSpecVersionUpdateModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, templateSpecName, templateSpecVersion, templateSpecVersionUpdateModel, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecVersion'>
             /// The version of the Template Spec.
             /// </param>
-            public static TemplateSpecVersionModel Get(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+            public static TemplateSpecVersion Get(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion)
             {
                 return operations.GetAsync(resourceGroupName, templateSpecName, templateSpecVersion).GetAwaiter().GetResult();
             }
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateSpecVersionModel> GetAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TemplateSpecVersion> GetAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, templateSpecName, templateSpecVersion, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecName'>
             /// Name of the Template Spec.
             /// </param>
-            public static IPage<TemplateSpecVersionModel> List(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName)
+            public static IPage<TemplateSpecVersion> List(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName)
             {
                 return operations.ListAsync(resourceGroupName, templateSpecName).GetAwaiter().GetResult();
             }
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TemplateSpecVersionModel>> ListAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TemplateSpecVersion>> ListAsync(this ITemplateSpecVersionsOperations operations, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, templateSpecName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TemplateSpecVersionModel> ListNext(this ITemplateSpecVersionsOperations operations, string nextPageLink)
+            public static IPage<TemplateSpecVersion> ListNext(this ITemplateSpecVersionsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TemplateSpecVersionModel>> ListNextAsync(this ITemplateSpecVersionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TemplateSpecVersion>> ListNextAsync(this ITemplateSpecVersionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
