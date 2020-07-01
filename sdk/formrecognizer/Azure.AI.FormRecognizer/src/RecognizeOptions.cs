@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Whether or not to include form content elements such as lines and words in addition to form fields.
         /// </summary>
-        public bool IncludeTextContent { get; set; } = false;
+        public bool IncludeFieldElements { get; set; } = false;
 
         /// <summary>
         /// When set, specifies the content type for uploaded streams and skips automatic
