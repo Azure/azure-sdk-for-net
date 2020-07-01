@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         [TestCase(null)]
         [TestCase(5)]
-        public async Task InsertedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
+        public async Task CreatedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
             List<IDictionary<string, object>> entityResults;
             List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 20);
@@ -88,7 +88,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedEntitiesCanBeQueriedWithFilters()
+        public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
             List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 20);
@@ -111,7 +111,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task EntitiyCanBeUpserted()
+        public async Task EntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
 
@@ -388,7 +388,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
+        public async Task CreatedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<IDictionary<string, object>> entityResults;
             List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
@@ -448,7 +448,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertReturnsEntitiesWithoutOdataAnnoations()
+        public async Task CreateEntityReturnsEntitiesWithoutOdataAnnoations()
         {
             List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
 
@@ -488,7 +488,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         [TestCase(null)]
         [TestCase(5)]
-        public async Task InsertedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
+        public async Task CreatedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
             List<TestEntity> entityResults;
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
@@ -512,7 +512,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedCustomEntitiesCanBeQueriedWithFilters()
+        public async Task CreatedCustomEntitiesCanBeQueriedWithFilters()
         {
             List<TestEntity> entityResults;
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
@@ -744,7 +744,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedCustomEntitiesAreRoundtrippedProprly()
+        public async Task CreatedCustomEntitiesAreRoundtrippedProprly()
         {
             List<TestEntity> entityResults;
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
