@@ -203,7 +203,7 @@ namespace Azure.Core.Pipeline
 
             private Action CreateContinuation(in Action originalContinuation)
             {
-                if (!_cancellationToken.CanBeCanceled || _taskAwaiter.IsCompleted)
+                if (!_cancellationToken.CanBeCanceled)
                 {
                     return originalContinuation;
                 }
