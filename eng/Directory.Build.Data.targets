@@ -28,17 +28,13 @@
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
       <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
-      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)/common/Extract-ReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec Condition="Exists('$(ChangeLogPath)')" ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(_VersionInProject)">
-      <Output TaskParameter="ConsoleOutput" ItemName="ExtractedReleaseNotesTemp" />
+    <Exec Condition="Exists('$(ChangeLogPath)')" ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
     <Error Condition="Exists('$(ChangeLogPath)') and '$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. @(ExtractedReleaseNotesTemp)" />
-    <ItemGroup Condition="Exists('$(ChangeLogPath)')">
-      <ExtractedReleaseNotes Condition="'$(SetReleaseNotesErrorCode)'=='0'" Include="@(ExtractedReleaseNotesTemp)" />
-    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
