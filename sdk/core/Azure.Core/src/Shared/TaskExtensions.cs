@@ -35,7 +35,7 @@ namespace Azure.Core.Pipeline
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
-        public static WithCancellationAwaitable<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+        public static WithCancellationAwaitable<T> AwaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
             => new WithCancellationAwaitable<T>(task, cancellationToken);
 
         public static T EnsureCompleted<T>(this Task<T> task)

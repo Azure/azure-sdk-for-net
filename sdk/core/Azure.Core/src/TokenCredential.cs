@@ -17,7 +17,7 @@ namespace Azure.Core
         /// attempts will be made to refresh the token. By default this will occur two minutes prior to the expiry of the token.
         /// </summary>
         /// <returns>The duration value representing the amount of time to subtract from the token expiry time.</returns>
-        public virtual TokenRefreshOptions TokenRefreshOffset { get; } = new TokenRefreshOptions(TimeSpan.FromMinutes(2));
+        public virtual TokenRefreshOptions RefreshOffset { get; } = new TokenRefreshOptions(TimeSpan.FromMinutes(2));
 
         /// <summary>
         /// Gets an <see cref="AccessToken"/> for the specified set of scopes.

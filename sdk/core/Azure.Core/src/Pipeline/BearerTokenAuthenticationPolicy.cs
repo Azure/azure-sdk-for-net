@@ -42,7 +42,7 @@ namespace Azure.Core.Pipeline
 
             _credential = credential;
             _scopes = scopes.ToArray();
-            _accessTokenCache = new AccessTokenCache(_credential.TokenRefreshOffset.Offset);
+            _accessTokenCache = new AccessTokenCache(_credential.RefreshOffset.Offset);
         }
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
                 if (pending != null)
                 {
                     headerValue = async
-                        ? await pending.WithCancellation(message.CancellationToken)
+                        ? await pending.AwaitWithCancellation(message.CancellationToken)
                         : pending.WaitWithCancellation(message.CancellationToken);
                 }
                 else

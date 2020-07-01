@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
         public void TaskExtensions_WithCancellationDefault()
         {
             var tcs = new TaskCompletionSource<int>();
-            var awaiter = tcs.Task.WithCancellation(default).GetAwaiter();
+            var awaiter = tcs.Task.AwaitWithCancellation(default).GetAwaiter();
             var continuationCalled = false;
 
             Assert.AreEqual(false, awaiter.IsCompleted);
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests
             tcs.SetResult(8);
             cts.Cancel();
 
-            var awaiter = tcs.Task.WithCancellation(cts.Token).GetAwaiter();
+            var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
 
             Assert.AreEqual(true, awaiter.IsCompleted);
             Assert.AreEqual(8, awaiter.GetResult());
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
             var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var awaiter = tcs.Task.WithCancellation(cts.Token).GetAwaiter();
+            var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
 
             Assert.AreEqual(true, awaiter.IsCompleted);
             Assert.Catch<OperationCanceledException>(() => awaiter.GetResult());
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
         {
             var tcs = new TaskCompletionSource<int>();
             var cts = new CancellationTokenSource();
-            var awaiter = tcs.Task.WithCancellation(cts.Token).GetAwaiter();
+            var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = false;
 
             Assert.AreEqual(false, awaiter.IsCompleted);
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
         {
             var tcs = new TaskCompletionSource<int>();
             var cts = new CancellationTokenSource();
-            var awaiter = tcs.Task.WithCancellation(cts.Token).GetAwaiter();
+            var awaiter = tcs.Task.AwaitWithCancellation(cts.Token).GetAwaiter();
             var continuationCalled = false;
 
             Assert.AreEqual(false, awaiter.IsCompleted);
