@@ -158,7 +158,7 @@ namespace Azure.Core.Pipeline
                     }
                     else
                     {
-                        pendingTcs.SetException(exception ?? new InvalidOperationException());
+                        pendingTcs.SetException(exception ?? new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
                     }
                 }
 
