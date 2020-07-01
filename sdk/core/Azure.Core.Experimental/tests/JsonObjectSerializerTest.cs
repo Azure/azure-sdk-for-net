@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
             using var memoryStream = new MemoryStream();
             var o = new Model {A = "1", B = 2};
 
-            JsonObjectSerializer.Serialize(memoryStream, o, o.GetType());
+            JsonObjectSerializer.Serialize(memoryStream, o, o.GetType(), default);
 
             Assert.AreEqual("{\"a\":\"1\",\"b\":2}", Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
             using var memoryStream = new MemoryStream();
             var o = new Model {A = "1", B = 2};
 
-            await JsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType());
+            await JsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType(), default);
 
             var aB = "{\"a\":\"1\",\"b\":2}";
             Assert.AreEqual(aB, Encoding.UTF8.GetString(memoryStream.ToArray()));
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
         {
             using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"a\":\"1\",\"b\":2}"));
 
-            var model = (Model)JsonObjectSerializer.Deserialize(memoryStream, typeof(Model));
+            var model = (Model)JsonObjectSerializer.Deserialize(memoryStream, typeof(Model), default);
 
             Assert.AreEqual("1", model.A);
             Assert.AreEqual(2, model.B);
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
         {
             using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"a\":\"1\",\"b\":2}"));
 
-            var model = (Model)await JsonObjectSerializer.DeserializeAsync(memoryStream, typeof(Model)).ConfigureAwait(false);
+            var model = (Model)await JsonObjectSerializer.DeserializeAsync(memoryStream, typeof(Model), default).ConfigureAwait(false);
 
             Assert.AreEqual("1", model.A);
             Assert.AreEqual(2, model.B);
