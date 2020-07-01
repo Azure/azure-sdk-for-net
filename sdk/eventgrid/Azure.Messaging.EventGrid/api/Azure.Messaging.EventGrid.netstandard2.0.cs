@@ -1,10 +1,10 @@
-namespace Azure.Messaging.EventGrid.Customization
+namespace Azure.Messaging.EventGrid
 {
     public partial class EventGridClient
     {
         protected EventGridClient() { }
         public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Customization.EventGridClientOptions options) { }
+        public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options) { }
         public virtual Azure.Response PublishCloudEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishCloudEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishCustomEvents(System.Collections.Generic.IEnumerable<object> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -14,10 +14,10 @@ namespace Azure.Messaging.EventGrid.Customization
     }
     public partial class EventGridClientOptions : Azure.Core.ClientOptions
     {
-        public EventGridClientOptions(Azure.Messaging.EventGrid.Customization.EventGridClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Customization.EventGridClientOptions.ServiceVersion.V1_0) { }
+        public EventGridClientOptions(Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion.V2018_01_01) { }
         public enum ServiceVersion
         {
-            V1_0 = 0,
+            V2018_01_01 = 1,
         }
     }
 }
