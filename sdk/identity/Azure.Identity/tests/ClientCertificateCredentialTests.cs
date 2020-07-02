@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
             var clientId = Guid.NewGuid().ToString();
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-            var mockCert = new X509Certificate2(certificatePath, "password");
+            var mockCert = new X509Certificate2(certificatePath);
 
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, mockCert));
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, certificatePath));
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
             ClientCertificateCredential missingFileCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "notfound.pem"));
             ClientCertificateCredential invalidPemCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
             ClientCertificateCredential unknownFormatCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
-            ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx"));
+            ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"));
 
             Assert.Throws<CredentialUnavailableException>(() => missingFileCredential.GetToken(tokenContext));
             Assert.Throws<CredentialUnavailableException>(() => invalidPemCredential.GetToken(tokenContext));
@@ -81,7 +81,7 @@ namespace Azure.Identity.Tests
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
-            var mockCert = new X509Certificate2(certificatePath, "password");
+            var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, options) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options)
@@ -107,7 +107,7 @@ namespace Azure.Identity.Tests
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
-            var mockCert = new X509Certificate2(certificatePath, "password");
+            var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, CredentialPipeline.GetInstance(null), mockMsalClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockMsalClient)
