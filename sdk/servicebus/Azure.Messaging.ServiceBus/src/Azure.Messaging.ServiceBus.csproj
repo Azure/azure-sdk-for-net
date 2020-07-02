@@ -14,21 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Reflection.TypeExtensions" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Threading.Channels" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->
