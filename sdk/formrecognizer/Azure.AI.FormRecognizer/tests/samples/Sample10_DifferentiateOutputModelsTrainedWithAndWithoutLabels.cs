@@ -18,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// This sample demonstrates the differences in output that arise when StartRecognizeCustomForms
         /// is called with custom models trained with labels and without labels.
         /// For this sample, you can use the training forms found in the `trainingFiles` folder.
+        /// Upload the forms to your storage container and then generate a container SAS URL.
 
         /// For more information see https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/overview#custom-models
 
@@ -50,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Samples
                     foreach (FormField field in form.Fields.Values)
                     {
                         Console.WriteLine($"Field {field.Name}: ");
-                        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+                        Console.WriteLine($"    Value: '{field.ValueData.Text}");
                         Console.WriteLine($"    Confidence: '{field.Confidence}");
                     }
                 }
@@ -62,15 +63,15 @@ namespace Azure.AI.FormRecognizer.Samples
                     Console.WriteLine("Find the value for a specific labeled field:");
                     if (form.Fields.TryGetValue("VendorName", out FormField field))
                     {
-                        Console.WriteLine($"VendorName is {field.ValueText.Text}");
+                        Console.WriteLine($"VendorName is {field.ValueData.Text}");
                     }
 
                     // Find labeled fields with specific words
                     Console.WriteLine("Find the value for labeled field with specific words:");
                     form.Fields.Where(kv => kv.Key.StartsWith("Ven"))
-                               .ToList().ForEach(v => Console.WriteLine($"{v.Key} is {v.Value.ValueText.Text}"));
+                               .ToList().ForEach(v => Console.WriteLine($"{v.Key} is {v.Value.ValueData.Text}"));
                     form.Fields.Where(kv => kv.Key.Contains("Name"))
-                               .ToList().ForEach(v => Console.WriteLine($"{v.Key} is {v.Value.ValueText.Text}"));
+                               .ToList().ForEach(v => Console.WriteLine($"{v.Key} is {v.Value.ValueData.Text}"));
                 }
             }
         }
@@ -104,12 +105,12 @@ namespace Azure.AI.FormRecognizer.Samples
                     {
                         Console.WriteLine($"Field {field.Name}: ");
 
-                        if (field.LabelText != null)
+                        if (field.LabelData != null)
                         {
-                            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+                            Console.WriteLine($"    Label: '{field.LabelData.Text}");
                         }
 
-                        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+                        Console.WriteLine($"    Value: '{field.ValueData.Text}");
                         Console.WriteLine($"    Confidence: '{field.Confidence}");
                     }
                 }
@@ -121,18 +122,18 @@ namespace Azure.AI.FormRecognizer.Samples
                     Console.WriteLine("Find the value for a specific unlabeled field:");
                     foreach (FormField field in form.Fields.Values)
                     {
-                        if (field.LabelText != null && field.LabelText.Text == "Vendor Name:")
+                        if (field.LabelData != null && field.LabelData.Text == "Vendor Name:")
                         {
-                            Console.WriteLine($"The Vendor Name is {field.ValueText.Text}");
+                            Console.WriteLine($"The Vendor Name is {field.ValueData.Text}");
                         }
                     }
 
                     // Find the value of unlabeled fields with specific words
                     Console.WriteLine("Find the value for labeled field with specific words:");
-                    form.Fields.Values.Where(field => field.LabelText.Text.StartsWith("Ven"))
-                                      .ToList().ForEach(v => Console.WriteLine($"{v.LabelText.Text} is {v.ValueText.Text}"));
-                    form.Fields.Values.Where(field => field.LabelText.Text.Contains("Name"))
-                                      .ToList().ForEach(v => Console.WriteLine($"{v.LabelText.Text} is {v.ValueText.Text}"));
+                    form.Fields.Values.Where(field => field.LabelData.Text.StartsWith("Ven"))
+                                      .ToList().ForEach(v => Console.WriteLine($"{v.LabelData.Text} is {v.ValueData.Text}"));
+                    form.Fields.Values.Where(field => field.LabelData.Text.Contains("Name"))
+                                      .ToList().ForEach(v => Console.WriteLine($"{v.LabelData.Text} is {v.ValueData.Text}"));
                 }
             }
         }
