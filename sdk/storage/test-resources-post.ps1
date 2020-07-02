@@ -35,6 +35,7 @@ $content =
   <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
+  <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
   <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
   <TenantConfigurations>
     <TenantConfiguration>
