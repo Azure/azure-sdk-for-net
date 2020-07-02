@@ -20,7 +20,7 @@
         }
     },
     "variables": {
-        "mgmtApiVersion": "2019-04-01",
+        "mgmtApiVersion": "2019-06-01",
         "keyvaultApiVersion": "2016-10-01",
         "authorizationApiVersion": "2018-09-01-preview",
         "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
@@ -29,6 +29,7 @@
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
+        "softDeleteAccountName": "[concat(parameters('baseName'), 'sftdl')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
         "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
@@ -91,6 +92,17 @@
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('primaryAccountName'), '/default')]",
+            "properties": {
+                "isVersioningEnabled": true
+            },
+            "dependsOn": [
+                "[variables('primaryAccountName')]"
+            ]
         },
         {
             "type": "Microsoft.Storage/storageAccounts",

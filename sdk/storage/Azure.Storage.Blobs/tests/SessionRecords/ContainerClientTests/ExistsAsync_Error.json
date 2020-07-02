@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
+      "RequestUri": "https://seanmccprodca.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-41e05517a67b5e47b1676563332dd3df-91a74393a2e5924d-00",
+        "traceparent": "00-1cc1435811160c4b8a544d3b96b71c8f-4afc9e362d9e8d4e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200701.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "a3e57b25-1f36-c942-091a-3c3895e9ef35",
-        "x-ms-date": "Fri, 03 Apr 2020 00:00:12 GMT",
+        "x-ms-date": "Thu, 02 Jul 2020 00:31:48 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -19,65 +19,66 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 03 Apr 2020 00:00:11 GMT",
-        "ETag": "\u00220x8D7D761FABD803F\u0022",
-        "Last-Modified": "Fri, 03 Apr 2020 00:00:11 GMT",
+        "Date": "Thu, 02 Jul 2020 00:31:46 GMT",
+        "ETag": "\u00220x8D81E1F4DAA7B46\u0022",
+        "Last-Modified": "Thu, 02 Jul 2020 00:31:46 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "a3e57b25-1f36-c942-091a-3c3895e9ef35",
-        "x-ms-request-id": "5f3629a6-401e-0017-4c4a-09e4ab000000",
+        "x-ms-request-id": "e8ac7d18-b01e-0049-5c08-50d369000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
+      "RequestUri": "https://seanmccprodca.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-9d99d6fd24d2d245b0dc89a0ddefa313-ce34299453596d4f-00",
+        "traceparent": "00-259f38c16e84eb468ac9bc844aadb162-f4f307a756710946-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200701.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "a22458e8-9589-d0f8-36d7-10568842cdb0",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 401,
       "ResponseHeaders": {
-        "Content-Length": "223",
+        "Content-Length": "302",
         "Content-Type": "application/xml",
-        "Date": "Fri, 03 Apr 2020 00:00:11 GMT",
+        "Date": "Thu, 02 Jul 2020 00:31:46 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "WWW-Authenticate": "Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id=https://storage.azure.com",
         "x-ms-client-request-id": "a22458e8-9589-d0f8-36d7-10568842cdb0",
-        "x-ms-error-code": "ResourceNotFound",
-        "x-ms-request-id": "d79ffcf2-c01e-0019-374a-09cd1b000000",
+        "x-ms-error-code": "NoAuthenticationInformation",
+        "x-ms-request-id": "ca94c682-301e-0057-4708-503fb1000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
-        "RequestId:d79ffcf2-c01e-0019-374a-09cd1b000000\n",
-        "Time:2020-04-03T00:00:11.8167251Z\u003C/Message\u003E\u003C/Error\u003E"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ENoAuthenticationInformation\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",
+        "RequestId:ca94c682-301e-0057-4708-503fb1000000\n",
+        "Time:2020-07-02T00:31:47.0582901Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
+      "RequestUri": "https://seanmccprodca.blob.core.windows.net/test-container-423b74cf-295f-a352-efb6-af4a1e6e392e?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-bf27f7115d65b3469f5204561310172e-663816d0ecef4340-00",
+        "traceparent": "00-666292e226e0db4587c08073443fa9fe-e9427bff59912344-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200701.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "3d50ed9b-4dc4-09ab-7a8e-98fd093382b7",
-        "x-ms-date": "Fri, 03 Apr 2020 00:00:12 GMT",
+        "x-ms-date": "Thu, 02 Jul 2020 00:31:48 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -85,13 +86,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 03 Apr 2020 00:00:11 GMT",
+        "Date": "Thu, 02 Jul 2020 00:31:46 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "3d50ed9b-4dc4-09ab-7a8e-98fd093382b7",
-        "x-ms-request-id": "d79ffd1e-c01e-0019-604a-09cd1b000000",
+        "x-ms-request-id": "e8ac7d4f-b01e-0049-0b08-50d369000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
@@ -99,6 +100,6 @@
   ],
   "Variables": {
     "RandomSeed": "1853959503",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmccprodca\nU2FuaXRpemVk\nhttps://seanmccprodca.blob.core.windows.net\nhttps://seanmccprodca.file.core.windows.net\nhttps://seanmccprodca.queue.core.windows.net\nhttps://seanmccprodca.table.core.windows.net\n\n\n\n\nhttps://seanmccprodca-secondary.blob.core.windows.net\nhttps://seanmccprodca-secondary.file.core.windows.net\nhttps://seanmccprodca-secondary.queue.core.windows.net\nhttps://seanmccprodca-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmccprodca.blob.core.windows.net/;QueueEndpoint=https://seanmccprodca.queue.core.windows.net/;FileEndpoint=https://seanmccprodca.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmccprodca-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmccprodca-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmccprodca-secondary.file.core.windows.net/;AccountName=seanmccprodca;AccountKey=Kg==;\nseanscope1"
   }
 }
