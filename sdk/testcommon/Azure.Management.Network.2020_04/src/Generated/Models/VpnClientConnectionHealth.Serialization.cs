@@ -16,22 +16,22 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TotalIngressBytesTransferred != null)
+            if (Optional.IsDefined(TotalIngressBytesTransferred))
             {
                 writer.WritePropertyName("totalIngressBytesTransferred");
                 writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
             }
-            if (TotalEgressBytesTransferred != null)
+            if (Optional.IsDefined(TotalEgressBytesTransferred))
             {
                 writer.WritePropertyName("totalEgressBytesTransferred");
                 writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
             }
-            if (VpnClientConnectionsCount != null)
+            if (Optional.IsDefined(VpnClientConnectionsCount))
             {
                 writer.WritePropertyName("vpnClientConnectionsCount");
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (AllocatedIpAddresses != null)
+            if (Optional.IsDefined(AllocatedIpAddresses))
             {
                 writer.WritePropertyName("allocatedIpAddresses");
                 writer.WriteStartArray();
@@ -46,45 +46,29 @@ namespace Azure.Management.Network.Models
 
         internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
         {
-            long? totalIngressBytesTransferred = default;
-            long? totalEgressBytesTransferred = default;
-            int? vpnClientConnectionsCount = default;
-            IList<string> allocatedIpAddresses = default;
+            Optional<long> totalIngressBytesTransferred = default;
+            Optional<long> totalEgressBytesTransferred = default;
+            Optional<int> vpnClientConnectionsCount = default;
+            Optional<IList<string>> allocatedIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalIngressBytesTransferred"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     totalIngressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("totalEgressBytesTransferred"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     totalEgressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("vpnClientConnectionsCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vpnClientConnectionsCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("allocatedIpAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -101,7 +85,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConnectionHealth(totalIngressBytesTransferred, totalEgressBytesTransferred, vpnClientConnectionsCount, allocatedIpAddresses);
+            return new VpnClientConnectionHealth(totalIngressBytesTransferred.HasValue ? totalIngressBytesTransferred.Value : (long?)null, totalEgressBytesTransferred.HasValue ? totalEgressBytesTransferred.Value : (long?)null, vpnClientConnectionsCount.HasValue ? vpnClientConnectionsCount.Value : (int?)null, new ChangeTrackingList<string>(allocatedIpAddresses));
         }
     }
 }

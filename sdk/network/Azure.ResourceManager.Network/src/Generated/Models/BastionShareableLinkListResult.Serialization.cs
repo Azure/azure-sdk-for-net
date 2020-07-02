@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BastionShareableLinkListResult DeserializeBastionShareableLinkListResult(JsonElement element)
         {
-            IReadOnlyList<BastionShareableLink> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BastionShareableLink>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BastionShareableLink> array = new List<BastionShareableLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionShareableLinkListResult(value, nextLink);
+            return new BastionShareableLinkListResult(new ChangeTrackingList<BastionShareableLink>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

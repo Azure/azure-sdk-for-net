@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -30,12 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (StorageLinkedServices != null)
+            if (Optional.IsDefined(StorageLinkedServices))
             {
                 writer.WritePropertyName("storageLinkedServices");
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GetDebugInfo != null)
+            if (Optional.IsDefined(GetDebugInfo))
             {
                 writer.WritePropertyName("getDebugInfo");
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
@@ -97,17 +97,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (FileLinkedService != null)
+            if (Optional.IsDefined(FileLinkedService))
             {
                 writer.WritePropertyName("fileLinkedService");
                 writer.WriteObjectValue(FileLinkedService);
             }
-            if (Combiner != null)
+            if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner");
                 writer.WriteObjectValue(Combiner);
             }
-            if (CommandEnvironment != null)
+            if (Optional.IsDefined(CommandEnvironment))
             {
                 writer.WritePropertyName("commandEnvironment");
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Defines != null)
+            if (Optional.IsDefined(Defines))
             {
                 writer.WritePropertyName("defines");
                 writer.WriteStartObject();
@@ -139,44 +139,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HDInsightStreamingActivity DeserializeHDInsightStreamingActivity(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
-            IList<LinkedServiceReference> storageLinkedServices = default;
-            IList<object> arguments = default;
-            HDInsightActivityDebugInfoOption? getDebugInfo = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<object>> arguments = default;
+            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             object mapper = default;
             object reducer = default;
             object input = default;
             object output = default;
             IList<object> filePaths = default;
-            LinkedServiceReference fileLinkedService = default;
-            object combiner = default;
-            IList<object> commandEnvironment = default;
-            IDictionary<string, object> defines = default;
+            Optional<LinkedServiceReference> fileLinkedService = default;
+            Optional<object> combiner = default;
+            Optional<IList<object>> commandEnvironment = default;
+            Optional<IDictionary<string, object>> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -192,19 +184,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -222,10 +206,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -247,10 +227,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("storageLinkedServices"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<LinkedServiceReference> array = new List<LinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -268,10 +244,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("arguments"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -289,10 +261,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("getDebugInfo"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
                             continue;
                         }
@@ -335,28 +303,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("fileLinkedService"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             fileLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("combiner"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             combiner = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("commandEnvironment"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -374,10 +330,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("defines"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -407,7 +359,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, storageLinkedServices, arguments, getDebugInfo, mapper, reducer, input, output, filePaths, fileLinkedService, combiner, commandEnvironment, defines);
+            return new HDInsightStreamingActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, linkedServiceName.HasValue ? linkedServiceName.Value : null, policy.HasValue ? policy.Value : null, new ChangeTrackingList<LinkedServiceReference>(storageLinkedServices), new ChangeTrackingList<object>(arguments), getDebugInfo.HasValue ? getDebugInfo.Value : (HDInsightActivityDebugInfoOption?)null, mapper, reducer, input, output, filePaths, fileLinkedService.HasValue ? fileLinkedService.Value : null, combiner.HasValue ? combiner.Value : null, new ChangeTrackingList<object>(commandEnvironment), new ChangeTrackingDictionary<string, object>(defines));
         }
     }
 }

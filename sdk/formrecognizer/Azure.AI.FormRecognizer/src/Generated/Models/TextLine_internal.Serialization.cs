@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            Language_internal? language = default;
+            Optional<Language_internal> language = default;
             IReadOnlyList<TextWord_internal> words = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,10 +38,6 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("language"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     language = new Language_internal(property.Value.GetString());
                     continue;
                 }
@@ -63,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextLine_internal(text, boundingBox, language, words);
+            return new TextLine_internal(text, boundingBox, language.HasValue ? language.Value : (Language_internal?)null, words);
         }
     }
 }

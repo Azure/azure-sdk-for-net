@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRoutePortsLocationListResult DeserializeExpressRoutePortsLocationListResult(JsonElement element)
         {
-            IReadOnlyList<ExpressRoutePortsLocation> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRoutePortsLocation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ExpressRoutePortsLocation> array = new List<ExpressRoutePortsLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocationListResult(value, nextLink);
+            return new ExpressRoutePortsLocationListResult(new ChangeTrackingList<ExpressRoutePortsLocation>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

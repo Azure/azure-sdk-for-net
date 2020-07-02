@@ -15,25 +15,17 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static ConfigurationQueriesTestResponse DeserializeConfigurationQueriesTestResponse(JsonElement element)
         {
-            string targetConditionError = default;
-            IReadOnlyDictionary<string, string> customMetricQueryErrors = default;
+            Optional<string> targetConditionError = default;
+            Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConditionError"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetConditionError = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("customMetricQueryErrors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors);
+            return new ConfigurationQueriesTestResponse(targetConditionError.HasValue ? targetConditionError.Value : null, new ChangeTrackingDictionary<string, string>(customMetricQueryErrors));
         }
     }
 }

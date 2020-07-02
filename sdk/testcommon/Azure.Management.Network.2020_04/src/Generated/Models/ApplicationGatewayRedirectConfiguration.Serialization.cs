@@ -16,54 +16,54 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (RedirectType != null)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType");
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (TargetListener != null)
+            if (Optional.IsDefined(TargetListener))
             {
                 writer.WritePropertyName("targetListener");
                 writer.WriteObjectValue(TargetListener);
             }
-            if (TargetUrl != null)
+            if (Optional.IsDefined(TargetUrl))
             {
                 writer.WritePropertyName("targetUrl");
                 writer.WriteStringValue(TargetUrl);
             }
-            if (IncludePath != null)
+            if (Optional.IsDefined(IncludePath))
             {
                 writer.WritePropertyName("includePath");
                 writer.WriteBooleanValue(IncludePath.Value);
             }
-            if (IncludeQueryString != null)
+            if (Optional.IsDefined(IncludeQueryString))
             {
                 writer.WritePropertyName("includeQueryString");
                 writer.WriteBooleanValue(IncludeQueryString.Value);
             }
-            if (RequestRoutingRules != null)
+            if (Optional.IsDefined(RequestRoutingRules))
             {
                 writer.WritePropertyName("requestRoutingRules");
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UrlPathMaps != null)
+            if (Optional.IsDefined(UrlPathMaps))
             {
                 writer.WritePropertyName("urlPathMaps");
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PathRules != null)
+            if (Optional.IsDefined(PathRules))
             {
                 writer.WritePropertyName("pathRules");
                 writer.WriteStartArray();
@@ -99,53 +99,37 @@ namespace Azure.Management.Network.Models
 
         internal static ApplicationGatewayRedirectConfiguration DeserializeApplicationGatewayRedirectConfiguration(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            ApplicationGatewayRedirectType? redirectType = default;
-            SubResource targetListener = default;
-            string targetUrl = default;
-            bool? includePath = default;
-            bool? includeQueryString = default;
-            IList<SubResource> requestRoutingRules = default;
-            IList<SubResource> urlPathMaps = default;
-            IList<SubResource> pathRules = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<ApplicationGatewayRedirectType> redirectType = default;
+            Optional<SubResource> targetListener = default;
+            Optional<string> targetUrl = default;
+            Optional<bool> includePath = default;
+            Optional<bool> includeQueryString = default;
+            Optional<IList<SubResource>> requestRoutingRules = default;
+            Optional<IList<SubResource>> urlPathMaps = default;
+            Optional<IList<SubResource>> pathRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -155,55 +139,31 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("redirectType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             redirectType = new ApplicationGatewayRedirectType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetListener"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             targetListener = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("targetUrl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             targetUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("includePath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             includePath = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("includeQueryString"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             includeQueryString = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("requestRoutingRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -221,10 +181,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("urlPathMaps"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -242,10 +198,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("pathRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -265,7 +217,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRedirectConfiguration(id, name, etag, type, redirectType, targetListener, targetUrl, includePath, includeQueryString, requestRoutingRules, urlPathMaps, pathRules);
+            return new ApplicationGatewayRedirectConfiguration(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, type.HasValue ? type.Value : null, redirectType.HasValue ? redirectType.Value : (ApplicationGatewayRedirectType?)null, targetListener.HasValue ? targetListener.Value : null, targetUrl.HasValue ? targetUrl.Value : null, includePath.HasValue ? includePath.Value : (bool?)null, includeQueryString.HasValue ? includeQueryString.Value : (bool?)null, new ChangeTrackingList<SubResource>(requestRoutingRules), new ChangeTrackingList<SubResource>(urlPathMaps), new ChangeTrackingList<SubResource>(pathRules));
         }
     }
 }

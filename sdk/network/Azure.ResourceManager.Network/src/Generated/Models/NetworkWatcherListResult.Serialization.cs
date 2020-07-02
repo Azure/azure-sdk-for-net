@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkWatcherListResult DeserializeNetworkWatcherListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkWatcher> value = default;
+            Optional<IReadOnlyList<NetworkWatcher>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkWatcher> array = new List<NetworkWatcher>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkWatcherListResult(value);
+            return new NetworkWatcherListResult(new ChangeTrackingList<NetworkWatcher>(value));
         }
     }
 }

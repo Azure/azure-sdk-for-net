@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -22,7 +23,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;
+            Arguments = new ChangeTrackingList<string>();
+            Jars = new ChangeTrackingList<string>();
+            PythonFiles = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
+            Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
@@ -63,18 +71,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         public string ArtifactId { get; set; }
         public string Name { get; }
         public string File { get; set; }
         public string ClassName { get; set; }
-        public IList<string> Arguments { get; set; }
-        public IList<string> Jars { get; set; }
-        public IList<string> PythonFiles { get; set; }
-        public IList<string> Files { get; set; }
-        public IList<string> Archives { get; set; }
+        public IList<string> Arguments { get; }
+        public IList<string> Jars { get; }
+        public IList<string> PythonFiles { get; }
+        public IList<string> Files { get; }
+        public IList<string> Archives { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Configuration { get; set; }
+        public IDictionary<string, string> Configuration { get; }
         public string DriverMemory { get; set; }
         public int? DriverCores { get; set; }
         public string ExecutorMemory { get; set; }

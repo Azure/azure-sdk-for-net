@@ -15,15 +15,11 @@ namespace Azure.Management.Storage.Models
     {
         internal static ListTableServices DeserializeListTableServices(JsonElement element)
         {
-            IReadOnlyList<TableServiceProperties> value = default;
+            Optional<IReadOnlyList<TableServiceProperties>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TableServiceProperties> array = new List<TableServiceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ListTableServices(value);
+            return new ListTableServices(new ChangeTrackingList<TableServiceProperties>(value));
         }
     }
 }

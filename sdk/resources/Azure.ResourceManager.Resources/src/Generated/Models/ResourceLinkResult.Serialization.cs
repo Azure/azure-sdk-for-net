@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ResourceLinkResult DeserializeResourceLinkResult(JsonElement element)
         {
             IReadOnlyList<ResourceLink> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceLinkResult(value, nextLink);
+            return new ResourceLinkResult(value, nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

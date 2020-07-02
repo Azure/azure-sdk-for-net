@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Method);
             writer.WritePropertyName("url");
             writer.WriteObjectValue(Url);
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteStringValue(Timeout);
             }
-            if (Headers != null)
+            if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers");
                 writer.WriteObjectValue(Headers);
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
                 writer.WriteObjectValue(Body);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication");
                 writer.WriteObjectValue(Authentication);
             }
-            if (ReportStatusOnCallBack != null)
+            if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack");
                 writer.WriteObjectValue(ReportStatusOnCallBack);
@@ -89,16 +89,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
             string method = default;
             object url = default;
-            string timeout = default;
-            object headers = default;
-            object body = default;
-            WebActivityAuthentication authentication = default;
-            object reportStatusOnCallBack = default;
+            Optional<string> timeout = default;
+            Optional<object> headers = default;
+            Optional<object> body = default;
+            Optional<WebActivityAuthentication> authentication = default;
+            Optional<object> reportStatusOnCallBack = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -115,19 +115,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -145,10 +137,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -180,46 +168,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("timeout"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             timeout = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("headers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             headers = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("body"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             body = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("authentication"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reportStatusOnCallBack"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             reportStatusOnCallBack = property0.Value.GetObject();
                             continue;
                         }
@@ -237,7 +205,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description, dependsOn, userProperties, additionalProperties, method, url, timeout, headers, body, authentication, reportStatusOnCallBack);
+            return new WebHookActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, method, url, timeout.HasValue ? timeout.Value : null, headers.HasValue ? headers.Value : null, body.HasValue ? body.Value : null, authentication.HasValue ? authentication.Value : null, reportStatusOnCallBack.HasValue ? reportStatusOnCallBack.Value : null);
         }
     }
 }

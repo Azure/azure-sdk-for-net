@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </param>
         internal GalleryApplicationList(IReadOnlyList<GalleryApplication> value, string nextLink)
         {
-            Value = value ?? new List<GalleryApplication>();
+            Value = value;
             NextLink = nextLink;
         }
 

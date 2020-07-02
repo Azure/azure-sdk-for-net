@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PlatformFaultDomain != null)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain");
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (AutoReplaceOnFailure != null)
+            if (Optional.IsDefined(AutoReplaceOnFailure))
             {
                 writer.WritePropertyName("autoReplaceOnFailure");
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
-            if (HostId != null)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId");
                 writer.WriteStringValue(HostId);
             }
-            if (VirtualMachines != null)
+            if (Optional.IsDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines");
                 writer.WriteStartArray();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
-            if (ProvisioningTime != null)
+            if (Optional.IsDefined(ProvisioningTime))
             {
                 writer.WritePropertyName("provisioningTime");
                 writer.WriteStringValue(ProvisioningTime.Value, "O");
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (InstanceView != null)
+            if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView");
                 writer.WriteObjectValue(InstanceView);
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Compute.Models
         internal static DedicatedHost DeserializeDedicatedHost(JsonElement element)
         {
             Sku sku = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            int? platformFaultDomain = default;
-            bool? autoReplaceOnFailure = default;
-            string hostId = default;
-            IList<SubResourceReadOnly> virtualMachines = default;
-            DedicatedHostLicenseTypes? licenseType = default;
-            DateTimeOffset? provisioningTime = default;
-            string provisioningState = default;
-            DedicatedHostInstanceView instanceView = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<int> platformFaultDomain = default;
+            Optional<bool> autoReplaceOnFailure = default;
+            Optional<string> hostId = default;
+            Optional<IList<SubResourceReadOnly>> virtualMachines = default;
+            Optional<DedicatedHostLicenseTypes> licenseType = default;
+            Optional<DateTimeOffset> provisioningTime = default;
+            Optional<string> provisioningState = default;
+            Optional<DedicatedHostInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -123,28 +123,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -155,10 +143,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -180,37 +164,21 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("platformFaultDomain"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             platformFaultDomain = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("autoReplaceOnFailure"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             autoReplaceOnFailure = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("hostId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("virtualMachines"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -228,37 +196,21 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("licenseType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             licenseType = property0.Value.GetString().ToDedicatedHostLicenseTypes();
                             continue;
                         }
                         if (property0.NameEquals("provisioningTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("instanceView"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value);
                             continue;
                         }
@@ -266,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHost(id, name, type, location, tags, sku, platformFaultDomain, autoReplaceOnFailure, hostId, virtualMachines, licenseType, provisioningTime, provisioningState, instanceView);
+            return new DedicatedHost(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), sku, platformFaultDomain.HasValue ? platformFaultDomain.Value : (int?)null, autoReplaceOnFailure.HasValue ? autoReplaceOnFailure.Value : (bool?)null, hostId.HasValue ? hostId.Value : null, new ChangeTrackingList<SubResourceReadOnly>(virtualMachines), licenseType.HasValue ? licenseType.Value : (DedicatedHostLicenseTypes?)null, provisioningTime.HasValue ? provisioningTime.Value : (DateTimeOffset?)null, provisioningState.HasValue ? provisioningState.Value : null, instanceView.HasValue ? instanceView.Value : null);
         }
     }
 }

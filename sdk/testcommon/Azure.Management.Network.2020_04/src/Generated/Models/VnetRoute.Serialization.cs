@@ -16,7 +16,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StaticRoutes != null)
+            if (Optional.IsDefined(StaticRoutes))
             {
                 writer.WritePropertyName("staticRoutes");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Network.Models
 
         internal static VnetRoute DeserializeVnetRoute(JsonElement element)
         {
-            IList<StaticRoute> staticRoutes = default;
+            Optional<IList<StaticRoute>> staticRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("staticRoutes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VnetRoute(staticRoutes);
+            return new VnetRoute(new ChangeTrackingList<StaticRoute>(staticRoutes));
         }
     }
 }

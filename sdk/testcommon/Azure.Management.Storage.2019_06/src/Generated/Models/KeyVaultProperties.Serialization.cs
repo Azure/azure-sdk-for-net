@@ -16,27 +16,27 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyname");
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyversion");
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyvaulturi");
                 writer.WriteStringValue(KeyVaultUri);
             }
-            if (CurrentVersionedKeyIdentifier != null)
+            if (Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier");
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (LastKeyRotationTimestamp != null)
+            if (Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp");
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
@@ -46,60 +46,40 @@ namespace Azure.Management.Storage.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
-            string keyname = default;
-            string keyversion = default;
-            string keyvaulturi = default;
-            string currentVersionedKeyIdentifier = default;
-            DateTimeOffset? lastKeyRotationTimestamp = default;
+            Optional<string> keyname = default;
+            Optional<string> keyversion = default;
+            Optional<string> keyvaulturi = default;
+            Optional<string> currentVersionedKeyIdentifier = default;
+            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyname"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyname = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyversion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyversion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyvaulturi"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyvaulturi = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("currentVersionedKeyIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentVersionedKeyIdentifier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastKeyRotationTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyname, keyversion, keyvaulturi, currentVersionedKeyIdentifier, lastKeyRotationTimestamp);
+            return new KeyVaultProperties(keyname.HasValue ? keyname.Value : null, keyversion.HasValue ? keyversion.Value : null, keyvaulturi.HasValue ? keyvaulturi.Value : null, currentVersionedKeyIdentifier.HasValue ? currentVersionedKeyIdentifier.Value : null, lastKeyRotationTimestamp.HasValue ? lastKeyRotationTimestamp.Value : (DateTimeOffset?)null);
         }
     }
 }

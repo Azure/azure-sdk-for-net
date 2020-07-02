@@ -16,7 +16,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Exclusions != null)
+            if (Optional.IsDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions");
                 writer.WriteStartArray();
@@ -38,16 +38,12 @@ namespace Azure.Management.Network.Models
 
         internal static ManagedRulesDefinition DeserializeManagedRulesDefinition(JsonElement element)
         {
-            IList<OwaspCrsExclusionEntry> exclusions = default;
+            Optional<IList<OwaspCrsExclusionEntry>> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exclusions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -81,7 +77,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ManagedRulesDefinition(exclusions, managedRuleSets);
+            return new ManagedRulesDefinition(new ChangeTrackingList<OwaspCrsExclusionEntry>(exclusions), managedRuleSets);
         }
     }
 }

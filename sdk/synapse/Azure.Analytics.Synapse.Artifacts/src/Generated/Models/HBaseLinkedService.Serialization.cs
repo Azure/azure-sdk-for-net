@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia");
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -53,49 +53,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host");
             writer.WriteObjectValue(Host);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteObjectValue(Port);
             }
-            if (HttpPath != null)
+            if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath");
                 writer.WriteObjectValue(HttpPath);
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
                 writer.WriteObjectValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
-            if (EnableSsl != null)
+            if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl");
                 writer.WriteObjectValue(EnableSsl);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath");
                 writer.WriteObjectValue(TrustedCertPath);
             }
-            if (AllowHostNameCNMismatch != null)
+            if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch");
                 writer.WriteObjectValue(AllowHostNameCNMismatch);
             }
-            if (AllowSelfSignedServerCert != null)
+            if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert");
                 writer.WriteObjectValue(AllowSelfSignedServerCert);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
@@ -112,21 +112,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static HBaseLinkedService DeserializeHBaseLinkedService(JsonElement element)
         {
             string type = default;
-            IntegrationRuntimeReference connectVia = default;
-            string description = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
             object host = default;
-            object port = default;
-            object httpPath = default;
+            Optional<object> port = default;
+            Optional<object> httpPath = default;
             HBaseAuthenticationType authenticationType = default;
-            object username = default;
-            SecretBase password = default;
-            object enableSsl = default;
-            object trustedCertPath = default;
-            object allowHostNameCNMismatch = default;
-            object allowSelfSignedServerCert = default;
-            object encryptedCredential = default;
+            Optional<object> username = default;
+            Optional<SecretBase> password = default;
+            Optional<object> enableSsl = default;
+            Optional<object> trustedCertPath = default;
+            Optional<object> allowHostNameCNMismatch = default;
+            Optional<object> allowSelfSignedServerCert = default;
+            Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -138,28 +138,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -177,10 +165,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -207,19 +191,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("port"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("httpPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             httpPath = property0.Value.GetObject();
                             continue;
                         }
@@ -230,64 +206,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("username"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             username = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableSsl = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("trustedCertPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             trustedCertPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("allowHostNameCNMismatch"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             allowHostNameCNMismatch = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("allowSelfSignedServerCert"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             allowSelfSignedServerCert = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
@@ -305,7 +253,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HBaseLinkedService(type, connectVia, description, parameters, annotations, additionalProperties, host, port, httpPath, authenticationType, username, password, enableSsl, trustedCertPath, allowHostNameCNMismatch, allowSelfSignedServerCert, encryptedCredential);
+            return new HBaseLinkedService(type, connectVia.HasValue ? connectVia.Value : null, description.HasValue ? description.Value : null, new ChangeTrackingDictionary<string, ParameterSpecification>(parameters), new ChangeTrackingList<object>(annotations), additionalProperties, host, port.HasValue ? port.Value : null, httpPath.HasValue ? httpPath.Value : null, authenticationType, username.HasValue ? username.Value : null, password.HasValue ? password.Value : null, enableSsl.HasValue ? enableSsl.Value : null, trustedCertPath.HasValue ? trustedCertPath.Value : null, allowHostNameCNMismatch.HasValue ? allowHostNameCNMismatch.Value : null, allowSelfSignedServerCert.HasValue ? allowSelfSignedServerCert.Value : null, encryptedCredential.HasValue ? encryptedCredential.Value : null);
         }
     }
 }

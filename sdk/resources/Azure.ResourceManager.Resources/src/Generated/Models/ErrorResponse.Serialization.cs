@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code");
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message");
                 writer.WriteStringValue(Message);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target");
                 writer.WriteStringValue(Target);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AdditionalInfo != null)
+            if (Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalInfo");
                 writer.WriteStartArray();
@@ -56,46 +56,30 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            string target = default;
-            IList<ErrorResponse> details = default;
-            IList<ErrorAdditionalInfo> additionalInfo = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IList<ErrorResponse>> details = default;
+            Optional<IList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,10 +97,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("additionalInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -133,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ErrorResponse(code, message, target, details, additionalInfo);
+            return new ErrorResponse(code.HasValue ? code.Value : null, message.HasValue ? message.Value : null, target.HasValue ? target.Value : null, new ChangeTrackingList<ErrorResponse>(details), new ChangeTrackingList<ErrorAdditionalInfo>(additionalInfo));
         }
     }
 }

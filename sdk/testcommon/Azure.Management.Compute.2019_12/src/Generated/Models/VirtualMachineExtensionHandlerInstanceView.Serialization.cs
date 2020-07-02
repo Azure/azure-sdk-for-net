@@ -15,17 +15,17 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion");
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteObjectValue(Status);
@@ -35,40 +35,28 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineExtensionHandlerInstanceView DeserializeVirtualMachineExtensionHandlerInstanceView(JsonElement element)
         {
-            string type = default;
-            string typeHandlerVersion = default;
-            InstanceViewStatus status = default;
+            Optional<string> type = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("typeHandlerVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     typeHandlerVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineExtensionHandlerInstanceView(type, typeHandlerVersion, status);
+            return new VirtualMachineExtensionHandlerInstanceView(type.HasValue ? type.Value : null, typeHandlerVersion.HasValue ? typeHandlerVersion.Value : null, status.HasValue ? status.Value : null);
         }
     }
 }

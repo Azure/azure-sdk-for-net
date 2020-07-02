@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static InboundNatRuleListResult DeserializeInboundNatRuleListResult(JsonElement element)
         {
-            IReadOnlyList<InboundNatRule> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<InboundNatRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InboundNatRule> array = new List<InboundNatRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new InboundNatRuleListResult(value, nextLink);
+            return new InboundNatRuleListResult(new ChangeTrackingList<InboundNatRule>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

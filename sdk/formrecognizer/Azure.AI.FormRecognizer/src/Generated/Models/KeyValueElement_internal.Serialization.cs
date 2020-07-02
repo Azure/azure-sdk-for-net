@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal static KeyValueElement_internal DeserializeKeyValueElement_internal(JsonElement element)
         {
             string text = default;
-            IReadOnlyList<float> boundingBox = default;
-            IReadOnlyList<string> elements = default;
+            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<IReadOnlyList<string>> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -27,10 +27,6 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("boundingBox"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -41,10 +37,6 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("elements"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -61,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new KeyValueElement_internal(text, boundingBox, elements);
+            return new KeyValueElement_internal(text, new ChangeTrackingList<float>(boundingBox), new ChangeTrackingList<string>(elements));
         }
     }
 }

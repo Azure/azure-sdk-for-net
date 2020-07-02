@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
                 writer.WriteStringValue(Address);
             }
-            if (Contact != null)
+            if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact");
                 writer.WriteStringValue(Contact);
             }
-            if (AvailableBandwidths != null)
+            if (Optional.IsDefined(AvailableBandwidths))
             {
                 writer.WritePropertyName("availableBandwidths");
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -80,59 +80,39 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRoutePortsLocation DeserializeExpressRoutePortsLocation(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string address = default;
-            string contact = default;
-            IList<ExpressRoutePortsLocationBandwidths> availableBandwidths = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> address = default;
+            Optional<string> contact = default;
+            Optional<IList<ExpressRoutePortsLocationBandwidths>> availableBandwidths = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -154,28 +134,16 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("address"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             address = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("contact"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             contact = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("availableBandwidths"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ExpressRoutePortsLocationBandwidths> array = new List<ExpressRoutePortsLocationBandwidths>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -193,10 +161,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -204,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocation(id, name, type, location, tags, address, contact, availableBandwidths, provisioningState);
+            return new ExpressRoutePortsLocation(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), address.HasValue ? address.Value : null, contact.HasValue ? contact.Value : null, new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>(availableBandwidths), provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

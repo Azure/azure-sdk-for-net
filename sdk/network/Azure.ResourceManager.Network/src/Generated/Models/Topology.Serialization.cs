@@ -16,45 +16,29 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Topology DeserializeTopology(JsonElement element)
         {
-            string id = default;
-            DateTimeOffset? createdDateTime = default;
-            DateTimeOffset? lastModified = default;
-            IReadOnlyList<TopologyResource> resources = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<IReadOnlyList<TopologyResource>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastModified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("resources"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TopologyResource> array = new List<TopologyResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Topology(id, createdDateTime, lastModified, resources);
+            return new Topology(id.HasValue ? id.Value : null, createdDateTime.HasValue ? createdDateTime.Value : (DateTimeOffset?)null, lastModified.HasValue ? lastModified.Value : (DateTimeOffset?)null, new ChangeTrackingList<TopologyResource>(resources));
         }
     }
 }

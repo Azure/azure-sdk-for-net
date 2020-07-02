@@ -16,29 +16,29 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix");
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (AddressPrefixes != null)
+            if (Optional.IsDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes");
                 writer.WriteStartArray();
@@ -48,22 +48,22 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup");
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable");
                 writer.WriteObjectValue(RouteTable);
             }
-            if (NatGateway != null)
+            if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway");
                 writer.WriteObjectValue(NatGateway);
             }
-            if (ServiceEndpoints != null)
+            if (Optional.IsDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints");
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServiceEndpointPolicies != null)
+            if (Optional.IsDefined(ServiceEndpointPolicies))
             {
                 writer.WritePropertyName("serviceEndpointPolicies");
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateEndpoints != null)
+            if (Optional.IsDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints");
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpConfigurations != null)
+            if (Optional.IsDefined(IpConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpConfigurationProfiles != null)
+            if (Optional.IsDefined(IpConfigurationProfiles))
             {
                 writer.WritePropertyName("ipConfigurationProfiles");
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpAllocations != null)
+            if (Optional.IsDefined(IpAllocations))
             {
                 writer.WritePropertyName("ipAllocations");
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceNavigationLinks != null)
+            if (Optional.IsDefined(ResourceNavigationLinks))
             {
                 writer.WritePropertyName("resourceNavigationLinks");
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServiceAssociationLinks != null)
+            if (Optional.IsDefined(ServiceAssociationLinks))
             {
                 writer.WritePropertyName("serviceAssociationLinks");
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Delegations != null)
+            if (Optional.IsDefined(Delegations))
             {
                 writer.WritePropertyName("delegations");
                 writer.WriteStartArray();
@@ -153,22 +153,22 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Purpose != null)
+            if (Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose");
                 writer.WriteStringValue(Purpose);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PrivateEndpointNetworkPolicies != null)
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies");
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies);
             }
-            if (PrivateLinkServiceNetworkPolicies != null)
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies");
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies);
@@ -179,53 +179,41 @@ namespace Azure.Management.Network.Models
 
         internal static Subnet DeserializeSubnet(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            string addressPrefix = default;
-            IList<string> addressPrefixes = default;
-            NetworkSecurityGroup networkSecurityGroup = default;
-            RouteTable routeTable = default;
-            SubResource natGateway = default;
-            IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default;
-            IList<ServiceEndpointPolicy> serviceEndpointPolicies = default;
-            IList<PrivateEndpoint> privateEndpoints = default;
-            IList<IPConfiguration> ipConfigurations = default;
-            IList<IPConfigurationProfile> ipConfigurationProfiles = default;
-            IList<SubResource> ipAllocations = default;
-            IList<ResourceNavigationLink> resourceNavigationLinks = default;
-            IList<ServiceAssociationLink> serviceAssociationLinks = default;
-            IList<Delegation> delegations = default;
-            string purpose = default;
-            ProvisioningState? provisioningState = default;
-            string privateEndpointNetworkPolicies = default;
-            string privateLinkServiceNetworkPolicies = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> addressPrefix = default;
+            Optional<IList<string>> addressPrefixes = default;
+            Optional<NetworkSecurityGroup> networkSecurityGroup = default;
+            Optional<RouteTable> routeTable = default;
+            Optional<SubResource> natGateway = default;
+            Optional<IList<ServiceEndpointPropertiesFormat>> serviceEndpoints = default;
+            Optional<IList<ServiceEndpointPolicy>> serviceEndpointPolicies = default;
+            Optional<IList<PrivateEndpoint>> privateEndpoints = default;
+            Optional<IList<IPConfiguration>> ipConfigurations = default;
+            Optional<IList<IPConfigurationProfile>> ipConfigurationProfiles = default;
+            Optional<IList<SubResource>> ipAllocations = default;
+            Optional<IList<ResourceNavigationLink>> resourceNavigationLinks = default;
+            Optional<IList<ServiceAssociationLink>> serviceAssociationLinks = default;
+            Optional<IList<Delegation>> delegations = default;
+            Optional<string> purpose = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> privateEndpointNetworkPolicies = default;
+            Optional<string> privateLinkServiceNetworkPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -235,19 +223,11 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("addressPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("addressPrefixes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -265,37 +245,21 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("networkSecurityGroup"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             networkSecurityGroup = NetworkSecurityGroup.DeserializeNetworkSecurityGroup(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("routeTable"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             routeTable = RouteTable.DeserializeRouteTable(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             natGateway = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceEndpoints"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ServiceEndpointPropertiesFormat> array = new List<ServiceEndpointPropertiesFormat>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -313,10 +277,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("serviceEndpointPolicies"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ServiceEndpointPolicy> array = new List<ServiceEndpointPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -334,10 +294,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("privateEndpoints"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<PrivateEndpoint> array = new List<PrivateEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -355,10 +311,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("ipConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<IPConfiguration> array = new List<IPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -376,10 +328,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("ipConfigurationProfiles"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<IPConfigurationProfile> array = new List<IPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -397,10 +345,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("ipAllocations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -418,10 +362,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("resourceNavigationLinks"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ResourceNavigationLink> array = new List<ResourceNavigationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -439,10 +379,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("serviceAssociationLinks"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -460,10 +396,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("delegations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Delegation> array = new List<Delegation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -481,37 +413,21 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("purpose"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             purpose = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointNetworkPolicies"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateEndpointNetworkPolicies = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceNetworkPolicies"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateLinkServiceNetworkPolicies = property0.Value.GetString();
                             continue;
                         }
@@ -519,7 +435,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new Subnet(id, name, etag, addressPrefix, addressPrefixes, networkSecurityGroup, routeTable, natGateway, serviceEndpoints, serviceEndpointPolicies, privateEndpoints, ipConfigurations, ipConfigurationProfiles, ipAllocations, resourceNavigationLinks, serviceAssociationLinks, delegations, purpose, provisioningState, privateEndpointNetworkPolicies, privateLinkServiceNetworkPolicies);
+            return new Subnet(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, addressPrefix.HasValue ? addressPrefix.Value : null, new ChangeTrackingList<string>(addressPrefixes), networkSecurityGroup.HasValue ? networkSecurityGroup.Value : null, routeTable.HasValue ? routeTable.Value : null, natGateway.HasValue ? natGateway.Value : null, new ChangeTrackingList<ServiceEndpointPropertiesFormat>(serviceEndpoints), new ChangeTrackingList<ServiceEndpointPolicy>(serviceEndpointPolicies), new ChangeTrackingList<PrivateEndpoint>(privateEndpoints), new ChangeTrackingList<IPConfiguration>(ipConfigurations), new ChangeTrackingList<IPConfigurationProfile>(ipConfigurationProfiles), new ChangeTrackingList<SubResource>(ipAllocations), new ChangeTrackingList<ResourceNavigationLink>(resourceNavigationLinks), new ChangeTrackingList<ServiceAssociationLink>(serviceAssociationLinks), new ChangeTrackingList<Delegation>(delegations), purpose.HasValue ? purpose.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, privateEndpointNetworkPolicies.HasValue ? privateEndpointNetworkPolicies.Value : null, privateLinkServiceNetworkPolicies.HasValue ? privateLinkServiceNetworkPolicies.Value : null);
         }
     }
 }

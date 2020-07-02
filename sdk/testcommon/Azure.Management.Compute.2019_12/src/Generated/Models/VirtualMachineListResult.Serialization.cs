@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         internal static VirtualMachineListResult DeserializeVirtualMachineListResult(JsonElement element)
         {
             IReadOnlyList<VirtualMachine> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineListResult(value, nextLink);
+            return new VirtualMachineListResult(value, nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

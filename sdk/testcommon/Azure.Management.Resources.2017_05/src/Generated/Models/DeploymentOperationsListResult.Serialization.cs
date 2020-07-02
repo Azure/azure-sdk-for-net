@@ -15,16 +15,12 @@ namespace Azure.Management.Resources.Models
     {
         internal static DeploymentOperationsListResult DeserializeDeploymentOperationsListResult(JsonElement element)
         {
-            IReadOnlyList<DeploymentOperation> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<DeploymentOperation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DeploymentOperation> array = new List<DeploymentOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeploymentOperationsListResult(value, nextLink);
+            return new DeploymentOperationsListResult(new ChangeTrackingList<DeploymentOperation>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

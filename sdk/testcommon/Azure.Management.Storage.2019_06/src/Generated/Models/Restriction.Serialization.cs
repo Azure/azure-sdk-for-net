@@ -15,26 +15,18 @@ namespace Azure.Management.Storage.Models
     {
         internal static Restriction DeserializeRestriction(JsonElement element)
         {
-            string type = default;
-            IReadOnlyList<string> values = default;
-            ReasonCode? reasonCode = default;
+            Optional<string> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<ReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("values"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,15 +44,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("reasonCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reasonCode = new ReasonCode(property.Value.GetString());
                     continue;
                 }
             }
-            return new Restriction(type, values, reasonCode);
+            return new Restriction(type.HasValue ? type.Value : null, new ChangeTrackingList<string>(values), reasonCode.HasValue ? reasonCode.Value : (ReasonCode?)null);
         }
     }
 }

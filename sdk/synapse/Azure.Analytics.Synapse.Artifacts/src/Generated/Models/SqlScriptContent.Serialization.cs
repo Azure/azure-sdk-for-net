@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Query);
             writer.WritePropertyName("currentConnection");
             writer.WriteObjectValue(CurrentConnection);
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteObjectValue(Metadata);
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string query = default;
             SqlConnection currentConnection = default;
-            SqlScriptMetadata metadata = default;
+            Optional<SqlScriptMetadata> metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -54,10 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("metadata"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);
                     continue;
                 }
@@ -72,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection, metadata, additionalProperties);
+            return new SqlScriptContent(query, currentConnection, metadata.HasValue ? metadata.Value : null, additionalProperties);
         }
     }
 }

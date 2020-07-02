@@ -15,15 +15,11 @@ namespace Azure.Management.Network.Models
     {
         internal static BgpPeerStatusListResult DeserializeBgpPeerStatusListResult(JsonElement element)
         {
-            IReadOnlyList<BgpPeerStatus> value = default;
+            Optional<IReadOnlyList<BgpPeerStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BgpPeerStatus> array = new List<BgpPeerStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new BgpPeerStatusListResult(value);
+            return new BgpPeerStatusListResult(new ChangeTrackingList<BgpPeerStatus>(value));
         }
     }
 }

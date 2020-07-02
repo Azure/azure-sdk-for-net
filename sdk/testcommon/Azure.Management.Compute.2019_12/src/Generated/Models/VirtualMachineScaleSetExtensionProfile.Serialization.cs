@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Extensions != null)
+            if (Optional.IsDefined(Extensions))
             {
                 writer.WritePropertyName("extensions");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineScaleSetExtensionProfile DeserializeVirtualMachineScaleSetExtensionProfile(JsonElement element)
         {
-            IList<VirtualMachineScaleSetExtension> extensions = default;
+            Optional<IList<VirtualMachineScaleSetExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineScaleSetExtension> array = new List<VirtualMachineScaleSetExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetExtensionProfile(extensions);
+            return new VirtualMachineScaleSetExtensionProfile(new ChangeTrackingList<VirtualMachineScaleSetExtension>(extensions));
         }
     }
 }

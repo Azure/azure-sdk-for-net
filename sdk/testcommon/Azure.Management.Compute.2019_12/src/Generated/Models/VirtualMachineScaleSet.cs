@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,8 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSet. </summary>
@@ -74,7 +77,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public VirtualMachineScaleSetIdentity Identity { get; set; }
         /// <summary> The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The upgrade policy. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>

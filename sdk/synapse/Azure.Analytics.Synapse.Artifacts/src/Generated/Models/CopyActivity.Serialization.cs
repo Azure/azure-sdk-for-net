@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Inputs != null)
+            if (Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Outputs != null)
+            if (Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -50,12 +50,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -81,42 +81,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("sink");
             writer.WriteObjectValue(Sink);
-            if (Translator != null)
+            if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator");
                 writer.WriteObjectValue(Translator);
             }
-            if (EnableStaging != null)
+            if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging");
                 writer.WriteObjectValue(EnableStaging);
             }
-            if (StagingSettings != null)
+            if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings");
                 writer.WriteObjectValue(StagingSettings);
             }
-            if (ParallelCopies != null)
+            if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies");
                 writer.WriteObjectValue(ParallelCopies);
             }
-            if (DataIntegrationUnits != null)
+            if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits");
                 writer.WriteObjectValue(DataIntegrationUnits);
             }
-            if (EnableSkipIncompatibleRow != null)
+            if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow");
                 writer.WriteObjectValue(EnableSkipIncompatibleRow);
             }
-            if (RedirectIncompatibleRowSettings != null)
+            if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings");
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
-            if (PreserveRules != null)
+            if (Optional.IsDefined(PreserveRules))
             {
                 writer.WritePropertyName("preserveRules");
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Preserve != null)
+            if (Optional.IsDefined(Preserve))
             {
                 writer.WritePropertyName("preserve");
                 writer.WriteStartArray();
@@ -147,36 +147,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CopyActivity DeserializeCopyActivity(JsonElement element)
         {
-            IList<DatasetReference> inputs = default;
-            IList<DatasetReference> outputs = default;
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<IList<DatasetReference>> inputs = default;
+            Optional<IList<DatasetReference>> outputs = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            object translator = default;
-            object enableStaging = default;
-            StagingSettings stagingSettings = default;
-            object parallelCopies = default;
-            object dataIntegrationUnits = default;
-            object enableSkipIncompatibleRow = default;
-            RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default;
-            IList<object> preserveRules = default;
-            IList<object> preserve = default;
+            Optional<object> translator = default;
+            Optional<object> enableStaging = default;
+            Optional<StagingSettings> stagingSettings = default;
+            Optional<object> parallelCopies = default;
+            Optional<object> dataIntegrationUnits = default;
+            Optional<object> enableSkipIncompatibleRow = default;
+            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
+            Optional<IList<object>> preserveRules = default;
+            Optional<IList<object>> preserve = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -194,10 +190,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -215,19 +207,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -243,19 +227,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -273,10 +249,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -308,73 +280,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("translator"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             translator = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("enableStaging"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableStaging = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("stagingSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             stagingSettings = StagingSettings.DeserializeStagingSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parallelCopies"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             parallelCopies = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("dataIntegrationUnits"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             dataIntegrationUnits = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("enableSkipIncompatibleRow"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableSkipIncompatibleRow = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("redirectIncompatibleRowSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             redirectIncompatibleRowSettings = RedirectIncompatibleRowSettings.DeserializeRedirectIncompatibleRowSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preserveRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -392,10 +332,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("preserve"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -425,7 +361,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, inputs, outputs, source, sink, translator, enableStaging, stagingSettings, parallelCopies, dataIntegrationUnits, enableSkipIncompatibleRow, redirectIncompatibleRowSettings, preserveRules, preserve);
+            return new CopyActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, linkedServiceName.HasValue ? linkedServiceName.Value : null, policy.HasValue ? policy.Value : null, new ChangeTrackingList<DatasetReference>(inputs), new ChangeTrackingList<DatasetReference>(outputs), source, sink, translator.HasValue ? translator.Value : null, enableStaging.HasValue ? enableStaging.Value : null, stagingSettings.HasValue ? stagingSettings.Value : null, parallelCopies.HasValue ? parallelCopies.Value : null, dataIntegrationUnits.HasValue ? dataIntegrationUnits.Value : null, enableSkipIncompatibleRow.HasValue ? enableSkipIncompatibleRow.Value : null, redirectIncompatibleRowSettings.HasValue ? redirectIncompatibleRowSettings.Value : null, new ChangeTrackingList<object>(preserveRules), new ChangeTrackingList<object>(preserve));
         }
     }
 }

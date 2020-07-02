@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -30,12 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -59,29 +59,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation");
             writer.WriteObjectValue(PackageLocation);
-            if (Runtime != null)
+            if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime");
                 writer.WriteObjectValue(Runtime);
             }
-            if (LoggingLevel != null)
+            if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel");
                 writer.WriteObjectValue(LoggingLevel);
             }
-            if (EnvironmentPath != null)
+            if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath");
                 writer.WriteObjectValue(EnvironmentPath);
             }
-            if (ExecutionCredential != null)
+            if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential");
                 writer.WriteObjectValue(ExecutionCredential);
             }
             writer.WritePropertyName("connectVia");
             writer.WriteObjectValue(ConnectVia);
-            if (ProjectParameters != null)
+            if (Optional.IsDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters");
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PackageParameters != null)
+            if (Optional.IsDefined(PackageParameters))
             {
                 writer.WritePropertyName("packageParameters");
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ProjectConnectionManagers != null)
+            if (Optional.IsDefined(ProjectConnectionManagers))
             {
                 writer.WritePropertyName("projectConnectionManagers");
                 writer.WriteStartObject();
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PackageConnectionManagers != null)
+            if (Optional.IsDefined(PackageConnectionManagers))
             {
                 writer.WritePropertyName("packageConnectionManagers");
                 writer.WriteStartObject();
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PropertyOverrides != null)
+            if (Optional.IsDefined(PropertyOverrides))
             {
                 writer.WritePropertyName("propertyOverrides");
                 writer.WriteStartObject();
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (LogLocation != null)
+            if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation");
                 writer.WriteObjectValue(LogLocation);
@@ -152,44 +152,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
             SsisPackageLocation packageLocation = default;
-            object runtime = default;
-            object loggingLevel = default;
-            object environmentPath = default;
-            SsisExecutionCredential executionCredential = default;
+            Optional<object> runtime = default;
+            Optional<object> loggingLevel = default;
+            Optional<object> environmentPath = default;
+            Optional<SsisExecutionCredential> executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
-            IDictionary<string, SsisExecutionParameter> projectParameters = default;
-            IDictionary<string, SsisExecutionParameter> packageParameters = default;
-            IDictionary<string, object> projectConnectionManagers = default;
-            IDictionary<string, object> packageConnectionManagers = default;
-            IDictionary<string, SsisPropertyOverride> propertyOverrides = default;
-            SsisLogLocation logLocation = default;
+            Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
+            Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
+            Optional<IDictionary<string, object>> projectConnectionManagers = default;
+            Optional<IDictionary<string, object>> packageConnectionManagers = default;
+            Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
+            Optional<SsisLogLocation> logLocation = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -205,19 +197,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -235,10 +219,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -265,37 +245,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("runtime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             runtime = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("loggingLevel"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             loggingLevel = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("environmentPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             environmentPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("executionCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value);
                             continue;
                         }
@@ -306,10 +270,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("projectParameters"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -327,10 +287,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("packageParameters"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -348,10 +304,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("projectConnectionManagers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -369,10 +321,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("packageConnectionManagers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -390,10 +338,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("propertyOverrides"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, SsisPropertyOverride> dictionary = new Dictionary<string, SsisPropertyOverride>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -411,10 +355,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("logLocation"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value);
                             continue;
                         }
@@ -432,7 +372,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, packageLocation, runtime, loggingLevel, environmentPath, executionCredential, connectVia, projectParameters, packageParameters, projectConnectionManagers, packageConnectionManagers, propertyOverrides, logLocation);
+            return new ExecuteSsisPackageActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, linkedServiceName.HasValue ? linkedServiceName.Value : null, policy.HasValue ? policy.Value : null, packageLocation, runtime.HasValue ? runtime.Value : null, loggingLevel.HasValue ? loggingLevel.Value : null, environmentPath.HasValue ? environmentPath.Value : null, executionCredential.HasValue ? executionCredential.Value : null, connectVia, new ChangeTrackingDictionary<string, SsisExecutionParameter>(projectParameters), new ChangeTrackingDictionary<string, SsisExecutionParameter>(packageParameters), new ChangeTrackingDictionary<string, object>(projectConnectionManagers), new ChangeTrackingDictionary<string, object>(packageConnectionManagers), new ChangeTrackingDictionary<string, SsisPropertyOverride>(propertyOverrides), logLocation.HasValue ? logLocation.Value : null);
         }
     }
 }

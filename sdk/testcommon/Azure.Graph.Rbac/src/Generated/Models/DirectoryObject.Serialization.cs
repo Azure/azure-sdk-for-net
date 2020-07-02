@@ -26,37 +26,25 @@ namespace Azure.Graph.Rbac.Models
                     case "User": return User.DeserializeUser(element);
                 }
             }
-            string objectId = default;
-            string objectType = default;
-            DateTimeOffset? deletionTimestamp = default;
+            Optional<string> objectId = default;
+            Optional<string> objectType = default;
+            Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -71,7 +59,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DirectoryObject(objectId, objectType, deletionTimestamp, additionalProperties);
+            return new DirectoryObject(objectId.HasValue ? objectId.Value : null, objectType.HasValue ? objectType.Value : null, deletionTimestamp.HasValue ? deletionTimestamp.Value : (DateTimeOffset?)null, additionalProperties);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Queries != null)
+            if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries");
                 writer.WriteStartObject();
@@ -43,16 +43,12 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static ConfigurationMetrics DeserializeConfigurationMetrics(JsonElement element)
         {
-            IDictionary<string, long> results = default;
-            IDictionary<string, string> queries = default;
+            Optional<IDictionary<string, long>> results = default;
+            Optional<IDictionary<string, string>> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, long> dictionary = new Dictionary<string, long>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -63,10 +59,6 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("queries"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -83,7 +75,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationMetrics(results, queries);
+            return new ConfigurationMetrics(new ChangeTrackingDictionary<string, long>(results), new ChangeTrackingDictionary<string, string>(queries));
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal static PageResult_internal DeserializePageResult_internal(JsonElement element)
         {
             int page = default;
-            int? clusterId = default;
-            IReadOnlyList<KeyValuePair_internal> keyValuePairs = default;
-            IReadOnlyList<DataTable_internal> tables = default;
+            Optional<int> clusterId = default;
+            Optional<IReadOnlyList<KeyValuePair_internal>> keyValuePairs = default;
+            Optional<IReadOnlyList<DataTable_internal>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -28,19 +28,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("clusterId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     clusterId = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("keyValuePairs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<KeyValuePair_internal> array = new List<KeyValuePair_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -58,10 +50,6 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("tables"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataTable_internal> array = new List<DataTable_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -78,7 +66,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new PageResult_internal(page, clusterId, keyValuePairs, tables);
+            return new PageResult_internal(page, clusterId.HasValue ? clusterId.Value : (int?)null, new ChangeTrackingList<KeyValuePair_internal>(keyValuePairs), new ChangeTrackingList<DataTable_internal>(tables));
         }
     }
 }

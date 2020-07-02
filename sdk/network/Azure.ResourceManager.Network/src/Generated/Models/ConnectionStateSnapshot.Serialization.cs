@@ -16,105 +16,65 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element)
         {
-            ConnectionState? connectionState = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            EvaluationState? evaluationState = default;
-            int? avgLatencyInMs = default;
-            int? minLatencyInMs = default;
-            int? maxLatencyInMs = default;
-            int? probesSent = default;
-            int? probesFailed = default;
-            IReadOnlyList<ConnectivityHop> hops = default;
+            Optional<ConnectionState> connectionState = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<EvaluationState> evaluationState = default;
+            Optional<int> avgLatencyInMs = default;
+            Optional<int> minLatencyInMs = default;
+            Optional<int> maxLatencyInMs = default;
+            Optional<int> probesSent = default;
+            Optional<int> probesFailed = default;
+            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionState = new ConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("evaluationState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     evaluationState = new EvaluationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avgLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     avgLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesSent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     probesSent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesFailed"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     probesFailed = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("hops"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionStateSnapshot(connectionState, startTime, endTime, evaluationState, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed, hops);
+            return new ConnectionStateSnapshot(connectionState.HasValue ? connectionState.Value : (ConnectionState?)null, startTime.HasValue ? startTime.Value : (DateTimeOffset?)null, endTime.HasValue ? endTime.Value : (DateTimeOffset?)null, evaluationState.HasValue ? evaluationState.Value : (EvaluationState?)null, avgLatencyInMs.HasValue ? avgLatencyInMs.Value : (int?)null, minLatencyInMs.HasValue ? minLatencyInMs.Value : (int?)null, maxLatencyInMs.HasValue ? maxLatencyInMs.Value : (int?)null, probesSent.HasValue ? probesSent.Value : (int?)null, probesFailed.HasValue ? probesFailed.Value : (int?)null, new ChangeTrackingList<ConnectivityHop>(hops));
         }
     }
 }

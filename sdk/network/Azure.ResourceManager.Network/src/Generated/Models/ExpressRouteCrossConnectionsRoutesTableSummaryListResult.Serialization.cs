@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCrossConnectionsRoutesTableSummaryListResult DeserializeExpressRouteCrossConnectionsRoutesTableSummaryListResult(JsonElement element)
         {
-            IReadOnlyList<ExpressRouteCrossConnectionRoutesTableSummary> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRouteCrossConnectionRoutesTableSummary>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ExpressRouteCrossConnectionRoutesTableSummary> array = new List<ExpressRouteCrossConnectionRoutesTableSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionsRoutesTableSummaryListResult(value, nextLink);
+            return new ExpressRouteCrossConnectionsRoutesTableSummaryListResult(new ChangeTrackingList<ExpressRouteCrossConnectionRoutesTableSummary>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

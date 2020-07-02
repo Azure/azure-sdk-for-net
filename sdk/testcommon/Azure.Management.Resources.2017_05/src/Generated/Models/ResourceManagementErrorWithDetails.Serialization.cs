@@ -15,45 +15,29 @@ namespace Azure.Management.Resources.Models
     {
         internal static ResourceManagementErrorWithDetails DeserializeResourceManagementErrorWithDetails(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            string target = default;
-            IReadOnlyList<ResourceManagementErrorWithDetails> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ResourceManagementErrorWithDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceManagementErrorWithDetails> array = new List<ResourceManagementErrorWithDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -70,7 +54,7 @@ namespace Azure.Management.Resources.Models
                     continue;
                 }
             }
-            return new ResourceManagementErrorWithDetails(code, message, target, details);
+            return new ResourceManagementErrorWithDetails(code.HasValue ? code.Value : null, message.HasValue ? message.Value : null, target.HasValue ? target.Value : null, new ChangeTrackingList<ResourceManagementErrorWithDetails>(details));
         }
     }
 }

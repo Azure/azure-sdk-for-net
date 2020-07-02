@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetRegions != null)
+            if (Optional.IsDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions");
                 writer.WriteStartArray();
@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicaCount != null)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount");
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (ExcludeFromLatest != null)
+            if (Optional.IsDefined(ExcludeFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (PublishedDate != null)
+            if (Optional.IsDefined(PublishedDate))
             {
                 writer.WritePropertyName("publishedDate");
                 writer.WriteStringValue(PublishedDate.Value, "O");
             }
-            if (EndOfLifeDate != null)
+            if (Optional.IsDefined(EndOfLifeDate))
             {
                 writer.WritePropertyName("endOfLifeDate");
                 writer.WriteStringValue(EndOfLifeDate.Value, "O");
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
@@ -57,20 +57,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionPublishingProfile DeserializeGalleryImageVersionPublishingProfile(JsonElement element)
         {
-            IList<TargetRegion> targetRegions = default;
-            int? replicaCount = default;
-            bool? excludeFromLatest = default;
-            DateTimeOffset? publishedDate = default;
-            DateTimeOffset? endOfLifeDate = default;
-            StorageAccountType? storageAccountType = default;
+            Optional<IList<TargetRegion>> targetRegions = default;
+            Optional<int> replicaCount = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<StorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetRegions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -88,51 +84,31 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("replicaCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     replicaCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     excludeFromLatest = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("publishedDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endOfLifeDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
             }
-            return new GalleryImageVersionPublishingProfile(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType);
+            return new GalleryImageVersionPublishingProfile(new ChangeTrackingList<TargetRegion>(targetRegions), replicaCount.HasValue ? replicaCount.Value : (int?)null, excludeFromLatest.HasValue ? excludeFromLatest.Value : (bool?)null, publishedDate.HasValue ? publishedDate.Value : (DateTimeOffset?)null, endOfLifeDate.HasValue ? endOfLifeDate.Value : (DateTimeOffset?)null, storageAccountType.HasValue ? storageAccountType.Value : (StorageAccountType?)null);
         }
     }
 }

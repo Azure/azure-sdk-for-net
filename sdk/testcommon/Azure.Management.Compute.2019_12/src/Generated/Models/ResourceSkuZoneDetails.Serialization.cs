@@ -15,16 +15,12 @@ namespace Azure.Management.Compute.Models
     {
         internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element)
         {
-            IReadOnlyList<string> name = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,10 +38,6 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,7 +54,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuZoneDetails(name, capabilities);
+            return new ResourceSkuZoneDetails(new ChangeTrackingList<string>(name), new ChangeTrackingList<ResourceSkuCapabilities>(capabilities));
         }
     }
 }

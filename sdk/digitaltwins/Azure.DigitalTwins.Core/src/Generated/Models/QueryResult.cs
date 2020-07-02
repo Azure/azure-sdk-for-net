@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.DigitalTwins.Core.Models
         /// <summary> Initializes a new instance of QueryResult. </summary>
         internal QueryResult()
         {
+            Items = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>

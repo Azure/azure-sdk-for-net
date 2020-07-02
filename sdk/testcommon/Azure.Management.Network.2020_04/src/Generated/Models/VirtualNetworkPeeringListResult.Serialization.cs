@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static VirtualNetworkPeeringListResult DeserializeVirtualNetworkPeeringListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkPeering> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkPeering>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkPeering> array = new List<VirtualNetworkPeering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringListResult(value, nextLink);
+            return new VirtualNetworkPeeringListResult(new ChangeTrackingList<VirtualNetworkPeering>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

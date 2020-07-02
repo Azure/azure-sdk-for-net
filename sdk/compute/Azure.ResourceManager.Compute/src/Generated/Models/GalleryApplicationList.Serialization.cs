@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryApplicationList DeserializeGalleryApplicationList(JsonElement element)
         {
             IReadOnlyList<GalleryApplication> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new GalleryApplicationList(value, nextLink);
+            return new GalleryApplicationList(value, nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

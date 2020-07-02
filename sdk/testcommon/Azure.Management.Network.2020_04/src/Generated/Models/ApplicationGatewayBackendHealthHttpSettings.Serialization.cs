@@ -15,25 +15,17 @@ namespace Azure.Management.Network.Models
     {
         internal static ApplicationGatewayBackendHealthHttpSettings DeserializeApplicationGatewayBackendHealthHttpSettings(JsonElement element)
         {
-            ApplicationGatewayBackendHttpSettings backendHttpSettings = default;
-            IReadOnlyList<ApplicationGatewayBackendHealthServer> servers = default;
+            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
+            Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendHttpSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("servers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers);
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.HasValue ? backendHttpSettings.Value : null, new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(servers));
         }
     }
 }

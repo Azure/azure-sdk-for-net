@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static ListVirtualWANsResult DeserializeListVirtualWANsResult(JsonElement element)
         {
-            IReadOnlyList<VirtualWAN> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualWAN>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualWAN> array = new List<VirtualWAN>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListVirtualWANsResult(value, nextLink);
+            return new ListVirtualWANsResult(new ChangeTrackingList<VirtualWAN>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

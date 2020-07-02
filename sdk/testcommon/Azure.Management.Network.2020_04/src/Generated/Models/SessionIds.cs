@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of SessionIds. </summary>
         public SessionIds()
         {
+            SessionIdsValue = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SessionIds. </summary>
@@ -25,6 +27,6 @@ namespace Azure.Management.Network.Models
         }
 
         /// <summary> List of session IDs. </summary>
-        public IList<string> SessionIdsValue { get; set; }
+        public IList<string> SessionIdsValue { get; }
     }
 }

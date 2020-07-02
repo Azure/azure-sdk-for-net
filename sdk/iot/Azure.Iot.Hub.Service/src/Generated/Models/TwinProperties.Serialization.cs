@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Desired != null)
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Reported != null)
+            if (Optional.IsDefined(Reported))
             {
                 writer.WritePropertyName("reported");
                 writer.WriteStartObject();
@@ -43,16 +43,12 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static TwinProperties DeserializeTwinProperties(JsonElement element)
         {
-            IDictionary<string, object> desired = default;
-            IDictionary<string, object> reported = default;
+            Optional<IDictionary<string, object>> desired = default;
+            Optional<IDictionary<string, object>> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -70,10 +66,6 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("reported"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -90,7 +82,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinProperties(desired, reported);
+            return new TwinProperties(new ChangeTrackingDictionary<string, object>(desired), new ChangeTrackingDictionary<string, object>(reported));
         }
     }
 }

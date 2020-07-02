@@ -16,32 +16,32 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RecordType != null)
+            if (Optional.IsDefined(RecordType))
             {
                 writer.WritePropertyName("recordType");
                 writer.WriteStringValue(RecordType);
             }
-            if (RecordSetName != null)
+            if (Optional.IsDefined(RecordSetName))
             {
                 writer.WritePropertyName("recordSetName");
                 writer.WriteStringValue(RecordSetName);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Ttl != null)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl");
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (IpAddresses != null)
+            if (Optional.IsDefined(IpAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
@@ -56,65 +56,41 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
-            string recordType = default;
-            string recordSetName = default;
-            string fqdn = default;
-            ProvisioningState? provisioningState = default;
-            int? ttl = default;
-            IList<string> ipAddresses = default;
+            Optional<string> recordType = default;
+            Optional<string> recordSetName = default;
+            Optional<string> fqdn = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<int> ttl = default;
+            Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recordSetName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordSetName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ttl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ttl = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("ipAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RecordSet(recordType, recordSetName, fqdn, provisioningState, ttl, ipAddresses);
+            return new RecordSet(recordType.HasValue ? recordType.Value : null, recordSetName.HasValue ? recordSetName.Value : null, fqdn.HasValue ? fqdn.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, ttl.HasValue ? ttl.Value : (int?)null, new ChangeTrackingList<string>(ipAddresses));
         }
     }
 }

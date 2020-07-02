@@ -15,55 +15,35 @@ namespace Azure.Management.Network.Models
     {
         internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string type = default;
-            string serviceName = default;
-            IReadOnlyList<string> actions = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> serviceName = default;
+            Optional<IReadOnlyList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -80,7 +60,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new AvailableDelegation(name, id, type, serviceName, actions);
+            return new AvailableDelegation(name.HasValue ? name.Value : null, id.HasValue ? id.Value : null, type.HasValue ? type.Value : null, serviceName.HasValue ? serviceName.Value : null, new ChangeTrackingList<string>(actions));
         }
     }
 }

@@ -17,27 +17,27 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StartDate != null)
+            if (Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate");
                 writer.WriteStringValue(StartDate.Value, "O");
             }
-            if (EndDate != null)
+            if (Optional.IsDefined(EndDate))
             {
                 writer.WritePropertyName("endDate");
                 writer.WriteStringValue(EndDate.Value, "O");
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
                 writer.WriteStringValue(KeyId);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (CustomKeyIdentifier != null)
+            if (Optional.IsDefined(CustomKeyIdentifier))
             {
                 writer.WritePropertyName("customKeyIdentifier");
                 writer.WriteBase64StringValue(CustomKeyIdentifier);
@@ -52,57 +52,37 @@ namespace Azure.Graph.Rbac.Models
 
         internal static PasswordCredential DeserializePasswordCredential(JsonElement element)
         {
-            DateTimeOffset? startDate = default;
-            DateTimeOffset? endDate = default;
-            string keyId = default;
-            string value = default;
-            byte[] customKeyIdentifier = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> endDate = default;
+            Optional<string> keyId = default;
+            Optional<string> value = default;
+            Optional<byte[]> customKeyIdentifier = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("keyId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("customKeyIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     customKeyIdentifier = property.Value.GetBytesFromBase64();
                     continue;
                 }
@@ -117,7 +97,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PasswordCredential(startDate, endDate, keyId, value, customKeyIdentifier, additionalProperties);
+            return new PasswordCredential(startDate.HasValue ? startDate.Value : (DateTimeOffset?)null, endDate.HasValue ? endDate.Value : (DateTimeOffset?)null, keyId.HasValue ? keyId.Value : null, value.HasValue ? value.Value : null, customKeyIdentifier.HasValue ? customKeyIdentifier.Value : null, additionalProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new ArgumentNullException(nameof(outputBlobSasUrl));
             }
 
+            VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUrl = outputBlobSasUrl;
         }
 
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>
-        public IList<string> VpnSites { get; set; }
+        public IList<string> VpnSites { get; }
         /// <summary> The sas-url to download the configurations for vpn-sites. </summary>
         public string OutputBlobSasUrl { get; }
     }

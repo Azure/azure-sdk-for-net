@@ -15,45 +15,29 @@ namespace Azure.Management.Network.Models
     {
         internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element)
         {
-            string networkSecurityGroupId = default;
-            string appliedTo = default;
-            MatchedRule matchedRule = default;
-            IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = default;
+            Optional<string> networkSecurityGroupId = default;
+            Optional<string> appliedTo = default;
+            Optional<MatchedRule> matchedRule = default;
+            Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkSecurityGroupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appliedTo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appliedTo = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("matchedRule"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rulesEvaluationResult"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -70,7 +54,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId, appliedTo, matchedRule, rulesEvaluationResult);
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.HasValue ? networkSecurityGroupId.Value : null, appliedTo.HasValue ? appliedTo.Value : null, matchedRule.HasValue ? matchedRule.Value : null, new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>(rulesEvaluationResult));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
         public ExportImportDevice()
         {
+            Tags = new ChangeTrackingDictionary<string, object>();
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
@@ -63,12 +66,12 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag. </summary>
         public string TwinETag { get; set; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
-        public IDictionary<string, object> Tags { get; set; }
+        public IDictionary<string, object> Tags { get; }
         /// <summary> Properties are optional and defaults to empty object. </summary>
         public PropertyContainer Properties { get; set; }
         /// <summary> Capabilities param is optional and defaults to no capability. </summary>
         public DeviceCapabilities Capabilities { get; set; }
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        public IList<string> ParentScopes { get; }
     }
 }

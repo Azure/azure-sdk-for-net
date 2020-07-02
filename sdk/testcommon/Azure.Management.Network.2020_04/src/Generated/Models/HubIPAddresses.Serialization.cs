@@ -16,7 +16,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PublicIPAddresses != null)
+            if (Optional.IsDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIPAddresses");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress");
                 writer.WriteStringValue(PrivateIPAddress);
@@ -36,16 +36,12 @@ namespace Azure.Management.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
-            IList<AzureFirewallPublicIPAddress> publicIPAddresses = default;
-            string privateIPAddress = default;
+            Optional<IList<AzureFirewallPublicIPAddress>> publicIPAddresses = default;
+            Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AzureFirewallPublicIPAddress> array = new List<AzureFirewallPublicIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -63,15 +59,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("privateIPAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new HubIPAddresses(publicIPAddresses, privateIPAddress);
+            return new HubIPAddresses(new ChangeTrackingList<AzureFirewallPublicIPAddress>(publicIPAddresses), privateIPAddress.HasValue ? privateIPAddress.Value : null);
         }
     }
 }

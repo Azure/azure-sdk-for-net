@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PolicyDefinitionListResult DeserializePolicyDefinitionListResult(JsonElement element)
         {
-            IReadOnlyList<PolicyDefinition> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PolicyDefinition>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PolicyDefinition> array = new List<PolicyDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PolicyDefinitionListResult(value, nextLink);
+            return new PolicyDefinitionListResult(new ChangeTrackingList<PolicyDefinition>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

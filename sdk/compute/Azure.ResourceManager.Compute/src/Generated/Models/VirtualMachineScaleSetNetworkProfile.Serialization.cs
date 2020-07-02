@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HealthProbe != null)
+            if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe");
                 writer.WriteObjectValue(HealthProbe);
             }
-            if (NetworkInterfaceConfigurations != null)
+            if (Optional.IsDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetNetworkProfile DeserializeVirtualMachineScaleSetNetworkProfile(JsonElement element)
         {
-            ApiEntityReference healthProbe = default;
-            IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
+            Optional<ApiEntityReference> healthProbe = default;
+            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthProbe"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     healthProbe = ApiEntityReference.DeserializeApiEntityReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfigurations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineScaleSetNetworkConfiguration> array = new List<VirtualMachineScaleSetNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe.HasValue ? healthProbe.Value : null, new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(networkInterfaceConfigurations));
         }
     }
 }

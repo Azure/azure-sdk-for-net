@@ -16,12 +16,12 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId");
                 writer.WriteStringValue(AppId);
             }
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Extensions != null)
+            if (Optional.IsDefined(Extensions))
             {
                 writer.WritePropertyName("extensions");
                 writer.WriteStartArray();
@@ -46,26 +46,18 @@ namespace Azure.Graph.Rbac.Models
 
         internal static PreAuthorizedApplication DeserializePreAuthorizedApplication(JsonElement element)
         {
-            string appId = default;
-            IList<PreAuthorizedApplicationPermission> permissions = default;
-            IList<PreAuthorizedApplicationExtension> extensions = default;
+            Optional<string> appId = default;
+            Optional<IList<PreAuthorizedApplicationPermission>> permissions = default;
+            Optional<IList<PreAuthorizedApplicationExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("permissions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PreAuthorizedApplicationPermission> array = new List<PreAuthorizedApplicationPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -83,10 +75,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("extensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PreAuthorizedApplicationExtension> array = new List<PreAuthorizedApplicationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -103,7 +91,7 @@ namespace Azure.Graph.Rbac.Models
                     continue;
                 }
             }
-            return new PreAuthorizedApplication(appId, permissions, extensions);
+            return new PreAuthorizedApplication(appId.HasValue ? appId.Value : null, new ChangeTrackingList<PreAuthorizedApplicationPermission>(permissions), new ChangeTrackingList<PreAuthorizedApplicationExtension>(extensions));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (AccessPolicies != null)
+            if (Optional.IsDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies");
                 writer.WriteStartArray();
@@ -31,47 +31,47 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VaultUri != null)
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri");
                 writer.WriteStringValue(VaultUri);
             }
-            if (EnabledForDeployment != null)
+            if (Optional.IsDefined(EnabledForDeployment))
             {
                 writer.WritePropertyName("enabledForDeployment");
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
-            if (EnabledForDiskEncryption != null)
+            if (Optional.IsDefined(EnabledForDiskEncryption))
             {
                 writer.WritePropertyName("enabledForDiskEncryption");
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
-            if (EnabledForTemplateDeployment != null)
+            if (Optional.IsDefined(EnabledForTemplateDeployment))
             {
                 writer.WritePropertyName("enabledForTemplateDeployment");
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
-            if (EnableSoftDelete != null)
+            if (Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete");
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (CreateMode != null)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (EnablePurgeProtection != null)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls");
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (PrivateEndpointConnections != null)
+            if (Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections");
                 writer.WriteStartArray();
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Guid tenantId = default;
             Sku sku = default;
-            IList<AccessPolicyEntry> accessPolicies = default;
-            string vaultUri = default;
-            bool? enabledForDeployment = default;
-            bool? enabledForDiskEncryption = default;
-            bool? enabledForTemplateDeployment = default;
-            bool? enableSoftDelete = default;
-            CreateMode? createMode = default;
-            bool? enablePurgeProtection = default;
-            NetworkRuleSet networkAcls = default;
-            IList<PrivateEndpointConnectionItem> privateEndpointConnections = default;
+            Optional<IList<AccessPolicyEntry>> accessPolicies = default;
+            Optional<string> vaultUri = default;
+            Optional<bool> enabledForDeployment = default;
+            Optional<bool> enabledForDiskEncryption = default;
+            Optional<bool> enabledForTemplateDeployment = default;
+            Optional<bool> enableSoftDelete = default;
+            Optional<CreateMode> createMode = default;
+            Optional<bool> enablePurgeProtection = default;
+            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<IList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
@@ -112,10 +112,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("accessPolicies"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -133,82 +129,46 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("vaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("enabledForDeployment"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabledForDeployment = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enabledForDiskEncryption"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabledForDiskEncryption = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enabledForTemplateDeployment"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabledForTemplateDeployment = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableSoftDelete"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enableSoftDelete = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("createMode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createMode = property.Value.GetString().ToCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enablePurgeProtection = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("networkAcls"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PrivateEndpointConnectionItem> array = new List<PrivateEndpointConnectionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -225,7 +185,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new VaultProperties(tenantId, sku, accessPolicies, vaultUri, enabledForDeployment, enabledForDiskEncryption, enabledForTemplateDeployment, enableSoftDelete, createMode, enablePurgeProtection, networkAcls, privateEndpointConnections);
+            return new VaultProperties(tenantId, sku, new ChangeTrackingList<AccessPolicyEntry>(accessPolicies), vaultUri.HasValue ? vaultUri.Value : null, enabledForDeployment.HasValue ? enabledForDeployment.Value : (bool?)null, enabledForDiskEncryption.HasValue ? enabledForDiskEncryption.Value : (bool?)null, enabledForTemplateDeployment.HasValue ? enabledForTemplateDeployment.Value : (bool?)null, enableSoftDelete.HasValue ? enableSoftDelete.Value : (bool?)null, createMode.HasValue ? createMode.Value : (CreateMode?)null, enablePurgeProtection.HasValue ? enablePurgeProtection.Value : (bool?)null, networkAcls.HasValue ? networkAcls.Value : null, new ChangeTrackingList<PrivateEndpointConnectionItem>(privateEndpointConnections));
         }
     }
 }

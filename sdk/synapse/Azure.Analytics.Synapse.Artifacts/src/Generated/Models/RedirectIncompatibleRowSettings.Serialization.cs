@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path");
                 writer.WriteObjectValue(Path);
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static RedirectIncompatibleRowSettings DeserializeRedirectIncompatibleRowSettings(JsonElement element)
         {
             object linkedServiceName = default;
-            object path = default;
+            Optional<object> path = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -46,10 +46,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetObject();
                     continue;
                 }
@@ -64,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedirectIncompatibleRowSettings(linkedServiceName, path, additionalProperties);
+            return new RedirectIncompatibleRowSettings(linkedServiceName, path.HasValue ? path.Value : null, additionalProperties);
         }
     }
 }

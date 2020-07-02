@@ -14,40 +14,28 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            KeyVaultServiceError innererror = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<KeyVaultServiceError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("innererror"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innererror = DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }
             }
-            return new KeyVaultServiceError(code, message, innererror);
+            return new KeyVaultServiceError(code.HasValue ? code.Value : null, message.HasValue ? message.Value : null, innererror.HasValue ? innererror.Value : null);
         }
     }
 }

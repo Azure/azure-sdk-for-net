@@ -14,40 +14,28 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static DesiredState DeserializeDesiredState(JsonElement element)
         {
-            int? code = default;
-            long? version = default;
-            string description = default;
+            Optional<int> code = default;
+            Optional<long> version = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new DesiredState(code, version, description);
+            return new DesiredState(code.HasValue ? code.Value : (int?)null, version.HasValue ? version.Value : (long?)null, description.HasValue ? description.Value : null);
         }
     }
 }

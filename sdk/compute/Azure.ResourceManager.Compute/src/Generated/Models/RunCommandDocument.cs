@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -44,7 +45,8 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(script));
             }
 
-            Script = script.ToArray();
+            Script = script.ToList();
+            Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of RunCommandDocument. </summary>
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(description));
             }
 
-            Script = script ?? new List<string>();
+            Script = script;
             Parameters = parameters;
         }
 

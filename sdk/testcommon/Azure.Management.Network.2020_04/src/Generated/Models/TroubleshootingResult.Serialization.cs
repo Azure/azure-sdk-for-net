@@ -16,45 +16,29 @@ namespace Azure.Management.Network.Models
     {
         internal static TroubleshootingResult DeserializeTroubleshootingResult(JsonElement element)
         {
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            string code = default;
-            IReadOnlyList<TroubleshootingDetails> results = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> code = default;
+            Optional<IReadOnlyList<TroubleshootingDetails>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TroubleshootingDetails> array = new List<TroubleshootingDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +55,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new TroubleshootingResult(startTime, endTime, code, results);
+            return new TroubleshootingResult(startTime.HasValue ? startTime.Value : (DateTimeOffset?)null, endTime.HasValue ? endTime.Value : (DateTimeOffset?)null, code.HasValue ? code.Value : null, new ChangeTrackingList<TroubleshootingDetails>(results));
         }
     }
 }

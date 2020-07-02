@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static PrivateLinkResourceListResult DeserializePrivateLinkResourceListResult(JsonElement element)
         {
-            IReadOnlyList<PrivateLinkResource> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PrivateLinkResource>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PrivateLinkResource> array = new List<PrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PrivateLinkResourceListResult(value, nextLink);
+            return new PrivateLinkResourceListResult(new ChangeTrackingList<PrivateLinkResource>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

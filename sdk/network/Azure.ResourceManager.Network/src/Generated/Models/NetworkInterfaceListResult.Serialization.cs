@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceListResult DeserializeNetworkInterfaceListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkInterface> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkInterface>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkInterface> array = new List<NetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceListResult(value, nextLink);
+            return new NetworkInterfaceListResult(new ChangeTrackingList<NetworkInterface>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

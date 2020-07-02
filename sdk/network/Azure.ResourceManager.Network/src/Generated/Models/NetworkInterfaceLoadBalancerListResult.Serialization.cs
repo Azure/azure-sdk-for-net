@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceLoadBalancerListResult DeserializeNetworkInterfaceLoadBalancerListResult(JsonElement element)
         {
-            IReadOnlyList<LoadBalancer> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<LoadBalancer>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<LoadBalancer> array = new List<LoadBalancer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkInterfaceLoadBalancerListResult(value, nextLink);
+            return new NetworkInterfaceLoadBalancerListResult(new ChangeTrackingList<LoadBalancer>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

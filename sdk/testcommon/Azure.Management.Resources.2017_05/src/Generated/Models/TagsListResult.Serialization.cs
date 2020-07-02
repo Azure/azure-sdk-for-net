@@ -15,16 +15,12 @@ namespace Azure.Management.Resources.Models
     {
         internal static TagsListResult DeserializeTagsListResult(JsonElement element)
         {
-            IReadOnlyList<TagDetails> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<TagDetails>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TagDetails> array = new List<TagDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new TagsListResult(value, nextLink);
+            return new TagsListResult(new ChangeTrackingList<TagDetails>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

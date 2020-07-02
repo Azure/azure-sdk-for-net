@@ -15,26 +15,18 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static Models_internal DeserializeModels_internal(JsonElement element)
         {
-            ModelsSummary_internal summary = default;
-            IReadOnlyList<ModelInfo_internal> modelList = default;
-            string nextLink = default;
+            Optional<ModelsSummary_internal> summary = default;
+            Optional<IReadOnlyList<ModelInfo_internal>> modelList = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     summary = ModelsSummary_internal.DeserializeModelsSummary_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ModelInfo_internal> array = new List<ModelInfo_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,15 +44,11 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new Models_internal(summary, modelList, nextLink);
+            return new Models_internal(summary.HasValue ? summary.Value : null, new ChangeTrackingList<ModelInfo_internal>(modelList), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

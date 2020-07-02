@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static WebApplicationFirewallPolicyListResult DeserializeWebApplicationFirewallPolicyListResult(JsonElement element)
         {
-            IReadOnlyList<WebApplicationFirewallPolicy> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<WebApplicationFirewallPolicy>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<WebApplicationFirewallPolicy> array = new List<WebApplicationFirewallPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new WebApplicationFirewallPolicyListResult(value, nextLink);
+            return new WebApplicationFirewallPolicyListResult(new ChangeTrackingList<WebApplicationFirewallPolicy>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

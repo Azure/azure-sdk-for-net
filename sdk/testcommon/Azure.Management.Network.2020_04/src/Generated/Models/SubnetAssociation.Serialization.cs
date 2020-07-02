@@ -15,25 +15,17 @@ namespace Azure.Management.Network.Models
     {
         internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
         {
-            string id = default;
-            IReadOnlyList<SecurityRule> securityRules = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<SecurityRule>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("securityRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new SubnetAssociation(id, securityRules);
+            return new SubnetAssociation(id.HasValue ? id.Value : null, new ChangeTrackingList<SecurityRule>(securityRules));
         }
     }
 }

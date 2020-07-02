@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             RuleGroupName = ruleGroupName;
             Description = description;
-            Rules = rules ?? new List<ApplicationGatewayFirewallRule>();
+            Rules = rules;
         }
 
         /// <summary> The name of the web application firewall rule group. </summary>

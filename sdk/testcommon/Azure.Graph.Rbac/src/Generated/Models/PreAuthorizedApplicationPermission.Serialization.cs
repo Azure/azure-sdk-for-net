@@ -16,12 +16,12 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DirectAccessGrant != null)
+            if (Optional.IsDefined(DirectAccessGrant))
             {
                 writer.WritePropertyName("directAccessGrant");
                 writer.WriteBooleanValue(DirectAccessGrant.Value);
             }
-            if (AccessGrants != null)
+            if (Optional.IsDefined(AccessGrants))
             {
                 writer.WritePropertyName("accessGrants");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.Graph.Rbac.Models
 
         internal static PreAuthorizedApplicationPermission DeserializePreAuthorizedApplicationPermission(JsonElement element)
         {
-            bool? directAccessGrant = default;
-            IList<string> accessGrants = default;
+            Optional<bool> directAccessGrant = default;
+            Optional<IList<string>> accessGrants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directAccessGrant"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     directAccessGrant = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("accessGrants"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.Graph.Rbac.Models
                     continue;
                 }
             }
-            return new PreAuthorizedApplicationPermission(directAccessGrant, accessGrants);
+            return new PreAuthorizedApplicationPermission(directAccessGrant.HasValue ? directAccessGrant.Value : (bool?)null, new ChangeTrackingList<string>(accessGrants));
         }
     }
 }

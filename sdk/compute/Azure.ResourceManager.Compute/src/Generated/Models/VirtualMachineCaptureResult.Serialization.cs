@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("$schema");
                 writer.WriteStringValue(Schema);
             }
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion");
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
@@ -51,46 +51,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element)
         {
-            string schema = default;
-            string contentVersion = default;
-            object parameters = default;
-            IList<object> resources = default;
-            string id = default;
+            Optional<string> schema = default;
+            Optional<string> contentVersion = default;
+            Optional<object> parameters = default;
+            Optional<IList<object>> resources = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schema = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("resources"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,15 +92,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineCaptureResult(id, schema, contentVersion, parameters, resources);
+            return new VirtualMachineCaptureResult(id.HasValue ? id.Value : null, schema.HasValue ? schema.Value : null, contentVersion.HasValue ? contentVersion.Value : null, parameters.HasValue ? parameters.Value : null, new ChangeTrackingList<object>(resources));
         }
     }
 }

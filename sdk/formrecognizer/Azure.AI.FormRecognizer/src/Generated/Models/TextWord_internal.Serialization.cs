@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            float? confidence = default;
+            Optional<float> confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -37,15 +37,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("confidence"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new TextWord_internal(text, boundingBox, confidence);
+            return new TextWord_internal(text, boundingBox, confidence.HasValue ? confidence.Value : (float?)null);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = "IntegrationRuntimeReference";
             ReferenceName = referenceName;
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
@@ -42,6 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference integration runtime name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for integration runtime. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

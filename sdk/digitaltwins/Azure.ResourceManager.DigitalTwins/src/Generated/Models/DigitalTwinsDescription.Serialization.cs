@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (CreatedTime != null)
+            if (Optional.IsDefined(CreatedTime))
             {
                 writer.WritePropertyName("createdTime");
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (LastUpdatedTime != null)
+            if (Optional.IsDefined(LastUpdatedTime))
             {
                 writer.WritePropertyName("lastUpdatedTime");
                 writer.WriteStringValue(LastUpdatedTime.Value, "O");
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
@@ -78,42 +78,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsDescription DeserializeDigitalTwinsDescription(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            DigitalTwinsSkuInfo sku = default;
-            DateTimeOffset? createdTime = default;
-            DateTimeOffset? lastUpdatedTime = default;
-            ProvisioningState? provisioningState = default;
-            string hostName = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<DigitalTwinsSkuInfo> sku = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -124,10 +112,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -145,10 +129,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = DigitalTwinsSkuInfo.DeserializeDigitalTwinsSkuInfo(property.Value);
                     continue;
                 }
@@ -158,37 +138,21 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         if (property0.NameEquals("createdTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastUpdatedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostName = property0.Value.GetString();
                             continue;
                         }
@@ -196,7 +160,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsDescription(id, name, type, location, tags, sku, createdTime, lastUpdatedTime, provisioningState, hostName);
+            return new DigitalTwinsDescription(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), sku.HasValue ? sku.Value : null, createdTime.HasValue ? createdTime.Value : (DateTimeOffset?)null, lastUpdatedTime.HasValue ? lastUpdatedTime.Value : (DateTimeOffset?)null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, hostName.HasValue ? hostName.Value : null);
         }
     }
 }

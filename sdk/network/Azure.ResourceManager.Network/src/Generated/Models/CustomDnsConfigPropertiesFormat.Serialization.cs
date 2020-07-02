@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
             }
-            if (IpAddresses != null)
+            if (Optional.IsDefined(IpAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static CustomDnsConfigPropertiesFormat DeserializeCustomDnsConfigPropertiesFormat(JsonElement element)
         {
-            string fqdn = default;
-            IList<string> ipAddresses = default;
+            Optional<string> fqdn = default;
+            Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ipAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CustomDnsConfigPropertiesFormat(fqdn, ipAddresses);
+            return new CustomDnsConfigPropertiesFormat(fqdn.HasValue ? fqdn.Value : null, new ChangeTrackingList<string>(ipAddresses));
         }
     }
 }

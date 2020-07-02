@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -47,22 +47,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteObjectValue(Timeout);
             }
-            if (Sleep != null)
+            if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep");
                 writer.WriteObjectValue(Sleep);
             }
-            if (MinimumSize != null)
+            if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize");
                 writer.WriteObjectValue(MinimumSize);
             }
-            if (ChildItems != null)
+            if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems");
                 writer.WriteObjectValue(ChildItems);
@@ -82,13 +82,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
-            object timeout = default;
-            object sleep = default;
-            object minimumSize = default;
-            object childItems = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
+            Optional<object> timeout = default;
+            Optional<object> sleep = default;
+            Optional<object> minimumSize = default;
+            Optional<object> childItems = default;
             DatasetReference dataset = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
@@ -106,19 +106,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -136,10 +128,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -161,37 +149,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("timeout"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             timeout = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("sleep"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             sleep = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("minimumSize"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             minimumSize = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("childItems"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             childItems = property0.Value.GetObject();
                             continue;
                         }
@@ -214,7 +186,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ValidationActivity(name, type, description, dependsOn, userProperties, additionalProperties, timeout, sleep, minimumSize, childItems, dataset);
+            return new ValidationActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, timeout.HasValue ? timeout.Value : null, sleep.HasValue ? sleep.Value : null, minimumSize.HasValue ? minimumSize.Value : null, childItems.HasValue ? childItems.Value : null, dataset);
         }
     }
 }

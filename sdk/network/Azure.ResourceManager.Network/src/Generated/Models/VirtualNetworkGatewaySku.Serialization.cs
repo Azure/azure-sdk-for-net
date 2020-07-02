@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
                 writer.WriteNumberValue(Capacity.Value);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewaySku DeserializeVirtualNetworkGatewaySku(JsonElement element)
         {
-            VirtualNetworkGatewaySkuName? name = default;
-            VirtualNetworkGatewaySkuTier? tier = default;
-            int? capacity = default;
+            Optional<VirtualNetworkGatewaySkuName> name = default;
+            Optional<VirtualNetworkGatewaySkuTier> tier = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = new VirtualNetworkGatewaySkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = new VirtualNetworkGatewaySkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VirtualNetworkGatewaySku(name, tier, capacity);
+            return new VirtualNetworkGatewaySku(name.HasValue ? name.Value : (VirtualNetworkGatewaySkuName?)null, tier.HasValue ? tier.Value : (VirtualNetworkGatewaySkuTier?)null, capacity.HasValue ? capacity.Value : (int?)null);
         }
     }
 }

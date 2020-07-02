@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProximityPlacementGroupType != null)
+            if (Optional.IsDefined(ProximityPlacementGroupType))
             {
                 writer.WritePropertyName("proximityPlacementGroupType");
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
-            if (VirtualMachines != null)
+            if (Optional.IsDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines");
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualMachineScaleSets != null)
+            if (Optional.IsDefined(VirtualMachineScaleSets))
             {
                 writer.WritePropertyName("virtualMachineScaleSets");
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySets != null)
+            if (Optional.IsDefined(AvailabilitySets))
             {
                 writer.WritePropertyName("availabilitySets");
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ColocationStatus != null)
+            if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus");
                 writer.WriteObjectValue(ColocationStatus);
@@ -92,42 +92,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ProximityPlacementGroup DeserializeProximityPlacementGroup(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            ProximityPlacementGroupType? proximityPlacementGroupType = default;
-            IList<SubResourceWithColocationStatus> virtualMachines = default;
-            IList<SubResourceWithColocationStatus> virtualMachineScaleSets = default;
-            IList<SubResourceWithColocationStatus> availabilitySets = default;
-            InstanceViewStatus colocationStatus = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
+            Optional<IList<SubResourceWithColocationStatus>> virtualMachines = default;
+            Optional<IList<SubResourceWithColocationStatus>> virtualMachineScaleSets = default;
+            Optional<IList<SubResourceWithColocationStatus>> availabilitySets = default;
+            Optional<InstanceViewStatus> colocationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -138,10 +126,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -163,19 +147,11 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("proximityPlacementGroupType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             proximityPlacementGroupType = new ProximityPlacementGroupType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualMachines"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -193,10 +169,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("virtualMachineScaleSets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -214,10 +186,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("availabilitySets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -235,10 +203,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("colocationStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value);
                             continue;
                         }
@@ -246,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ProximityPlacementGroup(id, name, type, location, tags, proximityPlacementGroupType, virtualMachines, virtualMachineScaleSets, availabilitySets, colocationStatus);
+            return new ProximityPlacementGroup(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), proximityPlacementGroupType.HasValue ? proximityPlacementGroupType.Value : (ProximityPlacementGroupType?)null, new ChangeTrackingList<SubResourceWithColocationStatus>(virtualMachines), new ChangeTrackingList<SubResourceWithColocationStatus>(virtualMachineScaleSets), new ChangeTrackingList<SubResourceWithColocationStatus>(availabilitySets), colocationStatus.HasValue ? colocationStatus.Value : null);
         }
     }
 }

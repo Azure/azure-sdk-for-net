@@ -18,27 +18,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize");
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout");
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount");
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait");
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -54,11 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static CopySink DeserializeCopySink(JsonElement element)
         {
             string type = default;
-            object writeBatchSize = default;
-            object writeBatchTimeout = default;
-            object sinkRetryCount = default;
-            object sinkRetryWait = default;
-            object maxConcurrentConnections = default;
+            Optional<object> writeBatchSize = default;
+            Optional<object> writeBatchTimeout = default;
+            Optional<object> sinkRetryCount = default;
+            Optional<object> sinkRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -70,46 +70,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("writeBatchSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     writeBatchSize = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     writeBatchTimeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sinkRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sinkRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
@@ -124,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopySink(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties);
+            return new CopySink(type, writeBatchSize.HasValue ? writeBatchSize.Value : null, writeBatchTimeout.HasValue ? writeBatchTimeout.Value : null, sinkRetryCount.HasValue ? sinkRetryCount.Value : null, sinkRetryWait.HasValue ? sinkRetryWait.Value : null, maxConcurrentConnections.HasValue ? maxConcurrentConnections.Value : null, additionalProperties);
         }
     }
 }

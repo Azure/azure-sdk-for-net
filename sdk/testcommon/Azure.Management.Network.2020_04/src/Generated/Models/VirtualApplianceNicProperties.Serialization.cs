@@ -15,17 +15,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (PublicIpAddress != null)
+            if (Optional.IsDefined(PublicIpAddress))
             {
                 writer.WritePropertyName("publicIpAddress");
                 writer.WriteStringValue(PublicIpAddress);
             }
-            if (PrivateIpAddress != null)
+            if (Optional.IsDefined(PrivateIpAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
                 writer.WriteStringValue(PrivateIpAddress);
@@ -35,40 +35,28 @@ namespace Azure.Management.Network.Models
 
         internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element)
         {
-            string name = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            Optional<string> name = default;
+            Optional<string> publicIpAddress = default;
+            Optional<string> privateIpAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publicIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privateIpAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualApplianceNicProperties(name, publicIpAddress, privateIpAddress);
+            return new VirtualApplianceNicProperties(name.HasValue ? name.Value : null, publicIpAddress.HasValue ? publicIpAddress.Value : null, privateIpAddress.HasValue ? privateIpAddress.Value : null);
         }
     }
 }

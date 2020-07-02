@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string type = default;
             string referenceName = default;
-            string name = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -46,15 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new PipelineReference(type, referenceName, name);
+            return new PipelineReference(type, referenceName, name.HasValue ? name.Value : null);
         }
     }
 }

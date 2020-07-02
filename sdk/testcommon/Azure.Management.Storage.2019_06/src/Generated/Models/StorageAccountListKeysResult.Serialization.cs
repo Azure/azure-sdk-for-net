@@ -15,15 +15,11 @@ namespace Azure.Management.Storage.Models
     {
         internal static StorageAccountListKeysResult DeserializeStorageAccountListKeysResult(JsonElement element)
         {
-            IReadOnlyList<StorageAccountKey> keys = default;
+            Optional<IReadOnlyList<StorageAccountKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<StorageAccountKey> array = new List<StorageAccountKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountListKeysResult(keys);
+            return new StorageAccountListKeysResult(new ChangeTrackingList<StorageAccountKey>(keys));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrefixMatch != null)
+            if (Optional.IsDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Management.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinCreationTime != null)
+            if (Optional.IsDefined(MinCreationTime))
             {
                 writer.WritePropertyName("minCreationTime");
                 writer.WriteStringValue(MinCreationTime);
@@ -36,16 +36,12 @@ namespace Azure.Management.Storage.Models
 
         internal static ObjectReplicationPolicyFilter DeserializeObjectReplicationPolicyFilter(JsonElement element)
         {
-            IList<string> prefixMatch = default;
-            string minCreationTime = default;
+            Optional<IList<string>> prefixMatch = default;
+            Optional<string> minCreationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -63,15 +59,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("minCreationTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minCreationTime = property.Value.GetString();
                     continue;
                 }
             }
-            return new ObjectReplicationPolicyFilter(prefixMatch, minCreationTime);
+            return new ObjectReplicationPolicyFilter(new ChangeTrackingList<string>(prefixMatch), minCreationTime.HasValue ? minCreationTime.Value : null);
         }
     }
 }

@@ -17,12 +17,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy");
                 writer.WriteStringValue(ManagedBy);
             }
-            if (ManagedByExtended != null)
+            if (Optional.IsDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended");
                 writer.WriteStartArray();
@@ -32,12 +32,12 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
@@ -47,24 +47,24 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -77,87 +77,87 @@ namespace Azure.Management.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (TimeCreated != null)
+            if (Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated");
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (OsType != null)
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OsType.Value.ToSerialString());
             }
-            if (HyperVGeneration != null)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (CreationData != null)
+            if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData");
                 writer.WriteObjectValue(CreationData);
             }
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (DiskSizeBytes != null)
+            if (Optional.IsDefined(DiskSizeBytes))
             {
                 writer.WritePropertyName("diskSizeBytes");
                 writer.WriteNumberValue(DiskSizeBytes.Value);
             }
-            if (UniqueId != null)
+            if (Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId");
                 writer.WriteStringValue(UniqueId);
             }
-            if (EncryptionSettingsCollection != null)
+            if (Optional.IsDefined(EncryptionSettingsCollection))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
                 writer.WriteObjectValue(EncryptionSettingsCollection);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DiskIopsReadWrite != null)
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite");
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (DiskMBpsReadWrite != null)
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite");
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (DiskIopsReadOnly != null)
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly");
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (DiskMBpsReadOnly != null)
+            if (Optional.IsDefined(DiskMBpsReadOnly))
             {
                 writer.WritePropertyName("diskMBpsReadOnly");
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (DiskState != null)
+            if (Optional.IsDefined(DiskState))
             {
                 writer.WritePropertyName("diskState");
                 writer.WriteStringValue(DiskState.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (MaxShares != null)
+            if (Optional.IsDefined(MaxShares))
             {
                 writer.WritePropertyName("maxShares");
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (ShareInfo != null)
+            if (Optional.IsDefined(ShareInfo))
             {
                 writer.WritePropertyName("shareInfo");
                 writer.WriteStartArray();
@@ -173,49 +173,41 @@ namespace Azure.Management.Compute.Models
 
         internal static Disk DeserializeDisk(JsonElement element)
         {
-            string managedBy = default;
-            IList<string> managedByExtended = default;
-            DiskSku sku = default;
-            IList<string> zones = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> managedBy = default;
+            Optional<IList<string>> managedByExtended = default;
+            Optional<DiskSku> sku = default;
+            Optional<IList<string>> zones = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            DateTimeOffset? timeCreated = default;
-            OperatingSystemTypes? osType = default;
-            HyperVGeneration? hyperVGeneration = default;
-            CreationData creationData = default;
-            int? diskSizeGB = default;
-            long? diskSizeBytes = default;
-            string uniqueId = default;
-            EncryptionSettingsCollection encryptionSettingsCollection = default;
-            string provisioningState = default;
-            long? diskIOPSReadWrite = default;
-            long? diskMBpsReadWrite = default;
-            long? diskIOPSReadOnly = default;
-            long? diskMBpsReadOnly = default;
-            DiskState? diskState = default;
-            Encryption encryption = default;
-            int? maxShares = default;
-            IList<ShareInfoElement> shareInfo = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<OperatingSystemTypes> osType = default;
+            Optional<HyperVGeneration> hyperVGeneration = default;
+            Optional<CreationData> creationData = default;
+            Optional<int> diskSizeGB = default;
+            Optional<long> diskSizeBytes = default;
+            Optional<string> uniqueId = default;
+            Optional<EncryptionSettingsCollection> encryptionSettingsCollection = default;
+            Optional<string> provisioningState = default;
+            Optional<long> diskIOPSReadWrite = default;
+            Optional<long> diskMBpsReadWrite = default;
+            Optional<long> diskIOPSReadOnly = default;
+            Optional<long> diskMBpsReadOnly = default;
+            Optional<DiskState> diskState = default;
+            Optional<Encryption> encryption = default;
+            Optional<int> maxShares = default;
+            Optional<IList<ShareInfoElement>> shareInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     managedBy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("managedByExtended"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -233,19 +225,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = DiskSku.DeserializeDiskSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -263,28 +247,16 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -295,10 +267,6 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -320,154 +288,86 @@ namespace Azure.Management.Compute.Models
                     {
                         if (property0.NameEquals("timeCreated"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("osType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             osType = property0.Value.GetString().ToOperatingSystemTypes();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hyperVGeneration = new HyperVGeneration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationData"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             creationData = CreationData.DeserializeCreationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGB"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskSizeGB = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("diskSizeBytes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("uniqueId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             uniqueId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("encryptionSettingsCollection"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("diskIOPSReadWrite"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskIOPSReadWrite = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("diskMBpsReadWrite"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskMBpsReadWrite = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("diskIOPSReadOnly"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskIOPSReadOnly = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("diskMBpsReadOnly"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskMBpsReadOnly = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("diskState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diskState = new DiskState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryption = Encryption.DeserializeEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxShares"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             maxShares = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("shareInfo"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ShareInfoElement> array = new List<ShareInfoElement>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -487,7 +387,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new Disk(id, name, type, location, tags, managedBy, managedByExtended, sku, zones, timeCreated, osType, hyperVGeneration, creationData, diskSizeGB, diskSizeBytes, uniqueId, encryptionSettingsCollection, provisioningState, diskIOPSReadWrite, diskMBpsReadWrite, diskIOPSReadOnly, diskMBpsReadOnly, diskState, encryption, maxShares, shareInfo);
+            return new Disk(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), managedBy.HasValue ? managedBy.Value : null, new ChangeTrackingList<string>(managedByExtended), sku.HasValue ? sku.Value : null, new ChangeTrackingList<string>(zones), timeCreated.HasValue ? timeCreated.Value : (DateTimeOffset?)null, osType.HasValue ? osType.Value : (OperatingSystemTypes?)null, hyperVGeneration.HasValue ? hyperVGeneration.Value : (HyperVGeneration?)null, creationData.HasValue ? creationData.Value : null, diskSizeGB.HasValue ? diskSizeGB.Value : (int?)null, diskSizeBytes.HasValue ? diskSizeBytes.Value : (long?)null, uniqueId.HasValue ? uniqueId.Value : null, encryptionSettingsCollection.HasValue ? encryptionSettingsCollection.Value : null, provisioningState.HasValue ? provisioningState.Value : null, diskIOPSReadWrite.HasValue ? diskIOPSReadWrite.Value : (long?)null, diskMBpsReadWrite.HasValue ? diskMBpsReadWrite.Value : (long?)null, diskIOPSReadOnly.HasValue ? diskIOPSReadOnly.Value : (long?)null, diskMBpsReadOnly.HasValue ? diskMBpsReadOnly.Value : (long?)null, diskState.HasValue ? diskState.Value : (DiskState?)null, encryption.HasValue ? encryption.Value : null, maxShares.HasValue ? maxShares.Value : (int?)null, new ChangeTrackingList<ShareInfoElement>(shareInfo));
         }
     }
 }

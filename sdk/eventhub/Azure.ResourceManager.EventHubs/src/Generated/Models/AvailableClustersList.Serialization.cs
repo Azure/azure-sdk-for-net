@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element)
         {
-            IReadOnlyList<AvailableCluster> value = default;
+            Optional<IReadOnlyList<AvailableCluster>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AvailableCluster> array = new List<AvailableCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new AvailableClustersList(value);
+            return new AvailableClustersList(new ChangeTrackingList<AvailableCluster>(value));
         }
     }
 }

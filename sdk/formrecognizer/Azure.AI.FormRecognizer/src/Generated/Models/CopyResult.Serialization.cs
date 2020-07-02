@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal static CopyResult DeserializeCopyResult(JsonElement element)
         {
             Guid modelId = default;
-            IReadOnlyList<FormRecognizerError> errors = default;
+            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"))
@@ -28,10 +28,6 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("errors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -48,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Training
                     continue;
                 }
             }
-            return new CopyResult(modelId, errors);
+            return new CopyResult(modelId, new ChangeTrackingList<FormRecognizerError>(errors));
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code");
                 writer.WriteStringValue(Code);
             }
-            if (FullName != null)
+            if (Optional.IsDefined(FullName))
             {
                 writer.WritePropertyName("fullName");
                 writer.WriteStringValue(FullName);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static MessagingRegionsProperties DeserializeMessagingRegionsProperties(JsonElement element)
         {
-            string code = default;
-            string fullName = default;
+            Optional<string> code = default;
+            Optional<string> fullName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fullName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fullName = property.Value.GetString();
                     continue;
                 }
             }
-            return new MessagingRegionsProperties(code, fullName);
+            return new MessagingRegionsProperties(code.HasValue ? code.Value : null, fullName.HasValue ? fullName.Value : null);
         }
     }
 }

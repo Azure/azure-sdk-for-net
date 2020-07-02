@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.Graph.Rbac.Models
             MailEnabled = false;
             MailNickname = mailNickname;
             SecurityEnabled = true;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of GroupCreateParameters. </summary>
@@ -47,7 +48,7 @@ namespace Azure.Graph.Rbac.Models
             MailEnabled = mailEnabled;
             MailNickname = mailNickname;
             SecurityEnabled = securityEnabled;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Group display name. </summary>

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize");
                 writer.WriteStringValue(VmSize);
             }
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count");
                 writer.WriteNumberValue(Count.Value);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostAllocatableVM DeserializeDedicatedHostAllocatableVM(JsonElement element)
         {
-            string vmSize = default;
-            double? count = default;
+            Optional<string> vmSize = default;
+            Optional<double> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vmSize = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("count"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     count = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new DedicatedHostAllocatableVM(vmSize, count);
+            return new DedicatedHostAllocatableVM(vmSize.HasValue ? vmSize.Value : null, count.HasValue ? count.Value : (double?)null);
         }
     }
 }

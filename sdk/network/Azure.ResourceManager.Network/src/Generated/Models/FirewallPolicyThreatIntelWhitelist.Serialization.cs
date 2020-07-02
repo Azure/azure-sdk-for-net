@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpAddresses != null)
+            if (Optional.IsDefined(IpAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Fqdns != null)
+            if (Optional.IsDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns");
                 writer.WriteStartArray();
@@ -41,16 +41,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyThreatIntelWhitelist DeserializeFirewallPolicyThreatIntelWhitelist(JsonElement element)
         {
-            IList<string> ipAddresses = default;
-            IList<string> fqdns = default;
+            Optional<IList<string>> ipAddresses = default;
+            Optional<IList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,10 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("fqdns"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -88,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyThreatIntelWhitelist(ipAddresses, fqdns);
+            return new FirewallPolicyThreatIntelWhitelist(new ChangeTrackingList<string>(ipAddresses), new ChangeTrackingList<string>(fqdns));
         }
     }
 }

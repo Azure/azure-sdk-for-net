@@ -15,25 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
         {
-            ConnectionMonitorSourceStatus? sourceStatus = default;
-            IReadOnlyList<ConnectionStateSnapshot> states = default;
+            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
+            Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceStatus = new ConnectionMonitorSourceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("states"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorQueryResult(sourceStatus, states);
+            return new ConnectionMonitorQueryResult(sourceStatus.HasValue ? sourceStatus.Value : (ConnectionMonitorSourceStatus?)null, new ChangeTrackingList<ConnectionStateSnapshot>(states));
         }
     }
 }

@@ -16,37 +16,37 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (FrontendIPConfigurations != null)
+            if (Optional.IsDefined(FrontendIPConfigurations))
             {
                 writer.WritePropertyName("frontendIPConfigurations");
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BackendAddressPools != null)
+            if (Optional.IsDefined(BackendAddressPools))
             {
                 writer.WritePropertyName("backendAddressPools");
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LoadBalancingRules != null)
+            if (Optional.IsDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules");
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Probes != null)
+            if (Optional.IsDefined(Probes))
             {
                 writer.WritePropertyName("probes");
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InboundNatRules != null)
+            if (Optional.IsDefined(InboundNatRules))
             {
                 writer.WritePropertyName("inboundNatRules");
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InboundNatPools != null)
+            if (Optional.IsDefined(InboundNatPools))
             {
                 writer.WritePropertyName("inboundNatPools");
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutboundRules != null)
+            if (Optional.IsDefined(OutboundRules))
             {
                 writer.WritePropertyName("outboundRules");
                 writer.WriteStartArray();
@@ -129,12 +129,12 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid");
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -145,84 +145,56 @@ namespace Azure.Management.Network.Models
 
         internal static LoadBalancer DeserializeLoadBalancer(JsonElement element)
         {
-            LoadBalancerSku sku = default;
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<FrontendIPConfiguration> frontendIPConfigurations = default;
-            IList<BackendAddressPool> backendAddressPools = default;
-            IList<LoadBalancingRule> loadBalancingRules = default;
-            IList<Probe> probes = default;
-            IList<InboundNatRule> inboundNatRules = default;
-            IList<InboundNatPool> inboundNatPools = default;
-            IList<OutboundRule> outboundRules = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<LoadBalancerSku> sku = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<FrontendIPConfiguration>> frontendIPConfigurations = default;
+            Optional<IList<BackendAddressPool>> backendAddressPools = default;
+            Optional<IList<LoadBalancingRule>> loadBalancingRules = default;
+            Optional<IList<Probe>> probes = default;
+            Optional<IList<InboundNatRule>> inboundNatRules = default;
+            Optional<IList<InboundNatPool>> inboundNatPools = default;
+            Optional<IList<OutboundRule>> outboundRules = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = LoadBalancerSku.DeserializeLoadBalancerSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -244,10 +216,6 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("frontendIPConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -265,10 +233,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("backendAddressPools"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<BackendAddressPool> array = new List<BackendAddressPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -286,10 +250,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("loadBalancingRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<LoadBalancingRule> array = new List<LoadBalancingRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -307,10 +267,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("probes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Probe> array = new List<Probe>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -328,10 +284,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("inboundNatRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<InboundNatRule> array = new List<InboundNatRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -349,10 +301,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("inboundNatPools"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<InboundNatPool> array = new List<InboundNatPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -370,10 +318,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("outboundRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<OutboundRule> array = new List<OutboundRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -391,19 +335,11 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -411,7 +347,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancer(id, name, type, location, tags, sku, etag, frontendIPConfigurations, backendAddressPools, loadBalancingRules, probes, inboundNatRules, inboundNatPools, outboundRules, resourceGuid, provisioningState);
+            return new LoadBalancer(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), sku.HasValue ? sku.Value : null, etag.HasValue ? etag.Value : null, new ChangeTrackingList<FrontendIPConfiguration>(frontendIPConfigurations), new ChangeTrackingList<BackendAddressPool>(backendAddressPools), new ChangeTrackingList<LoadBalancingRule>(loadBalancingRules), new ChangeTrackingList<Probe>(probes), new ChangeTrackingList<InboundNatRule>(inboundNatRules), new ChangeTrackingList<InboundNatPool>(inboundNatPools), new ChangeTrackingList<OutboundRule>(outboundRules), resourceGuid.HasValue ? resourceGuid.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

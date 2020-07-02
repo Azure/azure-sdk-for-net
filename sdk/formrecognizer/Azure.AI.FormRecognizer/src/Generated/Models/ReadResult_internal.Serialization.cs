@@ -20,8 +20,8 @@ namespace Azure.AI.FormRecognizer.Models
             float width = default;
             float height = default;
             LengthUnit unit = default;
-            Language_internal? language = default;
-            IReadOnlyList<TextLine_internal> lines = default;
+            Optional<Language_internal> language = default;
+            Optional<IReadOnlyList<TextLine_internal>> lines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -51,19 +51,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("language"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     language = new Language_internal(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lines"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TextLine_internal> array = new List<TextLine_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -80,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult_internal(page, angle, width, height, unit, language, lines);
+            return new ReadResult_internal(page, angle, width, height, unit, language.HasValue ? language.Value : (Language_internal?)null, new ChangeTrackingList<TextLine_internal>(lines));
         }
     }
 }

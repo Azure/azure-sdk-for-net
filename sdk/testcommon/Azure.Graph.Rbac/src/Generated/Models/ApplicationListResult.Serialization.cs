@@ -15,16 +15,12 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {
-            IReadOnlyList<Application> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<Application>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Application> array = new List<Application>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationListResult(value, odataNextLink);
+            return new ApplicationListResult(new ChangeTrackingList<Application>(value), odataNextLink.HasValue ? odataNextLink.Value : null);
         }
     }
 }

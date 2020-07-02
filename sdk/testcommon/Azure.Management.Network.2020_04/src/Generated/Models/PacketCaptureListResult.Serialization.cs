@@ -15,15 +15,11 @@ namespace Azure.Management.Network.Models
     {
         internal static PacketCaptureListResult DeserializePacketCaptureListResult(JsonElement element)
         {
-            IReadOnlyList<PacketCaptureResult> value = default;
+            Optional<IReadOnlyList<PacketCaptureResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PacketCaptureResult> array = new List<PacketCaptureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureListResult(value);
+            return new PacketCaptureListResult(new ChangeTrackingList<PacketCaptureResult>(value));
         }
     }
 }

@@ -16,42 +16,42 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (BootStrapConfigurationBlob != null)
+            if (Optional.IsDefined(BootStrapConfigurationBlob))
             {
                 writer.WritePropertyName("bootStrapConfigurationBlob");
                 writer.WriteStartArray();
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
                 writer.WriteObjectValue(VirtualHub);
             }
-            if (CloudInitConfigurationBlob != null)
+            if (Optional.IsDefined(CloudInitConfigurationBlob))
             {
                 writer.WritePropertyName("cloudInitConfigurationBlob");
                 writer.WriteStartArray();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualApplianceAsn != null)
+            if (Optional.IsDefined(VirtualApplianceAsn))
             {
                 writer.WritePropertyName("virtualApplianceAsn");
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
-            if (VirtualApplianceNics != null)
+            if (Optional.IsDefined(VirtualApplianceNics))
             {
                 writer.WritePropertyName("virtualApplianceNics");
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -115,91 +115,59 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkVirtualAppliance DeserializeNetworkVirtualAppliance(JsonElement element)
         {
-            ManagedServiceIdentity identity = default;
-            VirtualApplianceSkuProperties sku = default;
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<string> bootStrapConfigurationBlob = default;
-            SubResource virtualHub = default;
-            IList<string> cloudInitConfigurationBlob = default;
-            long? virtualApplianceAsn = default;
-            IList<VirtualApplianceNicProperties> virtualApplianceNics = default;
-            ProvisioningState? provisioningState = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<VirtualApplianceSkuProperties> sku = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> bootStrapConfigurationBlob = default;
+            Optional<SubResource> virtualHub = default;
+            Optional<IList<string>> cloudInitConfigurationBlob = default;
+            Optional<long> virtualApplianceAsn = default;
+            Optional<IList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -221,10 +189,6 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("bootStrapConfigurationBlob"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -242,19 +206,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("virtualHub"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualHub = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudInitConfigurationBlob"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -272,19 +228,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("virtualApplianceAsn"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualApplianceAsn = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("virtualApplianceNics"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<VirtualApplianceNicProperties> array = new List<VirtualApplianceNicProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -302,10 +250,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -313,7 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkVirtualAppliance(id, name, type, location, tags, identity, sku, etag, bootStrapConfigurationBlob, virtualHub, cloudInitConfigurationBlob, virtualApplianceAsn, virtualApplianceNics, provisioningState);
+            return new NetworkVirtualAppliance(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), identity.HasValue ? identity.Value : null, sku.HasValue ? sku.Value : null, etag.HasValue ? etag.Value : null, new ChangeTrackingList<string>(bootStrapConfigurationBlob), virtualHub.HasValue ? virtualHub.Value : null, new ChangeTrackingList<string>(cloudInitConfigurationBlob), virtualApplianceAsn.HasValue ? virtualApplianceAsn.Value : (long?)null, new ChangeTrackingList<VirtualApplianceNicProperties>(virtualApplianceNics), provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

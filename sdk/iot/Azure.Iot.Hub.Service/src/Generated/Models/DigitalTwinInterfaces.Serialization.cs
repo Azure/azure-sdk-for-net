@@ -15,16 +15,12 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static DigitalTwinInterfaces DeserializeDigitalTwinInterfaces(JsonElement element)
         {
-            IReadOnlyDictionary<string, PnpInterface> interfaces = default;
-            long? version = default;
+            Optional<IReadOnlyDictionary<string, PnpInterface>> interfaces = default;
+            Optional<long> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interfaces"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, PnpInterface> dictionary = new Dictionary<string, PnpInterface>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new DigitalTwinInterfaces(interfaces, version);
+            return new DigitalTwinInterfaces(new ChangeTrackingDictionary<string, PnpInterface>(interfaces), version.HasValue ? version.Value : (long?)null);
         }
     }
 }

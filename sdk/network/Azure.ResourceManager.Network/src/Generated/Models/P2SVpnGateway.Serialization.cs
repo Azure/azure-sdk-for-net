@@ -16,32 +16,32 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
                 writer.WriteObjectValue(VirtualHub);
             }
-            if (P2SConnectionConfigurations != null)
+            if (Optional.IsDefined(P2SConnectionConfigurations))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations");
                 writer.WriteStartArray();
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VpnGatewayScaleUnit != null)
+            if (Optional.IsDefined(VpnGatewayScaleUnit))
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit");
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
-            if (VpnServerConfiguration != null)
+            if (Optional.IsDefined(VpnServerConfiguration))
             {
                 writer.WritePropertyName("vpnServerConfiguration");
                 writer.WriteObjectValue(VpnServerConfiguration);
             }
-            if (VpnClientConnectionHealth != null)
+            if (Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth");
                 writer.WriteObjectValue(VpnClientConnectionHealth);
@@ -95,71 +95,47 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static P2SVpnGateway DeserializeP2SVpnGateway(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource virtualHub = default;
-            IList<P2SConnectionConfiguration> p2SConnectionConfigurations = default;
-            ProvisioningState? provisioningState = default;
-            int? vpnGatewayScaleUnit = default;
-            SubResource vpnServerConfiguration = default;
-            VpnClientConnectionHealth vpnClientConnectionHealth = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> virtualHub = default;
+            Optional<IList<P2SConnectionConfiguration>> p2SConnectionConfigurations = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<int> vpnGatewayScaleUnit = default;
+            Optional<SubResource> vpnServerConfiguration = default;
+            Optional<VpnClientConnectionHealth> vpnClientConnectionHealth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -181,19 +157,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("virtualHub"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualHub = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("p2SConnectionConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<P2SConnectionConfiguration> array = new List<P2SConnectionConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -211,37 +179,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vpnGatewayScaleUnit"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnGatewayScaleUnit = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("vpnServerConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnServerConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConnectionHealth"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vpnClientConnectionHealth = VpnClientConnectionHealth.DeserializeVpnClientConnectionHealth(property0.Value);
                             continue;
                         }
@@ -249,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2SVpnGateway(id, name, type, location, tags, etag, virtualHub, p2SConnectionConfigurations, provisioningState, vpnGatewayScaleUnit, vpnServerConfiguration, vpnClientConnectionHealth);
+            return new P2SVpnGateway(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), etag.HasValue ? etag.Value : null, virtualHub.HasValue ? virtualHub.Value : null, new ChangeTrackingList<P2SConnectionConfiguration>(p2SConnectionConfigurations), provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, vpnGatewayScaleUnit.HasValue ? vpnGatewayScaleUnit.Value : (int?)null, vpnServerConfiguration.HasValue ? vpnServerConfiguration.Value : null, vpnClientConnectionHealth.HasValue ? vpnClientConnectionHealth.Value : null);
         }
     }
 }

@@ -16,32 +16,32 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,17 +54,17 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace");
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (DhcpOptions != null)
+            if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions");
                 writer.WriteObjectValue(DhcpOptions);
             }
-            if (Subnets != null)
+            if (Optional.IsDefined(Subnets))
             {
                 writer.WritePropertyName("subnets");
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualNetworkPeerings != null)
+            if (Optional.IsDefined(VirtualNetworkPeerings))
             {
                 writer.WritePropertyName("virtualNetworkPeerings");
                 writer.WriteStartArray();
@@ -84,37 +84,37 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid");
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EnableDdosProtection != null)
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 writer.WritePropertyName("enableDdosProtection");
                 writer.WriteBooleanValue(EnableDdosProtection.Value);
             }
-            if (EnableVmProtection != null)
+            if (Optional.IsDefined(EnableVmProtection))
             {
                 writer.WritePropertyName("enableVmProtection");
                 writer.WriteBooleanValue(EnableVmProtection.Value);
             }
-            if (DdosProtectionPlan != null)
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan");
                 writer.WriteObjectValue(DdosProtectionPlan);
             }
-            if (BgpCommunities != null)
+            if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities");
                 writer.WriteObjectValue(BgpCommunities);
             }
-            if (IpAllocations != null)
+            if (Optional.IsDefined(IpAllocations))
             {
                 writer.WritePropertyName("ipAllocations");
                 writer.WriteStartArray();
@@ -130,76 +130,52 @@ namespace Azure.Management.Network.Models
 
         internal static VirtualNetwork DeserializeVirtualNetwork(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            AddressSpace addressSpace = default;
-            DhcpOptions dhcpOptions = default;
-            IList<Subnet> subnets = default;
-            IList<VirtualNetworkPeering> virtualNetworkPeerings = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
-            bool? enableDdosProtection = default;
-            bool? enableVmProtection = default;
-            SubResource ddosProtectionPlan = default;
-            VirtualNetworkBgpCommunities bgpCommunities = default;
-            IList<SubResource> ipAllocations = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AddressSpace> addressSpace = default;
+            Optional<DhcpOptions> dhcpOptions = default;
+            Optional<IList<Subnet>> subnets = default;
+            Optional<IList<VirtualNetworkPeering>> virtualNetworkPeerings = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> enableDdosProtection = default;
+            Optional<bool> enableVmProtection = default;
+            Optional<SubResource> ddosProtectionPlan = default;
+            Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
+            Optional<IList<SubResource>> ipAllocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -221,28 +197,16 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("addressSpace"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("subnets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Subnet> array = new List<Subnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -260,10 +224,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("virtualNetworkPeerings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<VirtualNetworkPeering> array = new List<VirtualNetworkPeering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -281,64 +241,36 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableDdosProtection"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableDdosProtection = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enableVmProtection"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableVmProtection = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("ddosProtectionPlan"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ddosProtectionPlan = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bgpCommunities"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAllocations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -358,7 +290,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetwork(id, name, type, location, tags, etag, addressSpace, dhcpOptions, subnets, virtualNetworkPeerings, resourceGuid, provisioningState, enableDdosProtection, enableVmProtection, ddosProtectionPlan, bgpCommunities, ipAllocations);
+            return new VirtualNetwork(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), etag.HasValue ? etag.Value : null, addressSpace.HasValue ? addressSpace.Value : null, dhcpOptions.HasValue ? dhcpOptions.Value : null, new ChangeTrackingList<Subnet>(subnets), new ChangeTrackingList<VirtualNetworkPeering>(virtualNetworkPeerings), resourceGuid.HasValue ? resourceGuid.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, enableDdosProtection.HasValue ? enableDdosProtection.Value : (bool?)null, enableVmProtection.HasValue ? enableVmProtection.Value : (bool?)null, ddosProtectionPlan.HasValue ? ddosProtectionPlan.Value : null, bgpCommunities.HasValue ? bgpCommunities.Value : null, new ChangeTrackingList<SubResource>(ipAllocations));
         }
     }
 }

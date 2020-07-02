@@ -15,44 +15,44 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (PartnerNamespace != null)
+            if (Optional.IsDefined(PartnerNamespace))
             {
                 writer.WritePropertyName("partnerNamespace");
                 writer.WriteStringValue(PartnerNamespace);
             }
-            if (AlternateName != null)
+            if (Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName");
                 writer.WriteStringValue(AlternateName);
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role");
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (PendingReplicationOperationsCount != null)
+            if (Optional.IsDefined(PendingReplicationOperationsCount))
             {
                 writer.WritePropertyName("pendingReplicationOperationsCount");
                 writer.WriteNumberValue(PendingReplicationOperationsCount.Value);
@@ -63,40 +63,28 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ArmDisasterRecovery DeserializeArmDisasterRecovery(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            ProvisioningStateDR? provisioningState = default;
-            string partnerNamespace = default;
-            string alternateName = default;
-            RoleDisasterRecovery? role = default;
-            long? pendingReplicationOperationsCount = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<ProvisioningStateDR> provisioningState = default;
+            Optional<string> partnerNamespace = default;
+            Optional<string> alternateName = default;
+            Optional<RoleDisasterRecovery> role = default;
+            Optional<long> pendingReplicationOperationsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -106,46 +94,26 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString().ToProvisioningStateDR();
                             continue;
                         }
                         if (property0.NameEquals("partnerNamespace"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             partnerNamespace = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("alternateName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             alternateName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("role"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             role = property0.Value.GetString().ToRoleDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("pendingReplicationOperationsCount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             pendingReplicationOperationsCount = property0.Value.GetInt64();
                             continue;
                         }
@@ -153,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ArmDisasterRecovery(id, name, type, provisioningState, partnerNamespace, alternateName, role, pendingReplicationOperationsCount);
+            return new ArmDisasterRecovery(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningStateDR?)null, partnerNamespace.HasValue ? partnerNamespace.Value : null, alternateName.HasValue ? alternateName.Value : null, role.HasValue ? role.Value : (RoleDisasterRecovery?)null, pendingReplicationOperationsCount.HasValue ? pendingReplicationOperationsCount.Value : (long?)null);
         }
     }
 }

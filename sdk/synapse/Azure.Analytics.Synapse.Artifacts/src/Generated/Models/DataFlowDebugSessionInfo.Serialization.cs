@@ -15,97 +15,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
         {
-            string dataFlowName = default;
-            string computeType = default;
-            int? coreCount = default;
-            int? nodeCount = default;
-            string integrationRuntimeName = default;
-            string sessionId = default;
-            string startTime = default;
-            int? timeToLiveInMinutes = default;
-            string lastActivityTime = default;
+            Optional<string> dataFlowName = default;
+            Optional<string> computeType = default;
+            Optional<int> coreCount = default;
+            Optional<int> nodeCount = default;
+            Optional<string> integrationRuntimeName = default;
+            Optional<string> sessionId = default;
+            Optional<string> startTime = default;
+            Optional<int> timeToLiveInMinutes = default;
+            Optional<string> lastActivityTime = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataFlowName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dataFlowName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("computeType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     computeType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("coreCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("nodeCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("integrationRuntimeName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     integrationRuntimeName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sessionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeToLiveInMinutes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("lastActivityTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastActivityTime = property.Value.GetString();
                     continue;
                 }
@@ -120,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
+            return new DataFlowDebugSessionInfo(dataFlowName.HasValue ? dataFlowName.Value : null, computeType.HasValue ? computeType.Value : null, coreCount.HasValue ? coreCount.Value : (int?)null, nodeCount.HasValue ? nodeCount.Value : (int?)null, integrationRuntimeName.HasValue ? integrationRuntimeName.Value : null, sessionId.HasValue ? sessionId.Value : null, startTime.HasValue ? startTime.Value : null, timeToLiveInMinutes.HasValue ? timeToLiveInMinutes.Value : (int?)null, lastActivityTime.HasValue ? lastActivityTime.Value : null, additionalProperties);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PublicKeys != null)
+            if (Optional.IsDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Compute.Models
 
         internal static SshConfiguration DeserializeSshConfiguration(JsonElement element)
         {
-            IList<SshPublicKey> publicKeys = default;
+            Optional<IList<SshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SshPublicKey> array = new List<SshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new SshConfiguration(publicKeys);
+            return new SshConfiguration(new ChangeTrackingList<SshPublicKey>(publicKeys));
         }
     }
 }

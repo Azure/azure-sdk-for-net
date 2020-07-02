@@ -15,12 +15,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Exceptiontype != null)
+            if (Optional.IsDefined(Exceptiontype))
             {
                 writer.WritePropertyName("exceptiontype");
                 writer.WriteStringValue(Exceptiontype);
             }
-            if (Errordetail != null)
+            if (Optional.IsDefined(Errordetail))
             {
                 writer.WritePropertyName("errordetail");
                 writer.WriteStringValue(Errordetail);
@@ -30,30 +30,22 @@ namespace Azure.Management.Compute.Models
 
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
-            string exceptiontype = default;
-            string errordetail = default;
+            Optional<string> exceptiontype = default;
+            Optional<string> errordetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exceptiontype"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     exceptiontype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errordetail"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errordetail = property.Value.GetString();
                     continue;
                 }
             }
-            return new InnerError(exceptiontype, errordetail);
+            return new InnerError(exceptiontype.HasValue ? exceptiontype.Value : null, errordetail.HasValue ? errordetail.Value : null);
         }
     }
 }

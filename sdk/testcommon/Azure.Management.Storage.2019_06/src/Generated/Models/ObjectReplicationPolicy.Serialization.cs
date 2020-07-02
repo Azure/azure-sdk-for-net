@@ -17,44 +17,44 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId");
                 writer.WriteStringValue(PolicyId);
             }
-            if (EnabledTime != null)
+            if (Optional.IsDefined(EnabledTime))
             {
                 writer.WritePropertyName("enabledTime");
                 writer.WriteStringValue(EnabledTime.Value, "O");
             }
-            if (SourceAccount != null)
+            if (Optional.IsDefined(SourceAccount))
             {
                 writer.WritePropertyName("sourceAccount");
                 writer.WriteStringValue(SourceAccount);
             }
-            if (DestinationAccount != null)
+            if (Optional.IsDefined(DestinationAccount))
             {
                 writer.WritePropertyName("destinationAccount");
                 writer.WriteStringValue(DestinationAccount);
             }
-            if (Rules != null)
+            if (Optional.IsDefined(Rules))
             {
                 writer.WritePropertyName("rules");
                 writer.WriteStartArray();
@@ -70,40 +70,28 @@ namespace Azure.Management.Storage.Models
 
         internal static ObjectReplicationPolicy DeserializeObjectReplicationPolicy(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string policyId = default;
-            DateTimeOffset? enabledTime = default;
-            string sourceAccount = default;
-            string destinationAccount = default;
-            IList<ObjectReplicationPolicyRule> rules = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> policyId = default;
+            Optional<DateTimeOffset> enabledTime = default;
+            Optional<string> sourceAccount = default;
+            Optional<string> destinationAccount = default;
+            Optional<IList<ObjectReplicationPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -113,46 +101,26 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("policyId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             policyId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enabledTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enabledTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("sourceAccount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             sourceAccount = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("destinationAccount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             destinationAccount = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ObjectReplicationPolicyRule> array = new List<ObjectReplicationPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -172,7 +140,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ObjectReplicationPolicy(id, name, type, policyId, enabledTime, sourceAccount, destinationAccount, rules);
+            return new ObjectReplicationPolicy(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, policyId.HasValue ? policyId.Value : null, enabledTime.HasValue ? enabledTime.Value : (DateTimeOffset?)null, sourceAccount.HasValue ? sourceAccount.Value : null, destinationAccount.HasValue ? destinationAccount.Value : null, new ChangeTrackingList<ObjectReplicationPolicyRule>(rules));
         }
     }
 }

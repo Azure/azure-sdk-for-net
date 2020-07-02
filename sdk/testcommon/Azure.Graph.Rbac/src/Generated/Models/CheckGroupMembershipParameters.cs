@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.Graph.Rbac.Models
 
             GroupId = groupId;
             MemberId = memberId;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of CheckGroupMembershipParameters. </summary>
@@ -41,7 +42,7 @@ namespace Azure.Graph.Rbac.Models
         {
             GroupId = groupId;
             MemberId = memberId;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The object ID of the group to check. </summary>

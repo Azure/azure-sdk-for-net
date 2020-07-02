@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language);
@@ -31,17 +31,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptMetadata DeserializeSqlScriptMetadata(JsonElement element)
         {
-            string language = default;
+            Optional<string> language = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     language = property.Value.GetString();
                     continue;
                 }
@@ -56,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptMetadata(language, additionalProperties);
+            return new SqlScriptMetadata(language.HasValue ? language.Value : null, additionalProperties);
         }
     }
 }

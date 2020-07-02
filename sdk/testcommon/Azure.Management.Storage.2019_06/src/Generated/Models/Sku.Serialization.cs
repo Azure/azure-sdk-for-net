@@ -17,7 +17,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToSerialString());
@@ -28,7 +28,7 @@ namespace Azure.Management.Storage.Models
         internal static Sku DeserializeSku(JsonElement element)
         {
             SkuName name = default;
-            SkuTier? tier = default;
+            Optional<SkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString().ToSkuTier();
                     continue;
                 }
             }
-            return new Sku(name, tier);
+            return new Sku(name, tier.HasValue ? tier.Value : (SkuTier?)null);
         }
     }
 }

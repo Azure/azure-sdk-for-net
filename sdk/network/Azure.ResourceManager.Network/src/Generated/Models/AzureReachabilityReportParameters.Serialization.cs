@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation");
             writer.WriteObjectValue(ProviderLocation);
-            if (Providers != null)
+            if (Optional.IsDefined(Providers))
             {
                 writer.WritePropertyName("providers");
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureLocations != null)
+            if (Optional.IsDefined(AzureLocations))
             {
                 writer.WritePropertyName("azureLocations");
                 writer.WriteStartArray();

@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static RouteTableListResult DeserializeRouteTableListResult(JsonElement element)
         {
-            IReadOnlyList<RouteTable> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<RouteTable>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<RouteTable> array = new List<RouteTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new RouteTableListResult(value, nextLink);
+            return new RouteTableListResult(new ChangeTrackingList<RouteTable>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

@@ -18,24 +18,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure");
                 writer.WriteObjectValue(Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema");
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -56,19 +56,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder");
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName");
                 writer.WriteObjectValue(TableName);
             }
-            if (Keyspace != null)
+            if (Optional.IsDefined(Keyspace))
             {
                 writer.WritePropertyName("keyspace");
                 writer.WriteObjectValue(Keyspace);
@@ -85,15 +85,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static CassandraTableDataset DeserializeCassandraTableDataset(JsonElement element)
         {
             string type = default;
-            string description = default;
-            object structure = default;
-            object schema = default;
+            Optional<string> description = default;
+            Optional<object> structure = default;
+            Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
-            DatasetFolder folder = default;
-            object tableName = default;
-            object keyspace = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
+            Optional<DatasetFolder> folder = default;
+            Optional<object> tableName = default;
+            Optional<object> keyspace = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -105,28 +105,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("structure"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     structure = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schema = property.Value.GetObject();
                     continue;
                 }
@@ -137,10 +125,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -158,10 +142,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -179,10 +159,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folder"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
@@ -192,19 +168,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("tableName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             tableName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("keyspace"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             keyspace = property0.Value.GetObject();
                             continue;
                         }
@@ -222,7 +190,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CassandraTableDataset(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties, tableName, keyspace);
+            return new CassandraTableDataset(type, description.HasValue ? description.Value : null, structure.HasValue ? structure.Value : null, schema.HasValue ? schema.Value : null, linkedServiceName, new ChangeTrackingDictionary<string, ParameterSpecification>(parameters), new ChangeTrackingList<object>(annotations), folder.HasValue ? folder.Value : null, additionalProperties, tableName.HasValue ? tableName.Value : null, keyspace.HasValue ? keyspace.Value : null);
         }
     }
 }

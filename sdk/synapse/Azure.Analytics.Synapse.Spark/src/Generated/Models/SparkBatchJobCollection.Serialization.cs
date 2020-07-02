@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             int @from = default;
             int total = default;
-            IReadOnlyList<SparkBatchJob> sessions = default;
+            Optional<IReadOnlyList<SparkBatchJob>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"))
@@ -32,10 +32,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("sessions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SparkBatchJob> array = new List<SparkBatchJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,7 +48,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkBatchJobCollection(@from, total, sessions);
+            return new SparkBatchJobCollection(@from, total, new ChangeTrackingList<SparkBatchJob>(sessions));
         }
     }
 }

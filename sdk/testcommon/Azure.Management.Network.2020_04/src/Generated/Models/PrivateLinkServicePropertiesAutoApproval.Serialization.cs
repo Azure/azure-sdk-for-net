@@ -16,7 +16,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Subscriptions != null)
+            if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Network.Models
 
         internal static PrivateLinkServicePropertiesAutoApproval DeserializePrivateLinkServicePropertiesAutoApproval(JsonElement element)
         {
-            IList<string> subscriptions = default;
+            Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServicePropertiesAutoApproval(subscriptions);
+            return new PrivateLinkServicePropertiesAutoApproval(new ChangeTrackingList<string>(subscriptions));
         }
     }
 }

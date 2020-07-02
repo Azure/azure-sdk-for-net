@@ -16,137 +16,85 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static ActivityRun DeserializeActivityRun(JsonElement element)
         {
-            string pipelineName = default;
-            string pipelineRunId = default;
-            string activityName = default;
-            string activityType = default;
-            string activityRunId = default;
-            string linkedServiceName = default;
-            string status = default;
-            DateTimeOffset? activityRunStart = default;
-            DateTimeOffset? activityRunEnd = default;
-            int? durationInMs = default;
-            object input = default;
-            object output = default;
-            object error = default;
+            Optional<string> pipelineName = default;
+            Optional<string> pipelineRunId = default;
+            Optional<string> activityName = default;
+            Optional<string> activityType = default;
+            Optional<string> activityRunId = default;
+            Optional<string> linkedServiceName = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> activityRunStart = default;
+            Optional<DateTimeOffset> activityRunEnd = default;
+            Optional<int> durationInMs = default;
+            Optional<object> input = default;
+            Optional<object> output = default;
+            Optional<object> error = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pipelineName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("pipelineRunId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pipelineRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("activityName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     activityName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("activityType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     activityType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("activityRunId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     activityRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("activityRunStart"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     activityRunStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("activityRunEnd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("input"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     input = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("output"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     output = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = property.Value.GetObject();
                     continue;
                 }
@@ -161,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
+            return new ActivityRun(pipelineName.HasValue ? pipelineName.Value : null, pipelineRunId.HasValue ? pipelineRunId.Value : null, activityName.HasValue ? activityName.Value : null, activityType.HasValue ? activityType.Value : null, activityRunId.HasValue ? activityRunId.Value : null, linkedServiceName.HasValue ? linkedServiceName.Value : null, status.HasValue ? status.Value : null, activityRunStart.HasValue ? activityRunStart.Value : (DateTimeOffset?)null, activityRunEnd.HasValue ? activityRunEnd.Value : (DateTimeOffset?)null, durationInMs.HasValue ? durationInMs.Value : (int?)null, input.HasValue ? input.Value : null, output.HasValue ? output.Value : null, error.HasValue ? error.Value : null, additionalProperties);
         }
     }
 }

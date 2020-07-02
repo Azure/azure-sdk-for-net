@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of SnapshotUpdate. </summary>
         public SnapshotUpdate()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SnapshotUpdate. </summary>
@@ -35,7 +37,7 @@ namespace Azure.Management.Compute.Models
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. </summary>
         public SnapshotSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>

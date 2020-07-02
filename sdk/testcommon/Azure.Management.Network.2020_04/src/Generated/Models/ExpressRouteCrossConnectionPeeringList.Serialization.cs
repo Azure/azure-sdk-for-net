@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static ExpressRouteCrossConnectionPeeringList DeserializeExpressRouteCrossConnectionPeeringList(JsonElement element)
         {
-            IReadOnlyList<ExpressRouteCrossConnectionPeering> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRouteCrossConnectionPeering>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ExpressRouteCrossConnectionPeering> array = new List<ExpressRouteCrossConnectionPeering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionPeeringList(value, nextLink);
+            return new ExpressRouteCrossConnectionPeeringList(new ChangeTrackingList<ExpressRouteCrossConnectionPeering>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

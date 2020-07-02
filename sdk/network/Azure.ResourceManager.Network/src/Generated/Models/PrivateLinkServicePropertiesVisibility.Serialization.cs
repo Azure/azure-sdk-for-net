@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Subscriptions != null)
+            if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateLinkServicePropertiesVisibility DeserializePrivateLinkServicePropertiesVisibility(JsonElement element)
         {
-            IList<string> subscriptions = default;
+            Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServicePropertiesVisibility(subscriptions);
+            return new PrivateLinkServicePropertiesVisibility(new ChangeTrackingList<string>(subscriptions));
         }
     }
 }

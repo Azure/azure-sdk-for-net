@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("level");
             writer.WriteStringValue(Level.ToString());
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
                 writer.WriteStringValue(Notes);
             }
-            if (Owners != null)
+            if (Optional.IsDefined(Owners))
             {
                 writer.WritePropertyName("owners");
                 writer.WriteStartArray();
@@ -56,38 +56,26 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagementLockObject DeserializeManagementLockObject(JsonElement element)
         {
-            string id = default;
-            string type = default;
-            string name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> name = default;
             LockLevel level = default;
-            string notes = default;
-            IList<ManagementLockOwner> owners = default;
+            Optional<string> notes = default;
+            Optional<IList<ManagementLockOwner>> owners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -102,19 +90,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("notes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             notes = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("owners"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -134,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagementLockObject(id, type, name, level, notes, owners);
+            return new ManagementLockObject(id.HasValue ? id.Value : null, type.HasValue ? type.Value : null, name.HasValue ? name.Value : null, level, notes.HasValue ? notes.Value : null, new ChangeTrackingList<ManagementLockOwner>(owners));
         }
     }
 }

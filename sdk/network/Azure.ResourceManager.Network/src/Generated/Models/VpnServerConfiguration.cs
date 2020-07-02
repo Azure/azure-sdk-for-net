@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnServerConfiguration. </summary>
         public VpnServerConfiguration()
         {
+            VpnProtocols = new ChangeTrackingList<VpnGatewayTunnelingProtocol>();
+            VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
+            VpnClientRootCertificates = new ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>();
+            VpnClientRevokedCertificates = new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>();
+            RadiusServerRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>();
+            RadiusClientRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>();
+            VpnClientIpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            RadiusServers = new ChangeTrackingList<RadiusServer>();
+            P2SVpnGateways = new ChangeTrackingList<P2SVpnGateway>();
         }
 
         /// <summary> Initializes a new instance of VpnServerConfiguration. </summary>
@@ -64,25 +74,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the VpnServerConfiguration that is unique within a resource group. </summary>
         public string NamePropertiesName { get; set; }
         /// <summary> VPN protocols for the VpnServerConfiguration. </summary>
-        public IList<VpnGatewayTunnelingProtocol> VpnProtocols { get; set; }
+        public IList<VpnGatewayTunnelingProtocol> VpnProtocols { get; }
         /// <summary> VPN authentication types for the VpnServerConfiguration. </summary>
-        public IList<VpnAuthenticationType> VpnAuthenticationTypes { get; set; }
+        public IList<VpnAuthenticationType> VpnAuthenticationTypes { get; }
         /// <summary> VPN client root certificate of VpnServerConfiguration. </summary>
-        public IList<VpnServerConfigVpnClientRootCertificate> VpnClientRootCertificates { get; set; }
+        public IList<VpnServerConfigVpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VPN client revoked certificate of VpnServerConfiguration. </summary>
-        public IList<VpnServerConfigVpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
+        public IList<VpnServerConfigVpnClientRevokedCertificate> VpnClientRevokedCertificates { get; }
         /// <summary> Radius Server root certificate of VpnServerConfiguration. </summary>
-        public IList<VpnServerConfigRadiusServerRootCertificate> RadiusServerRootCertificates { get; set; }
+        public IList<VpnServerConfigRadiusServerRootCertificate> RadiusServerRootCertificates { get; }
         /// <summary> Radius client root certificate of VpnServerConfiguration. </summary>
-        public IList<VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get; set; }
+        public IList<VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get; }
         /// <summary> VpnClientIpsecPolicies for VpnServerConfiguration. </summary>
-        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; set; }
+        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; }
         /// <summary> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </summary>
         public string RadiusServerAddress { get; set; }
         /// <summary> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </summary>
         public string RadiusServerSecret { get; set; }
         /// <summary> Multiple Radius Server configuration for VpnServerConfiguration. </summary>
-        public IList<RadiusServer> RadiusServers { get; set; }
+        public IList<RadiusServer> RadiusServers { get; }
         /// <summary> The set of aad vpn authentication parameters. </summary>
         public AadAuthenticationParameters AadAuthenticationParameters { get; set; }
         /// <summary> The provisioning state of the VpnServerConfiguration resource. Possible values are: &apos;Updating&apos;, &apos;Deleting&apos;, and &apos;Failed&apos;. </summary>

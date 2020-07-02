@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Routes != null)
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Labels != null)
+            if (Optional.IsDefined(Labels))
             {
                 writer.WritePropertyName("labels");
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AssociatedConnections != null)
+            if (Optional.IsDefined(AssociatedConnections))
             {
                 writer.WritePropertyName("associatedConnections");
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PropagatingConnections != null)
+            if (Optional.IsDefined(PropagatingConnections))
             {
                 writer.WritePropertyName("propagatingConnections");
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -89,50 +89,34 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubRouteTable DeserializeHubRouteTable(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            IList<HubRoute> routes = default;
-            IList<string> labels = default;
-            IList<SubResource> associatedConnections = default;
-            IList<SubResource> propagatingConnections = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<IList<HubRoute>> routes = default;
+            Optional<IList<string>> labels = default;
+            Optional<IList<SubResource>> associatedConnections = default;
+            Optional<IList<SubResource>> propagatingConnections = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -142,10 +126,6 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("routes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<HubRoute> array = new List<HubRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -163,10 +143,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("labels"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -184,10 +160,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("associatedConnections"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -205,10 +177,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("propagatingConnections"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -226,10 +194,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -237,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new HubRouteTable(id, name, etag, type, routes, labels, associatedConnections, propagatingConnections, provisioningState);
+            return new HubRouteTable(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, type.HasValue ? type.Value : null, new ChangeTrackingList<HubRoute>(routes), new ChangeTrackingList<string>(labels), new ChangeTrackingList<SubResource>(associatedConnections), new ChangeTrackingList<SubResource>(propagatingConnections), provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

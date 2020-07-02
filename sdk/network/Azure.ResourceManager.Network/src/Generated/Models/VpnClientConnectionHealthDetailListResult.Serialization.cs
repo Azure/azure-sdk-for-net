@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealthDetailListResult DeserializeVpnClientConnectionHealthDetailListResult(JsonElement element)
         {
-            IReadOnlyList<VpnClientConnectionHealthDetail> value = default;
+            Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VpnClientConnectionHealthDetail> array = new List<VpnClientConnectionHealthDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConnectionHealthDetailListResult(value);
+            return new VpnClientConnectionHealthDetailListResult(new ChangeTrackingList<VpnClientConnectionHealthDetail>(value));
         }
     }
 }

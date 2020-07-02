@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element)
         {
             IndexerStatus status = default;
-            IndexerExecutionResult lastResult = default;
+            Optional<IndexerExecutionResult> lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("lastResult"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
                     continue;
                 }
@@ -58,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+            return new SearchIndexerStatus(status, lastResult.HasValue ? lastResult.Value : null, executionHistory, limits);
         }
     }
 }

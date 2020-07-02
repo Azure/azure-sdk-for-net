@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Routes != null)
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRouteTable DeserializeVirtualHubRouteTable(JsonElement element)
         {
-            IList<VirtualHubRoute> routes = default;
+            Optional<IList<VirtualHubRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualHubRoute> array = new List<VirtualHubRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubRouteTable(routes);
+            return new VirtualHubRouteTable(new ChangeTrackingList<VirtualHubRoute>(routes));
         }
     }
 }

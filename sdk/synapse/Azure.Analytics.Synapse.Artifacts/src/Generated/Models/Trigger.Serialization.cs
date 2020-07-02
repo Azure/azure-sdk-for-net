@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (RuntimeState != null)
+            if (Optional.IsDefined(RuntimeState))
             {
                 writer.WritePropertyName("runtimeState");
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -57,9 +57,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             string type = default;
-            string description = default;
-            TriggerRuntimeState? runtimeState = default;
-            IList<object> annotations = default;
+            Optional<string> description = default;
+            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<IList<object>> annotations = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -71,28 +71,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("runtimeState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runtimeState = new TriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -119,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Trigger(type, description, runtimeState, annotations, additionalProperties);
+            return new Trigger(type, description.HasValue ? description.Value : null, runtimeState.HasValue ? runtimeState.Value : (TriggerRuntimeState?)null, new ChangeTrackingList<object>(annotations), additionalProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultPatchProperties. </summary>
         public VaultPatchProperties()
         {
+            AccessPolicies = new ChangeTrackingList<AccessPolicyEntry>();
         }
 
         /// <summary> Initializes a new instance of VaultPatchProperties. </summary>
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> SKU details. </summary>
         public Sku Sku { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
-        public IList<AccessPolicyEntry> AccessPolicies { get; set; }
+        public IList<AccessPolicyEntry> AccessPolicies { get; }
         /// <summary> Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault. </summary>
         public bool? EnabledForDeployment { get; set; }
         /// <summary> Property to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys. </summary>

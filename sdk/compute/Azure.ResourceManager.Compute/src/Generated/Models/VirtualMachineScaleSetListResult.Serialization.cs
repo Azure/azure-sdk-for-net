@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetListResult DeserializeVirtualMachineScaleSetListResult(JsonElement element)
         {
             IReadOnlyList<VirtualMachineScaleSet> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetListResult(value, nextLink);
+            return new VirtualMachineScaleSetListResult(value, nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

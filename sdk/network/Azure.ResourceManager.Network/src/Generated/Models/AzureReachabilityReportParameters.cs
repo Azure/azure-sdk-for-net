@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,6 +26,8 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             ProviderLocation = providerLocation;
+            Providers = new ChangeTrackingList<string>();
+            AzureLocations = new ChangeTrackingList<string>();
             StartTime = startTime;
             EndTime = endTime;
         }
@@ -47,9 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Parameters that define a geographic location. </summary>
         public AzureReachabilityReportLocation ProviderLocation { get; }
         /// <summary> List of Internet service providers. </summary>
-        public IList<string> Providers { get; set; }
+        public IList<string> Providers { get; }
         /// <summary> Optional Azure regions to scope the query to. </summary>
-        public IList<string> AzureLocations { get; set; }
+        public IList<string> AzureLocations { get; }
         /// <summary> The start time for the Azure reachability report. </summary>
         public DateTimeOffset StartTime { get; }
         /// <summary> The end time for the Azure reachability report. </summary>

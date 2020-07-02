@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (DefaultAction != null)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction");
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (VirtualNetworkRules != null)
+            if (Optional.IsDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules");
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpRules != null)
+            if (Optional.IsDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
@@ -64,38 +64,26 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            DefaultAction? defaultAction = default;
-            IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules = default;
-            IList<NWRuleSetIpRules> ipRules = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<DefaultAction> defaultAction = default;
+            Optional<IList<NWRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
+            Optional<IList<NWRuleSetIpRules>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -105,19 +93,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("defaultAction"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             defaultAction = new DefaultAction(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<NWRuleSetVirtualNetworkRules> array = new List<NWRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -135,10 +115,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("ipRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<NWRuleSetIpRules> array = new List<NWRuleSetIpRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -158,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(id, name, type, defaultAction, virtualNetworkRules, ipRules);
+            return new NetworkRuleSet(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, defaultAction.HasValue ? defaultAction.Value : (DefaultAction?)null, new ChangeTrackingList<NWRuleSetVirtualNetworkRules>(virtualNetworkRules), new ChangeTrackingList<NWRuleSetIpRules>(ipRules));
         }
     }
 }

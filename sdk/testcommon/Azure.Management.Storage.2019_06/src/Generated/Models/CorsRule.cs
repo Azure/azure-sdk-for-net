@@ -54,11 +54,11 @@ namespace Azure.Management.Storage.Models
         /// <param name="allowedHeaders"> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </param>
         internal CorsRule(IList<string> allowedOrigins, IList<CorsRuleAllowedMethodsItem> allowedMethods, int maxAgeInSeconds, IList<string> exposedHeaders, IList<string> allowedHeaders)
         {
-            AllowedOrigins = allowedOrigins ?? new List<string>();
-            AllowedMethods = allowedMethods ?? new List<CorsRuleAllowedMethodsItem>();
+            AllowedOrigins = allowedOrigins;
+            AllowedMethods = allowedMethods;
             MaxAgeInSeconds = maxAgeInSeconds;
-            ExposedHeaders = exposedHeaders ?? new List<string>();
-            AllowedHeaders = allowedHeaders ?? new List<string>();
+            ExposedHeaders = exposedHeaders;
+            AllowedHeaders = allowedHeaders;
         }
 
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or &quot;*&quot; to allow all domains. </summary>

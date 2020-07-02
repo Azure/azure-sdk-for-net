@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (ChangeNumber != null)
+            if (Optional.IsDefined(ChangeNumber))
             {
                 writer.WritePropertyName("changeNumber");
                 writer.WriteStringValue(ChangeNumber);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallIpGroups DeserializeAzureFirewallIpGroups(JsonElement element)
         {
-            string id = default;
-            string changeNumber = default;
+            Optional<string> id = default;
+            Optional<string> changeNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("changeNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changeNumber = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFirewallIpGroups(id, changeNumber);
+            return new AzureFirewallIpGroups(id.HasValue ? id.Value : null, changeNumber.HasValue ? changeNumber.Value : null);
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListQueueResource DeserializeListQueueResource(JsonElement element)
         {
-            IReadOnlyList<ListQueue> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ListQueue>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ListQueue> array = new List<ListQueue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListQueueResource(value, nextLink);
+            return new ListQueueResource(new ChangeTrackingList<ListQueue>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

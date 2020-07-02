@@ -15,38 +15,26 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string groupId = default;
-            IReadOnlyList<string> requiredMembers = default;
-            IReadOnlyList<string> requiredZoneNames = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -56,19 +44,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         if (property0.NameEquals("groupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             groupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("requiredMembers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -86,10 +66,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         }
                         if (property0.NameEquals("requiredZoneNames"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -109,7 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id, name, type, groupId, requiredMembers, requiredZoneNames);
+            return new PrivateLinkResource(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, groupId.HasValue ? groupId.Value : null, new ChangeTrackingList<string>(requiredMembers), new ChangeTrackingList<string>(requiredZoneNames));
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static FeatureOperationsListResult DeserializeFeatureOperationsListResult(JsonElement element)
         {
-            IReadOnlyList<FeatureResult> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<FeatureResult>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FeatureResult> array = new List<FeatureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new FeatureOperationsListResult(value, nextLink);
+            return new FeatureOperationsListResult(new ChangeTrackingList<FeatureResult>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

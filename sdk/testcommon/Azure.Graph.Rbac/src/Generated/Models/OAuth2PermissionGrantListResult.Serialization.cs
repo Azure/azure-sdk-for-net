@@ -15,16 +15,12 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static OAuth2PermissionGrantListResult DeserializeOAuth2PermissionGrantListResult(JsonElement element)
         {
-            IReadOnlyList<OAuth2PermissionGrant> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<OAuth2PermissionGrant>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OAuth2PermissionGrant> array = new List<OAuth2PermissionGrant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new OAuth2PermissionGrantListResult(value, odataNextLink);
+            return new OAuth2PermissionGrantListResult(new ChangeTrackingList<OAuth2PermissionGrant>(value), odataNextLink.HasValue ? odataNextLink.Value : null);
         }
     }
 }

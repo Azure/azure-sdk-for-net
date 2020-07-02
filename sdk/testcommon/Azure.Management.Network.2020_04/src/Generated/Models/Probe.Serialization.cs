@@ -16,29 +16,29 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LoadBalancingRules != null)
+            if (Optional.IsDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules");
                 writer.WriteStartArray();
@@ -48,32 +48,32 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
             }
-            if (IntervalInSeconds != null)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds");
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (NumberOfProbes != null)
+            if (Optional.IsDefined(NumberOfProbes))
             {
                 writer.WritePropertyName("numberOfProbes");
                 writer.WriteNumberValue(NumberOfProbes.Value);
             }
-            if (RequestPath != null)
+            if (Optional.IsDefined(RequestPath))
             {
                 writer.WritePropertyName("requestPath");
                 writer.WriteStringValue(RequestPath);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,52 +84,36 @@ namespace Azure.Management.Network.Models
 
         internal static Probe DeserializeProbe(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            IList<SubResource> loadBalancingRules = default;
-            ProbeProtocol? protocol = default;
-            int? port = default;
-            int? intervalInSeconds = default;
-            int? numberOfProbes = default;
-            string requestPath = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<IList<SubResource>> loadBalancingRules = default;
+            Optional<ProbeProtocol> protocol = default;
+            Optional<int> port = default;
+            Optional<int> intervalInSeconds = default;
+            Optional<int> numberOfProbes = default;
+            Optional<string> requestPath = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -139,10 +123,6 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("loadBalancingRules"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -160,55 +140,31 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("protocol"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             protocol = new ProbeProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             port = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("intervalInSeconds"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("numberOfProbes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             numberOfProbes = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             requestPath = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -216,7 +172,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new Probe(id, name, etag, type, loadBalancingRules, protocol, port, intervalInSeconds, numberOfProbes, requestPath, provisioningState);
+            return new Probe(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, type.HasValue ? type.Value : null, new ChangeTrackingList<SubResource>(loadBalancingRules), protocol.HasValue ? protocol.Value : (ProbeProtocol?)null, port.HasValue ? port.Value : (int?)null, intervalInSeconds.HasValue ? intervalInSeconds.Value : (int?)null, numberOfProbes.HasValue ? numberOfProbes.Value : (int?)null, requestPath.HasValue ? requestPath.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

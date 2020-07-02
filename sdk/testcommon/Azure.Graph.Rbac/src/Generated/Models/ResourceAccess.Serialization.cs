@@ -18,7 +18,7 @@ namespace Azure.Graph.Rbac.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
@@ -34,7 +34,7 @@ namespace Azure.Graph.Rbac.Models
         internal static ResourceAccess DeserializeResourceAccess(JsonElement element)
         {
             string id = default;
-            string type = default;
+            Optional<string> type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -46,10 +46,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -64,7 +60,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ResourceAccess(id, type, additionalProperties);
+            return new ResourceAccess(id, type.HasValue ? type.Value : null, additionalProperties);
         }
     }
 }

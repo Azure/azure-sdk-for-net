@@ -15,94 +15,94 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PeeringType != null)
+            if (Optional.IsDefined(PeeringType))
             {
                 writer.WritePropertyName("peeringType");
                 writer.WriteStringValue(PeeringType.Value.ToString());
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (AzureASN != null)
+            if (Optional.IsDefined(AzureASN))
             {
                 writer.WritePropertyName("azureASN");
                 writer.WriteNumberValue(AzureASN.Value);
             }
-            if (PeerASN != null)
+            if (Optional.IsDefined(PeerASN))
             {
                 writer.WritePropertyName("peerASN");
                 writer.WriteNumberValue(PeerASN.Value);
             }
-            if (PrimaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix");
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
-            if (SecondaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("secondaryPeerAddressPrefix");
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
-            if (PrimaryAzurePort != null)
+            if (Optional.IsDefined(PrimaryAzurePort))
             {
                 writer.WritePropertyName("primaryAzurePort");
                 writer.WriteStringValue(PrimaryAzurePort);
             }
-            if (SecondaryAzurePort != null)
+            if (Optional.IsDefined(SecondaryAzurePort))
             {
                 writer.WritePropertyName("secondaryAzurePort");
                 writer.WriteStringValue(SecondaryAzurePort);
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey");
                 writer.WriteStringValue(SharedKey);
             }
-            if (VlanId != null)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId");
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (MicrosoftPeeringConfig != null)
+            if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig");
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (GatewayManagerEtag != null)
+            if (Optional.IsDefined(GatewayManagerEtag))
             {
                 writer.WritePropertyName("gatewayManagerEtag");
                 writer.WriteStringValue(GatewayManagerEtag);
             }
-            if (LastModifiedBy != null)
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy");
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Ipv6PeeringConfig != null)
+            if (Optional.IsDefined(Ipv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig");
                 writer.WriteObjectValue(Ipv6PeeringConfig);
@@ -113,50 +113,38 @@ namespace Azure.Management.Network.Models
 
         internal static ExpressRouteCrossConnectionPeering DeserializeExpressRouteCrossConnectionPeering(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            ExpressRoutePeeringType? peeringType = default;
-            ExpressRoutePeeringState? state = default;
-            int? azureASN = default;
-            long? peerASN = default;
-            string primaryPeerAddressPrefix = default;
-            string secondaryPeerAddressPrefix = default;
-            string primaryAzurePort = default;
-            string secondaryAzurePort = default;
-            string sharedKey = default;
-            int? vlanId = default;
-            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
-            ProvisioningState? provisioningState = default;
-            string gatewayManagerEtag = default;
-            string lastModifiedBy = default;
-            Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<ExpressRoutePeeringType> peeringType = default;
+            Optional<ExpressRoutePeeringState> state = default;
+            Optional<int> azureASN = default;
+            Optional<long> peerASN = default;
+            Optional<string> primaryPeerAddressPrefix = default;
+            Optional<string> secondaryPeerAddressPrefix = default;
+            Optional<string> primaryAzurePort = default;
+            Optional<string> secondaryAzurePort = default;
+            Optional<string> sharedKey = default;
+            Optional<int> vlanId = default;
+            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> gatewayManagerEtag = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<Ipv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -166,136 +154,76 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("peeringType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             peeringType = new ExpressRoutePeeringType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             state = new ExpressRoutePeeringState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureASN"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             azureASN = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("peerASN"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             peerASN = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("primaryPeerAddressPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primaryPeerAddressPrefix = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("secondaryPeerAddressPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             secondaryPeerAddressPrefix = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("primaryAzurePort"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primaryAzurePort = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("secondaryAzurePort"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             secondaryAzurePort = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("sharedKey"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             sharedKey = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("vlanId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vlanId = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("microsoftPeeringConfig"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             gatewayManagerEtag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastModifiedBy = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
@@ -303,7 +231,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionPeering(id, name, etag, peeringType, state, azureASN, peerASN, primaryPeerAddressPrefix, secondaryPeerAddressPrefix, primaryAzurePort, secondaryAzurePort, sharedKey, vlanId, microsoftPeeringConfig, provisioningState, gatewayManagerEtag, lastModifiedBy, ipv6PeeringConfig);
+            return new ExpressRouteCrossConnectionPeering(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, peeringType.HasValue ? peeringType.Value : (ExpressRoutePeeringType?)null, state.HasValue ? state.Value : (ExpressRoutePeeringState?)null, azureASN.HasValue ? azureASN.Value : (int?)null, peerASN.HasValue ? peerASN.Value : (long?)null, primaryPeerAddressPrefix.HasValue ? primaryPeerAddressPrefix.Value : null, secondaryPeerAddressPrefix.HasValue ? secondaryPeerAddressPrefix.Value : null, primaryAzurePort.HasValue ? primaryAzurePort.Value : null, secondaryAzurePort.HasValue ? secondaryAzurePort.Value : null, sharedKey.HasValue ? sharedKey.Value : null, vlanId.HasValue ? vlanId.Value : (int?)null, microsoftPeeringConfig.HasValue ? microsoftPeeringConfig.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, gatewayManagerEtag.HasValue ? gatewayManagerEtag.Value : null, lastModifiedBy.HasValue ? lastModifiedBy.Value : null, ipv6PeeringConfig.HasValue ? ipv6PeeringConfig.Value : null);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Parameters != null && Parameters.Any())
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static FieldMappingFunction DeserializeFieldMappingFunction(JsonElement element)
         {
             string name = default;
-            IDictionary<string, object> parameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,10 +45,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -66,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new FieldMappingFunction(name, parameters);
+            return new FieldMappingFunction(name, new ChangeTrackingDictionary<string, object>(parameters));
         }
     }
 }

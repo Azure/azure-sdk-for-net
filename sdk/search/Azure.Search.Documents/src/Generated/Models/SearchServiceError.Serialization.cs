@@ -15,17 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceError DeserializeSearchServiceError(JsonElement element)
         {
-            string code = default;
+            Optional<string> code = default;
             string message = default;
-            IReadOnlyList<SearchServiceError> details = default;
+            Optional<IReadOnlyList<SearchServiceError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
@@ -36,10 +32,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SearchServiceError> array = new List<SearchServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchServiceError(code, message, details);
+            return new SearchServiceError(code.HasValue ? code.Value : null, message, new ChangeTrackingList<SearchServiceError>(details));
         }
     }
 }

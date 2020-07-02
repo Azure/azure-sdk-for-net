@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,6 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LastUpdatedAfter = lastUpdatedAfter;
             LastUpdatedBefore = lastUpdatedBefore;
+            Filters = new ChangeTrackingList<RunQueryFilter>();
+            OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
         }
 
         /// <summary> Initializes a new instance of RunFilterParameters. </summary>
@@ -44,8 +47,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </summary>
         public DateTimeOffset LastUpdatedBefore { get; }
         /// <summary> List of filters. </summary>
-        public IList<RunQueryFilter> Filters { get; set; }
+        public IList<RunQueryFilter> Filters { get; }
         /// <summary> List of OrderBy option. </summary>
-        public IList<RunQueryOrderBy> OrderBy { get; set; }
+        public IList<RunQueryOrderBy> OrderBy { get; }
     }
 }

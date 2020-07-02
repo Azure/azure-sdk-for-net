@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName");
             writer.WriteStringValue(RuleGroupName);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ApplicationGatewayFirewallRuleGroup DeserializeApplicationGatewayFirewallRuleGroup(JsonElement element)
         {
             string ruleGroupName = default;
-            string description = default;
+            Optional<string> description = default;
             IList<ApplicationGatewayFirewallRule> rules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,10 +47,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description, rules);
+            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description.HasValue ? description.Value : null, rules);
         }
     }
 }

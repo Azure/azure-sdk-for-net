@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AddressPrefixes != null)
+            if (Optional.IsDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AddressSpace DeserializeAddressSpace(JsonElement element)
         {
-            IList<string> addressPrefixes = default;
+            Optional<IList<string>> addressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AddressSpace(addressPrefixes);
+            return new AddressSpace(new ChangeTrackingList<string>(addressPrefixes));
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static ExpressRouteCircuitsArpTableListResult DeserializeExpressRouteCircuitsArpTableListResult(JsonElement element)
         {
-            IReadOnlyList<ExpressRouteCircuitArpTable> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitArpTable>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ExpressRouteCircuitArpTable> array = new List<ExpressRouteCircuitArpTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitsArpTableListResult(value, nextLink);
+            return new ExpressRouteCircuitsArpTableListResult(new ChangeTrackingList<ExpressRouteCircuitArpTable>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

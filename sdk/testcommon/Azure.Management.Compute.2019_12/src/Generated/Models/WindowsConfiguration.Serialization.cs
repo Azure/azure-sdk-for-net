@@ -16,22 +16,22 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProvisionVMAgent != null)
+            if (Optional.IsDefined(ProvisionVMAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
                 writer.WriteBooleanValue(ProvisionVMAgent.Value);
             }
-            if (EnableAutomaticUpdates != null)
+            if (Optional.IsDefined(EnableAutomaticUpdates))
             {
                 writer.WritePropertyName("enableAutomaticUpdates");
                 writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone");
                 writer.WriteStringValue(TimeZone);
             }
-            if (AdditionalUnattendContent != null)
+            if (Optional.IsDefined(AdditionalUnattendContent))
             {
                 writer.WritePropertyName("additionalUnattendContent");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (WinRM != null)
+            if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM");
                 writer.WriteObjectValue(WinRM);
@@ -51,46 +51,30 @@ namespace Azure.Management.Compute.Models
 
         internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
         {
-            bool? provisionVMAgent = default;
-            bool? enableAutomaticUpdates = default;
-            string timeZone = default;
-            IList<AdditionalUnattendContent> additionalUnattendContent = default;
-            WinRMConfiguration winRM = default;
+            Optional<bool> provisionVMAgent = default;
+            Optional<bool> enableAutomaticUpdates = default;
+            Optional<string> timeZone = default;
+            Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
+            Optional<WinRMConfiguration> winRM = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionVMAgent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableAutomaticUpdates"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enableAutomaticUpdates = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("timeZone"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeZone = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("additionalUnattendContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,15 +92,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("winRM"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value);
                     continue;
                 }
             }
-            return new WindowsConfiguration(provisionVMAgent, enableAutomaticUpdates, timeZone, additionalUnattendContent, winRM);
+            return new WindowsConfiguration(provisionVMAgent.HasValue ? provisionVMAgent.Value : (bool?)null, enableAutomaticUpdates.HasValue ? enableAutomaticUpdates.Value : (bool?)null, timeZone.HasValue ? timeZone.Value : null, new ChangeTrackingList<AdditionalUnattendContent>(additionalUnattendContent), winRM.HasValue ? winRM.Value : null);
         }
     }
 }

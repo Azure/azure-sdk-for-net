@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
         {
-            IReadOnlyList<ConsumerGroup> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ConsumerGroup>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConsumerGroup> array = new List<ConsumerGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConsumerGroupListResult(value, nextLink);
+            return new ConsumerGroupListResult(new ChangeTrackingList<ConsumerGroup>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

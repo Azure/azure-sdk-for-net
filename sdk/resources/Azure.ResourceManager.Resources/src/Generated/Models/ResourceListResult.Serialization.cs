@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceListResult DeserializeResourceListResult(JsonElement element)
         {
-            IReadOnlyList<GenericResourceExpanded> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<GenericResourceExpanded>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<GenericResourceExpanded> array = new List<GenericResourceExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceListResult(value, nextLink);
+            return new ResourceListResult(new ChangeTrackingList<GenericResourceExpanded>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

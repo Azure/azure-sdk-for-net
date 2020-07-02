@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllocatableVMs != null)
+            if (Optional.IsDefined(AllocatableVMs))
             {
                 writer.WritePropertyName("allocatableVMs");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Compute.Models
 
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            IList<DedicatedHostAllocatableVM> allocatableVMs = default;
+            Optional<IList<DedicatedHostAllocatableVM>> allocatableVMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(allocatableVMs);
+            return new DedicatedHostAvailableCapacity(new ChangeTrackingList<DedicatedHostAllocatableVM>(allocatableVMs));
         }
     }
 }

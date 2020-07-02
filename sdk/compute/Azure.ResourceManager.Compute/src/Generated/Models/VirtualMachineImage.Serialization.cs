@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (OsDiskImage != null)
+            if (Optional.IsDefined(OsDiskImage))
             {
                 writer.WritePropertyName("osDiskImage");
                 writer.WriteObjectValue(OsDiskImage);
             }
-            if (DataDiskImages != null)
+            if (Optional.IsDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages");
                 writer.WriteStartArray();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AutomaticOSUpgradeProperties != null)
+            if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties");
                 writer.WriteObjectValue(AutomaticOSUpgradeProperties);
             }
-            if (HyperVGeneration != null)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string name = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            string id = default;
-            PurchasePlan plan = default;
-            OSDiskImage osDiskImage = default;
-            IList<DataDiskImage> dataDiskImages = default;
-            AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default;
-            HyperVGenerationTypes? hyperVGeneration = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> id = default;
+            Optional<PurchasePlan> plan = default;
+            Optional<OSDiskImage> osDiskImage = default;
+            Optional<IList<DataDiskImage>> dataDiskImages = default;
+            Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
+            Optional<HyperVGenerationTypes> hyperVGeneration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -97,10 +97,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -118,10 +114,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -131,28 +123,16 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("plan"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             plan = PurchasePlan.DeserializePurchasePlan(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osDiskImage"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             osDiskImage = OSDiskImage.DeserializeOSDiskImage(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataDiskImages"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<DataDiskImage> array = new List<DataDiskImage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -170,19 +150,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("automaticOSUpgradeProperties"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             automaticOSUpgradeProperties = AutomaticOSUpgradeProperties.DeserializeAutomaticOSUpgradeProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hyperVGeneration = new HyperVGenerationTypes(property0.Value.GetString());
                             continue;
                         }
@@ -190,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineImage(id, name, location, tags, plan, osDiskImage, dataDiskImages, automaticOSUpgradeProperties, hyperVGeneration);
+            return new VirtualMachineImage(id.HasValue ? id.Value : null, name, location, new ChangeTrackingDictionary<string, string>(tags), plan.HasValue ? plan.Value : null, osDiskImage.HasValue ? osDiskImage.Value : null, new ChangeTrackingList<DataDiskImage>(dataDiskImages), automaticOSUpgradeProperties.HasValue ? automaticOSUpgradeProperties.Value : null, hyperVGeneration.HasValue ? hyperVGeneration.Value : (HyperVGenerationTypes?)null);
         }
     }
 }

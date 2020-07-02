@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkTapListResult DeserializeVirtualNetworkTapListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkTap> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkTap>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkTap> array = new List<VirtualNetworkTap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkTapListResult(value, nextLink);
+            return new VirtualNetworkTapListResult(new ChangeTrackingList<VirtualNetworkTap>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

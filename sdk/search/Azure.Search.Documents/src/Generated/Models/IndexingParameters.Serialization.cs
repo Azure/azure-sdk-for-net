@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,22 +16,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BatchSize != null)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize");
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (MaxFailedItems != null)
+            if (Optional.IsDefined(MaxFailedItems))
             {
                 writer.WritePropertyName("maxFailedItems");
                 writer.WriteNumberValue(MaxFailedItems.Value);
             }
-            if (MaxFailedItemsPerBatch != null)
+            if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
                 writer.WritePropertyName("maxFailedItemsPerBatch");
                 writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
             }
-            if (Configuration != null && Configuration.Any())
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration");
                 writer.WriteStartObject();
@@ -48,45 +47,29 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
-            int? batchSize = default;
-            int? maxFailedItems = default;
-            int? maxFailedItemsPerBatch = default;
-            IDictionary<string, object> configuration = default;
+            Optional<int> batchSize = default;
+            Optional<int> maxFailedItems = default;
+            Optional<int> maxFailedItemsPerBatch = default;
+            Optional<IDictionary<string, object>> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     batchSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItems"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxFailedItems = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItemsPerBatch"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxFailedItemsPerBatch = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("configuration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -103,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
+            return new IndexingParameters(batchSize.HasValue ? batchSize.Value : (int?)null, maxFailedItems.HasValue ? maxFailedItems.Value : (int?)null, maxFailedItemsPerBatch.HasValue ? maxFailedItemsPerBatch.Value : (int?)null, new ChangeTrackingDictionary<string, object>(configuration));
         }
     }
 }

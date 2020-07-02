@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteObjectValue(Source);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination");
                 writer.WriteObjectValue(Destination);
             }
-            if (AutoStart != null)
+            if (Optional.IsDefined(AutoStart))
             {
                 writer.WritePropertyName("autoStart");
                 writer.WriteBooleanValue(AutoStart.Value);
             }
-            if (MonitoringIntervalInSeconds != null)
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
                 writer.WritePropertyName("monitoringIntervalInSeconds");
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
-            if (Endpoints != null)
+            if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints");
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TestConfigurations != null)
+            if (Optional.IsDefined(TestConfigurations))
             {
                 writer.WritePropertyName("testConfigurations");
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TestGroups != null)
+            if (Optional.IsDefined(TestGroups))
             {
                 writer.WritePropertyName("testGroups");
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Outputs != null)
+            if (Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
                 writer.WriteStringValue(Notes);
@@ -86,59 +86,39 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorParameters DeserializeConnectionMonitorParameters(JsonElement element)
         {
-            ConnectionMonitorSource source = default;
-            ConnectionMonitorDestination destination = default;
-            bool? autoStart = default;
-            int? monitoringIntervalInSeconds = default;
-            IList<ConnectionMonitorEndpoint> endpoints = default;
-            IList<ConnectionMonitorTestConfiguration> testConfigurations = default;
-            IList<ConnectionMonitorTestGroup> testGroups = default;
-            IList<ConnectionMonitorOutput> outputs = default;
-            string notes = default;
+            Optional<ConnectionMonitorSource> source = default;
+            Optional<ConnectionMonitorDestination> destination = default;
+            Optional<bool> autoStart = default;
+            Optional<int> monitoringIntervalInSeconds = default;
+            Optional<IList<ConnectionMonitorEndpoint>> endpoints = default;
+            Optional<IList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
+            Optional<IList<ConnectionMonitorTestGroup>> testGroups = default;
+            Optional<IList<ConnectionMonitorOutput>> outputs = default;
+            Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("destination"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property.Value);
                     continue;
                 }
                 if (property.NameEquals("autoStart"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     autoStart = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("monitoringIntervalInSeconds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     monitoringIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("endpoints"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -156,10 +136,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("testConfigurations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -177,10 +153,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("testGroups"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -198,10 +170,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -219,15 +187,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("notes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     notes = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConnectionMonitorParameters(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes);
+            return new ConnectionMonitorParameters(source.HasValue ? source.Value : null, destination.HasValue ? destination.Value : null, autoStart.HasValue ? autoStart.Value : (bool?)null, monitoringIntervalInSeconds.HasValue ? monitoringIntervalInSeconds.Value : (int?)null, new ChangeTrackingList<ConnectionMonitorEndpoint>(endpoints), new ChangeTrackingList<ConnectionMonitorTestConfiguration>(testConfigurations), new ChangeTrackingList<ConnectionMonitorTestGroup>(testGroups), new ChangeTrackingList<ConnectionMonitorOutput>(outputs), notes.HasValue ? notes.Value : null);
         }
     }
 }

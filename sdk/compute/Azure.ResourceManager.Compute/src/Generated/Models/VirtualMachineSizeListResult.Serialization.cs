@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineSizeListResult DeserializeVirtualMachineSizeListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualMachineSize> value = default;
+            Optional<IReadOnlyList<VirtualMachineSize>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineSize> array = new List<VirtualMachineSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineSizeListResult(value);
+            return new VirtualMachineSizeListResult(new ChangeTrackingList<VirtualMachineSize>(value));
         }
     }
 }

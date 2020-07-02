@@ -15,7 +15,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Interfaces != null)
+            if (Optional.IsDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces");
                 writer.WriteStartObject();

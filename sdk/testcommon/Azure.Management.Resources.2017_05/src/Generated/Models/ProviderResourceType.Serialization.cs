@@ -15,28 +15,20 @@ namespace Azure.Management.Resources.Models
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
-            string resourceType = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<AliasType> aliases = default;
-            IReadOnlyList<string> apiVersions = default;
-            IReadOnlyDictionary<string, string> properties = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AliasType>> aliases = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -54,10 +46,6 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("aliases"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AliasType> array = new List<AliasType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -75,10 +63,6 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -96,10 +80,6 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -116,7 +96,7 @@ namespace Azure.Management.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType, locations, aliases, apiVersions, properties);
+            return new ProviderResourceType(resourceType.HasValue ? resourceType.Value : null, new ChangeTrackingList<string>(locations), new ChangeTrackingList<AliasType>(aliases), new ChangeTrackingList<string>(apiVersions), new ChangeTrackingDictionary<string, string>(properties));
         }
     }
 }

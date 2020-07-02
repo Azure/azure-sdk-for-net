@@ -15,36 +15,24 @@ namespace Azure.Management.Network.Models
     {
         internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element)
         {
-            NetworkInterfaceAssociation networkInterfaceAssociation = default;
-            SubnetAssociation subnetAssociation = default;
-            IReadOnlyList<SecurityRule> defaultSecurityRules = default;
-            IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
+            Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
+            Optional<SubnetAssociation> subnetAssociation = default;
+            Optional<IReadOnlyList<SecurityRule>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceAssociation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnetAssociation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultSecurityRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,10 +50,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("effectiveSecurityRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -82,7 +66,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules, effectiveSecurityRules);
+            return new SecurityRuleAssociations(networkInterfaceAssociation.HasValue ? networkInterfaceAssociation.Value : null, subnetAssociation.HasValue ? subnetAssociation.Value : null, new ChangeTrackingList<SecurityRule>(defaultSecurityRules), new ChangeTrackingList<EffectiveNetworkSecurityRule>(effectiveSecurityRules));
         }
     }
 }

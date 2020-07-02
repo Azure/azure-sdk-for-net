@@ -15,45 +15,29 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagInformationPropertiesFormat DeserializeServiceTagInformationPropertiesFormat(JsonElement element)
         {
-            string changeNumber = default;
-            string region = default;
-            string systemService = default;
-            IReadOnlyList<string> addressPrefixes = default;
+            Optional<string> changeNumber = default;
+            Optional<string> region = default;
+            Optional<string> systemService = default;
+            Optional<IReadOnlyList<string>> addressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changeNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("region"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     region = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemService"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     systemService = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -70,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceTagInformationPropertiesFormat(changeNumber, region, systemService, addressPrefixes);
+            return new ServiceTagInformationPropertiesFormat(changeNumber.HasValue ? changeNumber.Value : null, region.HasValue ? region.Value : null, systemService.HasValue ? systemService.Value : null, new ChangeTrackingList<string>(addressPrefixes));
         }
     }
 }

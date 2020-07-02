@@ -16,7 +16,7 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrefixMatch != null)
+            if (Optional.IsDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch");
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.Management.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (BlobIndexMatch != null)
+            if (Optional.IsDefined(BlobIndexMatch))
             {
                 writer.WritePropertyName("blobIndexMatch");
                 writer.WriteStartArray();
@@ -48,17 +48,13 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element)
         {
-            IList<string> prefixMatch = default;
+            Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
-            IList<TagFilter> blobIndexMatch = default;
+            Optional<IList<TagFilter>> blobIndexMatch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -93,10 +89,6 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("blobIndexMatch"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TagFilter> array = new List<TagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,7 +105,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyFilter(prefixMatch, blobTypes, blobIndexMatch);
+            return new ManagementPolicyFilter(new ChangeTrackingList<string>(prefixMatch), blobTypes, new ChangeTrackingList<TagFilter>(blobIndexMatch));
         }
     }
 }

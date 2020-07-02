@@ -24,7 +24,7 @@ namespace Azure.Management.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion");
             writer.WriteStringValue(RuleSetVersion);
-            if (DisabledRuleGroups != null)
+            if (Optional.IsDefined(DisabledRuleGroups))
             {
                 writer.WritePropertyName("disabledRuleGroups");
                 writer.WriteStartArray();
@@ -34,27 +34,27 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequestBodyCheck != null)
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck");
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (MaxRequestBodySize != null)
+            if (Optional.IsDefined(MaxRequestBodySize))
             {
                 writer.WritePropertyName("maxRequestBodySize");
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
-            if (MaxRequestBodySizeInKb != null)
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb");
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (FileUploadLimitInMb != null)
+            if (Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb");
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Exclusions != null)
+            if (Optional.IsDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions");
                 writer.WriteStartArray();
@@ -73,12 +73,12 @@ namespace Azure.Management.Network.Models
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;
             string ruleSetVersion = default;
-            IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default;
-            bool? requestBodyCheck = default;
-            int? maxRequestBodySize = default;
-            int? maxRequestBodySizeInKb = default;
-            int? fileUploadLimitInMb = default;
-            IList<ApplicationGatewayFirewallExclusion> exclusions = default;
+            Optional<IList<ApplicationGatewayFirewallDisabledRuleGroup>> disabledRuleGroups = default;
+            Optional<bool> requestBodyCheck = default;
+            Optional<int> maxRequestBodySize = default;
+            Optional<int> maxRequestBodySizeInKb = default;
+            Optional<int> fileUploadLimitInMb = default;
+            Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -103,10 +103,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("disabledRuleGroups"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationGatewayFirewallDisabledRuleGroup> array = new List<ApplicationGatewayFirewallDisabledRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,46 +120,26 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("requestBodyCheck"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("maxRequestBodySize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxRequestBodySize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxRequestBodySizeInKb"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("fileUploadLimitInMb"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("exclusions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApplicationGatewayFirewallExclusion> array = new List<ApplicationGatewayFirewallExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -180,7 +156,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, disabledRuleGroups, requestBodyCheck, maxRequestBodySize, maxRequestBodySizeInKb, fileUploadLimitInMb, exclusions);
+            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>(disabledRuleGroups), requestBodyCheck.HasValue ? requestBodyCheck.Value : (bool?)null, maxRequestBodySize.HasValue ? maxRequestBodySize.Value : (int?)null, maxRequestBodySizeInKb.HasValue ? maxRequestBodySizeInKb.Value : (int?)null, fileUploadLimitInMb.HasValue ? fileUploadLimitInMb.Value : (int?)null, new ChangeTrackingList<ApplicationGatewayFirewallExclusion>(exclusions));
         }
     }
 }

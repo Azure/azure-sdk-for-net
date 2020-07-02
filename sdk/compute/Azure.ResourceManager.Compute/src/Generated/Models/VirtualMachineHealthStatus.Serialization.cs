@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteObjectValue(Status);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineHealthStatus DeserializeVirtualMachineHealthStatus(JsonElement element)
         {
-            InstanceViewStatus status = default;
+            Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineHealthStatus(status);
+            return new VirtualMachineHealthStatus(status.HasValue ? status.Value : null);
         }
     }
 }

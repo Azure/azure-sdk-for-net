@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PlatformUpdateDomainCount != null)
+            if (Optional.IsDefined(PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount");
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (PlatformFaultDomainCount != null)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount");
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (VirtualMachines != null)
+            if (Optional.IsDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines");
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
                 writer.WriteObjectValue(ProximityPlacementGroup);
             }
-            if (Statuses != null)
+            if (Optional.IsDefined(Statuses))
             {
                 writer.WritePropertyName("statuses");
                 writer.WriteStartArray();
@@ -92,52 +92,36 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AvailabilitySet DeserializeAvailabilitySet(JsonElement element)
         {
-            Sku sku = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<Sku> sku = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            int? platformUpdateDomainCount = default;
-            int? platformFaultDomainCount = default;
-            IList<SubResource> virtualMachines = default;
-            SubResource proximityPlacementGroup = default;
-            IList<InstanceViewStatus> statuses = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<int> platformUpdateDomainCount = default;
+            Optional<int> platformFaultDomainCount = default;
+            Optional<IList<SubResource>> virtualMachines = default;
+            Optional<SubResource> proximityPlacementGroup = default;
+            Optional<IList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -148,10 +132,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -173,28 +153,16 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("platformUpdateDomainCount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             platformUpdateDomainCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("platformFaultDomainCount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             platformFaultDomainCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("virtualMachines"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -212,19 +180,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("proximityPlacementGroup"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             proximityPlacementGroup = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("statuses"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -244,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AvailabilitySet(id, name, type, location, tags, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines, proximityPlacementGroup, statuses);
+            return new AvailabilitySet(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), sku.HasValue ? sku.Value : null, platformUpdateDomainCount.HasValue ? platformUpdateDomainCount.Value : (int?)null, platformFaultDomainCount.HasValue ? platformFaultDomainCount.Value : (int?)null, new ChangeTrackingList<SubResource>(virtualMachines), proximityPlacementGroup.HasValue ? proximityPlacementGroup.Value : null, new ChangeTrackingList<InstanceViewStatus>(statuses));
         }
     }
 }

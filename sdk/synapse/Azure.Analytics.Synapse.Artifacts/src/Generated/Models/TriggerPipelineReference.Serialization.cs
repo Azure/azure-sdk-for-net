@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PipelineReference != null)
+            if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference");
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -37,25 +37,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TriggerPipelineReference DeserializeTriggerPipelineReference(JsonElement element)
         {
-            PipelineReference pipelineReference = default;
-            IDictionary<string, object> parameters = default;
+            Optional<PipelineReference> pipelineReference = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pipelineReference = PipelineReference.DeserializePipelineReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -72,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference, parameters);
+            return new TriggerPipelineReference(pipelineReference.HasValue ? pipelineReference.Value : null, new ChangeTrackingDictionary<string, object>(parameters));
         }
     }
 }

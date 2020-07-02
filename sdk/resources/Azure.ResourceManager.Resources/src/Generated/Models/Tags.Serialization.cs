@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TagsValue != null)
+            if (Optional.IsDefined(TagsValue))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -32,15 +32,11 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static Tags DeserializeTags(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -57,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Tags(tags);
+            return new Tags(new ChangeTrackingDictionary<string, string>(tags));
         }
     }
 }

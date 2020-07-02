@@ -17,72 +17,72 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId");
                 writer.WriteStringValue(DeviceId);
             }
-            if (GenerationId != null)
+            if (Optional.IsDefined(GenerationId))
             {
                 writer.WritePropertyName("generationId");
                 writer.WriteStringValue(GenerationId);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (ConnectionState != null)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState");
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusReason != null)
+            if (Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason");
                 writer.WriteStringValue(StatusReason);
             }
-            if (ConnectionStateUpdatedTime != null)
+            if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {
                 writer.WritePropertyName("connectionStateUpdatedTime");
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "O");
             }
-            if (StatusUpdatedTime != null)
+            if (Optional.IsDefined(StatusUpdatedTime))
             {
                 writer.WritePropertyName("statusUpdatedTime");
                 writer.WriteStringValue(StatusUpdatedTime.Value, "O");
             }
-            if (LastActivityTime != null)
+            if (Optional.IsDefined(LastActivityTime))
             {
                 writer.WritePropertyName("lastActivityTime");
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
-            if (CloudToDeviceMessageCount != null)
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount");
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication");
                 writer.WriteObjectValue(Authentication);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities");
                 writer.WriteObjectValue(Capabilities);
             }
-            if (DeviceScope != null)
+            if (Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope");
                 writer.WriteStringValue(DeviceScope);
             }
-            if (ParentScopes != null)
+            if (Optional.IsDefined(ParentScopes))
             {
                 writer.WritePropertyName("parentScopes");
                 writer.WriteStartArray();
@@ -97,145 +97,89 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element)
         {
-            string deviceId = default;
-            string generationId = default;
-            string etag = default;
-            DeviceConnectionState? connectionState = default;
-            DeviceStatus? status = default;
-            string statusReason = default;
-            DateTimeOffset? connectionStateUpdatedTime = default;
-            DateTimeOffset? statusUpdatedTime = default;
-            DateTimeOffset? lastActivityTime = default;
-            int? cloudToDeviceMessageCount = default;
-            AuthenticationMechanism authentication = default;
-            DeviceCapabilities capabilities = default;
-            string deviceScope = default;
-            IList<string> parentScopes = default;
+            Optional<string> deviceId = default;
+            Optional<string> generationId = default;
+            Optional<string> etag = default;
+            Optional<DeviceConnectionState> connectionState = default;
+            Optional<DeviceStatus> status = default;
+            Optional<string> statusReason = default;
+            Optional<DateTimeOffset> connectionStateUpdatedTime = default;
+            Optional<DateTimeOffset> statusUpdatedTime = default;
+            Optional<DateTimeOffset> lastActivityTime = default;
+            Optional<int> cloudToDeviceMessageCount = default;
+            Optional<AuthenticationMechanism> authentication = default;
+            Optional<DeviceCapabilities> capabilities = default;
+            Optional<string> deviceScope = default;
+            Optional<IList<string>> parentScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("generationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     generationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectionState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionState = new DeviceConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = new DeviceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusReason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectionStateUpdatedTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionStateUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("statusUpdatedTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastActivityTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastActivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cloudToDeviceMessageCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cloudToDeviceMessageCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("authentication"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deviceScope"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceScope = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parentScopes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -252,7 +196,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceIdentity(deviceId, generationId, etag, connectionState, status, statusReason, connectionStateUpdatedTime, statusUpdatedTime, lastActivityTime, cloudToDeviceMessageCount, authentication, capabilities, deviceScope, parentScopes);
+            return new DeviceIdentity(deviceId.HasValue ? deviceId.Value : null, generationId.HasValue ? generationId.Value : null, etag.HasValue ? etag.Value : null, connectionState.HasValue ? connectionState.Value : (DeviceConnectionState?)null, status.HasValue ? status.Value : (DeviceStatus?)null, statusReason.HasValue ? statusReason.Value : null, connectionStateUpdatedTime.HasValue ? connectionStateUpdatedTime.Value : (DateTimeOffset?)null, statusUpdatedTime.HasValue ? statusUpdatedTime.Value : (DateTimeOffset?)null, lastActivityTime.HasValue ? lastActivityTime.Value : (DateTimeOffset?)null, cloudToDeviceMessageCount.HasValue ? cloudToDeviceMessageCount.Value : (int?)null, authentication.HasValue ? authentication.Value : null, capabilities.HasValue ? capabilities.Value : null, deviceScope.HasValue ? deviceScope.Value : null, new ChangeTrackingList<string>(parentScopes));
         }
     }
 }

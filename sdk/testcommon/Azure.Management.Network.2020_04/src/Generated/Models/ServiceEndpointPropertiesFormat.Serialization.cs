@@ -16,12 +16,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Service != null)
+            if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service");
                 writer.WriteStringValue(Service);
             }
-            if (Locations != null)
+            if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -41,26 +41,18 @@ namespace Azure.Management.Network.Models
 
         internal static ServiceEndpointPropertiesFormat DeserializeServiceEndpointPropertiesFormat(JsonElement element)
         {
-            string service = default;
-            IList<string> locations = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> service = default;
+            Optional<IList<string>> locations = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("service"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     service = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -78,15 +70,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
             }
-            return new ServiceEndpointPropertiesFormat(service, locations, provisioningState);
+            return new ServiceEndpointPropertiesFormat(service.HasValue ? service.Value : null, new ChangeTrackingList<string>(locations), provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

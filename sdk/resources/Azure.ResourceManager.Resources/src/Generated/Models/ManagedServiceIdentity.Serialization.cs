@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (UserAssignedIdentities != null)
+            if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
                 writer.WriteStartObject();
@@ -37,25 +37,17 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
-            string type = default;
-            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
+            Optional<string> type = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -72,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(type, userAssignedIdentities);
+            return new ManagedServiceIdentity(type.HasValue ? type.Value : null, new ChangeTrackingDictionary<string, UserAssignedIdentity>(userAssignedIdentities));
         }
     }
 }

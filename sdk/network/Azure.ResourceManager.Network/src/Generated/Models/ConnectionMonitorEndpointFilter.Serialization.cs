@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Items != null)
+            if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilter DeserializeConnectionMonitorEndpointFilter(JsonElement element)
         {
-            string type = default;
-            IList<ConnectionMonitorEndpointFilterItem> items = default;
+            Optional<string> type = default;
+            Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("items"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpointFilter(type, items);
+            return new ConnectionMonitorEndpointFilter(type.HasValue ? type.Value : null, new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(items));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
                 writer.WriteStartObject();
@@ -32,15 +32,11 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element)
         {
-            IDictionary<string, string> settings = default;
+            Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -57,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ClusterQuotaConfigurationProperties(settings);
+            return new ClusterQuotaConfigurationProperties(new ChangeTrackingDictionary<string, string>(settings));
         }
     }
 }

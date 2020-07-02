@@ -15,55 +15,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkRequest DeserializeSparkRequest(JsonElement element)
         {
-            string name = default;
-            string file = default;
-            string className = default;
-            IReadOnlyList<string> args = default;
-            IReadOnlyList<string> jars = default;
-            IReadOnlyList<string> pyFiles = default;
-            IReadOnlyList<string> files = default;
-            IReadOnlyList<string> archives = default;
-            IReadOnlyDictionary<string, string> conf = default;
-            string driverMemory = default;
-            int? driverCores = default;
-            string executorMemory = default;
-            int? executorCores = default;
-            int? numExecutors = default;
+            Optional<string> name = default;
+            Optional<string> file = default;
+            Optional<string> className = default;
+            Optional<IReadOnlyList<string>> args = default;
+            Optional<IReadOnlyList<string>> jars = default;
+            Optional<IReadOnlyList<string>> pyFiles = default;
+            Optional<IReadOnlyList<string>> files = default;
+            Optional<IReadOnlyList<string>> archives = default;
+            Optional<IReadOnlyDictionary<string, string>> conf = default;
+            Optional<string> driverMemory = default;
+            Optional<int> driverCores = default;
+            Optional<string> executorMemory = default;
+            Optional<int> executorCores = default;
+            Optional<int> numExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("file"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     file = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("className"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     className = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("args"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -81,10 +65,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("jars"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -102,10 +82,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("pyFiles"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -123,10 +99,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("files"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -144,10 +116,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("archives"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -165,10 +133,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("conf"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -186,51 +150,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("driverMemory"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     driverMemory = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("driverCores"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     driverCores = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("executorMemory"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     executorMemory = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("executorCores"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     executorCores = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("numExecutors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     numExecutors = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new SparkRequest(name, file, className, args, jars, pyFiles, files, archives, conf, driverMemory, driverCores, executorMemory, executorCores, numExecutors);
+            return new SparkRequest(name.HasValue ? name.Value : null, file.HasValue ? file.Value : null, className.HasValue ? className.Value : null, new ChangeTrackingList<string>(args), new ChangeTrackingList<string>(jars), new ChangeTrackingList<string>(pyFiles), new ChangeTrackingList<string>(files), new ChangeTrackingList<string>(archives), new ChangeTrackingDictionary<string, string>(conf), driverMemory.HasValue ? driverMemory.Value : null, driverCores.HasValue ? driverCores.Value : (int?)null, executorMemory.HasValue ? executorMemory.Value : null, executorCores.HasValue ? executorCores.Value : (int?)null, numExecutors.HasValue ? numExecutors.Value : (int?)null);
         }
     }
 }

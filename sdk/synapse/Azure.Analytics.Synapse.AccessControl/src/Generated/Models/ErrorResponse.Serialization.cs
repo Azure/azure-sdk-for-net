@@ -17,8 +17,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         {
             string code = default;
             string message = default;
-            string target = default;
-            IReadOnlyList<ErrorDetail> details = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -33,19 +33,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,7 +54,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                     continue;
                 }
             }
-            return new ErrorResponse(code, message, target, details);
+            return new ErrorResponse(code, message, target.HasValue ? target.Value : null, new ChangeTrackingList<ErrorDetail>(details));
         }
     }
 }

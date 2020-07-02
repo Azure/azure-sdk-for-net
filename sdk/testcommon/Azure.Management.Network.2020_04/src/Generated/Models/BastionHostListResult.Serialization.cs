@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static BastionHostListResult DeserializeBastionHostListResult(JsonElement element)
         {
-            IReadOnlyList<BastionHost> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BastionHost>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BastionHost> array = new List<BastionHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionHostListResult(value, nextLink);
+            return new BastionHostListResult(new ChangeTrackingList<BastionHost>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetInstanceViewStatusesSummary DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(JsonElement element)
         {
-            IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary = default;
+            Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusesSummary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineStatusCodeCount> array = new List<VirtualMachineStatusCodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetInstanceViewStatusesSummary(statusesSummary);
+            return new VirtualMachineScaleSetInstanceViewStatusesSummary(new ChangeTrackingList<VirtualMachineStatusCodeCount>(statusesSummary));
         }
     }
 }

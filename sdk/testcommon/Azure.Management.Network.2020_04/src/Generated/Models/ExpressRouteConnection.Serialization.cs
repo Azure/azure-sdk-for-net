@@ -17,39 +17,39 @@ namespace Azure.Management.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ExpressRouteCircuitPeering != null)
+            if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering");
                 writer.WriteObjectValue(ExpressRouteCircuitPeering);
             }
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey");
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (RoutingWeight != null)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight");
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (EnableInternetSecurity != null)
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity");
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (RoutingConfiguration != null)
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration");
                 writer.WriteObjectValue(RoutingConfiguration);
@@ -61,13 +61,13 @@ namespace Azure.Management.Network.Models
         internal static ExpressRouteConnection DeserializeExpressRouteConnection(JsonElement element)
         {
             string name = default;
-            string id = default;
-            ProvisioningState? provisioningState = default;
-            ExpressRouteCircuitPeeringId expressRouteCircuitPeering = default;
-            string authorizationKey = default;
-            int? routingWeight = default;
-            bool? enableInternetSecurity = default;
-            RoutingConfiguration routingConfiguration = default;
+            Optional<string> id = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<ExpressRouteCircuitPeeringId> expressRouteCircuitPeering = default;
+            Optional<string> authorizationKey = default;
+            Optional<int> routingWeight = default;
+            Optional<bool> enableInternetSecurity = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -77,10 +77,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -90,55 +86,31 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteCircuitPeering"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             expressRouteCircuitPeering = ExpressRouteCircuitPeeringId.DeserializeExpressRouteCircuitPeeringId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authorizationKey"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             authorizationKey = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             routingWeight = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("enableInternetSecurity"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableInternetSecurity = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("routingConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
@@ -146,7 +118,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteConnection(id, name, provisioningState, expressRouteCircuitPeering, authorizationKey, routingWeight, enableInternetSecurity, routingConfiguration);
+            return new ExpressRouteConnection(id.HasValue ? id.Value : null, name, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, expressRouteCircuitPeering.HasValue ? expressRouteCircuitPeering.Value : null, authorizationKey.HasValue ? authorizationKey.Value : null, routingWeight.HasValue ? routingWeight.Value : (int?)null, enableInternetSecurity.HasValue ? enableInternetSecurity.Value : (bool?)null, routingConfiguration.HasValue ? routingConfiguration.Value : null);
         }
     }
 }

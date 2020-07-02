@@ -18,24 +18,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure");
                 writer.WriteObjectValue(Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema");
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName");
             writer.WriteObjectValue(LinkedServiceName);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -56,24 +56,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder");
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteObjectValue(Location);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName");
                 writer.WriteObjectValue(EncodingName);
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression");
                 writer.WriteObjectValue(Compression);
@@ -90,16 +90,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static JsonDataset DeserializeJsonDataset(JsonElement element)
         {
             string type = default;
-            string description = default;
-            object structure = default;
-            object schema = default;
+            Optional<string> description = default;
+            Optional<object> structure = default;
+            Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
-            DatasetFolder folder = default;
-            DatasetLocation location = default;
-            object encodingName = default;
-            DatasetCompression compression = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
+            Optional<DatasetFolder> folder = default;
+            Optional<DatasetLocation> location = default;
+            Optional<object> encodingName = default;
+            Optional<DatasetCompression> compression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -111,28 +111,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("structure"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     structure = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schema = property.Value.GetObject();
                     continue;
                 }
@@ -143,10 +131,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -164,10 +148,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -185,10 +165,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folder"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
@@ -198,28 +174,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("location"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encodingName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encodingName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("compression"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             compression = DatasetCompression.DeserializeDatasetCompression(property0.Value);
                             continue;
                         }
@@ -237,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonDataset(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties, location, encodingName, compression);
+            return new JsonDataset(type, description.HasValue ? description.Value : null, structure.HasValue ? structure.Value : null, schema.HasValue ? schema.Value : null, linkedServiceName, new ChangeTrackingDictionary<string, ParameterSpecification>(parameters), new ChangeTrackingList<object>(annotations), folder.HasValue ? folder.Value : null, additionalProperties, location.HasValue ? location.Value : null, encodingName.HasValue ? encodingName.Value : null, compression.HasValue ? compression.Value : null);
         }
     }
 }

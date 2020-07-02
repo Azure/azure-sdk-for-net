@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (SourceAddresses != null)
+            if (Optional.IsDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DestinationAddresses != null)
+            if (Optional.IsDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses");
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DestinationPorts != null)
+            if (Optional.IsDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts");
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Protocols != null)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("protocols");
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TranslatedAddress != null)
+            if (Optional.IsDefined(TranslatedAddress))
             {
                 writer.WritePropertyName("translatedAddress");
                 writer.WriteStringValue(TranslatedAddress);
             }
-            if (TranslatedPort != null)
+            if (Optional.IsDefined(TranslatedPort))
             {
                 writer.WritePropertyName("translatedPort");
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (TranslatedFqdn != null)
+            if (Optional.IsDefined(TranslatedFqdn))
             {
                 writer.WritePropertyName("translatedFqdn");
                 writer.WriteStringValue(TranslatedFqdn);
             }
-            if (SourceIpGroups != null)
+            if (Optional.IsDefined(SourceIpGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
@@ -96,42 +96,30 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallNatRule DeserializeAzureFirewallNatRule(JsonElement element)
         {
-            string name = default;
-            string description = default;
-            IList<string> sourceAddresses = default;
-            IList<string> destinationAddresses = default;
-            IList<string> destinationPorts = default;
-            IList<AzureFirewallNetworkRuleProtocol> protocols = default;
-            string translatedAddress = default;
-            string translatedPort = default;
-            string translatedFqdn = default;
-            IList<string> sourceIpGroups = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<IList<string>> sourceAddresses = default;
+            Optional<IList<string>> destinationAddresses = default;
+            Optional<IList<string>> destinationPorts = default;
+            Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;
+            Optional<string> translatedAddress = default;
+            Optional<string> translatedPort = default;
+            Optional<string> translatedFqdn = default;
+            Optional<IList<string>> sourceIpGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -149,10 +137,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -170,10 +154,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationPorts"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -191,10 +171,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("protocols"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AzureFirewallNetworkRuleProtocol> array = new List<AzureFirewallNetworkRuleProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -205,37 +181,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("translatedAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     translatedAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("translatedPort"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     translatedPort = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("translatedFqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     translatedFqdn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceIpGroups"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -252,7 +212,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallNatRule(name, description, sourceAddresses, destinationAddresses, destinationPorts, protocols, translatedAddress, translatedPort, translatedFqdn, sourceIpGroups);
+            return new AzureFirewallNatRule(name.HasValue ? name.Value : null, description.HasValue ? description.Value : null, new ChangeTrackingList<string>(sourceAddresses), new ChangeTrackingList<string>(destinationAddresses), new ChangeTrackingList<string>(destinationPorts), new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(protocols), translatedAddress.HasValue ? translatedAddress.Value : null, translatedPort.HasValue ? translatedPort.Value : null, translatedFqdn.HasValue ? translatedFqdn.Value : null, new ChangeTrackingList<string>(sourceIpGroups));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.Management.Network.Models
             }
 
             RuleGroupName = ruleGroupName;
+            Rules = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>
@@ -37,6 +39,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The name of the rule group that will be disabled. </summary>
         public string RuleGroupName { get; set; }
         /// <summary> The list of rules that will be disabled. If null, all rules of the rule group will be disabled. </summary>
-        public IList<int> Rules { get; set; }
+        public IList<int> Rules { get; }
     }
 }

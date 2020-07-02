@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ScriptLogsList DeserializeScriptLogsList(JsonElement element)
         {
-            IReadOnlyList<ScriptLog> value = default;
+            Optional<IReadOnlyList<ScriptLog>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ScriptLog> array = new List<ScriptLog>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ScriptLogsList(value);
+            return new ScriptLogsList(new ChangeTrackingList<ScriptLog>(value));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Management.Network.Models
         public PatchRouteFilterRule()
         {
             RouteFilterRuleType = "Community";
+            Communities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
@@ -45,7 +47,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The rule type of the rule. </summary>
         public string RouteFilterRuleType { get; set; }
         /// <summary> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </summary>
-        public IList<string> Communities { get; set; }
+        public IList<string> Communities { get; }
         /// <summary> The provisioning state of the route filter rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

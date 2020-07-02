@@ -15,25 +15,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
-            string nextLink = default;
-            IReadOnlyList<Operation> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<Operation>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Operation> array = new List<Operation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new OperationListResult(nextLink, value);
+            return new OperationListResult(nextLink.HasValue ? nextLink.Value : null, new ChangeTrackingList<Operation>(value));
         }
     }
 }

@@ -15,131 +15,83 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSession DeserializeSparkSession(JsonElement element)
         {
-            SparkSessionState livyInfo = default;
-            string name = default;
-            string workspaceName = default;
-            string sparkPoolName = default;
-            string submitterName = default;
-            string submitterId = default;
-            string artifactId = default;
-            SparkJobType? jobType = default;
-            SparkSessionResultType? result = default;
-            SparkScheduler schedulerInfo = default;
-            SparkServicePlugin pluginInfo = default;
-            IReadOnlyList<SparkServiceError> errorInfo = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            Optional<SparkSessionState> livyInfo = default;
+            Optional<string> name = default;
+            Optional<string> workspaceName = default;
+            Optional<string> sparkPoolName = default;
+            Optional<string> submitterName = default;
+            Optional<string> submitterId = default;
+            Optional<string> artifactId = default;
+            Optional<SparkJobType> jobType = default;
+            Optional<SparkSessionResultType> result = default;
+            Optional<SparkScheduler> schedulerInfo = default;
+            Optional<SparkServicePlugin> pluginInfo = default;
+            Optional<IReadOnlyList<SparkServiceError>> errorInfo = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             int id = default;
-            string appId = default;
-            IReadOnlyDictionary<string, string> appInfo = default;
-            string state = default;
-            IReadOnlyList<string> log = default;
+            Optional<string> appId = default;
+            Optional<IReadOnlyDictionary<string, string>> appInfo = default;
+            Optional<string> state = default;
+            Optional<IReadOnlyList<string>> log = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     livyInfo = SparkSessionState.DeserializeSparkSessionState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("workspaceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sparkPoolName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sparkPoolName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("submitterName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     submitterName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("submitterId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     submitterId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("artifactId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     artifactId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("jobType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     jobType = new SparkJobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("result"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result = new SparkSessionResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulerInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schedulerInfo = SparkScheduler.DeserializeSparkScheduler(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pluginInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pluginInfo = SparkServicePlugin.DeserializeSparkServicePlugin(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SparkServiceError> array = new List<SparkServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -157,10 +109,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -183,19 +131,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("appId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -213,19 +153,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("log"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -242,7 +174,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSession(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, schedulerInfo, pluginInfo, errorInfo, tags, id, appId, appInfo, state, log);
+            return new SparkSession(livyInfo.HasValue ? livyInfo.Value : null, name.HasValue ? name.Value : null, workspaceName.HasValue ? workspaceName.Value : null, sparkPoolName.HasValue ? sparkPoolName.Value : null, submitterName.HasValue ? submitterName.Value : null, submitterId.HasValue ? submitterId.Value : null, artifactId.HasValue ? artifactId.Value : null, jobType.HasValue ? jobType.Value : (SparkJobType?)null, result.HasValue ? result.Value : (SparkSessionResultType?)null, schedulerInfo.HasValue ? schedulerInfo.Value : null, pluginInfo.HasValue ? pluginInfo.Value : null, new ChangeTrackingList<SparkServiceError>(errorInfo), new ChangeTrackingDictionary<string, string>(tags), id, appId.HasValue ? appId.Value : null, new ChangeTrackingDictionary<string, string>(appInfo), state.HasValue ? state.Value : null, new ChangeTrackingList<string>(log));
         }
     }
 }

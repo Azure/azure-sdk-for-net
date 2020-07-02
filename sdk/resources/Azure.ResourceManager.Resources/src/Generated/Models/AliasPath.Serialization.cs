@@ -15,26 +15,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static AliasPath DeserializeAliasPath(JsonElement element)
         {
-            string path = default;
-            IReadOnlyList<string> apiVersions = default;
-            AliasPattern pattern = default;
+            Optional<string> path = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<AliasPattern> pattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("apiVersions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,15 +44,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("pattern"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
             }
-            return new AliasPath(path, apiVersions, pattern);
+            return new AliasPath(path.HasValue ? path.Value : null, new ChangeTrackingList<string>(apiVersions), pattern.HasValue ? pattern.Value : null);
         }
     }
 }

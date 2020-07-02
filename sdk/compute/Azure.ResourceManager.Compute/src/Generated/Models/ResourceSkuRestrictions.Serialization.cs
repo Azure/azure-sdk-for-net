@@ -15,27 +15,19 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuRestrictions DeserializeResourceSkuRestrictions(JsonElement element)
         {
-            ResourceSkuRestrictionsType? type = default;
-            IReadOnlyList<string> values = default;
-            ResourceSkuRestrictionInfo restrictionInfo = default;
-            ResourceSkuRestrictionsReasonCode? reasonCode = default;
+            Optional<ResourceSkuRestrictionsType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<ResourceSkuRestrictionInfo> restrictionInfo = default;
+            Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString().ToResourceSkuRestrictionsType();
                     continue;
                 }
                 if (property.NameEquals("values"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -53,24 +45,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("restrictionInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     restrictionInfo = ResourceSkuRestrictionInfo.DeserializeResourceSkuRestrictionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reasonCode = property.Value.GetString().ToResourceSkuRestrictionsReasonCode();
                     continue;
                 }
             }
-            return new ResourceSkuRestrictions(type, values, restrictionInfo, reasonCode);
+            return new ResourceSkuRestrictions(type.HasValue ? type.Value : (ResourceSkuRestrictionsType?)null, new ChangeTrackingList<string>(values), restrictionInfo.HasValue ? restrictionInfo.Value : null, reasonCode.HasValue ? reasonCode.Value : (ResourceSkuRestrictionsReasonCode?)null);
         }
     }
 }

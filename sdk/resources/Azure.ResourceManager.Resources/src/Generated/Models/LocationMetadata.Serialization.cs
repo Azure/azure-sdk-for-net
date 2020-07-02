@@ -15,75 +15,47 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationMetadata DeserializeLocationMetadata(JsonElement element)
         {
-            RegionType? regionType = default;
-            RegionCategory? regionCategory = default;
-            string geographyGroup = default;
-            string longitude = default;
-            string latitude = default;
-            string physicalLocation = default;
-            IReadOnlyList<PairedRegion> pairedRegion = default;
+            Optional<RegionType> regionType = default;
+            Optional<RegionCategory> regionCategory = default;
+            Optional<string> geographyGroup = default;
+            Optional<string> longitude = default;
+            Optional<string> latitude = default;
+            Optional<string> physicalLocation = default;
+            Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     regionType = new RegionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("regionCategory"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     regionCategory = new RegionCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geographyGroup"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     geographyGroup = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("longitude"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     longitude = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("latitude"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     latitude = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("physicalLocation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     physicalLocation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("pairedRegion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -100,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationMetadata(regionType, regionCategory, geographyGroup, longitude, latitude, physicalLocation, pairedRegion);
+            return new LocationMetadata(regionType.HasValue ? regionType.Value : (RegionType?)null, regionCategory.HasValue ? regionCategory.Value : (RegionCategory?)null, geographyGroup.HasValue ? geographyGroup.Value : null, longitude.HasValue ? longitude.Value : null, latitude.HasValue ? latitude.Value : null, physicalLocation.HasValue ? physicalLocation.Value : null, new ChangeTrackingList<PairedRegion>(pairedRegion));
         }
     }
 }

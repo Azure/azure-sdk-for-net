@@ -15,15 +15,11 @@ namespace Azure.Management.Storage.Models
     {
         internal static ListQueueServices DeserializeListQueueServices(JsonElement element)
         {
-            IReadOnlyList<QueueServiceProperties> value = default;
+            Optional<IReadOnlyList<QueueServiceProperties>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<QueueServiceProperties> array = new List<QueueServiceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ListQueueServices(value);
+            return new ListQueueServices(new ChangeTrackingList<QueueServiceProperties>(value));
         }
     }
 }

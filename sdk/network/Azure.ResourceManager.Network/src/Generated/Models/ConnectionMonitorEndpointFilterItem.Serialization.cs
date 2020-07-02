@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
                 writer.WriteStringValue(Address);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilterItem DeserializeConnectionMonitorEndpointFilterItem(JsonElement element)
         {
-            string type = default;
-            string address = default;
+            Optional<string> type = default;
+            Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     address = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpointFilterItem(type, address);
+            return new ConnectionMonitorEndpointFilterItem(type.HasValue ? type.Value : null, address.HasValue ? address.Value : null);
         }
     }
 }

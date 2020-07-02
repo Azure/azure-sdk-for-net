@@ -16,17 +16,17 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (LastSyncTime != null)
+            if (Optional.IsDefined(LastSyncTime))
             {
                 writer.WritePropertyName("lastSyncTime");
                 writer.WriteStringValue(LastSyncTime.Value, "O");
             }
-            if (CanFailover != null)
+            if (Optional.IsDefined(CanFailover))
             {
                 writer.WritePropertyName("canFailover");
                 writer.WriteBooleanValue(CanFailover.Value);
@@ -36,40 +36,28 @@ namespace Azure.Management.Storage.Models
 
         internal static GeoReplicationStats DeserializeGeoReplicationStats(JsonElement element)
         {
-            GeoReplicationStatus? status = default;
-            DateTimeOffset? lastSyncTime = default;
-            bool? canFailover = default;
+            Optional<GeoReplicationStatus> status = default;
+            Optional<DateTimeOffset> lastSyncTime = default;
+            Optional<bool> canFailover = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = new GeoReplicationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastSyncTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("canFailover"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     canFailover = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new GeoReplicationStats(status, lastSyncTime, canFailover);
+            return new GeoReplicationStats(status.HasValue ? status.Value : (GeoReplicationStatus?)null, lastSyncTime.HasValue ? lastSyncTime.Value : (DateTimeOffset?)null, canFailover.HasValue ? canFailover.Value : (bool?)null);
         }
     }
 }

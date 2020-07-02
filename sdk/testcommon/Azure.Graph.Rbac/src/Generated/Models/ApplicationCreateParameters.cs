@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             DisplayName = displayName;
+            IdentifierUris = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationCreateParameters. </summary>
@@ -66,6 +68,6 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> The display name of the application. </summary>
         public string DisplayName { get; }
         /// <summary> A collection of URIs for the application. </summary>
-        public IList<string> IdentifierUris { get; set; }
+        public IList<string> IdentifierUris { get; }
     }
 }

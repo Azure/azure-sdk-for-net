@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static ListP2SVpnGatewaysResult DeserializeListP2SVpnGatewaysResult(JsonElement element)
         {
-            IReadOnlyList<P2SVpnGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<P2SVpnGateway>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<P2SVpnGateway> array = new List<P2SVpnGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListP2SVpnGatewaysResult(value, nextLink);
+            return new ListP2SVpnGatewaysResult(new ChangeTrackingList<P2SVpnGateway>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

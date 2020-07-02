@@ -15,59 +15,39 @@ namespace Azure.Management.Storage.Models
     {
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
-            string displayDescription = default;
-            string unit = default;
-            IReadOnlyList<Dimension> dimensions = default;
-            string aggregationType = default;
-            bool? fillGapWithZero = default;
-            string category = default;
-            string resourceIdDimensionNameOverride = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> displayDescription = default;
+            Optional<string> unit = default;
+            Optional<IReadOnlyList<Dimension>> dimensions = default;
+            Optional<string> aggregationType = default;
+            Optional<bool> fillGapWithZero = default;
+            Optional<string> category = default;
+            Optional<string> resourceIdDimensionNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayDescription"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     unit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dimensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -85,42 +65,26 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("aggregationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aggregationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fillGapWithZero"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("category"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     category = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceIdDimensionNameOverride"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceIdDimensionNameOverride = property.Value.GetString();
                     continue;
                 }
             }
-            return new MetricSpecification(name, displayName, displayDescription, unit, dimensions, aggregationType, fillGapWithZero, category, resourceIdDimensionNameOverride);
+            return new MetricSpecification(name.HasValue ? name.Value : null, displayName.HasValue ? displayName.Value : null, displayDescription.HasValue ? displayDescription.Value : null, unit.HasValue ? unit.Value : null, new ChangeTrackingList<Dimension>(dimensions), aggregationType.HasValue ? aggregationType.Value : null, fillGapWithZero.HasValue ? fillGapWithZero.Value : (bool?)null, category.HasValue ? category.Value : null, resourceIdDimensionNameOverride.HasValue ? resourceIdDimensionNameOverride.Value : null);
         }
     }
 }

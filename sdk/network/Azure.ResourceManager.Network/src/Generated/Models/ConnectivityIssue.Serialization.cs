@@ -15,45 +15,29 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
         {
-            Origin? origin = default;
-            Severity? severity = default;
-            IssueType? type = default;
-            IReadOnlyList<IDictionary<string, string>> context = default;
+            Optional<Origin> origin = default;
+            Optional<Severity> severity = default;
+            Optional<IssueType> type = default;
+            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     origin = new Origin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = new IssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -82,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityIssue(origin, severity, type, context);
+            return new ConnectivityIssue(origin.HasValue ? origin.Value : (Origin?)null, severity.HasValue ? severity.Value : (Severity?)null, type.HasValue ? type.Value : (IssueType?)null, new ChangeTrackingList<IDictionary<string, string>>(context));
         }
     }
 }

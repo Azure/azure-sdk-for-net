@@ -16,32 +16,32 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PlatformUpdateDomain != null)
+            if (Optional.IsDefined(PlatformUpdateDomain))
             {
                 writer.WritePropertyName("platformUpdateDomain");
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (PlatformFaultDomain != null)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain");
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (RdpThumbPrint != null)
+            if (Optional.IsDefined(RdpThumbPrint))
             {
                 writer.WritePropertyName("rdpThumbPrint");
                 writer.WriteStringValue(RdpThumbPrint);
             }
-            if (VmAgent != null)
+            if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent");
                 writer.WriteObjectValue(VmAgent);
             }
-            if (MaintenanceRedeployStatus != null)
+            if (Optional.IsDefined(MaintenanceRedeployStatus))
             {
                 writer.WritePropertyName("maintenanceRedeployStatus");
                 writer.WriteObjectValue(MaintenanceRedeployStatus);
             }
-            if (Disks != null)
+            if (Optional.IsDefined(Disks))
             {
                 writer.WritePropertyName("disks");
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Extensions != null)
+            if (Optional.IsDefined(Extensions))
             {
                 writer.WritePropertyName("extensions");
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VmHealth != null)
+            if (Optional.IsDefined(VmHealth))
             {
                 writer.WritePropertyName("vmHealth");
                 writer.WriteObjectValue(VmHealth);
             }
-            if (BootDiagnostics != null)
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics");
                 writer.WriteObjectValue(BootDiagnostics);
             }
-            if (Statuses != null)
+            if (Optional.IsDefined(Statuses))
             {
                 writer.WritePropertyName("statuses");
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PlacementGroupId != null)
+            if (Optional.IsDefined(PlacementGroupId))
             {
                 writer.WritePropertyName("placementGroupId");
                 writer.WriteStringValue(PlacementGroupId);
@@ -91,70 +91,46 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineScaleSetVMInstanceView DeserializeVirtualMachineScaleSetVMInstanceView(JsonElement element)
         {
-            int? platformUpdateDomain = default;
-            int? platformFaultDomain = default;
-            string rdpThumbPrint = default;
-            VirtualMachineAgentInstanceView vmAgent = default;
-            MaintenanceRedeployStatus maintenanceRedeployStatus = default;
-            IList<DiskInstanceView> disks = default;
-            IList<VirtualMachineExtensionInstanceView> extensions = default;
-            VirtualMachineHealthStatus vmHealth = default;
-            BootDiagnosticsInstanceView bootDiagnostics = default;
-            IList<InstanceViewStatus> statuses = default;
-            string placementGroupId = default;
+            Optional<int> platformUpdateDomain = default;
+            Optional<int> platformFaultDomain = default;
+            Optional<string> rdpThumbPrint = default;
+            Optional<VirtualMachineAgentInstanceView> vmAgent = default;
+            Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
+            Optional<IList<DiskInstanceView>> disks = default;
+            Optional<IList<VirtualMachineExtensionInstanceView>> extensions = default;
+            Optional<VirtualMachineHealthStatus> vmHealth = default;
+            Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
+            Optional<IList<InstanceViewStatus>> statuses = default;
+            Optional<string> placementGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     platformUpdateDomain = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("platformFaultDomain"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     platformFaultDomain = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rdpThumbPrint"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     rdpThumbPrint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vmAgent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maintenanceRedeployStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("disks"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -172,10 +148,6 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("extensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -193,28 +165,16 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("vmHealth"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bootDiagnostics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -232,15 +192,11 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("placementGroupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     placementGroupId = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMInstanceView(platformUpdateDomain, platformFaultDomain, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks, extensions, vmHealth, bootDiagnostics, statuses, placementGroupId);
+            return new VirtualMachineScaleSetVMInstanceView(platformUpdateDomain.HasValue ? platformUpdateDomain.Value : (int?)null, platformFaultDomain.HasValue ? platformFaultDomain.Value : (int?)null, rdpThumbPrint.HasValue ? rdpThumbPrint.Value : null, vmAgent.HasValue ? vmAgent.Value : null, maintenanceRedeployStatus.HasValue ? maintenanceRedeployStatus.Value : null, new ChangeTrackingList<DiskInstanceView>(disks), new ChangeTrackingList<VirtualMachineExtensionInstanceView>(extensions), vmHealth.HasValue ? vmHealth.Value : null, bootDiagnostics.HasValue ? bootDiagnostics.Value : null, new ChangeTrackingList<InstanceViewStatus>(statuses), placementGroupId.HasValue ? placementGroupId.Value : null);
         }
     }
 }

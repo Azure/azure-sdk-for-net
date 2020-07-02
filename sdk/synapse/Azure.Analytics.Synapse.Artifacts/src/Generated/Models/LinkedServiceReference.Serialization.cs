@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string type = default;
             string referenceName = default;
-            IDictionary<string, object> parameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -53,10 +53,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -73,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkedServiceReference(type, referenceName, parameters);
+            return new LinkedServiceReference(type, referenceName, new ChangeTrackingDictionary<string, object>(parameters));
         }
     }
 }

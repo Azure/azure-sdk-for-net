@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static NetworkSecurityGroupListResult DeserializeNetworkSecurityGroupListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkSecurityGroup> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkSecurityGroup>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkSecurityGroup> array = new List<NetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkSecurityGroupListResult(value, nextLink);
+            return new NetworkSecurityGroupListResult(new ChangeTrackingList<NetworkSecurityGroup>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

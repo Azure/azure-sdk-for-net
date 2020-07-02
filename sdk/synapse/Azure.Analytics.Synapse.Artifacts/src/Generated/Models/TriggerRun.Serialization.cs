@@ -16,78 +16,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerRun DeserializeTriggerRun(JsonElement element)
         {
-            string triggerRunId = default;
-            string triggerName = default;
-            string triggerType = default;
-            DateTimeOffset? triggerRunTimestamp = default;
-            TriggerRunStatus? status = default;
-            string message = default;
-            IReadOnlyDictionary<string, string> properties = default;
-            IReadOnlyDictionary<string, string> triggeredPipelines = default;
+            Optional<string> triggerRunId = default;
+            Optional<string> triggerName = default;
+            Optional<string> triggerType = default;
+            Optional<DateTimeOffset> triggerRunTimestamp = default;
+            Optional<TriggerRunStatus> status = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<IReadOnlyDictionary<string, string>> triggeredPipelines = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerRunId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("triggerName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("triggerType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("triggerRunTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerRunTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = new TriggerRunStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -105,10 +77,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("triggeredPipelines"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -135,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TriggerRun(triggerRunId, triggerName, triggerType, triggerRunTimestamp, status, message, properties, triggeredPipelines, additionalProperties);
+            return new TriggerRun(triggerRunId.HasValue ? triggerRunId.Value : null, triggerName.HasValue ? triggerName.Value : null, triggerType.HasValue ? triggerType.Value : null, triggerRunTimestamp.HasValue ? triggerRunTimestamp.Value : (DateTimeOffset?)null, status.HasValue ? status.Value : (TriggerRunStatus?)null, message.HasValue ? message.Value : null, new ChangeTrackingDictionary<string, string>(properties), new ChangeTrackingDictionary<string, string>(triggeredPipelines), additionalProperties);
         }
     }
 }

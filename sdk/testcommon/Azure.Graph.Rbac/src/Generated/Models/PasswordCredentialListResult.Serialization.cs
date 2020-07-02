@@ -15,15 +15,11 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static PasswordCredentialListResult DeserializePasswordCredentialListResult(JsonElement element)
         {
-            IReadOnlyList<PasswordCredential> value = default;
+            Optional<IReadOnlyList<PasswordCredential>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PasswordCredential> array = new List<PasswordCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Graph.Rbac.Models
                     continue;
                 }
             }
-            return new PasswordCredentialListResult(value);
+            return new PasswordCredentialListResult(new ChangeTrackingList<PasswordCredential>(value));
         }
     }
 }

@@ -15,25 +15,17 @@ namespace Azure.Management.Network.Models
     {
         internal static IPAddressAvailabilityResult DeserializeIPAddressAvailabilityResult(JsonElement element)
         {
-            bool? available = default;
-            IReadOnlyList<string> availableIPAddresses = default;
+            Optional<bool> available = default;
+            Optional<IReadOnlyList<string>> availableIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     available = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("availableIPAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new IPAddressAvailabilityResult(available, availableIPAddresses);
+            return new IPAddressAvailabilityResult(available.HasValue ? available.Value : (bool?)null, new ChangeTrackingList<string>(availableIPAddresses));
         }
     }
 }

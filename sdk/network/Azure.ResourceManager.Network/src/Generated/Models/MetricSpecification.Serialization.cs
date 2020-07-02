@@ -15,73 +15,49 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
-            string displayDescription = default;
-            string unit = default;
-            string aggregationType = default;
-            IReadOnlyList<Availability> availabilities = default;
-            bool? enableRegionalMdmAccount = default;
-            bool? fillGapWithZero = default;
-            string metricFilterPattern = default;
-            IReadOnlyList<Dimension> dimensions = default;
-            bool? isInternal = default;
-            string sourceMdmAccount = default;
-            string sourceMdmNamespace = default;
-            string resourceIdDimensionNameOverride = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> displayDescription = default;
+            Optional<string> unit = default;
+            Optional<string> aggregationType = default;
+            Optional<IReadOnlyList<Availability>> availabilities = default;
+            Optional<bool> enableRegionalMdmAccount = default;
+            Optional<bool> fillGapWithZero = default;
+            Optional<string> metricFilterPattern = default;
+            Optional<IReadOnlyList<Dimension>> dimensions = default;
+            Optional<bool> isInternal = default;
+            Optional<string> sourceMdmAccount = default;
+            Optional<string> sourceMdmNamespace = default;
+            Optional<string> resourceIdDimensionNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayDescription"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     unit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aggregationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aggregationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("availabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Availability> array = new List<Availability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -99,37 +75,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("enableRegionalMdmAccount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enableRegionalMdmAccount = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("fillGapWithZero"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("metricFilterPattern"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     metricFilterPattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dimensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -147,42 +107,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("isInternal"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isInternal = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sourceMdmAccount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceMdmAccount = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceMdmNamespace"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceMdmNamespace = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceIdDimensionNameOverride"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceIdDimensionNameOverride = property.Value.GetString();
                     continue;
                 }
             }
-            return new MetricSpecification(name, displayName, displayDescription, unit, aggregationType, availabilities, enableRegionalMdmAccount, fillGapWithZero, metricFilterPattern, dimensions, isInternal, sourceMdmAccount, sourceMdmNamespace, resourceIdDimensionNameOverride);
+            return new MetricSpecification(name.HasValue ? name.Value : null, displayName.HasValue ? displayName.Value : null, displayDescription.HasValue ? displayDescription.Value : null, unit.HasValue ? unit.Value : null, aggregationType.HasValue ? aggregationType.Value : null, new ChangeTrackingList<Availability>(availabilities), enableRegionalMdmAccount.HasValue ? enableRegionalMdmAccount.Value : (bool?)null, fillGapWithZero.HasValue ? fillGapWithZero.Value : (bool?)null, metricFilterPattern.HasValue ? metricFilterPattern.Value : null, new ChangeTrackingList<Dimension>(dimensions), isInternal.HasValue ? isInternal.Value : (bool?)null, sourceMdmAccount.HasValue ? sourceMdmAccount.Value : null, sourceMdmNamespace.HasValue ? sourceMdmNamespace.Value : null, resourceIdDimensionNameOverride.HasValue ? resourceIdDimensionNameOverride.Value : null);
         }
     }
 }

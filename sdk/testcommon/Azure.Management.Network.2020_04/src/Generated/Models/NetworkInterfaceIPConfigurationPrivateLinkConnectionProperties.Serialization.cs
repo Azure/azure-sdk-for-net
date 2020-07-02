@@ -16,17 +16,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId");
                 writer.WriteStringValue(GroupId);
             }
-            if (RequiredMemberName != null)
+            if (Optional.IsDefined(RequiredMemberName))
             {
                 writer.WritePropertyName("requiredMemberName");
                 writer.WriteStringValue(RequiredMemberName);
             }
-            if (Fqdns != null)
+            if (Optional.IsDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns");
                 writer.WriteStartArray();
@@ -41,35 +41,23 @@ namespace Azure.Management.Network.Models
 
         internal static NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(JsonElement element)
         {
-            string groupId = default;
-            string requiredMemberName = default;
-            IList<string> fqdns = default;
+            Optional<string> groupId = default;
+            Optional<string> requiredMemberName = default;
+            Optional<IList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     groupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("requiredMemberName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     requiredMemberName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fqdns"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -86,7 +74,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId, requiredMemberName, fqdns);
+            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.HasValue ? groupId.Value : null, requiredMemberName.HasValue ? requiredMemberName.Value : null, new ChangeTrackingList<string>(fqdns));
         }
     }
 }

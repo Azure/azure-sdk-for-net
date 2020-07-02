@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion");
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Substatuses != null)
+            if (Optional.IsDefined(Substatuses))
             {
                 writer.WritePropertyName("substatuses");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Statuses != null)
+            if (Optional.IsDefined(Statuses))
             {
                 writer.WritePropertyName("statuses");
                 writer.WriteStartArray();
@@ -56,46 +56,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineExtensionInstanceView DeserializeVirtualMachineExtensionInstanceView(JsonElement element)
         {
-            string name = default;
-            string type = default;
-            string typeHandlerVersion = default;
-            IList<InstanceViewStatus> substatuses = default;
-            IList<InstanceViewStatus> statuses = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<IList<InstanceViewStatus>> substatuses = default;
+            Optional<IList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("typeHandlerVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     typeHandlerVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("substatuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,10 +97,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -133,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineExtensionInstanceView(name, type, typeHandlerVersion, substatuses, statuses);
+            return new VirtualMachineExtensionInstanceView(name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, typeHandlerVersion.HasValue ? typeHandlerVersion.Value : null, new ChangeTrackingList<InstanceViewStatus>(substatuses), new ChangeTrackingList<InstanceViewStatus>(statuses));
         }
     }
 }

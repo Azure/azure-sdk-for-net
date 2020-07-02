@@ -16,76 +16,52 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentPropertiesExtended DeserializeDeploymentPropertiesExtended(JsonElement element)
         {
-            string provisioningState = default;
-            string correlationId = default;
-            DateTimeOffset? timestamp = default;
-            string duration = default;
-            object outputs = default;
-            IReadOnlyList<Provider> providers = default;
-            IReadOnlyList<Dependency> dependencies = default;
-            TemplateLink templateLink = default;
-            object parameters = default;
-            ParametersLink parametersLink = default;
-            DeploymentMode? mode = default;
-            DebugSetting debugSetting = default;
-            OnErrorDeploymentExtended onErrorDeployment = default;
-            string templateHash = default;
-            IReadOnlyList<ResourceReference> outputResources = default;
-            IReadOnlyList<ResourceReference> validatedResources = default;
-            ErrorResponse error = default;
+            Optional<string> provisioningState = default;
+            Optional<string> correlationId = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> duration = default;
+            Optional<object> outputs = default;
+            Optional<IReadOnlyList<Provider>> providers = default;
+            Optional<IReadOnlyList<Dependency>> dependencies = default;
+            Optional<TemplateLink> templateLink = default;
+            Optional<object> parameters = default;
+            Optional<ParametersLink> parametersLink = default;
+            Optional<DeploymentMode> mode = default;
+            Optional<DebugSetting> debugSetting = default;
+            Optional<OnErrorDeploymentExtended> onErrorDeployment = default;
+            Optional<string> templateHash = default;
+            Optional<IReadOnlyList<ResourceReference>> outputResources = default;
+            Optional<IReadOnlyList<ResourceReference>> validatedResources = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("correlationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     correlationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("duration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     duration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     outputs = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("providers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Provider> array = new List<Provider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -103,10 +79,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("dependencies"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Dependency> array = new List<Dependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,73 +96,41 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("templateLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     templateLink = TemplateLink.DeserializeTemplateLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parametersLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parametersLink = ParametersLink.DeserializeParametersLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mode = property.Value.GetString().ToDeploymentMode();
                     continue;
                 }
                 if (property.NameEquals("debugSetting"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     onErrorDeployment = OnErrorDeploymentExtended.DeserializeOnErrorDeploymentExtended(property.Value);
                     continue;
                 }
                 if (property.NameEquals("templateHash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     templateHash = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("outputResources"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceReference> array = new List<ResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -208,10 +148,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("validatedResources"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceReference> array = new List<ResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -229,15 +165,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new DeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers, dependencies, templateLink, parameters, parametersLink, mode, debugSetting, onErrorDeployment, templateHash, outputResources, validatedResources, error);
+            return new DeploymentPropertiesExtended(provisioningState.HasValue ? provisioningState.Value : null, correlationId.HasValue ? correlationId.Value : null, timestamp.HasValue ? timestamp.Value : (DateTimeOffset?)null, duration.HasValue ? duration.Value : null, outputs.HasValue ? outputs.Value : null, new ChangeTrackingList<Provider>(providers), new ChangeTrackingList<Dependency>(dependencies), templateLink.HasValue ? templateLink.Value : null, parameters.HasValue ? parameters.Value : null, parametersLink.HasValue ? parametersLink.Value : null, mode.HasValue ? mode.Value : (DeploymentMode?)null, debugSetting.HasValue ? debugSetting.Value : null, onErrorDeployment.HasValue ? onErrorDeployment.Value : null, templateHash.HasValue ? templateHash.Value : null, new ChangeTrackingList<ResourceReference>(outputResources), new ChangeTrackingList<ResourceReference>(validatedResources), error.HasValue ? error.Value : null);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPPrefix. </summary>
         public PublicIPPrefix()
         {
+            Zones = new ChangeTrackingList<string>();
+            IpTags = new ChangeTrackingList<IpTag>();
+            PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefix. </summary>
@@ -54,11 +58,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The public IP address version. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The list of tags associated with the public IP prefix. </summary>
-        public IList<IpTag> IpTags { get; set; }
+        public IList<IpTag> IpTags { get; }
         /// <summary> The Length of the Public IP Prefix. </summary>
         public int? PrefixLength { get; set; }
         /// <summary> The allocated Prefix. </summary>

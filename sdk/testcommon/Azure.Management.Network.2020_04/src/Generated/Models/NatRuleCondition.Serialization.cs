@@ -16,7 +16,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpProtocols != null)
+            if (Optional.IsDefined(IpProtocols))
             {
                 writer.WritePropertyName("ipProtocols");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SourceAddresses != null)
+            if (Optional.IsDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DestinationAddresses != null)
+            if (Optional.IsDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses");
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DestinationPorts != null)
+            if (Optional.IsDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts");
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SourceIpGroups != null)
+            if (Optional.IsDefined(SourceIpGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
@@ -66,17 +66,17 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TerminateTLS != null)
+            if (Optional.IsDefined(TerminateTLS))
             {
                 writer.WritePropertyName("terminateTLS");
                 writer.WriteBooleanValue(TerminateTLS.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -88,23 +88,19 @@ namespace Azure.Management.Network.Models
 
         internal static NatRuleCondition DeserializeNatRuleCondition(JsonElement element)
         {
-            IList<FirewallPolicyRuleConditionNetworkProtocol> ipProtocols = default;
-            IList<string> sourceAddresses = default;
-            IList<string> destinationAddresses = default;
-            IList<string> destinationPorts = default;
-            IList<string> sourceIpGroups = default;
-            bool? terminateTLS = default;
-            string name = default;
-            string description = default;
+            Optional<IList<FirewallPolicyRuleConditionNetworkProtocol>> ipProtocols = default;
+            Optional<IList<string>> sourceAddresses = default;
+            Optional<IList<string>> destinationAddresses = default;
+            Optional<IList<string>> destinationPorts = default;
+            Optional<IList<string>> sourceIpGroups = default;
+            Optional<bool> terminateTLS = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             FirewallPolicyRuleConditionType ruleConditionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipProtocols"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FirewallPolicyRuleConditionNetworkProtocol> array = new List<FirewallPolicyRuleConditionNetworkProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -115,10 +111,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("sourceAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -136,10 +128,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("destinationAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -157,10 +145,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("destinationPorts"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -178,10 +162,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("sourceIpGroups"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -199,28 +179,16 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("terminateTLS"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     terminateTLS = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -230,7 +198,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new NatRuleCondition(name, description, ruleConditionType, ipProtocols, sourceAddresses, destinationAddresses, destinationPorts, sourceIpGroups, terminateTLS);
+            return new NatRuleCondition(name.HasValue ? name.Value : null, description.HasValue ? description.Value : null, ruleConditionType, new ChangeTrackingList<FirewallPolicyRuleConditionNetworkProtocol>(ipProtocols), new ChangeTrackingList<string>(sourceAddresses), new ChangeTrackingList<string>(destinationAddresses), new ChangeTrackingList<string>(destinationPorts), new ChangeTrackingList<string>(sourceIpGroups), terminateTLS.HasValue ? terminateTLS.Value : (bool?)null);
         }
     }
 }

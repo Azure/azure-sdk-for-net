@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IpGroup. </summary>
         public IpGroup()
         {
+            IpAddresses = new ChangeTrackingList<string>();
+            Firewalls = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of IpGroup. </summary>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the IpGroups resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
-        public IList<string> IpAddresses { get; set; }
+        public IList<string> IpAddresses { get; }
         /// <summary> List of references to Azure resources that this IpGroups is associated with. </summary>
         public IList<SubResource> Firewalls { get; }
     }

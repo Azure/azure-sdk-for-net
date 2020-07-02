@@ -15,9 +15,9 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static Domain DeserializeDomain(JsonElement element)
         {
-            string authenticationType = default;
-            bool? isDefault = default;
-            bool? isVerified = default;
+            Optional<string> authenticationType = default;
+            Optional<bool> isDefault = default;
+            Optional<bool> isVerified = default;
             string name = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
@@ -25,28 +25,16 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("authenticationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     authenticationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isDefault"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isVerified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isVerified = property.Value.GetBoolean();
                     continue;
                 }
@@ -66,7 +54,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Domain(authenticationType, isDefault, isVerified, name, additionalProperties);
+            return new Domain(authenticationType.HasValue ? authenticationType.Value : null, isDefault.HasValue ? isDefault.Value : (bool?)null, isVerified.HasValue ? isVerified.Value : (bool?)null, name, additionalProperties);
         }
     }
 }

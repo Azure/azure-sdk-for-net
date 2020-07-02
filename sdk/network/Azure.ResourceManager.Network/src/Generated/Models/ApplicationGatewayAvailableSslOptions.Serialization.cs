@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PredefinedPolicies != null)
+            if (Optional.IsDefined(PredefinedPolicies))
             {
                 writer.WritePropertyName("predefinedPolicies");
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultPolicy != null)
+            if (Optional.IsDefined(DefaultPolicy))
             {
                 writer.WritePropertyName("defaultPolicy");
                 writer.WriteStringValue(DefaultPolicy.Value.ToString());
             }
-            if (AvailableCipherSuites != null)
+            if (Optional.IsDefined(AvailableCipherSuites))
             {
                 writer.WritePropertyName("availableCipherSuites");
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailableProtocols != null)
+            if (Optional.IsDefined(AvailableProtocols))
             {
                 writer.WritePropertyName("availableProtocols");
                 writer.WriteStartArray();
@@ -90,59 +90,39 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayAvailableSslOptions DeserializeApplicationGatewayAvailableSslOptions(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<SubResource> predefinedPolicies = default;
-            ApplicationGatewaySslPolicyName? defaultPolicy = default;
-            IList<ApplicationGatewaySslCipherSuite> availableCipherSuites = default;
-            IList<ApplicationGatewaySslProtocol> availableProtocols = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<SubResource>> predefinedPolicies = default;
+            Optional<ApplicationGatewaySslPolicyName> defaultPolicy = default;
+            Optional<IList<ApplicationGatewaySslCipherSuite>> availableCipherSuites = default;
+            Optional<IList<ApplicationGatewaySslProtocol>> availableProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -164,10 +144,6 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("predefinedPolicies"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -185,19 +161,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("defaultPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             defaultPolicy = new ApplicationGatewaySslPolicyName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("availableCipherSuites"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -208,10 +176,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("availableProtocols"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ApplicationGatewaySslProtocol> array = new List<ApplicationGatewaySslProtocol>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -224,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableSslOptions(id, name, type, location, tags, predefinedPolicies, defaultPolicy, availableCipherSuites, availableProtocols);
+            return new ApplicationGatewayAvailableSslOptions(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), new ChangeTrackingList<SubResource>(predefinedPolicies), defaultPolicy.HasValue ? defaultPolicy.Value : (ApplicationGatewaySslPolicyName?)null, new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(availableCipherSuites), new ChangeTrackingList<ApplicationGatewaySslProtocol>(availableProtocols));
         }
     }
 }

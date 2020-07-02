@@ -15,29 +15,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
-            string resourceType = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<Alias> aliases = default;
-            IReadOnlyList<string> apiVersions = default;
-            string capabilities = default;
-            IReadOnlyDictionary<string, string> properties = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<Alias>> aliases = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<string> capabilities = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -55,10 +47,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("aliases"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Alias> array = new List<Alias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -76,10 +64,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -97,19 +81,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     capabilities = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -126,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType, locations, aliases, apiVersions, capabilities, properties);
+            return new ProviderResourceType(resourceType.HasValue ? resourceType.Value : null, new ChangeTrackingList<string>(locations), new ChangeTrackingList<Alias>(aliases), new ChangeTrackingList<string>(apiVersions), capabilities.HasValue ? capabilities.Value : null, new ChangeTrackingDictionary<string, string>(properties));
         }
     }
 }

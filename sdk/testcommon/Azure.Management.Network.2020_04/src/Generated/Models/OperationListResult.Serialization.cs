@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
-            IReadOnlyList<Operation> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Operation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Operation> array = new List<Operation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new OperationListResult(value, nextLink);
+            return new OperationListResult(new ChangeTrackingList<Operation>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

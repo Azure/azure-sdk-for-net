@@ -15,35 +15,23 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static ErrorDefinition DeserializeErrorDefinition(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            IReadOnlyList<ErrorDefinition> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<ErrorDefinition>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorDefinition> array = new List<ErrorDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -60,7 +48,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new ErrorDefinition(code, message, details);
+            return new ErrorDefinition(code.HasValue ? code.Value : null, message.HasValue ? message.Value : null, new ChangeTrackingList<ErrorDefinition>(details));
         }
     }
 }

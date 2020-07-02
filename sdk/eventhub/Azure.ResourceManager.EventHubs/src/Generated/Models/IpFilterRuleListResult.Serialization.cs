@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static IpFilterRuleListResult DeserializeIpFilterRuleListResult(JsonElement element)
         {
-            IReadOnlyList<IpFilterRule> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<IpFilterRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IpFilterRule> array = new List<IpFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new IpFilterRuleListResult(value, nextLink);
+            return new IpFilterRuleListResult(new ChangeTrackingList<IpFilterRule>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

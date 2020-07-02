@@ -16,12 +16,12 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Bypass != null)
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass");
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (VirtualNetworkRules != null)
+            if (Optional.IsDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Management.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpRules != null)
+            if (Optional.IsDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
@@ -48,27 +48,19 @@ namespace Azure.Management.Storage.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            Bypass? bypass = default;
-            IList<VirtualNetworkRule> virtualNetworkRules = default;
-            IList<IPRule> ipRules = default;
+            Optional<Bypass> bypass = default;
+            Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IList<IPRule>> ipRules = default;
             DefaultAction defaultAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bypass = new Bypass(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -86,10 +78,6 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("ipRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IPRule> array = new List<IPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,7 +99,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(bypass, virtualNetworkRules, ipRules, defaultAction);
+            return new NetworkRuleSet(bypass.HasValue ? bypass.Value : (Bypass?)null, new ChangeTrackingList<VirtualNetworkRule>(virtualNetworkRules), new ChangeTrackingList<IPRule>(ipRules), defaultAction);
         }
     }
 }

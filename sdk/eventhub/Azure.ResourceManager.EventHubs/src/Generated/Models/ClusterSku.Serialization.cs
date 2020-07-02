@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
                 writer.WriteNumberValue(Capacity.Value);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static ClusterSku DeserializeClusterSku(JsonElement element)
         {
             string name = default;
-            int? capacity = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("capacity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ClusterSku(name, capacity);
+            return new ClusterSku(name, capacity.HasValue ? capacity.Value : (int?)null);
         }
     }
 }

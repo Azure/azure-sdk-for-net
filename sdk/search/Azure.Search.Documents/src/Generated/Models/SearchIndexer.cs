@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -35,8 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
-            FieldMappings = new List<FieldMapping>();
-            OutputFieldMappings = new List<FieldMapping>();
+            FieldMappings = new ChangeTrackingList<FieldMapping>();
+            OutputFieldMappings = new ChangeTrackingList<FieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -60,8 +61,8 @@ namespace Azure.Search.Documents.Indexes.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
-            FieldMappings = fieldMappings ?? new List<FieldMapping>();
-            OutputFieldMappings = outputFieldMappings ?? new List<FieldMapping>();
+            FieldMappings = fieldMappings;
+            OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
             _etag = Etag;
         }

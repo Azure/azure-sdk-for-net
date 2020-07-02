@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrepareNetworkPoliciesRequest. </summary>
         public PrepareNetworkPoliciesRequest()
         {
+            NetworkIntentPolicyConfigurations = new ChangeTrackingList<NetworkIntentPolicyConfiguration>();
         }
 
         /// <summary> Initializes a new instance of PrepareNetworkPoliciesRequest. </summary>
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the service for which subnet is being prepared for. </summary>
         public string ServiceName { get; set; }
         /// <summary> A list of NetworkIntentPolicyConfiguration. </summary>
-        public IList<NetworkIntentPolicyConfiguration> NetworkIntentPolicyConfigurations { get; set; }
+        public IList<NetworkIntentPolicyConfiguration> NetworkIntentPolicyConfigurations { get; }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerProbeListResult DeserializeLoadBalancerProbeListResult(JsonElement element)
         {
-            IReadOnlyList<Probe> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Probe>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Probe> array = new List<Probe>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LoadBalancerProbeListResult(value, nextLink);
+            return new LoadBalancerProbeListResult(new ChangeTrackingList<Probe>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

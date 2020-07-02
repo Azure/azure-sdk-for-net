@@ -15,28 +15,20 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Alias DeserializeAlias(JsonElement element)
         {
-            string name = default;
-            IReadOnlyList<AliasPath> paths = default;
-            AliasType? type = default;
-            string defaultPath = default;
-            AliasPattern defaultPattern = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<AliasPath>> paths = default;
+            Optional<AliasType> type = default;
+            Optional<string> defaultPath = default;
+            Optional<AliasPattern> defaultPattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("paths"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AliasPath> array = new List<AliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -54,33 +46,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString().ToAliasType();
                     continue;
                 }
                 if (property.NameEquals("defaultPath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultPath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("defaultPattern"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultPattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
             }
-            return new Alias(name, paths, type, defaultPath, defaultPattern);
+            return new Alias(name.HasValue ? name.Value : null, new ChangeTrackingList<AliasPath>(paths), type.HasValue ? type.Value : (AliasType?)null, defaultPath.HasValue ? defaultPath.Value : null, defaultPattern.HasValue ? defaultPattern.Value : null);
         }
     }
 }

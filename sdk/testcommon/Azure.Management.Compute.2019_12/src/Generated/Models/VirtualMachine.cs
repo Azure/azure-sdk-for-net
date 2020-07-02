@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,9 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            Resources = new ChangeTrackingList<VirtualMachineExtension>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachine. </summary>
@@ -82,7 +86,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> The identity of the virtual machine, if configured. </summary>
         public VirtualMachineIdentity Identity { get; set; }
         /// <summary> The virtual machine zones. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>

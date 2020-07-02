@@ -15,15 +15,11 @@ namespace Azure.Management.Compute.Models
     {
         internal static VirtualMachineExtensionsListResult DeserializeVirtualMachineExtensionsListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualMachineExtension> value = default;
+            Optional<IReadOnlyList<VirtualMachineExtension>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineExtensionsListResult(value);
+            return new VirtualMachineExtensionsListResult(new ChangeTrackingList<VirtualMachineExtension>(value));
         }
     }
 }

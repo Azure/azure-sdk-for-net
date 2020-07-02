@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static LoadBalancerBackendAddressPoolListResult DeserializeLoadBalancerBackendAddressPoolListResult(JsonElement element)
         {
-            IReadOnlyList<BackendAddressPool> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BackendAddressPool>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BackendAddressPool> array = new List<BackendAddressPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddressPoolListResult(value, nextLink);
+            return new LoadBalancerBackendAddressPoolListResult(new ChangeTrackingList<BackendAddressPool>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

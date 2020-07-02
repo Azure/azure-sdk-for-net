@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityGroupViewResult DeserializeSecurityGroupViewResult(JsonElement element)
         {
-            IReadOnlyList<SecurityGroupNetworkInterface> networkInterfaces = default;
+            Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecurityGroupNetworkInterface> array = new List<SecurityGroupNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SecurityGroupViewResult(networkInterfaces);
+            return new SecurityGroupViewResult(new ChangeTrackingList<SecurityGroupNetworkInterface>(networkInterfaces));
         }
     }
 }

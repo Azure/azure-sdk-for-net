@@ -16,32 +16,32 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContainerSettings != null)
+            if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings");
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (StorageAccountSettings != null)
+            if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings");
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (CleanupPreference != null)
+            if (Optional.IsDefined(CleanupPreference))
             {
                 writer.WritePropertyName("cleanupPreference");
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteObjectValue(Status);
             }
-            if (Outputs != null)
+            if (Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartObject();
@@ -57,65 +57,41 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static DeploymentScriptPropertiesBase DeserializeDeploymentScriptPropertiesBase(JsonElement element)
         {
-            ContainerConfiguration containerSettings = default;
-            StorageAccountConfiguration storageAccountSettings = default;
-            CleanupOptions? cleanupPreference = default;
-            ScriptProvisioningState? provisioningState = default;
-            ScriptStatus status = default;
-            IDictionary<string, object> outputs = default;
+            Optional<ContainerConfiguration> containerSettings = default;
+            Optional<StorageAccountConfiguration> storageAccountSettings = default;
+            Optional<CleanupOptions> cleanupPreference = default;
+            Optional<ScriptProvisioningState> provisioningState = default;
+            Optional<ScriptStatus> status = default;
+            Optional<IDictionary<string, object>> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cleanupPreference"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cleanupPreference = new CleanupOptions(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new ScriptProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = ScriptStatus.DeserializeScriptStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -132,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DeploymentScriptPropertiesBase(containerSettings, storageAccountSettings, cleanupPreference, provisioningState, status, outputs);
+            return new DeploymentScriptPropertiesBase(containerSettings.HasValue ? containerSettings.Value : null, storageAccountSettings.HasValue ? storageAccountSettings.Value : null, cleanupPreference.HasValue ? cleanupPreference.Value : (CleanupOptions?)null, provisioningState.HasValue ? provisioningState.Value : (ScriptProvisioningState?)null, status.HasValue ? status.Value : null, new ChangeTrackingDictionary<string, object>(outputs));
         }
     }
 }

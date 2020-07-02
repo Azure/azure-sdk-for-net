@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicKeys"> the list of SSH public keys used to authenticate with Linux-based VMs. </param>
         internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys)
         {
-            PublicKeys = publicKeys ?? new List<ContainerServiceSshPublicKey>();
+            PublicKeys = publicKeys;
         }
 
         /// <summary> the list of SSH public keys used to authenticate with Linux-based VMs. </summary>

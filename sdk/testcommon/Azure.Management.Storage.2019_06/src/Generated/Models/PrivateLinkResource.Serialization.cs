@@ -16,29 +16,29 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId");
                 writer.WriteStringValue(GroupId);
             }
-            if (RequiredMembers != null)
+            if (Optional.IsDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers");
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.Management.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequiredZoneNames != null)
+            if (Optional.IsDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames");
                 writer.WriteStartArray();
@@ -64,38 +64,26 @@ namespace Azure.Management.Storage.Models
 
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string groupId = default;
-            IList<string> requiredMembers = default;
-            IList<string> requiredZoneNames = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> groupId = default;
+            Optional<IList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -105,19 +93,11 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("groupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             groupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("requiredMembers"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -135,10 +115,6 @@ namespace Azure.Management.Storage.Models
                         }
                         if (property0.NameEquals("requiredZoneNames"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -158,7 +134,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id, name, type, groupId, requiredMembers, requiredZoneNames);
+            return new PrivateLinkResource(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, groupId.HasValue ? groupId.Value : null, new ChangeTrackingList<string>(requiredMembers), new ChangeTrackingList<string>(requiredZoneNames));
         }
     }
 }

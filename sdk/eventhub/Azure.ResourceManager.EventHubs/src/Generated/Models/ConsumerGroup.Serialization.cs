@@ -16,34 +16,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (CreatedAt != null)
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt");
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
-            if (UpdatedAt != null)
+            if (Optional.IsDefined(UpdatedAt))
             {
                 writer.WritePropertyName("updatedAt");
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (UserMetadata != null)
+            if (Optional.IsDefined(UserMetadata))
             {
                 writer.WritePropertyName("userMetadata");
                 writer.WriteStringValue(UserMetadata);
@@ -54,38 +54,26 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ConsumerGroup DeserializeConsumerGroup(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
-            string userMetadata = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -95,28 +83,16 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("createdAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("userMetadata"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             userMetadata = property0.Value.GetString();
                             continue;
                         }
@@ -124,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ConsumerGroup(id, name, type, createdAt, updatedAt, userMetadata);
+            return new ConsumerGroup(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, createdAt.HasValue ? createdAt.Value : (DateTimeOffset?)null, updatedAt.HasValue ? updatedAt.Value : (DateTimeOffset?)null, userMetadata.HasValue ? userMetadata.Value : null);
         }
     }
 }

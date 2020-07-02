@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources");
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -76,87 +76,87 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile");
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities");
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (OsProfile != null)
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile");
                 writer.WriteObjectValue(OsProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (AvailabilitySet != null)
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
                 writer.WriteObjectValue(AvailabilitySet);
             }
-            if (VirtualMachineScaleSet != null)
+            if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
                 writer.WriteObjectValue(VirtualMachineScaleSet);
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
                 writer.WriteObjectValue(ProximityPlacementGroup);
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (EvictionPolicy != null)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy");
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile");
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
                 writer.WriteObjectValue(Host);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (InstanceView != null)
+            if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView");
                 writer.WriteObjectValue(InstanceView);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
             }
-            if (VmId != null)
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId");
                 writer.WriteStringValue(VmId);
@@ -167,49 +167,41 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachine DeserializeVirtualMachine(JsonElement element)
         {
-            Plan plan = default;
-            IList<VirtualMachineExtension> resources = default;
-            VirtualMachineIdentity identity = default;
-            IList<string> zones = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<Plan> plan = default;
+            Optional<IList<VirtualMachineExtension>> resources = default;
+            Optional<VirtualMachineIdentity> identity = default;
+            Optional<IList<string>> zones = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            HardwareProfile hardwareProfile = default;
-            StorageProfile storageProfile = default;
-            AdditionalCapabilities additionalCapabilities = default;
-            OSProfile osProfile = default;
-            NetworkProfile networkProfile = default;
-            DiagnosticsProfile diagnosticsProfile = default;
-            SubResource availabilitySet = default;
-            SubResource virtualMachineScaleSet = default;
-            SubResource proximityPlacementGroup = default;
-            VirtualMachinePriorityTypes? priority = default;
-            VirtualMachineEvictionPolicyTypes? evictionPolicy = default;
-            BillingProfile billingProfile = default;
-            SubResource host = default;
-            string provisioningState = default;
-            VirtualMachineInstanceView instanceView = default;
-            string licenseType = default;
-            string vmId = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<HardwareProfile> hardwareProfile = default;
+            Optional<StorageProfile> storageProfile = default;
+            Optional<AdditionalCapabilities> additionalCapabilities = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<NetworkProfile> networkProfile = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<SubResource> availabilitySet = default;
+            Optional<SubResource> virtualMachineScaleSet = default;
+            Optional<SubResource> proximityPlacementGroup = default;
+            Optional<VirtualMachinePriorityTypes> priority = default;
+            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<BillingProfile> billingProfile = default;
+            Optional<SubResource> host = default;
+            Optional<string> provisioningState = default;
+            Optional<VirtualMachineInstanceView> instanceView = default;
+            Optional<string> licenseType = default;
+            Optional<string> vmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     plan = Plan.DeserializePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -227,19 +219,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -257,28 +241,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -289,10 +261,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -314,154 +282,86 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("hardwareProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySet"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             availabilitySet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineScaleSet"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualMachineScaleSet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             proximityPlacementGroup = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("priority"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             priority = new VirtualMachinePriorityTypes(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             evictionPolicy = new VirtualMachineEvictionPolicyTypes(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             billingProfile = BillingProfile.DeserializeBillingProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("host"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             host = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("instanceView"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("licenseType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             licenseType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("vmId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vmId = property0.Value.GetString();
                             continue;
                         }
@@ -469,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachine(id, name, type, location, tags, plan, resources, identity, zones, hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, diagnosticsProfile, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, priority, evictionPolicy, billingProfile, host, provisioningState, instanceView, licenseType, vmId);
+            return new VirtualMachine(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), plan.HasValue ? plan.Value : null, new ChangeTrackingList<VirtualMachineExtension>(resources), identity.HasValue ? identity.Value : null, new ChangeTrackingList<string>(zones), hardwareProfile.HasValue ? hardwareProfile.Value : null, storageProfile.HasValue ? storageProfile.Value : null, additionalCapabilities.HasValue ? additionalCapabilities.Value : null, osProfile.HasValue ? osProfile.Value : null, networkProfile.HasValue ? networkProfile.Value : null, diagnosticsProfile.HasValue ? diagnosticsProfile.Value : null, availabilitySet.HasValue ? availabilitySet.Value : null, virtualMachineScaleSet.HasValue ? virtualMachineScaleSet.Value : null, proximityPlacementGroup.HasValue ? proximityPlacementGroup.Value : null, priority.HasValue ? priority.Value : (VirtualMachinePriorityTypes?)null, evictionPolicy.HasValue ? evictionPolicy.Value : (VirtualMachineEvictionPolicyTypes?)null, billingProfile.HasValue ? billingProfile.Value : null, host.HasValue ? host.Value : null, provisioningState.HasValue ? provisioningState.Value : null, instanceView.HasValue ? instanceView.Value : null, licenseType.HasValue ? licenseType.Value : null, vmId.HasValue ? vmId.Value : null);
         }
     }
 }

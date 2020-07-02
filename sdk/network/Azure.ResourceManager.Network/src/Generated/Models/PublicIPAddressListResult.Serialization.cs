@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PublicIPAddressListResult DeserializePublicIPAddressListResult(JsonElement element)
         {
-            IReadOnlyList<PublicIPAddress> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<PublicIPAddress>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PublicIPAddress> array = new List<PublicIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new PublicIPAddressListResult(value, nextLink);
+            return new PublicIPAddressListResult(new ChangeTrackingList<PublicIPAddress>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

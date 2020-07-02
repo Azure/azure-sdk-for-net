@@ -15,27 +15,19 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetInstanceView DeserializeVirtualMachineScaleSetInstanceView(JsonElement element)
         {
-            VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default;
-            IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default;
-            IReadOnlyList<InstanceViewStatus> statuses = default;
-            IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
+            Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
+            Optional<IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary>> extensions = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineScaleSetVMExtensionsSummary> array = new List<VirtualMachineScaleSetVMExtensionsSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -53,10 +45,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -74,10 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("orchestrationServices"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OrchestrationServiceSummary> array = new List<OrchestrationServiceSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -94,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions, statuses, orchestrationServices);
+            return new VirtualMachineScaleSetInstanceView(virtualMachine.HasValue ? virtualMachine.Value : null, new ChangeTrackingList<VirtualMachineScaleSetVMExtensionsSummary>(extensions), new ChangeTrackingList<InstanceViewStatus>(statuses), new ChangeTrackingList<OrchestrationServiceSummary>(orchestrationServices));
         }
     }
 }

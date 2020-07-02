@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (UserAssignedIdentities != null)
+            if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
                 writer.WriteStartObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
                 writer.WriteStringValue(PrincipalId);
             }
-            if (TenantId != null)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId);
@@ -47,27 +47,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
-            IdentityType? type = default;
-            IDictionary<string, UserIdentity> userAssignedIdentities = default;
-            string principalId = default;
-            string tenantId = default;
+            Optional<IdentityType> type = default;
+            Optional<IDictionary<string, UserIdentity>> userAssignedIdentities = default;
+            Optional<string> principalId = default;
+            Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = new IdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -85,24 +77,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceIdentity(type, userAssignedIdentities, principalId, tenantId);
+            return new ResourceIdentity(type.HasValue ? type.Value : (IdentityType?)null, new ChangeTrackingDictionary<string, UserIdentity>(userAssignedIdentities), principalId.HasValue ? principalId.Value : null, tenantId.HasValue ? tenantId.Value : null);
         }
     }
 }

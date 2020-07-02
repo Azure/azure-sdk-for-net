@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVirtualHubRouteTableV2SResult DeserializeListVirtualHubRouteTableV2SResult(JsonElement element)
         {
-            IReadOnlyList<VirtualHubRouteTableV2> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualHubRouteTableV2>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualHubRouteTableV2> array = new List<VirtualHubRouteTableV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListVirtualHubRouteTableV2SResult(value, nextLink);
+            return new ListVirtualHubRouteTableV2SResult(new ChangeTrackingList<VirtualHubRouteTableV2>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

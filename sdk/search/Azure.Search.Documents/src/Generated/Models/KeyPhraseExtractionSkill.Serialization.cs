@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,82 +16,71 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (MaxKeyPhraseCount != null)
+            if (Optional.IsDefined(MaxKeyPhraseCount))
             {
-                writer.WritePropertyName("maxKeyPhraseCount");
-                writer.WriteNumberValue(MaxKeyPhraseCount.Value);
+                if (MaxKeyPhraseCount != null)
+                {
+                    writer.WritePropertyName("maxKeyPhraseCount");
+                    writer.WriteNumberValue(MaxKeyPhraseCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxKeyPhraseCount");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            if (Inputs.Any())
+            writer.WritePropertyName("inputs");
+            writer.WriteStartArray();
+            foreach (var item in Inputs)
             {
-                writer.WritePropertyName("inputs");
-                writer.WriteStartArray();
-                foreach (var item in Inputs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
-            else
+            writer.WriteEndArray();
+            writer.WritePropertyName("outputs");
+            writer.WriteStartArray();
+            foreach (var item in Outputs)
             {
-                writer.WriteNull("inputs");
+                writer.WriteObjectValue(item);
             }
-            if (Outputs.Any())
-            {
-                writer.WritePropertyName("outputs");
-                writer.WriteStartArray();
-                foreach (var item in Outputs)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            else
-            {
-                writer.WriteNull("outputs");
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
         internal static KeyPhraseExtractionSkill DeserializeKeyPhraseExtractionSkill(JsonElement element)
         {
-            KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default;
-            int? maxKeyPhraseCount = default;
+            Optional<KeyPhraseExtractionSkillLanguage> defaultLanguageCode = default;
+            Optional<int?> maxKeyPhraseCount = default;
             string odataType = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultLanguageCode = new KeyPhraseExtractionSkillLanguage(property.Value.GetString());
                     continue;
                 }
@@ -100,6 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxKeyPhraseCount = null;
                         continue;
                     }
                     maxKeyPhraseCount = property.Value.GetInt32();
@@ -112,28 +101,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -172,7 +149,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeyPhraseExtractionSkill(odataType, name, description, context, inputs, outputs, defaultLanguageCode, maxKeyPhraseCount);
+            return new KeyPhraseExtractionSkill(odataType, name.HasValue ? name.Value : null, description.HasValue ? description.Value : null, context.HasValue ? context.Value : null, inputs, outputs, defaultLanguageCode.HasValue ? defaultLanguageCode.Value : (KeyPhraseExtractionSkillLanguage?)null, maxKeyPhraseCount.HasValue ? maxKeyPhraseCount.Value : null);
         }
     }
 }

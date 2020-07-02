@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = "SqlQuery";
             Content = content;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlScript. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Description = description;
             Type = type;
             Content = content;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the SQL script. </summary>

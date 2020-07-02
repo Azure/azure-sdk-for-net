@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimaryScriptUri != null)
+            if (Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri");
                 writer.WriteStringValue(PrimaryScriptUri);
             }
-            if (SupportingScriptUris != null)
+            if (Optional.IsDefined(SupportingScriptUris))
             {
                 writer.WritePropertyName("supportingScriptUris");
                 writer.WriteStartArray();
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ScriptContent != null)
+            if (Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent");
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStringValue(Arguments);
             }
-            if (EnvironmentVariables != null)
+            if (Optional.IsDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables");
                 writer.WriteStartArray();
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag");
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WritePropertyName("retentionInterval");
             writer.WriteStringValue(RetentionInterval, "P");
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -69,31 +69,23 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ScriptConfigurationBase DeserializeScriptConfigurationBase(JsonElement element)
         {
-            string primaryScriptUri = default;
-            IList<string> supportingScriptUris = default;
-            string scriptContent = default;
-            string arguments = default;
-            IList<EnvironmentVariable> environmentVariables = default;
-            string forceUpdateTag = default;
+            Optional<string> primaryScriptUri = default;
+            Optional<IList<string>> supportingScriptUris = default;
+            Optional<string> scriptContent = default;
+            Optional<string> arguments = default;
+            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
-            TimeSpan? timeout = default;
+            Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryScriptUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryScriptUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("supportingScriptUris"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,28 +103,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("scriptContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scriptContent = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("arguments"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     arguments = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<EnvironmentVariable> array = new List<EnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -150,10 +130,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("forceUpdateTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     forceUpdateTag = property.Value.GetString();
                     continue;
                 }
@@ -164,15 +140,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("timeout"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new ScriptConfigurationBase(primaryScriptUri, supportingScriptUris, scriptContent, arguments, environmentVariables, forceUpdateTag, retentionInterval, timeout);
+            return new ScriptConfigurationBase(primaryScriptUri.HasValue ? primaryScriptUri.Value : null, new ChangeTrackingList<string>(supportingScriptUris), scriptContent.HasValue ? scriptContent.Value : null, arguments.HasValue ? arguments.Value : null, new ChangeTrackingList<EnvironmentVariable>(environmentVariables), forceUpdateTag.HasValue ? forceUpdateTag.Value : null, retentionInterval, timeout.HasValue ? timeout.Value : (TimeSpan?)null);
         }
     }
 }

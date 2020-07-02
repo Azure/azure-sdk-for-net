@@ -16,12 +16,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AggregatedState != null)
+            if (Optional.IsDefined(AggregatedState))
             {
                 writer.WritePropertyName("aggregatedState");
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.Management.Compute.Models
 
         internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)
         {
-            AggregatedReplicationState? aggregatedState = default;
-            IList<RegionalReplicationStatus> summary = default;
+            Optional<AggregatedReplicationState> aggregatedState = default;
+            Optional<IList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aggregatedState = new AggregatedReplicationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new ReplicationStatus(aggregatedState, summary);
+            return new ReplicationStatus(aggregatedState.HasValue ? aggregatedState.Value : (AggregatedReplicationState?)null, new ChangeTrackingList<RegionalReplicationStatus>(summary));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IdToken != null)
+            if (Optional.IsDefined(IdToken))
             {
                 writer.WritePropertyName("idToken");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SamlToken != null)
+            if (Optional.IsDefined(SamlToken))
             {
                 writer.WritePropertyName("samlToken");
                 writer.WriteStartArray();
@@ -51,17 +51,13 @@ namespace Azure.Graph.Rbac.Models
 
         internal static OptionalClaims DeserializeOptionalClaims(JsonElement element)
         {
-            IList<OptionalClaim> idToken = default;
-            IList<OptionalClaim> accessToken = default;
-            IList<OptionalClaim> samlToken = default;
+            Optional<IList<OptionalClaim>> idToken = default;
+            Optional<IList<OptionalClaim>> accessToken = default;
+            Optional<IList<OptionalClaim>> samlToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("idToken"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -79,10 +75,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("accessToken"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -100,10 +92,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("samlToken"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OptionalClaim> array = new List<OptionalClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -120,7 +108,7 @@ namespace Azure.Graph.Rbac.Models
                     continue;
                 }
             }
-            return new OptionalClaims(idToken, accessToken, samlToken);
+            return new OptionalClaims(new ChangeTrackingList<OptionalClaim>(idToken), new ChangeTrackingList<OptionalClaim>(accessToken), new ChangeTrackingList<OptionalClaim>(samlToken));
         }
     }
 }

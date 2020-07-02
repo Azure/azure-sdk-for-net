@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder");
                 writer.WriteObjectValue(Folder);
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             string type = default;
-            string description = default;
-            IList<object> annotations = default;
-            DataFlowFolder folder = default;
+            Optional<string> description = default;
+            Optional<IList<object>> annotations = default;
+            Optional<DataFlowFolder> folder = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -63,19 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -93,15 +85,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folder"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
                     continue;
                 }
             }
-            return new DataFlow(type, description, annotations, folder);
+            return new DataFlow(type, description.HasValue ? description.Value : null, new ChangeTrackingList<object>(annotations), folder.HasValue ? folder.Value : null);
         }
     }
 }

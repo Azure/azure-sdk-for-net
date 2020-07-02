@@ -15,15 +15,11 @@ namespace Azure.Management.Compute.Models
     {
         internal static ComputeOperationListResult DeserializeComputeOperationListResult(JsonElement element)
         {
-            IReadOnlyList<ComputeOperationValue> value = default;
+            Optional<IReadOnlyList<ComputeOperationValue>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ComputeOperationValue> array = new List<ComputeOperationValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new ComputeOperationListResult(value);
+            return new ComputeOperationListResult(new ChangeTrackingList<ComputeOperationValue>(value));
         }
     }
 }

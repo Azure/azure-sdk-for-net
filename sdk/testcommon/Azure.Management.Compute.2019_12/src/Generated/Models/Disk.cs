@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,10 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            ManagedByExtended = new ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
+            ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
 
         /// <summary> Initializes a new instance of Disk. </summary>
@@ -82,7 +87,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or UltraSSD_LRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> The Logical zone list for Disk. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The time when the disk was created. </summary>
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The Operating System type. </summary>

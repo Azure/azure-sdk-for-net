@@ -17,84 +17,84 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Deleted != null)
+            if (Optional.IsDefined(Deleted))
             {
                 writer.WritePropertyName("deleted");
                 writer.WriteBooleanValue(Deleted.Value);
             }
-            if (DeletedTime != null)
+            if (Optional.IsDefined(DeletedTime))
             {
                 writer.WritePropertyName("deletedTime");
                 writer.WriteStringValue(DeletedTime.Value, "O");
             }
-            if (RemainingRetentionDays != null)
+            if (Optional.IsDefined(RemainingRetentionDays))
             {
                 writer.WritePropertyName("remainingRetentionDays");
                 writer.WriteNumberValue(RemainingRetentionDays.Value);
             }
-            if (DefaultEncryptionScope != null)
+            if (Optional.IsDefined(DefaultEncryptionScope))
             {
                 writer.WritePropertyName("defaultEncryptionScope");
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
-            if (DenyEncryptionScopeOverride != null)
+            if (Optional.IsDefined(DenyEncryptionScopeOverride))
             {
                 writer.WritePropertyName("denyEncryptionScopeOverride");
                 writer.WriteBooleanValue(DenyEncryptionScopeOverride.Value);
             }
-            if (PublicAccess != null)
+            if (Optional.IsDefined(PublicAccess))
             {
                 writer.WritePropertyName("publicAccess");
                 writer.WriteStringValue(PublicAccess.Value.ToSerialString());
             }
-            if (LastModifiedTime != null)
+            if (Optional.IsDefined(LastModifiedTime))
             {
                 writer.WritePropertyName("lastModifiedTime");
                 writer.WriteStringValue(LastModifiedTime.Value, "O");
             }
-            if (LeaseStatus != null)
+            if (Optional.IsDefined(LeaseStatus))
             {
                 writer.WritePropertyName("leaseStatus");
                 writer.WriteStringValue(LeaseStatus.Value.ToString());
             }
-            if (LeaseState != null)
+            if (Optional.IsDefined(LeaseState))
             {
                 writer.WritePropertyName("leaseState");
                 writer.WriteStringValue(LeaseState.Value.ToString());
             }
-            if (LeaseDuration != null)
+            if (Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration");
                 writer.WriteStringValue(LeaseDuration.Value.ToString());
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteStartObject();
@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ImmutabilityPolicy != null)
+            if (Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy");
                 writer.WriteObjectValue(ImmutabilityPolicy);
             }
-            if (LegalHold != null)
+            if (Optional.IsDefined(LegalHold))
             {
                 writer.WritePropertyName("legalHold");
                 writer.WriteObjectValue(LegalHold);
             }
-            if (HasLegalHold != null)
+            if (Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold");
                 writer.WriteBooleanValue(HasLegalHold.Value);
             }
-            if (HasImmutabilityPolicy != null)
+            if (Optional.IsDefined(HasImmutabilityPolicy))
             {
                 writer.WritePropertyName("hasImmutabilityPolicy");
                 writer.WriteBooleanValue(HasImmutabilityPolicy.Value);
@@ -131,61 +131,45 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ListContainerItem DeserializeListContainerItem(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string version = default;
-            bool? deleted = default;
-            DateTimeOffset? deletedTime = default;
-            int? remainingRetentionDays = default;
-            string defaultEncryptionScope = default;
-            bool? denyEncryptionScopeOverride = default;
-            PublicAccess? publicAccess = default;
-            DateTimeOffset? lastModifiedTime = default;
-            LeaseStatus? leaseStatus = default;
-            LeaseState? leaseState = default;
-            LeaseDuration? leaseDuration = default;
-            IDictionary<string, string> metadata = default;
-            ImmutabilityPolicyProperties immutabilityPolicy = default;
-            LegalHoldProperties legalHold = default;
-            bool? hasLegalHold = default;
-            bool? hasImmutabilityPolicy = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> version = default;
+            Optional<bool> deleted = default;
+            Optional<DateTimeOffset> deletedTime = default;
+            Optional<int> remainingRetentionDays = default;
+            Optional<string> defaultEncryptionScope = default;
+            Optional<bool> denyEncryptionScopeOverride = default;
+            Optional<PublicAccess> publicAccess = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<LeaseStatus> leaseStatus = default;
+            Optional<LeaseState> leaseState = default;
+            Optional<LeaseDuration> leaseDuration = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<ImmutabilityPolicyProperties> immutabilityPolicy = default;
+            Optional<LegalHoldProperties> legalHold = default;
+            Optional<bool> hasLegalHold = default;
+            Optional<bool> hasImmutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -195,109 +179,61 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         if (property0.NameEquals("version"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             version = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("deleted"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             deleted = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("deletedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             deletedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("remainingRetentionDays"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             remainingRetentionDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("defaultEncryptionScope"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             defaultEncryptionScope = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("denyEncryptionScopeOverride"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             denyEncryptionScopeOverride = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("publicAccess"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicAccess = property0.Value.GetString().ToPublicAccess();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("leaseStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             leaseStatus = new LeaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             leaseState = new LeaseState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseDuration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             leaseDuration = new LeaseDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metadata"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -315,37 +251,21 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("immutabilityPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             immutabilityPolicy = ImmutabilityPolicyProperties.DeserializeImmutabilityPolicyProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("legalHold"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hasLegalHold"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hasLegalHold = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("hasImmutabilityPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
@@ -353,7 +273,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ListContainerItem(id, name, type, etag, version, deleted, deletedTime, remainingRetentionDays, defaultEncryptionScope, denyEncryptionScopeOverride, publicAccess, lastModifiedTime, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy);
+            return new ListContainerItem(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, etag.HasValue ? etag.Value : null, version.HasValue ? version.Value : null, deleted.HasValue ? deleted.Value : (bool?)null, deletedTime.HasValue ? deletedTime.Value : (DateTimeOffset?)null, remainingRetentionDays.HasValue ? remainingRetentionDays.Value : (int?)null, defaultEncryptionScope.HasValue ? defaultEncryptionScope.Value : null, denyEncryptionScopeOverride.HasValue ? denyEncryptionScopeOverride.Value : (bool?)null, publicAccess.HasValue ? publicAccess.Value : (PublicAccess?)null, lastModifiedTime.HasValue ? lastModifiedTime.Value : (DateTimeOffset?)null, leaseStatus.HasValue ? leaseStatus.Value : (LeaseStatus?)null, leaseState.HasValue ? leaseState.Value : (LeaseState?)null, leaseDuration.HasValue ? leaseDuration.Value : (LeaseDuration?)null, new ChangeTrackingDictionary<string, string>(metadata), immutabilityPolicy.HasValue ? immutabilityPolicy.Value : null, legalHold.HasValue ? legalHold.Value : null, hasLegalHold.HasValue ? hasLegalHold.Value : (bool?)null, hasImmutabilityPolicy.HasValue ? hasImmutabilityPolicy.Value : (bool?)null);
         }
     }
 }

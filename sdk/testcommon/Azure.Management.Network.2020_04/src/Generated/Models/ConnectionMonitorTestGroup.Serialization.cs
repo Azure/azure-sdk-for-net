@@ -18,7 +18,7 @@ namespace Azure.Management.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Disable != null)
+            if (Optional.IsDefined(Disable))
             {
                 writer.WritePropertyName("disable");
                 writer.WriteBooleanValue(Disable.Value);
@@ -50,7 +50,7 @@ namespace Azure.Management.Network.Models
         internal static ConnectionMonitorTestGroup DeserializeConnectionMonitorTestGroup(JsonElement element)
         {
             string name = default;
-            bool? disable = default;
+            Optional<bool> disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -63,10 +63,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("disable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     disable = property.Value.GetBoolean();
                     continue;
                 }
@@ -122,7 +118,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorTestGroup(name, disable, testConfigurations, sources, destinations);
+            return new ConnectionMonitorTestGroup(name, disable.HasValue ? disable.Value : (bool?)null, testConfigurations, sources, destinations);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsPatchDescription. </summary>
         public DigitalTwinsPatchDescription()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsPatchDescription. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         }
 
         /// <summary> Instance tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

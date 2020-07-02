@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = "LinkedServiceReference";
             ReferenceName = referenceName;
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
@@ -42,6 +44,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference LinkedService name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for LinkedService. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

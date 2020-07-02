@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         public PrivateEndpoint()
         {
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
+            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
@@ -50,10 +55,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the private endpoint resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; set; }
+        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
         /// <summary> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; set; }
+        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> An array of custom dns configurations. </summary>
-        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; set; }
+        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; }
     }
 }

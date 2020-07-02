@@ -16,62 +16,42 @@ namespace Azure.Management.Resources.Models
     {
         internal static DeploymentPropertiesExtended DeserializeDeploymentPropertiesExtended(JsonElement element)
         {
-            string provisioningState = default;
-            string correlationId = default;
-            DateTimeOffset? timestamp = default;
-            object outputs = default;
-            IReadOnlyList<Provider> providers = default;
-            IReadOnlyList<Dependency> dependencies = default;
-            object template = default;
-            TemplateLink templateLink = default;
-            object parameters = default;
-            ParametersLink parametersLink = default;
-            DeploymentMode? mode = default;
-            DebugSetting debugSetting = default;
+            Optional<string> provisioningState = default;
+            Optional<string> correlationId = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<object> outputs = default;
+            Optional<IReadOnlyList<Provider>> providers = default;
+            Optional<IReadOnlyList<Dependency>> dependencies = default;
+            Optional<object> template = default;
+            Optional<TemplateLink> templateLink = default;
+            Optional<object> parameters = default;
+            Optional<ParametersLink> parametersLink = default;
+            Optional<DeploymentMode> mode = default;
+            Optional<DebugSetting> debugSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("correlationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     correlationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     outputs = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("providers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Provider> array = new List<Provider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -89,10 +69,6 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("dependencies"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Dependency> array = new List<Dependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -110,60 +86,36 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("template"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     template = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("templateLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     templateLink = TemplateLink.DeserializeTemplateLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parametersLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parametersLink = ParametersLink.DeserializeParametersLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mode = property.Value.GetString().ToDeploymentMode();
                     continue;
                 }
                 if (property.NameEquals("debugSetting"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
                     continue;
                 }
             }
-            return new DeploymentPropertiesExtended(provisioningState, correlationId, timestamp, outputs, providers, dependencies, template, templateLink, parameters, parametersLink, mode, debugSetting);
+            return new DeploymentPropertiesExtended(provisioningState.HasValue ? provisioningState.Value : null, correlationId.HasValue ? correlationId.Value : null, timestamp.HasValue ? timestamp.Value : (DateTimeOffset?)null, outputs.HasValue ? outputs.Value : null, new ChangeTrackingList<Provider>(providers), new ChangeTrackingList<Dependency>(dependencies), template.HasValue ? template.Value : null, templateLink.HasValue ? templateLink.Value : null, parameters.HasValue ? parameters.Value : null, parametersLink.HasValue ? parametersLink.Value : null, mode.HasValue ? mode.Value : (DeploymentMode?)null, debugSetting.HasValue ? debugSetting.Value : null);
         }
     }
 }

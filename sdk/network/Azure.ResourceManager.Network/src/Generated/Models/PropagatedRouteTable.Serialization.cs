@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Labels != null)
+            if (Optional.IsDefined(Labels))
             {
                 writer.WritePropertyName("labels");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Ids != null)
+            if (Optional.IsDefined(Ids))
             {
                 writer.WritePropertyName("ids");
                 writer.WriteStartArray();
@@ -41,16 +41,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PropagatedRouteTable DeserializePropagatedRouteTable(JsonElement element)
         {
-            IList<string> labels = default;
-            IList<SubResource> ids = default;
+            Optional<IList<string>> labels = default;
+            Optional<IList<SubResource>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labels"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,10 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ids"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -88,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PropagatedRouteTable(labels, ids);
+            return new PropagatedRouteTable(new ChangeTrackingList<string>(labels), new ChangeTrackingList<SubResource>(ids));
         }
     }
 }

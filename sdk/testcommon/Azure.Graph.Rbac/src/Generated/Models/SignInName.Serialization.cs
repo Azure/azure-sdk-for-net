@@ -15,27 +15,19 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static SignInName DeserializeSignInName(JsonElement element)
         {
-            string type = default;
-            string value = default;
+            Optional<string> type = default;
+            Optional<string> value = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
@@ -50,7 +42,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SignInName(type, value, additionalProperties);
+            return new SignInName(type.HasValue ? type.Value : null, value.HasValue ? value.Value : null, additionalProperties);
         }
     }
 }

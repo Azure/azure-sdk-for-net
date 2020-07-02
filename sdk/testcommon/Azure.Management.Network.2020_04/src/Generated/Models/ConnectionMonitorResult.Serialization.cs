@@ -16,78 +16,54 @@ namespace Azure.Management.Network.Models
     {
         internal static ConnectionMonitorResult DeserializeConnectionMonitorResult(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string etag = default;
-            string type = default;
-            string location = default;
-            IReadOnlyDictionary<string, string> tags = default;
-            ConnectionMonitorSource source = default;
-            ConnectionMonitorDestination destination = default;
-            bool? autoStart = default;
-            int? monitoringIntervalInSeconds = default;
-            IReadOnlyList<ConnectionMonitorEndpoint> endpoints = default;
-            IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations = default;
-            IReadOnlyList<ConnectionMonitorTestGroup> testGroups = default;
-            IReadOnlyList<ConnectionMonitorOutput> outputs = default;
-            string notes = default;
-            ProvisioningState? provisioningState = default;
-            DateTimeOffset? startTime = default;
-            string monitoringStatus = default;
-            ConnectionMonitorType? connectionMonitorType = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<ConnectionMonitorSource> source = default;
+            Optional<ConnectionMonitorDestination> destination = default;
+            Optional<bool> autoStart = default;
+            Optional<int> monitoringIntervalInSeconds = default;
+            Optional<IReadOnlyList<ConnectionMonitorEndpoint>> endpoints = default;
+            Optional<IReadOnlyList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
+            Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
+            Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
+            Optional<string> notes = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<string> monitoringStatus = default;
+            Optional<ConnectionMonitorType> connectionMonitorType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -109,46 +85,26 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("source"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("destination"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoStart"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             autoStart = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("monitoringIntervalInSeconds"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             monitoringIntervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("endpoints"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -166,10 +122,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("testConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -187,10 +139,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("testGroups"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -208,10 +156,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("outputs"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -229,46 +173,26 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("notes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             notes = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("monitoringStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             monitoringStatus = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("connectionMonitorType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             connectionMonitorType = new ConnectionMonitorType(property0.Value.GetString());
                             continue;
                         }
@@ -276,7 +200,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorResult(name, id, etag, type, location, tags, source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, provisioningState, startTime, monitoringStatus, connectionMonitorType);
+            return new ConnectionMonitorResult(name.HasValue ? name.Value : null, id.HasValue ? id.Value : null, etag.HasValue ? etag.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), source.HasValue ? source.Value : null, destination.HasValue ? destination.Value : null, autoStart.HasValue ? autoStart.Value : (bool?)null, monitoringIntervalInSeconds.HasValue ? monitoringIntervalInSeconds.Value : (int?)null, new ChangeTrackingList<ConnectionMonitorEndpoint>(endpoints), new ChangeTrackingList<ConnectionMonitorTestConfiguration>(testConfigurations), new ChangeTrackingList<ConnectionMonitorTestGroup>(testGroups), new ChangeTrackingList<ConnectionMonitorOutput>(outputs), notes.HasValue ? notes.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, startTime.HasValue ? startTime.Value : (DateTimeOffset?)null, monitoringStatus.HasValue ? monitoringStatus.Value : null, connectionMonitorType.HasValue ? connectionMonitorType.Value : (ConnectionMonitorType?)null);
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static OperationDefinitionListResult DeserializeOperationDefinitionListResult(JsonElement element)
         {
-            IReadOnlyList<OperationDefinition> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<OperationDefinition>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<OperationDefinition> array = new List<OperationDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new OperationDefinitionListResult(value, nextLink);
+            return new OperationDefinitionListResult(new ChangeTrackingList<OperationDefinition>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

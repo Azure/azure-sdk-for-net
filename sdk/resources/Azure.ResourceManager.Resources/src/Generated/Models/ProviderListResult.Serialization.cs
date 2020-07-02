@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderListResult DeserializeProviderListResult(JsonElement element)
         {
-            IReadOnlyList<Provider> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Provider>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Provider> array = new List<Provider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProviderListResult(value, nextLink);
+            return new ProviderListResult(new ChangeTrackingList<Provider>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

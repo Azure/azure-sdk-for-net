@@ -15,7 +15,7 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
@@ -25,20 +25,16 @@ namespace Azure.Management.Network.Models
 
         internal static NatGatewaySku DeserializeNatGatewaySku(JsonElement element)
         {
-            string name = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new NatGatewaySku(name);
+            return new NatGatewaySku(name.HasValue ? name.Value : null);
         }
     }
 }

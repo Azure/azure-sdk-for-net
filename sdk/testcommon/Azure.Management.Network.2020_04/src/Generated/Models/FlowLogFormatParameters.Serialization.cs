@@ -15,12 +15,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
                 writer.WriteNumberValue(Version.Value);
@@ -30,30 +30,22 @@ namespace Azure.Management.Network.Models
 
         internal static FlowLogFormatParameters DeserializeFlowLogFormatParameters(JsonElement element)
         {
-            string type = default;
-            int? version = default;
+            Optional<string> type = default;
+            Optional<int> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     version = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FlowLogFormatParameters(type, version);
+            return new FlowLogFormatParameters(type.HasValue ? type.Value : null, version.HasValue ? version.Value : (int?)null);
         }
     }
 }

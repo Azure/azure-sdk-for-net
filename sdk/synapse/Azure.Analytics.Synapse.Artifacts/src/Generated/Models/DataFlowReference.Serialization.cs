@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (DatasetParameters != null)
+            if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters");
                 writer.WriteObjectValue(DatasetParameters);
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string type = default;
             string referenceName = default;
-            object datasetParameters = default;
+            Optional<object> datasetParameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -54,10 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("datasetParameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     datasetParameters = property.Value.GetObject();
                     continue;
                 }
@@ -72,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters, additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters.HasValue ? datasetParameters.Value : null, additionalProperties);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Lun != null)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun");
                 writer.WriteNumberValue(Lun.Value);
@@ -25,20 +25,16 @@ namespace Azure.Management.Compute.Models
 
         internal static DataDiskImage DeserializeDataDiskImage(JsonElement element)
         {
-            int? lun = default;
+            Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lun = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DataDiskImage(lun);
+            return new DataDiskImage(lun.HasValue ? lun.Value : (int?)null);
         }
     }
 }

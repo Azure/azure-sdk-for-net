@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Management.Network.Models
         public ConnectionMonitorEndpointFilter()
         {
             Type = "Include";
+            Items = new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
@@ -30,6 +32,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </summary>
         public string Type { get; set; }
         /// <summary> List of items in the filter. </summary>
-        public IList<ConnectionMonitorEndpointFilterItem> Items { get; set; }
+        public IList<ConnectionMonitorEndpointFilterItem> Items { get; }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DestinationType != null)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType");
                 writer.WriteStringValue(DestinationType);
             }
-            if (Destinations != null)
+            if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations");
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextHopType != null)
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType");
                 writer.WriteStringValue(NextHopType);
             }
-            if (NextHops != null)
+            if (Optional.IsDefined(NextHops))
             {
                 writer.WritePropertyName("nextHops");
                 writer.WriteStartArray();
@@ -51,27 +51,19 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRouteV2 DeserializeVirtualHubRouteV2(JsonElement element)
         {
-            string destinationType = default;
-            IList<string> destinations = default;
-            string nextHopType = default;
-            IList<string> nextHops = default;
+            Optional<string> destinationType = default;
+            Optional<IList<string>> destinations = default;
+            Optional<string> nextHopType = default;
+            Optional<IList<string>> nextHops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destinationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("destinations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -89,19 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextHopType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("nextHops"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -118,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubRouteV2(destinationType, destinations, nextHopType, nextHops);
+            return new VirtualHubRouteV2(destinationType.HasValue ? destinationType.Value : null, new ChangeTrackingList<string>(destinations), nextHopType.HasValue ? nextHopType.Value : null, new ChangeTrackingList<string>(nextHops));
         }
     }
 }

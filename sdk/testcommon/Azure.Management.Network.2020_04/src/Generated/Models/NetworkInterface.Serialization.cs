@@ -16,32 +16,32 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,22 +54,22 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualMachine != null)
+            if (Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine");
                 writer.WriteObjectValue(VirtualMachine);
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup");
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint");
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (IpConfigurations != null)
+            if (Optional.IsDefined(IpConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TapConfigurations != null)
+            if (Optional.IsDefined(TapConfigurations))
             {
                 writer.WritePropertyName("tapConfigurations");
                 writer.WriteStartArray();
@@ -89,32 +89,32 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings");
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (MacAddress != null)
+            if (Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress");
                 writer.WriteStringValue(MacAddress);
             }
-            if (Primary != null)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary");
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (EnableAcceleratedNetworking != null)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking");
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (EnableIPForwarding != null)
+            if (Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding");
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (HostedWorkloads != null)
+            if (Optional.IsDefined(HostedWorkloads))
             {
                 writer.WritePropertyName("hostedWorkloads");
                 writer.WriteStartArray();
@@ -124,12 +124,12 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid");
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -140,78 +140,54 @@ namespace Azure.Management.Network.Models
 
         internal static NetworkInterface DeserializeNetworkInterface(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource virtualMachine = default;
-            NetworkSecurityGroup networkSecurityGroup = default;
-            PrivateEndpoint privateEndpoint = default;
-            IList<NetworkInterfaceIPConfiguration> ipConfigurations = default;
-            IList<NetworkInterfaceTapConfiguration> tapConfigurations = default;
-            NetworkInterfaceDnsSettings dnsSettings = default;
-            string macAddress = default;
-            bool? primary = default;
-            bool? enableAcceleratedNetworking = default;
-            bool? enableIPForwarding = default;
-            IList<string> hostedWorkloads = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> virtualMachine = default;
+            Optional<NetworkSecurityGroup> networkSecurityGroup = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<IList<NetworkInterfaceIPConfiguration>> ipConfigurations = default;
+            Optional<IList<NetworkInterfaceTapConfiguration>> tapConfigurations = default;
+            Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
+            Optional<string> macAddress = default;
+            Optional<bool> primary = default;
+            Optional<bool> enableAcceleratedNetworking = default;
+            Optional<bool> enableIPForwarding = default;
+            Optional<IList<string>> hostedWorkloads = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -233,37 +209,21 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("virtualMachine"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             virtualMachine = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkSecurityGroup"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             networkSecurityGroup = NetworkSecurityGroup.DeserializeNetworkSecurityGroup(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<NetworkInterfaceIPConfiguration> array = new List<NetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -281,10 +241,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("tapConfigurations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<NetworkInterfaceTapConfiguration> array = new List<NetworkInterfaceTapConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -302,55 +258,31 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("dnsSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("macAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             macAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("primary"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enableAcceleratedNetworking"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableAcceleratedNetworking = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("enableIPForwarding"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enableIPForwarding = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("hostedWorkloads"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -368,19 +300,11 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -388,7 +312,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new NetworkInterface(id, name, type, location, tags, etag, virtualMachine, networkSecurityGroup, privateEndpoint, ipConfigurations, tapConfigurations, dnsSettings, macAddress, primary, enableAcceleratedNetworking, enableIPForwarding, hostedWorkloads, resourceGuid, provisioningState);
+            return new NetworkInterface(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), etag.HasValue ? etag.Value : null, virtualMachine.HasValue ? virtualMachine.Value : null, networkSecurityGroup.HasValue ? networkSecurityGroup.Value : null, privateEndpoint.HasValue ? privateEndpoint.Value : null, new ChangeTrackingList<NetworkInterfaceIPConfiguration>(ipConfigurations), new ChangeTrackingList<NetworkInterfaceTapConfiguration>(tapConfigurations), dnsSettings.HasValue ? dnsSettings.Value : null, macAddress.HasValue ? macAddress.Value : null, primary.HasValue ? primary.Value : (bool?)null, enableAcceleratedNetworking.HasValue ? enableAcceleratedNetworking.Value : (bool?)null, enableIPForwarding.HasValue ? enableIPForwarding.Value : (bool?)null, new ChangeTrackingList<string>(hostedWorkloads), resourceGuid.HasValue ? resourceGuid.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

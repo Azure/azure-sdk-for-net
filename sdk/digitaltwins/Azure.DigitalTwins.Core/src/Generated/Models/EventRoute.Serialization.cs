@@ -15,14 +15,14 @@ namespace Azure.DigitalTwins.Core.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("endpointName");
             writer.WriteStringValue(EndpointName);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteStringValue(Filter);
@@ -32,17 +32,13 @@ namespace Azure.DigitalTwins.Core.Models
 
         internal static EventRoute DeserializeEventRoute(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             string endpointName = default;
-            string filter = default;
+            Optional<string> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -53,15 +49,11 @@ namespace Azure.DigitalTwins.Core.Models
                 }
                 if (property.NameEquals("filter"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filter = property.Value.GetString();
                     continue;
                 }
             }
-            return new EventRoute(id, endpointName, filter);
+            return new EventRoute(id.HasValue ? id.Value : null, endpointName, filter.HasValue ? filter.Value : null);
         }
     }
 }

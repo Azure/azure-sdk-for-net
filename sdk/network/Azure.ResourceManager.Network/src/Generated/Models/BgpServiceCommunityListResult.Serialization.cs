@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BgpServiceCommunityListResult DeserializeBgpServiceCommunityListResult(JsonElement element)
         {
-            IReadOnlyList<BgpServiceCommunity> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BgpServiceCommunity>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BgpServiceCommunity> array = new List<BgpServiceCommunity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BgpServiceCommunityListResult(value, nextLink);
+            return new BgpServiceCommunityListResult(new ChangeTrackingList<BgpServiceCommunity>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

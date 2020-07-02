@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (WorkspaceSettings != null)
+            if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings");
                 writer.WriteObjectValue(WorkspaceSettings);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorOutput DeserializeConnectionMonitorOutput(JsonElement element)
         {
-            string type = default;
-            ConnectionMonitorWorkspaceSettings workspaceSettings = default;
+            Optional<string> type = default;
+            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("workspaceSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceSettings = ConnectionMonitorWorkspaceSettings.DeserializeConnectionMonitorWorkspaceSettings(property.Value);
                     continue;
                 }
             }
-            return new ConnectionMonitorOutput(type, workspaceSettings);
+            return new ConnectionMonitorOutput(type.HasValue ? type.Value : null, workspaceSettings.HasValue ? workspaceSettings.Value : null);
         }
     }
 }

@@ -16,49 +16,49 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LinkedResourceType != null)
+            if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType");
                 writer.WriteStringValue(LinkedResourceType);
             }
-            if (Link != null)
+            if (Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link");
                 writer.WriteStringValue(Link);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (AllowDelete != null)
+            if (Optional.IsDefined(AllowDelete))
             {
                 writer.WritePropertyName("allowDelete");
                 writer.WriteBooleanValue(AllowDelete.Value);
             }
-            if (Locations != null)
+            if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations");
                 writer.WriteStartArray();
@@ -74,50 +74,34 @@ namespace Azure.Management.Network.Models
 
         internal static ServiceAssociationLink DeserializeServiceAssociationLink(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            string linkedResourceType = default;
-            string link = default;
-            ProvisioningState? provisioningState = default;
-            bool? allowDelete = default;
-            IList<string> locations = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<string> linkedResourceType = default;
+            Optional<string> link = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> allowDelete = default;
+            Optional<IList<string>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -127,46 +111,26 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("linkedResourceType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             linkedResourceType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("link"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             link = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowDelete"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             allowDelete = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("locations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -186,7 +150,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ServiceAssociationLink(id, name, etag, type, linkedResourceType, link, provisioningState, allowDelete, locations);
+            return new ServiceAssociationLink(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, etag.HasValue ? etag.Value : null, type.HasValue ? type.Value : null, linkedResourceType.HasValue ? linkedResourceType.Value : null, link.HasValue ? link.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, allowDelete.HasValue ? allowDelete.Value : (bool?)null, new ChangeTrackingList<string>(locations));
         }
     }
 }

@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (OperatingSystem != null)
+            if (Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("operatingSystem");
                 writer.WriteStringValue(OperatingSystem);
             }
-            if (ComputeRole != null)
+            if (Optional.IsDefined(ComputeRole))
             {
                 writer.WritePropertyName("computeRole");
                 writer.WriteStringValue(ComputeRole);
             }
-            if (HandlerSchema != null)
+            if (Optional.IsDefined(HandlerSchema))
             {
                 writer.WritePropertyName("handlerSchema");
                 writer.WriteStringValue(HandlerSchema);
             }
-            if (VmScaleSetEnabled != null)
+            if (Optional.IsDefined(VmScaleSetEnabled))
             {
                 writer.WritePropertyName("vmScaleSetEnabled");
                 writer.WriteBooleanValue(VmScaleSetEnabled.Value);
             }
-            if (SupportsMultipleExtensions != null)
+            if (Optional.IsDefined(SupportsMultipleExtensions))
             {
                 writer.WritePropertyName("supportsMultipleExtensions");
                 writer.WriteBooleanValue(SupportsMultipleExtensions.Value);
@@ -77,42 +77,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineExtensionImage DeserializeVirtualMachineExtensionImage(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            string operatingSystem = default;
-            string computeRole = default;
-            string handlerSchema = default;
-            bool? vmScaleSetEnabled = default;
-            bool? supportsMultipleExtensions = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> operatingSystem = default;
+            Optional<string> computeRole = default;
+            Optional<string> handlerSchema = default;
+            Optional<bool> vmScaleSetEnabled = default;
+            Optional<bool> supportsMultipleExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -123,10 +111,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -148,46 +132,26 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("operatingSystem"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             operatingSystem = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("computeRole"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             computeRole = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("handlerSchema"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             handlerSchema = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("vmScaleSetEnabled"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vmScaleSetEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("supportsMultipleExtensions"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             supportsMultipleExtensions = property0.Value.GetBoolean();
                             continue;
                         }
@@ -195,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineExtensionImage(id, name, type, location, tags, operatingSystem, computeRole, handlerSchema, vmScaleSetEnabled, supportsMultipleExtensions);
+            return new VirtualMachineExtensionImage(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), operatingSystem.HasValue ? operatingSystem.Value : null, computeRole.HasValue ? computeRole.Value : null, handlerSchema.HasValue ? handlerSchema.Value : null, vmScaleSetEnabled.HasValue ? vmScaleSetEnabled.Value : (bool?)null, supportsMultipleExtensions.HasValue ? supportsMultipleExtensions.Value : (bool?)null);
         }
     }
 }

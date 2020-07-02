@@ -15,45 +15,29 @@ namespace Azure.Management.Resources.Models
     {
         internal static Provider DeserializeProvider(JsonElement element)
         {
-            string id = default;
-            string @namespace = default;
-            string registrationState = default;
-            IReadOnlyList<ProviderResourceType> resourceTypes = default;
+            Optional<string> id = default;
+            Optional<string> @namespace = default;
+            Optional<string> registrationState = default;
+            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namespace"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     @namespace = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("registrationState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     registrationState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceTypes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -70,7 +54,7 @@ namespace Azure.Management.Resources.Models
                     continue;
                 }
             }
-            return new Provider(id, @namespace, registrationState, resourceTypes);
+            return new Provider(id.HasValue ? id.Value : null, @namespace.HasValue ? @namespace.Value : null, registrationState.HasValue ? registrationState.Value : null, new ChangeTrackingList<ProviderResourceType>(resourceTypes));
         }
     }
 }

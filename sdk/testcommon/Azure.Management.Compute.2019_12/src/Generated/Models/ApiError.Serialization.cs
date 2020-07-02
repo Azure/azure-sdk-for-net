@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details");
                 writer.WriteStartArray();
@@ -26,22 +26,22 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror");
                 writer.WriteObjectValue(Innererror);
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code");
                 writer.WriteStringValue(Code);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target");
                 writer.WriteStringValue(Target);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message");
                 writer.WriteStringValue(Message);
@@ -51,19 +51,15 @@ namespace Azure.Management.Compute.Models
 
         internal static ApiError DeserializeApiError(JsonElement element)
         {
-            IList<ApiErrorBase> details = default;
-            InnerError innererror = default;
-            string code = default;
-            string target = default;
-            string message = default;
+            Optional<IList<ApiErrorBase>> details = default;
+            Optional<InnerError> innererror = default;
+            Optional<string> code = default;
+            Optional<string> target = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApiErrorBase> array = new List<ApiErrorBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -81,42 +77,26 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("innererror"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApiError(details, innererror, code, target, message);
+            return new ApiError(new ChangeTrackingList<ApiErrorBase>(details), innererror.HasValue ? innererror.Value : null, code.HasValue ? code.Value : null, target.HasValue ? target.Value : null, message.HasValue ? message.Value : null);
         }
     }
 }

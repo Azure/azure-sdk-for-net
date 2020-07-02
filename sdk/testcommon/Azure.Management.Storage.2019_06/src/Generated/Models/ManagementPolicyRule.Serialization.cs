@@ -15,7 +15,7 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
@@ -31,7 +31,7 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element)
         {
-            bool? enabled = default;
+            Optional<bool> enabled = default;
             string name = default;
             string type = default;
             ManagementPolicyDefinition definition = default;
@@ -39,10 +39,6 @@ namespace Azure.Management.Storage.Models
             {
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
@@ -62,7 +58,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyRule(enabled, name, type, definition);
+            return new ManagementPolicyRule(enabled.HasValue ? enabled.Value : (bool?)null, name, type, definition);
         }
     }
 }

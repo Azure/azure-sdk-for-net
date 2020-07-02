@@ -16,12 +16,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
@@ -31,32 +31,32 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -69,12 +69,12 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (IdleTimeoutInMinutes != null)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes");
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (PublicIpAddresses != null)
+            if (Optional.IsDefined(PublicIpAddresses))
             {
                 writer.WritePropertyName("publicIpAddresses");
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicIpPrefixes != null)
+            if (Optional.IsDefined(PublicIpPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes");
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Subnets != null)
+            if (Optional.IsDefined(Subnets))
             {
                 writer.WritePropertyName("subnets");
                 writer.WriteStartArray();
@@ -104,12 +104,12 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid");
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -120,37 +120,29 @@ namespace Azure.Management.Network.Models
 
         internal static NatGateway DeserializeNatGateway(JsonElement element)
         {
-            NatGatewaySku sku = default;
-            IList<string> zones = default;
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            int? idleTimeoutInMinutes = default;
-            IList<SubResource> publicIpAddresses = default;
-            IList<SubResource> publicIpPrefixes = default;
-            IList<SubResource> subnets = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<NatGatewaySku> sku = default;
+            Optional<IList<string>> zones = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<int> idleTimeoutInMinutes = default;
+            Optional<IList<SubResource>> publicIpAddresses = default;
+            Optional<IList<SubResource>> publicIpPrefixes = default;
+            Optional<IList<SubResource>> subnets = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = NatGatewaySku.DeserializeNatGatewaySku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -168,55 +160,31 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -238,19 +206,11 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("idleTimeoutInMinutes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             idleTimeoutInMinutes = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("publicIpAddresses"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -268,10 +228,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("publicIpPrefixes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -289,10 +245,6 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("subnets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -310,19 +262,11 @@ namespace Azure.Management.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -330,7 +274,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new NatGateway(id, name, type, location, tags, sku, zones, etag, idleTimeoutInMinutes, publicIpAddresses, publicIpPrefixes, subnets, resourceGuid, provisioningState);
+            return new NatGateway(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), sku.HasValue ? sku.Value : null, new ChangeTrackingList<string>(zones), etag.HasValue ? etag.Value : null, idleTimeoutInMinutes.HasValue ? idleTimeoutInMinutes.Value : (int?)null, new ChangeTrackingList<SubResource>(publicIpAddresses), new ChangeTrackingList<SubResource>(publicIpPrefixes), new ChangeTrackingList<SubResource>(subnets), resourceGuid.HasValue ? resourceGuid.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

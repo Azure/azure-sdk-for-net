@@ -15,15 +15,11 @@ namespace Azure.Management.Network.Models
     {
         internal static VirtualWanSecurityProviders DeserializeVirtualWanSecurityProviders(JsonElement element)
         {
-            IReadOnlyList<VirtualWanSecurityProvider> supportedProviders = default;
+            Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProviders"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualWanSecurityProvider> array = new List<VirtualWanSecurityProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new VirtualWanSecurityProviders(supportedProviders);
+            return new VirtualWanSecurityProviders(new ChangeTrackingList<VirtualWanSecurityProvider>(supportedProviders));
         }
     }
 }

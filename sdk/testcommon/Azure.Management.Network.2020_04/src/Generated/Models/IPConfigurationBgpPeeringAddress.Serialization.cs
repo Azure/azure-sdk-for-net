@@ -16,12 +16,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpconfigurationId != null)
+            if (Optional.IsDefined(IpconfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId");
                 writer.WriteStringValue(IpconfigurationId);
             }
-            if (DefaultBgpIpAddresses != null)
+            if (Optional.IsDefined(DefaultBgpIpAddresses))
             {
                 writer.WritePropertyName("defaultBgpIpAddresses");
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CustomBgpIpAddresses != null)
+            if (Optional.IsDefined(CustomBgpIpAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses");
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TunnelIpAddresses != null)
+            if (Optional.IsDefined(TunnelIpAddresses))
             {
                 writer.WritePropertyName("tunnelIpAddresses");
                 writer.WriteStartArray();
@@ -56,27 +56,19 @@ namespace Azure.Management.Network.Models
 
         internal static IPConfigurationBgpPeeringAddress DeserializeIPConfigurationBgpPeeringAddress(JsonElement element)
         {
-            string ipconfigurationId = default;
-            IList<string> defaultBgpIpAddresses = default;
-            IList<string> customBgpIpAddresses = default;
-            IList<string> tunnelIpAddresses = default;
+            Optional<string> ipconfigurationId = default;
+            Optional<IList<string>> defaultBgpIpAddresses = default;
+            Optional<IList<string>> customBgpIpAddresses = default;
+            Optional<IList<string>> tunnelIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipconfigurationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("defaultBgpIpAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -94,10 +86,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("customBgpIpAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -115,10 +103,6 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("tunnelIpAddresses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -135,7 +119,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new IPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIpAddresses, customBgpIpAddresses, tunnelIpAddresses);
+            return new IPConfigurationBgpPeeringAddress(ipconfigurationId.HasValue ? ipconfigurationId.Value : null, new ChangeTrackingList<string>(defaultBgpIpAddresses), new ChangeTrackingList<string>(customBgpIpAddresses), new ChangeTrackingList<string>(tunnelIpAddresses));
         }
     }
 }

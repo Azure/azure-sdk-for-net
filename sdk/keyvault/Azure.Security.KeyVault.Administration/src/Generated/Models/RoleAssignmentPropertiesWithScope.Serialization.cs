@@ -14,40 +14,28 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleAssignmentPropertiesWithScope DeserializeRoleAssignmentPropertiesWithScope(JsonElement element)
         {
-            string scope = default;
-            string roleDefinitionId = default;
-            string principalId = default;
+            Optional<string> scope = default;
+            Optional<string> roleDefinitionId = default;
+            Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scope = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("roleDefinitionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
             }
-            return new RoleAssignmentPropertiesWithScope(scope, roleDefinitionId, principalId);
+            return new RoleAssignmentPropertiesWithScope(scope.HasValue ? scope.Value : null, roleDefinitionId.HasValue ? roleDefinitionId.Value : null, principalId.HasValue ? principalId.Value : null);
         }
     }
 }

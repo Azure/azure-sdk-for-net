@@ -15,16 +15,12 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static DirectoryObjectListResult DeserializeDirectoryObjectListResult(JsonElement element)
         {
-            IReadOnlyList<DirectoryObject> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<DirectoryObject>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DirectoryObject> array = new List<DirectoryObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DirectoryObjectListResult(value, odataNextLink);
+            return new DirectoryObjectListResult(new ChangeTrackingList<DirectoryObject>(value), odataNextLink.HasValue ? odataNextLink.Value : null);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Usage DeserializeUsage(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             string unit = default;
             long currentValue = default;
             long limit = default;
@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -51,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Usage(id, unit, currentValue, limit, name);
+            return new Usage(id.HasValue ? id.Value : null, unit, currentValue, limit, name);
         }
     }
 }

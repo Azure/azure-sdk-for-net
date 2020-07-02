@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ManagedServiceIdentity()
         {
             Type = "UserAssigned";
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
@@ -30,6 +32,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Type of the managed identity. </summary>
         public string Type { get; set; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

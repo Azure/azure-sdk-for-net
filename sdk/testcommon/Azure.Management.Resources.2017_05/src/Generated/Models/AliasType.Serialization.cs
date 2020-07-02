@@ -15,25 +15,17 @@ namespace Azure.Management.Resources.Models
     {
         internal static AliasType DeserializeAliasType(JsonElement element)
         {
-            string name = default;
-            IReadOnlyList<AliasPathType> paths = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<AliasPathType>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("paths"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AliasPathType> array = new List<AliasPathType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Management.Resources.Models
                     continue;
                 }
             }
-            return new AliasType(name, paths);
+            return new AliasType(name.HasValue ? name.Value : null, new ChangeTrackingList<AliasPathType>(paths));
         }
     }
 }

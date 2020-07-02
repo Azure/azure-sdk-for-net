@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type);
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (AccessCredential != null)
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential");
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (LogRefreshInterval != null)
+            if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval");
                 writer.WriteObjectValue(LogRefreshInterval);
@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             object logPath = default;
             string type = default;
-            SsisAccessCredential accessCredential = default;
-            object logRefreshInterval = default;
+            Optional<SsisAccessCredential> accessCredential = default;
+            Optional<object> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"))
@@ -59,19 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("accessCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             logRefreshInterval = property0.Value.GetObject();
                             continue;
                         }
@@ -79,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval);
+            return new SsisLogLocation(logPath, type, accessCredential.HasValue ? accessCredential.Value : null, logRefreshInterval.HasValue ? logRefreshInterval.Value : null);
         }
     }
 }

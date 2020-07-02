@@ -15,26 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuLocationInfo DeserializeResourceSkuLocationInfo(JsonElement element)
         {
-            string location = default;
-            IReadOnlyList<string> zones = default;
-            IReadOnlyList<ResourceSkuZoneDetails> zoneDetails = default;
+            Optional<string> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,10 +44,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("zoneDetails"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -72,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuLocationInfo(location, zones, zoneDetails);
+            return new ResourceSkuLocationInfo(location.HasValue ? location.Value : null, new ChangeTrackingList<string>(zones), new ChangeTrackingList<ResourceSkuZoneDetails>(zoneDetails));
         }
     }
 }

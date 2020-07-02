@@ -16,12 +16,12 @@ namespace Azure.Management.Storage.Models
         internal static SkuInformation DeserializeSkuInformation(JsonElement element)
         {
             SkuName name = default;
-            SkuTier? tier = default;
-            string resourceType = default;
-            Kind? kind = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<SKUCapability> capabilities = default;
-            IReadOnlyList<Restriction> restrictions = default;
+            Optional<SkuTier> tier = default;
+            Optional<string> resourceType = default;
+            Optional<Kind> kind = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<SKUCapability>> capabilities = default;
+            Optional<IReadOnlyList<Restriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -31,37 +31,21 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString().ToSkuTier();
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     kind = new Kind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -79,10 +63,6 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SKUCapability> array = new List<SKUCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -100,10 +80,6 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("restrictions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Restriction> array = new List<Restriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -120,7 +96,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new SkuInformation(name, tier, resourceType, kind, locations, capabilities, restrictions);
+            return new SkuInformation(name, tier.HasValue ? tier.Value : (SkuTier?)null, resourceType.HasValue ? resourceType.Value : null, kind.HasValue ? kind.Value : (Kind?)null, new ChangeTrackingList<string>(locations), new ChangeTrackingList<SKUCapability>(capabilities), new ChangeTrackingList<Restriction>(restrictions));
         }
     }
 }

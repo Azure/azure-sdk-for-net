@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info");
                 writer.WriteObjectValue(Info);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            string type = default;
-            object info = default;
+            Optional<string> type = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("info"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     info = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type, info);
+            return new ErrorAdditionalInfo(type.HasValue ? type.Value : null, info.HasValue ? info.Value : null);
         }
     }
 }

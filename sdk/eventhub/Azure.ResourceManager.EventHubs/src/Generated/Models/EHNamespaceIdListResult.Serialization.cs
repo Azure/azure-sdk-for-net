@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element)
         {
-            IReadOnlyList<EHNamespaceIdContainer> value = default;
+            Optional<IReadOnlyList<EHNamespaceIdContainer>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<EHNamespaceIdContainer> array = new List<EHNamespaceIdContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EHNamespaceIdListResult(value);
+            return new EHNamespaceIdListResult(new ChangeTrackingList<EHNamespaceIdContainer>(value));
         }
     }
 }

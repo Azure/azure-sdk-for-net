@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceContent != null)
+            if (Optional.IsDefined(DeviceContent))
             {
                 writer.WritePropertyName("deviceContent");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ModulesContent != null)
+            if (Optional.IsDefined(ModulesContent))
             {
                 writer.WritePropertyName("modulesContent");
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ModuleContent != null)
+            if (Optional.IsDefined(ModuleContent))
             {
                 writer.WritePropertyName("moduleContent");
                 writer.WriteStartObject();
@@ -54,17 +54,13 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element)
         {
-            IDictionary<string, object> deviceContent = default;
-            IDictionary<string, object> modulesContent = default;
-            IDictionary<string, object> moduleContent = default;
+            Optional<IDictionary<string, object>> deviceContent = default;
+            Optional<IDictionary<string, object>> modulesContent = default;
+            Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -82,10 +78,6 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("modulesContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -103,10 +95,6 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 if (property.NameEquals("moduleContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -123,7 +111,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationContent(deviceContent, modulesContent, moduleContent);
+            return new ConfigurationContent(new ChangeTrackingDictionary<string, object>(deviceContent), new ChangeTrackingDictionary<string, object>(modulesContent), new ChangeTrackingDictionary<string, object>(moduleContent));
         }
     }
 }

@@ -15,36 +15,24 @@ namespace Azure.DigitalTwins.Core.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            IReadOnlyList<Error> details = default;
-            InnerError innererror = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<Error>> details = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,15 +50,11 @@ namespace Azure.DigitalTwins.Core.Models
                 }
                 if (property.NameEquals("innererror"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new Error(code, message, details, innererror);
+            return new Error(code.HasValue ? code.Value : null, message.HasValue ? message.Value : null, new ChangeTrackingList<Error>(details), innererror.HasValue ? innererror.Value : null);
         }
     }
 }

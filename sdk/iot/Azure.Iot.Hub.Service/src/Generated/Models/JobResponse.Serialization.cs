@@ -15,140 +15,88 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static JobResponse DeserializeJobResponse(JsonElement element)
         {
-            string jobId = default;
-            string queryCondition = default;
-            DateTimeOffset? createdTime = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            long? maxExecutionTimeInSeconds = default;
-            JobResponseType? type = default;
-            CloudToDeviceMethodRequest cloudToDeviceMethod = default;
-            TwinData updateTwin = default;
-            JobResponseStatus? status = default;
-            string failureReason = default;
-            string statusMessage = default;
-            DeviceJobStatistics deviceJobStatistics = default;
+            Optional<string> jobId = default;
+            Optional<string> queryCondition = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<long> maxExecutionTimeInSeconds = default;
+            Optional<JobResponseType> type = default;
+            Optional<CloudToDeviceMethodRequest> cloudToDeviceMethod = default;
+            Optional<TwinData> updateTwin = default;
+            Optional<JobResponseStatus> status = default;
+            Optional<string> failureReason = default;
+            Optional<string> statusMessage = default;
+            Optional<DeviceJobStatistics> deviceJobStatistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queryCondition"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     queryCondition = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("maxExecutionTimeInSeconds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxExecutionTimeInSeconds = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = new JobResponseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cloudToDeviceMethod"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("updateTwin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     updateTwin = TwinData.DeserializeTwinData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = new JobResponseStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failureReason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     failureReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusMessage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusMessage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deviceJobStatistics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceJobStatistics = DeviceJobStatistics.DeserializeDeviceJobStatistics(property.Value);
                     continue;
                 }
             }
-            return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
+            return new JobResponse(jobId.HasValue ? jobId.Value : null, queryCondition.HasValue ? queryCondition.Value : null, createdTime.HasValue ? createdTime.Value : (DateTimeOffset?)null, startTime.HasValue ? startTime.Value : (DateTimeOffset?)null, endTime.HasValue ? endTime.Value : (DateTimeOffset?)null, maxExecutionTimeInSeconds.HasValue ? maxExecutionTimeInSeconds.Value : (long?)null, type.HasValue ? type.Value : (JobResponseType?)null, cloudToDeviceMethod.HasValue ? cloudToDeviceMethod.Value : null, updateTwin.HasValue ? updateTwin.Value : null, status.HasValue ? status.Value : (JobResponseStatus?)null, failureReason.HasValue ? failureReason.Value : null, statusMessage.HasValue ? statusMessage.Value : null, deviceJobStatistics.HasValue ? deviceJobStatistics.Value : null);
         }
     }
 }

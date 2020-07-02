@@ -14,30 +14,22 @@ namespace Azure.DigitalTwins.Core.Models
     {
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
-            string code = default;
-            InnerError innererror = default;
+            Optional<string> code = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("innererror"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innererror = DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new InnerError(code, innererror);
+            return new InnerError(code.HasValue ? code.Value : null, innererror.HasValue ? innererror.Value : null);
         }
     }
 }

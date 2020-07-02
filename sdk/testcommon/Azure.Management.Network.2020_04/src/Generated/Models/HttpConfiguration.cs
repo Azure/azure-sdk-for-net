@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -16,6 +17,8 @@ namespace Azure.Management.Network.Models
         public HttpConfiguration()
         {
             Method = "Get";
+            Headers = new ChangeTrackingList<HttpHeader>();
+            ValidStatusCodes = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of HttpConfiguration. </summary>
@@ -32,8 +35,8 @@ namespace Azure.Management.Network.Models
         /// <summary> HTTP method. </summary>
         public string Method { get; set; }
         /// <summary> List of HTTP headers. </summary>
-        public IList<HttpHeader> Headers { get; set; }
+        public IList<HttpHeader> Headers { get; }
         /// <summary> Valid status codes. </summary>
-        public IList<int> ValidStatusCodes { get; set; }
+        public IList<int> ValidStatusCodes { get; }
     }
 }

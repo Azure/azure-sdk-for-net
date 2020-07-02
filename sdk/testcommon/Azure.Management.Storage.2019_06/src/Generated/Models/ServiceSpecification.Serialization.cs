@@ -15,15 +15,11 @@ namespace Azure.Management.Storage.Models
     {
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
         {
-            IReadOnlyList<MetricSpecification> metricSpecifications = default;
+            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricSpecifications"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ServiceSpecification(metricSpecifications);
+            return new ServiceSpecification(new ChangeTrackingList<MetricSpecification>(metricSpecifications));
         }
     }
 }

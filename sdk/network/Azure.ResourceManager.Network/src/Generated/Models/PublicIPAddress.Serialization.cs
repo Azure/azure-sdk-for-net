@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones");
                 writer.WriteStartArray();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -69,32 +69,32 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PublicIPAllocationMethod != null)
+            if (Optional.IsDefined(PublicIPAllocationMethod))
             {
                 writer.WritePropertyName("publicIPAllocationMethod");
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
             }
-            if (PublicIPAddressVersion != null)
+            if (Optional.IsDefined(PublicIPAddressVersion))
             {
                 writer.WritePropertyName("publicIPAddressVersion");
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (IpConfiguration != null)
+            if (Optional.IsDefined(IpConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration");
                 writer.WriteObjectValue(IpConfiguration);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings");
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (DdosSettings != null)
+            if (Optional.IsDefined(DdosSettings))
             {
                 writer.WritePropertyName("ddosSettings");
                 writer.WriteObjectValue(DdosSettings);
             }
-            if (IpTags != null)
+            if (Optional.IsDefined(IpTags))
             {
                 writer.WritePropertyName("ipTags");
                 writer.WriteStartArray();
@@ -104,27 +104,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IpAddress != null)
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
             }
-            if (PublicIPPrefix != null)
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix");
                 writer.WriteObjectValue(PublicIPPrefix);
             }
-            if (IdleTimeoutInMinutes != null)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes");
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid");
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -135,51 +135,39 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PublicIPAddress DeserializePublicIPAddress(JsonElement element)
         {
-            PublicIPAddressSku sku = default;
-            string etag = default;
-            IList<string> zones = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IPAllocationMethod? publicIPAllocationMethod = default;
-            IPVersion? publicIPAddressVersion = default;
-            IPConfiguration ipConfiguration = default;
-            PublicIPAddressDnsSettings dnsSettings = default;
-            DdosSettings ddosSettings = default;
-            IList<IpTag> ipTags = default;
-            string ipAddress = default;
-            SubResource publicIPPrefix = default;
-            int? idleTimeoutInMinutes = default;
-            string resourceGuid = default;
-            ProvisioningState? provisioningState = default;
+            Optional<PublicIPAddressSku> sku = default;
+            Optional<string> etag = default;
+            Optional<IList<string>> zones = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IPAllocationMethod> publicIPAllocationMethod = default;
+            Optional<IPVersion> publicIPAddressVersion = default;
+            Optional<IPConfiguration> ipConfiguration = default;
+            Optional<PublicIPAddressDnsSettings> dnsSettings = default;
+            Optional<DdosSettings> ddosSettings = default;
+            Optional<IList<IpTag>> ipTags = default;
+            Optional<string> ipAddress = default;
+            Optional<SubResource> publicIPPrefix = default;
+            Optional<int> idleTimeoutInMinutes = default;
+            Optional<string> resourceGuid = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -197,46 +185,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -258,55 +226,31 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("publicIPAllocationMethod"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressVersion"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicIPAddressVersion = new IPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipConfiguration = IPConfiguration.DeserializeIPConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             dnsSettings = PublicIPAddressDnsSettings.DeserializePublicIPAddressDnsSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ddosSettings"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ddosSettings = DdosSettings.DeserializeDdosSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipTags"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<IpTag> array = new List<IpTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -324,46 +268,26 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("ipAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("publicIPPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicIPPrefix = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("idleTimeoutInMinutes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             idleTimeoutInMinutes = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -371,7 +295,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PublicIPAddress(id, name, type, location, tags, sku, etag, zones, publicIPAllocationMethod, publicIPAddressVersion, ipConfiguration, dnsSettings, ddosSettings, ipTags, ipAddress, publicIPPrefix, idleTimeoutInMinutes, resourceGuid, provisioningState);
+            return new PublicIPAddress(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location.HasValue ? location.Value : null, new ChangeTrackingDictionary<string, string>(tags), sku.HasValue ? sku.Value : null, etag.HasValue ? etag.Value : null, new ChangeTrackingList<string>(zones), publicIPAllocationMethod.HasValue ? publicIPAllocationMethod.Value : (IPAllocationMethod?)null, publicIPAddressVersion.HasValue ? publicIPAddressVersion.Value : (IPVersion?)null, ipConfiguration.HasValue ? ipConfiguration.Value : null, dnsSettings.HasValue ? dnsSettings.Value : null, ddosSettings.HasValue ? ddosSettings.Value : null, new ChangeTrackingList<IpTag>(ipTags), ipAddress.HasValue ? ipAddress.Value : null, publicIPPrefix.HasValue ? publicIPPrefix.Value : null, idleTimeoutInMinutes.HasValue ? idleTimeoutInMinutes.Value : (int?)null, resourceGuid.HasValue ? resourceGuid.Value : null, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null);
         }
     }
 }

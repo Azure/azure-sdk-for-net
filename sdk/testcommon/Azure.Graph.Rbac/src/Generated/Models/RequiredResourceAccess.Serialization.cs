@@ -23,7 +23,7 @@ namespace Azure.Graph.Rbac.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ResourceAppId != null)
+            if (Optional.IsDefined(ResourceAppId))
             {
                 writer.WritePropertyName("resourceAppId");
                 writer.WriteStringValue(ResourceAppId);
@@ -39,7 +39,7 @@ namespace Azure.Graph.Rbac.Models
         internal static RequiredResourceAccess DeserializeRequiredResourceAccess(JsonElement element)
         {
             IList<ResourceAccess> resourceAccess = default;
-            string resourceAppId = default;
+            Optional<string> resourceAppId = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -63,10 +63,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("resourceAppId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceAppId = property.Value.GetString();
                     continue;
                 }
@@ -81,7 +77,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RequiredResourceAccess(resourceAccess, resourceAppId, additionalProperties);
+            return new RequiredResourceAccess(resourceAccess, resourceAppId.HasValue ? resourceAppId.Value : null, additionalProperties);
         }
     }
 }

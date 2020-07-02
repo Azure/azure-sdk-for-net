@@ -17,8 +17,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string code = default;
             string message = default;
-            string target = default;
-            IReadOnlyList<CloudError> details = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<CloudError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -37,19 +37,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("target"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             target = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("details"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<CloudError> array = new List<CloudError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -69,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CloudError(code, message, target, details);
+            return new CloudError(code, message, target.HasValue ? target.Value : null, new ChangeTrackingList<CloudError>(details));
         }
     }
 }

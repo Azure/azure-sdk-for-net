@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVpnServerConfigurationsResult DeserializeListVpnServerConfigurationsResult(JsonElement element)
         {
-            IReadOnlyList<VpnServerConfiguration> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VpnServerConfiguration>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VpnServerConfiguration> array = new List<VpnServerConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListVpnServerConfigurationsResult(value, nextLink);
+            return new ListVpnServerConfigurationsResult(new ChangeTrackingList<VpnServerConfiguration>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

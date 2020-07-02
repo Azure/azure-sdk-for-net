@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Name = name;
             DisplayName = displayName;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Name = name;
             DisplayName = displayName;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Name of the kernel specification. </summary>

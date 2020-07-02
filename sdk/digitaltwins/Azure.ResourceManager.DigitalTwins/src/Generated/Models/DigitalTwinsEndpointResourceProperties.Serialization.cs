@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType");
             writer.WriteStringValue(EndpointType.ToString());
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (CreatedTime != null)
+            if (Optional.IsDefined(CreatedTime))
             {
                 writer.WritePropertyName("createdTime");
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             EndpointType endpointType = default;
-            EndpointProvisioningState? provisioningState = default;
-            DateTimeOffset? createdTime = default;
-            IDictionary<string, string> tags = default;
+            Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"))
@@ -67,28 +67,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = new EndpointProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -105,7 +93,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdTime, tags);
+            return new DigitalTwinsEndpointResourceProperties(endpointType, provisioningState.HasValue ? provisioningState.Value : (EndpointProvisioningState?)null, createdTime.HasValue ? createdTime.Value : (DateTimeOffset?)null, new ChangeTrackingDictionary<string, string>(tags));
         }
     }
 }

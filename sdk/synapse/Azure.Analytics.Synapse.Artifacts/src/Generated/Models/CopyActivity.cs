@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -32,8 +33,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(sink));
             }
 
+            Inputs = new ChangeTrackingList<DatasetReference>();
+            Outputs = new ChangeTrackingList<DatasetReference>();
             Source = source;
             Sink = sink;
+            PreserveRules = new ChangeTrackingList<object>();
+            Preserve = new ChangeTrackingList<object>();
             Type = "Copy";
         }
 
@@ -78,9 +83,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> List of inputs for the activity. </summary>
-        public IList<DatasetReference> Inputs { get; set; }
+        public IList<DatasetReference> Inputs { get; }
         /// <summary> List of outputs for the activity. </summary>
-        public IList<DatasetReference> Outputs { get; set; }
+        public IList<DatasetReference> Outputs { get; }
         /// <summary> Copy activity source. </summary>
         public CopySource Source { get; set; }
         /// <summary> Copy activity sink. </summary>
@@ -100,8 +105,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Redirect incompatible row settings when EnableSkipIncompatibleRow is true. </summary>
         public RedirectIncompatibleRowSettings RedirectIncompatibleRowSettings { get; set; }
         /// <summary> Preserve Rules. </summary>
-        public IList<object> PreserveRules { get; set; }
+        public IList<object> PreserveRules { get; }
         /// <summary> Preserve rules. </summary>
-        public IList<object> Preserve { get; set; }
+        public IList<object> Preserve { get; }
     }
 }

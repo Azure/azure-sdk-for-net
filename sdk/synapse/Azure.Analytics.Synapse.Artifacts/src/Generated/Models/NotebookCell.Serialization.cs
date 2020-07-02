@@ -27,12 +27,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Attachments != null)
+            if (Optional.IsDefined(Attachments))
             {
                 writer.WritePropertyName("attachments");
                 writer.WriteObjectValue(Attachments);
             }
-            if (Outputs != null)
+            if (Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartArray();
@@ -55,8 +55,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string cellType = default;
             object metadata = default;
             IList<string> source = default;
-            object attachments = default;
-            IList<NotebookCellOutputItem> outputs = default;
+            Optional<object> attachments = default;
+            Optional<IList<NotebookCellOutputItem>> outputs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -90,19 +90,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("attachments"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     attachments = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -129,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookCell(cellType, metadata, source, attachments, outputs, additionalProperties);
+            return new NotebookCell(cellType, metadata, source, attachments.HasValue ? attachments.Value : null, new ChangeTrackingList<NotebookCellOutputItem>(outputs), additionalProperties);
         }
     }
 }

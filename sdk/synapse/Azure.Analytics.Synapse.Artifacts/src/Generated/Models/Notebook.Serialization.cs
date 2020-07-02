@@ -16,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (BigDataPool != null)
+            if (Optional.IsDefined(BigDataPool))
             {
                 writer.WritePropertyName("bigDataPool");
                 writer.WriteObjectValue(BigDataPool);
             }
-            if (SessionProperties != null)
+            if (Optional.IsDefined(SessionProperties))
             {
                 writer.WritePropertyName("sessionProperties");
                 writer.WriteObjectValue(SessionProperties);
@@ -54,9 +54,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Notebook DeserializeNotebook(JsonElement element)
         {
-            string description = default;
-            BigDataPoolReference bigDataPool = default;
-            NotebookSessionProperties sessionProperties = default;
+            Optional<string> description = default;
+            Optional<BigDataPoolReference> bigDataPool = default;
+            Optional<NotebookSessionProperties> sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
@@ -67,28 +67,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("bigDataPool"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
                     continue;
                 }
@@ -135,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description, bigDataPool, sessionProperties, metadata, nbformat, nbformatMinor, cells, additionalProperties);
+            return new Notebook(description.HasValue ? description.Value : null, bigDataPool.HasValue ? bigDataPool.Value : null, sessionProperties.HasValue ? sessionProperties.Value : null, metadata, nbformat, nbformatMinor, cells, additionalProperties);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OsDiskImage != null)
+            if (Optional.IsDefined(OsDiskImage))
             {
                 writer.WritePropertyName("osDiskImage");
                 writer.WriteObjectValue(OsDiskImage);
             }
-            if (DataDiskImages != null)
+            if (Optional.IsDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages");
                 writer.WriteStartArray();
@@ -36,25 +36,17 @@ namespace Azure.Management.Compute.Models
 
         internal static EncryptionImages DeserializeEncryptionImages(JsonElement element)
         {
-            DiskImageEncryption osDiskImage = default;
-            IList<DataDiskImageEncryption> dataDiskImages = default;
+            Optional<DiskImageEncryption> osDiskImage = default;
+            Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     osDiskImage = DiskImageEncryption.DeserializeDiskImageEncryption(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,7 +63,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new EncryptionImages(osDiskImage, dataDiskImages);
+            return new EncryptionImages(osDiskImage.HasValue ? osDiskImage.Value : null, new ChangeTrackingList<DataDiskImageEncryption>(dataDiskImages));
         }
     }
 }

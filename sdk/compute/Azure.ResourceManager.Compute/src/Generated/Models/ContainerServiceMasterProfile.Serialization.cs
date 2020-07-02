@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count");
                 writer.WriteStringValue(Count.Value.ToString());
             }
             writer.WritePropertyName("dnsPrefix");
             writer.WriteStringValue(DnsPrefix);
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
@@ -32,17 +32,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ContainerServiceMasterProfile DeserializeContainerServiceMasterProfile(JsonElement element)
         {
-            Enum27? count = default;
+            Optional<Enum27> count = default;
             string dnsPrefix = default;
-            string fqdn = default;
+            Optional<string> fqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     count = new Enum27(property.Value.GetInt32());
                     continue;
                 }
@@ -53,15 +49,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServiceMasterProfile(count, dnsPrefix, fqdn);
+            return new ContainerServiceMasterProfile(count.HasValue ? count.Value : (Enum27?)null, dnsPrefix, fqdn.HasValue ? fqdn.Value : null);
         }
     }
 }

@@ -15,16 +15,12 @@ namespace Azure.Management.Network.Models
     {
         internal static ServiceAssociationLinksListResult DeserializeServiceAssociationLinksListResult(JsonElement element)
         {
-            IReadOnlyList<ServiceAssociationLink> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ServiceAssociationLink>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.Management.Network.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceAssociationLinksListResult(value, nextLink);
+            return new ServiceAssociationLinksListResult(new ChangeTrackingList<ServiceAssociationLink>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

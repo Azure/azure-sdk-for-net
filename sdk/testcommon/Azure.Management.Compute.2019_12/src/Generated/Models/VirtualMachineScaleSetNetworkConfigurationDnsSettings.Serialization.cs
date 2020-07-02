@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DnsServers != null)
+            if (Optional.IsDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers");
                 writer.WriteStartArray();
@@ -31,15 +31,11 @@ namespace Azure.Management.Compute.Models
 
         internal static VirtualMachineScaleSetNetworkConfigurationDnsSettings DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(JsonElement element)
         {
-            IList<string> dnsServers = default;
+            Optional<IList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsServers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers);
+            return new VirtualMachineScaleSetNetworkConfigurationDnsSettings(new ChangeTrackingList<string>(dnsServers));
         }
     }
 }

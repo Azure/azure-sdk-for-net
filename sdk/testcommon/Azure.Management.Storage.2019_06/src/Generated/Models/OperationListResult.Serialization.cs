@@ -15,15 +15,11 @@ namespace Azure.Management.Storage.Models
     {
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
-            IReadOnlyList<Operation> value = default;
+            Optional<IReadOnlyList<Operation>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Operation> array = new List<Operation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new OperationListResult(value);
+            return new OperationListResult(new ChangeTrackingList<Operation>(value));
         }
     }
 }

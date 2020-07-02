@@ -15,17 +15,13 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static CheckGroupMembershipResult DeserializeCheckGroupMembershipResult(JsonElement element)
         {
-            bool? value = default;
+            Optional<bool> value = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetBoolean();
                     continue;
                 }
@@ -40,7 +36,7 @@ namespace Azure.Graph.Rbac.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CheckGroupMembershipResult(value, additionalProperties);
+            return new CheckGroupMembershipResult(value.HasValue ? value.Value : (bool?)null, additionalProperties);
         }
     }
 }

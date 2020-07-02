@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServices != null)
+            if (Optional.IsDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Datasets != null)
+            if (Optional.IsDefined(Datasets))
             {
                 writer.WritePropertyName("datasets");
                 writer.WriteStartArray();
@@ -41,16 +41,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
         {
-            IList<LinkedServiceReference> linkedServices = default;
-            IList<DatasetReference> datasets = default;
+            Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<LinkedServiceReference> array = new List<LinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,10 +64,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("datasets"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -88,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(linkedServices, datasets);
+            return new CustomActivityReferenceObject(new ChangeTrackingList<LinkedServiceReference>(linkedServices), new ChangeTrackingList<DatasetReference>(datasets));
         }
     }
 }

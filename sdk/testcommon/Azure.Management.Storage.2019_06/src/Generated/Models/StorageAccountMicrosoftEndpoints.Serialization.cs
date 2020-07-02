@@ -15,32 +15,32 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Blob != null)
+            if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob");
                 writer.WriteStringValue(Blob);
             }
-            if (Queue != null)
+            if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue");
                 writer.WriteStringValue(Queue);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table");
                 writer.WriteStringValue(Table);
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file");
                 writer.WriteStringValue(File);
             }
-            if (Web != null)
+            if (Optional.IsDefined(Web))
             {
                 writer.WritePropertyName("web");
                 writer.WriteStringValue(Web);
             }
-            if (Dfs != null)
+            if (Optional.IsDefined(Dfs))
             {
                 writer.WritePropertyName("dfs");
                 writer.WriteStringValue(Dfs);
@@ -50,70 +50,46 @@ namespace Azure.Management.Storage.Models
 
         internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element)
         {
-            string blob = default;
-            string queue = default;
-            string table = default;
-            string file = default;
-            string web = default;
-            string dfs = default;
+            Optional<string> blob = default;
+            Optional<string> queue = default;
+            Optional<string> table = default;
+            Optional<string> file = default;
+            Optional<string> web = default;
+            Optional<string> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blob = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     queue = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("table"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     table = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("file"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     file = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("web"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     web = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dfs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dfs = property.Value.GetString();
                     continue;
                 }
             }
-            return new StorageAccountMicrosoftEndpoints(blob, queue, table, file, web, dfs);
+            return new StorageAccountMicrosoftEndpoints(blob.HasValue ? blob.Value : null, queue.HasValue ? queue.Value : null, table.HasValue ? table.Value : null, file.HasValue ? file.Value : null, web.HasValue ? web.Value : null, dfs.HasValue ? dfs.Value : null);
         }
     }
 }

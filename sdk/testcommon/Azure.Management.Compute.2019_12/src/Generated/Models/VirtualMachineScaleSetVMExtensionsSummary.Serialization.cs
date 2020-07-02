@@ -15,25 +15,17 @@ namespace Azure.Management.Compute.Models
     {
         internal static VirtualMachineScaleSetVMExtensionsSummary DeserializeVirtualMachineScaleSetVMExtensionsSummary(JsonElement element)
         {
-            string name = default;
-            IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusesSummary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualMachineStatusCodeCount> array = new List<VirtualMachineStatusCodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,7 +42,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionsSummary(name, statusesSummary);
+            return new VirtualMachineScaleSetVMExtensionsSummary(name.HasValue ? name.Value : null, new ChangeTrackingList<VirtualMachineStatusCodeCount>(statusesSummary));
         }
     }
 }

@@ -15,15 +15,11 @@ namespace Azure.Management.Network.Models
     {
         internal static ExpressRouteConnectionList DeserializeExpressRouteConnectionList(JsonElement element)
         {
-            IReadOnlyList<ExpressRouteConnection> value = default;
+            Optional<IReadOnlyList<ExpressRouteConnection>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ExpressRouteConnection> array = new List<ExpressRouteConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteConnectionList(value);
+            return new ExpressRouteConnectionList(new ChangeTrackingList<ExpressRouteConnection>(value));
         }
     }
 }

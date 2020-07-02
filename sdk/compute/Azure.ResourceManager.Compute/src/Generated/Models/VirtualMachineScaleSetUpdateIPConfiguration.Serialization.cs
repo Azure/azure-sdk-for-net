@@ -16,39 +16,39 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
                 writer.WriteObjectValue(Subnet);
             }
-            if (Primary != null)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary");
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (PublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration");
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (PrivateIPAddressVersion != null)
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion");
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (ApplicationGatewayBackendAddressPools != null)
+            if (Optional.IsDefined(ApplicationGatewayBackendAddressPools))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools");
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ApplicationSecurityGroups != null)
+            if (Optional.IsDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups");
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LoadBalancerBackendAddressPools != null)
+            if (Optional.IsDefined(LoadBalancerBackendAddressPools))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools");
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LoadBalancerInboundNatPools != null)
+            if (Optional.IsDefined(LoadBalancerInboundNatPools))
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools");
                 writer.WriteStartArray();
@@ -94,33 +94,25 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetUpdateIPConfiguration DeserializeVirtualMachineScaleSetUpdateIPConfiguration(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            ApiEntityReference subnet = default;
-            bool? primary = default;
-            VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IPVersion? privateIPAddressVersion = default;
-            IList<SubResource> applicationGatewayBackendAddressPools = default;
-            IList<SubResource> applicationSecurityGroups = default;
-            IList<SubResource> loadBalancerBackendAddressPools = default;
-            IList<SubResource> loadBalancerInboundNatPools = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<ApiEntityReference> subnet = default;
+            Optional<bool> primary = default;
+            Optional<VirtualMachineScaleSetUpdatePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
+            Optional<IPVersion> privateIPAddressVersion = default;
+            Optional<IList<SubResource>> applicationGatewayBackendAddressPools = default;
+            Optional<IList<SubResource>> applicationSecurityGroups = default;
+            Optional<IList<SubResource>> loadBalancerBackendAddressPools = default;
+            Optional<IList<SubResource>> loadBalancerInboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -130,46 +122,26 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("subnet"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             subnet = ApiEntityReference.DeserializeApiEntityReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primary"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primary = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicIPAddressConfiguration = VirtualMachineScaleSetUpdatePublicIPAddressConfiguration.DeserializeVirtualMachineScaleSetUpdatePublicIPAddressConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateIPAddressVersion = new IPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationGatewayBackendAddressPools"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -187,10 +159,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("applicationSecurityGroups"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -208,10 +176,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("loadBalancerBackendAddressPools"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -229,10 +193,6 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("loadBalancerInboundNatPools"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -252,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id, name, subnet, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools, applicationSecurityGroups, loadBalancerBackendAddressPools, loadBalancerInboundNatPools);
+            return new VirtualMachineScaleSetUpdateIPConfiguration(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, subnet.HasValue ? subnet.Value : null, primary.HasValue ? primary.Value : (bool?)null, publicIPAddressConfiguration.HasValue ? publicIPAddressConfiguration.Value : null, privateIPAddressVersion.HasValue ? privateIPAddressVersion.Value : (IPVersion?)null, new ChangeTrackingList<SubResource>(applicationGatewayBackendAddressPools), new ChangeTrackingList<SubResource>(applicationSecurityGroups), new ChangeTrackingList<SubResource>(loadBalancerBackendAddressPools), new ChangeTrackingList<SubResource>(loadBalancerInboundNatPools));
         }
     }
 }

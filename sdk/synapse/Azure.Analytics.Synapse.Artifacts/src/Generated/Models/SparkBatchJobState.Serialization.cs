@@ -15,100 +15,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
         {
-            DateTimeOffset? notStartedAt = default;
-            DateTimeOffset? startingAt = default;
-            DateTimeOffset? runningAt = default;
-            DateTimeOffset? deadAt = default;
-            DateTimeOffset? successAt = default;
-            DateTimeOffset? killedAt = default;
-            DateTimeOffset? recoveringAt = default;
-            string currentState = default;
-            SparkRequest jobCreationRequest = default;
+            Optional<DateTimeOffset> notStartedAt = default;
+            Optional<DateTimeOffset> startingAt = default;
+            Optional<DateTimeOffset> runningAt = default;
+            Optional<DateTimeOffset> deadAt = default;
+            Optional<DateTimeOffset> successAt = default;
+            Optional<DateTimeOffset> killedAt = default;
+            Optional<DateTimeOffset> recoveringAt = default;
+            Optional<string> currentState = default;
+            Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     notStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("startingAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startingAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runningAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runningAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deadAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deadAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("successAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     successAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("killedAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     killedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("recoveringAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recoveringAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("jobCreationRequest"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);
                     continue;
                 }
             }
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, killedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(notStartedAt.HasValue ? notStartedAt.Value : (DateTimeOffset?)null, startingAt.HasValue ? startingAt.Value : (DateTimeOffset?)null, runningAt.HasValue ? runningAt.Value : (DateTimeOffset?)null, deadAt.HasValue ? deadAt.Value : (DateTimeOffset?)null, successAt.HasValue ? successAt.Value : (DateTimeOffset?)null, killedAt.HasValue ? killedAt.Value : (DateTimeOffset?)null, recoveringAt.HasValue ? recoveringAt.Value : (DateTimeOffset?)null, currentState.HasValue ? currentState.Value : null, jobCreationRequest.HasValue ? jobCreationRequest.Value : null);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.DigitalTwins.Core.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query");
                 writer.WriteStringValue(Query);
             }
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken");
                 writer.WriteStringValue(ContinuationToken);

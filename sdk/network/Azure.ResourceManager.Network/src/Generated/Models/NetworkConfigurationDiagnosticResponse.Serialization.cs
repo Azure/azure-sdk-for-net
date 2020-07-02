@@ -15,15 +15,11 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkConfigurationDiagnosticResponse DeserializeNetworkConfigurationDiagnosticResponse(JsonElement element)
         {
-            IReadOnlyList<NetworkConfigurationDiagnosticResult> results = default;
+            Optional<IReadOnlyList<NetworkConfigurationDiagnosticResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkConfigurationDiagnosticResult> array = new List<NetworkConfigurationDiagnosticResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -40,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkConfigurationDiagnosticResponse(results);
+            return new NetworkConfigurationDiagnosticResponse(new ChangeTrackingList<NetworkConfigurationDiagnosticResult>(results));
         }
     }
 }

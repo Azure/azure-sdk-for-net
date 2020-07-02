@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount");
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait");
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -44,9 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static CopySource DeserializeCopySource(JsonElement element)
         {
             string type = default;
-            object sourceRetryCount = default;
-            object sourceRetryWait = default;
-            object maxConcurrentConnections = default;
+            Optional<object> sourceRetryCount = default;
+            Optional<object> sourceRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
@@ -58,28 +58,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("sourceRetryCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
@@ -94,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopySource(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties);
+            return new CopySource(type, sourceRetryCount.HasValue ? sourceRetryCount.Value : null, sourceRetryWait.HasValue ? sourceRetryWait.Value : null, maxConcurrentConnections.HasValue ? maxConcurrentConnections.Value : null, additionalProperties);
         }
     }
 }

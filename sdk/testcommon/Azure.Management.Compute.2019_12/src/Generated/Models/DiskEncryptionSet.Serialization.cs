@@ -16,29 +16,29 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -51,12 +51,12 @@ namespace Azure.Management.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ActiveKey != null)
+            if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey");
                 writer.WriteObjectValue(ActiveKey);
             }
-            if (PreviousKeys != null)
+            if (Optional.IsDefined(PreviousKeys))
             {
                 writer.WritePropertyName("previousKeys");
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState);
@@ -77,50 +77,34 @@ namespace Azure.Management.Compute.Models
 
         internal static DiskEncryptionSet DeserializeDiskEncryptionSet(JsonElement element)
         {
-            EncryptionSetIdentity identity = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<EncryptionSetIdentity> identity = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            KeyVaultAndKeyReference activeKey = default;
-            IList<KeyVaultAndKeyReference> previousKeys = default;
-            string provisioningState = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<KeyVaultAndKeyReference> activeKey = default;
+            Optional<IList<KeyVaultAndKeyReference>> previousKeys = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = EncryptionSetIdentity.DeserializeEncryptionSetIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -131,10 +115,6 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -156,19 +136,11 @@ namespace Azure.Management.Compute.Models
                     {
                         if (property0.NameEquals("activeKey"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             activeKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("previousKeys"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<KeyVaultAndKeyReference> array = new List<KeyVaultAndKeyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -186,10 +158,6 @@ namespace Azure.Management.Compute.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
@@ -197,7 +165,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new DiskEncryptionSet(id, name, type, location, tags, identity, activeKey, previousKeys, provisioningState);
+            return new DiskEncryptionSet(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), identity.HasValue ? identity.Value : null, activeKey.HasValue ? activeKey.Value : null, new ChangeTrackingList<KeyVaultAndKeyReference>(previousKeys), provisioningState.HasValue ? provisioningState.Value : null);
         }
     }
 }

@@ -15,21 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
         {
-            IReadOnlyList<ConnectivityHop> hops = default;
-            ConnectionStatus? connectionStatus = default;
-            int? avgLatencyInMs = default;
-            int? minLatencyInMs = default;
-            int? maxLatencyInMs = default;
-            int? probesSent = default;
-            int? probesFailed = default;
+            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
+            Optional<ConnectionStatus> connectionStatus = default;
+            Optional<int> avgLatencyInMs = default;
+            Optional<int> minLatencyInMs = default;
+            Optional<int> maxLatencyInMs = default;
+            Optional<int> probesSent = default;
+            Optional<int> probesFailed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hops"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -47,60 +43,36 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("connectionStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionStatus = new ConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avgLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     avgLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxLatencyInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesSent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     probesSent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesFailed"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     probesFailed = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ConnectivityInformation(hops, connectionStatus, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed);
+            return new ConnectivityInformation(new ChangeTrackingList<ConnectivityHop>(hops), connectionStatus.HasValue ? connectionStatus.Value : (ConnectionStatus?)null, avgLatencyInMs.HasValue ? avgLatencyInMs.Value : (int?)null, minLatencyInMs.HasValue ? minLatencyInMs.Value : (int?)null, maxLatencyInMs.HasValue ? maxLatencyInMs.Value : (int?)null, probesSent.HasValue ? probesSent.Value : (int?)null, probesFailed.HasValue ? probesFailed.Value : (int?)null);
         }
     }
 }

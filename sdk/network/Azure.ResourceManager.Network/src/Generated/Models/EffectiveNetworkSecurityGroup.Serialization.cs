@@ -15,36 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroup DeserializeEffectiveNetworkSecurityGroup(JsonElement element)
         {
-            SubResource networkSecurityGroup = default;
-            EffectiveNetworkSecurityGroupAssociation association = default;
-            IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
-            string tagMap = default;
+            Optional<SubResource> networkSecurityGroup = default;
+            Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
+            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
+            Optional<string> tagMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroup"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     networkSecurityGroup = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("association"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     association = EffectiveNetworkSecurityGroupAssociation.DeserializeEffectiveNetworkSecurityGroupAssociation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("effectiveSecurityRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,15 +50,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tagMap"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tagMap = property.Value.GetString();
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules, tagMap);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup.HasValue ? networkSecurityGroup.Value : null, association.HasValue ? association.Value : null, new ChangeTrackingList<EffectiveNetworkSecurityRule>(effectiveSecurityRules), tagMap.HasValue ? tagMap.Value : null);
         }
     }
 }

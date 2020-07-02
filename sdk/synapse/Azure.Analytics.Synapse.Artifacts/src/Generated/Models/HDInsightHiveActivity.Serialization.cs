@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName");
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
@@ -30,12 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (DependsOn != null)
+            if (Optional.IsDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn");
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserProperties != null)
+            if (Optional.IsDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties");
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (StorageLinkedServices != null)
+            if (Optional.IsDefined(StorageLinkedServices))
             {
                 writer.WritePropertyName("storageLinkedServices");
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStartArray();
@@ -77,22 +77,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GetDebugInfo != null)
+            if (Optional.IsDefined(GetDebugInfo))
             {
                 writer.WritePropertyName("getDebugInfo");
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
-            if (ScriptPath != null)
+            if (Optional.IsDefined(ScriptPath))
             {
                 writer.WritePropertyName("scriptPath");
                 writer.WriteObjectValue(ScriptPath);
             }
-            if (ScriptLinkedService != null)
+            if (Optional.IsDefined(ScriptLinkedService))
             {
                 writer.WritePropertyName("scriptLinkedService");
                 writer.WriteObjectValue(ScriptLinkedService);
             }
-            if (Defines != null)
+            if (Optional.IsDefined(Defines))
             {
                 writer.WritePropertyName("defines");
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Variables != null)
+            if (Optional.IsDefined(Variables))
             {
                 writer.WritePropertyName("variables");
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout");
                 writer.WriteNumberValue(QueryTimeout.Value);
@@ -129,40 +129,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HDInsightHiveActivity DeserializeHDInsightHiveActivity(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
-            ActivityPolicy policy = default;
+            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            string description = default;
-            IList<ActivityDependency> dependsOn = default;
-            IList<UserProperty> userProperties = default;
-            IList<LinkedServiceReference> storageLinkedServices = default;
-            IList<object> arguments = default;
-            HDInsightActivityDebugInfoOption? getDebugInfo = default;
-            object scriptPath = default;
-            LinkedServiceReference scriptLinkedService = default;
-            IDictionary<string, object> defines = default;
-            IList<object> variables = default;
-            int? queryTimeout = default;
+            Optional<string> description = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<object>> arguments = default;
+            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            Optional<object> scriptPath = default;
+            Optional<LinkedServiceReference> scriptLinkedService = default;
+            Optional<IDictionary<string, object>> defines = default;
+            Optional<IList<object>> variables = default;
+            Optional<int> queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
@@ -178,19 +170,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -208,10 +192,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("userProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -233,10 +213,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("storageLinkedServices"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<LinkedServiceReference> array = new List<LinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -254,10 +230,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("arguments"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -275,37 +247,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("getDebugInfo"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scriptPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             scriptPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("scriptLinkedService"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             scriptLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defines"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -323,10 +279,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("variables"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -344,10 +296,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("queryTimeout"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             queryTimeout = property0.Value.GetInt32();
                             continue;
                         }
@@ -365,7 +313,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy, storageLinkedServices, arguments, getDebugInfo, scriptPath, scriptLinkedService, defines, variables, queryTimeout);
+            return new HDInsightHiveActivity(name, type, description.HasValue ? description.Value : null, new ChangeTrackingList<ActivityDependency>(dependsOn), new ChangeTrackingList<UserProperty>(userProperties), additionalProperties, linkedServiceName.HasValue ? linkedServiceName.Value : null, policy.HasValue ? policy.Value : null, new ChangeTrackingList<LinkedServiceReference>(storageLinkedServices), new ChangeTrackingList<object>(arguments), getDebugInfo.HasValue ? getDebugInfo.Value : (HDInsightActivityDebugInfoOption?)null, scriptPath.HasValue ? scriptPath.Value : null, scriptLinkedService.HasValue ? scriptLinkedService.Value : null, new ChangeTrackingDictionary<string, object>(defines), new ChangeTrackingList<object>(variables), queryTimeout.HasValue ? queryTimeout.Value : (int?)null);
         }
     }
 }

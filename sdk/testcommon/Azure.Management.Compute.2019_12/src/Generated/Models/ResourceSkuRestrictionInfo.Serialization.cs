@@ -15,16 +15,12 @@ namespace Azure.Management.Compute.Models
     {
         internal static ResourceSkuRestrictionInfo DeserializeResourceSkuRestrictionInfo(JsonElement element)
         {
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<string> zones = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,10 +38,6 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("zones"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,7 +54,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuRestrictionInfo(locations, zones);
+            return new ResourceSkuRestrictionInfo(new ChangeTrackingList<string>(locations), new ChangeTrackingList<string>(zones));
         }
     }
 }

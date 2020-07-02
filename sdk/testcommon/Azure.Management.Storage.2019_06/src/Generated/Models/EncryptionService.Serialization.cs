@@ -16,17 +16,17 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (LastEnabledTime != null)
+            if (Optional.IsDefined(LastEnabledTime))
             {
                 writer.WritePropertyName("lastEnabledTime");
                 writer.WriteStringValue(LastEnabledTime.Value, "O");
             }
-            if (KeyType != null)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType");
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -36,40 +36,28 @@ namespace Azure.Management.Storage.Models
 
         internal static EncryptionService DeserializeEncryptionService(JsonElement element)
         {
-            bool? enabled = default;
-            DateTimeOffset? lastEnabledTime = default;
-            KeyType? keyType = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> lastEnabledTime = default;
+            Optional<KeyType> keyType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("lastEnabledTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("keyType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyType = new KeyType(property.Value.GetString());
                     continue;
                 }
             }
-            return new EncryptionService(enabled, lastEnabledTime, keyType);
+            return new EncryptionService(enabled.HasValue ? enabled.Value : (bool?)null, lastEnabledTime.HasValue ? lastEnabledTime.Value : (DateTimeOffset?)null, keyType.HasValue ? keyType.Value : (KeyType?)null);
         }
     }
 }
