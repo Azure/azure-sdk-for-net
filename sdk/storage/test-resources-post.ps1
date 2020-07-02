@@ -119,7 +119,7 @@ $content =
       <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
-      <TenantName>SoftDeleteAccount</TenantName>
+      <TenantName>SoftDeleteTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$SoftDeleteAccountName</AccountName>
       <AccountKey>$SoftDeleteAccountKey</AccountKey>

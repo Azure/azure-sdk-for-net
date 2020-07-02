@@ -2554,7 +2554,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+                e => { });
         }
 
         [Test]
