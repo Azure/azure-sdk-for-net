@@ -46,12 +46,12 @@ namespace Azure.AI.FormRecognizer.Samples
                     {
                         Console.WriteLine($"Field '{field.Name}: ");
 
-                        if (field.LabelText != null)
+                        if (field.LabelData != null)
                         {
-                            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+                            Console.WriteLine($"    Label: '{field.LabelData.Text}");
                         }
 
-                        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+                        Console.WriteLine($"    Value: '{field.ValueData.Text}");
                         Console.WriteLine($"    Confidence: '{field.Confidence}");
                     }
                 }
