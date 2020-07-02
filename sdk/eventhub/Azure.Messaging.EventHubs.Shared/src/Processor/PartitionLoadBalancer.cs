@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -74,6 +75,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         public TimeSpan LoadBalanceInterval { get; set; } = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///   Indicates whether the load balancer believes itself to be in a balanced state
+        ///   when considering its fair share of partitions and whether any partitions
+        ///   remain unclaimed.
+        /// </summary>
+        ///
+        public virtual bool IsBalanced { get; private set; }
 
         /// <summary>
         ///   The partitionIds currently owned by the associated event processor.
@@ -216,7 +225,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (claimedOwnership != null)
             {
                 InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
+                unclaimedPartitions.Remove(claimedOwnership.PartitionId);
             }
+
+            // Update the balanced state.  Consider the load balanced if this processor has its minimum share of partitions, no partitions
+            // remain unclaimed and this cycle did not claim a partition.
+
+            var minimumDesiredPartitions = partitionIds.Length / ActiveOwnershipWithDistribution.Keys.Count;
+            IsBalanced = ((InstanceOwnership.Count >= minimumDesiredPartitions) && (unclaimedPartitions.Count <= 0) && (claimedOwnership == null));
 
             return claimedOwnership;
         }
@@ -271,6 +287,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
             Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
+
             var ownedPartitionsCount = ActiveOwnershipWithDistribution[OwnerIdentifier].Count;
             Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier);
 
@@ -306,7 +323,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 Logger.ShouldStealPartition(OwnerIdentifier);
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
-
                 var partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount = new List<string>();
                 var partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount = new List<string>();
 
