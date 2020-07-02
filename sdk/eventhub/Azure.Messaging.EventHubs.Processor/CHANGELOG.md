@@ -1,7 +1,26 @@
 # Release History
 
-## 5.2.0-preview.1 (Unreleased)
+## 5.2.0-preview.1 (2020-07-06)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Processing events
+
+- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+
+#### Bug fixes and foundation
+
+- Surfacing of exceptions has been fixed to consistently preserve the stack trace in cases where it was previously lost.  (A community contribution, courtesy of _(danielmarbach](https://github.com/danielmarbach))_
+
+- A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
 ## 5.1.0
 
@@ -46,7 +65,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Parsing of connection strings is now more permissive for the `Endpoint` key, allowing additional formats that result from common mistakes when building the string rather than copying the value from the portal.
 
-- The partition manager has been renamed to `StorageManager` to better represent its purpose.  (A community contribution, courtesy of ([marusyk](https://github.com/marusyk))
+- The partition manager has been renamed to `StorageManager` to better represent its purpose.  (A community contribution, courtesy of [marusyk](https://github.com/marusyk))
 
 #### Testing
 
