@@ -496,7 +496,6 @@ namespace Azure.Storage.Queues.Test
         [TestCase("{\"key1\":\"value1\",\"key2\":\"value2\"}")] // more typical json object, but not the actual schema we're looking for
         [TestCase("{\"EncryptedMessageContents\":\"value1\",\"key2\":\"value2\"}")] // one required piece but not the other
         [TestCase("{\"EncryptionData\":{},\"key2\":\"value2\"}")] // one required piece but not the other
-        [TestCase("ᛁᚳ᛫ᛗᚨᚷ᛫ᚷᛚᚨᛋ᛫ᛖᚩᛏᚪᚾ᛫ᚩᚾᛞ᛫ᚻᛁᛏ᛫ᚾᛖ᛫ᚻᛖᚪᚱᛗᛁᚪᚧ᛫ᛗᛖ")]
         [LiveOnly] // cannot seed content encryption key
         public async Task ReadPlaintextMessage(string message)
         {
