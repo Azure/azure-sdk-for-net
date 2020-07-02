@@ -51,7 +51,11 @@ dotnet add package Microsoft.Azure.Storage.Blob
 
 Legacy (v11)
 
+TODO
+
 v12
+
+TODO
 
 #### SAS
 
@@ -59,7 +63,7 @@ There are various SAS tokens that may be generated. Visit our documentation page
 
 Legacy (v11)
 ```c
-
+TODO
 ```
 
 v12
@@ -94,13 +98,11 @@ BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 await service.GetPropertiesAsync();
 ```
 
-Summary:
-
 #### Connection string
 
 The following code assumes you have acquired your connection string (you can do so from the Access Keys tab under Settings in your Portal Storage Account blade). It is recommended to store it in an environment variable.
 
-Parsing the connection string in v11 vs v12.....
+[//]: # (Parsing the connection string in v11 vs v12.....)
 
 Legacy (v11)
 ```c
@@ -132,7 +134,7 @@ await service.GetPropertiesAsync();
 
 ### Shared Access Policies
 
-TBD
+TODO
 
 ### Client hierarchy
 
@@ -148,6 +150,8 @@ In the interest of simplifying the API surface we've made a three top level clie
 | `CloudBlobContainer`  | `BlobContainerClient` |
 | `CloudBlobClient` | `BlobClient` |
 | `CloudBlockBlob` | `BlockBlobClient` |
+
+## Migration Samples
 
 ### Creating a Container
 
@@ -200,7 +204,7 @@ BlobClient blobClient = containerClient.GetBlobClient(filename);
 
 // Open the file and upload its data
 using FileStream uploadFileStream = File.OpenRead(localFilePath);
-await blobClient.UploadAsync(uploadFileStream, true);
+await blobClient.UploadAsync(uploadFileStream, overwrite: true);
 uploadFileStream.Close();
 ```
 
