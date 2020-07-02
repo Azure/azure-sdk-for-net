@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The condition that results in the alert rule being activated.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RuleCondition")]
     public partial class RuleCondition
     {
         /// <summary>
