@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class DirectoryClientTests : PathTestBase
     {
-        public DirectoryClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public DirectoryClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -356,7 +356,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -2405,6 +2405,182 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Verify the file name exists in the filesystem
             Assert.AreEqual(2, names.Count);
             Assert.Contains(fullPathName, names);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClient_SpecialCharactersUnescaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            string subDirectoryName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            DataLakeDirectoryClient subDirectory = InstrumentClient(directory.GetSubDirectoryClient(subDirectoryName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{directoryName}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            string expectedPath = $"{directoryName}/{subDirectoryName}";
+
+            // Act
+            Response<PathInfo> createResponse = await subDirectory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem subDirectoryPathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(subDirectoryPathItem);
+            Assert.AreEqual(subDirectoryName, subDirectory.Name);
+            Assert.AreEqual(expectedPath, subDirectory.Path);
+
+            Assert.AreEqual(blobUri, subDirectory.Uri);
+            Assert.AreEqual(blobUri, subDirectory.BlobUri);
+            Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClient_SpecialCharactersEscaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            string fileName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{directoryName}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            string expectedPath = $"{directoryName}/{fileName}";
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(expectedPath, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
+        }
+
+        [Test]
+        public async Task GetFileClient_SpecialCharactersUnescaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            string fileName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            DataLakeDirectoryClient subDirectory = InstrumentClient(directory.GetSubDirectoryClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{directoryName}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            string expectedPath = $"{directoryName}/{fileName}";
+
+            // Act
+            Response<PathInfo> createResponse = await subDirectory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem subDirectoryPathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(subDirectoryPathItem);
+            Assert.AreEqual(fileName, subDirectory.Name);
+            Assert.AreEqual(expectedPath, subDirectory.Path);
+
+            Assert.AreEqual(blobUri, subDirectory.Uri);
+            Assert.AreEqual(blobUri, subDirectory.BlobUri);
+            Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+        }
+
+        [Test]
+        public async Task GetFileClient_SpecialCharactersEscaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            string fileName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{directoryName}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            string expectedPath = $"{directoryName}/{fileName}";
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                pathItems.Add(pathItem);
+            }
+
+            PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(filePathItem);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(expectedPath, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndFileAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeFileClient file = await subdirectory.CreateFileAsync(fileName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{fileName}", file.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{fileName}", file.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAndSubDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string subDirectoryName = GetNewDirectoryName();
+            string lowerSubDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(subDirectoryName);
+            DataLakeDirectoryClient lowerSubDirectory = await subdirectory.CreateSubDirectoryAsync(lowerSubDirectoryName);
+
+            // Assert
+            Assert.AreEqual($"{subdirectory.DfsUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.DfsUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.BlobUri.AbsoluteUri}/{lowerSubDirectoryName}", lowerSubDirectory.BlobUri.AbsoluteUri);
+            Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken).ConfigureAwait(false);
 
             return Page<BlobItem>.FromValues(
-                response.Value.BlobItems.ToArray(),
+                response.Value.BlobItems.ToBlobItems().ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }
@@ -86,9 +86,17 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Snapshots);
             }
+            if ((traits & BlobTraits.Tags) == BlobTraits.Tags)
+            {
+                items.Add(ListBlobsIncludeItem.Tags);
+            }
             if ((states & BlobStates.Uncommitted) == BlobStates.Uncommitted)
             {
                 items.Add(ListBlobsIncludeItem.Uncommittedblobs);
+            }
+            if ((states & BlobStates.Version) == BlobStates.Version)
+            {
+                items.Add(ListBlobsIncludeItem.Versions);
             }
             return items.Count > 0 ? items : null;
         }

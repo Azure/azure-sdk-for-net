@@ -323,7 +323,26 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            if (directoryName.Length == 0)
+            {
+                return new DataLakeDirectoryClient(
+                    Uri.AppendToPath(directoryName),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics);
+            }
+            else
+            {
+                return new DataLakeDirectoryClient(
+                Uri,
+                directoryName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+            }
+        }
+
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
@@ -344,7 +363,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileClient(
+                Uri,
+                fileName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.

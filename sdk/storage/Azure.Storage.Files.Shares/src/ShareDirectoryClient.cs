@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.Shares
@@ -323,7 +324,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         public virtual ShareFileClient GetFileClient(string fileName)
-            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+        {
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+            shareUriBuilder.DirectoryOrFilePath += $"/{fileName}";
+            return new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
 
         /// <summary>
         /// Creates a new <see cref="ShareDirectoryClient"/> object by appending
@@ -334,7 +343,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+            shareUriBuilder.DirectoryOrFilePath += $"/{subdirectoryName}";
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -344,10 +361,10 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName;
+                _name = builder.LastDirectoryOrFileName.UnescapePath();
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
+                _path = builder.DirectoryOrFilePath.UnescapePath();
             }
         }
 

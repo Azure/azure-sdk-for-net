@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -413,7 +415,44 @@ namespace Azure.Storage.Blobs
 
         #region GetBlobContainers
         /// <summary>
-        /// The <see cref="GetBlobContainers"/> operation returns an async
+        /// The <see cref="GetBlobContainers(BlobContainerTraits, BlobContainerStates, string, CancellationToken)"/>
+        /// operation returns an asyncsequence of blob containers in the storage account.  Enumerating the
+        /// blob containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">List Containers</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blob containers.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the blob containers.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only containers
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
+        /// describing the blob containers in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobContainerItem> GetBlobContainers(
+            BlobContainerTraits traits = BlobContainerTraits.None,
+            BlobContainerStates states = BlobContainerStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobContainersAsyncCollection(this, traits, states, prefix).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobContainers(BlobContainerTraits, string, CancellationToken)"/> operation returns an async
         /// sequence of blob containers in the storage account.  Enumerating the
         /// blob containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
@@ -439,19 +478,59 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobContainerTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobContainersAsyncCollection(this, traits, default, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobContainersAsync"/> operation returns an async
-        /// sequence of blob containers in the storage account.  Enumerating the
+        /// The <see cref="GetBlobContainersAsync(BlobContainerTraits, BlobContainerStates, string, CancellationToken)"/>
+        /// operation returns an async sequence of blob containers in the storage account.  Enumerating the
         /// blob containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">List Containers</see>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blob containers.
+        /// </param>
+        /// <param name="states">
+        /// Specifies states options for shaping the blob containers.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only containers
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// containers in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
+            BlobContainerTraits traits = BlobContainerTraits.None,
+            BlobContainerStates states = BlobContainerStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobContainersAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobContainersAsync(BlobContainerTraits, string, CancellationToken)"/>
+        /// operation returns an async sequence of blob containers in the storage account.  Enumerating the
+        /// blob containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blob containers.
@@ -472,11 +551,14 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobContainerTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobContainersAsyncCollection(this, traits, default, prefix).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersInternal"/> operation returns a
@@ -484,7 +566,7 @@ namespace Azure.Storage.Blobs
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
         /// and the <see cref="BlobContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetBlobContainersAsync"/>
+        /// empty to make subsequent calls to <see cref="GetBlobContainersInternal"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
         ///
@@ -501,6 +583,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="traits">
         /// Specifies trait options for shaping the blob containers.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the blob containers.
         /// </param>
         /// <param name="prefix">
         /// Specifies a string that filters the results to return only containers
@@ -528,6 +613,7 @@ namespace Azure.Storage.Blobs
         internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
             string continuationToken,
             BlobContainerTraits traits,
+            BlobContainerStates states,
             string prefix,
             int? pageSizeHint,
             bool async,
@@ -551,7 +637,7 @@ namespace Azure.Storage.Blobs
                         marker: continuationToken,
                         prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: traits.AsIncludeType(),
+                        include: BlobExtensions.AsIncludeItems(traits, states),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1349,5 +1435,265 @@ namespace Azure.Storage.Blobs
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion DeleteBlobContainer
+
+        #region UndeleteBlobContainer
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="destinationContainerName">
+        /// Optional.  Use this parameter if you would like to restore the container
+        /// under a different name.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual Response<BlobContainerClient> UndeleteBlobContainer(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            string destinationContainerName = default,
+            CancellationToken cancellationToken = default)
+            => UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                destinationContainerName,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="destinationContainerName">
+        /// Optional.  Use this parameter if you would like to restore the container
+        /// under a different name.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            string destinationContainerName = default,
+            CancellationToken cancellationToken = default)
+            => await UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                destinationContainerName,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="destinationContainerName">
+        /// Optional.  Use this parameter if you would like to restore the container
+        /// under a different name.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<BlobContainerClient>> UndeleteBlobContainerInternal(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            string destinationContainerName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(deletedContainerName)}: {deletedContainerName}\n" +
+                    $"{nameof(deletedContainerVersion)}: {deletedContainerVersion}");
+
+                try
+                {
+                    BlobContainerClient containerClient;
+                    if (destinationContainerName != null)
+                    {
+                        containerClient = GetBlobContainerClient(destinationContainerName);
+                    }
+                    else
+                    {
+                        containerClient = GetBlobContainerClient(deletedContainerName);
+                    }
+
+                    Response response = await BlobRestClient.Container.RestoreAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        containerClient.Uri,
+                        Version.ToVersionString(),
+                        deletedContainerName: deletedContainerName,
+                        deletedContainerVersion: deletedContainerVersion,
+                        async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(UndeleteBlobContainer)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(containerClient, response);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion UndeleteBlobContainer
+
+        #region FilterBlobs
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter enables the caller to query blobs whose tags match a given expression.
+        /// The given expression must evaluate to true for a blob to be returned in the results.
+        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobTagItem> FindBlobsByTags(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter enables the caller to query blobs whose tags match a given expression.
+        /// The given expression must evaluate to true for a blob to be returned in the results.
+        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobTagItem> FindBlobsByTagsAsync(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
+            string marker,
+            string expression,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobServiceClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(expression)}: {expression}");
+
+                try
+                {
+                    return await BlobRestClient.Service.FilterBlobsAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        version: Version.ToVersionString(),
+                        where: expression,
+                        marker: marker,
+                        maxresults: pageSizeHint,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                }
+            }
+        }
+        #endregion FilterBlobs
     }
 }

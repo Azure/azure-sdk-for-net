@@ -180,8 +180,31 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
-            : base(directoryUri, pipeline, version, clientDiagnostics)
+        internal DataLakeDirectoryClient(
+            Uri directoryUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  directoryUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
+        {
+        }
+
+        internal DataLakeDirectoryClient(
+            Uri fileSystemUri,
+            string directoryPath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileSystemUri,
+                  directoryPath,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
         {
         }
         #endregion ctors
@@ -195,7 +218,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileClient(
+                Uri,
+                $"{Path}/{fileName}",
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> object by appending
@@ -206,7 +234,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeDirectoryClient(
+                Uri,
+                $"{Path}/{subdirectoryName}",
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         #region Create
         /// <summary>

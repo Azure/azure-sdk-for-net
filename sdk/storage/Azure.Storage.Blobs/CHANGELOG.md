@@ -1,7 +1,20 @@
 # Release History
 
 ## 12.5.0-preview.5 (Unreleased)
-
+- Added support for service version 2019-12-12.
+- Added support for Blob Tags.
+- Added support for Blob Version.
+- Added support for Object Replication Service.
+- Added support for Append Seal.
+- Added support for Jumbo Blobs.
+- Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
+- Added RehydratePriority to BlobProperties and BlobItemProperties.
+- Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
+- Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
+- Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
 
 ## 12.5.0-preview.4 (2020-06)
 - This preview contains bug fixes to improve quality.

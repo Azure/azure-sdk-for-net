@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class FileSystemClientTests : DataLakeTestBase
     {
-        public FileSystemClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileSystemClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await fileSystem.DeleteAsync();
@@ -364,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -404,7 +404,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystemClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -524,7 +524,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [Test]
@@ -658,7 +658,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1684,6 +1684,122 @@ namespace Azure.Storage.Files.DataLake.Tests
                         conditions: conditions),
                     e => { });
             }
+        }
+
+        [Test]
+        public async Task GetDirectoryClient_SpecialCharactersUnescaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+
+            // Act
+            Response<PathInfo> createResponse = await directory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync())
+            {
+                pathItems.Add(pathItem);
+            }
+
+            // Assert
+            Assert.AreEqual(directoryName, pathItems[0].Name);
+            Assert.AreEqual(directoryName, directory.Name);
+            Assert.AreEqual(directoryName, directory.Path);
+
+            Assert.AreEqual(blobUri, directory.Uri);
+            Assert.AreEqual(blobUri, directory.BlobUri);
+            Assert.AreEqual(dfsUri, directory.DfsUri);
+        }
+
+        [Test]
+        public async Task GetDirectoryClient_SpecialCharactersEscaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+
+            // Act
+            Response<PathInfo> createResponse = await directory.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync())
+            {
+                pathItems.Add(pathItem);
+            }
+
+            // Assert
+            Assert.AreEqual(directoryName, pathItems[0].Name);
+            Assert.AreEqual(directoryName, directory.Name);
+            Assert.AreEqual(directoryName, directory.Path);
+
+            Assert.AreEqual(blobUri, directory.Uri);
+            Assert.AreEqual(blobUri, directory.BlobUri);
+            Assert.AreEqual(dfsUri, directory.DfsUri);
+        }
+
+        [Test]
+        public async Task GetFileClient_SpecialCharactersUnescaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string fileName = "%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B";
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/%2521%2527%2528%2529%253B%255B%255D%2540%2526%2525%253D%252B%2524%252C%2523äÄöÖüÜß%253B");
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync())
+            {
+                pathItems.Add(pathItem);
+            }
+
+            // Assert
+            Assert.AreEqual(fileName, pathItems[0].Name);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(fileName, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
+        }
+
+        [Test]
+        public async Task GetFileClient_SpecialCharactersEscaped()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string fileName = "!'();[]@&%=+$,#äÄöÖüÜß;";
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B");
+
+            // Act
+            Response<PathInfo> createResponse = await file.CreateAsync();
+
+            List<PathItem> pathItems = new List<PathItem>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync())
+            {
+                pathItems.Add(pathItem);
+            }
+
+            // Assert
+            Assert.AreEqual(fileName, pathItems[0].Name);
+            Assert.AreEqual(fileName, file.Name);
+            Assert.AreEqual(fileName, file.Path);
+
+            Assert.AreEqual(blobUri, file.Uri);
+            Assert.AreEqual(blobUri, file.BlobUri);
+            Assert.AreEqual(dfsUri, file.DfsUri);
         }
 
         private IEnumerable<AccessConditionParameters> Conditions_Data
