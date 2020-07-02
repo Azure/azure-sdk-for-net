@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Avs.Models
 {
 
     /// <summary>
-    /// Defines values for ClusterProvisioningState.
+    /// Defines values for HcxEnterpriseSiteStatus.
     /// </summary>
-    public static class ClusterProvisioningState
+    public static class HcxEnterpriseSiteStatus
     {
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Cancelled = "Cancelled";
-        public const string Deleting = "Deleting";
-        public const string Updating = "Updating";
+        public const string Available = "Available";
+        public const string Consumed = "Consumed";
+        public const string Deactivated = "Deactivated";
+        public const string Deleted = "Deleted";
     }
 }

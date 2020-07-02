@@ -16,31 +16,29 @@ namespace Microsoft.Azure.Management.Avs.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of a cluster
+    /// The properties of a default cluster
     /// </summary>
-    public partial class ClusterProperties : DefaultClusterProperties
+    public partial class ManagementCluster : ClusterUpdateProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterProperties class.
+        /// Initializes a new instance of the ManagementCluster class.
         /// </summary>
-        public ClusterProperties()
+        public ManagementCluster()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterProperties class.
+        /// Initializes a new instance of the ManagementCluster class.
         /// </summary>
-        /// <param name="clusterId">The identity</param>
         /// <param name="clusterSize">The cluster size</param>
+        /// <param name="clusterId">The identity</param>
         /// <param name="hosts">The hosts</param>
-        /// <param name="provisioningState">The state of the cluster
-        /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Updating'</param>
-        public ClusterProperties(int? clusterId = default(int?), int? clusterSize = default(int?), IList<string> hosts = default(IList<string>), string provisioningState = default(string))
-            : base(clusterId, clusterSize, hosts)
+        public ManagementCluster(int? clusterSize = default(int?), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
+            : base(clusterSize)
         {
-            ProvisioningState = provisioningState;
+            ClusterId = clusterId;
+            Hosts = hosts;
             CustomInit();
         }
 
@@ -50,11 +48,16 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the state of the cluster provisioning. Possible values
-        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Updating'
+        /// Gets the identity
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
+        [JsonProperty(PropertyName = "clusterId")]
+        public int? ClusterId { get; private set; }
+
+        /// <summary>
+        /// Gets the hosts
+        /// </summary>
+        [JsonProperty(PropertyName = "hosts")]
+        public IList<string> Hosts { get; private set; }
 
     }
 }

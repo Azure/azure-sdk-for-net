@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Management.Avs.Models
         public IDictionary<string, int?> HostsRemaining { get; private set; }
 
         /// <summary>
-        /// Gets or sets host quota is active for current subscription.
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// Gets host quota is active for current subscription. Possible values
+        /// include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "quotaEnabled")]
-        public string QuotaEnabled { get; set; }
+        public string QuotaEnabled { get; private set; }
 
     }
 }
