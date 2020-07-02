@@ -314,6 +314,14 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
+    "SOFT_DELETE_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('softDeleteAccountName')]"
+    },
+    "SOFT_DELETE_ACCOUNT_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    },
     "KEYVAULT_URI":{
       "type": "string",
       "value": "[variables('azureKeyVaultUrl')]"
