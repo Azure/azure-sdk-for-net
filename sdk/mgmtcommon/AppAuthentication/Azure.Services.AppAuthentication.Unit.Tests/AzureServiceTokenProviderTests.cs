@@ -113,6 +113,39 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// Test that the force refresh works as expected.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task GetAppAuthResultForceRefreshTest()
+        {
+            // Create two instances of AzureServiceTokenProvider based on AzureCliAccessTokenProvider. 
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+            AzureServiceTokenProvider azureServiceTokenProvider1 = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+
+            // Part 1: Verify force refresh of sequential requests will request new tokens.
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(1, mockProcessManager.HitCount);
+
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(1, mockProcessManager.HitCount); // cache hit.
+
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId, forceRefresh: true);
+            Assert.Equal(2, mockProcessManager.HitCount); // force refresh hit.
+
+            await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(2, mockProcessManager.HitCount); // cache hit.
+
+            await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId, forceRefresh: true);
+            Assert.Equal(3, mockProcessManager.HitCount); // force refresh hit.
+
+            // Part 2: Verify parallel force-refreshes re-use the same fetched token.
+            // TODO: current system does not allow for controlling this flow, test would be non-deterministic and intermitently fail.
+        }
+
+        /// <summary>
         /// Check that the exception thrown by the AzureServiceTokenProvider is as expected. 
         /// </summary>
         /// <returns></returns>
