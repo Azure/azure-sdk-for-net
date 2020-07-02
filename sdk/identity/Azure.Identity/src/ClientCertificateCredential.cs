@@ -392,6 +392,15 @@ namespace Azure.Identity
                     X509Certificate2 certWithoutPrivateKey = new X509Certificate2(Convert.FromBase64String(certificateMatch.Groups[3].Value));
                     Certificate = (X509Certificate2)copyWithPrivateKeyMethodInfo.Invoke(null, new object[] { certWithoutPrivateKey, privateKey });
 
+                    // On desktop NetFX it appears the PrivateKey property is not initialized after calling CopyWithPrivateKey
+                    // this leads to an issue when using the MSAL ConfidentialClient which uses the PrivateKey property to get the
+                    // signing key vs. the extension method GetRsaPrivateKey which we were previously using when signing the claim ourselves.
+                    // Because of this we need to set PrivateKey to the instance we created to deserialize the private key
+                    if (Certificate.PrivateKey == null)
+                    {
+                        Certificate.PrivateKey = privateKey;
+                    }
+
                     return Certificate;
                 }
                 catch (Exception e) when (!(e is OperationCanceledException))

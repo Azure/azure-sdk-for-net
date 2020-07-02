@@ -34,12 +34,6 @@ namespace Azure.Identity.Tests
         [TestCase(false)]
         public async Task FromCertificatePath(bool usePem)
         {
-#if NET461
-            if (usePem)
-            {
-                Assert.Ignore("known issue");
-            }
-#endif
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = usePem ? TestEnvironment.ServicePrincipalCertificatePemPath : TestEnvironment.ServicePrincipalCertificatePfxPath;
