@@ -16,6 +16,6 @@ namespace Azure.Data.Tables.Tests
 
         public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryKeyEnvironmentVariableName);
         public string AccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
-        public string StorageUri => string.Format(StorageUriFormat, AccountName);
+        public string StorageUri => !string.IsNullOrEmpty(StorageEndpointSuffix) ? $"https://{AccountName}.table.{StorageEndpointSuffix}" : string.Format(StorageUriFormat, AccountName) ;
     }
 }
