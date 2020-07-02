@@ -9,10 +9,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Tests.Samples;
 using NUnit.Framework;
 
-namespace Azure.Search.Documents.Tests.Models
+namespace Azure.Search.Documents.Tests.Samples
 {
     public sealed class IndexingParametersExtensionsTests
     {
