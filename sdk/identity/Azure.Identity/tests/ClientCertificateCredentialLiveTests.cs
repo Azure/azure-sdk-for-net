@@ -59,6 +59,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token2 = await credential2.GetTokenAsync(tokenRequestContext);
 
+            // this assert is conditional because the access token is scrubbed in the recording so they will never be different
             if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
             {
                 Assert.AreNotEqual(token.Token, token2.Token);
@@ -93,6 +94,7 @@ namespace Azure.Identity.Tests
 
             AccessToken token2 = await credential2.GetTokenAsync(tokenRequestContext);
 
+            // this assert is conditional because the access token is scrubbed in the recording so they will never be different
             if (Mode != RecordedTestMode.Playback && Mode != RecordedTestMode.None)
             {
                 Assert.AreNotEqual(token.Token, token2.Token);

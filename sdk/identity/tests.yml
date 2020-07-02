@@ -7,7 +7,7 @@ extends:
     PreSteps:
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -Encoding Byte
-          Set-Content -Path $(Agent.TempDirectory)/test.pfx -Value $env:PEM_CONTENTS
+          Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
         env:
           PFX_CONTENTS: $(net-identity-spcert-pfx)
           PEM_CONTENTS: $(net-identity-spcert-pem)
