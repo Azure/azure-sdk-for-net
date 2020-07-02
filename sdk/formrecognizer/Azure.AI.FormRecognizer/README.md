@@ -277,6 +277,7 @@ Train a machine-learned model on your own form types. The resulting model will b
 
 ```C# Snippet:FormRecognizerSample4TrainModelWithForms
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
+// Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
