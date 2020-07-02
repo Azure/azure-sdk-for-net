@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
                 await receiver.CompleteMessageAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.AsBytes().ToArray());
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.Bytes.ToArray());
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.AsBytes().ToArray().SequenceEqual(sentMessage.Body.AsBytes().ToArray()));
+                    Assert.IsTrue(received.Body.Bytes.ToArray().SequenceEqual(sentMessage.Body.Bytes.ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Label, sentMessage.Label);
