@@ -157,6 +157,51 @@
             }
         },
         {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('softDeleteAccountName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": "[variables('networkAcls')]",
+                "supportsHttpsTrafficOnly": true,
+                "encryption": "[variables('encryption')]",
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('softDeleteAccountName'), '/default')]",
+            "properties": {
+                "deleteRetentionPolicy": {
+                      "enabled": true,
+                      "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('softDeleteAccountName')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('softDeleteAccountName'), '/default')]",
+            "properties": {
+                "shareDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('softDeleteAccountName')]"
+            ]
+        },
+        {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "[variables('keyvaultApiVersion')]",
             "name": "[variables('keyvaultName')]",
