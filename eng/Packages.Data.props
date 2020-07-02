@@ -11,8 +11,8 @@
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.AI.TextAnalytics" Version="1.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.2.2" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.1" />
+    <PackageReference Update="Azure.Core" Version="1.3.0" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.2" />
     <PackageReference Update="Azure.Identity" Version="1.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
