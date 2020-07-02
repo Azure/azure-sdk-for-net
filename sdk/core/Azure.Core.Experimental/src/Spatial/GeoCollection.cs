@@ -9,23 +9,23 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a geometry that is composed of multiple geometries.
     /// </summary>
-    public sealed class CollectionGeometry : Geometry
+    public sealed class GeoCollection : Geometry
     {
         /// <summary>
-        /// Initializes new instance of <see cref="CollectionGeometry"/>.
+        /// Initializes new instance of <see cref="GeoCollection"/>.
         /// </summary>
         /// <param name="geometries">The collection of inner geometries.</param>
-        public CollectionGeometry(IEnumerable<Geometry> geometries): this(geometries, null, DefaultProperties)
+        public GeoCollection(IEnumerable<Geometry> geometries): this(geometries, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="CollectionGeometry"/>.
+        /// Initializes new instance of <see cref="GeoCollection"/>.
         /// </summary>
         /// <param name="geometries">The collection of inner geometries.</param>
-        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
+        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public CollectionGeometry(IEnumerable<Geometry> geometries, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        public GeoCollection(IEnumerable<Geometry> geometries, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(geometries, nameof(geometries));
 

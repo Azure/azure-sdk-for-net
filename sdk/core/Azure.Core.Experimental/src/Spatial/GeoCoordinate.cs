@@ -8,7 +8,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a position that is a part of geometry.
     /// </summary>
-    public readonly struct GeometryPosition : IEquatable<GeometryPosition>
+    public readonly struct GeoCoordinate : IEquatable<GeoCoordinate>
     {
         /// <summary>
         /// Gets the altitude of the position.
@@ -26,21 +26,21 @@ namespace Azure.Core.Spatial
         public double Latitude { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryPosition"/>.
+        /// Initializes a new instance of <see cref="GeoCoordinate"/>.
         /// </summary>
         /// <param name="longitude">The longitude of the position.</param>
         /// <param name="latitude">The latitude of the position.</param>
-        public GeometryPosition(double longitude, double latitude) : this(longitude, latitude, null)
+        public GeoCoordinate(double longitude, double latitude) : this(longitude, latitude, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryPosition"/>.
+        /// Initializes a new instance of <see cref="GeoCoordinate"/>.
         /// </summary>
         /// <param name="longitude">The longitude of the position.</param>
         /// <param name="latitude">The latitude of the position.</param>
         /// <param name="altitude">The altitude of the position.</param>
-        public GeometryPosition(double longitude, double latitude, double? altitude)
+        public GeoCoordinate(double longitude, double latitude, double? altitude)
         {
             Longitude = longitude;
             Latitude = latitude;
@@ -48,7 +48,7 @@ namespace Azure.Core.Spatial
         }
 
         /// <inheritdoc />
-        public bool Equals(GeometryPosition other)
+        public bool Equals(GeoCoordinate other)
         {
             return Nullable.Equals(Altitude, other.Altitude) && Longitude.Equals(other.Longitude) && Latitude.Equals(other.Latitude);
         }
@@ -56,7 +56,7 @@ namespace Azure.Core.Spatial
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            return obj is GeometryPosition other && Equals(other);
+            return obj is GeoCoordinate other && Equals(other);
         }
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.Core.Spatial
         /// <param name="left">The first position to compare.</param>
         /// <param name="right">The first position to compare.</param>
         /// <returns><c>true</c> if the value of <c>left</c> is the same as the value of <c>b</c>; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(GeometryPosition left, GeometryPosition right)
+        public static bool operator ==(GeoCoordinate left, GeoCoordinate right)
         {
             return left.Equals(right);
         }
@@ -79,7 +79,7 @@ namespace Azure.Core.Spatial
         /// <param name="left">The first position to compare.</param>
         /// <param name="right">The first position to compare.</param>
         /// <returns><c>false</c> if the value of <c>left</c> is the same as the value of <c>b</c>; otherwise, <c>true</c>.</returns>
-        public static bool operator !=(GeometryPosition left, GeometryPosition right)
+        public static bool operator !=(GeoCoordinate left, GeoCoordinate right)
         {
             return !left.Equals(right);
         }

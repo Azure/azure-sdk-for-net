@@ -7,25 +7,25 @@ using System.Linq;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    /// Represents a geometry that is composed of multiple <see cref="LineGeometry"/>.
+    /// Represents a geometry that is composed of multiple <see cref="GeoLine"/>.
     /// </summary>
-    public sealed class MultiLineGeometry : Geometry
+    public sealed class GeoMultiLine : Geometry
     {
         /// <summary>
-        /// Initializes new instance of <see cref="MultiLineGeometry"/>.
+        /// Initializes new instance of <see cref="GeoMultiLine"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lines): this(lines, null, DefaultProperties)
+        public GeoMultiLine(IEnumerable<GeoLine> lines): this(lines, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="MultiLineGeometry"/>.
+        /// Initializes new instance of <see cref="GeoMultiLine"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
+        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lines, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        public GeoMultiLine(IEnumerable<GeoLine> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(lines, nameof(lines));
 
@@ -35,6 +35,6 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<LineGeometry> Lines { get; }
+        public IReadOnlyList<GeoLine> Lines { get; }
     }
 }

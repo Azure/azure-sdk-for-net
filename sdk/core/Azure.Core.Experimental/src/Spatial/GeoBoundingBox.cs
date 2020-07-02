@@ -8,7 +8,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents information about the coordinate range of the <see cref="Geometry"/>.
     /// </summary>
-    public readonly struct GeometryBoundingBox : IEquatable<GeometryBoundingBox>
+    public readonly struct GeoBoundingBox : IEquatable<GeoBoundingBox>
     {
         /// <summary>
         /// The westmost value of <see cref="Geometry"/> coordinates.
@@ -41,16 +41,16 @@ namespace Azure.Core.Spatial
         public double? MaxAltitude { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryBoundingBox"/>.
+        /// Initializes a new instance of <see cref="GeoBoundingBox"/>.
         /// </summary>
-        public GeometryBoundingBox(double west, double south, double east, double north) : this(west, south, east, north, null, null)
+        public GeoBoundingBox(double west, double south, double east, double north) : this(west, south, east, north, null, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GeometryBoundingBox"/>.
+        /// Initializes a new instance of <see cref="GeoBoundingBox"/>.
         /// </summary>
-        public GeometryBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude)
+        public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude)
         {
             West = west;
             South = south;
@@ -61,7 +61,7 @@ namespace Azure.Core.Spatial
         }
 
         /// <inheritdoc />
-        public bool Equals(GeometryBoundingBox other)
+        public bool Equals(GeoBoundingBox other)
         {
             return West.Equals(other.West) &&
                    South.Equals(other.South) &&
@@ -74,7 +74,7 @@ namespace Azure.Core.Spatial
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            return obj is GeometryBoundingBox other && Equals(other);
+            return obj is GeoBoundingBox other && Equals(other);
         }
 
         /// <inheritdoc />
