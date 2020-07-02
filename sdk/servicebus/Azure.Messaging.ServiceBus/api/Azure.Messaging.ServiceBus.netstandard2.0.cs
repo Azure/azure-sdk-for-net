@@ -152,7 +152,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
-        public ServiceBusMessage(string body, System.Text.Encoding encoding) { }
         public Azure.Core.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
