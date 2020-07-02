@@ -187,12 +187,13 @@ namespace Azure.Core.Tests
         {
             var requestMre = new ManualResetEventSlim(true);
             var responseMre = new ManualResetEventSlim(true);
+            var expiresOnOffset = 2;
             var credential = new TokenCredentialStub((r, c) =>
             {
                 requestMre.Set();
                 responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
-            }, IsAsync);
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffsetHelpers.GetUtcNow().AddSeconds(expiresOnOffset++));
+            }, IsAsync, TimeSpan.FromSeconds(2));
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -272,10 +273,44 @@ namespace Azure.Core.Tests
             Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
         }
 
+        [Test]
+        public void BearerTokenAuthenticationPolicy_GatedConcurrentCallsCancelled()
+        {
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                throw new InvalidOperationException("Error");
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
+            responseMre.Set();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+        }
+
         private class TokenCredentialStub : TokenCredential
         {
             public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync)
+                : this (handler, isAsync, TimeSpan.FromMinutes(2))
+            { }
+
+            public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync, TimeSpan tokenRefreshOffset)
             {
+                RefreshOffset = new TokenRefreshOptions(tokenRefreshOffset);
+
                 if (isAsync)
                 {
 #pragma warning disable 1998
@@ -287,6 +322,8 @@ namespace Azure.Core.Tests
                     _getTokenHandler = handler;
                 }
             }
+
+            public override TokenRefreshOptions RefreshOffset { get; }
 
             private readonly Func<TokenRequestContext, CancellationToken, ValueTask<AccessToken>> _getTokenAsyncHandler;
             private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _getTokenHandler;

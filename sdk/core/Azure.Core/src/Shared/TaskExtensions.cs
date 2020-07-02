@@ -15,27 +15,7 @@ namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {
-        public static T WaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
-        {
-            try
-            {
-                task.Wait(cancellationToken);
-            }
-            catch (Exception)
-            {
-                // ignore exception here to rethrow it later
-            }
-
-            if (!task.IsCompleted)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            return task.GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        }
-
-        public static WithCancellationAwaitable<T> AwaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+        public static WithCancellationAwaitable<T> AwaitWithCancellation<T>(this ValueTask<T> task, CancellationToken cancellationToken)
             => new WithCancellationAwaitable<T>(task, cancellationToken);
 
         public static T EnsureCompleted<T>(this Task<T> task)
@@ -161,9 +141,9 @@ namespace Azure.Core.Pipeline
         public readonly struct WithCancellationAwaitable<T>
         {
             private readonly CancellationToken _cancellationToken;
-            private readonly ConfiguredTaskAwaitable<T> _awaitable;
+            private readonly ConfiguredValueTaskAwaitable<T> _awaitable;
 
-            public WithCancellationAwaitable(Task<T> task, CancellationToken cancellationToken)
+            public WithCancellationAwaitable(ValueTask<T> task, CancellationToken cancellationToken)
             {
                 _awaitable = task.ConfigureAwait(false);
                 _cancellationToken = cancellationToken;
@@ -175,9 +155,9 @@ namespace Azure.Core.Pipeline
         public readonly struct WithCancellationAwaiter<T> : ICriticalNotifyCompletion
         {
             private readonly CancellationToken _cancellationToken;
-            private readonly ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter _taskAwaiter;
+            private readonly ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter _taskAwaiter;
 
-            public WithCancellationAwaiter(ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter awaiter, CancellationToken cancellationToken)
+            public WithCancellationAwaiter(ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter awaiter, CancellationToken cancellationToken)
             {
                 _taskAwaiter = awaiter;
                 _cancellationToken = cancellationToken;
