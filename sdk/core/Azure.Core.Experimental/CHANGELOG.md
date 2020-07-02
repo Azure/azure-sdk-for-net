@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.2 (Unreleased)
+## 0.1.0-preview.2
 
 ### Breaking Changes
 - `BinaryData`: Renamed `AsString` to `ToString`.
