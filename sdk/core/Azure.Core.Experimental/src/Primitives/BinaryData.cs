@@ -42,7 +42,8 @@ namespace Azure.Core
         public ReadOnlyMemory<byte> Bytes { get; }
 
         /// <summary>
-        /// Creates a binary data instance from bytes.
+        /// Creates a binary data instance by making a copy
+        /// of the passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
         public BinaryData(ReadOnlySpan<byte> data)
@@ -51,7 +52,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates a binary data instance from bytes.
+        /// Creates a binary data instance by wrapping the
+        /// passed in bytes.
         /// </summary>
         /// <param name="data">Byte data.</param>
         private BinaryData(ReadOnlyMemory<byte> data)
@@ -126,7 +128,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
-        /// the specified type using the <see cref="JsonObjectSerializer"/>.
+        /// the <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
         /// <param name="data">The data to use.</param>
@@ -138,8 +140,8 @@ namespace Azure.Core
             Serialize<T>(data, new JsonObjectSerializer(), cancellationToken);
 
         /// <summary>
-        /// Creates a BinaryData instance from the specified data using
-        /// the specified type using the <see cref="JsonObjectSerializer"/>.
+        /// Creates a BinaryData instance from the specified data
+        /// using the <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
         /// <param name="data">The data to use.</param>
@@ -150,10 +152,9 @@ namespace Azure.Core
             CancellationToken cancellationToken = default) =>
             await SerializeInternalAsync<T>(data, new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
-
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
-        /// the specified type.
+        /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
         /// <param name="data">The data to use.</param>
@@ -169,7 +170,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Creates a BinaryData instance from the specified data using
-        /// the specified type.
+        /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type of the data.</typeparam>
         /// <param name="data">The data to use.</param>
@@ -233,7 +234,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Converts the BinaryData to the specified type.
+        /// Converts the BinaryData to the specified type using
+        /// the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
@@ -245,7 +247,8 @@ namespace Azure.Core
             DeserializeInternalAsync<T>(serializer, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Converts the BinaryData to the specified type using <see cref="JsonObjectSerializer"/>.
+        /// Converts the BinaryData to the specified type using the
+        /// <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
@@ -259,7 +262,8 @@ namespace Azure.Core
             await DeserializeInternalAsync<T>(new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Converts the BinaryData to the specified type using <see cref="JsonObjectSerializer"/>.
+        /// Converts the BinaryData to the specified type using the
+        /// <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
@@ -269,7 +273,8 @@ namespace Azure.Core
             DeserializeInternalAsync<T>(new JsonObjectSerializer(), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Converts the BinaryData to the specified type.
+        /// Converts the BinaryData to the specified type using the
+        /// provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T">The type that the data should be
         /// converted to.</typeparam>
