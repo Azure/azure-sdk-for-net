@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Defines how the indexer should rotate PDFs.

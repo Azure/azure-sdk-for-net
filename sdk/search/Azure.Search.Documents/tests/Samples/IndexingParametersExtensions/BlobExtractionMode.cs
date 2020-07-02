@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Defines which parts of a blob will be indexed by the blob storage indexer.

@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Defines extension methods for the <see cref="IndexingParameters"/> class.

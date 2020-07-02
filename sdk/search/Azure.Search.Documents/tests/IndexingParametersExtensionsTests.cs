@@ -11,7 +11,8 @@ using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
-namespace Azure.Search.Documents.Tests.Samples
+// TODO: Remove or substantially change once https://github.com/Azure/azure-sdk-for-net/issues/12374 is completed.
+namespace Azure.Search.Documents.Samples.Tests
 {
     public sealed class IndexingParametersExtensionsTests
     {

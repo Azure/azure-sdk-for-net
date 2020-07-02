@@ -4,7 +4,7 @@
 using System;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Indicates whether the field can be returned in a search result. This

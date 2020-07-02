@@ -14,7 +14,7 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Core.Spatial;
 #endif
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Builds field definitions for a search index by reflecting over a user-defined model type.
@@ -167,15 +167,15 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 SearchField CreateComplexField(SearchFieldDataType dataType, Type underlyingClrType, ObjectInfo info)
                 {
+                    if (processedTypes.Contains(underlyingClrType))
+                    {
+                        // Skip recursive types.
+                        return null;
+                    }
+
+                    processedTypes.Push(underlyingClrType);
                     try
                     {
-                        if (processedTypes.Contains(underlyingClrType))
-                        {
-                            // Skip recursive types.
-                            return null;
-                        }
-
-                        processedTypes.Push(underlyingClrType);
                         IList<SearchField> subFields =
                             BuildForTypeRecursive(underlyingClrType, info, namingPolicy, processedTypes);
 

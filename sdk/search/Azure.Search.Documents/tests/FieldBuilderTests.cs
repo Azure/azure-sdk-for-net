@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Tests;
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples.Tests
 {
     public class FieldBuilderTests
     {

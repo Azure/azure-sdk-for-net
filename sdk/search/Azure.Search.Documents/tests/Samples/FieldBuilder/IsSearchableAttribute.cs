@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Causes the field to be included in full-text searches. Valid only for

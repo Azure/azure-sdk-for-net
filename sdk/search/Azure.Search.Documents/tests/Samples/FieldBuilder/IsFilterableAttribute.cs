@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Tests.Samples
+namespace Azure.Search.Documents.Samples
 {
     /// <summary>
     /// Indicates that the field can be used in filter expressions.
