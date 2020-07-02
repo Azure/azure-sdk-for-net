@@ -17,16 +17,9 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            else
-            {
-                writer.WriteNull("name");
-            }
-            if (Fields != null && Fields.Any())
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            if (Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -147,19 +140,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

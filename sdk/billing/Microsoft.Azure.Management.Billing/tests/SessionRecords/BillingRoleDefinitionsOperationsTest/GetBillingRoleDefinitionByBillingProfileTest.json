@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCL2JpbGxpbmdSb2xlRGVmaW5pdGlvbnMvNDAwMDAwMDAtYWFhYS1iYmJiLWNjY2MtMTAwMDAwMDAwMDAwP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNjkyYTFlZjYtNTk1YS01NTc4LTg3NzYtZGUxMGM5ZDY0ODYxJTNBNTg2OWVhMTAtYTIxZS00MjNmLTkyMTMtMmNhMGQxOTM4OTA4XzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0RTTkgtV1VaRS1CRzctVEdCL2JpbGxpbmdSb2xlRGVmaW5pdGlvbnMvNDAwMDAwMDAtYWFhYS1iYmJiLWNjY2MtMTAwMDAwMDAwMDAwP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d5af4ef5-c403-423a-be5a-65c7c3b2556d"
+          "dc5ee9e3-f932-416a-a7e8-29016b471d38"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Jun 2020 21:55:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,35 +32,32 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11998"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1052.344"
+          "10.5.1249.546"
         ],
         "api-supported-versions": [
-          "2019-10-01-preview"
+          "2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
         "x-ms-request-id": [
-          "7c5440d3-3c00-47d3-b01b-30096fa21e9d"
+          "987fca42-3903-4f06-96f0-869e587f0a71"
         ],
         "x-ms-correlation-request-id": [
-          "7c5440d3-3c00-47d3-b01b-30096fa21e9d"
+          "987fca42-3903-4f06-96f0-869e587f0a71"
         ],
         "x-ms-routing-request-id": [
-          "CANADACENTRAL:20191120T072444Z:7c5440d3-3c00-47d3-b01b-30096fa21e9d"
+          "NORTHEUROPE:20200602T215554Z:987fca42-3903-4f06-96f0-869e587f0a71"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ],
-        "Date": [
-          "Wed, 20 Nov 2019 07:24:44 GMT"
         ],
         "Content-Length": [
           "949"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"name\": \"40000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"properties\": {\r\n    \"description\": \"The Owner role gives the user all permissions including access management rights to the Billing Group.\",\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"40000000-aaaa-bbbb-cccc-200000000000\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000001\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000002\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000003\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000004\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000005\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000006\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000007\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000008\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000011\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roleName\": \"Billing profile owner\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/billingRoleDefinitions\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/billingRoleDefinitions/40000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"name\": \"40000000-aaaa-bbbb-cccc-100000000000\",\r\n  \"properties\": {\r\n    \"description\": \"The Owner role gives the user all permissions including access management rights to the Billing Group.\",\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"40000000-aaaa-bbbb-cccc-200000000000\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000001\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000002\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000003\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000004\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000005\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000006\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000007\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000008\",\r\n          \"40000000-aaaa-bbbb-cccc-200000000011\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roleName\": \"Billing profile owner\"\r\n  },\r\n  \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/billingRoleDefinitions\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "0195fcc8-69cd-4440-852b-237bdae4e36c"
   }
 }

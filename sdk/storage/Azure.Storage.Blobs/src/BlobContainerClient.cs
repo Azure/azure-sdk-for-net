@@ -165,7 +165,7 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the blob container in the storage account to reference.
@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container in the storage account to reference.
@@ -407,7 +407,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -458,7 +458,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -508,7 +508,7 @@ namespace Azure.Storage.Blobs
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -559,7 +559,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, it is not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -660,7 +660,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account. If the container with the same name
         /// already exists, it is not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -710,7 +710,7 @@ namespace Azure.Storage.Blobs
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, it is not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -761,7 +761,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account. If the container with the same name
         /// already exists, it is not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -811,7 +811,7 @@ namespace Azure.Storage.Blobs
         /// operation creates a new container under the specified account.  If the container already exists, it is
         /// not changed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -896,7 +896,7 @@ namespace Azure.Storage.Blobs
         /// under the specified account, if it does not already exist.
         /// If the container with the same name already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
@@ -1997,7 +1997,7 @@ namespace Azure.Storage.Blobs
         /// multiple requests to the service while fetching all the values.
         /// Blobs are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blobs.
@@ -2034,7 +2034,7 @@ namespace Azure.Storage.Blobs
         /// make multiple requests to the service while fetching all the
         /// values.  Blobs are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blobs.
@@ -2075,7 +2075,7 @@ namespace Azure.Storage.Blobs
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -2180,7 +2180,7 @@ namespace Azure.Storage.Blobs
         /// <paramref name="delimiter"/> can be used to traverse a virtual
         /// hierarchy of blobs as though it were a file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blobs.
@@ -2237,7 +2237,7 @@ namespace Azure.Storage.Blobs
         /// <paramref name="delimiter"/> can be used to traverse a virtual
         /// hierarchy of blobs as though it were a file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blobs.
@@ -2298,7 +2298,7 @@ namespace Azure.Storage.Blobs
         /// can be used to traverse a virtual hierarchy of blobs as though
         /// it were a file system.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">List Blobs</see>.
         /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list

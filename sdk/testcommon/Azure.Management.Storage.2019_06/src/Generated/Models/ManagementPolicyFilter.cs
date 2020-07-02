@@ -23,7 +23,7 @@ namespace Azure.Management.Storage.Models
                 throw new ArgumentNullException(nameof(blobTypes));
             }
 
-            BlobTypes = blobTypes.ToArray();
+            BlobTypes = blobTypes.ToList();
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>

@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, null);
                 }
                 var options = new ServiceBusSessionProcessorOptions
@@ -162,7 +162,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     var message = args.Message;
                     if (!autoComplete)
                     {
-                        await args.CompleteAsync(message);
+                        await args.CompleteMessageAsync(message);
                     }
                     Interlocked.Increment(ref messageCt);
                     Assert.AreEqual(message.SessionId, args.SessionId);
@@ -205,7 +205,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
                 var options = new ServiceBusSessionProcessorOptions
@@ -235,16 +235,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         switch (numThreads)
                         {
                             case 1:
-                                await args.CompleteAsync(message, args.CancellationToken);
+                                await args.CompleteMessageAsync(message, args.CancellationToken);
                                 break;
                             case 5:
-                                await args.AbandonAsync(message);
+                                await args.AbandonMessageAsync(message);
                                 break;
                             case 10:
-                                await args.DeadLetterAsync(message);
+                                await args.DeadLetterMessageAsync(message);
                                 break;
                             case 20:
-                                await args.DeferAsync(message);
+                                await args.DeferMessageAsync(message);
                                 break;
                         }
                         Interlocked.Increment(ref messageCt);
@@ -302,7 +302,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -328,7 +328,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var message = args.Message;
                         if (!autoComplete)
                         {
-                            await args.CompleteAsync(message);
+                            await args.CompleteMessageAsync(message);
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, args.SessionId);
@@ -475,7 +475,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 for (int i = 0; i < numThreads; i++)
                 {
                     sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -487,7 +487,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentCalls = numThreads,
                     AutoComplete = autoComplete,
                     // using the last sessionId from the loop
-                    SessionIds = new string [] {sessionId}
+                    SessionIds = new string[] { sessionId }
                 };
 
                 var processor = client.CreateSessionProcessor(
@@ -505,7 +505,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var message = args.Message;
                         if (!autoComplete)
                         {
-                            await args.CompleteAsync(message);
+                            await args.CompleteMessageAsync(message);
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(sessionId, message.SessionId);
@@ -545,14 +545,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads;
                 for (int i = 0; i < numThreads; i++)
                 {
                     AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
-                await sender.SendAsync(batch);
+                await sender.SendMessagesAsync(batch);
 
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -580,7 +580,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var lockedUntil = args.SessionLockedUntil;
                         await Task.Delay(lockDuration);
                         Assert.That(args.SessionLockedUntil > lockedUntil, $"{lockedUntil},{DateTime.UtcNow}");
-                        await args.CompleteAsync(message, args.CancellationToken);
+                        await args.CompleteMessageAsync(message, args.CancellationToken);
                         Interlocked.Increment(ref messageCt);
                     }
                     finally
@@ -614,14 +614,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 var messageSendCt = numThreads;
                 for (int i = 0; i < numThreads; i++)
                 {
                     AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
-                await sender.SendAsync(batch);
+                await sender.SendMessagesAsync(batch);
 
                 var options = new ServiceBusSessionProcessorOptions
                 {
@@ -669,7 +669,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
                         Assert.That(
-                            async () => await args.CompleteAsync(message, args.CancellationToken),
+                            async () => await args.CompleteMessageAsync(message, args.CancellationToken),
                             Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
@@ -693,7 +693,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(GetMessage("sessionId"));
                 var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     AutoComplete = true
@@ -733,7 +733,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(GetMessage("sessionId"));
                 var processor = client.CreateSessionProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 
@@ -742,19 +742,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     switch (settleMethod)
                     {
                         case "Abandon":
-                            await args.AbandonAsync(args.Message);
+                            await args.AbandonMessageAsync(args.Message);
                             break;
                         case "Complete":
-                            await args.CompleteAsync(args.Message);
+                            await args.CompleteMessageAsync(args.Message);
                             break;
                         case "Defer":
-                            await args.DeferAsync(args.Message);
+                            await args.DeferMessageAsync(args.Message);
                             break;
                         case "Deadletter":
-                            await args.DeadLetterAsync(args.Message);
+                            await args.DeadLetterMessageAsync(args.Message);
                             break;
                         case "DeadletterOverload":
-                            await args.DeadLetterAsync(args.Message, "reason");
+                            await args.DeadLetterMessageAsync(args.Message, "reason");
                             break;
                     }
                     throw new TestException();
@@ -779,7 +779,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
                     var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
-                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                    var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                     Assert.IsNotNull(msg);
                 }
                 else
@@ -813,18 +813,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     var sessionId = Guid.NewGuid().ToString();
                     sessionIds.Add(sessionId);
-                    await sender.SendAsync(GetMessage(sessionId));
+                    await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
 
                 // sending 2 more messages and not specifying these sessionIds when creating a processor,
                 // to make sure that these messages will not be received.
                 var sessionId1 = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessage(sessionId1));
+                await sender.SendMessageAsync(GetMessage(sessionId1));
                 sessions.TryAdd(sessionId1, true);
 
                 var sessionId2 = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessage(sessionId2));
+                await sender.SendMessageAsync(GetMessage(sessionId2));
                 sessions.TryAdd(sessionId2, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -862,7 +862,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         var message = args.Message;
                         if (!autoComplete)
                         {
-                            await args.CompleteAsync(message);
+                            await args.CompleteMessageAsync(message);
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.IsTrue(sessionIds.Contains(message.SessionId));
@@ -916,7 +916,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     var sessionId = Guid.NewGuid().ToString();
                     sessionIds.Add(sessionId);
                     var messages = GetMessages(messagesPerSession, sessionId);
-                    await sender.SendAsync(messages);
+                    await sender.SendMessagesAsync(messages);
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -1060,7 +1060,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1071,7 +1071,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentCalls = 1,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(10),
-                    SessionIds = new string [] { sessionId }
+                    SessionIds = new string[] { sessionId }
                 };
 
                 var processor = client.CreateSessionProcessor(
@@ -1108,7 +1108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     try
                     {
                         var message = args.Message;
-                        await args.CompleteAsync(message);
+                        await args.CompleteMessageAsync(message);
                         await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(10)));
 
                         sessions.TryRemove(message.SessionId, out bool _);
@@ -1156,7 +1156,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(GetMessage(sessionId));
 
                 if (errorSource == ServiceBusErrorSource.AcceptMessageSession)
                 {
@@ -1179,7 +1179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentCalls = 1,
                     MaxAutoLockRenewalDuration = (errorSource == ServiceBusErrorSource.RenewLock ?
                         TimeSpan.FromSeconds(1) : TimeSpan.FromSeconds(0)),
-                    SessionIds = new string [] { sessionId }
+                    SessionIds = new string[] { sessionId }
                 };
 
                 var processor = client.CreateSessionProcessor(
@@ -1275,12 +1275,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         switch (errorSource)
                         {
                             case ServiceBusErrorSource.Receive:
-                                await args.CompleteAsync(message);
+                                await args.CompleteMessageAsync(message);
                                 await Task.Delay(delayDuration);
                                 break;
                             case ServiceBusErrorSource.UserCallback:
                                 await Task.Delay(delayDuration);
-                                await args.CompleteAsync(message);
+                                await args.CompleteMessageAsync(message);
                                 break;
                             case ServiceBusErrorSource.Abandon:
                                 await Task.Delay(delayDuration);
@@ -1332,7 +1332,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessage(sessionId));
+                await sender.SendMessageAsync(GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1364,7 +1364,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     try
                     {
                         var message = args.Message;
-                        await args.CompleteAsync(message);
+                        await args.CompleteMessageAsync(message);
                         await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(10)));
 
                         sessions.TryRemove(message.SessionId, out bool _);

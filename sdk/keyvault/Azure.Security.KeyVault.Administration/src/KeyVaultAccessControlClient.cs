@@ -250,7 +250,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = name == default ? Guid.NewGuid().ToString() : name.ToString();
-                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), _name, properties, cancellationToken);
+                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -275,7 +275,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = name == default ? Guid.NewGuid().ToString() : name.ToString();
-                return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), _name, properties, cancellationToken)
+                return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
                 .ConfigureAwait(false);
             }
             catch (Exception ex)

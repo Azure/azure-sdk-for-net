@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "094dc779e32e4e8254a9bdf3146da809",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "497",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:35:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ff9b02f3-b605-4b59-bc03-e9a44e9a7da3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "ff9b02f3-b605-4b59-bc03-e9a44e9a7da3",
+        "x-ms-routing-request-id": "EASTASIA:20200529T023510Z:ff9b02f3-b605-4b59-bc03-e9a44e9a7da3"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d",
+            "authorizationSource": "RoleBased",
+            "managedByTenants": [],
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "subscriptionId": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "displayName": "Visual Studio Enterprise",
+            "state": "Enabled",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Public_2014-09-01",
+              "quotaId": "MSDN_2014-09-01",
+              "spendingLimit": "On"
+            }
+          }
+        ],
+        "count": {
+          "type": "Total",
+          "value": 1
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1581399014",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

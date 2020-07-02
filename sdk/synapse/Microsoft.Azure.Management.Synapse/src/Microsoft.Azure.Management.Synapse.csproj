@@ -7,14 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>0.1.0-preview.2</Version>
+		<Version>1.0.0-preview.1</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
- Fix Update SqlPool issue
- Support IntegrationRuntime feature
- Support Get single Firewall Rule
- Support Vnet feature
+ Support Private link
+ Remove node count constraint for big data pool info
       ]]>
 		</PackageReleaseNotes>
     

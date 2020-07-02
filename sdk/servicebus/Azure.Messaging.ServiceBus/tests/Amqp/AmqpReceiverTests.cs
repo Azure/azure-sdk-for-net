@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             AmqpReceiver receiver = CreateReceiver();
 
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(retriableException);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.GeneralError));
@@ -220,7 +220,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(retriableException);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceBusy));
@@ -340,7 +340,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(exception);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentNullException>());
@@ -394,7 +394,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(exception);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
@@ -447,7 +447,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(exception);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(
+            Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());

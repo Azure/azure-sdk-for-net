@@ -43,10 +43,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="roundTripTimeMax">Maximum roundtrip time in
         /// milliseconds.</param>
         /// <param name="issues">List of issues.</param>
-        /// <param name="context">Provides additional context on the
-        /// issue.</param>
+        /// <param name="context">Provides additional context on links.</param>
         /// <param name="resourceId">Resource ID.</param>
-        public HopLink(string nextHopId = default(string), string linkType = default(string), int? roundTripTimeMin = default(int?), int? roundTripTimeAvg = default(int?), int? roundTripTimeMax = default(int?), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>), IList<IDictionary<string, string>> context = default(IList<IDictionary<string, string>>), string resourceId = default(string))
+        public HopLink(string nextHopId = default(string), string linkType = default(string), int? roundTripTimeMin = default(int?), int? roundTripTimeAvg = default(int?), int? roundTripTimeMax = default(int?), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>), IDictionary<string, string> context = default(IDictionary<string, string>), string resourceId = default(string))
         {
             NextHopId = nextHopId;
             LinkType = linkType;
@@ -101,10 +100,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ConnectivityIssue> Issues { get; private set; }
 
         /// <summary>
-        /// Gets provides additional context on the issue.
+        /// Gets provides additional context on links.
         /// </summary>
         [JsonProperty(PropertyName = "context")]
-        public IList<IDictionary<string, string>> Context { get; private set; }
+        public IDictionary<string, string> Context { get; private set; }
 
         /// <summary>
         /// Gets resource ID.

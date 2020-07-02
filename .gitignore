@@ -9,6 +9,7 @@
 *.lock.json
 developer/
 launch.json
+launchSettings.json
 
 # Build results
 binaries/
@@ -161,3 +162,6 @@ node_modules/
 
 # MSBuild binary log files
 msbuild.binlog
+
+# BenchmarkDotNet 
+BenchmarkDotNet.Artifacts

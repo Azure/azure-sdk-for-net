@@ -39,8 +39,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
 
       - pwsh: |
-          dotnet restore eng/ApiCompat/ApiCompat.csproj
-          dotnet build eng/ApiCompat/ApiCompat.csproj  /t:GeneratePublishDependencyFile /p:PublishDepsFilePath=$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json
+          dotnet build eng/azure-sdk-deps.csproj  /t:GenerateDepsFile /p:PublishDepsFilePath=$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json
         displayName: "Generate azure-sdk.deps.json"
 
       - task: PublishPipelineArtifact@1

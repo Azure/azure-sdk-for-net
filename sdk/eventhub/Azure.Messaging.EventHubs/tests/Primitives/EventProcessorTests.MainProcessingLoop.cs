@@ -493,7 +493,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLogger
-                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(secondPartition, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(secondPartition, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockLoadBalancer
@@ -584,7 +584,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLogger
-                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() =>
                 {
                     if (Interlocked.Increment(ref startProcessingCalls) >= expectedProcessingCalls)
@@ -1173,7 +1173,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Object.Identifier,
                     mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
+                    mockProcessor.Object.ConsumerGroup,
+                    options.DefaultStartingPosition.ToString()),
                  Times.Once);
 
             mockProcessor
@@ -1270,7 +1271,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Object.Identifier,
                     mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
+                    mockProcessor.Object.ConsumerGroup,
+                    options.DefaultStartingPosition.ToString()),
                  Times.Exactly(2));
 
             mockProcessor

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 {
     public class RegisteredServerTests
     {
-        [Fact(Skip = "Pending bug fix in the service")]
+        [Fact]
         public void RegisteredServerCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             }
         }
 
-        [Fact(Skip = "Pending bug fix in the service")]
+        [Fact]
         public void RegisteredServerGetTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             }
         }
 
-        [Fact(Skip = "Pending bug fix in the service")]
+        [Fact]
         public void RegisteredServerTriggerRolloverTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             }
         }
 
-        [Fact(Skip = "Pending bug fix in the service")]
+        [Fact]
         public void RegisteredServerListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             }
         }
 
-        [Fact(Skip = "Pending bug fix in the service")]
+        [Fact]
         public void RegisteredServerDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

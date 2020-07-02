@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new ArgumentNullException(nameof(tags));
             }
 
-            Tags = tags.ToArray();
+            Tags = tags.ToList();
         }
 
         /// <summary> Initializes a new instance of LegalHold. </summary>

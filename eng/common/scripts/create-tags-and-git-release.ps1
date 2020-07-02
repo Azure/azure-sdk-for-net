@@ -6,6 +6,7 @@ param (
   # used by VerifyPackages
   $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
   $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
+  [ValidateSet("Nuget","NPM","PyPI","Maven")]
   $packageRepository, # used to indicate destination against which we will check the existing version.
   # valid options: PyPI, Nuget, NPM, Maven, C
   # used by CreateTags
@@ -17,8 +18,6 @@ param (
   $repoId = "$repoOwner/$repoName", # full repo id. EG azure/azure-sdk-for-net  DevOps: $(Build.Repository.Id),
   [switch]$continueOnError = $false
 )
-
-Write-Host "> $PSCommandPath $args"
 
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 

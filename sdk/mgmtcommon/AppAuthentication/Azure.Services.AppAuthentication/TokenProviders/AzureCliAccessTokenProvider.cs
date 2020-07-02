@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         // The default install paths are used to find Azure CLI. This is for security, so that any path in the calling program's Path environment is not used to execute Azure CLI.
         private readonly string _azureCliDefaultPathWindows =
-            $"{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles(x86)")}\\Microsoft SDKs\\Azure\\CLI2\\wbin; {EnvironmentHelper.GetEnvironmentVariable("ProgramFiles")}\\Microsoft SDKs\\Azure\\CLI2\\wbin"
+            $"{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles(x86)")}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles")}\\Microsoft SDKs\\Azure\\CLI2\\wbin"
         ;
 
         // Default path for non-Windows. 

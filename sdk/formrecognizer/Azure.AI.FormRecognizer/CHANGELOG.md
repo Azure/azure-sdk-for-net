@@ -2,6 +2,22 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Renames
+
+- Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
+- Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
+- Parameter `accessToken` in `CopyAuthorization.FromJson` has been renamed to `copyAuthorization`.
+
+### Other breaking changes
+
+- Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
+- `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
+
+### Fixes
+
+- Fixed a bug in which the `FormPage.TextAngle` property sometimes fell out of the (-180, 180] range ([#13082](https://github.com/Azure/azure-sdk-for-net/issues/13082)).
 
 ## 1.0.0-preview.3 (06-10-2020)
 

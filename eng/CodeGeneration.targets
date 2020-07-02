@@ -3,7 +3,7 @@
   <PropertyGroup>
     <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6223/autorest-3.0.6223.tgz</_AutoRestVersion>
     <_AutoRestCoreVersion>3.0.6283</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200610.1/autorest-csharp-v3-3.0.0-dev.20200610.1.tgz</_AutoRestCSharpVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200625.1/autorest-csharp-v3-3.0.0-dev.20200625.1.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
@@ -16,7 +16,6 @@
     <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
-    <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
@@ -36,18 +35,13 @@
     <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory)" />
   </Target>
 
+  <PropertyGroup Condition="'$(_GenerateCode)' == 'true'">
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
     <Compile Include="$(_AutoRestSharedCodeDirectory)/**/*.cs" Link="Shared/AutoRest/%(RecursiveDir)/%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>
-
-
-
-
-
-
-
-
-
 

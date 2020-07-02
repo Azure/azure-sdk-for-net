@@ -18,35 +18,35 @@ ServiceBusSender sender = client.CreateSender(queueName);
 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive and settle the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // complete the message, thereby deleting it from the service
-await receiver.CompleteAsync(receivedMessage);
+await receiver.CompleteMessageAsync(receivedMessage);
 ```
 
 ### Abandon a message
 
 ```C# Snippet:ServiceBusAbandonMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
-await receiver.AbandonAsync(receivedMessage);
+await receiver.AbandonMessageAsync(receivedMessage);
 ```
 
 ### Defer a message
 
 ```C# Snippet:ServiceBusDeferMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // defer the message, thereby preventing the message from being received again without using
 // the received deferred message API.
-await receiver.DeferAsync(receivedMessage);
+await receiver.DeferMessageAsync(receivedMessage);
 
 // receive the deferred message by specifying the service set sequence number of the original
 // received message
@@ -56,14 +56,14 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ### Dead letter a message
 
 ```C# Snippet:ServiceBusDeadLetterMessage
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterAsync(receivedMessage);
+await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
-ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
+ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 ```
 
 ## Source

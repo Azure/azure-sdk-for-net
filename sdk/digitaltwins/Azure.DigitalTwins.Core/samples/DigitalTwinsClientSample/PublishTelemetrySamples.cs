@@ -41,22 +41,22 @@ namespace Azure.DigitalTwins.Samples
             await client
                 .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
-            Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
+            Console.WriteLine($"Successfully created models '{componentModelId}' and '{modelId}'");
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId);
 
             await client.CreateDigitalTwinAsync(twinId, twinPayload);
-            Console.WriteLine($"Created digital twin {twinId}.");
+            Console.WriteLine($"Created digital twin '{twinId}'.");
 
             try
             {
                 #region Snippet:DigitalTwinsSamplePublishTelemetry
 
                 // construct your json telemetry payload by hand.
-                Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
-                Console.WriteLine($"Published telemetry message to twin with Id {twinId}. Response status: {publishTelemetryResponse.Status}");
+                await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+                Console.WriteLine($"Published telemetry message to twin '{twinId}'.");
 
                 #endregion Snippet:DigitalTwinsSamplePublishTelemetry
 
@@ -65,19 +65,19 @@ namespace Azure.DigitalTwins.Samples
                 // construct your json telemetry payload by serializing a dictionary.
                 var telemetryPayload = new Dictionary<string, int>
                 {
-                    { "ComponentTelemetry1", 9}
+                    { "ComponentTelemetry1", 9 }
                 };
-                Response publishTelemetryToComponentResponse = await client.PublishComponentTelemetryAsync(
+                await client.PublishComponentTelemetryAsync(
                     twinId,
                     "Component1",
                     JsonSerializer.Serialize(telemetryPayload));
-                Console.WriteLine($"Published component telemetry message to twin with Id {twinId}. Response status: {publishTelemetryToComponentResponse.Status}");
+                Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 
                 #endregion Snippet:DigitalTwinsSamplePublishComponentTelemetry
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to publish a telemetry message due to {ex.Message}");
+                FatalError($"Failed to publish a telemetry message due to: {ex.Message}");
             }
 
             try
@@ -95,7 +95,7 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to delete due to {ex.Message}");
+                FatalError($"Failed to delete due to: {ex.Message}");
             }
         }
     }

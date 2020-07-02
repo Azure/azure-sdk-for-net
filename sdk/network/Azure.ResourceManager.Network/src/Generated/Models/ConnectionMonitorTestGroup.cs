@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             Name = name;
-            TestConfigurations = testConfigurations.ToArray();
-            Sources = sources.ToArray();
-            Destinations = destinations.ToArray();
+            TestConfigurations = testConfigurations.ToList();
+            Sources = sources.ToList();
+            Destinations = destinations.ToList();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorTestGroup. </summary>

@@ -169,19 +169,19 @@ namespace Azure.Data.Tables.Tests
             }).ToList();
         }
 
-        protected async Task InsertTestEntities<T>(List<T> entitiesToInsert) where T : TableEntity, new()
+        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : TableEntity, new()
         {
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
         }
 
-        protected async Task InsertTestEntities(List<Dictionary<string,object>> entitiesToInsert)
+        protected async Task CreateTestEntities(List<Dictionary<string,object>> entitiesToCreate)
         {
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
         }
 

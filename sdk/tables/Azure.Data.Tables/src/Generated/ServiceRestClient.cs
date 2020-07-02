@@ -67,7 +67,7 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(tableServiceProperties, "TableServiceProperties");
+            content.XmlWriter.WriteObjectValue(tableServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
         }
@@ -158,9 +158,9 @@ namespace Azure.Data.Tables
                     {
                         TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("TableServiceProperties") is XElement tableServicePropertiesElement)
+                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = TableServiceProperties.DeserializeTableServiceProperties(tableServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -184,9 +184,9 @@ namespace Azure.Data.Tables
                     {
                         TableServiceProperties value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("TableServiceProperties") is XElement tableServicePropertiesElement)
+                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
                         {
-                            value = TableServiceProperties.DeserializeTableServiceProperties(tableServicePropertiesElement);
+                            value = TableServiceProperties.DeserializeTableServiceProperties(storageServicePropertiesElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -233,9 +233,9 @@ namespace Azure.Data.Tables
                     {
                         TableServiceStats value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("TableServiceStats") is XElement tableServiceStatsElement)
+                        if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = TableServiceStats.DeserializeTableServiceStats(tableServiceStatsElement);
+                            value = TableServiceStats.DeserializeTableServiceStats(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -259,9 +259,9 @@ namespace Azure.Data.Tables
                     {
                         TableServiceStats value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("TableServiceStats") is XElement tableServiceStatsElement)
+                        if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
-                            value = TableServiceStats.DeserializeTableServiceStats(tableServiceStatsElement);
+                            value = TableServiceStats.DeserializeTableServiceStats(storageServiceStatsElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }

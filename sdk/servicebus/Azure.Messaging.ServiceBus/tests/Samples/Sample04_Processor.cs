@@ -31,12 +31,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
-                ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-                messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+                ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+                messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
                 // send the message batch
-                await sender.SendAsync(messageBatch);
+                await sender.SendMessagesAsync(messageBatch);
 
                 // get the options to use for configuring the processor
                 var options = new ServiceBusProcessorOptions
@@ -61,11 +61,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 async Task MessageHandler(ProcessMessageEventArgs args)
                 {
-                    string body = args.Message.Body.AsString();
+                    string body = args.Message.Body.ToString();
                     Console.WriteLine(body);
 
                     // we can evaluate application logic and use that to determine how to settle the message.
-                    await args.CompleteAsync(args.Message);
+                    await args.CompleteMessageAsync(args.Message);
                     tcs.SetResult(true);
                 }
 

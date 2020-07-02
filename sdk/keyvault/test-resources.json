@@ -51,7 +51,26 @@
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]"
+        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]",
+        "mgmtApiVersion": "2019-04-01",
+        "blobContainerName": "backup",
+        "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "encryption": {
+            "services": {
+                "blob": {
+                    "enabled": true
+                }
+            },
+            "keySource": "Microsoft.Storage"
+        },
+        "networkAcls": {
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [
+            ],
+            "ipRules": [
+            ],
+            "defaultAction": "Allow"
+        }
     },
     "resources": [
         {
@@ -124,6 +143,55 @@
                 "enabledForTemplateDeployment": false,
                 "enableSoftDelete": "[parameters('enableSoftDelete')]"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('primaryAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": "[variables('networkAcls')]",
+                "supportsHttpsTrafficOnly": true,
+                "encryption": "[variables('encryption')]",
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('primaryAccountName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": false
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(variables('primaryAccountName'), '/default/', variables('blobContainerName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('primaryAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
         }
     ],
     "outputs": {
@@ -135,9 +203,21 @@
             "type": "string",
             "value": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))).sku.name]"
         },
-        "CLIENT_OBJECTID" : {
+        "CLIENT_OBJECTID": {
             "type": "string",
             "value": "[parameters('testApplicationOid')]"
+        },
+        "BLOB_STORAGE_ACCOUNT_NAME": {
+            "type": "string",
+            "value": "[variables('primaryAccountName')]"
+        },
+        "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+        },
+        "BLOB_CONTAINER_NAME" : {
+            "type": "string",
+            "value": "[variables('blobContainerName')]"
         }
     }
 }

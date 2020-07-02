@@ -34,7 +34,7 @@ namespace Microsoft.Extensions.Azure
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <returns>An Azure client builder.</returns>
@@ -79,7 +79,7 @@ namespace Microsoft.Extensions.Azure
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <returns>An Azure client builder.</returns>

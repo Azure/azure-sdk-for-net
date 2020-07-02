@@ -43,5 +43,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="index">The 0-based index of the point to be retrieved.</param>
         /// <returns>A <see cref="PointF"/> corresponding to the specified <paramref name="index"/>.</returns>
         public PointF this[int index] => Points[index];
+
+        /// <summary>
+        /// Returns string representation for <see cref="BoundingBox"/>.
+        /// </summary>
+        public override string ToString() => string.Join(",", Points.Select(p => p.ToString()).ToArray());
     }
 }
