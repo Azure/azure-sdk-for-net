@@ -6,20 +6,22 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// The details of field elements that are part of a <see cref="FormField"/>.
+    /// A form content element representing text that is part of a <see cref="FormField"/>.
+    /// This includes the location of the text in the form and a collection of the content
+    /// elements that make up the text.
     /// </summary>
     public class FieldData : FormElement
     {
         /// <summary>
         /// </summary>
-        /// <param name="FormElement"></param>
+        /// <param name="formElement"></param>
         /// <param name="pageNumber"></param>
         /// <param name="boundingBox"></param>
         /// <param name="text"></param>
-        internal FieldData(string text, int pageNumber, BoundingBox boundingBox, IReadOnlyList<FormElement> FormElement)
+        internal FieldData(string text, int pageNumber, BoundingBox boundingBox, IReadOnlyList<FormElement> formElement)
             : base(boundingBox, pageNumber, text)
         {
-            FieldElements = FormElement;
+            FieldElements = formElement;
         }
 
         /// <summary>

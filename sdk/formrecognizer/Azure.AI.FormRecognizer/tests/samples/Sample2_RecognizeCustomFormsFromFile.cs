@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
                         if (field.LabelData != null)
                         {
-                            Console.WriteLine($"    Label-------: '{(string)field.LabelData}");
+                            Console.WriteLine($"    Label: '{field.LabelData.Text}");
                         }
 
                         Console.WriteLine($"    Value: '{field.ValueData.Text}");
