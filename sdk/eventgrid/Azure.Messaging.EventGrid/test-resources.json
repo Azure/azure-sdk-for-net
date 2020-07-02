@@ -61,6 +61,7 @@
                             "sourceField": "TestID"
                         },
                         "subject": {
+                            "defaultValue": "default",
                             "sourceField": "TestSubject"
                         },
                         "topic": {
