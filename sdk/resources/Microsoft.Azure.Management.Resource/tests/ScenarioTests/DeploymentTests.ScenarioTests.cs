@@ -361,8 +361,51 @@ namespace ResourceGroups.Tests
             }
         }
 
-        // TODO: Fix
-        [Fact(Skip = "TODO: Re-record test")]
+        [Fact]
+        public void CreateDeploymentCheckSuccessOperations()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                string resourceName = TestUtilities.GenerateName("csres");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        TemplateLink = new TemplateLink
+                        {
+                            Id = GoodResourceId,
+                        },
+                        Parameters =
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
+
+                client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+
+                //Wait for deployment to complete
+                TestUtilities.Wait(30000);
+                var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
+
+                Assert.True(operations.Any());
+                Assert.NotNull(operations.First().Id);
+                Assert.NotNull(operations.First().OperationId);
+                Assert.NotNull(operations.First().Properties);
+                Assert.Null(operations.First().Properties.StatusMessage);
+            }
+
+        }
+
+            // TODO: Fix
+            [Fact(Skip = "TODO: Re-record test")]
         public void CreateDummyDeploymentProducesOperations()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
