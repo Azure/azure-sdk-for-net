@@ -5,8 +5,11 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
-    <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>37.0.0.0</Version>
+    <Description>
+      Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
+      Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
+    </Description>
+    <Version>37.0.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
