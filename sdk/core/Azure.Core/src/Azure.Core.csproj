@@ -23,8 +23,6 @@
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
-    <Compile Remove="Internal\DateTimeOffsetHelpers.netstandard.cs" />
-    <Compile Remove="Internal\DateTimeOffsetHelpers.netfx.cs" />
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
@@ -36,13 +34,5 @@
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Compile Include="Internal\DateTimeOffsetHelpers.netfx.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <Compile Include="Internal\DateTimeOffsetHelpers.netstandard.cs"  />
   </ItemGroup>
 </Project>

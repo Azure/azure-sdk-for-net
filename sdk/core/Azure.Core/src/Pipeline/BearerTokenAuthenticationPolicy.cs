@@ -176,14 +176,14 @@ namespace Azure.Core.Pipeline
             {
                 lock (_syncObj)
                 {
-                    if (DateTimeOffsetHelpers.GetUtcNow() >= _expiresOn && _tokenState != TokenState.Pending)
+                    if (DateTimeOffset.UtcNow >= _expiresOn && _tokenState != TokenState.Pending)
                     {
                         _tokenState = TokenState.Pending;
                         _headerValue = null;
                         return new ValueTask<string?>();
                     }
 
-                    if (DateTimeOffsetHelpers.GetUtcNow() >= _refreshOn && _tokenState == TokenState.Valid)
+                    if (DateTimeOffset.UtcNow >= _refreshOn && _tokenState == TokenState.Valid)
                     {
                         _tokenState = TokenState.AboutToExpire;
                         return new ValueTask<string?>();

@@ -192,7 +192,7 @@ namespace Azure.Core.Tests
             {
                 requestMre.Set();
                 responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffsetHelpers.GetUtcNow().AddSeconds(expiresOnOffset++));
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(expiresOnOffset++));
             }, IsAsync, TimeSpan.FromSeconds(2));
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
@@ -289,7 +289,7 @@ namespace Azure.Core.Tests
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
-            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
             requestMre.Wait();
 
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
@@ -298,7 +298,7 @@ namespace Azure.Core.Tests
             Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
             responseMre.Set();
 
-            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<InvalidOperationException>(async () => await firstRequestTask);
         }
 
         private class TokenCredentialStub : TokenCredential
