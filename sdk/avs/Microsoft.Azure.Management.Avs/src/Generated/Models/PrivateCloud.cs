@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Avs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.Avs.Models
     /// <summary>
     /// A private cloud resource
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class PrivateCloud : TrackedResource
     {
         /// <summary>
@@ -31,19 +34,59 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the PrivateCloud class.
         /// </summary>
+        /// <param name="sku">The private cloud SKU</param>
+        /// <param name="networkBlock">The block of addresses should be unique
+        /// across VNet in your subscription as well as on-premise. Make sure
+        /// the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are
+        /// between 0 and 255, and X is between 0 and 22</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">The private cloud SKU</param>
-        /// <param name="properties">The properties of a private cloud
-        /// resource</param>
-        public PrivateCloud(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), PrivateCloudProperties properties = default(PrivateCloudProperties))
+        /// <param name="managementCluster">The default cluster used for
+        /// management</param>
+        /// <param name="internet">Connectivity to internet is enabled or
+        /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="identitySources">vCenter Single Sign On Identity
+        /// Sources</param>
+        /// <param name="provisioningState">The provisioning state. Possible
+        /// values include: 'Succeeded', 'Failed', 'Cancelled', 'Pending',
+        /// 'Building', 'Deleting', 'Updating'</param>
+        /// <param name="circuit">An ExpressRoute Circuit</param>
+        /// <param name="endpoints">The endpoints</param>
+        /// <param name="managementNetwork">Network used to access vCenter
+        /// Server and NSX-T Manager</param>
+        /// <param name="provisioningNetwork">Used for virtual machine cold
+        /// migration, cloning, and snapshot migration</param>
+        /// <param name="vmotionNetwork">Used for live migration of virtual
+        /// machines</param>
+        /// <param name="vcenterPassword">Optionally, set the vCenter admin
+        /// password when the private cloud is created</param>
+        /// <param name="nsxtPassword">Optionally, set the NSX-T Manager
+        /// password when the private cloud is created</param>
+        /// <param name="vcenterCertificateThumbprint">Thumbprint of the
+        /// vCenter Server SSL certificate</param>
+        /// <param name="nsxtCertificateThumbprint">Thumbprint of the NSX-T
+        /// Manager SSL certificate</param>
+        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
-            Properties = properties;
+            ManagementCluster = managementCluster;
+            Internet = internet;
+            IdentitySources = identitySources;
+            ProvisioningState = provisioningState;
+            Circuit = circuit;
+            Endpoints = endpoints;
+            NetworkBlock = networkBlock;
+            ManagementNetwork = managementNetwork;
+            ProvisioningNetwork = provisioningNetwork;
+            VmotionNetwork = vmotionNetwork;
+            VcenterPassword = vcenterPassword;
+            NsxtPassword = nsxtPassword;
+            VcenterCertificateThumbprint = vcenterCertificateThumbprint;
+            NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             CustomInit();
         }
 
@@ -59,19 +102,114 @@ namespace Microsoft.Azure.Management.Avs.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of a private cloud resource
+        /// Gets or sets the default cluster used for management
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PrivateCloudProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.managementCluster")]
+        public ManagementCluster ManagementCluster { get; set; }
+
+        /// <summary>
+        /// Gets or sets connectivity to internet is enabled or disabled.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.internet")]
+        public string Internet { get; set; }
+
+        /// <summary>
+        /// Gets or sets vCenter Single Sign On Identity Sources
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.identitySources")]
+        public IList<IdentitySource> IdentitySources { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state. Possible values include: 'Succeeded',
+        /// 'Failed', 'Cancelled', 'Pending', 'Building', 'Deleting',
+        /// 'Updating'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets an ExpressRoute Circuit
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.circuit")]
+        public Circuit Circuit { get; set; }
+
+        /// <summary>
+        /// Gets the endpoints
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endpoints")]
+        public Endpoints Endpoints { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the block of addresses should be unique across VNet in
+        /// your subscription as well as on-premise. Make sure the CIDR format
+        /// is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255,
+        /// and X is between 0 and 22
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkBlock")]
+        public string NetworkBlock { get; set; }
+
+        /// <summary>
+        /// Gets network used to access vCenter Server and NSX-T Manager
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managementNetwork")]
+        public string ManagementNetwork { get; private set; }
+
+        /// <summary>
+        /// Gets used for virtual machine cold migration, cloning, and snapshot
+        /// migration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningNetwork")]
+        public string ProvisioningNetwork { get; private set; }
+
+        /// <summary>
+        /// Gets used for live migration of virtual machines
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vmotionNetwork")]
+        public string VmotionNetwork { get; private set; }
+
+        /// <summary>
+        /// Gets or sets optionally, set the vCenter admin password when the
+        /// private cloud is created
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vcenterPassword")]
+        public string VcenterPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets optionally, set the NSX-T Manager password when the
+        /// private cloud is created
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nsxtPassword")]
+        public string NsxtPassword { get; set; }
+
+        /// <summary>
+        /// Gets thumbprint of the vCenter Server SSL certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vcenterCertificateThumbprint")]
+        public string VcenterCertificateThumbprint { get; private set; }
+
+        /// <summary>
+        /// Gets thumbprint of the NSX-T Manager SSL certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nsxtCertificateThumbprint")]
+        public string NsxtCertificateThumbprint { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (NetworkBlock == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkBlock");
+            }
             if (Sku != null)
             {
                 Sku.Validate();

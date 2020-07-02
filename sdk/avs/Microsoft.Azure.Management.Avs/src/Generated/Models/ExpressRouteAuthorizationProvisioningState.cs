@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Avs.Models
 {
 
     /// <summary>
-    /// Defines values for ClusterProvisioningState.
+    /// Defines values for ExpressRouteAuthorizationProvisioningState.
     /// </summary>
-    public static class ClusterProvisioningState
+    public static class ExpressRouteAuthorizationProvisioningState
     {
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
-        public const string Cancelled = "Cancelled";
-        public const string Deleting = "Deleting";
         public const string Updating = "Updating";
     }
 }

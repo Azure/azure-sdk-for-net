@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.Avs
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Unique identifier for the Azure subscription
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Version of Azure VMware Solution API to be used with the client request
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -93,6 +93,16 @@ namespace Microsoft.Azure.Management.Avs
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IHcxEnterpriseSitesOperations.
+        /// </summary>
+        public virtual IHcxEnterpriseSitesOperations HcxEnterpriseSites { get; private set; }
+
+        /// <summary>
+        /// Gets the IAuthorizationsOperations.
+        /// </summary>
+        public virtual IAuthorizationsOperations Authorizations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AvsClient class.
@@ -339,8 +349,10 @@ namespace Microsoft.Azure.Management.Avs
             Locations = new LocationsOperations(this);
             PrivateClouds = new PrivateCloudsOperations(this);
             Clusters = new ClustersOperations(this);
+            HcxEnterpriseSites = new HcxEnterpriseSitesOperations(this);
+            Authorizations = new AuthorizationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-09-preview";
+            ApiVersion = "2020-03-20";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -357,6 +369,7 @@ namespace Microsoft.Azure.Management.Avs
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -370,6 +383,7 @@ namespace Microsoft.Azure.Management.Avs
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

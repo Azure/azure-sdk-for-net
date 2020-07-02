@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Avs.Models
 {
 
     /// <summary>
-    /// Defines values for ClusterProvisioningState.
+    /// Defines values for TrialStatus.
     /// </summary>
-    public static class ClusterProvisioningState
+    public static class TrialStatus
     {
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Cancelled = "Cancelled";
-        public const string Deleting = "Deleting";
-        public const string Updating = "Updating";
+        public const string TrialAvailable = "TrialAvailable";
+        public const string TrialUsed = "TrialUsed";
+        public const string TrialDisabled = "TrialDisabled";
     }
 }
