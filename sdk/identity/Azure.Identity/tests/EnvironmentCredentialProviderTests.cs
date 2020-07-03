@@ -81,7 +81,7 @@ namespace Azure.Identity.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientIdBackup);
                 Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
-                Environment.SetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_LOCATION", clientCertificateLocationBackup);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH", clientCertificateLocationBackup);
             }
         }
 
@@ -100,9 +100,9 @@ namespace Azure.Identity.Tests
         {
             string expectedInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockAadClient = new MockAadIdentityClient(() => { throw new MockClientException(expectedInnerExMessage); });
+            var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
 
-            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient);
+            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient);
 
             var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred));
 
