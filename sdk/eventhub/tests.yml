@@ -1,8 +1,41 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    MaxParallel: 6
-    ServiceDirectory: eventhub
-    TimeoutInMinutes: 120
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: eventhub
+        MaxParallel: 6
+        TimeoutInMinutes: 120
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+          SERVICE_MANAGEMENT_URL: https://management.core.windows.net/
+          STORAGE_ENDPOINT_SUFFIX: core.windows.net
+          RESOURCE_MANAGER: https://management.azure.com/
+
+      # AzureUSGovernment
+      - ServiceDirectory: eventhub
+        MaxParallel: 6
+        TimeoutInMinutes: 120
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+          SERVICE_MANAGEMENT_URL: https://management.core.usgovcloudapi.net/
+          STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
+          RESOURCE_MANAGER: https://management.usgovcloudapi.net/
+
+      # AzureChinaCloud
+      - ServiceDirectory: eventhub
+        MaxParallel: 6
+        TimeoutInMinutes: 120
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+          SERVICE_MANAGEMENT_URL: https://management.core.chinacloudapi.cn/
+          STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
+          RESOURCE_MANAGER: https://management.chinacloudapi.cn
