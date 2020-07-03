@@ -18,11 +18,11 @@ namespace Azure.Messaging.EventGrid.Tests
         public const string DomainKeyEnvironmentVariableName = "EVENT_GRID_DOMAIN_KEY";
         public const string DomainEndpointEnvironmentVariableName = "EVENT_GRID_DOMAIN_ENDPOINT";
 
-        public const string CldEvntTopicKeyEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY";
-        public const string CldEvntTopicEndpointEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT";
+        public const string CloudEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY";
+        public const string CloudEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT";
 
-        public const string CstEvntTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
-        public const string CstEvntTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
+        public const string CustomEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
+        public const string CustomEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
 
 
         public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
@@ -31,10 +31,10 @@ namespace Azure.Messaging.EventGrid.Tests
         public string DomainHost => GetRecordedVariable(DomainEndpointEnvironmentVariableName);
         public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName);
 
-        public string CloudEventTopicHost => GetRecordedVariable(CldEvntTopicEndpointEnvironmentVariableName);
-        public string CloudEventTopicKey => GetRecordedVariable(CldEvntTopicKeyEnvironmentVariableName);
+        public string CloudEventTopicHost => GetRecordedVariable(CloudEventTopicEndpointEnvironmentVariableName);
+        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName);
 
-        public string CustomEventTopicHost => GetRecordedVariable(CstEvntTopicEndpointEnvironmentVariableName);
-        public string CustomEventTopicKey => GetRecordedVariable(CstEvntTopicKeyEnvironmentVariableName);
+        public string CustomEventTopicHost => GetRecordedVariable(CustomEventTopicEndpointEnvironmentVariableName);
+        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName);
     }
 }
