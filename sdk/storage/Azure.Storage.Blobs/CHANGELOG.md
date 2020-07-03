@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-preview.6 (Unreleased)
+
+
 ## 12.5.0-preview.5 (2020-07-03)
 - Added support for service version 2019-12-12.
 - Added support for Blob Tags.
