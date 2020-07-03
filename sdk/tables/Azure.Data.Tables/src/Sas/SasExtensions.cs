@@ -57,6 +57,63 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
+        /// Parse a string representing which services are accessible from a
+        /// shared access signature.
+        /// </summary>
+        /// <param name="s">
+        /// A string representing which services are accessible.
+        /// </param>
+        /// <returns>
+        /// An <see cref="TableAccountSasServices"/> instance.
+        /// </returns>
+        internal static TableAccountSasServices ParseAccountServices(string s)
+        {
+            TableAccountSasServices svcs = default;
+            foreach (var ch in s)
+            {
+                svcs |= ch switch
+                {
+                    TableConstants.Sas.TableAccountServices.Blob => TableAccountSasServices.Blobs,
+                    TableConstants.Sas.TableAccountServices.Queue => TableAccountSasServices.Queues,
+                    TableConstants.Sas.TableAccountServices.File => TableAccountSasServices.Files,
+                    TableConstants.Sas.TableAccountServices.Table => TableAccountSasServices.Tables,
+                    _ => throw Errors.InvalidService(ch),
+                };
+                ;
+            }
+            return svcs;
+        }
+
+        /// <summary>
+        /// Parse a string representing which resource types are accessible
+        /// from a shared access signature.
+        /// </summary>
+        /// <param name="s">
+        /// A string representing which resource types are accessible.
+        /// </param>
+        /// <returns>
+        /// An <see cref="TableAccountSasResourceTypes"/> instance.
+        /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
+        internal static TableAccountSasResourceTypes ParseResourceTypes(string s)
+        {
+            TableAccountSasResourceTypes types = default;
+            foreach (var ch in s)
+            {
+                types |= ch switch
+                {
+                    TableConstants.Sas.TableAccountResources.Service => TableAccountSasResourceTypes.Service,
+                    TableConstants.Sas.TableAccountResources.Container => TableAccountSasResourceTypes.Container,
+                    TableConstants.Sas.TableAccountResources.Object => TableAccountSasResourceTypes.Object,
+                    _ => throw Errors.InvalidResourceType(ch),
+                };
+            }
+            return types;
+        }
+
+        /// <summary>
         /// FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
         /// SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
         /// </summary>
@@ -91,6 +148,72 @@ namespace Azure.Data.Tables.Sas
             if (!string.IsNullOrWhiteSpace(parameters.Version))
             {
                 stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
+            }
+
+            if (parameters.Protocol != default)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Protocol, parameters.Protocol.ToProtocolString());
+            }
+
+            if (parameters.StartsOn != DateTimeOffset.MinValue)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
+            }
+
+            if (parameters.ExpiresOn != DateTimeOffset.MinValue)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
+            }
+
+            var ipr = parameters.IPRange.ToString();
+            if (ipr.Length > 0)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.IPRange, ipr);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.Identifier))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Identifier, parameters.Identifier);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.Resource))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Resource, parameters.Resource);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.Permissions))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Permissions, parameters.Permissions);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.Signature))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));
+            }
+        }
+
+        /// <summary>
+        /// Builds the query parameter string for the SasQueryParameters instance.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="stringBuilder">
+        /// StringBuilder instance to add the query params to
+        /// </param>
+        internal static void AppendProperties(this TableAccountSasQueryParameters parameters, StringBuilder stringBuilder)
+        {
+            if (!string.IsNullOrWhiteSpace(parameters.Version))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
+            }
+
+            if (parameters.Services != null)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, parameters.Services.Value.ToPermissionsString());
+            }
+
+            if (parameters.ResourceTypes != null)
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ResourceTypes, parameters.ResourceTypes.Value.ToPermissionsString());
             }
 
             if (parameters.Protocol != default)
