@@ -34,11 +34,11 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained with labels
-            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelTrainedWithLabels.ModelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomFormsAsync(modelTrainedWithLabels.ModelId, stream).WaitForCompletionAsync();
 
                 // With a form recognized by a model trained with labels, the 'field.Name' key will be the label
                 // that you gave it at training time.
@@ -88,11 +88,11 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained without labels
-            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelTrainedWithoutLabels.ModelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomFormsAsync(modelTrainedWithoutLabels.ModelId, stream).WaitForCompletionAsync();
 
                 // With a form recognized by a model trained without labels, the 'field.Name' property will be denoted
                 // by a numeric index. To look for the labels identified during the training step,

@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream).WaitForCompletionAsync();
 
                 // To see the list of the supported fields returned by service and its corresponding types, consult:
                 // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
