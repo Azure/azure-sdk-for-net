@@ -9,10 +9,10 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Tests.Samples;
 using NUnit.Framework;
 
-namespace Azure.Search.Documents.Tests.Models
+// TODO: Remove or substantially change once https://github.com/Azure/azure-sdk-for-net/issues/12374 is completed.
+namespace Azure.Search.Documents.Samples.Tests
 {
     public sealed class IndexingParametersExtensionsTests
     {
