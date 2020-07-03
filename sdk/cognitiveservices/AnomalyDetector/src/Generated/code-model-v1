@@ -1,0 +1,4569 @@
+{
+ "$id": "1",
+ "modelTypes": [
+  {
+   "$id": "2",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "3",
+     "isReadOnly": false,
+     "realPath": [
+      "timestamp"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "4",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "5",
+      "fixed": false,
+      "raw": "Timestamp of a data point (ISO8601 format)."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "6",
+      "fixed": false,
+      "raw": "timestamp"
+     },
+     "serializedName": "timestamp",
+     "modelType": {
+      "$id": "7",
+      "$type": "PrimaryType",
+      "format": "date-time",
+      "knownPrimaryType": "dateTime",
+      "name": {
+       "$id": "8",
+       "fixed": false,
+       "raw": "DateTime"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "9",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "10",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "11",
+      "fixed": false,
+      "raw": "The measurement of that point, should be float."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "12",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "13",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "14",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "Point",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "15",
+    "fixed": false,
+    "raw": "Point"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "Point",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/Point"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "16",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "17",
+     "isReadOnly": false,
+     "realPath": [
+      "code"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "18",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "19",
+      "fixed": false,
+      "raw": "The error code."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "1.0"
+       ],
+       "filename": [
+        "mem:///122?oai3.shaken.json"
+       ],
+       "name": "AnomalyDetectorErrorCodes",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/APIError-code"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "AnomalyDetectorErrorCodes",
+       "modelAsString": true,
+       "oldModelAsString": true
+      },
+      "x-internal-autorest-anonymous-schema": {
+       "anonymous": true
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "20",
+      "fixed": false,
+      "raw": "code"
+     },
+     "serializedName": "code",
+     "modelType": {
+      "$id": "21",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "object",
+      "name": {
+       "$id": "22",
+       "fixed": false,
+       "raw": "Object"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "23",
+     "isReadOnly": false,
+     "realPath": [
+      "message"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "24",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "25",
+      "fixed": false,
+      "raw": "A message explaining the error reported by the service."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "26",
+      "fixed": false,
+      "raw": "message"
+     },
+     "serializedName": "message",
+     "modelType": {
+      "$id": "27",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "28",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "APIError",
+   "documentation": "Error information returned by the API.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "29",
+    "fixed": false,
+    "raw": "APIError"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "APIError",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/APIError"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "30",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "31",
+     "isReadOnly": false,
+     "realPath": [
+      "series"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "32",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "33",
+      "fixed": false,
+      "raw": "Time series data points. Points should be sorted by timestamp in ascending order to match the anomaly detection result. If the data is not sorted correctly or there is duplicated timestamp, the API will not work. In such case, an error message will be returned."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "34",
+      "fixed": false,
+      "raw": "series"
+     },
+     "serializedName": "series",
+     "modelType": {
+      "$id": "35",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "2"
+      },
+      "name": {
+       "$id": "36",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "37",
+     "isReadOnly": false,
+     "realPath": [
+      "granularity"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "38",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "39",
+      "fixed": false
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "1.0"
+       ],
+       "filename": [
+        "mem:///122?oai3.shaken.json"
+       ],
+       "name": "Granularity",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/Granularity"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "Granularity",
+       "modelAsString": false,
+       "oldModelAsString": false
+      },
+      "x-nullable": false
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "40",
+      "fixed": false,
+      "raw": "granularity"
+     },
+     "serializedName": "granularity",
+     "modelType": {
+      "$id": "41",
+      "$type": "EnumType",
+      "values": [
+       {
+        "$id": "42",
+        "name": "yearly",
+        "serializedName": "yearly"
+       },
+       {
+        "$id": "43",
+        "name": "monthly",
+        "serializedName": "monthly"
+       },
+       {
+        "$id": "44",
+        "name": "weekly",
+        "serializedName": "weekly"
+       },
+       {
+        "$id": "45",
+        "name": "daily",
+        "serializedName": "daily"
+       },
+       {
+        "$id": "46",
+        "name": "hourly",
+        "serializedName": "hourly"
+       },
+       {
+        "$id": "47",
+        "name": "minutely",
+        "serializedName": "minutely"
+       },
+       {
+        "$id": "48",
+        "name": "secondly",
+        "serializedName": "secondly"
+       }
+      ],
+      "oldModelAsString": false,
+      "modelAsString": false,
+      "underlyingType": {
+       "$id": "49",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "50",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "51",
+       "fixed": false,
+       "raw": "Granularity"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "52",
+     "isReadOnly": false,
+     "realPath": [
+      "customInterval"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "53",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "54",
+      "fixed": false,
+      "raw": "Custom Interval is used to set non-standard time interval, for example, if the series is 5 minutes, request can be set as {\"granularity\":\"minutely\", \"customInterval\":5}."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "55",
+      "fixed": false,
+      "raw": "customInterval"
+     },
+     "serializedName": "customInterval",
+     "modelType": {
+      "$id": "56",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "57",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "58",
+     "isReadOnly": false,
+     "realPath": [
+      "period"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "59",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "60",
+      "fixed": false,
+      "raw": "Optional argument, periodic value of a time series. If the value is null or does not present, the API will determine the period automatically."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "61",
+      "fixed": false,
+      "raw": "period"
+     },
+     "serializedName": "period",
+     "modelType": {
+      "$id": "62",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "63",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "64",
+     "isReadOnly": false,
+     "realPath": [
+      "maxAnomalyRatio"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "65",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "66",
+      "fixed": false,
+      "raw": "Optional argument, advanced model parameter, max anomaly ratio in a time series."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "67",
+      "fixed": false,
+      "raw": "maxAnomalyRatio"
+     },
+     "serializedName": "maxAnomalyRatio",
+     "modelType": {
+      "$id": "68",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "69",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "70",
+     "isReadOnly": false,
+     "realPath": [
+      "sensitivity"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "71",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "72",
+      "fixed": false,
+      "raw": "Optional argument, advanced model parameter, between 0-99, the lower the value is, the larger the margin value will be which means less anomalies will be accepted."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "73",
+      "fixed": false,
+      "raw": "sensitivity"
+     },
+     "serializedName": "sensitivity",
+     "modelType": {
+      "$id": "74",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "75",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "Request",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "76",
+    "fixed": false,
+    "raw": "Request"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "Request",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/Request"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "77",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "78",
+     "isReadOnly": false,
+     "realPath": [
+      "period"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "79",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "80",
+      "fixed": false,
+      "raw": "Frequency extracted from the series, zero means no recurrent pattern has been found."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "81",
+      "fixed": false,
+      "raw": "period"
+     },
+     "serializedName": "period",
+     "modelType": {
+      "$id": "82",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "83",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "84",
+     "isReadOnly": false,
+     "realPath": [
+      "expectedValues"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "85",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "86",
+      "fixed": false,
+      "raw": "ExpectedValues contain expected value for each input point. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "87",
+      "fixed": false,
+      "raw": "expectedValues"
+     },
+     "serializedName": "expectedValues",
+     "modelType": {
+      "$id": "88",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "89",
+       "$type": "PrimaryType",
+       "format": "float",
+       "knownPrimaryType": "double",
+       "name": {
+        "$id": "90",
+        "fixed": false,
+        "raw": "Double"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "91",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "92",
+     "isReadOnly": false,
+     "realPath": [
+      "upperMargins"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "93",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "94",
+      "fixed": false,
+      "raw": "UpperMargins contain upper margin of each input point. UpperMargin is used to calculate upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin. Anomalies in response can be filtered by upperBoundary and lowerBoundary. By adjusting marginScale value, less significant anomalies can be filtered in client side. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "95",
+      "fixed": false,
+      "raw": "upperMargins"
+     },
+     "serializedName": "upperMargins",
+     "modelType": {
+      "$id": "96",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "97",
+       "$type": "PrimaryType",
+       "format": "float",
+       "knownPrimaryType": "double",
+       "name": {
+        "$id": "98",
+        "fixed": false,
+        "raw": "Double"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "99",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "100",
+     "isReadOnly": false,
+     "realPath": [
+      "lowerMargins"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "101",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "102",
+      "fixed": false,
+      "raw": "LowerMargins contain lower margin of each input point. LowerMargin is used to calculate lowerBoundary, which equals to expectedValue - (100 - marginScale)*lowerMargin. Points between the boundary can be marked as normal ones in client side. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "103",
+      "fixed": false,
+      "raw": "lowerMargins"
+     },
+     "serializedName": "lowerMargins",
+     "modelType": {
+      "$id": "104",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "105",
+       "$type": "PrimaryType",
+       "format": "float",
+       "knownPrimaryType": "double",
+       "name": {
+        "$id": "106",
+        "fixed": false,
+        "raw": "Double"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "107",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "108",
+     "isReadOnly": false,
+     "realPath": [
+      "isAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "109",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "110",
+      "fixed": false,
+      "raw": "IsAnomaly contains anomaly properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "111",
+      "fixed": false,
+      "raw": "isAnomaly"
+     },
+     "serializedName": "isAnomaly",
+     "modelType": {
+      "$id": "112",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "113",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "boolean",
+       "name": {
+        "$id": "114",
+        "fixed": false,
+        "raw": "Boolean"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "115",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "116",
+     "isReadOnly": false,
+     "realPath": [
+      "isNegativeAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "117",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "118",
+      "fixed": false,
+      "raw": "IsNegativeAnomaly contains anomaly status in negative direction for each input point. True means a negative anomaly has been detected. A negative anomaly means the point is detected as an anomaly and its real value is smaller than the expected one. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "119",
+      "fixed": false,
+      "raw": "isNegativeAnomaly"
+     },
+     "serializedName": "isNegativeAnomaly",
+     "modelType": {
+      "$id": "120",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "121",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "boolean",
+       "name": {
+        "$id": "122",
+        "fixed": false,
+        "raw": "Boolean"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "123",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "124",
+     "isReadOnly": false,
+     "realPath": [
+      "isPositiveAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "125",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "126",
+      "fixed": false,
+      "raw": "IsPositiveAnomaly contain anomaly status in positive direction for each input point. True means a positive anomaly has been detected. A positive anomaly means the point is detected as an anomaly and its real value is larger than the expected one. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "127",
+      "fixed": false,
+      "raw": "isPositiveAnomaly"
+     },
+     "serializedName": "isPositiveAnomaly",
+     "modelType": {
+      "$id": "128",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "129",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "boolean",
+       "name": {
+        "$id": "130",
+        "fixed": false,
+        "raw": "Boolean"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "131",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "EntireDetectResponse",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "132",
+    "fixed": false,
+    "raw": "EntireDetectResponse"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "EntireDetectResponse",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/EntireDetectResponse"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "133",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "134",
+     "isReadOnly": false,
+     "realPath": [
+      "period"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "135",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "136",
+      "fixed": false,
+      "raw": "Frequency extracted from the series, zero means no recurrent pattern has been found."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "137",
+      "fixed": false,
+      "raw": "period"
+     },
+     "serializedName": "period",
+     "modelType": {
+      "$id": "138",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "139",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "140",
+     "isReadOnly": false,
+     "realPath": [
+      "suggestedWindow"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "141",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "142",
+      "fixed": false,
+      "raw": "Suggested input series points needed for detecting the latest point."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "143",
+      "fixed": false,
+      "raw": "suggestedWindow"
+     },
+     "serializedName": "suggestedWindow",
+     "modelType": {
+      "$id": "144",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "145",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "146",
+     "isReadOnly": false,
+     "realPath": [
+      "expectedValue"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "147",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "148",
+      "fixed": false,
+      "raw": "Expected value of the latest point."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "149",
+      "fixed": false,
+      "raw": "expectedValue"
+     },
+     "serializedName": "expectedValue",
+     "modelType": {
+      "$id": "150",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "151",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "152",
+     "isReadOnly": false,
+     "realPath": [
+      "upperMargin"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "153",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "154",
+      "fixed": false,
+      "raw": "Upper margin of the latest point. UpperMargin is used to calculate upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin. If the value of latest point is between upperBoundary and lowerBoundary, it should be treated as normal value. By adjusting marginScale value, anomaly status of latest point can be changed."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "155",
+      "fixed": false,
+      "raw": "upperMargin"
+     },
+     "serializedName": "upperMargin",
+     "modelType": {
+      "$id": "156",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "157",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "158",
+     "isReadOnly": false,
+     "realPath": [
+      "lowerMargin"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "159",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "160",
+      "fixed": false,
+      "raw": "Lower margin of the latest point. LowerMargin is used to calculate lowerBoundary, which equals to expectedValue - (100 - marginScale)*lowerMargin. "
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "161",
+      "fixed": false,
+      "raw": "lowerMargin"
+     },
+     "serializedName": "lowerMargin",
+     "modelType": {
+      "$id": "162",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "163",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "164",
+     "isReadOnly": false,
+     "realPath": [
+      "isAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "165",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "166",
+      "fixed": false,
+      "raw": "Anomaly status of the latest point, true means the latest point is an anomaly either in negative direction or positive direction."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "167",
+      "fixed": false,
+      "raw": "isAnomaly"
+     },
+     "serializedName": "isAnomaly",
+     "modelType": {
+      "$id": "168",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "boolean",
+      "name": {
+       "$id": "169",
+       "fixed": false,
+       "raw": "Boolean"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "170",
+     "isReadOnly": false,
+     "realPath": [
+      "isNegativeAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "171",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "172",
+      "fixed": false,
+      "raw": "Anomaly status in negative direction of the latest point. True means the latest point is an anomaly and its real value is smaller than the expected one."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "173",
+      "fixed": false,
+      "raw": "isNegativeAnomaly"
+     },
+     "serializedName": "isNegativeAnomaly",
+     "modelType": {
+      "$id": "174",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "boolean",
+      "name": {
+       "$id": "175",
+       "fixed": false,
+       "raw": "Boolean"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "176",
+     "isReadOnly": false,
+     "realPath": [
+      "isPositiveAnomaly"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "177",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "178",
+      "fixed": false,
+      "raw": "Anomaly status in positive direction of the latest point. True means the latest point is an anomaly and its real value is larger than the expected one."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "179",
+      "fixed": false,
+      "raw": "isPositiveAnomaly"
+     },
+     "serializedName": "isPositiveAnomaly",
+     "modelType": {
+      "$id": "180",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "boolean",
+      "name": {
+       "$id": "181",
+       "fixed": false,
+       "raw": "Boolean"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "LastDetectResponse",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "182",
+    "fixed": false,
+    "raw": "LastDetectResponse"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "LastDetectResponse",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/LastDetectResponse"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "183",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "184",
+     "isReadOnly": false,
+     "realPath": [
+      "series"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "185",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "186",
+      "fixed": false,
+      "raw": "Time series data points. Points should be sorted by timestamp in ascending order to match the change point detection result."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "187",
+      "fixed": false,
+      "raw": "series"
+     },
+     "serializedName": "series",
+     "modelType": {
+      "$id": "188",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "2"
+      },
+      "name": {
+       "$id": "189",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "190",
+     "isReadOnly": false,
+     "realPath": [
+      "granularity"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "191",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "192",
+      "fixed": false,
+      "raw": "Can only be one of yearly, monthly, weekly, daily, hourly, minutely or secondly. Granularity is used for verify whether input series is valid."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "1.0"
+       ],
+       "filename": [
+        "mem:///122?oai3.shaken.json"
+       ],
+       "name": "Granularity",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/Granularity"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "Granularity",
+       "modelAsString": false,
+       "oldModelAsString": false
+      },
+      "x-nullable": false
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "193",
+      "fixed": false,
+      "raw": "granularity"
+     },
+     "serializedName": "granularity",
+     "modelType": {
+      "$ref": "41"
+     }
+    },
+    {
+     "$id": "194",
+     "isReadOnly": false,
+     "realPath": [
+      "customInterval"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "195",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "196",
+      "fixed": false,
+      "raw": "Custom Interval is used to set non-standard time interval, for example, if the series is 5 minutes, request can be set as {\"granularity\":\"minutely\", \"customInterval\":5}."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "197",
+      "fixed": false,
+      "raw": "customInterval"
+     },
+     "serializedName": "customInterval",
+     "modelType": {
+      "$id": "198",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "199",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "200",
+     "isReadOnly": false,
+     "realPath": [
+      "period"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "201",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "202",
+      "fixed": false,
+      "raw": "Optional argument, periodic value of a time series. If the value is null or does not present, the API will determine the period automatically."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "203",
+      "fixed": false,
+      "raw": "period"
+     },
+     "serializedName": "period",
+     "modelType": {
+      "$id": "204",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "205",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "206",
+     "isReadOnly": false,
+     "realPath": [
+      "stableTrendWindow"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "207",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "208",
+      "fixed": false,
+      "raw": "Optional argument, advanced model parameter, a default stableTrendWindow will be used in detection."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "209",
+      "fixed": false,
+      "raw": "stableTrendWindow"
+     },
+     "serializedName": "stableTrendWindow",
+     "modelType": {
+      "$id": "210",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "211",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "212",
+     "isReadOnly": false,
+     "realPath": [
+      "threshold"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "213",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "214",
+      "fixed": false,
+      "raw": "Optional argument, advanced model parameter, between 0.0-1.0, the lower the value is, the larger the trend error will be which means less change point will be accepted."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "215",
+      "fixed": false,
+      "raw": "threshold"
+     },
+     "serializedName": "threshold",
+     "modelType": {
+      "$id": "216",
+      "$type": "PrimaryType",
+      "format": "float",
+      "knownPrimaryType": "double",
+      "name": {
+       "$id": "217",
+       "fixed": false,
+       "raw": "Double"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "ChangePointDetectRequest",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "218",
+    "fixed": false,
+    "raw": "ChangePointDetectRequest"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "ChangePointDetectRequest",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/ChangePointDetectRequest"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "219",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "220",
+     "isReadOnly": false,
+     "realPath": [
+      "period"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "221",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "222",
+      "fixed": false,
+      "raw": "Frequency extracted from the series, zero means no recurrent pattern has been found."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "223",
+      "fixed": false,
+      "raw": "period"
+     },
+     "serializedName": "period",
+     "modelType": {
+      "$id": "224",
+      "$type": "PrimaryType",
+      "format": "int32",
+      "knownPrimaryType": "int",
+      "name": {
+       "$id": "225",
+       "fixed": false,
+       "raw": "Int"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "226",
+     "isReadOnly": false,
+     "realPath": [
+      "isChangePoint"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "227",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "228",
+      "fixed": false,
+      "raw": "isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "229",
+      "fixed": false,
+      "raw": "isChangePoint"
+     },
+     "serializedName": "isChangePoint",
+     "modelType": {
+      "$id": "230",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "231",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "boolean",
+       "name": {
+        "$id": "232",
+        "fixed": false,
+        "raw": "Boolean"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "233",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "234",
+     "isReadOnly": false,
+     "realPath": [
+      "confidenceScores"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "235",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "236",
+      "fixed": false,
+      "raw": "the change point confidence of each point"
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "237",
+      "fixed": false,
+      "raw": "confidenceScores"
+     },
+     "serializedName": "confidenceScores",
+     "modelType": {
+      "$id": "238",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "239",
+       "$type": "PrimaryType",
+       "format": "float",
+       "knownPrimaryType": "double",
+       "name": {
+        "$id": "240",
+        "fixed": false,
+        "raw": "Double"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "241",
+       "fixed": false
+      },
+      "extensions": {
+       "x-nullable": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "ChangePointDetectResponse",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "242",
+    "fixed": false,
+    "raw": "ChangePointDetectResponse"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///122?oai3.shaken.json"
+     ],
+     "name": "ChangePointDetectResponse",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/schemas/ChangePointDetectResponse"
+     ]
+    }
+   },
+   "deprecated": false
+  }
+ ],
+ "errorTypes": [
+  {
+   "$ref": "16"
+  }
+ ],
+ "enumTypes": [
+  {
+   "$ref": "41"
+  }
+ ],
+ "hostParametersFront": [
+  {
+   "$id": "243",
+   "clientProperty": {
+    "$id": "244",
+    "isReadOnly": false,
+    "realPath": [
+     "Endpoint"
+    ],
+    "collectionFormat": "none",
+    "defaultValue": {
+     "$id": "245",
+     "fixed": false
+    },
+    "deprecated": false,
+    "documentation": {
+     "$id": "246",
+     "fixed": false,
+     "raw": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com)."
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "1.0"
+      ],
+      "filename": [
+       "mem:///122?oai3.shaken.json"
+      ],
+      "name": "Endpoint",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/parameters/Endpoint"
+      ]
+     },
+     "x-ms-parameter-location": "client",
+     "x-ms-skip-url-encoding": true
+    },
+    "isRequired": true,
+    "isConstant": false,
+    "name": {
+     "$id": "247",
+     "fixed": false,
+     "raw": "Endpoint"
+    },
+    "serializedName": "Endpoint",
+    "modelType": {
+     "$id": "248",
+     "$type": "PrimaryType",
+     "knownPrimaryType": "string",
+     "name": {
+      "$id": "249",
+      "fixed": false,
+      "raw": "String"
+     },
+     "deprecated": false
+    }
+   },
+   "location": "path",
+   "deprecated": false,
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "250",
+    "fixed": false,
+    "raw": ""
+   },
+   "documentation": {
+    "$id": "251",
+    "fixed": false,
+    "raw": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com)."
+   },
+   "extensions": {
+    "x-name": "Endpoint",
+    "x-ms-parameter-location": "client",
+    "x-required": true,
+    "x-type": "string",
+    "x-in": "path",
+    "x-ms-skip-url-encoding": true,
+    "x-ms-original": {
+     "$ref": "#/components/parameters/parameters:0"
+    },
+    "hostParameter": true
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "252",
+    "fixed": false,
+    "raw": "Endpoint"
+   },
+   "serializedName": "Endpoint",
+   "modelType": {
+    "$id": "253",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "254",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  }
+ ],
+ "name": "AnomalyDetectorClient",
+ "namespace": "Microsoft.Azure.CognitiveServices.AnomalyDetector",
+ "modelsName": "Models",
+ "apiVersion": "1.0",
+ "baseUrl": "{Endpoint}/anomalydetector/v1.0",
+ "documentation": "The Anomaly Detector API detects anomalies automatically in time series data. It supports two kinds of mode, one is for stateless using, another is for stateful using. In stateless mode, there are three functionalities. Entire Detect is for detecting the whole series with model trained by the time series, Last Detect is detecting last point with model trained by points before. ChangePoint Detect is for detecting trend changes in time series. In stateful mode, user can store time series, the stored time series will be used for detection anomalies. Under this mode, user can still use the above three functionalities by only giving a time range without preparing time series in client side. Besides the above three functionalities, stateful model also provide group based detection and labeling service. By leveraging labeling service user can provide labels for each detection result, these labels will be used for retuning or regenerating detection models. Inconsistency detection is a kind of group based detection, this detection will find inconsistency ones in a set of time series. By using anomaly detector service, business customers can discover incidents and establish a logic flow for root cause analysis.",
+ "extensions": {
+  "security": [
+   {
+    "apiKeyHeader": []
+   }
+  ],
+  "x-ms-parameterized-host": true
+ },
+ "properties": [
+  {
+   "$ref": "244"
+  }
+ ],
+ "operations": [
+  {
+   "$id": "255",
+   "methods": [
+    {
+     "$id": "256",
+     "parameters": [
+      {
+       "$id": "257",
+       "location": "body",
+       "deprecated": false,
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "258",
+        "fixed": false
+       },
+       "documentation": {
+        "$id": "259",
+        "fixed": false,
+        "raw": "Time series points and period if needed. Advanced model parameters can also be set in the request."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·lnwiks·timeseries-entire-detect·post·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/requestBodies/paths·lnwiks·timeseries-entire-detect·post·requestbody"
+         ]
+        },
+        "x-ms-requestBody-name": "body"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "260",
+        "fixed": false,
+        "raw": "body"
+       },
+       "serializedName": "body",
+       "modelType": {
+        "$ref": "30"
+       }
+      }
+     ],
+     "name": {
+      "$id": "261",
+      "fixed": false,
+      "raw": "EntireDetect"
+     },
+     "group": {
+      "$id": "262",
+      "fixed": false,
+      "raw": ""
+     },
+     "serializedName": "EntireDetect",
+     "url": "/timeseries/entire/detect",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "OK": {
+       "$id": "263",
+       "body": {
+        "$ref": "77"
+       },
+       "extensions": {
+        "$id": "264",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·lrlcpt·timeseries-entire-detect·post·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·lrlcpt·timeseries-entire-detect·post·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "265",
+      "body": {
+       "$ref": "16"
+      },
+      "extensions": {
+       "$id": "266",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "1.0"
+        ],
+        "filename": [
+         "mem:///122?oai3.shaken.json"
+        ],
+        "name": "paths·99u0sq·timeseries-entire-detect·post·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·99u0sq·timeseries-entire-detect·post·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "267",
+      "body": {
+       "$ref": "77"
+      },
+      "isNullable": true
+     },
+     "description": "This operation generates a model using an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series.",
+     "summary": "Detect anomalies for the entire series in batch.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "{Endpoint}/anomalydetector/v1.0",
+        "variables": {
+         "Endpoint": {
+          "x-name": "Endpoint",
+          "description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+          "x-ms-parameter-location": "client",
+          "x-required": true,
+          "x-type": "string",
+          "x-in": "path",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-original": {
+           "$ref": "#/components/parameters/parameters:0"
+          },
+          "default": ""
+         }
+        }
+       }
+      ],
+      "x-ms-requestBody-index": "0",
+      "x-ms-examples": {
+       "Find anomalies for the entire series in batch example": {
+        "parameters": {
+         "Endpoint": "{Endpoint}",
+         "Content-Type": "application/json",
+         "Ocp-Apim-Subscription-Key": "{API key}",
+         "body": {
+          "series": [
+           {
+            "timestamp": "1972-01-01T00:00:00Z",
+            "value": "826"
+           },
+           {
+            "timestamp": "1972-02-01T00:00:00Z",
+            "value": "799"
+           },
+           {
+            "timestamp": "1972-03-01T00:00:00Z",
+            "value": "890"
+           },
+           {
+            "timestamp": "1972-04-01T00:00:00Z",
+            "value": "900"
+           },
+           {
+            "timestamp": "1972-05-01T00:00:00Z",
+            "value": "961"
+           },
+           {
+            "timestamp": "1972-06-01T00:00:00Z",
+            "value": "935"
+           },
+           {
+            "timestamp": "1972-07-01T00:00:00Z",
+            "value": "894"
+           },
+           {
+            "timestamp": "1972-08-01T00:00:00Z",
+            "value": "855"
+           },
+           {
+            "timestamp": "1972-09-01T00:00:00Z",
+            "value": "809"
+           },
+           {
+            "timestamp": "1972-10-01T00:00:00Z",
+            "value": "810"
+           },
+           {
+            "timestamp": "1972-11-01T00:00:00Z",
+            "value": "766"
+           },
+           {
+            "timestamp": "1972-12-01T00:00:00Z",
+            "value": "805"
+           },
+           {
+            "timestamp": "1973-01-01T00:00:00Z",
+            "value": "821"
+           },
+           {
+            "timestamp": "1973-02-01T00:00:00Z",
+            "value": "773"
+           },
+           {
+            "timestamp": "1973-03-01T00:00:00Z",
+            "value": "883"
+           },
+           {
+            "timestamp": "1973-04-01T00:00:00Z",
+            "value": "898"
+           },
+           {
+            "timestamp": "1973-05-01T00:00:00Z",
+            "value": "957"
+           },
+           {
+            "timestamp": "1973-06-01T00:00:00Z",
+            "value": "924"
+           },
+           {
+            "timestamp": "1973-07-01T00:00:00Z",
+            "value": "881"
+           },
+           {
+            "timestamp": "1973-08-01T00:00:00Z",
+            "value": "837"
+           },
+           {
+            "timestamp": "1973-09-01T00:00:00Z",
+            "value": "784"
+           },
+           {
+            "timestamp": "1973-10-01T00:00:00Z",
+            "value": "791"
+           },
+           {
+            "timestamp": "1973-11-01T00:00:00Z",
+            "value": "760"
+           },
+           {
+            "timestamp": "1973-12-01T00:00:00Z",
+            "value": "802"
+           },
+           {
+            "timestamp": "1974-01-01T00:00:00Z",
+            "value": "828"
+           },
+           {
+            "timestamp": "1974-02-01T00:00:00Z",
+            "value": "1030"
+           },
+           {
+            "timestamp": "1974-03-01T00:00:00Z",
+            "value": "889"
+           },
+           {
+            "timestamp": "1974-04-01T00:00:00Z",
+            "value": "902"
+           },
+           {
+            "timestamp": "1974-05-01T00:00:00Z",
+            "value": "969"
+           },
+           {
+            "timestamp": "1974-06-01T00:00:00Z",
+            "value": "947"
+           },
+           {
+            "timestamp": "1974-07-01T00:00:00Z",
+            "value": "908"
+           },
+           {
+            "timestamp": "1974-08-01T00:00:00Z",
+            "value": "867"
+           },
+           {
+            "timestamp": "1974-09-01T00:00:00Z",
+            "value": "815"
+           },
+           {
+            "timestamp": "1974-10-01T00:00:00Z",
+            "value": "812"
+           },
+           {
+            "timestamp": "1974-11-01T00:00:00Z",
+            "value": "773"
+           },
+           {
+            "timestamp": "1974-12-01T00:00:00Z",
+            "value": "813"
+           },
+           {
+            "timestamp": "1975-01-01T00:00:00Z",
+            "value": "834"
+           },
+           {
+            "timestamp": "1975-02-01T00:00:00Z",
+            "value": "782"
+           },
+           {
+            "timestamp": "1975-03-01T00:00:00Z",
+            "value": "892"
+           },
+           {
+            "timestamp": "1975-04-01T00:00:00Z",
+            "value": "903"
+           },
+           {
+            "timestamp": "1975-05-01T00:00:00Z",
+            "value": "966"
+           },
+           {
+            "timestamp": "1975-06-01T00:00:00Z",
+            "value": "937"
+           },
+           {
+            "timestamp": "1975-07-01T00:00:00Z",
+            "value": "896"
+           },
+           {
+            "timestamp": "1975-08-01T00:00:00Z",
+            "value": "858"
+           },
+           {
+            "timestamp": "1975-09-01T00:00:00Z",
+            "value": "817"
+           },
+           {
+            "timestamp": "1975-10-01T00:00:00Z",
+            "value": "827"
+           },
+           {
+            "timestamp": "1975-11-01T00:00:00Z",
+            "value": "797"
+           },
+           {
+            "timestamp": "1975-12-01T00:00:00Z",
+            "value": "843"
+           }
+          ],
+          "maxAnomalyRatio": "0.25",
+          "sensitivity": "95",
+          "granularity": "monthly"
+         }
+        },
+        "responses": {
+         "200": {
+          "body": {
+           "isNegativeAnomaly": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+           ],
+           "expectedValues": [
+            "827.7940908243968",
+            "798.9133774671927",
+            "888.6058431807189",
+            "900.5606407986661",
+            "962.8389426378304",
+            "933.2591606306954",
+            "891.0784104799666",
+            "856.1781601363697",
+            "809.8987227908941",
+            "807.375129007505",
+            "764.3196682448518",
+            "803.933498594564",
+            "823.5900620883058",
+            "794.0905641334288",
+            "883.164245249282",
+            "894.8419000690953",
+            "956.8430591101258",
+            "927.6285055190114",
+            "885.812983784303",
+            "851.6424797402517",
+            "806.0927886943216",
+            "804.6826815312029",
+            "762.74070738882",
+            "804.0251702513732",
+            "825.3523662579559",
+            "798.0404188724976",
+            "889.3016505577698",
+            "902.4226124345937",
+            "965.867078532635",
+            "937.3200495736695",
+            "896.1720524711102",
+            "862.0087368413656",
+            "816.4662342097423",
+            "814.4297745524709",
+            "771.8614479159354",
+            "811.859271346729",
+            "831.8998279215521",
+            "802.947544797165",
+            "892.5684407435083",
+            "904.5488214533809",
+            "966.8527063844707",
+            "937.3168391003043",
+            "895.180003672544",
+            "860.3649596356635",
+            "814.1707285969043",
+            "811.9054862686213",
+            "769.1083769610742",
+            "809.2328084659704"
+           ],
+           "isPositiveAnomaly": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+           ],
+           "lowerMargins": [
+            "41.389704541219835",
+            "39.94566887335964",
+            "44.43029215903594",
+            "45.02803203993331",
+            "48.14194713189152",
+            "46.66295803153477",
+            "44.55392052399833",
+            "42.808908006818484",
+            "40.494936139544706",
+            "40.36875645037525",
+            "38.215983412242586",
+            "40.196674929728196",
+            "41.17950310441529",
+            "39.70452820667144",
+            "44.1582122624641",
+            "44.74209500345477",
+            "47.84215295550629",
+            "46.38142527595057",
+            "44.290649189215145",
+            "42.58212398701258",
+            "40.30463943471608",
+            "40.234134076560146",
+            "38.137035369441",
+            "40.201258512568664",
+            "41.267618312897795",
+            "39.90202094362488",
+            "44.46508252788849",
+            "45.121130621729684",
+            "48.29335392663175",
+            "46.86600247868348",
+            "44.80860262355551",
+            "43.100436842068284",
+            "40.82331171048711",
+            "40.721488727623544",
+            "38.593072395796774",
+            "40.59296356733645",
+            "41.5949913960776",
+            "40.14737723985825",
+            "44.62842203717541",
+            "45.227441072669045",
+            "48.34263531922354",
+            "46.86584195501521",
+            "44.759000183627194",
+            "43.01824798178317",
+            "40.70853642984521",
+            "40.59527431343106",
+            "38.45541884805371",
+            "40.46164042329852"
+           ],
+           "period": "12",
+           "upperMargins": [
+            "41.389704541219835",
+            "39.94566887335964",
+            "44.43029215903594",
+            "45.02803203993331",
+            "48.14194713189152",
+            "46.66295803153477",
+            "44.55392052399833",
+            "42.808908006818484",
+            "40.494936139544706",
+            "40.36875645037525",
+            "38.215983412242586",
+            "40.196674929728196",
+            "41.17950310441529",
+            "39.70452820667144",
+            "44.1582122624641",
+            "44.74209500345477",
+            "47.84215295550629",
+            "46.38142527595057",
+            "44.290649189215145",
+            "42.58212398701258",
+            "40.30463943471608",
+            "40.234134076560146",
+            "38.137035369441",
+            "40.201258512568664",
+            "41.267618312897795",
+            "39.90202094362488",
+            "44.46508252788849",
+            "45.121130621729684",
+            "48.29335392663175",
+            "46.86600247868348",
+            "44.80860262355551",
+            "43.100436842068284",
+            "40.82331171048711",
+            "40.721488727623544",
+            "38.593072395796774",
+            "40.59296356733645",
+            "41.5949913960776",
+            "40.14737723985825",
+            "44.62842203717541",
+            "45.227441072669045",
+            "48.34263531922354",
+            "46.86584195501521",
+            "44.759000183627194",
+            "43.01824798178317",
+            "40.70853642984521",
+            "40.59527431343106",
+            "38.45541884805371",
+            "40.46164042329852"
+           ],
+           "isAnomaly": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+           ]
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "268",
+     "parameters": [
+      {
+       "$id": "269",
+       "location": "body",
+       "deprecated": false,
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "270",
+        "fixed": false
+       },
+       "documentation": {
+        "$id": "271",
+        "fixed": false,
+        "raw": "Time series points and period if needed. Advanced model parameters can also be set in the request."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·v26u65·timeseries-last-detect·post·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/requestBodies/paths·v26u65·timeseries-last-detect·post·requestbody"
+         ]
+        },
+        "x-ms-requestBody-name": "body"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "272",
+        "fixed": false,
+        "raw": "body"
+       },
+       "serializedName": "body",
+       "modelType": {
+        "$ref": "30"
+       }
+      }
+     ],
+     "name": {
+      "$id": "273",
+      "fixed": false,
+      "raw": "LastDetect"
+     },
+     "group": {
+      "$id": "274",
+      "fixed": false,
+      "raw": ""
+     },
+     "serializedName": "LastDetect",
+     "url": "/timeseries/last/detect",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "OK": {
+       "$id": "275",
+       "body": {
+        "$ref": "133"
+       },
+       "extensions": {
+        "$id": "276",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·bnodq2·timeseries-last-detect·post·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·bnodq2·timeseries-last-detect·post·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "277",
+      "body": {
+       "$ref": "16"
+      },
+      "extensions": {
+       "$id": "278",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "1.0"
+        ],
+        "filename": [
+         "mem:///122?oai3.shaken.json"
+        ],
+        "name": "paths·1qbyvkw·timeseries-last-detect·post·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·1qbyvkw·timeseries-last-detect·post·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "279",
+      "body": {
+       "$ref": "133"
+      },
+      "isNullable": true
+     },
+     "description": "This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics.",
+     "summary": "Detect anomaly status of the latest point in time series.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "{Endpoint}/anomalydetector/v1.0",
+        "variables": {
+         "Endpoint": {
+          "x-name": "Endpoint",
+          "description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+          "x-ms-parameter-location": "client",
+          "x-required": true,
+          "x-type": "string",
+          "x-in": "path",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-original": {
+           "$ref": "#/components/parameters/parameters:0"
+          },
+          "default": ""
+         }
+        }
+       }
+      ],
+      "x-ms-requestBody-index": "0",
+      "x-ms-examples": {
+       "Detect anomaly status of the latest point in time series example": {
+        "parameters": {
+         "Endpoint": "{Endpoint}",
+         "Content-Type": "application/json",
+         "Ocp-Apim-Subscription-Key": "{API key}",
+         "body": {
+          "series": [
+           {
+            "timestamp": "1972-01-01T00:00:00Z",
+            "value": "826"
+           },
+           {
+            "timestamp": "1972-02-01T00:00:00Z",
+            "value": "799"
+           },
+           {
+            "timestamp": "1972-03-01T00:00:00Z",
+            "value": "890"
+           },
+           {
+            "timestamp": "1972-04-01T00:00:00Z",
+            "value": "900"
+           },
+           {
+            "timestamp": "1972-05-01T00:00:00Z",
+            "value": "961"
+           },
+           {
+            "timestamp": "1972-06-01T00:00:00Z",
+            "value": "935"
+           },
+           {
+            "timestamp": "1972-07-01T00:00:00Z",
+            "value": "894"
+           },
+           {
+            "timestamp": "1972-08-01T00:00:00Z",
+            "value": "855"
+           },
+           {
+            "timestamp": "1972-09-01T00:00:00Z",
+            "value": "809"
+           },
+           {
+            "timestamp": "1972-10-01T00:00:00Z",
+            "value": "810"
+           },
+           {
+            "timestamp": "1972-11-01T00:00:00Z",
+            "value": "766"
+           },
+           {
+            "timestamp": "1972-12-01T00:00:00Z",
+            "value": "805"
+           },
+           {
+            "timestamp": "1973-01-01T00:00:00Z",
+            "value": "821"
+           },
+           {
+            "timestamp": "1973-02-01T00:00:00Z",
+            "value": "773"
+           },
+           {
+            "timestamp": "1973-03-01T00:00:00Z",
+            "value": "883"
+           },
+           {
+            "timestamp": "1973-04-01T00:00:00Z",
+            "value": "898"
+           },
+           {
+            "timestamp": "1973-05-01T00:00:00Z",
+            "value": "957"
+           },
+           {
+            "timestamp": "1973-06-01T00:00:00Z",
+            "value": "924"
+           },
+           {
+            "timestamp": "1973-07-01T00:00:00Z",
+            "value": "881"
+           },
+           {
+            "timestamp": "1973-08-01T00:00:00Z",
+            "value": "837"
+           },
+           {
+            "timestamp": "1973-09-01T00:00:00Z",
+            "value": "784"
+           },
+           {
+            "timestamp": "1973-10-01T00:00:00Z",
+            "value": "791"
+           },
+           {
+            "timestamp": "1973-11-01T00:00:00Z",
+            "value": "760"
+           },
+           {
+            "timestamp": "1973-12-01T00:00:00Z",
+            "value": "802"
+           },
+           {
+            "timestamp": "1974-01-01T00:00:00Z",
+            "value": "828"
+           },
+           {
+            "timestamp": "1974-02-01T00:00:00Z",
+            "value": "1030"
+           },
+           {
+            "timestamp": "1974-03-01T00:00:00Z",
+            "value": "889"
+           },
+           {
+            "timestamp": "1974-04-01T00:00:00Z",
+            "value": "902"
+           },
+           {
+            "timestamp": "1974-05-01T00:00:00Z",
+            "value": "969"
+           },
+           {
+            "timestamp": "1974-06-01T00:00:00Z",
+            "value": "947"
+           },
+           {
+            "timestamp": "1974-07-01T00:00:00Z",
+            "value": "908"
+           },
+           {
+            "timestamp": "1974-08-01T00:00:00Z",
+            "value": "867"
+           },
+           {
+            "timestamp": "1974-09-01T00:00:00Z",
+            "value": "815"
+           },
+           {
+            "timestamp": "1974-10-01T00:00:00Z",
+            "value": "812"
+           },
+           {
+            "timestamp": "1974-11-01T00:00:00Z",
+            "value": "773"
+           },
+           {
+            "timestamp": "1974-12-01T00:00:00Z",
+            "value": "813"
+           },
+           {
+            "timestamp": "1975-01-01T00:00:00Z",
+            "value": "834"
+           },
+           {
+            "timestamp": "1975-02-01T00:00:00Z",
+            "value": "782"
+           },
+           {
+            "timestamp": "1975-03-01T00:00:00Z",
+            "value": "892"
+           },
+           {
+            "timestamp": "1975-04-01T00:00:00Z",
+            "value": "903"
+           },
+           {
+            "timestamp": "1975-05-01T00:00:00Z",
+            "value": "966"
+           },
+           {
+            "timestamp": "1975-06-01T00:00:00Z",
+            "value": "937"
+           },
+           {
+            "timestamp": "1975-07-01T00:00:00Z",
+            "value": "896"
+           },
+           {
+            "timestamp": "1975-08-01T00:00:00Z",
+            "value": "858"
+           },
+           {
+            "timestamp": "1975-09-01T00:00:00Z",
+            "value": "817"
+           },
+           {
+            "timestamp": "1975-10-01T00:00:00Z",
+            "value": "827"
+           },
+           {
+            "timestamp": "1975-11-01T00:00:00Z",
+            "value": "797"
+           },
+           {
+            "timestamp": "1975-12-01T00:00:00Z",
+            "value": "843"
+           }
+          ],
+          "maxAnomalyRatio": "0.25",
+          "sensitivity": "95",
+          "granularity": "monthly"
+         }
+        },
+        "responses": {
+         "200": {
+          "body": {
+           "isAnomaly": false,
+           "isPositiveAnomaly": false,
+           "isNegativeAnomaly": false,
+           "period": "12",
+           "expectedValue": "809.2328084659704",
+           "upperMargin": "40.46164042329852",
+           "lowerMargin": "40.46164042329852",
+           "suggestedWindow": "49"
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "280",
+     "parameters": [
+      {
+       "$id": "281",
+       "location": "body",
+       "deprecated": false,
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "282",
+        "fixed": false
+       },
+       "documentation": {
+        "$id": "283",
+        "fixed": false,
+        "raw": "Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·1jdnhn·timeseries-changepoint-detect·post·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/requestBodies/paths·1jdnhn·timeseries-changepoint-detect·post·requestbody"
+         ]
+        },
+        "x-ms-requestBody-name": "body"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "284",
+        "fixed": false,
+        "raw": "body"
+       },
+       "serializedName": "body",
+       "modelType": {
+        "$ref": "183"
+       }
+      }
+     ],
+     "name": {
+      "$id": "285",
+      "fixed": false,
+      "raw": "ChangePointDetect"
+     },
+     "group": {
+      "$id": "286",
+      "fixed": false,
+      "raw": ""
+     },
+     "serializedName": "ChangePointDetect",
+     "url": "/timeseries/changePoint/detect",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "OK": {
+       "$id": "287",
+       "body": {
+        "$ref": "219"
+       },
+       "extensions": {
+        "$id": "288",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///122?oai3.shaken.json"
+         ],
+         "name": "paths·6yfodl·timeseries-changepoint-detect·post·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·6yfodl·timeseries-changepoint-detect·post·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "289",
+      "body": {
+       "$ref": "16"
+      },
+      "extensions": {
+       "$id": "290",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "1.0"
+        ],
+        "filename": [
+         "mem:///122?oai3.shaken.json"
+        ],
+        "name": "paths·7xdc6n·timeseries-changepoint-detect·post·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.0/AnomalyDetector.json#/components/responses/paths·7xdc6n·timeseries-changepoint-detect·post·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "291",
+      "body": {
+       "$ref": "219"
+      },
+      "isNullable": true
+     },
+     "description": "Evaluate change point score of every series point",
+     "summary": "Detect change point for the entire series",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "{Endpoint}/anomalydetector/v1.0",
+        "variables": {
+         "Endpoint": {
+          "x-name": "Endpoint",
+          "description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+          "x-ms-parameter-location": "client",
+          "x-required": true,
+          "x-type": "string",
+          "x-in": "path",
+          "x-ms-skip-url-encoding": true,
+          "x-ms-original": {
+           "$ref": "#/components/parameters/parameters:0"
+          },
+          "default": ""
+         }
+        }
+       }
+      ],
+      "x-ms-requestBody-index": "0",
+      "x-ms-examples": {
+       "Detect change point example": {
+        "parameters": {
+         "Endpoint": "{Endpoint}",
+         "Content-Type": "application/json",
+         "Ocp-Apim-Subscription-Key": "{API key}",
+         "body": {
+          "series": [
+           {
+            "timestamp": "2017-01-01T06:45:00Z",
+            "value": "1639196"
+           },
+           {
+            "timestamp": "2017-01-01T06:50:00Z",
+            "value": "1639290"
+           },
+           {
+            "timestamp": "2017-01-01T06:55:00Z",
+            "value": "1667293"
+           },
+           {
+            "timestamp": "2017-01-01T07:00:00Z",
+            "value": "1703130"
+           },
+           {
+            "timestamp": "2017-01-01T07:05:00Z",
+            "value": "1650912"
+           },
+           {
+            "timestamp": "2017-01-01T07:10:00Z",
+            "value": "1653596"
+           },
+           {
+            "timestamp": "2017-01-01T07:15:00Z",
+            "value": "1653793"
+           },
+           {
+            "timestamp": "2017-01-01T07:20:00Z",
+            "value": "1653795"
+           },
+           {
+            "timestamp": "2017-01-01T07:25:00Z",
+            "value": "1663471"
+           },
+           {
+            "timestamp": "2017-01-01T07:30:00Z",
+            "value": "1662358"
+           },
+           {
+            "timestamp": "2017-01-01T07:35:00Z",
+            "value": "1664320"
+           },
+           {
+            "timestamp": "2017-01-01T07:40:00Z",
+            "value": "1664942"
+           },
+           {
+            "timestamp": "2017-01-01T07:45:00Z",
+            "value": "1664966"
+           },
+           {
+            "timestamp": "2017-01-01T07:50:00Z",
+            "value": "1724271"
+           },
+           {
+            "timestamp": "2017-01-01T07:55:00Z",
+            "value": "1678720"
+           },
+           {
+            "timestamp": "2017-01-01T08:00:00Z",
+            "value": "1672536"
+           },
+           {
+            "timestamp": "2017-01-01T08:05:00Z",
+            "value": "1672544"
+           },
+           {
+            "timestamp": "2017-01-01T08:10:00Z",
+            "value": "1672364"
+           },
+           {
+            "timestamp": "2017-01-01T08:15:00Z",
+            "value": "1672912"
+           },
+           {
+            "timestamp": "2017-01-01T08:20:00Z",
+            "value": "1672736"
+           },
+           {
+            "timestamp": "2017-01-01T08:25:00Z",
+            "value": "1672725"
+           },
+           {
+            "timestamp": "2017-01-01T08:30:00Z",
+            "value": "1673247"
+           },
+           {
+            "timestamp": "2017-01-01T08:35:00Z",
+            "value": "1673109"
+           },
+           {
+            "timestamp": "2017-01-01T08:40:00Z",
+            "value": "1690088"
+           },
+           {
+            "timestamp": "2017-01-01T08:45:00Z",
+            "value": "1703865"
+           },
+           {
+            "timestamp": "2017-01-01T08:50:00Z",
+            "value": "1703865"
+           },
+           {
+            "timestamp": "2017-01-01T08:55:00Z",
+            "value": "1786581"
+           },
+           {
+            "timestamp": "2017-01-01T09:00:00Z",
+            "value": "1800945"
+           },
+           {
+            "timestamp": "2017-01-01T09:05:00Z",
+            "value": "1800957"
+           },
+           {
+            "timestamp": "2017-01-01T09:10:00Z",
+            "value": "1801191"
+           },
+           {
+            "timestamp": "2017-01-01T09:15:00Z",
+            "value": "1801412"
+           },
+           {
+            "timestamp": "2017-01-01T09:20:00Z",
+            "value": "1801621"
+           },
+           {
+            "timestamp": "2017-01-01T09:25:00Z",
+            "value": "1801621"
+           },
+           {
+            "timestamp": "2017-01-01T09:30:00Z",
+            "value": "1801654"
+           },
+           {
+            "timestamp": "2017-01-01T09:35:00Z",
+            "value": "1802105"
+           },
+           {
+            "timestamp": "2017-01-01T09:40:00Z",
+            "value": "1801800"
+           },
+           {
+            "timestamp": "2017-01-01T09:45:00Z",
+            "value": "1803040"
+           },
+           {
+            "timestamp": "2017-01-01T09:50:00Z",
+            "value": "1803672"
+           },
+           {
+            "timestamp": "2017-01-01T09:55:00Z",
+            "value": "1803535"
+           },
+           {
+            "timestamp": "2017-01-01T10:00:00Z",
+            "value": "1803541"
+           },
+           {
+            "timestamp": "2017-01-01T10:05:00Z",
+            "value": "1803545"
+           },
+           {
+            "timestamp": "2017-01-01T10:10:00Z",
+            "value": "1803599"
+           },
+           {
+            "timestamp": "2017-01-01T10:15:00Z",
+            "value": "1803616"
+           },
+           {
+            "timestamp": "2017-01-01T10:20:00Z",
+            "value": "1803619"
+           },
+           {
+            "timestamp": "2017-01-01T10:25:00Z",
+            "value": "1809942"
+           },
+           {
+            "timestamp": "2017-01-01T10:30:00Z",
+            "value": "1802720"
+           },
+           {
+            "timestamp": "2017-01-01T10:35:00Z",
+            "value": "1802720"
+           },
+           {
+            "timestamp": "2017-01-01T10:40:00Z",
+            "value": "1802888"
+           },
+           {
+            "timestamp": "2017-01-01T10:45:00Z",
+            "value": "1809574"
+           },
+           {
+            "timestamp": "2017-01-01T10:50:00Z",
+            "value": "1803896"
+           },
+           {
+            "timestamp": "2017-01-01T10:55:00Z",
+            "value": "1803850"
+           },
+           {
+            "timestamp": "2017-01-01T11:00:00Z",
+            "value": "1803854"
+           },
+           {
+            "timestamp": "2017-01-01T11:05:00Z",
+            "value": "1803854"
+           },
+           {
+            "timestamp": "2017-01-01T11:10:00Z",
+            "value": "1803797"
+           },
+           {
+            "timestamp": "2017-01-01T11:15:00Z",
+            "value": "1803921"
+           },
+           {
+            "timestamp": "2017-01-01T11:20:00Z",
+            "value": "1803933"
+           },
+           {
+            "timestamp": "2017-01-01T11:25:00Z",
+            "value": "1804040"
+           },
+           {
+            "timestamp": "2017-01-01T11:30:00Z",
+            "value": "1804044"
+           },
+           {
+            "timestamp": "2017-01-01T11:35:00Z",
+            "value": "1804070"
+           },
+           {
+            "timestamp": "2017-01-01T11:40:00Z",
+            "value": "1804070"
+           },
+           {
+            "timestamp": "2017-01-01T11:45:00Z",
+            "value": "1804068"
+           },
+           {
+            "timestamp": "2017-01-01T11:50:00Z",
+            "value": "1804073"
+           },
+           {
+            "timestamp": "2017-01-01T11:55:00Z",
+            "value": "1804101"
+           },
+           {
+            "timestamp": "2017-01-01T12:00:00Z",
+            "value": "1804674"
+           },
+           {
+            "timestamp": "2017-01-01T12:05:00Z",
+            "value": "1804714"
+           },
+           {
+            "timestamp": "2017-01-01T12:10:00Z",
+            "value": "1804730"
+           },
+           {
+            "timestamp": "2017-01-01T12:15:00Z",
+            "value": "1804816"
+           },
+           {
+            "timestamp": "2017-01-01T12:20:00Z",
+            "value": "1803996"
+           },
+           {
+            "timestamp": "2017-01-01T12:25:00Z",
+            "value": "1803998"
+           },
+           {
+            "timestamp": "2017-01-01T12:30:00Z",
+            "value": "1804015"
+           },
+           {
+            "timestamp": "2017-01-01T12:35:00Z",
+            "value": "1804047"
+           },
+           {
+            "timestamp": "2017-01-01T12:40:00Z",
+            "value": "1804050"
+           },
+           {
+            "timestamp": "2017-01-01T12:45:00Z",
+            "value": "1804218"
+           },
+           {
+            "timestamp": "2017-01-01T12:50:00Z",
+            "value": "1804217"
+           },
+           {
+            "timestamp": "2017-01-01T12:55:00Z",
+            "value": "1804217"
+           },
+           {
+            "timestamp": "2017-01-01T13:00:00Z",
+            "value": "1804205"
+           },
+           {
+            "timestamp": "2017-01-01T13:05:00Z",
+            "value": "1804728"
+           },
+           {
+            "timestamp": "2017-01-01T13:10:00Z",
+            "value": "1804748"
+           },
+           {
+            "timestamp": "2017-01-01T13:15:00Z",
+            "value": "1805232"
+           },
+           {
+            "timestamp": "2017-01-01T13:20:00Z",
+            "value": "1814121"
+           },
+           {
+            "timestamp": "2017-01-01T13:25:00Z",
+            "value": "1806789"
+           },
+           {
+            "timestamp": "2017-01-01T13:30:00Z",
+            "value": "1806119"
+           },
+           {
+            "timestamp": "2017-01-01T13:35:00Z",
+            "value": "1806329"
+           },
+           {
+            "timestamp": "2017-01-01T13:40:00Z",
+            "value": "1806454"
+           },
+           {
+            "timestamp": "2017-01-01T13:45:00Z",
+            "value": "1806852"
+           },
+           {
+            "timestamp": "2017-01-01T13:50:00Z",
+            "value": "1807347"
+           },
+           {
+            "timestamp": "2017-01-01T13:55:00Z",
+            "value": "1812144"
+           },
+           {
+            "timestamp": "2017-01-01T14:00:00Z",
+            "value": "1807418"
+           },
+           {
+            "timestamp": "2017-01-01T14:05:00Z",
+            "value": "1807418"
+           },
+           {
+            "timestamp": "2017-01-01T14:10:00Z",
+            "value": "1807432"
+           },
+           {
+            "timestamp": "2017-01-01T14:15:00Z",
+            "value": "1808540"
+           },
+           {
+            "timestamp": "2017-01-01T14:20:00Z",
+            "value": "1808541"
+           },
+           {
+            "timestamp": "2017-01-01T14:25:00Z",
+            "value": "1807831"
+           },
+           {
+            "timestamp": "2017-01-01T14:30:00Z",
+            "value": "1807852"
+           },
+           {
+            "timestamp": "2017-01-01T14:35:00Z",
+            "value": "1807811"
+           },
+           {
+            "timestamp": "2017-01-01T14:40:00Z",
+            "value": "2214285"
+           },
+           {
+            "timestamp": "2017-01-01T14:45:00Z",
+            "value": "2215019"
+           },
+           {
+            "timestamp": "2017-01-01T14:50:00Z",
+            "value": "2215329"
+           },
+           {
+            "timestamp": "2017-01-01T14:55:00Z",
+            "value": "2215097"
+           },
+           {
+            "timestamp": "2017-01-01T15:00:00Z",
+            "value": "2215129"
+           },
+           {
+            "timestamp": "2017-01-01T15:05:00Z",
+            "value": "2215120"
+           },
+           {
+            "timestamp": "2017-01-01T15:10:00Z",
+            "value": "2217056"
+           },
+           {
+            "timestamp": "2017-01-01T15:15:00Z",
+            "value": "2217056"
+           },
+           {
+            "timestamp": "2017-01-01T15:20:00Z",
+            "value": "2222126"
+           },
+           {
+            "timestamp": "2017-01-01T15:25:00Z",
+            "value": "2226472"
+           },
+           {
+            "timestamp": "2017-01-01T15:30:00Z",
+            "value": "2226722"
+           },
+           {
+            "timestamp": "2017-01-01T15:35:00Z",
+            "value": "2226729"
+           },
+           {
+            "timestamp": "2017-01-01T15:40:00Z",
+            "value": "2226735"
+           },
+           {
+            "timestamp": "2017-01-01T15:45:00Z",
+            "value": "2226735"
+           },
+           {
+            "timestamp": "2017-01-01T15:50:00Z",
+            "value": "2226735"
+           },
+           {
+            "timestamp": "2017-01-01T15:55:00Z",
+            "value": "2226952"
+           },
+           {
+            "timestamp": "2017-01-01T16:00:00Z",
+            "value": "2226962"
+           },
+           {
+            "timestamp": "2017-01-01T16:05:00Z",
+            "value": "2649337"
+           },
+           {
+            "timestamp": "2017-01-01T16:10:00Z",
+            "value": "2092796"
+           },
+           {
+            "timestamp": "2017-01-01T16:15:00Z",
+            "value": "2092839"
+           },
+           {
+            "timestamp": "2017-01-01T16:20:00Z",
+            "value": "2092940"
+           },
+           {
+            "timestamp": "2017-01-01T16:25:00Z",
+            "value": "2092940"
+           },
+           {
+            "timestamp": "2017-01-01T16:30:00Z",
+            "value": "2092965"
+           },
+           {
+            "timestamp": "2017-01-01T16:35:00Z",
+            "value": "2092979"
+           },
+           {
+            "timestamp": "2017-01-01T16:40:00Z",
+            "value": "2095588"
+           },
+           {
+            "timestamp": "2017-01-01T16:45:00Z",
+            "value": "2099586"
+           },
+           {
+            "timestamp": "2017-01-01T16:50:00Z",
+            "value": "2102981"
+           },
+           {
+            "timestamp": "2017-01-01T16:55:00Z",
+            "value": "2108053"
+           },
+           {
+            "timestamp": "2017-01-01T17:00:00Z",
+            "value": "2107907"
+           },
+           {
+            "timestamp": "2017-01-01T17:05:00Z",
+            "value": "2108241"
+           },
+           {
+            "timestamp": "2017-01-01T17:10:00Z",
+            "value": "2100321"
+           },
+           {
+            "timestamp": "2017-01-01T17:15:00Z",
+            "value": "2100448"
+           },
+           {
+            "timestamp": "2017-01-01T17:20:00Z",
+            "value": "2100483"
+           },
+           {
+            "timestamp": "2017-01-01T17:25:00Z",
+            "value": "2103042"
+           },
+           {
+            "timestamp": "2017-01-01T17:30:00Z",
+            "value": "2103037"
+           },
+           {
+            "timestamp": "2017-01-01T17:35:00Z",
+            "value": "2103040"
+           },
+           {
+            "timestamp": "2017-01-01T17:40:00Z",
+            "value": "2103054"
+           },
+           {
+            "timestamp": "2017-01-01T17:45:00Z",
+            "value": "2103058"
+           },
+           {
+            "timestamp": "2017-01-01T17:50:00Z",
+            "value": "1830757"
+           },
+           {
+            "timestamp": "2017-01-01T17:55:00Z",
+            "value": "1830855"
+           },
+           {
+            "timestamp": "2017-01-01T18:00:00Z",
+            "value": "1831495"
+           },
+           {
+            "timestamp": "2017-01-01T18:05:00Z",
+            "value": "1831463"
+           },
+           {
+            "timestamp": "2017-01-01T18:10:00Z",
+            "value": "1831963"
+           },
+           {
+            "timestamp": "2017-01-01T18:15:00Z",
+            "value": "1832046"
+           },
+           {
+            "timestamp": "2017-01-01T18:20:00Z",
+            "value": "1832070"
+           },
+           {
+            "timestamp": "2017-01-01T18:25:00Z",
+            "value": "1835511"
+           },
+           {
+            "timestamp": "2017-01-01T18:30:00Z",
+            "value": "1835265"
+           },
+           {
+            "timestamp": "2017-01-01T18:35:00Z",
+            "value": "1835481"
+           },
+           {
+            "timestamp": "2017-01-01T18:40:00Z",
+            "value": "1835578"
+           },
+           {
+            "timestamp": "2017-01-01T18:45:00Z",
+            "value": "1835611"
+           },
+           {
+            "timestamp": "2017-01-01T18:50:00Z",
+            "value": "1836314"
+           },
+           {
+            "timestamp": "2017-01-01T18:55:00Z",
+            "value": "1836369"
+           },
+           {
+            "timestamp": "2017-01-01T19:00:00Z",
+            "value": "1837280"
+           },
+           {
+            "timestamp": "2017-01-01T19:05:00Z",
+            "value": "1842939"
+           },
+           {
+            "timestamp": "2017-01-01T19:10:00Z",
+            "value": "1843126"
+           },
+           {
+            "timestamp": "2017-01-01T19:15:00Z",
+            "value": "1845840"
+           },
+           {
+            "timestamp": "2017-01-01T19:20:00Z",
+            "value": "1842444"
+           },
+           {
+            "timestamp": "2017-01-01T19:25:00Z",
+            "value": "1839891"
+           },
+           {
+            "timestamp": "2017-01-01T19:30:00Z",
+            "value": "1839875"
+           },
+           {
+            "timestamp": "2017-01-01T19:35:00Z",
+            "value": "1839870"
+           },
+           {
+            "timestamp": "2017-01-01T19:40:00Z",
+            "value": "1840090"
+           },
+           {
+            "timestamp": "2017-01-01T19:45:00Z",
+            "value": "1840479"
+           },
+           {
+            "timestamp": "2017-01-01T19:50:00Z",
+            "value": "1840479"
+           },
+           {
+            "timestamp": "2017-01-01T19:55:00Z",
+            "value": "1840482"
+           },
+           {
+            "timestamp": "2017-01-01T20:00:00Z",
+            "value": "1841522"
+           },
+           {
+            "timestamp": "2017-01-01T20:05:00Z",
+            "value": "1841836"
+           },
+           {
+            "timestamp": "2017-01-01T20:10:00Z",
+            "value": "1842377"
+           },
+           {
+            "timestamp": "2017-01-01T20:15:00Z",
+            "value": "1842388"
+           },
+           {
+            "timestamp": "2017-01-01T20:20:00Z",
+            "value": "1842489"
+           },
+           {
+            "timestamp": "2017-01-01T20:25:00Z",
+            "value": "1842489"
+           },
+           {
+            "timestamp": "2017-01-01T20:30:00Z",
+            "value": "1842489"
+           },
+           {
+            "timestamp": "2017-01-01T20:35:00Z",
+            "value": "1842496"
+           },
+           {
+            "timestamp": "2017-01-01T20:40:00Z",
+            "value": "1842689"
+           },
+           {
+            "timestamp": "2017-01-01T20:45:00Z",
+            "value": "1843117"
+           },
+           {
+            "timestamp": "2017-01-01T20:50:00Z",
+            "value": "1843116"
+           },
+           {
+            "timestamp": "2017-01-01T20:55:00Z",
+            "value": "1843227"
+           },
+           {
+            "timestamp": "2017-01-01T21:00:00Z",
+            "value": "1843138"
+           },
+           {
+            "timestamp": "2017-01-01T21:05:00Z",
+            "value": "1843141"
+           },
+           {
+            "timestamp": "2017-01-01T21:10:00Z",
+            "value": "1843310"
+           },
+           {
+            "timestamp": "2017-01-01T21:15:00Z",
+            "value": "1843310"
+           },
+           {
+            "timestamp": "2017-01-01T21:20:00Z",
+            "value": "1843507"
+           },
+           {
+            "timestamp": "2017-01-01T21:25:00Z",
+            "value": "1843953"
+           },
+           {
+            "timestamp": "2017-01-01T21:30:00Z",
+            "value": "1844778"
+           },
+           {
+            "timestamp": "2017-01-01T21:35:00Z",
+            "value": "1843918"
+           },
+           {
+            "timestamp": "2017-01-01T21:40:00Z",
+            "value": "1882692"
+           },
+           {
+            "timestamp": "2017-01-01T21:45:00Z",
+            "value": "1974888"
+           },
+           {
+            "timestamp": "2017-01-01T21:50:00Z",
+            "value": "2157136"
+           },
+           {
+            "timestamp": "2017-01-01T21:55:00Z",
+            "value": "2154987"
+           },
+           {
+            "timestamp": "2017-01-01T22:00:00Z",
+            "value": "2155664"
+           },
+           {
+            "timestamp": "2017-01-01T22:05:00Z",
+            "value": "2155660"
+           },
+           {
+            "timestamp": "2017-01-01T22:10:00Z",
+            "value": "2155824"
+           },
+           {
+            "timestamp": "2017-01-01T22:15:00Z",
+            "value": "2155824"
+           },
+           {
+            "timestamp": "2017-01-01T22:20:00Z",
+            "value": "2156329"
+           },
+           {
+            "timestamp": "2017-01-01T22:25:00Z",
+            "value": "2156479"
+           },
+           {
+            "timestamp": "2017-01-01T22:30:00Z",
+            "value": "2165269"
+           },
+           {
+            "timestamp": "2017-01-01T22:35:00Z",
+            "value": "2165433"
+           },
+           {
+            "timestamp": "2017-01-01T22:40:00Z",
+            "value": "2165739"
+           },
+           {
+            "timestamp": "2017-01-01T22:45:00Z",
+            "value": "2165931"
+           },
+           {
+            "timestamp": "2017-01-01T22:50:00Z",
+            "value": "2165928"
+           },
+           {
+            "timestamp": "2017-01-01T22:55:00Z",
+            "value": "2165989"
+           },
+           {
+            "timestamp": "2017-01-01T23:00:00Z",
+            "value": "2228961"
+           },
+           {
+            "timestamp": "2017-01-01T23:05:00Z",
+            "value": "2228961"
+           },
+           {
+            "timestamp": "2017-01-01T23:10:00Z",
+            "value": "2228961"
+           },
+           {
+            "timestamp": "2017-01-01T23:15:00Z",
+            "value": "2485802"
+           },
+           {
+            "timestamp": "2017-01-01T23:20:00Z",
+            "value": "2485802"
+           },
+           {
+            "timestamp": "2017-01-01T23:25:00Z",
+            "value": "2486021"
+           },
+           {
+            "timestamp": "2017-01-01T23:30:00Z",
+            "value": "2485293"
+           },
+           {
+            "timestamp": "2017-01-01T23:35:00Z",
+            "value": "2485293"
+           },
+           {
+            "timestamp": "2017-01-01T23:40:00Z",
+            "value": "2485324"
+           },
+           {
+            "timestamp": "2017-01-01T23:45:00Z",
+            "value": "2489142"
+           },
+           {
+            "timestamp": "2017-01-01T23:50:00Z",
+            "value": "2526312"
+           },
+           {
+            "timestamp": "2017-01-01T23:55:00Z",
+            "value": "2526313"
+           },
+           {
+            "timestamp": "2017-01-02T00:00:00Z",
+            "value": "2526314"
+           },
+           {
+            "timestamp": "2017-01-02T00:05:00Z",
+            "value": "2526324"
+           },
+           {
+            "timestamp": "2017-01-02T00:10:00Z",
+            "value": "2526325"
+           },
+           {
+            "timestamp": "2017-01-02T00:15:00Z",
+            "value": "2526205"
+           },
+           {
+            "timestamp": "2017-01-02T00:20:00Z",
+            "value": "2526226"
+           },
+           {
+            "timestamp": "2017-01-02T00:25:00Z",
+            "value": "2526475"
+           },
+           {
+            "timestamp": "2017-01-02T00:30:00Z",
+            "value": "2526471"
+           },
+           {
+            "timestamp": "2017-01-02T00:35:00Z",
+            "value": "2526471"
+           },
+           {
+            "timestamp": "2017-01-02T00:40:00Z",
+            "value": "2526534"
+           },
+           {
+            "timestamp": "2017-01-02T00:45:00Z",
+            "value": "2526646"
+           },
+           {
+            "timestamp": "2017-01-02T00:50:00Z",
+            "value": "2526646"
+           },
+           {
+            "timestamp": "2017-01-02T00:55:00Z",
+            "value": "2526648"
+           },
+           {
+            "timestamp": "2017-01-02T01:00:00Z",
+            "value": "2526658"
+           },
+           {
+            "timestamp": "2017-01-02T01:05:00Z",
+            "value": "2526771"
+           },
+           {
+            "timestamp": "2017-01-02T01:10:00Z",
+            "value": "2526773"
+           },
+           {
+            "timestamp": "2017-01-02T01:15:00Z",
+            "value": "2526793"
+           },
+           {
+            "timestamp": "2017-01-02T01:20:00Z",
+            "value": "2527010"
+           },
+           {
+            "timestamp": "2017-01-02T01:25:00Z",
+            "value": "2527031"
+           },
+           {
+            "timestamp": "2017-01-02T01:30:00Z",
+            "value": "3178096"
+           },
+           {
+            "timestamp": "2017-01-02T01:35:00Z",
+            "value": "3196305"
+           },
+           {
+            "timestamp": "2017-01-02T01:40:00Z",
+            "value": "3196202"
+           },
+           {
+            "timestamp": "2017-01-02T01:45:00Z",
+            "value": "3196202"
+           },
+           {
+            "timestamp": "2017-01-02T01:50:00Z",
+            "value": "3196205"
+           },
+           {
+            "timestamp": "2017-01-02T01:55:00Z",
+            "value": "3229232"
+           },
+           {
+            "timestamp": "2017-01-02T02:00:00Z",
+            "value": "3230463"
+           },
+           {
+            "timestamp": "2017-01-02T02:05:00Z",
+            "value": "3230468"
+           },
+           {
+            "timestamp": "2017-01-02T02:10:00Z",
+            "value": "3230468"
+           },
+           {
+            "timestamp": "2017-01-02T02:15:00Z",
+            "value": "3230468"
+           },
+           {
+            "timestamp": "2017-01-02T02:20:00Z",
+            "value": "3230470"
+           },
+           {
+            "timestamp": "2017-01-02T02:25:00Z",
+            "value": "3230467"
+           },
+           {
+            "timestamp": "2017-01-02T02:30:00Z",
+            "value": "3230506"
+           },
+           {
+            "timestamp": "2017-01-02T02:35:00Z",
+            "value": "3231536"
+           },
+           {
+            "timestamp": "2017-01-02T02:40:00Z",
+            "value": "3230723"
+           },
+           {
+            "timestamp": "2017-01-02T02:45:00Z",
+            "value": "3230727"
+           },
+           {
+            "timestamp": "2017-01-02T02:50:00Z",
+            "value": "3230727"
+           },
+           {
+            "timestamp": "2017-01-02T02:55:00Z",
+            "value": "3230727"
+           },
+           {
+            "timestamp": "2017-01-02T03:00:00Z",
+            "value": "3231880"
+           },
+           {
+            "timestamp": "2017-01-02T03:05:00Z",
+            "value": "3232283"
+           },
+           {
+            "timestamp": "2017-01-02T03:10:00Z",
+            "value": "3232283"
+           },
+           {
+            "timestamp": "2017-01-02T03:15:00Z",
+            "value": "3232283"
+           },
+           {
+            "timestamp": "2017-01-02T03:20:00Z",
+            "value": "3232325"
+           },
+           {
+            "timestamp": "2017-01-02T03:25:00Z",
+            "value": "3232323"
+           },
+           {
+            "timestamp": "2017-01-02T03:30:00Z",
+            "value": "3232327"
+           },
+           {
+            "timestamp": "2017-01-02T03:35:00Z",
+            "value": "3232340"
+           },
+           {
+            "timestamp": "2017-01-02T03:40:00Z",
+            "value": "3232713"
+           },
+           {
+            "timestamp": "2017-01-02T03:45:00Z",
+            "value": "3232729"
+           },
+           {
+            "timestamp": "2017-01-02T03:50:00Z",
+            "value": "3232756"
+           },
+           {
+            "timestamp": "2017-01-02T03:55:00Z",
+            "value": "3233500"
+           },
+           {
+            "timestamp": "2017-01-02T04:00:00Z",
+            "value": "3233500"
+           },
+           {
+            "timestamp": "2017-01-02T04:05:00Z",
+            "value": "3233500"
+           }
+          ],
+          "granularity": "minutely",
+          "customInterval": "5",
+          "stableTrendWindow": "10",
+          "threshold": "0.99",
+          "period": "0"
+         }
+        },
+        "responses": {
+         "200": {
+          "body": {
+           "period": "0",
+           "confidenceScores": [
+            "0.11841763735063232",
+            "0.014857199927548581",
+            "0.0887032374955278",
+            "0.07430314751946857",
+            "0.059903057543409355",
+            "0.04132288981790399",
+            "0.022742722092391268",
+            "0.0005683208474757854",
+            "0.0216060803974397",
+            "0.053248991089971616",
+            "0.08489190178249614",
+            "0.04322511558132514",
+            "0.085336620199234",
+            "0.05876047041512903",
+            "0.02673755265447302",
+            "0.005032027060762012",
+            "0.031323171543775764",
+            "0.06299774949197792",
+            "0.08944723025337244",
+            "0.11523169864554421",
+            "0.14288453512268834",
+            "0.001592562559717675",
+            "0.32637788222282893",
+            "0",
+            "7.37310752217245e-15",
+            "2.211932256651735e-14",
+            "1",
+            "0.015697015891758138",
+            "0.01242773215043403",
+            "0.016188579169534697",
+            "0.019537751864826272",
+            "0.022506917491993753",
+            "0.01885762668253081",
+            "0.016253355310429398",
+            "0.017227483829906676",
+            "0.023236706002118527",
+            "0.03906277743439327",
+            "0.0354134866249377",
+            "0.037084294769315296",
+            "0.038248426822850935",
+            "0.050274427573818385",
+            "0.046815140298421175",
+            "0.043292518511668716",
+            "0.041353259508804745",
+            "0.038242312045861385",
+            "0.0346880230034313",
+            "0.032717096744889713",
+            "0.033026212895129546",
+            "0.031055286636580585",
+            "0.0275326648498355",
+            "0.023883374040372555",
+            "0.021564107969369743",
+            "0.018706498551854727",
+            "0.01543721481052325",
+            "0.015176320358565887",
+            "0.011527029549110314",
+            "0.008004407762357859",
+            "0.004355116952902286",
+            "0.0007058261434393403",
+            "0.0030701336887340946",
+            "0.006592755475479178",
+            "0.010147044517909256",
+            "0.013701333560339335",
+            "0.016780613767597707",
+            "0.020366570065705403",
+            "0.024015860875168354",
+            "0.02757014991759106",
+            "0.03033275756808058",
+            "0.03068865378707081",
+            "0.03395793752839492",
+            "0.03760722833785786",
+            "0.04122485189164318",
+            "0.030433874112103007",
+            "0.032816474694461056",
+            "0.03602242392443729",
+            "0.03960838022253762",
+            "0.04268766042980336",
+            "0.04633695123926631",
+            "0.0346592903007527",
+            "0.010219725324164698",
+            "0.007218892441326965",
+            "0.006909776291079754",
+            "0.000049463551460760754",
+            "0.0016047901503119819",
+            "0.01042121060065547",
+            "0.009020294944303705",
+            "0.005371004134840759",
+            "0.0021650549048718984",
+            "0.010517653997227793",
+            "0.0075017083013172925",
+            "0.00385241749186172",
+            "0.0008681390516288423",
+            "0.019005920148370017",
+            "0.015388296594592068",
+            "0.12583612799160215",
+            "1",
+            "0.005055878353042495",
+            "0.007613932468790628",
+            "0.011913685646822731",
+            "0.0166567804043268",
+            "0.015351429327405014",
+            "0.034309821169245976",
+            "0.0292817211106433",
+            "0.02425362105202589",
+            "0.019225520993423218",
+            "0.01419742093482055",
+            "0.00916932087621788",
+            "0.004141220817600464",
+            "0.0008868792410022057",
+            "0.0059149792996048755",
+            "0.010943079358207547",
+            "0.015971179416810213",
+            "0.02099927947542763",
+            "1",
+            "0.11533376425564247",
+            "0.1207645081246342",
+            "0.025174230145423273",
+            "0.09422487163021387",
+            "0.08417070843230404",
+            "0.07411654523437947",
+            "0.06406238203646963",
+            "0.0540082188385598",
+            "0.04395405564064997",
+            "0.03500824639144218",
+            "0.024954083193532338",
+            "0.014899919995622513",
+            "0.004845756797712681",
+            "0.005208406400211895",
+            "0.015262569598121728",
+            "0.025316732796031558",
+            "0.03537089599394139",
+            "0.045425059191865964",
+            "0.05145748091871777",
+            "1",
+            "0.011663506282381296",
+            "0.0043856580970499884",
+            "0.002892190088273945",
+            "0.01017003827359788",
+            "0.01744788645892181",
+            "0.024725734644253115",
+            "0.03200358282957705",
+            "0.03928143101490098",
+            "0.046559279200224915",
+            "0.05383712738555622",
+            "0.060069956133518614",
+            "0.0450857235774741",
+            "0.050621872700536176",
+            "0.029050850963546225",
+            "0.045689493056171517",
+            "0.0385699811492357",
+            "0.03179880905474635",
+            "0.03082274474926925",
+            "0.03586345902254038",
+            "0.028585610837209074",
+            "0.021402764418918006",
+            "0.04705886213832124",
+            "0.049724532235770696",
+            "0.05957866937203304",
+            "0.052649160999162954",
+            "0.045371312813839014",
+            "0.03809346462851508",
+            "0.030815616443183775",
+            "0.023537768257859845",
+            "0.01945831289597576",
+            "0.012180464710644455",
+            "0.00490261652532052",
+            "0.002153560870260057",
+            "0.0033196287098028916",
+            "0.0029244412792105113",
+            "0.0043217396504358",
+            "0.010934575466529664",
+            "0.018117421884820732",
+            "0.02267188608187652",
+            "0.027321352045957807",
+            "0.03459920023128174",
+            "0.03563859904812146",
+            "0.02990120514994264",
+            "0.03607069938654979",
+            "0.017223061637835352",
+            "7.37310752217245e-15",
+            "1.47462150443449e-14",
+            "1",
+            "0.046440552438977135",
+            "0.012233652454378385",
+            "0.017033155644526038",
+            "0.05136672465183527",
+            "0.06970832954194527",
+            "0.09929181019761117",
+            "0.11281999222473732",
+            "0.11039622919405537",
+            "0.08125609011787617",
+            "0.05661270134791935",
+            "0.028264243663680723",
+            "0.005974323576610399",
+            "0.038471191754617544",
+            "0",
+            "0",
+            "0",
+            "0.020288532128574968",
+            "0.005041879493223223",
+            "0.009223088216122232",
+            "0.009332792637570532",
+            "0.024579445272937026",
+            "0.03289096891488949",
+            "0.050695883419617865",
+            "1",
+            "0.000748013913075547",
+            "0.002186373999917361",
+            "0.0009330173541465358",
+            "0.00032033929162428933",
+            "0.0012886906362965138",
+            "0.002542047282052593",
+            "0.0007963481454318109",
+            "0.0004886757560166365",
+            "0.0016470306347398486",
+            "0.001063686451208582",
+            "0.0011980222832366648",
+            "0.00008700161821178273",
+            "0.0013086910082902394",
+            "0.0022770423529624643",
+            "0.000016333637160404937",
+            "0.0012053557529180517",
+            "0.0018570345408140537",
+            "0.0037297360397815314",
+            "0.003109724507563151",
+            "0.22869458705263188",
+            "0.2293374323429407",
+            "0.1140021204394844",
+            "0.0012381896969537412",
+            "0.11340677603264777",
+            "1",
+            "0.011793249472519423",
+            "0.008293225072094536",
+            "0.00469819890465153",
+            "0.0010715054815308995",
+            "0.0025551879416044767",
+            "0.006118546853369862",
+            "0.008605219072110835",
+            "0.0053601180131874334",
+            "0.008860142413597574",
+            "0.01248683583673295",
+            "0.01611352925985358",
+            "0.005878587160222206",
+            "0.013145429690188892",
+            "0.022280640305150038",
+            "0.01865394688201466",
+            "0.015027253458894031",
+            "0.012033905149325846",
+            "0.009040556839742916",
+            "0.005445530672299909",
+            "0.0018505045048569009",
+            "0.001744521662600853",
+            "0.005339547830043862",
+            "0.008760404091259945",
+            "0.012181260352490777",
+            "0.009902010591734853",
+            "0.007622760830993676"
+           ],
+           "isChangePoint": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+           ]
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "292",
+    "fixed": false,
+    "raw": ""
+   },
+   "typeName": {
+    "$id": "293",
+    "fixed": false
+   },
+   "nameForProperty": "AnomalyDetectorClient"
+  }
+ ]
+}

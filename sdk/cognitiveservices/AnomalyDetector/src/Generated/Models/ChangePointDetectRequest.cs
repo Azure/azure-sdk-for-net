@@ -16,26 +16,26 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Request
+    public partial class ChangePointDetectRequest
     {
         /// <summary>
-        /// Initializes a new instance of the Request class.
+        /// Initializes a new instance of the ChangePointDetectRequest class.
         /// </summary>
-        public Request()
+        public ChangePointDetectRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Request class.
+        /// Initializes a new instance of the ChangePointDetectRequest class.
         /// </summary>
         /// <param name="series">Time series data points. Points should be
-        /// sorted by timestamp in ascending order to match the anomaly
-        /// detection result. If the data is not sorted correctly or there is
-        /// duplicated timestamp, the API will not work. In such case, an error
-        /// message will be returned.</param>
-        /// <param name="granularity">Possible values include: 'yearly',
-        /// 'monthly', 'weekly', 'daily', 'hourly', 'minutely',
+        /// sorted by timestamp in ascending order to match the change point
+        /// detection result.</param>
+        /// <param name="granularity">Can only be one of yearly, monthly,
+        /// weekly, daily, hourly, minutely or secondly. Granularity is used
+        /// for verify whether input series is valid. Possible values include:
+        /// 'yearly', 'monthly', 'weekly', 'daily', 'hourly', 'minutely',
         /// 'secondly'</param>
         /// <param name="customInterval">Custom Interval is used to set
         /// non-standard time interval, for example, if the series is 5
@@ -44,20 +44,21 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
         /// <param name="period">Optional argument, periodic value of a time
         /// series. If the value is null or does not present, the API will
         /// determine the period automatically.</param>
-        /// <param name="maxAnomalyRatio">Optional argument, advanced model
-        /// parameter, max anomaly ratio in a time series.</param>
-        /// <param name="sensitivity">Optional argument, advanced model
-        /// parameter, between 0-99, the lower the value is, the larger the
-        /// margin value will be which means less anomalies will be
+        /// <param name="stableTrendWindow">Optional argument, advanced model
+        /// parameter, a default stableTrendWindow will be used in
+        /// detection.</param>
+        /// <param name="threshold">Optional argument, advanced model
+        /// parameter, between 0.0-1.0, the lower the value is, the larger the
+        /// trend error will be which means less change point will be
         /// accepted.</param>
-        public Request(IList<Point> series, Granularity granularity, int? customInterval = default(int?), int? period = default(int?), double? maxAnomalyRatio = default(double?), int? sensitivity = default(int?))
+        public ChangePointDetectRequest(IList<Point> series, Granularity granularity, int? customInterval = default(int?), int? period = default(int?), int? stableTrendWindow = default(int?), double? threshold = default(double?))
         {
             Series = series;
             Granularity = granularity;
             CustomInterval = customInterval;
             Period = period;
-            MaxAnomalyRatio = maxAnomalyRatio;
-            Sensitivity = sensitivity;
+            StableTrendWindow = stableTrendWindow;
+            Threshold = threshold;
             CustomInit();
         }
 
@@ -68,17 +69,17 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
 
         /// <summary>
         /// Gets or sets time series data points. Points should be sorted by
-        /// timestamp in ascending order to match the anomaly detection result.
-        /// If the data is not sorted correctly or there is duplicated
-        /// timestamp, the API will not work. In such case, an error message
-        /// will be returned.
+        /// timestamp in ascending order to match the change point detection
+        /// result.
         /// </summary>
         [JsonProperty(PropertyName = "series")]
         public IList<Point> Series { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'yearly', 'monthly',
-        /// 'weekly', 'daily', 'hourly', 'minutely', 'secondly'
+        /// Gets or sets can only be one of yearly, monthly, weekly, daily,
+        /// hourly, minutely or secondly. Granularity is used for verify
+        /// whether input series is valid. Possible values include: 'yearly',
+        /// 'monthly', 'weekly', 'daily', 'hourly', 'minutely', 'secondly'
         /// </summary>
         [JsonProperty(PropertyName = "granularity")]
         public Granularity Granularity { get; set; }
@@ -100,19 +101,19 @@ namespace Microsoft.Azure.CognitiveServices.AnomalyDetector.Models
         public int? Period { get; set; }
 
         /// <summary>
-        /// Gets or sets optional argument, advanced model parameter, max
-        /// anomaly ratio in a time series.
+        /// Gets or sets optional argument, advanced model parameter, a default
+        /// stableTrendWindow will be used in detection.
         /// </summary>
-        [JsonProperty(PropertyName = "maxAnomalyRatio")]
-        public double? MaxAnomalyRatio { get; set; }
+        [JsonProperty(PropertyName = "stableTrendWindow")]
+        public int? StableTrendWindow { get; set; }
 
         /// <summary>
         /// Gets or sets optional argument, advanced model parameter, between
-        /// 0-99, the lower the value is, the larger the margin value will be
-        /// which means less anomalies will be accepted.
+        /// 0.0-1.0, the lower the value is, the larger the trend error will be
+        /// which means less change point will be accepted.
         /// </summary>
-        [JsonProperty(PropertyName = "sensitivity")]
-        public int? Sensitivity { get; set; }
+        [JsonProperty(PropertyName = "threshold")]
+        public double? Threshold { get; set; }
 
         /// <summary>
         /// Validate the object.
