@@ -21,7 +21,6 @@ namespace Azure.Messaging.EventGrid.Tests
         {
         }
 
-
         [Test]
         public async Task CanPublishEvent()
         {

@@ -16,8 +16,8 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 EventGridTestEnvironment.TopicKeyEnvironmentVariableName => SanitizeValue,
                 EventGridTestEnvironment.DomainKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.CldEvntTopicKeyEnvironmentVariableName => SanitizeValue,
-                EventGridTestEnvironment.CstEvntTopicKeyEnvironmentVariableName => SanitizeValue,
+                EventGridTestEnvironment.CloudEventTopicKeyEnvironmentVariableName => SanitizeValue,
+                EventGridTestEnvironment.CustomEventTopicKeyEnvironmentVariableName => SanitizeValue,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }
