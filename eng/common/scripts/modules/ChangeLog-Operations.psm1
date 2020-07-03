@@ -82,7 +82,8 @@ function Confirm-ChangeLogEntry {
     [String]$ChangeLogLocation,
     [Parameter(Mandatory = $true)]
     [String]$VersionString,
-    [boolean]$ForRelease = $false
+    [boolean]$ForRelease = $false,
+    [string]$BuildNo
   )
 
   $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
@@ -94,8 +95,9 @@ function Confirm-ChangeLogEntry {
   }
 
   if ($ForRelease -eq $True) {
-    $CurrentDate = Get-Date -Format "yyyy-MM-dd"
-    if ($changeLogEntry.ReleaseStatus -ne "($CurrentDate)") {
+    $ExpectedStatus = '(' + $BuildNo.Substring(0,4) + '-' + $BuildNo.Substring(4,2) + '-' + $BuildNo.Substring(6,2) + ')'
+    Write-Host "Expected Status " $ExpectedStatus
+    if ($changeLogEntry.ReleaseStatus -ne $ExpectedStatus) {
       Write-Host ("##[warning]Incorrect Date: Please use the current date in the Changelog '{0}' before releasing the package" -f $ChangeLogLocation)
       exit 1
     }

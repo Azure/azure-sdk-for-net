@@ -19,6 +19,7 @@ steps:
         -RepoRoot $(Build.SourcesDirectory)
         -RepoName $(Build.Repository.Name)
         -ForRelease $${{ parameters.ForRelease }}
+        -BuildNumber $(Build.BuildNumber)
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLogEntry for ${{ parameters.PackageName }}

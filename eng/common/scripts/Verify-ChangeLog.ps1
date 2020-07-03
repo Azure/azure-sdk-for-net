@@ -8,7 +8,8 @@ param (
     [ValidateSet("net","java","js","python")]
     [string]$Language,
     [string]$RepoName,
-    [boolean]$ForRelease=$False
+    [boolean]$ForRelease=$False,
+    [string]$BuildNumber
 )
 
 . (Join-Path $PSScriptRoot SemVer.ps1)
@@ -27,5 +28,5 @@ else
     }
 
     $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceName $ServiceName -Language $Language -RepoRoot $RepoRoot
-    Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.pkgChangeLogPath -VersionString $PackageProp.pkgVersion -ForRelease $ForRelease
+    Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.pkgChangeLogPath -VersionString $PackageProp.pkgVersion -ForRelease $ForRelease -BuildNo $BuildNumber 
 }
