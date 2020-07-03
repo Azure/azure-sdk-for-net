@@ -1,6 +1,6 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
+## 12.3.0-preview.1 (2020-07-02)
 - Added support for service version 2019-12-12.
 - Added support for Jumbo Files.
 - Fixed bug where DataLakeFileClient, DataLakeDirectoryClient, and DataLakePathClient.Name and .Path were sometimes URL-encoded.

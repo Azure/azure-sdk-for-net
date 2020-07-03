@@ -1,6 +1,6 @@
 # Release History
 
-## 12.4.0-preview.5 (Unreleased)
+## 12.4.0-preview.5 (2020-07-02)
 - Fixed a bug in queue client-side encryption deserialization.
 - This release contains bug fixes to improve quality.
 
