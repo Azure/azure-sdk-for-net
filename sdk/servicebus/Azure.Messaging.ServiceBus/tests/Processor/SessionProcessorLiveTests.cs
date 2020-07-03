@@ -397,7 +397,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await processor.StartProcessingAsync();
                 var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                while (stopwatch.Elapsed.TotalSeconds <= 30)
                 {
                     if (exceptionReceivedHandlerCalled)
                     {
@@ -440,7 +440,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await processor.StartProcessingAsync();
                 var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                while (stopwatch.Elapsed.TotalSeconds <= 30)
                 {
                     if (exceptionReceivedHandlerCalled)
                     {
