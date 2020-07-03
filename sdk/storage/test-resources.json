@@ -10,7 +10,21 @@
             "metadata": {
                 "description": "The principal to assign the role to. This is application object id."
             }
-        }
+        },
+        "storageEndpointSuffix": {
+            "type": "string",
+            "defaultValue": "core.windows.net",
+            "metadata": {
+                "description": "The storage endpoint suffix. Its value will be changed for different clouds test."
+            }
+        },
+        "azureAuthorityHost": {
+            "type": "string",
+            "defaultValue": "https://login.microsoftonline.com",
+            "metadata": {
+                "description": "The azure authority host. Its value will be changed for different clouds test."
+            }
+        }      
     },
     "variables": {
         "mgmtApiVersion": "2019-04-01",
@@ -176,5 +190,13 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
+    "STORAGE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[parameters('storageEndpointSuffix')]"
+    },
+    "AZURE_AUTHORITY_HOST": {
+        "type": "string",
+        "value": "[parameters('azureAuthorityHost')]"
+    }
   }
 }

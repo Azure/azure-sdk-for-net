@@ -1,8 +1,29 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    ServiceDirectory: storage
-    BuildInParallel: false
-    TimeoutInMinutes: 300
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: storage
+        ScenarioName: AzureCloud
+        BuildInParallel: false
+        TimeoutInMinutes: 300
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureAuthorityHost = 'https://login.microsoftonline.com' }"
+        
+      # AzureUSGovernment
+      - ServiceDirectory: storage
+        ScenarioName: AzureUSGovernment
+        BuildInParallel: false
+        TimeoutInMinutes: 300
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureAuthorityHost = 'https://login.microsoftonline.us' }"
+       
+      # AzureChinaCloud
+      - ServiceDirectory: storage
+        ScenarioName: AzureChinaCloud
+        BuildInParallel: false
+        TimeoutInMinutes: 300
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn' }"
