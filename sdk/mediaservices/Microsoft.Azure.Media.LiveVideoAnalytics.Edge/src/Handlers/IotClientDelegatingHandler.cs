@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Handlers
                         throw new InvalidOperationException("POST request with empty entity action operation is not allowed");
                     }
 
-                    methodSuffix = char.ToUpper(instanceAction[0], CultureInfo.InvariantCulture) + instanceAction.Substring(1);
+                    methodSuffix = Char.ToUpperInvariant(instanceAction[0]) + instanceAction.Substring(1);
                     break;
 
                 default:
