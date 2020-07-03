@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
@@ -117,8 +120,9 @@ namespace Azure.Storage.Test
         /// TenantConfiguration value.
         /// </summary>
         /// <param name="text">The string to parse.</param>
+        /// <param name="playback">Whether or not we're in playback mode.</param>
         /// <returns>A TenantConfiguration value.</returns>
-        public static TenantConfiguration Parse(string text)
+        public static TenantConfiguration Parse(string text, bool playback = false)
         {
             var values = text?.Split('\n');
             if (values == null || values.Length != 22)
@@ -126,7 +130,7 @@ namespace Azure.Storage.Test
                 throw new ArgumentException();
             }
 
-            return new TenantConfiguration
+            var config = new TenantConfiguration
             {
                 // Keep these in the same order as Serialize above!
                 TenantName = values[0],
@@ -152,6 +156,24 @@ namespace Azure.Storage.Test
                 ConnectionString = values[20],
                 EncryptionScope = values[21]
             };
+
+            // HACK: Identity's update to the latest version of MSAL breaks
+            // recordings when we're using a project reference.  This
+            // temporarily works around the issue by disabling any playback
+            // test using OAuth with version 1.2.* of Azure.Identity.
+            if (playback && !string.IsNullOrEmpty(config.ActiveDirectoryApplicationId))
+            {
+                string version =
+                    typeof(ClientSecretCredential).Assembly
+                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                    .InformationalVersion;
+                if (version.StartsWith("1.2"))
+                {
+                    throw new InconclusiveException($"Ignore Azure.Identity {version} for playback.");
+                }
+            }
+
+            return config;
         }
 
         /// <summary>
