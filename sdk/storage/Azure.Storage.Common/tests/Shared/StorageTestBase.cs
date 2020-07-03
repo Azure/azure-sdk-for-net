@@ -149,7 +149,7 @@ namespace Azure.Storage.Test.Shared
                     if (!_playbackConfigCache.TryGetValue(name, out config))
                     {
                         text = Recording.GetVariable(name, null);
-                        config = TenantConfiguration.Parse(text);
+                        config = TenantConfiguration.Parse(text, playback: true);
                         _playbackConfigCache[name] = config;
                     }
                     break;
