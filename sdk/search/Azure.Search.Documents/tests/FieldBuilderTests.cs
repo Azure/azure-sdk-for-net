@@ -65,9 +65,7 @@ namespace Azure.Search.Documents.Samples.Tests
                     (SearchFieldDataType.Boolean, nameof(ReflectableModel.Flag)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
-#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
-#endif
                 };
 
                 (SearchFieldDataType, string)[] primitivePropertyTestData =
@@ -121,13 +119,11 @@ namespace Azure.Search.Documents.Samples.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
-#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointICollection)),
-#endif
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexArray)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIList)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIEnumerable)),

@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
+#else
+using Microsoft.Spatial;
 #endif
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -109,6 +110,8 @@ namespace Azure.Search.Documents.Samples.Tests
 
 #if EXPERIMENTAL_SPATIAL
         public PointGeometry GeographyPoint { get; set; }
+#else
+        public GeographyPoint GeographyPoint { get; set; }
 #endif
 
         public int[] IntArray { get; set; }
@@ -181,6 +184,16 @@ namespace Azure.Search.Documents.Samples.Tests
         public IEnumerable<PointGeometry> GeographyPointIEnumerable { get; set; }
 
         public ICollection<PointGeometry> GeographyPointICollection { get; set; }
+#else
+        public GeographyPoint[] GeographyPointArray { get; set; }
+
+        public IList<GeographyPoint> GeographyPointIList { get; set; }
+
+        public List<GeographyPoint> GeographyPointList { get; set; }
+
+        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
+
+        public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
 #endif
 
         public ReflectableComplexObject Complex { get; set; }

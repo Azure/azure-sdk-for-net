@@ -12,6 +12,8 @@ using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
+#else
+using Microsoft.Spatial;
 #endif
 
 namespace Azure.Search.Documents.Samples
@@ -45,6 +47,8 @@ namespace Azure.Search.Documents.Samples
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
 #if EXPERIMENTAL_SPATIAL
                     [typeof(PointGeometry)] = SearchFieldDataType.GeographyPoint,
+#else
+                    [typeof(GeographyPoint)] = SearchFieldDataType.GeographyPoint,
 #endif
                 });
 
