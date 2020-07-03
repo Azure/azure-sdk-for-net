@@ -76,6 +76,15 @@
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "a97b65f3-24c7-4388-baec-2e87135dc908",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
         }
     ],
     "outputs": {
