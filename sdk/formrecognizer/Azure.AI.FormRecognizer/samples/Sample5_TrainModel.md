@@ -23,7 +23,7 @@ var client = new FormTrainingClient(new Uri(endpoint), credential);
 
 Train custom models to recognize all fields and values found in your custom forms. A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract from each form type.
 
-```C# Snippet:FormRecognizerSample4TrainModelWithForms
+```C# Snippet:FormRecognizerSampleTrainModelWithForms
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
 // Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
@@ -57,7 +57,7 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 
 Train custom models to recognize specific fields and values you specify by labeling your custom forms. A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 
-```C# Snippet:FormRecognizerSample5TrainModelWithFormsAndLabels
+```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
 // Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions to set up forms for training in an Azure Storage Blob Container, please see:

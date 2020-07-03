@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            #region Snippet:FormRecognizerSample6ManageCustomModels
+            #region Snippet:FormRecognizerSampleManageCustomModels
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

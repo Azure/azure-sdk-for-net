@@ -162,7 +162,7 @@ foreach (FormPage page in formPages)
 ### Recognize Custom Forms
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
-```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
 RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, formUri).WaitForCompletionAsync();
@@ -275,7 +275,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
 
-```C# Snippet:FormRecognizerSample4TrainModelWithForms
+```C# Snippet:FormRecognizerSampleTrainModelWithForms
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
 // Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
@@ -308,7 +308,7 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 ### Manage Custom Models
 Manage the custom models stored in your account.
 
-```C# Snippet:FormRecognizerSample6ManageCustomModels
+```C# Snippet:FormRecognizerSampleManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.

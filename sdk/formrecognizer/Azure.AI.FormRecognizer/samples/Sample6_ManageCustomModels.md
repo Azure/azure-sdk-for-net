@@ -25,7 +25,7 @@ Operations that can be executed are:
 - Get a specific model using the model's Id.
 - Delete a model from the resource account.
 
-```C# Snippet:FormRecognizerSample6ManageCustomModels
+```C# Snippet:FormRecognizerSampleManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.

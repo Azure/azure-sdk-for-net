@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = model.ModelId;
 
-            #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+            #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
             //@@ string modelId = "<modelId>";
 
             RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, formUri).WaitForCompletionAsync();

@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:FormRecognizerSample1CreateClient
+            #region Snippet:FormRecognizerSampleCreateClient
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
