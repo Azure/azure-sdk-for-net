@@ -124,10 +124,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "factoryName", "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -137,6 +134,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByFactory", tracingParameters);
             }
@@ -147,9 +145,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -353,14 +351,11 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "factoryName", "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (filterParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filterParameters");
             }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -370,6 +365,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("filterParameters", filterParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "QueryByFactory", tracingParameters);
@@ -381,9 +377,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -619,10 +615,6 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (trigger == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "trigger");
@@ -631,6 +623,7 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 trigger.Validate();
             }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -641,6 +634,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("trigger", trigger);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -654,9 +648,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -898,10 +892,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -912,6 +903,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -924,9 +916,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1154,10 +1146,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1168,6 +1157,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -1179,9 +1169,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1411,10 +1401,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1425,6 +1412,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetEventSubscriptionStatus", tracingParameters);
             }
@@ -1436,9 +1424,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1736,10 +1724,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1750,6 +1735,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginSubscribeToEvents", tracingParameters);
             }
@@ -1761,9 +1747,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1986,10 +1972,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2000,6 +1983,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUnsubscribeFromEvents", tracingParameters);
             }
@@ -2011,9 +1995,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2233,10 +2217,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2247,6 +2228,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStart", tracingParameters);
             }
@@ -2258,9 +2240,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2462,10 +2444,7 @@ namespace Microsoft.Azure.Management.DataFactory
                     throw new ValidationException(ValidationRules.Pattern, "triggerName", "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2476,6 +2455,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("triggerName", triggerName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStop", tracingParameters);
             }
@@ -2487,9 +2467,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{triggerName}", System.Uri.EscapeDataString(triggerName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

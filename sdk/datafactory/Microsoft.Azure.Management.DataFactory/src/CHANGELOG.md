@@ -16,6 +16,7 @@
 - Added fileFilter to file server source
 - Added partitionRootPath to binary connector
 - Added an option to support unzip file directly to target folder
+- Added support of Message server connecting from SAP Open Hub
 
 ## Version 4.8.0
 ###  Feature Additions

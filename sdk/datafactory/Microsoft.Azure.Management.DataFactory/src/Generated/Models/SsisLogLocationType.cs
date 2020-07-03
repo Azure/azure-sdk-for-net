@@ -12,16 +12,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for RecurrenceFrequency.
+    /// Defines values for SsisLogLocationType.
     /// </summary>
-    public static class RecurrenceFrequency
+    public static class SsisLogLocationType
     {
-        public const string NotSpecified = "NotSpecified";
-        public const string Minute = "Minute";
-        public const string Hour = "Hour";
-        public const string Day = "Day";
-        public const string Week = "Week";
-        public const string Month = "Month";
-        public const string Year = "Year";
+        public const string File = "File";
     }
 }

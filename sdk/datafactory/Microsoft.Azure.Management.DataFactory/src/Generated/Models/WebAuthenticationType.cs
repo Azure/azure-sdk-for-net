@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for JsonWriteFilePattern.
+    /// Defines values for WebAuthenticationType.
     /// </summary>
-    public static class JsonWriteFilePattern
+    public static class WebAuthenticationType
     {
-        public const string SetOfObjects = "setOfObjects";
-        public const string ArrayOfObjects = "arrayOfObjects";
+        public const string Basic = "Basic";
+        public const string Anonymous = "Anonymous";
+        public const string ClientCertificate = "ClientCertificate";
     }
 }

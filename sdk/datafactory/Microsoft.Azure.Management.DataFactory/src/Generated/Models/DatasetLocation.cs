@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Dataset location.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DatasetLocation")]
     public partial class DatasetLocation
     {
         /// <summary>

@@ -134,10 +134,6 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "runId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (filterParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filterParameters");
@@ -146,6 +142,7 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 filterParameters.Validate();
             }
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -156,6 +153,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("runId", runId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("filterParameters", filterParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "QueryByPipelineRun", tracingParameters);
@@ -168,9 +166,9 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{runId}", System.Uri.EscapeDataString(runId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
