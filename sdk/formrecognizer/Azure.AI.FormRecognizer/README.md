@@ -121,16 +121,20 @@ Please note that models can also be trained using a graphical user interface suc
 
 Because analyzing and training form documents takes time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-receipts).
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-content).
 
 ## Examples
-The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
+The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API. Most of the snippets below make use of asynchronous service calls, but keep in mind that the Azure.AI.FormRecognizer package supports both synchronous and asynchronous APIs.
 
+### Async examples
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
 * [Recognize Receipts](#recognize-receipts)
 * [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
+
+### Sync examples
+* [Manage Custom Models Synchronously](#manage-custom-models-synchronously)
 
 ### Recognize Content
 Recognize text and table data, along with their bounding box coordinates, from documents.
@@ -308,7 +312,7 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 ### Manage Custom Models
 Manage the custom models stored in your account.
 
-```C# Snippet:FormRecognizerSampleManageCustomModels
+```C# Snippet:FormRecognizerSampleManageCustomModelsAsync
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -352,6 +356,12 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 
 // Delete the model from the account.
 client.DeleteModel(model.ModelId);
+```
+
+### Manage Custom Models Synchronously
+Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart.
+
+```C# Snippet:FormRecognizerSampleManageCustomModels
 ```
 
 ## Troubleshooting

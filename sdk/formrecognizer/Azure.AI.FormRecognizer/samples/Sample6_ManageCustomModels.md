@@ -25,7 +25,9 @@ Operations that can be executed are:
 - Get a specific model using the model's Id.
 - Delete a model from the resource account.
 
-```C# Snippet:FormRecognizerSampleManageCustomModels
+## Manage Custom Models Asynchronously
+
+```C# Snippet:FormRecognizerSampleManageCustomModelsAsync
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -69,6 +71,13 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 
 // Delete the model from the account.
 client.DeleteModel(model.ModelId);
+```
+
+## Manage Custom Models Synchronously
+
+Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart.
+
+```C# Snippet:FormRecognizerSampleManageCustomModels
 ```
 
 To see the full example source files, see:

@@ -19,6 +19,8 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
+            #region Snippet:FormRecognizerSampleManageCustomModelsAsync
+
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -39,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
 
             // Create a new model to store in the account
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Get the model that was just created
             CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
@@ -62,6 +64,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // Delete the model from the account.
             await client.DeleteModelAsync(model.ModelId);
+
+            #endregion
         }
     }
 }
