@@ -663,10 +663,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
                     var message = args.Message;
-                    var lockedUntil = args.SessionLockedUntil;
                     // wait 2x lock duration in case the
                     // lock was renewed already
                     await Task.Delay(lockDuration.Add(lockDuration));
+                    var lockedUntil = args.SessionLockedUntil;
                     if (!args.CancellationToken.IsCancellationRequested)
                     {
                         // only do the assertion if cancellation wasn't requested as otherwise
