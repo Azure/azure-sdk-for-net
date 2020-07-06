@@ -124,17 +124,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
-        ///   The authority host of the cloud to use during Live tests. Recorded.
+        ///   The authority host of the cloud to use during Live tests.
         /// </summary>
         public string AuthorityHost => GetOptionalVariable(AzureAuthorityHostEnvironmentVariable) ?? "https://login.microsoftonline.com";
 
         /// <summary>
-        ///   The service management Url of the cloud to use during Live tests. Recorded.
+        ///   The service management Url of the cloud to use during Live tests.
         /// </summary>
         public string ServiceManagementUrl => GetOptionalVariable(ServiceManagementUrlEnvironmentVariable) ?? "https://management.core.windows.net/";
 
         /// <summary>
-        ///   The resource manager of the cloud to use during Live tests. Recorded.
+        ///   The resource manager of the cloud to use during Live tests.
         /// </summary>
         public Uri ResourceManager => new Uri(GetOptionalVariable(ResourceManagerEnvironmentVariable) ?? "https://management.azure.com/");
 
