@@ -1,6 +1,22 @@
 # Release History
 
-## 7.0.0-preview.4 (Unreleased)
+## 7.0.0-preview.4 (2020-07-07)
+### Acknowledgements
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
+
+### Added
+- Add IAsyncEnumerable Receive overload
+- Add batch schedule/cancel schedule messages
+  
+### Breaking Changes
+- Remove use of "Batch" in Peek/Receive methods.
+- Add Message/Messages suffix to Peek/Send/Receive/Abandon/Defer/Complete/DeadLetter methods.
+- Rename ServiceBusSender.CreateBatch to ServiceBusSender.CreateMessageBatch
+- Rename CreateBatchOptions to CreateMessageBatchOptions
+- Rename ServiceBusMessageBatch.TryAdd to ServiceBusMessageBatch.TryAddMessage
+- Change output list type from IList<ServiceBusReceivedMessage> to IReadOnlyList<ServiceBusReceivedMessage>
 
 
 ## 7.0.0-preview.3 (2020-06-08)
