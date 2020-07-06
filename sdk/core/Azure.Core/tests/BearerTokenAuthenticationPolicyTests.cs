@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
-            MockTransport transport = CreateMockTransport(Enumerable.Range(0, 100).Select(i => new MockResponse(200)).ToArray());
+            MockTransport transport = CreateMockTransport(r => new MockResponse(200));
             var requestTasks = new Task<Response>[100];
 
             for (int i = 0; i < requestTasks.Length; i++)
@@ -230,7 +230,7 @@ namespace Azure.Core.Tests
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
-            MockTransport transport = CreateMockTransport(Enumerable.Range(0, 100).Select(i => new MockResponse(200)).ToArray());
+            MockTransport transport = CreateMockTransport(r => new MockResponse(200));
             var requestTasks = new Task<Response>[100];
 
             for (int i = 0; i < requestTasks.Length; i++)
