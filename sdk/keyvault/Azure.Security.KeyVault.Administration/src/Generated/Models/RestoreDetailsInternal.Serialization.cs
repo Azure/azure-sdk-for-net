@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class FullRestoreDetailsInternal
+    internal partial class RestoreDetailsInternal
     {
-        internal static FullRestoreDetailsInternal DeserializeFullRestoreDetailsInternal(JsonElement element)
+        internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element)
         {
             string status = default;
             string statusDetails = default;
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new FullRestoreDetailsInternal(status, statusDetails, error, jobId, startTime, endTime);
+            return new RestoreDetailsInternal(status, statusDetails, error, jobId, startTime, endTime);
         }
     }
 }

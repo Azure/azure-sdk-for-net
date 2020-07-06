@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Administration
         private readonly int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
-        private FullRestoreDetailsInternal _value;
+        private RestoreDetailsInternal _value;
 
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
-            _value = new FullRestoreDetailsInternal(string.Empty, string.Empty, null, id, null, null);
+            _value = new RestoreDetailsInternal(string.Empty, string.Empty, null, id, null, null);
         }
 
         /// <summary>
@@ -45,12 +45,12 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore(Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync(Uri, string, string, CancellationToken)"/>.</param>
-        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<FullRestoreDetailsInternal, ServiceFullRestoreOperationHeaders> response)
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
 
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
+            _value = new RestoreDetailsInternal(string.Empty, string.Empty, null, response.Headers.JobId(), null, null);
             _client = client;
             _response = response.GetRawResponse();
             _retryAfterSeconds = response.Headers.RetryAfter;
@@ -59,10 +59,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of a RestoreOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="FullRestoreDetailsInternal" /> that will be used to populate various properties.</param>
+        /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        internal RestoreOperation(FullRestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal RestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(response, nameof(response));
@@ -115,7 +115,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             if (!HasCompleted)
             {
-                Response<FullRestoreDetailsInternal> response = _client.GetRestoreDetails(Id, cancellationToken);
+                Response<RestoreDetailsInternal> response = _client.GetRestoreDetails(Id, cancellationToken);
                 _value = response.Value;
                 _response = response.GetRawResponse();
             }
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             if (!HasCompleted)
             {
-                Response<FullRestoreDetailsInternal> response = await _client.GetRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
+                Response<RestoreDetailsInternal> response = await _client.GetRestoreDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
                 _value = response.Value;
                 _response = response.GetRawResponse();
             }

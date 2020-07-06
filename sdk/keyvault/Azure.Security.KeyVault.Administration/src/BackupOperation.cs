@@ -44,12 +44,12 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders> response)
+        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullBackupHeaders> response)
         {
             _client = client;
             _response = response;
             _retryAfterSeconds = response.Headers.RetryAfter;
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
+            _value = new FullBackupDetailsInternal(string.Empty, string.Empty, null, null, null, response.Headers.JobId(), string.Empty);
         }
 
         /// <summary>

@@ -9,22 +9,22 @@ using System;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Full restore operation. </summary>
-    internal partial class FullRestoreDetailsInternal
+    /// <summary> Restore operation. </summary>
+    internal partial class RestoreDetailsInternal
     {
-        /// <summary> Initializes a new instance of FullRestoreDetailsInternal. </summary>
-        internal FullRestoreDetailsInternal()
+        /// <summary> Initializes a new instance of RestoreDetailsInternal. </summary>
+        internal RestoreDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of FullRestoreDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of RestoreDetailsInternal. </summary>
         /// <param name="status"> Status of the restore operation. </param>
         /// <param name="statusDetails"> The status details of restore operation. </param>
-        /// <param name="error"> Error encountered, if any, during the full restore operation. </param>
-        /// <param name="jobId"> Identifier for the full restore operation. </param>
+        /// <param name="error"> Error encountered, if any, during the restore operation. </param>
+        /// <param name="jobId"> Identifier for the restore operation. </param>
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
-        internal FullRestoreDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        internal RestoreDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -38,9 +38,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string Status { get; }
         /// <summary> The status details of restore operation. </summary>
         public string StatusDetails { get; }
-        /// <summary> Error encountered, if any, during the full restore operation. </summary>
+        /// <summary> Error encountered, if any, during the restore operation. </summary>
         public KeyVaultServiceError Error { get; }
-        /// <summary> Identifier for the full restore operation. </summary>
+        /// <summary> Identifier for the restore operation. </summary>
         public string JobId { get; }
         /// <summary> The start time of the restore operation. </summary>
         public DateTimeOffset? StartTime { get; }

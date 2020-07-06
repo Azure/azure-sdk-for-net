@@ -45,7 +45,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the restore operation.</param>
         /// <param name="errorMessage">The error message generated from the operation, if any.</param>
         public static RestoreOperation RestoreOperation(Response response, KeyVaultBackupClient client, string id, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
-            new RestoreOperation(new FullRestoreDetailsInternal(null,
+            new RestoreOperation(new RestoreDetailsInternal(null,
                                                                 null,
                                                                 errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
                                                                 id,
