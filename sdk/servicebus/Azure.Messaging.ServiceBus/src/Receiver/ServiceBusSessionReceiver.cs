@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The session state as byte array.</returns>
         public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus
             byte[] sessionState,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
