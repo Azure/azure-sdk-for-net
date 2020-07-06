@@ -29,6 +29,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The name of the environment variable used to specify an override for the Event Hub instance to use for all tests.</summary>
         private const string EventHubNameOverrideEnvironmentVariable = "EVENTHUB_OVERRIDE_EVENT_HUB_NAME";
 
+        /// <summary>The name of the environment variable used to specify azure authority host to use for all tests.</summary>
+        private const string AzureAuthorityHostEnvironmentVariable = "AZURE_AUTHORITY_HOST";
+
+        /// <summary>The name of the environment variable used to specify service management url to use for all tests.</summary>
+        private const string ServiceManagementUrlEnvironmentVariable = "SERVICE_MANAGEMENT_URL";
+
+        /// <summary>The name of the environment variable used to specify resource manager to use for all tests.</summary>
+        private const string ResourceManagerEnvironmentVariable = "RESOURCE_MANAGER";
+
         /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
 
@@ -113,6 +122,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <value>The shared access key, as contained within the associated connection string.</value>
         ///
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
+
+        /// <summary>
+        ///   The authority host of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string AuthorityHost => GetOptionalVariable(AzureAuthorityHostEnvironmentVariable) ?? "https://login.microsoftonline.com";
+
+        /// <summary>
+        ///   The service management Url of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string ServiceManagementUrl => GetOptionalVariable(ServiceManagementUrlEnvironmentVariable) ?? "https://management.core.windows.net/";
+
+        /// <summary>
+        ///   The resource manager of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public Uri ResourceManager => new Uri(GetOptionalVariable(ResourceManagerEnvironmentVariable) ?? "https://management.azure.com/");
 
         /// <summary>
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.

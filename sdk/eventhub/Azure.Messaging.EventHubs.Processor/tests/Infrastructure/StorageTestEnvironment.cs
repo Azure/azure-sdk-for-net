@@ -55,6 +55,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public string StorageConnectionString => ActiveStorageAccount.Value.ConnectionString;
 
         /// <summary>
+        ///   The storage account endpoint suffix of the cloud to use during Live tests. Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetOptionalVariable("STORAGE_ENDPOINT_SUFFIX") ?? "core.windows.net";
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="StorageTestEnvironment"/> class.
         /// </summary>
         ///

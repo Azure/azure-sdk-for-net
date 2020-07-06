@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                   string resourceGroupName,
                                                                   string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new Uri(EventHubsTestEnvironment.Instance.ResourceManager), new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(EventHubsTestEnvironment.Instance.ResourceManager, new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName)).ConfigureAwait(false);
                 return resourceGroup.Location;

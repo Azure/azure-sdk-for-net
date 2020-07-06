@@ -68,13 +68,13 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         internal static string EventHubsSecret => EventHubsSecretInstance.Value;
 
-        internal static string AuthorityHost => AuthorityHostInstance.Value;
+        internal static string AuthorityHost => AuthorityHostInstance.Value ?? "https://login.microsoftonline.com";
 
-        internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value;
+        internal static string ServiceManagementUrl => ServiceManagementUrlInstance.Value ?? "https://management.core.windows.net/";
 
-        internal static string ResourceManager => ResourceManagerInstance.Value;
+        internal static Uri ResourceManager => new Uri(ResourceManagerInstance.Value ?? "https://management.azure.com/");
 
-        internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value;
+        internal static string StorageEndpointSuffix => StorageEndpointSuffixInstance.Value ?? "core.windows.net";
 
         internal static string GetEntityConnectionString(string entityName) =>
             new EventHubsConnectionStringBuilder(EventHubsConnectionString) { EntityPath = entityName }.ToString();
