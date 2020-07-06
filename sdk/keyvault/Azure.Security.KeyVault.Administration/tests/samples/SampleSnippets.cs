@@ -7,6 +7,7 @@ using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
+using Azure.Security.KeyVault.Administration.Tests;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -15,8 +16,11 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets : SamplesBase<KeyVaultTestEnvironment>
+    public partial class Snippets : AccessControlTestBase
     {
+        public Snippets(bool isAsync) : base(isAsync /* To record tests, add a second argument of RecordedTestMode.Record */)
+        { }
+
 #pragma warning disable IDE1006 // Naming Styles
         private KeyVaultAccessControlClient client;
         private string objectId;
@@ -33,6 +37,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            /*@@*/ client = Client;
 
             // Retrieve all the role definitions.
             List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
@@ -49,6 +54,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         [Ignore("These tests can't run until the service features are available")]
         public void GetRoleDefinitions()
         {
+            client = Client;
             #region Snippet:GetRoleDefinitions
             Pageable<RoleDefinition> allDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global);
 
@@ -65,8 +71,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
         [Ignore("These tests can't run until the service features are available")]
         public void CreateRoleAssignment()
         {
+            client = Client;
             #region Snippet:CreateRoleAssignment
-
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = roleDefinitionId;
 
@@ -98,6 +104,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         [Ignore("These tests can't run until the service features are available")]
         public void RoleAssignmentNotFound()
         {
+            client = Client;
             #region Snippet:RoleAssignmentNotFound
             try
             {
