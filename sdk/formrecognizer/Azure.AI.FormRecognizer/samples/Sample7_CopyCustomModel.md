@@ -7,10 +7,10 @@ To get started you'll need a Cognitive Services resource or a Form Recognizer re
 ## Copy a custom model
 There are several scenarios that require the models to be copied between Form Recognizer resources, like for example, to keep a backup of the created models.
 Copies can be made:
-- Within same Form Recognizer resource
+- Within the same Form Recognizer resource.
 - Across other Form Recognizer resources that exist in any other supported region.
 
-For this sample, you will copy a model across Form recognizer resource. It assumes you have the credentials for both the source and the target Form Recognizer resources.
+For this sample, you will copy a model across Form Recognizer resources. It assumes you have the credentials for both the source and the target Form Recognizer resources.
 
 ## Creating the source and target `FormTrainingClient`
 
@@ -50,7 +50,7 @@ CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(reso
 string jsonTargetAuth = targetAuth.ToJson();
 ```
 
-To deserealize a string that contains authorizaiton information, use the `FromJson` method from `CopyAuthorization`.
+To deserialize a string that contains authorization information, use the `FromJson` method from `CopyAuthorization`.
 ```C# Snippet:FormRecognizerSampleFromJson
 CopyAuthorization targetCopyAuth = CopyAuthorization.FromJson(jsonTargetAuth);
 ```

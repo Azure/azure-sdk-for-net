@@ -32,10 +32,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The id of the model to use for copy.</summary>
+        /// <summary>The ID of the model to use for copy.</summary>
         private readonly string _modelId;
 
-        /// <summary>The id of the copied model.</summary>
+        /// <summary>The ID of the copied model.</summary>
         private readonly string _targetModelId;
 
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
+        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
             _serviceClient = client.ServiceClient;
@@ -115,7 +115,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
+        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
         {
             _serviceClient = serviceClient;
