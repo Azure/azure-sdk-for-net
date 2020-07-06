@@ -52,7 +52,7 @@ namespace Azure.Data.Tables
     {
         /// <summary>
         /// Creates a string representing which services can be used for
-        /// <see cref="TableAccountSasBuilder.Services"/>.
+        /// <see cref="TableAccountSasQueryParameters.Services"/>.
         /// </summary>
         /// <returns>
         /// A string representing which services are allowed.

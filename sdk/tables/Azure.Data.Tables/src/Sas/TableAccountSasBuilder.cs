@@ -31,11 +31,13 @@ namespace Azure.Data.Tables.Sas
         /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
         /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableAccountSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
+            ResourceTypes = resourceTypes;
         }
 
         /// <summary>
