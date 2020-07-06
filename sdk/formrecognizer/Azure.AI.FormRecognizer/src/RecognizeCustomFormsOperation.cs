@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The id of the model to use for recognizing form values.</summary>
+        /// <summary>The ID of the model to use for recognizing form values.</summary>
         private readonly string _modelId;
 
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
