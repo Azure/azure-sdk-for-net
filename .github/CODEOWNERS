@@ -9,42 +9,42 @@
 /sdk/                                           @AlexGhiondea
 
 # Core
-/sdk/core/                                      @pakrym @KrzysztofCwalina
+/sdk/core/                                      @pakrym @KrzysztofCwalina       %Azure.Core
 
 # Extensions
-/sdk/extensions/                                @parkym
+/sdk/extensions/                                @parkym                         %Azure.Core
 
 # Service teams
-/sdk/appconfiguration/                          @annelo-msft @AlexanderSher
+/sdk/appconfiguration/                          @annelo-msft @AlexanderSher     %AzConfig
 
-/sdk/batch/                                     @bgklein @xingwu1 
+/sdk/batch/                                     @bgklein @xingwu1               %Batch
 
-/sdk/cognitiveservices/language.textanalytics/  @assafi 
+/sdk/cognitiveservices/language.textanalytics/  @assafi                         
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum      %DigitalTwins
 
-/sdk/eventgrid/                                 @Kishp01 @ahamad-MS
+/sdk/eventgrid/                                 @Kishp01 @ahamad-MS   
 
 /sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
-/sdk/identity/                                  @schaabs
+/sdk/identity/                                  @schaabs @alexanderSher    %Azure.Identity
 
-/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum    %Iot
 
-/sdk/keyvault/                                  @schaabs @heaths
+/sdk/keyvault/                                  @schaabs @heaths    %KeyVault
 
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths   %Search
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
 /sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft    %Storage
 
-/sdk/tables/                                    @christothes
+/sdk/tables/                                    @christothes    %Tables
 
 /sdk/textanalytics/                             @annelo-msft @maririos
 
