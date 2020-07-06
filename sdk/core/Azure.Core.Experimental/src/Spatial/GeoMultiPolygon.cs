@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoPolygon"/>.
     /// </summary>
-    public sealed class GeoMultiPolygon : Geometry
+    public sealed class GeoMultiPolygon : Geometry, IReadOnlyList<GeoPolygon>
     {
         /// <summary>
         /// Initializes new instance of <see cref="GeoMultiPolygon"/>.
@@ -32,9 +33,23 @@ namespace Azure.Core.Spatial
             Polygons = polygons.ToArray();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public IReadOnlyList<GeoPolygon> Polygons { get; }
+        internal IReadOnlyList<GeoPolygon> Polygons { get; }
+
+        /// <inheritdoc />
+        public IEnumerator<GeoPolygon> GetEnumerator()
+        {
+            return Polygons.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <inheritdoc />
+        public int Count => Polygons.Count;
+
+        /// <inheritdoc />
+        public GeoPolygon this[int index] => Polygons[index];
     }
 }

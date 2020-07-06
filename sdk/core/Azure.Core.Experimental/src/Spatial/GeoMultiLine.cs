@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoLine"/>.
     /// </summary>
-    public sealed class GeoMultiLine : Geometry
+    public sealed class GeoMultiLine : Geometry, IReadOnlyList<GeoLine>
     {
         /// <summary>
         /// Initializes new instance of <see cref="GeoMultiLine"/>.
@@ -35,6 +36,23 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoLine> Lines { get; }
+        internal IReadOnlyList<GeoLine> Lines { get; }
+
+        /// <inheritdoc />
+        public IEnumerator<GeoLine> GetEnumerator()
+        {
+            return Lines.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <inheritdoc />
+        public int Count => Lines.Count;
+
+        /// <inheritdoc />
+        public GeoLine this[int index] => Lines[index];
     }
 }
