@@ -10,26 +10,42 @@
 
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Base class for all types of Route.
+    /// Defines the Resource ID for a Routing Rule.
     /// </summary>
-    public partial class RouteConfiguration
+    public partial class RoutingRuleLink
     {
         /// <summary>
-        /// Initializes a new instance of the RouteConfiguration class.
+        /// Initializes a new instance of the RoutingRuleLink class.
         /// </summary>
-        public RouteConfiguration()
+        public RoutingRuleLink()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the RoutingRuleLink class.
+        /// </summary>
+        /// <param name="id">Resource ID.</param>
+        public RoutingRuleLink(string id = default(string))
+        {
+            Id = id;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets resource ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
