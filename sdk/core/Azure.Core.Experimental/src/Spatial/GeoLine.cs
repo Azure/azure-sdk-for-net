@@ -14,27 +14,67 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="GeoLine"/>.
         /// </summary>
-        /// <param name="positions">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
-        public GeoLine(IEnumerable<GeoCoordinate> positions): this(positions, null, DefaultProperties)
+        /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
+        public GeoLine(IEnumerable<GeometryCoordinate> coordinates): this(coordinates, null, DefaultProperties)
         {
         }
 
         /// <summary>
         /// Initializes new instance of <see cref="GeoLine"/>.
         /// </summary>
-        /// <param name="positions">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
+        /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public GeoLine(IEnumerable<GeoCoordinate> positions, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        public GeoLine(IEnumerable<GeometryCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(ConvertCoordinates(coordinates), boundingBox, additionalProperties)
         {
-            Argument.AssertNotNull(positions, nameof(positions));
+        }
 
-            Positions = positions.ToArray();
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoLine"/>.
+        /// </summary>
+        /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
+        public GeoLine(IEnumerable<GeographyCoordinate> coordinates): this(coordinates, null, DefaultProperties)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoLine"/>.
+        /// </summary>
+        /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
+        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
+        public GeoLine(IEnumerable<GeographyCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(ConvertCoordinates(coordinates), boundingBox, additionalProperties)
+        {
+        }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoLine"/>.
+        /// </summary>
+        /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
+        /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
+        internal GeoLine(IReadOnlyList<GeoCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        {
+            Coordinates = coordinates;
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoCoordinate> Positions { get; }
+        public IReadOnlyList<GeoCoordinate> Coordinates { get; }
+
+        internal static IReadOnlyList<GeoCoordinate> ConvertCoordinates(IEnumerable<GeometryCoordinate> coordinates)
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            return coordinates.Select(c => new GeoCoordinate(c)).ToArray();
+        }
+
+        internal static IReadOnlyList<GeoCoordinate> ConvertCoordinates(IEnumerable<GeographyCoordinate> coordinates)
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            return coordinates.Select(c => new GeoCoordinate(c)).ToArray();
+        }
     }
 }

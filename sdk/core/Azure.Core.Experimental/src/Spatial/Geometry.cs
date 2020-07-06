@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 
@@ -57,9 +58,10 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="json">The GeoJSON representation of an object.</param>
         /// <returns>The resulting <see cref="Geometry"/> object.</returns>
-        public Geometry Parse(string json)
+        public static Geometry Parse(string json)
         {
-
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            return GeoJsonConverter.Read(element);
         }
     }
 }
