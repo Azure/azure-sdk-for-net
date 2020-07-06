@@ -333,7 +333,7 @@ await foreach (CustomFormModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
@@ -359,7 +359,7 @@ await client.DeleteModelAsync(model.ModelId);
 ```
 
 ### Manage Custom Models Synchronously
-Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart.
+Manage the custom models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` for training, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
 
 ```C# Snippet:FormRecognizerSampleManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

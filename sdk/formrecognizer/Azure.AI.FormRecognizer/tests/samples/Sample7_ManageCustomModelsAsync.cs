@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
 
             // Create a new model to store in the account
-            CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Get the model that was just created
             CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
