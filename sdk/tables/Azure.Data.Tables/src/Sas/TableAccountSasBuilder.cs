@@ -17,14 +17,10 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
         /// <param name="permissions">The permissions associated with the shared access signature.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableAccountSasBuilder(string tableName, TableAccountSasPermissions permissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(TableAccountSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            TableName = tableName;
             ExpiresOn = expiresOn;
             SetPermissions(permissions);
         }
@@ -32,14 +28,10 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
         /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableAccountSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
         }
@@ -92,11 +84,6 @@ namespace Azure.Data.Tables.Sas
         /// correlates to an access policy specified for the container.
         /// </summary>
         public string Identifier { get; set; }
-
-        /// <summary>
-        /// The name of the table being made accessible.
-        /// </summary>
-        public string TableName { get; }
 
         /// <summary>
         /// The services associated with the shared access signature. The
