@@ -75,8 +75,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static ServiceBusReceivedMessage ToServiceBusDataMessage(this AmqpMessage message)
         {
-            IEnumerable<byte[]> data = (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(data) };
+            // TODO: WIP
+            using var streamData = message.BodyStream;
+            var data = new byte[streamData.Length];
+            streamData.Read(data, 0, (int)streamData.Length);
+            // IEnumerable<byte[]> data = (message.DataBody ?? Enumerable.Empty<Data>()).Select(db => db.GetByteArray()).Where(ba => ba != null);
+            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(new[]{ data }) };
         }
 
         private static ServiceBusReceivedMessage ToServiceBusSequenceMessage(this AmqpMessage message)
@@ -87,8 +91,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static ServiceBusReceivedMessage ToServiceBusValueMessage(this AmqpMessage message)
         {
-            object value =
-                AmqpMessageConverter.TryGetNetObjectFromAmqpObject(message.ValueBody.Value, MappingType.MessageBody, out var dotNetObject)
+            object value = AmqpMessageConverter.TryGetNetObjectFromAmqpObject(message.ValueBody.Value, MappingType.MessageBody, out var dotNetObject)
                 ? dotNetObject
                 : message.ValueBody.Value;
             return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpValueMessage(value) };
