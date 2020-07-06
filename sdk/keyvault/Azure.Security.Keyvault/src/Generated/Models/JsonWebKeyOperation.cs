@@ -27,6 +27,7 @@ namespace Azure.Security.KeyVault.Models
         private const string VerifyValue = "verify";
         private const string WrapKeyValue = "wrapKey";
         private const string UnwrapKeyValue = "unwrapKey";
+        private const string ImportValue = "import";
 
         /// <summary> encrypt. </summary>
         public static JsonWebKeyOperation Encrypt { get; } = new JsonWebKeyOperation(EncryptValue);
@@ -40,6 +41,8 @@ namespace Azure.Security.KeyVault.Models
         public static JsonWebKeyOperation WrapKey { get; } = new JsonWebKeyOperation(WrapKeyValue);
         /// <summary> unwrapKey. </summary>
         public static JsonWebKeyOperation UnwrapKey { get; } = new JsonWebKeyOperation(UnwrapKeyValue);
+        /// <summary> import. </summary>
+        public static JsonWebKeyOperation Import { get; } = new JsonWebKeyOperation(ImportValue);
         /// <summary> Determines if two <see cref="JsonWebKeyOperation"/> values are the same. </summary>
         public static bool operator ==(JsonWebKeyOperation left, JsonWebKeyOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonWebKeyOperation"/> values are not the same. </summary>

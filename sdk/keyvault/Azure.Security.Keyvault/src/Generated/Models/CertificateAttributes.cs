@@ -23,12 +23,16 @@ namespace Azure.Security.KeyVault.Models
         /// <param name="expires"> Expiry date in UTC. </param>
         /// <param name="created"> Creation time in UTC. </param>
         /// <param name="updated"> Last updated time in UTC. </param>
+        /// <param name="recoverableDays"> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </param>
         /// <param name="recoveryLevel"> Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains &apos;Purgeable&apos;, the certificate can be permanently deleted by a privileged user; otherwise, only the system can purge the certificate, at the end of the retention interval. </param>
-        internal CertificateAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated, DeletionRecoveryLevel? recoveryLevel) : base(enabled, notBefore, expires, created, updated)
+        internal CertificateAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated, int? recoverableDays, DeletionRecoveryLevel? recoveryLevel) : base(enabled, notBefore, expires, created, updated)
         {
+            RecoverableDays = recoverableDays;
             RecoveryLevel = recoveryLevel;
         }
 
+        /// <summary> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </summary>
+        public int? RecoverableDays { get; }
         /// <summary> Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains &apos;Purgeable&apos;, the certificate can be permanently deleted by a privileged user; otherwise, only the system can purge the certificate, at the end of the retention interval. </summary>
         public DeletionRecoveryLevel? RecoveryLevel { get; }
     }

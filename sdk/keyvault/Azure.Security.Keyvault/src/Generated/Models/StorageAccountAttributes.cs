@@ -21,12 +21,14 @@ namespace Azure.Security.KeyVault.Models
         /// <param name="enabled"> the enabled state of the object. </param>
         /// <param name="created"> Creation time in UTC. </param>
         /// <param name="updated"> Last updated time in UTC. </param>
+        /// <param name="recoverableDays"> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </param>
         /// <param name="recoveryLevel"> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </param>
-        internal StorageAccountAttributes(bool? enabled, DateTimeOffset? created, DateTimeOffset? updated, DeletionRecoveryLevel? recoveryLevel)
+        internal StorageAccountAttributes(bool? enabled, DateTimeOffset? created, DateTimeOffset? updated, int? recoverableDays, DeletionRecoveryLevel? recoveryLevel)
         {
             Enabled = enabled;
             Created = created;
             Updated = updated;
+            RecoverableDays = recoverableDays;
             RecoveryLevel = recoveryLevel;
         }
 
@@ -36,6 +38,8 @@ namespace Azure.Security.KeyVault.Models
         public DateTimeOffset? Created { get; }
         /// <summary> Last updated time in UTC. </summary>
         public DateTimeOffset? Updated { get; }
+        /// <summary> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </summary>
+        public int? RecoverableDays { get; }
         /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
         public DeletionRecoveryLevel? RecoveryLevel { get; }
     }

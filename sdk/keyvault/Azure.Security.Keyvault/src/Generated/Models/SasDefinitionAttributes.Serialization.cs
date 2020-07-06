@@ -31,6 +31,11 @@ namespace Azure.Security.KeyVault.Models
                 writer.WritePropertyName("updated");
                 writer.WriteNumberValue(Updated.Value, "U");
             }
+            if (RecoverableDays != null)
+            {
+                writer.WritePropertyName("recoverableDays");
+                writer.WriteNumberValue(RecoverableDays.Value);
+            }
             if (RecoveryLevel != null)
             {
                 writer.WritePropertyName("recoveryLevel");
@@ -44,6 +49,7 @@ namespace Azure.Security.KeyVault.Models
             bool? enabled = default;
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
+            int? recoverableDays = default;
             DeletionRecoveryLevel? recoveryLevel = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,6 +80,15 @@ namespace Azure.Security.KeyVault.Models
                     updated = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
+                if (property.NameEquals("recoverableDays"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoverableDays = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("recoveryLevel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -84,7 +99,7 @@ namespace Azure.Security.KeyVault.Models
                     continue;
                 }
             }
-            return new SasDefinitionAttributes(enabled, created, updated, recoveryLevel);
+            return new SasDefinitionAttributes(enabled, created, updated, recoverableDays, recoveryLevel);
         }
     }
 }

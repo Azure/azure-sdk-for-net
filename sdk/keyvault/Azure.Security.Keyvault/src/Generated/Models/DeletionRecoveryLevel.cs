@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Models
 {
-    /// <summary> Reflects the deletion recovery level currently in effect for keys in the current vault. If it contains &apos;Purgeable&apos; the key can be permanently deleted by a privileged user; otherwise, only the system can purge the key, at the end of the retention interval. </summary>
+    /// <summary> Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains &apos;Purgeable&apos;, the certificate can be permanently deleted by a privileged user; otherwise, only the system can purge the certificate, at the end of the retention interval. </summary>
     public readonly partial struct DeletionRecoveryLevel : IEquatable<DeletionRecoveryLevel>
     {
         private readonly string _value;

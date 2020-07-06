@@ -16,6 +16,11 @@ namespace Azure.Security.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (RecoverableDays != null)
+            {
+                writer.WritePropertyName("recoverableDays");
+                writer.WriteNumberValue(RecoverableDays.Value);
+            }
             if (RecoveryLevel != null)
             {
                 writer.WritePropertyName("recoveryLevel");
@@ -51,6 +56,7 @@ namespace Azure.Security.KeyVault.Models
 
         internal static SecretAttributes DeserializeSecretAttributes(JsonElement element)
         {
+            int? recoverableDays = default;
             DeletionRecoveryLevel? recoveryLevel = default;
             bool? enabled = default;
             DateTimeOffset? nbf = default;
@@ -59,6 +65,15 @@ namespace Azure.Security.KeyVault.Models
             DateTimeOffset? updated = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("recoverableDays"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoverableDays = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("recoveryLevel"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -114,7 +129,7 @@ namespace Azure.Security.KeyVault.Models
                     continue;
                 }
             }
-            return new SecretAttributes(enabled, nbf, exp, created, updated, recoveryLevel);
+            return new SecretAttributes(enabled, nbf, exp, created, updated, recoverableDays, recoveryLevel);
         }
     }
 }

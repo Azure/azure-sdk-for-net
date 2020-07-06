@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.0")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.1-preview")
         {
             if (apiVersion == null)
             {
@@ -39,6 +39,2554 @@ namespace Azure.Security.KeyVault
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        internal HttpMessage CreateGetCertificatesRequest(string vaultBaseUrl, int? maxresults, bool? includePending)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (includePending != null)
+            {
+                uri.AppendQuery("includePending", includePending.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateListResult>> GetCertificatesAsync(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificatesRequest(vaultBaseUrl, maxresults, includePending);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateListResult> GetCertificates(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificatesRequest(vaultBaseUrl, maxresults, includePending);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteCertificateRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DeletedCertificateBundle>> DeleteCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateDeleteCertificateRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DeletedCertificateBundle> DeleteCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateDeleteCertificateRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetCertificateContactsRequest(string vaultBaseUrl, Contacts contacts)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/contacts", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(contacts);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="contacts"> The contacts for the key vault certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<Contacts>> SetCertificateContactsAsync(string vaultBaseUrl, Contacts contacts, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (contacts == null)
+            {
+                throw new ArgumentNullException(nameof(contacts));
+            }
+
+            using var message = CreateSetCertificateContactsRequest(vaultBaseUrl, contacts);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="contacts"> The contacts for the key vault certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Contacts> SetCertificateContacts(string vaultBaseUrl, Contacts contacts, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (contacts == null)
+            {
+                throw new ArgumentNullException(nameof(contacts));
+            }
+
+            using var message = CreateSetCertificateContactsRequest(vaultBaseUrl, contacts);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateContactsRequest(string vaultBaseUrl)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/contacts", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<Contacts>> GetCertificateContactsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateContactsRequest(vaultBaseUrl);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Contacts> GetCertificateContacts(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateContactsRequest(vaultBaseUrl);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteCertificateContactsRequest(string vaultBaseUrl)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/contacts", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<Contacts>> DeleteCertificateContactsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateDeleteCertificateContactsRequest(vaultBaseUrl);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Contacts> DeleteCertificateContacts(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateDeleteCertificateContactsRequest(vaultBaseUrl);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Contacts value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = Contacts.DeserializeContacts(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateIssuersRequest(string vaultBaseUrl, int? maxresults)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/issuers", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateIssuerListResult>> GetCertificateIssuersAsync(string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateIssuersRequest(vaultBaseUrl, maxresults);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateIssuerListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateIssuerListResult> GetCertificateIssuers(string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateIssuersRequest(vaultBaseUrl, maxresults);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateIssuerListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetCertificateIssuerRequest(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials, OrganizationDetails organizationDetails, IssuerAttributes attributes)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/issuers/", false);
+            uri.AppendPath(issuerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateIssuerSetParameters(provider, credentials, organizationDetails, attributes);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="provider"> The issuer provider. </param>
+        /// <param name="credentials"> The credentials to be used for the issuer. </param>
+        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
+        /// <param name="attributes"> Attributes of the issuer object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IssuerBundle>> SetCertificateIssuerAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+
+            using var message = CreateSetCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="provider"> The issuer provider. </param>
+        /// <param name="credentials"> The credentials to be used for the issuer. </param>
+        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
+        /// <param name="attributes"> Attributes of the issuer object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IssuerBundle> SetCertificateIssuer(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+            if (provider == null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+
+            using var message = CreateSetCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCertificateIssuerRequest(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials, OrganizationDetails organizationDetails, IssuerAttributes attributes)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/issuers/", false);
+            uri.AppendPath(issuerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateIssuerUpdateParameters(provider, credentials, organizationDetails, attributes);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires the certificates/setissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="provider"> The issuer provider. </param>
+        /// <param name="credentials"> The credentials to be used for the issuer. </param>
+        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
+        /// <param name="attributes"> Attributes of the issuer object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IssuerBundle>> UpdateCertificateIssuerAsync(string vaultBaseUrl, string issuerName, string provider = null, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateUpdateCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires the certificates/setissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="provider"> The issuer provider. </param>
+        /// <param name="credentials"> The credentials to be used for the issuer. </param>
+        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
+        /// <param name="attributes"> Attributes of the issuer object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IssuerBundle> UpdateCertificateIssuer(string vaultBaseUrl, string issuerName, string provider = null, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateUpdateCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateIssuerRequest(string vaultBaseUrl, string issuerName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/issuers/", false);
+            uri.AppendPath(issuerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IssuerBundle>> GetCertificateIssuerAsync(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateGetCertificateIssuerRequest(vaultBaseUrl, issuerName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IssuerBundle> GetCertificateIssuer(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateGetCertificateIssuerRequest(vaultBaseUrl, issuerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteCertificateIssuerRequest(string vaultBaseUrl, string issuerName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/issuers/", false);
+            uri.AppendPath(issuerName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires the certificates/manageissuers/deleteissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<IssuerBundle>> DeleteCertificateIssuerAsync(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateDeleteCertificateIssuerRequest(vaultBaseUrl, issuerName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires the certificates/manageissuers/deleteissuers permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="issuerName"> The name of the issuer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<IssuerBundle> DeleteCertificateIssuer(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (issuerName == null)
+            {
+                throw new ArgumentNullException(nameof(issuerName));
+            }
+
+            using var message = CreateDeleteCertificateIssuerRequest(vaultBaseUrl, issuerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IssuerBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateCertificateRequest(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/create", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateCreateParameters(certificatePolicy, certificateAttributes, tags);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> If this is the first version, the certificate resource is created. This operation requires the certificates/create permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateOperation>> CreateCertificateAsync(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateCreateCertificateRequest(vaultBaseUrl, certificateName, certificatePolicy, certificateAttributes, tags);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        CertificateOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> If this is the first version, the certificate resource is created. This operation requires the certificates/create permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateOperation> CreateCertificate(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateCreateCertificateRequest(vaultBaseUrl, certificateName, certificatePolicy, certificateAttributes, tags);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        CertificateOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateImportCertificateRequest(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/import", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateImportParameters(base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM file must contain the key as well as x509 certificates. This operation requires the certificates/import permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="base64EncodedCertificate"> Base64 encoded representation of the certificate object to import. This certificate needs to contain the private key. </param>
+        /// <param name="password"> If the private key in base64EncodedCertificate is encrypted, the password used for encryption. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> ImportCertificateAsync(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = null, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (base64EncodedCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(base64EncodedCertificate));
+            }
+
+            using var message = CreateImportCertificateRequest(vaultBaseUrl, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM file must contain the key as well as x509 certificates. This operation requires the certificates/import permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="base64EncodedCertificate"> Base64 encoded representation of the certificate object to import. This certificate needs to contain the private key. </param>
+        /// <param name="password"> If the private key in base64EncodedCertificate is encrypted, the password used for encryption. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> ImportCertificate(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = null, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (base64EncodedCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(base64EncodedCertificate));
+            }
+
+            using var message = CreateImportCertificateRequest(vaultBaseUrl, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateVersionsRequest(string vaultBaseUrl, string certificateName, int? maxresults)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/versions", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateListResult>> GetCertificateVersionsAsync(string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateVersionsRequest(vaultBaseUrl, certificateName, maxresults);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateListResult> GetCertificateVersions(string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateVersionsRequest(vaultBaseUrl, certificateName, maxresults);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificatePolicyRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/policy", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in a given key vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificatePolicy>> GetCertificatePolicyAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificatePolicyRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificatePolicy value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in a given key vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificatePolicy> GetCertificatePolicy(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificatePolicyRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificatePolicy value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCertificatePolicyRequest(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/policy", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(certificatePolicy);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
+        /// <param name="certificatePolicy"> The policy for the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificatePolicy>> UpdateCertificatePolicyAsync(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificatePolicy == null)
+            {
+                throw new ArgumentNullException(nameof(certificatePolicy));
+            }
+
+            using var message = CreateUpdateCertificatePolicyRequest(vaultBaseUrl, certificateName, certificatePolicy);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificatePolicy value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
+        /// <param name="certificatePolicy"> The policy for the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificatePolicy> UpdateCertificatePolicy(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificatePolicy == null)
+            {
+                throw new ArgumentNullException(nameof(certificatePolicy));
+            }
+
+            using var message = CreateUpdateCertificatePolicyRequest(vaultBaseUrl, certificateName, certificatePolicy);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificatePolicy value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCertificateRequest(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(certificateVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateUpdateParameters(certificatePolicy, certificateAttributes, tags);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate&apos;s attributes. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given key vault. </param>
+        /// <param name="certificateVersion"> The version of the certificate. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> UpdateCertificateAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateVersion == null)
+            {
+                throw new ArgumentNullException(nameof(certificateVersion));
+            }
+
+            using var message = CreateUpdateCertificateRequest(vaultBaseUrl, certificateName, certificateVersion, certificatePolicy, certificateAttributes, tags);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate&apos;s attributes. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given key vault. </param>
+        /// <param name="certificateVersion"> The version of the certificate. </param>
+        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> UpdateCertificate(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateVersion == null)
+            {
+                throw new ArgumentNullException(nameof(certificateVersion));
+            }
+
+            using var message = CreateUpdateCertificateRequest(vaultBaseUrl, certificateName, certificateVersion, certificatePolicy, certificateAttributes, tags);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateRequest(string vaultBaseUrl, string certificateName, string certificateVersion)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(certificateVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Gets information about a specific certificate. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
+        /// <param name="certificateVersion"> The version of the certificate. This URI fragment is optional. If not specified, the latest version of the certificate is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> GetCertificateAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateVersion == null)
+            {
+                throw new ArgumentNullException(nameof(certificateVersion));
+            }
+
+            using var message = CreateGetCertificateRequest(vaultBaseUrl, certificateName, certificateVersion);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets information about a specific certificate. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
+        /// <param name="certificateVersion"> The version of the certificate. This URI fragment is optional. If not specified, the latest version of the certificate is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> GetCertificate(string vaultBaseUrl, string certificateName, string certificateVersion, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateVersion == null)
+            {
+                throw new ArgumentNullException(nameof(certificateVersion));
+            }
+
+            using var message = CreateGetCertificateRequest(vaultBaseUrl, certificateName, certificateVersion);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCertificateOperationRequest(string vaultBaseUrl, string certificateName, bool cancellationRequested)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/pending", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateOperationUpdateParameter(cancellationRequested);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationRequested"> Indicates if cancellation was requested on the certificate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateOperation>> UpdateCertificateOperationAsync(string vaultBaseUrl, string certificateName, bool cancellationRequested, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateUpdateCertificateOperationRequest(vaultBaseUrl, certificateName, cancellationRequested);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationRequested"> Indicates if cancellation was requested on the certificate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateOperation> UpdateCertificateOperation(string vaultBaseUrl, string certificateName, bool cancellationRequested, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateUpdateCertificateOperationRequest(vaultBaseUrl, certificateName, cancellationRequested);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateOperationRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/pending", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateOperation>> GetCertificateOperationAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateOperationRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateOperation> GetCertificateOperation(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateOperationRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteCertificateOperationRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/pending", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no longer created. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateOperation>> DeleteCertificateOperationAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateDeleteCertificateOperationRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no longer created. This operation requires the certificates/update permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateOperation> DeleteCertificateOperation(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateDeleteCertificateOperationRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateMergeCertificateRequest(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/pending/merge", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateMergeParameters(x509Certificates.ToList(), certificateAttributes, tags);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available in the service. This operation requires the certificates/create permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="x509Certificates"> The certificate or the certificate chain to merge. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> MergeCertificateAsync(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (x509Certificates == null)
+            {
+                throw new ArgumentNullException(nameof(x509Certificates));
+            }
+
+            using var message = CreateMergeCertificateRequest(vaultBaseUrl, certificateName, x509Certificates, certificateAttributes, tags);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available in the service. This operation requires the certificates/create permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="x509Certificates"> The certificate or the certificate chain to merge. </param>
+        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> MergeCertificate(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (x509Certificates == null)
+            {
+                throw new ArgumentNullException(nameof(x509Certificates));
+            }
+
+            using var message = CreateMergeCertificateRequest(vaultBaseUrl, certificateName, x509Certificates, certificateAttributes, tags);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateBackupCertificateRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/backup", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded. This operation requires the certificates/backup permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<BackupCertificateResult>> BackupCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateBackupCertificateRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BackupCertificateResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = BackupCertificateResult.DeserializeBackupCertificateResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded. This operation requires the certificates/backup permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<BackupCertificateResult> BackupCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateBackupCertificateRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BackupCertificateResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = BackupCertificateResult.DeserializeBackupCertificateResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRestoreCertificateRequest(string vaultBaseUrl, byte[] certificateBundleBackup)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/certificates/restore", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CertificateRestoreParameters(certificateBundleBackup);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateBundleBackup"> The backup blob associated with a certificate bundle. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> RestoreCertificateAsync(string vaultBaseUrl, byte[] certificateBundleBackup, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateBundleBackup == null)
+            {
+                throw new ArgumentNullException(nameof(certificateBundleBackup));
+            }
+
+            using var message = CreateRestoreCertificateRequest(vaultBaseUrl, certificateBundleBackup);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateBundleBackup"> The backup blob associated with a certificate bundle. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> RestoreCertificate(string vaultBaseUrl, byte[] certificateBundleBackup, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateBundleBackup == null)
+            {
+                throw new ArgumentNullException(nameof(certificateBundleBackup));
+            }
+
+            using var message = CreateRestoreCertificateRequest(vaultBaseUrl, certificateBundleBackup);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDeletedCertificatesRequest(string vaultBaseUrl, int? maxresults, bool? includePending)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/deletedcertificates", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (includePending != null)
+            {
+                uri.AppendQuery("includePending", includePending.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DeletedCertificateListResult>> GetDeletedCertificatesAsync(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetDeletedCertificatesRequest(vaultBaseUrl, maxresults, includePending);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DeletedCertificateListResult> GetDeletedCertificates(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetDeletedCertificatesRequest(vaultBaseUrl, maxresults, includePending);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/deletedcertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DeletedCertificateBundle>> GetDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DeletedCertificateBundle> GetDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePurgeDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/deletedcertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify &apos;Purgeable&apos;. This operation requires the certificate/purge permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PurgeDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreatePurgeDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify &apos;Purgeable&apos;. This operation requires the certificate/purge permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PurgeDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreatePurgeDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRecoverDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/deletedcertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/recover", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate&apos;s attributes). This operation requires the certificates/recover permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the deleted certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateBundle>> RecoverDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateRecoverDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate&apos;s attributes). This operation requires the certificates/recover permission. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the deleted certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateBundle> RecoverDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateRecoverDeletedCertificateRequest(vaultBaseUrl, certificateName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateBundle value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateCreateKeyRequest(string vaultBaseUrl, string keyName, JsonWebKeyType kty, int? keySize, IEnumerable<JsonWebKeyOperation> keyOps, KeyAttributes keyAttributes, IDictionary<string, string> tags, JsonWebKeyCurveName? curve)
@@ -3109,2554 +5657,6 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetCertificatesRequest(string vaultBaseUrl, int? maxresults, bool? includePending)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates", false);
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (includePending != null)
-            {
-                uri.AppendQuery("includePending", includePending.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateListResult>> GetCertificatesAsync(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificatesRequest(vaultBaseUrl, maxresults, includePending);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateListResult> GetCertificates(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificatesRequest(vaultBaseUrl, maxresults, includePending);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteCertificateRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedCertificateBundle>> DeleteCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateDeleteCertificateRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedCertificateBundle> DeleteCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateDeleteCertificateRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateSetCertificateContactsRequest(string vaultBaseUrl, Contacts contacts)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/contacts", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(contacts);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="contacts"> The contacts for the key vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Contacts>> SetCertificateContactsAsync(string vaultBaseUrl, Contacts contacts, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (contacts == null)
-            {
-                throw new ArgumentNullException(nameof(contacts));
-            }
-
-            using var message = CreateSetCertificateContactsRequest(vaultBaseUrl, contacts);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="contacts"> The contacts for the key vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Contacts> SetCertificateContacts(string vaultBaseUrl, Contacts contacts, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (contacts == null)
-            {
-                throw new ArgumentNullException(nameof(contacts));
-            }
-
-            using var message = CreateSetCertificateContactsRequest(vaultBaseUrl, contacts);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateContactsRequest(string vaultBaseUrl)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/contacts", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Contacts>> GetCertificateContactsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateContactsRequest(vaultBaseUrl);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Contacts> GetCertificateContacts(string vaultBaseUrl, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateContactsRequest(vaultBaseUrl);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteCertificateContactsRequest(string vaultBaseUrl)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/contacts", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Contacts>> DeleteCertificateContactsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateDeleteCertificateContactsRequest(vaultBaseUrl);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Contacts> DeleteCertificateContacts(string vaultBaseUrl, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateDeleteCertificateContactsRequest(vaultBaseUrl);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Contacts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Contacts.DeserializeContacts(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateIssuersRequest(string vaultBaseUrl, int? maxresults)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/issuers", false);
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateIssuerListResult>> GetCertificateIssuersAsync(string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateIssuersRequest(vaultBaseUrl, maxresults);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateIssuerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateIssuerListResult> GetCertificateIssuers(string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateIssuersRequest(vaultBaseUrl, maxresults);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateIssuerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateSetCertificateIssuerRequest(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials, OrganizationDetails organizationDetails, IssuerAttributes attributes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/issuers/", false);
-            uri.AppendPath(issuerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateIssuerSetParameters(provider, credentials, organizationDetails, attributes);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="provider"> The issuer provider. </param>
-        /// <param name="credentials"> The credentials to be used for the issuer. </param>
-        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
-        /// <param name="attributes"> Attributes of the issuer object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IssuerBundle>> SetCertificateIssuerAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
-            using var message = CreateSetCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="provider"> The issuer provider. </param>
-        /// <param name="credentials"> The credentials to be used for the issuer. </param>
-        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
-        /// <param name="attributes"> Attributes of the issuer object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IssuerBundle> SetCertificateIssuer(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-            if (provider == null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
-            using var message = CreateSetCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateCertificateIssuerRequest(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials, OrganizationDetails organizationDetails, IssuerAttributes attributes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/issuers/", false);
-            uri.AppendPath(issuerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateIssuerUpdateParameters(provider, credentials, organizationDetails, attributes);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires the certificates/setissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="provider"> The issuer provider. </param>
-        /// <param name="credentials"> The credentials to be used for the issuer. </param>
-        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
-        /// <param name="attributes"> Attributes of the issuer object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IssuerBundle>> UpdateCertificateIssuerAsync(string vaultBaseUrl, string issuerName, string provider = null, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateUpdateCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires the certificates/setissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="provider"> The issuer provider. </param>
-        /// <param name="credentials"> The credentials to be used for the issuer. </param>
-        /// <param name="organizationDetails"> Details of the organization as provided to the issuer. </param>
-        /// <param name="attributes"> Attributes of the issuer object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IssuerBundle> UpdateCertificateIssuer(string vaultBaseUrl, string issuerName, string provider = null, IssuerCredentials credentials = null, OrganizationDetails organizationDetails = null, IssuerAttributes attributes = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateUpdateCertificateIssuerRequest(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateIssuerRequest(string vaultBaseUrl, string issuerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/issuers/", false);
-            uri.AppendPath(issuerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IssuerBundle>> GetCertificateIssuerAsync(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateGetCertificateIssuerRequest(vaultBaseUrl, issuerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IssuerBundle> GetCertificateIssuer(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateGetCertificateIssuerRequest(vaultBaseUrl, issuerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteCertificateIssuerRequest(string vaultBaseUrl, string issuerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/issuers/", false);
-            uri.AppendPath(issuerName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires the certificates/manageissuers/deleteissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IssuerBundle>> DeleteCertificateIssuerAsync(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateDeleteCertificateIssuerRequest(vaultBaseUrl, issuerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires the certificates/manageissuers/deleteissuers permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="issuerName"> The name of the issuer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IssuerBundle> DeleteCertificateIssuer(string vaultBaseUrl, string issuerName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (issuerName == null)
-            {
-                throw new ArgumentNullException(nameof(issuerName));
-            }
-
-            using var message = CreateDeleteCertificateIssuerRequest(vaultBaseUrl, issuerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IssuerBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IssuerBundle.DeserializeIssuerBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateCertificateRequest(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/create", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateCreateParameters(certificatePolicy, certificateAttributes, tags);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> If this is the first version, the certificate resource is created. This operation requires the certificates/create permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateOperation>> CreateCertificateAsync(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateCreateCertificateRequest(vaultBaseUrl, certificateName, certificatePolicy, certificateAttributes, tags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        CertificateOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> If this is the first version, the certificate resource is created. This operation requires the certificates/create permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateOperation> CreateCertificate(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateCreateCertificateRequest(vaultBaseUrl, certificateName, certificatePolicy, certificateAttributes, tags);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    {
-                        CertificateOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateImportCertificateRequest(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/import", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateImportParameters(base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM file must contain the key as well as x509 certificates. This operation requires the certificates/import permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="base64EncodedCertificate"> Base64 encoded representation of the certificate object to import. This certificate needs to contain the private key. </param>
-        /// <param name="password"> If the private key in base64EncodedCertificate is encrypted, the password used for encryption. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> ImportCertificateAsync(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = null, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (base64EncodedCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(base64EncodedCertificate));
-            }
-
-            using var message = CreateImportCertificateRequest(vaultBaseUrl, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM file must contain the key as well as x509 certificates. This operation requires the certificates/import permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="base64EncodedCertificate"> Base64 encoded representation of the certificate object to import. This certificate needs to contain the private key. </param>
-        /// <param name="password"> If the private key in base64EncodedCertificate is encrypted, the password used for encryption. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> ImportCertificate(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = null, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (base64EncodedCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(base64EncodedCertificate));
-            }
-
-            using var message = CreateImportCertificateRequest(vaultBaseUrl, certificateName, base64EncodedCertificate, password, certificatePolicy, certificateAttributes, tags);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateVersionsRequest(string vaultBaseUrl, string certificateName, int? maxresults)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/versions", false);
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateListResult>> GetCertificateVersionsAsync(string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateVersionsRequest(vaultBaseUrl, certificateName, maxresults);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateListResult> GetCertificateVersions(string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateVersionsRequest(vaultBaseUrl, certificateName, maxresults);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificatePolicyRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/policy", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in a given key vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificatePolicy>> GetCertificatePolicyAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificatePolicyRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificatePolicy value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in a given key vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificatePolicy> GetCertificatePolicy(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificatePolicyRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificatePolicy value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateCertificatePolicyRequest(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/policy", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificatePolicy);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
-        /// <param name="certificatePolicy"> The policy for the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificatePolicy>> UpdateCertificatePolicyAsync(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificatePolicy == null)
-            {
-                throw new ArgumentNullException(nameof(certificatePolicy));
-            }
-
-            using var message = CreateUpdateCertificatePolicyRequest(vaultBaseUrl, certificateName, certificatePolicy);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificatePolicy value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
-        /// <param name="certificatePolicy"> The policy for the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificatePolicy> UpdateCertificatePolicy(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificatePolicy == null)
-            {
-                throw new ArgumentNullException(nameof(certificatePolicy));
-            }
-
-            using var message = CreateUpdateCertificatePolicyRequest(vaultBaseUrl, certificateName, certificatePolicy);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificatePolicy value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificatePolicy.DeserializeCertificatePolicy(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateCertificateRequest(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(certificateVersion, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateUpdateParameters(certificatePolicy, certificateAttributes, tags);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate&apos;s attributes. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given key vault. </param>
-        /// <param name="certificateVersion"> The version of the certificate. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> UpdateCertificateAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateVersion == null)
-            {
-                throw new ArgumentNullException(nameof(certificateVersion));
-            }
-
-            using var message = CreateUpdateCertificateRequest(vaultBaseUrl, certificateName, certificateVersion, certificatePolicy, certificateAttributes, tags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate&apos;s attributes. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given key vault. </param>
-        /// <param name="certificateVersion"> The version of the certificate. </param>
-        /// <param name="certificatePolicy"> The management policy for the certificate. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> UpdateCertificate(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = null, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateVersion == null)
-            {
-                throw new ArgumentNullException(nameof(certificateVersion));
-            }
-
-            using var message = CreateUpdateCertificateRequest(vaultBaseUrl, certificateName, certificateVersion, certificatePolicy, certificateAttributes, tags);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateRequest(string vaultBaseUrl, string certificateName, string certificateVersion)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(certificateVersion, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Gets information about a specific certificate. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
-        /// <param name="certificateVersion"> The version of the certificate. This URI fragment is optional. If not specified, the latest version of the certificate is returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> GetCertificateAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateVersion == null)
-            {
-                throw new ArgumentNullException(nameof(certificateVersion));
-            }
-
-            using var message = CreateGetCertificateRequest(vaultBaseUrl, certificateName, certificateVersion);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets information about a specific certificate. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate in the given vault. </param>
-        /// <param name="certificateVersion"> The version of the certificate. This URI fragment is optional. If not specified, the latest version of the certificate is returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> GetCertificate(string vaultBaseUrl, string certificateName, string certificateVersion, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateVersion == null)
-            {
-                throw new ArgumentNullException(nameof(certificateVersion));
-            }
-
-            using var message = CreateGetCertificateRequest(vaultBaseUrl, certificateName, certificateVersion);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateCertificateOperationRequest(string vaultBaseUrl, string certificateName, bool cancellationRequested)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateOperationUpdateParameter(cancellationRequested);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationRequested"> Indicates if cancellation was requested on the certificate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateOperation>> UpdateCertificateOperationAsync(string vaultBaseUrl, string certificateName, bool cancellationRequested, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateUpdateCertificateOperationRequest(vaultBaseUrl, certificateName, cancellationRequested);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationRequested"> Indicates if cancellation was requested on the certificate operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateOperation> UpdateCertificateOperation(string vaultBaseUrl, string certificateName, bool cancellationRequested, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateUpdateCertificateOperationRequest(vaultBaseUrl, certificateName, cancellationRequested);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateOperationRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateOperation>> GetCertificateOperationAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateOperationRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateOperation> GetCertificateOperation(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateOperationRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteCertificateOperationRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no longer created. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateOperation>> DeleteCertificateOperationAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateDeleteCertificateOperationRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no longer created. This operation requires the certificates/update permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateOperation> DeleteCertificateOperation(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateDeleteCertificateOperationRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateOperation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateOperation.DeserializeCertificateOperation(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateMergeCertificateRequest(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes, IDictionary<string, string> tags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/pending/merge", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateMergeParameters(x509Certificates.ToList(), certificateAttributes, tags);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available in the service. This operation requires the certificates/create permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="x509Certificates"> The certificate or the certificate chain to merge. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> MergeCertificateAsync(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (x509Certificates == null)
-            {
-                throw new ArgumentNullException(nameof(x509Certificates));
-            }
-
-            using var message = CreateMergeCertificateRequest(vaultBaseUrl, certificateName, x509Certificates, certificateAttributes, tags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available in the service. This operation requires the certificates/create permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="x509Certificates"> The certificate or the certificate chain to merge. </param>
-        /// <param name="certificateAttributes"> The attributes of the certificate (optional). </param>
-        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> MergeCertificate(string vaultBaseUrl, string certificateName, IEnumerable<byte[]> x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (x509Certificates == null)
-            {
-                throw new ArgumentNullException(nameof(x509Certificates));
-            }
-
-            using var message = CreateMergeCertificateRequest(vaultBaseUrl, certificateName, x509Certificates, certificateAttributes, tags);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateBackupCertificateRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded. This operation requires the certificates/backup permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<BackupCertificateResult>> BackupCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateBackupCertificateRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BackupCertificateResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BackupCertificateResult.DeserializeBackupCertificateResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded. This operation requires the certificates/backup permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BackupCertificateResult> BackupCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateBackupCertificateRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BackupCertificateResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BackupCertificateResult.DeserializeBackupCertificateResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateRestoreCertificateRequest(string vaultBaseUrl, byte[] certificateBundleBackup)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/certificates/restore", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new CertificateRestoreParameters(certificateBundleBackup);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateBundleBackup"> The backup blob associated with a certificate bundle. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> RestoreCertificateAsync(string vaultBaseUrl, byte[] certificateBundleBackup, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateBundleBackup == null)
-            {
-                throw new ArgumentNullException(nameof(certificateBundleBackup));
-            }
-
-            using var message = CreateRestoreCertificateRequest(vaultBaseUrl, certificateBundleBackup);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateBundleBackup"> The backup blob associated with a certificate bundle. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> RestoreCertificate(string vaultBaseUrl, byte[] certificateBundleBackup, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateBundleBackup == null)
-            {
-                throw new ArgumentNullException(nameof(certificateBundleBackup));
-            }
-
-            using var message = CreateRestoreCertificateRequest(vaultBaseUrl, certificateBundleBackup);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetDeletedCertificatesRequest(string vaultBaseUrl, int? maxresults, bool? includePending)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/deletedcertificates", false);
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (includePending != null)
-            {
-                uri.AppendQuery("includePending", includePending.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedCertificateListResult>> GetDeletedCertificatesAsync(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetDeletedCertificatesRequest(vaultBaseUrl, maxresults, includePending);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedCertificateListResult> GetDeletedCertificates(string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetDeletedCertificatesRequest(vaultBaseUrl, maxresults, includePending);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/deletedcertificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedCertificateBundle>> GetDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedCertificateBundle> GetDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateBundle.DeserializeDeletedCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreatePurgeDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/deletedcertificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify &apos;Purgeable&apos;. This operation requires the certificate/purge permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PurgeDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreatePurgeDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify &apos;Purgeable&apos;. This operation requires the certificate/purge permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PurgeDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreatePurgeDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateRecoverDeletedCertificateRequest(string vaultBaseUrl, string certificateName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/deletedcertificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/recover", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate&apos;s attributes). This operation requires the certificates/recover permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the deleted certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateBundle>> RecoverDeletedCertificateAsync(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateRecoverDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate&apos;s attributes). This operation requires the certificates/recover permission. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the deleted certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateBundle> RecoverDeletedCertificate(string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateRecoverDeletedCertificateRequest(vaultBaseUrl, certificateName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateBundle value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateBundle.DeserializeCertificateBundle(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetStorageAccountsRequest(string vaultBaseUrl, int? maxresults)
         {
             var message = _pipeline.CreateMessage();
@@ -7626,6 +7626,380 @@ namespace Azure.Security.KeyVault
             }
         }
 
+        internal HttpMessage CreateGetCertificatesNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults, bool? includePending)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateListResult>> GetCertificatesNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateListResult> GetCertificatesNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateIssuersNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateIssuerListResult>> GetCertificateIssuersNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateIssuersNextPageRequest(nextLink, vaultBaseUrl, maxresults);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateIssuerListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateIssuerListResult> GetCertificateIssuersNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetCertificateIssuersNextPageRequest(nextLink, vaultBaseUrl, maxresults);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateIssuerListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCertificateVersionsNextPageRequest(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<CertificateListResult>> GetCertificateVersionsNextPageAsync(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateVersionsNextPageRequest(nextLink, vaultBaseUrl, certificateName, maxresults);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="certificateName"> The name of the certificate. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CertificateListResult> GetCertificateVersionsNextPage(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+
+            using var message = CreateGetCertificateVersionsNextPageRequest(nextLink, vaultBaseUrl, certificateName, maxresults);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDeletedCertificatesNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults, bool? includePending)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DeletedCertificateListResult>> GetDeletedCertificatesNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetDeletedCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
+        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DeletedCertificateListResult> GetDeletedCertificatesNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreateGetDeletedCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeletedCertificateListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetKeyVersionsNextPageRequest(string nextLink, string vaultBaseUrl, string keyName, int? maxresults)
         {
             var message = _pipeline.CreateMessage();
@@ -8178,380 +8552,6 @@ namespace Azure.Security.KeyVault
                         else
                         {
                             value = DeletedSecretListResult.DeserializeDeletedSecretListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificatesNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults, bool? includePending)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateListResult>> GetCertificatesNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateListResult> GetCertificatesNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateIssuersNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateIssuerListResult>> GetCertificateIssuersNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateIssuersNextPageRequest(nextLink, vaultBaseUrl, maxresults);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateIssuerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation requires the certificates/manageissuers/getissuers permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateIssuerListResult> GetCertificateIssuersNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetCertificateIssuersNextPageRequest(nextLink, vaultBaseUrl, maxresults);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateIssuerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateIssuerListResult.DeserializeCertificateIssuerListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetCertificateVersionsNextPageRequest(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CertificateListResult>> GetCertificateVersionsNextPageAsync(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateVersionsNextPageRequest(nextLink, vaultBaseUrl, certificateName, maxresults);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="certificateName"> The name of the certificate. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CertificateListResult> GetCertificateVersionsNextPage(string nextLink, string vaultBaseUrl, string certificateName, int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-
-            using var message = CreateGetCertificateVersionsNextPageRequest(nextLink, vaultBaseUrl, certificateName, maxresults);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CertificateListResult.DeserializeCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetDeletedCertificatesNextPageRequest(string nextLink, string vaultBaseUrl, int? maxresults, bool? includePending)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedCertificateListResult>> GetDeletedCertificatesNextPageAsync(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetDeletedCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
-        /// <param name="includePending"> Specifies whether to include certificates which are not completely provisioned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedCertificateListResult> GetDeletedCertificatesNextPage(string nextLink, string vaultBaseUrl, int? maxresults = null, bool? includePending = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetDeletedCertificatesNextPageRequest(nextLink, vaultBaseUrl, maxresults, includePending);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeletedCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedCertificateListResult.DeserializeDeletedCertificateListResult(document.RootElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
