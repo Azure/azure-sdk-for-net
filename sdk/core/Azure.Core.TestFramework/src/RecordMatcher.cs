@@ -80,7 +80,7 @@ namespace Azure.Core.TestFramework
                     }
                 }
 
-                if (!AreUrisSame(recordRequestUri, uri))
+                if (!IsEquivalentUri(recordRequestUri, uri))
                 {
                     score++;
                 }
@@ -171,14 +171,11 @@ namespace Azure.Core.TestFramework
             IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
             CompareHeaderDictionaries(entry.Request.Headers, otherEntry.Request.Headers, VolatileHeaders) == 0;
 
-        private static bool AreUrisSame(string entryUri, string otherEntryUri) =>
+        protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
             // Some versions of .NET behave differently when calling new Uri("...")
             // so we'll normalize the recordings (which may have been against
             // a different .NET version) to be safe
             new Uri(entryUri).ToString() == new Uri(otherEntryUri).ToString();
-
-        protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
-            AreUrisSame(entryUri, otherEntryUri);
 
         protected virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
         {
@@ -213,7 +210,7 @@ namespace Azure.Core.TestFramework
                 builder.AppendLine($"Method doesn't match, request <{request.RequestMethod}> record <{bestScoreEntry.RequestMethod}>");
             }
 
-            if (!AreUrisSame(request.RequestUri, bestScoreEntry.RequestUri))
+            if (!IsEquivalentUri(request.RequestUri, bestScoreEntry.RequestUri))
             {
                 builder.AppendLine("Uri doesn't match:");
                 builder.AppendLine($"    request <{request.RequestUri}>");
