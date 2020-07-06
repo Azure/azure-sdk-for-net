@@ -75,8 +75,9 @@ namespace Azure.Tables.Tests
         {
             var expiry = DateTimeOffset.Now.AddDays(1);
             var permissions = TableAccountSasPermissions.All;
+            var resourceTypes = TableAccountSasResourceTypes.All;
 
-            var sas = service_Instrumented.GetSasBuilder(permissions, expiry);
+            var sas = service_Instrumented.GetSasBuilder(permissions, resourceTypes, expiry);
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));

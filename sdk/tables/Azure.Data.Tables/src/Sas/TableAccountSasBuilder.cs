@@ -18,11 +18,13 @@ namespace Azure.Data.Tables.Sas
         /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
         /// <param name="permissions">The permissions associated with the shared access signature.</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableAccountSasBuilder(TableAccountSasPermissions permissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
             ExpiresOn = expiresOn;
             SetPermissions(permissions);
+            ResourceTypes = resourceTypes;
         }
 
         /// <summary>
@@ -86,12 +88,6 @@ namespace Azure.Data.Tables.Sas
         public string Identifier { get; set; }
 
         /// <summary>
-        /// The services associated with the shared access signature. The
-        /// user is restricted to operations with the specified services.
-        /// </summary>
-        public TableAccountSasServices Services { get; set;}
-
-        /// <summary>
         /// The resource types associated with the shared access signature. The
         /// user is restricted to operations on the specified resources.
         /// </summary>
@@ -148,7 +144,7 @@ namespace Azure.Data.Tables.Sas
             var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
-                Services.ToPermissionsString(),
+                TableConstants.Sas.TableAccountServices.Table,
                 ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
@@ -159,7 +155,7 @@ namespace Azure.Data.Tables.Sas
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableAccountSasQueryParameters(
                 version: Version,
-                services: Services,
+                services: TableAccountSasServices.Tables,
                 resourceTypes: ResourceTypes,
                 protocol: Protocol,
                 startsOn: StartsOn,

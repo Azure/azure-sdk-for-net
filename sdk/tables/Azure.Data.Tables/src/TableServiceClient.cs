@@ -96,11 +96,12 @@ namespace Azure.Data.Tables
         /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current account.
         /// </summary>
         /// <param name="permissions"><see cref="TableAccountSasPermissions"/> containing the allowed permissions.</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
-        public virtual TableAccountSasBuilder GetSasBuilder(TableAccountSasPermissions permissions, DateTimeOffset expiresOn)
+        public virtual TableAccountSasBuilder GetSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(permissions, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
         }
 
         /// <summary>

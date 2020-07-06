@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,6 +25,75 @@ namespace Azure.Data.Tables.Tests
 
         public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
+
+        [Test]
+        public void ValidateAccountSasCredentialsWithPermissions()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+
+            // Build a shared access signature with only Delete permissions and access to all service resource types.
+
+            TableAccountSasBuilder sas = service.GetSasBuilder(TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string token = sas.Sign(credential);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = token
+            };
+
+            // Create the TableServiceClient using the SAS URI.
+
+            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are unable to create a table in the account with the SAS URI.
+            var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            Assert.That(async () => await sasAuthedService.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+
+            // Validate that we are able to create a table with full permissions.
+            Assert.That(async () => await service.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to delete a table in the account with the SAS URI.
+            Assert.That(async () => await sasAuthedService.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+        }
+
+        [Test]
+        public void ValidateAccountSasCredentialsWithResourceTypes()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+
+            // Build a shared access signature with all permissions and access to only Container resource types.
+
+            TableAccountSasBuilder sas = service.GetSasBuilder(TableAccountSasPermissions.All, TableAccountSasResourceTypes.Service, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string token = sas.Sign(credential);
+
+            // Build a SAS URI
+            UriBuilder sasUri = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = token
+            };
+
+            // Create the TableServiceClient using the SAS URI.
+
+            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are unable to create a table in the account with the SAS URI.
+            var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            Assert.That(async () => await sasAuthedService.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+
+            // Validate that we are able to create a table with full accessibility.
+            Assert.That(async () => await service.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to get table service properties with the SAS URI.
+            Assert.That(async () => await sasAuthedService.GetPropertiesAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to delete a table in the account with full accessibility.
+            Assert.That(async () => await service.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+        }
 
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
