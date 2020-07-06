@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:FormRecognizerSample1CreateClient
+            #region Snippet:FormRecognizerSampleCreateClient
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream).WaitForCompletionAsync();
 
                 // To see the list of the supported fields returned by service and its corresponding types, consult:
                 // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
