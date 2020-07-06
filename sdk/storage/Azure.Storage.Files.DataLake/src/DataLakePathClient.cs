@@ -2406,6 +2406,7 @@ namespace Azure.Storage.Files.DataLake
                     try
                     {
                         Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
+                        string firstFailedContiuationToken = null;
                         string lastContinuationToken = null;
                         int directoriesSuccessfulCount = 0;
                         int filesSuccessfulCount = 0;
@@ -2442,6 +2443,12 @@ namespace Azure.Storage.Files.DataLake
                                 directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
+                                if (options.ContinueOnFailure &&
+                                    string.IsNullOrEmpty(firstFailedContiuationToken) &&
+                                    (currentFailureCount > 0))
+                                {
+                                    firstFailedContiuationToken = continuationToken;
+                                }
                                 if (progressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries
@@ -2452,22 +2459,22 @@ namespace Azure.Storage.Files.DataLake
                                             ErrorMessage = failedEntry.ErrorMessage,
                                         }).ToList();
                                     progressHandler.Report(Response.FromValue(new AccessControlChanges()
-                                    {
-                                        BatchCounters = new AccessControlChangeCounters()
                                         {
-                                            ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
-                                            ChangedFilesCount = currentFilesSuccessfulCount,
-                                            FailedChangesCount = currentFailureCount,
+                                            BatchCounters = new AccessControlChangeCounters()
+                                            {
+                                                ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                                ChangedFilesCount = currentFilesSuccessfulCount,
+                                                FailedChangesCount = currentFailureCount,
+                                            },
+                                            AggregateCounters = new AccessControlChangeCounters()
+                                            {
+                                                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                                ChangedFilesCount = filesSuccessfulCount,
+                                                FailedChangesCount = failureCount,
+                                            },
+                                            BatchFailures = failedEntries,
+                                            ContinuationToken = lastContinuationToken,
                                         },
-                                        AggregateCounters = new AccessControlChangeCounters()
-                                        {
-                                            ChangedDirectoriesCount = directoriesSuccessfulCount,
-                                            ChangedFilesCount = filesSuccessfulCount,
-                                            FailedChangesCount = failureCount,
-                                        },
-                                        BatchFailures = failedEntries,
-                                        ContinuationToken = lastContinuationToken,
-                                    },
                                         jsonResponse.GetRawResponse()));
                                 }
                             }
@@ -2476,6 +2483,16 @@ namespace Azure.Storage.Files.DataLake
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
+                        // When ContinueOnFailure is enabled, set the continuation token
+                        // to the continuation token that was seen on the first failure request
+                        if (!string.IsNullOrEmpty(firstFailedContiuationToken))
+                        {
+                            continuationToken = firstFailedContiuationToken;
+                        }
+                        else
+                        {
+                            continuationToken = failureCount > 0 ? lastContinuationToken : continuationToken;
+                        }
                         return Response.FromValue(new AccessControlChangeResult()
                         {
                             Counters = new AccessControlChangeCounters()
@@ -2484,7 +2501,7 @@ namespace Azure.Storage.Files.DataLake
                                 ChangedFilesCount = filesSuccessfulCount,
                                 FailedChangesCount = failureCount,
                             },
-                            ContinuationToken = failureCount > 0 ? lastContinuationToken : continuationToken,
+                            ContinuationToken = continuationToken,
                         },
                             jsonResponse.GetRawResponse());
                     }
