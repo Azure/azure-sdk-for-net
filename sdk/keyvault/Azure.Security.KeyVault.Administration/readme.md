@@ -2,7 +2,7 @@
 
 Azure Key Vault is a cloud service for securely storing and accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, or certificates. A vault is a logical group of secrets.
 
-The Azure Key Vault administration library clients supports administrative tasks such as full backup / restore and key level role based access control (RBAC).
+The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
 ## Getting started
 
@@ -10,7 +10,7 @@ The Azure Key Vault administration library clients supports administrative tasks
 Install the Azure Key Vault administration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Administration
+Install-Package Azure.Security.KeyVault.Administration --version 4.1.0-preview.1
 ```
 
 ### Prerequisites
@@ -81,17 +81,16 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 #### Create KeyVaultAccessControlClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** with the above returned URI, you can create the [KeyVaultAccessControlClient][rbac_client]:
 
-```C# Snippet:CreateKeyClient
+```C# Snippet:CreateKeyVaultAccessControlClient
 // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-var client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Retrieve all the role definitions.
 List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
 
 // Retrieve all the role assignments.
-List<RoleDefinition> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
-
+List<RoleAssignment> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
 ```
 
 ## Key concepts
@@ -105,7 +104,7 @@ RoleDefinitions can be listed and specified as part of a `RoleAssignment`.
 A `RoleAssignment` is the association of a RoleDefinition to a service principal. They can be created, listed, fetched individually, and deleted.
 
 ### KeyVaultAccessControlClient
-A `KeyVaultAccessControlClient` provides both synchronous and asynchronous operations allowing for listing management of `RoleDefinition` and `RoleAssignment` objects.
+A `KeyVaultAccessControlClient` provides both synchronous and asynchronous operations allowing for management of `RoleDefinition` and `RoleAssignment` objects.
 
 ## Examples
 The Azure.Security.KeyVault.Administration package supports synchronous and asynchronous APIs.
@@ -116,9 +115,9 @@ The following section provides several code snippets using the `client` [created
 List the role definitions available for assignment.
 
 ```C# Snippet:GetRoleDefinitions
-Pageable<RoleDefinition> allDefinitions = Client.GetRoleDefinitions(RoleAssignmentScope.Global);
+Pageable<RoleDefinition> allDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global);
 
-foreach (KeyProperties roleDefinition in allDefinitions)
+foreach (RoleDefinition roleDefinition in allDefinitions)
 {
     Console.WriteLine(roleDefinition.Id);
     Console.WriteLine(roleDefinition.RoleName);
@@ -131,14 +130,13 @@ foreach (KeyProperties roleDefinition in allDefinitions)
 Assign a role to a service principal. This will require a role definition id from the list retrieved in the [above snippet](#list-the-role-definitions) and the principal object id retrieved in the [Create/Get credentials](#create/get-credentials)
 
 ```C# Snippet:CreateRoleAssignment
+// Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
+string definitionIdToAssign = roleDefinitionId;
 
-// Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
-var definitionIdToAssign = <roleDefinitionId>;
+// Replace objectId with the service principal object id from the Create/Get credentials section above
+string servicePrincipalObjectId = objectId;
 
-// Replace <objectId> with the service principal object id from the Create/Get credentials section above
-var servicePrincipalObjectId = <objectId>;
-
-var properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
+RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
 RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
 
 Console.WriteLine(createdAssignment.Name);
@@ -151,12 +149,11 @@ Console.WriteLine(fetchedAssignment.Name);
 Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
 Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-RoleAssignment deletedAssignment = Client.DeleteRoleAssignment(RoleAssignmentScope.Global, assignment.Name);
+RoleAssignment deletedAssignment = client.DeleteRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
 
 Console.WriteLine(deletedAssignment.Name);
 Console.WriteLine(deletedAssignment.Properties.PrincipalId);
 Console.WriteLine(deletedAssignment.Properties.RoleDefinitionId);
-
 ```
 
 ## Troubleshooting
@@ -168,7 +165,7 @@ For example, if you try to retrieve a role assignment that doesn't exist in your
 ```C# Snippet:RoleAssignmentNotFound
 try
 {
-    RoleAssignment roleAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, "invalid-name");;
+    RoleAssignment roleAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, "invalid-name");
 }
 catch (RequestFailedException ex)
 {
