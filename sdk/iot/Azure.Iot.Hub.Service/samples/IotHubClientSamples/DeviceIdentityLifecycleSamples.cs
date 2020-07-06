@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Samples
     {
         public readonly IoTHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
-        public readonly Random Random = new Random();
+        public static readonly Random Random = new Random();
 
         public DeviceIdentityLifecycleSamples(IoTHubServiceClient client)
         {

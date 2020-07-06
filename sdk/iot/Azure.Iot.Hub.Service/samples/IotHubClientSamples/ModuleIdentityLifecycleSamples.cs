@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Samples
     {
         public readonly IoTHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
-        public readonly Random Random = new Random();
+        public static readonly Random Random = new Random();
 
         public ModuleIdentityLifecycleSamples(IoTHubServiceClient client)
         {
@@ -196,9 +199,9 @@ namespace Azure.Iot.Hub.Service.Samples
                 Response<ModuleIdentity> response = await IoTHubServiceClient.Modules.CreateOrUpdateIdentityAsync(moduleIdentity);
 
                 ModuleIdentity updatedModule = response.Value;
-                
+
                 SampleLogger.PrintSuccess($"Successfully updated module identity: DeviceId: '{updatedModule.DeviceId}', ModuleId: '{updatedModule.ModuleId}', ManagedBy: '{updatedModule.ManagedBy}', ETag: '{updatedModule.Etag}'");
-                
+
                 return updatedModule;
             }
             catch (Exception ex)
@@ -260,7 +263,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 TwinData updatedTwin = response.Value;
 
-                var userPropValue = (string) updatedTwin.Properties.Desired
+                var userPropValue = (string)updatedTwin.Properties.Desired
                     .Where(p => p.Key == userPropName)
                     .First()
                     .Value;

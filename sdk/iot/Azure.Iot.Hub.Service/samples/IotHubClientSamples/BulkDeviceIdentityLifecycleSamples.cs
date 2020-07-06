@@ -18,7 +18,7 @@ namespace Azure.Iot.Hub.Service.Samples
     {
         public readonly IoTHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
-        public readonly Random Random = new Random();
+        public static readonly Random Random = new Random();
 
         // Can be 1 to 100, configures how many devices to create/update/delete per service API call
         public const int BulkCount = 20;
@@ -44,19 +44,19 @@ namespace Azure.Iot.Hub.Service.Samples
             await CreateDeviceIdentitiesAsync(deviceIdentities);
 
             // Get the created devices from the service
-            IEnumerable<DeviceIdentity> createdIdentities = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray()).ConfigureAwait(false);
+            IEnumerable<DeviceIdentity> createdIdentities = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
 
             // Update multiple DeviceIdentities.
             await UpdateDeviceIdentitiesAsync(createdIdentities);
 
             // Get the updated devices from the service
-            IEnumerable<TwinData> deviceTwins = await GetDeviceTwins(deviceIdentities.Select(identity => identity.DeviceId).ToArray()).ConfigureAwait(false);
+            IEnumerable<TwinData> deviceTwins = await GetDeviceTwins(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
 
             // Update Device Twin.
             await UpdateDeviceTwinsAsync(deviceTwins);
 
             // Get the updated devices from the service
-            IEnumerable<DeviceIdentity> identitiesBeforeDelete = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray()).ConfigureAwait(false);
+            IEnumerable<DeviceIdentity> identitiesBeforeDelete = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
 
             // Delete the device.
             await DeleteDeviceIdentitiesAsync(identitiesBeforeDelete);
@@ -225,7 +225,7 @@ namespace Azure.Iot.Hub.Service.Samples
             List<DeviceIdentity> retrievedIdentities = new List<DeviceIdentity>();
             for (int deviceIndex = 0; deviceIndex < BulkCount; deviceIndex++)
             {
-                retrievedIdentities.Add(await IoTHubServiceClient.Devices.GetIdentityAsync(deviceIds[deviceIndex]).ConfigureAwait(false));
+                retrievedIdentities.Add(await IoTHubServiceClient.Devices.GetIdentityAsync(deviceIds[deviceIndex]));
             }
 
             return retrievedIdentities;
@@ -239,7 +239,7 @@ namespace Azure.Iot.Hub.Service.Samples
             List<TwinData> retrievedTwins = new List<TwinData>();
             for (int deviceIndex = 0; deviceIndex < BulkCount; deviceIndex++)
             {
-                retrievedTwins.Add(await IoTHubServiceClient.Devices.GetTwinAsync(deviceIds[deviceIndex]).ConfigureAwait(false));
+                retrievedTwins.Add(await IoTHubServiceClient.Devices.GetTwinAsync(deviceIds[deviceIndex]));
             }
 
             return retrievedTwins;
