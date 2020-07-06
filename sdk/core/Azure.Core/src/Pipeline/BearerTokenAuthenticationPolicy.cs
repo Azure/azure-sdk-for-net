@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
 
             _credential = credential;
             _scopes = scopes.ToArray();
-            _accessTokenCache = new AccessTokenCache(_credential.RefreshOffset.Offset);
+            _accessTokenCache = new AccessTokenCache(_credential.RefreshOptions.Offset);
         }
 
         /// <inheritdoc />

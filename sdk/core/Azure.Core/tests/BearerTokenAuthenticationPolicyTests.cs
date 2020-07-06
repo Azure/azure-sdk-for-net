@@ -309,7 +309,7 @@ namespace Azure.Core.Tests
 
             public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync, TimeSpan tokenRefreshOffset)
             {
-                RefreshOffset = new TokenRefreshOptions(tokenRefreshOffset);
+                RefreshOptions = new TokenRefreshOptions(tokenRefreshOffset);
 
                 if (isAsync)
                 {
@@ -323,7 +323,7 @@ namespace Azure.Core.Tests
                 }
             }
 
-            public override TokenRefreshOptions RefreshOffset { get; }
+            public override TokenRefreshOptions RefreshOptions { get; }
 
             private readonly Func<TokenRequestContext, CancellationToken, ValueTask<AccessToken>> _getTokenAsyncHandler;
             private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _getTokenHandler;
