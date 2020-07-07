@@ -5,7 +5,8 @@ namespace Azure.Messaging.EventGrid
         protected EventGridClient() { }
         public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public EventGridClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options) { }
-        public EventGridClient(System.Uri endpoint, Azure.Messaging.EventGrid.SharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options = null) { }
+        public EventGridClient(System.Uri endpoint, Azure.Messaging.EventGrid.SharedAccessSignatureCredential credential) { }
+        public EventGridClient(System.Uri endpoint, Azure.Messaging.EventGrid.SharedAccessSignatureCredential credential, Azure.Messaging.EventGrid.EventGridClientOptions options) { }
         public string BuildSharedAccessSignature(System.DateTimeOffset expirationUtc) { throw null; }
         public virtual Azure.Response PublishCloudEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishCloudEventsAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Models.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

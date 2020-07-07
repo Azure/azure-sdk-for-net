@@ -34,17 +34,25 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
-        /// <param name="endpoint">topic endpoint</param>
-        /// <param name="credential">used to connect to Azure</param>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new EventGridClientOptions())
         {
         }
 
+        /// <summary>Initalizes an instance of EventGridClient</summary>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential)
+            : this(endpoint, credential, new EventGridClientOptions())
+        {
+        }
+
         /// <summary>Initalizes an instance of the<see cref="EventGridClient"/> class</summary>
-        /// <param name="endpoint">topic endpoint</param>
-        /// <param name="credential">used to connect to Azure</param>
-        /// <param name="options">configuring options</param>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        /// <param name="options">Configuring options</param>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -60,10 +68,10 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Initializes a new instance of the <see cref="EventGridClient"/> class.
         /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="credential"></param>
-        /// <param name="options"></param>
-        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options = default)
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        /// <param name="options">Configuring options</param>
+        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridClientOptions();
@@ -201,7 +209,7 @@ namespace Azure.Messaging.EventGrid
 
             if (_key == null)
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException("Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
             }
 
             var uriBuilder = new RequestUriBuilder();
