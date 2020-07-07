@@ -8,7 +8,8 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Core.Pipeline;
-using System.Text;
+using Azure.Messaging.ServiceBus.Plugins;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -35,6 +36,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
+        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -42,12 +44,14 @@ namespace Azure.Messaging.ServiceBus
         internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string entityPath,
             ServiceBusConnection connection,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
+                plugins: plugins,
                 options: options);
             try
             {
@@ -68,12 +72,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
+        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
+            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options) :
-            base(connection, entityPath, true, options?.ToReceiverOptions(), options?.SessionId)
+            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), options?.SessionId)
         {
         }
 
@@ -92,10 +98,10 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The session state as byte array.</returns>
         public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
                 sessionId: SessionId);
             scope.Start();
@@ -131,10 +137,10 @@ namespace Azure.Messaging.ServiceBus
             byte[] sessionState,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
                 sessionId: SessionId);
             scope.Start();
@@ -171,10 +177,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
                 sessionId: SessionId);
             scope.Start();

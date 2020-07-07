@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
         private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
 
-        public DataLakeUriBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public DataLakeUriBuilderTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

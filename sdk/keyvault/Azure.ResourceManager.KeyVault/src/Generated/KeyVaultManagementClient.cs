@@ -53,28 +53,16 @@ namespace Azure.ResourceManager.KeyVault
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of VaultsClient. </summary>
-        public virtual VaultsClient GetVaultsClient()
-        {
-            return new VaultsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of VaultsOperations. </summary>
+        public virtual VaultsOperations Vaults => new VaultsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateEndpointConnectionsClient. </summary>
-        public virtual PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient()
-        {
-            return new PrivateEndpointConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
+        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of PrivateLinkResourcesClient. </summary>
-        public virtual PrivateLinkResourcesClient GetPrivateLinkResourcesClient()
-        {
-            return new PrivateLinkResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
+        public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
     }
 }

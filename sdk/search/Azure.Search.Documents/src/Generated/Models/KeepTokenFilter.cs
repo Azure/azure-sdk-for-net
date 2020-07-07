@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(keepWords));
             }
 
-            KeepWords = keepWords.ToArray();
+            KeepWords = keepWords.ToList();
             ODataType = "#Microsoft.Azure.Search.KeepTokenFilter";
         }
 

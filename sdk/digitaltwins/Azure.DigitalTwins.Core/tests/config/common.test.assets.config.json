@@ -1,8 +1,0 @@
-﻿{
-    "FloorModelId": "dtmi:example:Floor;1",
-    "RoomModelId": "dtmi:example:Room;1",
-    "RoomWithWifiModelId": "dtmi:example:Room;1",
-    "HvacModelId": "dtmi:example:Hvac;1",
-    "BuildingModelId": "dtmi:example:Building;1",
-    "WardModelId": "dtmi:example:Ward;1"
-}

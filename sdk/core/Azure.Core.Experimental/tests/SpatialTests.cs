@@ -35,14 +35,14 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtrip<PointGeometry>(input);
             Assert.AreEqual(P(0), point.Position);
-            Assert.AreEqual(P(1).Longitude, point.Properties.BoundingBox.Value.West);
-            Assert.AreEqual(P(1).Latitude, point.Properties.BoundingBox.Value.South);
+            Assert.AreEqual(P(1).Longitude, point.BoundingBox.Value.West);
+            Assert.AreEqual(P(1).Latitude, point.BoundingBox.Value.South);
 
-            Assert.AreEqual(P(2).Longitude, point.Properties.BoundingBox.Value.East);
-            Assert.AreEqual(P(2).Latitude, point.Properties.BoundingBox.Value.North);
+            Assert.AreEqual(P(2).Longitude, point.BoundingBox.Value.East);
+            Assert.AreEqual(P(2).Latitude, point.BoundingBox.Value.North);
 
-            Assert.AreEqual(P(1).Altitude, point.Properties.BoundingBox.Value.MinAltitude);
-            Assert.AreEqual(P(2).Altitude, point.Properties.BoundingBox.Value.MaxAltitude);
+            Assert.AreEqual(P(1).Altitude, point.BoundingBox.Value.MinAltitude);
+            Assert.AreEqual(P(2).Altitude, point.BoundingBox.Value.MaxAltitude);
         }
 
         [Test]
@@ -60,13 +60,13 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtrip<PointGeometry>(input);
             Assert.AreEqual(P(0), point.Position);
-            Assert.AreEqual(1, point.Properties.AdditionalProperties["additionalNumber"]);
-            Assert.AreEqual(2.2, point.Properties.AdditionalProperties["additionalNumber2"]);
-            Assert.AreEqual(9999999999999999999L, point.Properties.AdditionalProperties["additionalNumber3"]);
-            Assert.AreEqual("hello", point.Properties.AdditionalProperties["additionalString"]);
-            Assert.AreEqual(null, point.Properties.AdditionalProperties["additionalNull"]);
-            Assert.AreEqual(true, point.Properties.AdditionalProperties["additionalBool"]);
-            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.Properties.AdditionalProperties["additionalArray"]);
+            Assert.AreEqual(1, point.AdditionalProperties["additionalNumber"]);
+            Assert.AreEqual(2.2, point.AdditionalProperties["additionalNumber2"]);
+            Assert.AreEqual(9999999999999999999L, point.AdditionalProperties["additionalNumber3"]);
+            Assert.AreEqual("hello", point.AdditionalProperties["additionalString"]);
+            Assert.AreEqual(null, point.AdditionalProperties["additionalNull"]);
+            Assert.AreEqual(true, point.AdditionalProperties["additionalBool"]);
+            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.AdditionalProperties["additionalArray"]);
         }
 
         [Test]

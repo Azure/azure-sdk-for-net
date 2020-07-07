@@ -27,12 +27,12 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableExecuteQueryDictionary()
         {
-            var entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
-            entitiesToInsert.AddRange(CreateTableEntities(PartitionKeyValue2, 1));
+            var entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate.AddRange(CreateTableEntities(PartitionKeyValue2, 1));
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var results = await client.QueryAsync(x => (string)x[TableConstants.PropertyNames.PartitionKey] == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -45,12 +45,12 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableExecuteQueryGeneric()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 1);
-            entitiesToInsert.AddRange(CreateComplexTableEntities(PartitionKeyValue2, 1));
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate.AddRange(CreateComplexTableEntities(PartitionKeyValue2, 1));
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -63,11 +63,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableFilterPredicate()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             // Filter before key predicate.
             var results = await client.QueryAsync<ComplexEntity>(ent => ent.RowKey != "0004" && ent.PartitionKey == PartitionKeyValue).ToEnumerableAsync().ConfigureAwait(false);
@@ -77,7 +77,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
                 Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
             }
-            Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count - 1));
+            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
 
             // Key predicate before filter.
 
@@ -88,17 +88,17 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
                 Assert.That(ent.RowKey, Is.Not.EqualTo("0004"));
             }
-            Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count - 1));
+            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
         }
 
         [Test]
         public async Task TableQueryableComplexFilter()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var results = await client.QueryAsync<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50)).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -113,11 +113,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableComplexFilterWithCreateFilter()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var filter = client.CreateFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
             var results = await client.QueryAsync<ComplexEntity>(filter).ToEnumerableAsync().ConfigureAwait(false);
@@ -133,11 +133,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableNestedParanthesis()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             // Complex nested query to return entity 2 and 4.
             var results = await client.QueryAsync<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) ||
@@ -155,23 +155,23 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableUnary()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             // Unary Not.
 
-            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && !(x.RowKey == entitiesToInsert[0].RowKey)).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && !(x.RowKey == entitiesToCreate[0].RowKey)).ToEnumerableAsync().ConfigureAwait(false);
 
             // Assert that all but one were returned
 
-            Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count - 1));
+            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
 
             foreach (var ent in results)
             {
-                Assert.That(ent.RowKey, Is.Not.EqualTo(entitiesToInsert[0].RowKey));
+                Assert.That(ent.RowKey, Is.Not.EqualTo(entitiesToCreate[0].RowKey));
             }
 
             // Unary +.
@@ -179,24 +179,24 @@ namespace Azure.Data.Tables.Tests
             results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && +x.Int32 < +5).ToEnumerableAsync().ConfigureAwait(false);
 
             // Assert that all were returned
-            Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count));
+            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
 
             // Unary -.
 
             results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.Int32 > -1).ToEnumerableAsync().ConfigureAwait(false);
 
             // Assert that all were returned
-            Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count));
+            Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
         }
 
         [Test]
         public async Task TableTakeWithContinuationTask()
         {
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             // Query the entities with a Take count to limit the number of responses
 
@@ -211,11 +211,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableMultipleTake()
         {
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 10);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 10);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
@@ -230,48 +230,48 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableDynamicTableEntityQuery()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 2);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             Func<string, string> identityFunc = (s) => s;
 
-            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == identityFunc(entitiesToInsert[1].RowKey)).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == identityFunc(entitiesToCreate[1].RowKey)).ToEnumerableAsync().ConfigureAwait(false);
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
             Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
-            Assert.That(entity.RowKey, Is.EqualTo(entitiesToInsert[1].RowKey));
+            Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
         }
 
         [Test]
         public async Task TableQueryableMultipleWhere()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 2);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == entitiesToInsert[1].RowKey).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == entitiesToCreate[1].RowKey).ToEnumerableAsync().ConfigureAwait(false);
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
             Assert.That(entity.PartitionKey, Is.EqualTo(PartitionKeyValue));
-            Assert.That(entity.RowKey, Is.EqualTo(entitiesToInsert[1].RowKey));
+            Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
 
         }
 
         [Test]
         public async Task TableQueryableEnumerateTwice()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 2);
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var results = await client.QueryAsync<ComplexEntity>(x => true).ToEnumerableAsync().ConfigureAwait(false);
 
@@ -301,14 +301,14 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableOnSupportedTypes()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
-            ComplexEntity thirdEntity = entitiesToInsert[2];
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
+            ComplexEntity thirdEntity = entitiesToCreate[2];
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
@@ -403,14 +403,14 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableWithDictionaryTypeOnSupportedTypes()
         {
-            var entitiesToInsert = CreateComplexTableEntities(PartitionKeyValue, 4);
-            ComplexEntity thirdEntity = entitiesToInsert[2];
+            var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
+            ComplexEntity thirdEntity = entitiesToCreate[2];
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
@@ -505,12 +505,12 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task TableQueryableWithInvalidQuery()
         {
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 1);
-            entitiesToInsert.AddRange(CreateCustomTableEntities(PartitionKeyValue2, 1));
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
+            entitiesToCreate.AddRange(CreateCustomTableEntities(PartitionKeyValue2, 1));
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
             var results = await client.QueryAsync<ComplexEntity>(ent => ent.PartitionKey == PartitionKeyValue && ent.PartitionKey == PartitionKeyValue2).ToEnumerableAsync().ConfigureAwait(false);
             Assert.That(results.Count, Is.Zero);

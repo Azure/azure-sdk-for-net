@@ -106,7 +106,7 @@ function Extract-PythonPkgProps ($pkgPath, $serviceName, $pkgName)
     {
         $setupLocation = $pkgPath.Replace('\','/')
         pushd $RepoRoot
-        $setupProps = (python -c "import scripts.devops_tasks.common_tasks; obj=scripts.devops_tasks.common_tasks.parse_setup('$setupLocation'); print('{0},{1}'.format(obj[0], obj[1]));") -split ","
+        $setupProps = (python -c "import sys; import os; sys.path.append(os.path.join('scripts', 'devops_tasks')); from common_tasks import parse_setup; obj=parse_setup('$setupLocation'); print('{0},{1}'.format(obj[0], obj[1]));") -split ","
         popd
         if (($setupProps -ne $null) -and ($setupProps[0] -eq $pkgName))
         {

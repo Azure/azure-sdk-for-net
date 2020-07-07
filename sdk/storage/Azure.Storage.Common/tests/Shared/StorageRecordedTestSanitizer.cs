@@ -131,5 +131,18 @@ namespace Azure.Storage.Test.Shared
             // If anything goes wrong, don't sanitize
             return body;
         }
+
+        public override string SanitizeVariable(string variableName, string environmentVariableValue) =>
+            variableName switch
+            {
+                "Storage_TestConfigDefault" => SanitizeConnectionString(environmentVariableValue),
+                _ => base.SanitizeVariable(variableName, environmentVariableValue)
+            };
+
+        private static string SanitizeConnectionString(string connectionString)
+        {
+            connectionString = connectionString.Replace("AccountKey=Sanitized", "AccountKey=Kg==;");
+            return connectionString;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="dataSources"> The datasources in the Search service. </param>
         internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSourceConnection> dataSources)
         {
-            DataSources = dataSources;
+            DataSources = dataSources ?? new List<SearchIndexerDataSourceConnection>();
         }
 
         /// <summary> The datasources in the Search service. </summary>

@@ -117,6 +117,164 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
         }
 
         /// <summary>
+        ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsBalancedIsCorrectWithOneProcessor()
+        {
+            const int NumberOfPartitions = 3;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+
+            // Ownership should start empty.
+
+            var completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+            Assert.That(completeOwnership.Count(), Is.EqualTo(0), "No partitions should be owned.");
+
+            // Start the load balancer so that it claims a random partition until none are left.
+
+            for (var index = 0; index < NumberOfPartitions; ++index)
+            {
+                await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+                Assert.That(loadBalancer.IsBalanced, Is.False, "The load balancer should not believe the state is balanced while partitions remain unclaimed.");
+            }
+
+            // The load balancer should not consider itself balanced until a cycle is run with no partitions claimed.  Run one additional
+            // cycle to satisfy that condition.
+
+            Assert.That(loadBalancer.IsBalanced, Is.False, "The load balancer should not believe the state is balanced until no partition is claimed during a cycle.");
+            await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+
+            // All partitions are owned by load balancer.
+
+            completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+
+            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns all partitions.");
+        }
+
+        /// <summary>
+        ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsBalancedIsCorrectWithMultipleProcessorsAndAnEventDistribution()
+        {
+            const int MinimumPartitionCount = 4;
+            const int NumberOfPartitions = 12;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
+
+            // Create partitions owned by a different load balancer.
+
+            var secondLoadBalancerId = Guid.NewGuid().ToString();
+            var secondLoadBalancerPartitions = Enumerable.Range(1, MinimumPartitionCount);
+
+            completeOwnership = completeOwnership
+                .Concat(CreatePartitionOwnership(secondLoadBalancerPartitions.Select(i => i.ToString()), secondLoadBalancerId));
+
+            // Create partitions owned by a different load balancer.
+
+            var thirdLoadBalancerId = Guid.NewGuid().ToString();
+            var thirdLoadBalancerPartitions = Enumerable.Range(secondLoadBalancerPartitions.Max() + 1, MinimumPartitionCount);
+
+            completeOwnership = completeOwnership
+                .Concat(CreatePartitionOwnership(thirdLoadBalancerPartitions.Select(i => i.ToString()), thirdLoadBalancerId));
+
+            // Seed the storageManager with all partitions.
+
+            await storageManager.ClaimOwnershipAsync(completeOwnership);
+
+            // Ensure that there is exactly the minimum number of partitions available to be owned.
+
+            var unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
+            Assert.That(unownedPartitions.Count(), Is.EqualTo(MinimumPartitionCount), "There should be exactly the balanced share of partitions left unowned.");
+
+            // Run load balancing cycles until the load balancer believes that the state is balanced or the minimum count is quadrupled.
+
+            var cycleCount = 0;
+
+            while ((!loadBalancer.IsBalanced) && (cycleCount < (MinimumPartitionCount * 4)))
+            {
+                await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+                ++cycleCount;
+            }
+
+            completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+            unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
+
+            Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
+            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
+            Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 1), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+        }
+
+        /// <summary>
+        ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsBalancedIsCorrectWithMultipleProcessorsAndAnUnevenDistribution()
+        {
+            const int MinimumPartitionCount = 4;
+            const int NumberOfPartitions = 13;
+
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
+            var loadBalancer = new PartitionLoadBalancer(storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+            var completeOwnership = Enumerable.Empty<EventProcessorPartitionOwnership>();
+
+            // Create partitions owned by a different load balancer.
+
+            var secondLoadBalancerId = Guid.NewGuid().ToString();
+            var secondLoadBalancerPartitions = Enumerable.Range(1, MinimumPartitionCount);
+
+            completeOwnership = completeOwnership
+                .Concat(CreatePartitionOwnership(secondLoadBalancerPartitions.Select(i => i.ToString()), secondLoadBalancerId));
+
+            // Create partitions owned by a different load balancer.
+
+            var thirdLoadBalancerId = Guid.NewGuid().ToString();
+            var thirdLoadBalancerPartitions = Enumerable.Range(secondLoadBalancerPartitions.Max() + 1, MinimumPartitionCount);
+
+            completeOwnership = completeOwnership
+                .Concat(CreatePartitionOwnership(thirdLoadBalancerPartitions.Select(i => i.ToString()), thirdLoadBalancerId));
+
+            // Seed the storageManager with all partitions.
+
+            await storageManager.ClaimOwnershipAsync(completeOwnership);
+
+            // Ensure that there is exactly one more than the minimum number of partitions available to be owned.
+
+            var unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
+            Assert.That(unownedPartitions.Count(), Is.EqualTo(MinimumPartitionCount + 1), $"There should be { MinimumPartitionCount + 1 } partitions left unowned.");
+
+            // Run load balancing cycles until the load balancer believes that the state is balanced or the minimum count is quadrupled.
+
+            var cycleCount = 0;
+
+            while ((!loadBalancer.IsBalanced) && (cycleCount < (MinimumPartitionCount * 4)))
+            {
+                await loadBalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
+                ++cycleCount;
+            }
+
+            completeOwnership = await storageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+            unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
+
+            Assert.That(unownedPartitions.Count(), Is.EqualTo(0), "There no partitions left unowned.");
+            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions), "All partitions should be owned.");
+            Assert.That(loadBalancer.IsBalanced, Is.True, "The load balancer should believe the state is balanced when it owns the correct number of partitions.");
+            Assert.That(cycleCount, Is.EqualTo(MinimumPartitionCount + 2), "The load balancer should have reached a balanced state once all partitions were owned and the next cycle claimed none.");
+        }
+
+        /// <summary>
         ///   Verifies that partitions ownership load balancing will direct a <see cref="PartitionLoadBalancer" /> to claim ownership of a claimable partition
         ///   when it owns exactly the calculated MinimumOwnedPartitionsCount.
         /// </summary>
@@ -124,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
         [Test]
         public async Task RunLoadBalancingAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
         {
-            const int MinimumpartitionCount = 4;
+            const int MinimumPartitionCount = 4;
             const int NumberOfPartitions = 13;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
@@ -133,27 +291,26 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
 
             // Create partitions owned by this load balancer.
 
-            var loadbalancer1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
+            var loadbalancer1PartitionIds = Enumerable.Range(1, MinimumPartitionCount);
             var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
 
             // Create partitions owned by a different load balancer.
 
             var loadbalancer2Id = Guid.NewGuid().ToString();
-            var loadbalancer2PartitionIds = Enumerable.Range(loadbalancer1PartitionIds.Max() + 1, MinimumpartitionCount);
+            var loadbalancer2PartitionIds = Enumerable.Range(loadbalancer1PartitionIds.Max() + 1, MinimumPartitionCount);
             completeOwnership = completeOwnership
                 .Concat(CreatePartitionOwnership(loadbalancer2PartitionIds.Select(i => i.ToString()), loadbalancer2Id));
 
             // Create partitions owned by a different load balancer.
 
             var loadbalancer3Id = Guid.NewGuid().ToString();
-            var loadbalancer3PartitionIds = Enumerable.Range(loadbalancer2PartitionIds.Max() + 1, MinimumpartitionCount);
+            var loadbalancer3PartitionIds = Enumerable.Range(loadbalancer2PartitionIds.Max() + 1, MinimumPartitionCount);
             completeOwnership = completeOwnership
                 .Concat(CreatePartitionOwnership(loadbalancer3PartitionIds.Select(i => i.ToString()), loadbalancer3Id));
 
             // Seed the storageManager with all partitions.
 
             await storageManager.ClaimOwnershipAsync(completeOwnership);
-
             var claimablePartitionIds = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
 
             // Get owned partitions.
@@ -163,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
 
             // Verify owned partitionIds match the owned partitions.
 
-            Assert.That(ownedByloadbalancer1.Count(), Is.EqualTo(MinimumpartitionCount));
+            Assert.That(ownedByloadbalancer1.Count(), Is.EqualTo(MinimumPartitionCount));
             Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.False);
 
             // Start the load balancer to claim ownership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
@@ -177,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
 
             // Verify that we took ownership of the additional partition.
 
-            Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumpartitionCount));
+            Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumPartitionCount));
             Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
         }
 
@@ -365,7 +522,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
             mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.StealPartition(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(p => p.Overlaps(partitionIds))));
+            mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(set => set.Count == 0 || set.All(item => partitionIds.Contains(item)))));
         }
 
         /// <summary>

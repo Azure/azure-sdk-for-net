@@ -8,10 +8,10 @@ namespace Azure.DigitalTwins.Core.Tests
     public class DigitalTwinsTestEnvironment : TestEnvironment
     {
         public DigitalTwinsTestEnvironment()
-            : base("digitaltwins")
+            : base(TestSettings.AdtEnvironmentVariablesPrefix.ToLower())
         {
         }
 
-        public string DigitalTwinHostname => GetRecordedVariable("DIGITALTWINS_URL");
+        public string DigitalTwinHostname => GetRecordedVariable($"{TestSettings.AdtEnvironmentVariablesPrefix}_URL");
     }
 }

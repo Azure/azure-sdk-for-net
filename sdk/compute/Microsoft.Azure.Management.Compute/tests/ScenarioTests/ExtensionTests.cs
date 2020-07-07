@@ -23,7 +23,7 @@ namespace Compute.Tests
                 Publisher = "Microsoft.Compute",
                 VirtualMachineExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
-                AutoUpgradeMinorVersion = true,
+                AutoUpgradeMinorVersion = false,
                 ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
                 ProtectedSettings = "{}"
@@ -107,7 +107,7 @@ namespace Compute.Tests
 
                     // Validate the extension instance view in the VM instance-view
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, InstanceViewTypes.InstanceView);
-                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault());
+                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault(c => c.Name == vmExtension.Name));
 
                     // Validate the extension delete API
                     m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, vmExtension.Name);

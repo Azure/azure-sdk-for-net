@@ -1,14 +1,7 @@
 trigger: none
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+extends:
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 6
     ServiceDirectory: eventhub

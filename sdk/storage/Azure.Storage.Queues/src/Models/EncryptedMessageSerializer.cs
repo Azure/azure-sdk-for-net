@@ -78,6 +78,12 @@ namespace Azure.Storage.Queues.Specialized.Models
             {
                 ReadPropertyValue(data, property);
             }
+
+            if (data.EncryptionData == default || data.EncryptedMessageText == default)
+            {
+                throw new FormatException($"Failed to find non-optional properties while deserializing `{typeof(EncryptedMessage).FullName}`.");
+            }
+
             return data;
         }
 
@@ -90,6 +96,10 @@ namespace Azure.Storage.Queues.Specialized.Models
             else if (property.NameEquals(nameof(data.EncryptionData)))
             {
                 data.EncryptionData = EncryptionDataSerializer.ReadEncryptionData(property.Value);
+            }
+            else
+            {
+                throw new FormatException($"Failed to deserialize `{typeof(EncryptedMessage).FullName}`. Unrecognized property `{property.Name}`.");
             }
         }
         #endregion

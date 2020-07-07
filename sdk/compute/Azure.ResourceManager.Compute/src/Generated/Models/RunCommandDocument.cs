@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(description));
             }
 
-            Script = script;
+            Script = script ?? new List<string>();
             Parameters = parameters;
         }
 

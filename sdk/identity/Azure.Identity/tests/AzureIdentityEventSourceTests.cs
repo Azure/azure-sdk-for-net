@@ -50,9 +50,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateClientSecretCredentialSucceededEvents()
         {
-            var mockAadClient = new MockAadIdentityClient(() => new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(10)));
+            var mockMsalClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
 
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient));
+            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "ClientSecretCredential.GetToken";
 
@@ -62,9 +62,11 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateClientCertificateCredentialSucceededEvents()
         {
+            var mockMsalClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.Now + TimeSpan.FromMinutes(10)));
+
             var mockAadClient = new MockAadIdentityClient(() => new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(10)));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockAadClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "ClientCertificateCredential.GetToken";
 
@@ -116,9 +118,9 @@ namespace Azure.Identity.Tests
         {
             var expExMessage = Guid.NewGuid().ToString();
 
-            var mockAadClient = new MockAadIdentityClient(() => throw new MockClientException(expExMessage));
+            var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expExMessage));
 
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient));
+            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "ClientSecretCredential.GetToken";
 
@@ -130,9 +132,9 @@ namespace Azure.Identity.Tests
         {
             var expExMessage = Guid.NewGuid().ToString();
 
-            var mockAadClient = new MockAadIdentityClient(() => throw new MockClientException(expExMessage));
+            var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expExMessage));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockAadClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
             var method = "ClientCertificateCredential.GetToken";
 

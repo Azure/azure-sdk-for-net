@@ -53,40 +53,22 @@ namespace Azure.Management.Resources
             _endpoint = endpoint;
         }
 
-        /// <summary> Creates a new instance of DeploymentsClient. </summary>
-        public virtual DeploymentsClient GetDeploymentsClient()
-        {
-            return new DeploymentsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DeploymentsOperations. </summary>
+        public virtual DeploymentsOperations Deployments => new DeploymentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ProvidersClient. </summary>
-        public virtual ProvidersClient GetProvidersClient()
-        {
-            return new ProvidersClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ProvidersOperations. </summary>
+        public virtual ProvidersOperations Providers => new ProvidersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourcesClient. </summary>
-        public virtual ResourcesClient GetResourcesClient()
-        {
-            return new ResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourcesOperations. </summary>
+        public virtual ResourcesOperations Resources => new ResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ResourceGroupsClient. </summary>
-        public virtual ResourceGroupsClient GetResourceGroupsClient()
-        {
-            return new ResourceGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ResourceGroupsOperations. </summary>
+        public virtual ResourceGroupsOperations ResourceGroups => new ResourceGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of TagsClient. </summary>
-        public virtual TagsClient GetTagsClient()
-        {
-            return new TagsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of TagsOperations. </summary>
+        public virtual TagsOperations Tags => new TagsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of DeploymentClient. </summary>
-        public virtual DeploymentClient GetDeploymentClient()
-        {
-            return new DeploymentClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of DeploymentOperations. </summary>
+        public virtual DeploymentOperations Deployment => new DeploymentOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents
     /// expressions, like the kind used by <see cref="SearchOptions.Filter"/>,
     /// by automatically replacing, quoting, and escaping interpolated
     /// parameters.
-    /// <see href="https://docs.microsoft.com/en-us/azure/search/search-filters"/>
+    /// For more information, see <see href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</see>.
     /// </summary>
     public static class SearchFilter
     {

@@ -23,17 +23,17 @@ namespace Azure.Management.Storage.Models
                 throw new ArgumentNullException(nameof(rules));
             }
 
-            Rules = rules.ToArray();
+            Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         internal ManagementPolicySchema(IList<ManagementPolicyRule> rules)
         {
-            Rules = rules;
+            Rules = rules ?? new List<ManagementPolicyRule>();
         }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
-        public IList<ManagementPolicyRule> Rules { get; set; }
+        public IList<ManagementPolicyRule> Rules { get; }
     }
 }

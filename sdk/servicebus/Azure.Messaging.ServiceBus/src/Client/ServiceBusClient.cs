@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -19,6 +21,9 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
+
+        private readonly ServiceBusClientOptions _options;
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -46,16 +51,15 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; }
 
         /// <summary>
-        ///   The set of client options used for creation of client.
-        /// </summary>
-        ///
-        private ServiceBusClientOptions Options { get; set; }
-
-        /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
+        /// <summary>
+        /// The list of plugins for the client.
+        /// </summary>
+        internal IList<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -128,10 +132,11 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
-            Connection = new ServiceBusConnection(connectionString, options);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Options = Connection.Options;
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -160,13 +165,14 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
-                options);
-            Options = Connection.Options;
+                _options);
+            Plugins = _options.Plugins;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -186,7 +192,8 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
                 options: new ServiceBusSenderOptions(),
-                connection: Connection);
+                connection: Connection,
+                plugins: Plugins);
         }
 
         /// <summary>
@@ -206,7 +213,8 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
                 options: options,
-                connection: Connection);
+                connection: Connection,
+                plugins: Plugins);
         }
 
         /// <summary>
@@ -226,6 +234,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -250,6 +259,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -276,6 +286,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusReceiverOptions());
         }
 
@@ -303,6 +314,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -333,6 +345,7 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
+                plugins: Plugins,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -366,6 +379,7 @@ namespace Azure.Messaging.ServiceBus
             return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
+                plugins: Plugins,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -392,6 +406,7 @@ namespace Azure.Messaging.ServiceBus
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatDeadLetterPath(queueName),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -422,6 +437,7 @@ namespace Azure.Messaging.ServiceBus
                         topicName,
                         subscriptionName)),
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -444,6 +460,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -468,6 +485,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -493,6 +511,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: new ServiceBusProcessorOptions());
         }
 
@@ -519,6 +538,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
+                plugins: Plugins,
                 options: options);
         }
 
@@ -541,6 +561,7 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
+                plugins: Plugins,
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
 
@@ -566,6 +587,7 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
+                plugins: Plugins,
                 options: options ?? new ServiceBusSessionProcessorOptions());
         }
 

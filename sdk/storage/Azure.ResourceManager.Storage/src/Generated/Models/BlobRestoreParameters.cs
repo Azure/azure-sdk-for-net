@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             TimeToRestore = timeToRestore;
-            BlobRanges = blobRanges.ToArray();
+            BlobRanges = blobRanges.ToList();
         }
 
         /// <summary> Initializes a new instance of BlobRestoreParameters. </summary>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Storage.Models
         internal BlobRestoreParameters(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)
         {
             TimeToRestore = timeToRestore;
-            BlobRanges = blobRanges;
+            BlobRanges = blobRanges ?? new List<BlobRestoreRange>();
         }
 
         /// <summary> Restore blob to the specified time. </summary>
         public DateTimeOffset TimeToRestore { get; set; }
         /// <summary> Blob ranges to restore. </summary>
-        public IList<BlobRestoreRange> BlobRanges { get; set; }
+        public IList<BlobRestoreRange> BlobRanges { get; }
     }
 }

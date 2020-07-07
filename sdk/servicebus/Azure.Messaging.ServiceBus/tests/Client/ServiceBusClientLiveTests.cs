@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -34,8 +34,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.AsString(), receivedMessage.Body.AsString());
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
                 Assert.IsTrue(client.IsDisposed);
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -78,8 +78,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.AsString(), receivedMessage.Body.AsString());
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 if (!useSessions)
                 {

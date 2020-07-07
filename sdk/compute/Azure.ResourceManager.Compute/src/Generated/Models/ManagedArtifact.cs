@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The managed artifact id. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

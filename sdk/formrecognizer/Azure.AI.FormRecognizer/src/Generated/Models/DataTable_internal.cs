@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Rows = rows;
             Columns = columns;
-            Cells = cells;
+            Cells = cells ?? new List<DataTableCell_internal>();
         }
 
         /// <summary> Number of rows. </summary>

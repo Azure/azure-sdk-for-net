@@ -17,67 +17,67 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Specifies that the error code is an invalid request.
         /// </summary>
-        public static readonly string InvalidRequest = "invalidRequest";
+        public static readonly string InvalidRequest = "InvalidRequest";
 
         /// <summary>
         /// Specifies that the error code is an invalid argument.
         /// </summary>
-        public static readonly string InvalidArgument = "invalidArgument";
+        public static readonly string InvalidArgument = "InvalidArgument";
 
         /// <summary>
         /// Specifies that the error code is an internal server error.
         /// </summary>
-        public static readonly string InternalServerError = "internalServerError";
+        public static readonly string InternalServerError = "InternalServerError";
 
         /// <summary>
         /// Specifies that the error code is service unavailable.
         /// </summary>
-        public static readonly string ServiceUnavailable = "serviceUnavailable";
+        public static readonly string ServiceUnavailable = "ServiceUnavailable";
 
         /// <summary>
         /// Specifies that the error code is an invalid parameter value.
         /// </summary>
-        public static readonly string InvalidParameterValue = "invalidParameterValue";
+        public static readonly string InvalidParameterValue = "InvalidParameterValue";
 
         /// <summary>
         /// Specifies that the error code is an invalid request body format.
         /// </summary>
-        public static readonly string InvalidRequestBodyFormat = "invalidRequestBodyFormat";
+        public static readonly string InvalidRequestBodyFormat = "InvalidRequestBodyFormat";
 
         /// <summary>
         /// Specifies that the error code is an empty request.
         /// </summary>
-        public static readonly string EmptyRequest = "emptyRequest";
+        public static readonly string EmptyRequest = "EmptyRequest";
 
         /// <summary>
         /// Specifies that the error code is a missing input records.
         /// </summary>
-        public static readonly string MissingInputRecords = "missingInputRecords";
+        public static readonly string MissingInputRecords = "MissingInputRecords";
 
         /// <summary>
         /// Specifies that the error code is an invalid document.
         /// </summary>
-        public static readonly string InvalidDocument = "invalidDocument";
+        public static readonly string InvalidDocument = "InvalidDocument";
 
         /// <summary>
         /// Specifies that the error code is model version incorrect.
         /// </summary>
-        public static readonly string ModelVersionIncorrect = "modelVersionIncorrect";
+        public static readonly string ModelVersionIncorrect = "ModelVersionIncorrect";
 
         /// <summary>
         /// Specifies that the error code is an invalid document batch.
         /// </summary>
-        public static readonly string InvalidDocumentBatch = "invalidDocumentBatch";
+        public static readonly string InvalidDocumentBatch = "InvalidDocumentBatch";
 
         /// <summary>
         /// Specifies that the error code is an unsupported language code.
         /// </summary>
-        public static readonly string UnsupportedLanguageCode = "unsupportedLanguageCode";
+        public static readonly string UnsupportedLanguageCode = "UnsupportedLanguageCode";
 
         /// <summary>
         /// Specifies that the error code is an invalid country hint.
         /// </summary>
-        public static readonly string InvalidCountryHint = "invalidCountryHint";
+        public static readonly string InvalidCountryHint = "InvalidCountryHint";
 
         private TextAnalyticsErrorCode(string errorCode)
         {

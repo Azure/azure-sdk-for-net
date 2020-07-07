@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             RetentionInterval = retentionInterval;
             AzCliVersion = azCliVersion;
-            Kind = "AzureCLI";
+            Kind = ScriptType.AzureCLI;
         }
 
         /// <summary> Initializes a new instance of AzureCliScript. </summary>

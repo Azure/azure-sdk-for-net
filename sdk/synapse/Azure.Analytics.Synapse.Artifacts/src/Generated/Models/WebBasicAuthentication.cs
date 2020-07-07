@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Username = username;
             Password = password;
-            AuthenticationType = "Basic";
+            AuthenticationType = WebAuthenticationType.Basic;
         }
 
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>

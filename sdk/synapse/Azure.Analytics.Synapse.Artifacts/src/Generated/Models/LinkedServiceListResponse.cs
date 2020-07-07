@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal LinkedServiceListResponse(IReadOnlyList<LinkedServiceResource> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<LinkedServiceResource>();
             NextLink = nextLink;
         }
 

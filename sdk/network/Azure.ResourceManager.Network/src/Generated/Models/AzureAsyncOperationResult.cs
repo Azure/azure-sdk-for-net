@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Status of the Azure async operation. </summary>
-        public NetworkOperationStatus? Status { get; set; }
+        public NetworkOperationStatus? Status { get; }
         /// <summary> Details of the error occurred during specified asynchronous operation. </summary>
-        public Error Error { get; set; }
+        public Error Error { get; }
     }
 }

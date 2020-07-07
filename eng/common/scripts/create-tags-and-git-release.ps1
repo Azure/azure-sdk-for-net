@@ -18,8 +18,6 @@ param (
   [switch]$continueOnError = $false
 )
 
-Write-Host "> $PSCommandPath $args"
-
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
 $apiUrl = "https://api.github.com/repos/$repoId"
