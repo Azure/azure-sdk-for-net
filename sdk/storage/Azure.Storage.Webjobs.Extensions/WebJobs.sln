@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{639967B0-0544-4C52-94AC-9A3D25E33256}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{72A798F0-699B-4C8E-8D43-C1749661471E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleHost", "sample\SampleHost\SampleHost.csproj", "{93429246-CCE9-4EB0-B94D-68522862BA79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Host.TestCommon", "test\Microsoft.Azure.WebJobs.Host.TestCommon\WebJobs.Host.TestCommon.csproj", "{4A832C21-66EA-4DE4-8124-F27F8900CBA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Host.EndToEndTests", "test\Microsoft.Azure.WebJobs.Host.EndToEndTests\WebJobs.Host.EndToEndTests.csproj", "{340AB554-5482-4B3D-B65F-46DFF5AF1684}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{3B089351-285A-4829-8F60-30768A7469BD}"
+	ProjectSection(SolutionItems) = preProject
+		build\common.props = build\common.props
+		build\PublicKey.snk = build\PublicKey.snk
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WebJobs.Shared", "src\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.shproj", "{ADD036F5-2170-4B05-9E0A-C2ED0A08A929}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Extensions.Storage", "src\Microsoft.Azure.WebJobs.Extensions.Storage\WebJobs.Extensions.Storage.csproj", "{A9733406-267C-4A53-AB07-D3A834E22153}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WebJobs.Shared.Storage", "src\Microsoft.Azure.WebJobs.Shared.Storage\WebJobs.Shared.Storage.shproj", "{6BED7F8A-A199-4D9D-85D1-6856EE3292C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Extensions.Storage.UnitTests", "test\Microsoft.Azure.Webjobs.Extensions.Storage.UnitTests\WebJobs.Extensions.Storage.UnitTests.csproj", "{0CC5741F-ACDA-4DB8-9C17-074E8896F244}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WebJobs.Protocols", "src\Microsoft.Azure.WebJobs.Protocols\WebJobs.Protocols.shproj", "{6FCD0852-6019-4CD5-9B7E-0DE021A72BD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeAzureStorage", "test\FakeStorage\FakeAzureStorage.csproj", "{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems*{6bed7f8a-a199-4d9d-85d1-6856ee3292c6}*SharedItemsImports = 13
+		src\Microsoft.Azure.WebJobs.Protocols\Microsoft.Azure.WebJobs.Protocols.projitems*{6fcd0852-6019-4cd5-9b7e-0de021a72bd7}*SharedItemsImports = 13
+		src\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems*{a9733406-267c-4a53-ab07-d3a834e22153}*SharedItemsImports = 5
+		src\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.projitems*{a9733406-267c-4a53-ab07-d3a834e22153}*SharedItemsImports = 5
+		src\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.projitems*{add036f5-2170-4b05-9e0a-c2ed0a08a929}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93429246-CCE9-4EB0-B94D-68522862BA79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93429246-CCE9-4EB0-B94D-68522862BA79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A832C21-66EA-4DE4-8124-F27F8900CBA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A832C21-66EA-4DE4-8124-F27F8900CBA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A832C21-66EA-4DE4-8124-F27F8900CBA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A832C21-66EA-4DE4-8124-F27F8900CBA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9733406-267C-4A53-AB07-D3A834E22153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9733406-267C-4A53-AB07-D3A834E22153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9733406-267C-4A53-AB07-D3A834E22153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9733406-267C-4A53-AB07-D3A834E22153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC5741F-ACDA-4DB8-9C17-074E8896F244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC5741F-ACDA-4DB8-9C17-074E8896F244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC5741F-ACDA-4DB8-9C17-074E8896F244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC5741F-ACDA-4DB8-9C17-074E8896F244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93429246-CCE9-4EB0-B94D-68522862BA79} = {72A798F0-699B-4C8E-8D43-C1749661471E}
+		{4A832C21-66EA-4DE4-8124-F27F8900CBA9} = {639967B0-0544-4C52-94AC-9A3D25E33256}
+		{340AB554-5482-4B3D-B65F-46DFF5AF1684} = {639967B0-0544-4C52-94AC-9A3D25E33256}
+		{0CC5741F-ACDA-4DB8-9C17-074E8896F244} = {639967B0-0544-4C52-94AC-9A3D25E33256}
+		{337B79EB-A3CB-4CE0-A7F2-DD5E638AC882} = {639967B0-0544-4C52-94AC-9A3D25E33256}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {371BFA14-0980-4A43-A18A-CA1C1A9CB784}
+	EndGlobalSection
+EndGlobal

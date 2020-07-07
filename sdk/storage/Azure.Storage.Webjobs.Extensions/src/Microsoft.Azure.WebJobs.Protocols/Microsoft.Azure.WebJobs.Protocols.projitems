@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6fcd0852-6019-4cd5-9b7e-0de021a72bd7</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Microsoft.Azure.WebJobs.Protocols</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AbortHostInstanceMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterLogItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingDataParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlobMetadataKeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlobNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlobParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlobTriggerParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CallAndOverrideMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CallerSuppliedParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CancellationTokenParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CloudStorageAccountParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleOutputParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ContainerNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DictionaryExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExecutionReason.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionCompletedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionFailure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessageExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FunctionStatusMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HeartbeatCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HeartbeatDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HeartbeatMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HostMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HostMessageSender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HostOutputMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HostStartedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHeartbeatCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHeartbeatMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHostMessageSender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JsonSerialization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JsonTypeNameAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JTokenExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LocalBlobDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NullHeartbeatCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterDisplayHints.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PolymorphicJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QueueParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QueueTriggerParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReadBlobParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServiceBusParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServiceBusTriggerParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SingletonParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TableEntityParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TableParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TableParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TextParameterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TriggerParameterDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebJobRunIdentifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebJobTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebSitesKnownKeyNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WriteBlobParameterLog.cs" />
+  </ItemGroup>
+</Project>

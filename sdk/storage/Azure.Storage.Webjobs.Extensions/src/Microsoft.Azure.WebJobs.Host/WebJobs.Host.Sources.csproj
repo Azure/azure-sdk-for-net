@@ -1,0 +1,71 @@
+﻿<Project>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="..\..\build\common.props" />
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.WebJobs.Sources</PackageId>
+    <IsPackable>true</IsPackable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <NoWarn>CS8021</NoWarn>
+    <NoBuild>true</NoBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Converters\AsyncConverter.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="Converters\CompositeObjectToTypeConverter.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)\</PackagePath>
+    </Compile>
+    <Compile Update="Converters\IAsyncObjectToTypeConverter.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="Converters\ConversionResult.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="Converters\IdentityConverter.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="Converters\IObjectToTypeConverter.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="Triggers\ITriggerDataArgumentBinding.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Update="TypeUtility.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Include="..\Microsoft.Azure.WebJobs.Shared\DictionaryExtensions.cs" Link="DictionaryExtensions.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+    <Compile Include="..\Microsoft.Azure.WebJobs.Shared\Sanitizer.cs" Link="Sanitizer.cs">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(PackageId)</PackagePath>
+    </Compile>
+  </ItemGroup>  
+  
+  <ItemGroup>
+    <PackageReference Remove="@(PackageReference)" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+  <Target Name="Compile" />
+  <Target Name="CopyFilesToOutputDirectory" />
+  
+</Project>
