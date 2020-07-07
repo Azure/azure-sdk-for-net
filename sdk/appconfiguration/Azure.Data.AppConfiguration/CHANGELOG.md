@@ -1,7 +1,8 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.0.1
 
+- Update the tag list for the AzConfig package
 
 ## 1.0.0
 
