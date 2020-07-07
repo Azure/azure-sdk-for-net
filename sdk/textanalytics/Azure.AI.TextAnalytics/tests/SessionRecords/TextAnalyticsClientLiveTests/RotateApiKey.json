@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/languages",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-512dfd29ac403845b6659996dd18e961-aa3ed13f78379947-00",
+        "traceparent": "00-d0112b0c3dd98a4385811c815cbd9006-a39fff653102eb4a-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "fadc546e9b67fee26b7fe2f6f428f049",
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "055b8ca5-e131-44a3-a60a-d00de16109fe",
+        "apim-request-id": "43f80b37-e87d-4bf4-a18b-11af0c28191f",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 25 Apr 2020 20:38:38 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "documents": [
@@ -52,15 +52,15 @@
       }
     },
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/languages",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-83174e99e5383b4ab078d088e5e20c4f-507fa3bb87f6dd45-00",
+        "traceparent": "00-8421d03e892ebf40835991fb182d9342-169b74281617a041-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5315eb796922e8ec800365621457b196",
@@ -77,31 +77,21 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "b62f8c82-3617-4d6f-ac9c-edf5f22badd8",
-        "Content-Length": "225",
-        "Content-Type": "application/json",
-        "Date": "Sat, 25 Apr 2020 20:38:38 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "WWW-Authenticate": "AzureApiManagementKey realm=\u0022https://westus2.ppe.cognitiveservices.azure.com/text/analytics\u0022,name=\u0022Ocp-Apim-Subscription-Key\u0022,type=\u0022header\u0022",
-        "X-Content-Type-Options": "nosniff"
+        "Content-Length": "224",
+        "Date": "Mon, 06 Jul 2020 22:03:49 GMT"
       },
-      "ResponseBody": {
-        "error": {
-          "code": "401",
-          "message": "Access denied due to invalid subscription key or wrong API endpoint. Make sure to provide a valid key for an active subscription and use a correct regional API endpoint for your resource."
-        }
-      }
+      "ResponseBody": "eyJlcnJvciI6eyJjb2RlIjoiNDAxIiwibWVzc2FnZSI6IkFjY2VzcyBkZW5pZWQgZHVlIHRvIGludmFsaWQgc3Vic2NyaXB0aW9uIGtleSBvciB3cm9uZyBBUEkgZW5kcG9pbnQuIE1ha2Ugc3VyZSB0byBwcm92aWRlIGEgdmFsaWQga2V5IGZvciBhbiBhY3RpdmUgc3Vic2NyaXB0aW9uIGFuZCB1c2UgYSBjb3JyZWN0IHJlZ2lvbmFsIEFQSSBlbmRwb2ludCBmb3IgeW91ciByZXNvdXJjZS4ifX0="
     },
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/languages",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9e8c041fae39a241898d768bcb0769a7-3af09e011278e042-00",
+        "traceparent": "00-2cd3e660547b8249bb23af4cdd0920e1-56aa3b029ab5a946-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b95b6331e26dc320faed975cc20fd95e",
@@ -118,14 +108,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6895f95e-30e1-481d-80a2-54e9c484390f",
+        "apim-request-id": "6f9f0e0b-7eaf-4a3f-acff-0bbfb0dc44a1",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 25 Apr 2020 20:38:38 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
         "documents": [
@@ -147,6 +137,6 @@
   "Variables": {
     "RandomSeed": "328308741",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.ppe.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

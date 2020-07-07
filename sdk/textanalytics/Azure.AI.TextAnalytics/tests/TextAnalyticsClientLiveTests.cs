@@ -11,10 +11,16 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(
+        TextAnalyticsClientOptions.ServiceVersion.V3_0,
+        TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_1)]
     public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
+        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+
+        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
@@ -22,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             string apiKey = TestEnvironment.ApiKey;
             credential ??= new AzureKeyCredential(apiKey);
-            options ??= new TextAnalyticsClientOptions();
+            options ??= new TextAnalyticsClientOptions(_serviceVersion);
             return InstrumentClient (
                 new TextAnalyticsClient(
                     new Uri(TestEnvironment.Endpoint),
@@ -78,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
-            var options = new TextAnalyticsClientOptions()
+            var options = new TextAnalyticsClientOptions(_serviceVersion)
             {
                 DefaultCountryHint = DetectLanguageInput.None
             };

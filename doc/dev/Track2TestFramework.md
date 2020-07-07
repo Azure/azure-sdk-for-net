@@ -256,4 +256,48 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
+# Support multi service version testing
 
+To enable multi-version testing add the `ClientTestFixture` attribute listing all the service versions to the test class itself or a base class:
+
+```C#
+[ClientTestFixture(
+    BlobClientOptions.ServiceVersion.V2019_02_02,
+    BlobClientOptions.ServiceVersion.V2019_07_07)]
+public abstract class BlobTestBase : StorageTestBase
+{
+    private readonly BlobClientOptions.ServiceVersion _serviceVersion;
+
+    public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
+        : base(async, mode)
+    {
+        _serviceVersion = serviceVersion;
+    }
+
+    // ...
+}
+```
+
+Add a `ServiceVersion` parameter to the test class constructor and use the provided service version to create the `ClientOptions` instance.
+
+```C#
+public BlobClientOptions GetOptions() =>
+    new BlobClientOptions(_serviceVersion) { /* ... */ };
+```
+
+To control what service versions test would run against use the `ServiceVersion` attribute by setting it's `Min` or `Max` properties (inclusive).
+
+```C#
+[Test]
+[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
+public async Task UploadOverwritesExistingBlob()
+{
+    // ...
+}
+```
+
+How it looks it the test explorer:
+
+![image](https://user-images.githubusercontent.com/1697911/72942831-52c7ca00-3d29-11ea-9b7e-2e54198d800d.png)
+
+**Note:** If test recordings are enabled, the recordings will be generated against the latests version of the service.

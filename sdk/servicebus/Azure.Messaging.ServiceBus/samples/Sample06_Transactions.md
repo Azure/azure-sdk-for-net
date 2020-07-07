@@ -50,6 +50,27 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 }
 ```
 
+### Setting session state within a transaction
+```C# Snippet:ServiceBusTransactionalSetSessionState
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+ServiceBusSender sender = client.CreateSender(queueName);
+
+await sender.SendMessageAsync(new ServiceBusMessage("my message") { SessionId = "sessionId" });
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+var state = Encoding.UTF8.GetBytes("some state");
+using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+{
+    await receiver.CompleteMessageAsync(receivedMessage);
+    await receiver.SetSessionStateAsync(state);
+    ts.Complete();
+}
+```
+
 ## Source
 
 To see the full example source, see:

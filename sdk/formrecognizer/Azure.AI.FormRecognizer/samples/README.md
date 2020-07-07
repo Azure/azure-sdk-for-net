@@ -17,7 +17,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - Recognize custom forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
-## Common scenarios samples:
+## Common scenarios samples
 - [Recognize form content](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample1_RecognizeFormContent.md)
 - [Recognize custom forms](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample2_RecognizeCustomForms.md)
 - [Recognize receipts](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_RecognizeReceipts.md)

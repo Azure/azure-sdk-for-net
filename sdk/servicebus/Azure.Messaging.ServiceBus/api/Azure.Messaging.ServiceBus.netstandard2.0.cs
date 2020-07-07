@@ -130,20 +130,19 @@ namespace Azure.Messaging.ServiceBus
         public enum FailureReason
         {
             GeneralError = 0,
-            ClientClosed = 1,
-            MessagingEntityNotFound = 2,
-            MessageLockLost = 3,
-            MessageNotFound = 4,
-            MessageSizeExceeded = 5,
-            MessagingEntityDisabled = 6,
-            QuotaExceeded = 7,
-            ServiceBusy = 8,
-            ServiceTimeout = 9,
-            ServiceCommunicationProblem = 10,
-            SessionCannotBeLocked = 11,
-            SessionLockLost = 12,
-            Unauthorized = 13,
-            MessagingEntityAlreadyExists = 14,
+            MessagingEntityNotFound = 1,
+            MessageLockLost = 2,
+            MessageNotFound = 3,
+            MessageSizeExceeded = 4,
+            MessagingEntityDisabled = 5,
+            QuotaExceeded = 6,
+            ServiceBusy = 7,
+            ServiceTimeout = 8,
+            ServiceCommunicationProblem = 9,
+            SessionCannotBeLocked = 10,
+            SessionLockLost = 11,
+            Unauthorized = 12,
+            MessagingEntityAlreadyExists = 13,
         }
     }
     public partial class ServiceBusMessage

@@ -1290,14 +1290,14 @@ namespace Azure.AI.FormRecognizer.Tests
                         Assert.AreEqual(0, cell.FieldElements.Count);
                     }
 
-                    foreach (var content in cell.FieldElements)
+                    foreach (var element in cell.FieldElements)
                     {
-                        Assert.AreEqual(expectedPageNumber, content.PageNumber);
-                        Assert.NotNull(content.BoundingBox.Points);
-                        Assert.AreEqual(4, content.BoundingBox.Points.Length);
+                        Assert.AreEqual(expectedPageNumber, element.PageNumber);
+                        Assert.NotNull(element.BoundingBox.Points);
+                        Assert.AreEqual(4, element.BoundingBox.Points.Length);
 
-                        Assert.NotNull(content.Text);
-                        Assert.True(content is FormWord || content is FormLine);
+                        Assert.NotNull(element.Text);
+                        Assert.True(element is FormWord || element is FormLine);
                     }
                 }
             }

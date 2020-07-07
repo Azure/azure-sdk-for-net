@@ -37,7 +37,7 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.3
+dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.4
 ```
 
 ### Authenticate the client
@@ -332,8 +332,6 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 - `IsTransient` : This identifies whether or not the exception is considered recoverable.  In the case where it was deemed transient, the appropriate retry policy has already been applied and retries were unsuccessful.
 
 - `Reason` : Provides a set of well-known reasons for the failure that help to categorize and clarify the root cause.  These are intended to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal.   Some key failure reasons are:
-
-  - **Client Closed** : This occurs when an operation has been requested on a Service Bus client that has already been closed or disposed of. It is recommended to check the application code and ensure that objects from the Service Bus client library are created and closed/disposed in the intended scope.  
 
   - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
 
