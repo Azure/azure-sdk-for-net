@@ -2,15 +2,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</PackageId>
     <Description>Provides developers with libraries for managing Live video analytics edge module using direct methods</Description>
-    <Version>1.0.0-preview</Version>
+    <Version>1.0.0-preview.1</Version>
     <AssemblyName>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</AssemblyName>
     <PackageTags>Azure Media Live Video Analytics;Live Video Analytics;LVA;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updates to the V3 API include:
-        
-        * Ability to play fairplay protected content offline.
-        * Added ContentAwareEncoding preset.
+        Release of Live video analytics V1 API
             ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
