@@ -278,19 +278,19 @@ public abstract class BlobTestBase : StorageTestBase
 }
 ```
 
-Add a service version attribute to the test class ctor and use the provided service version to create the `ClientOptions` instance.
+Add a `ServiceVersion` parameter to the test class constructor and use the provided service version to create the `ClientOptions` instance.
 
 ```C#
 public BlobClientOptions GetOptions() =>
     new BlobClientOptions(_serviceVersion) { /* ... */ };
 ```
 
-To control what service versions test would run against use the `ServiceVersion` attribute by setting it's `Mix` or `Max` properties (inclusive).
+To control what service versions test would run against use the `ServiceVersion` attribute by setting it's `Min` or `Max` properties (inclusive).
 
 ```C#
 [Test]
 [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
-public void Ctor_ConnectionString()
+public async Task UploadOverwritesExistingBlob()
 {
     // ...
 }

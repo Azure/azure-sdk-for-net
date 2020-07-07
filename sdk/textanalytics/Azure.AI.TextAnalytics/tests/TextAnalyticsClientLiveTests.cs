@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
-            var options = new TextAnalyticsClientOptions()
+            var options = new TextAnalyticsClientOptions(_serviceVersion)
             {
                 DefaultCountryHint = DetectLanguageInput.None
             };
