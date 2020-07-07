@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
-            Assert.IsNotNull(result.ContinuationToken);
+            Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
@@ -1778,7 +1778,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
-            Assert.IsNotNull(result.ContinuationToken);
+            Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
@@ -2187,7 +2187,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
             Assert.AreEqual(6, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.AreEqual(4, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.FailedChangesCount);
-            Assert.IsNotNull(result.ContinuationToken);
+            Assert.IsNull(result.ContinuationToken);
         }
 
         [Test]
