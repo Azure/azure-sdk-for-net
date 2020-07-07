@@ -18,8 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     {
         /// <summary>
         /// Disk is encrypted at rest with Platform managed key. It is the
-        /// default encryption type. This is not a valid encryption type for
-        /// disk encryption sets.
+        /// default encryption type.
         /// </summary>
         public const string EncryptionAtRestWithPlatformKey = "EncryptionAtRestWithPlatformKey";
         /// <summary>
