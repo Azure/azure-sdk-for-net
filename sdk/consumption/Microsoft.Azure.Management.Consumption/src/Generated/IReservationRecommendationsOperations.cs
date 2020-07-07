@@ -27,9 +27,28 @@ namespace Microsoft.Azure.Management.Consumption
         /// List of recommendations for purchasing reserved instances.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with reservation recommendations operations.
+        /// This includes '/subscriptions/{subscriptionId}/' for subscription
+        /// scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resource group scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for BillingAccount scope, and
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for billingProfile scope
+        /// </param>
         /// <param name='filter'>
-        /// May be used to filter reservationRecommendations by
-        /// properties/scope and properties/lookBackPeriod.
+        /// May be used to filter reservationRecommendations by:
+        /// properties/scope with allowed values ['Single', 'Shared'] and
+        /// default value 'Single'; properties/resourceType with allowed values
+        /// ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk',
+        /// 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB',
+        /// 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob',
+        /// 'AzureDataExplorer', 'VMwareCloudSimple'] and default value
+        /// 'VirtualMachines'; and properties/lookBackPeriod with allowed
+        /// values ['Last7Days', 'Last30Days', 'Last60Days'] and default value
+        /// 'Last7Days'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,7 +65,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List of recommendations for purchasing reserved instances.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
