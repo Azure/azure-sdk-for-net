@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingPropertyOperations operations.
+    /// BillingPeriodsOperations operations.
     /// </summary>
-    internal partial class BillingPropertyOperations : IServiceOperations<BillingManagementClient>, IBillingPropertyOperations
+    internal partial class BillingPeriodsOperations : IServiceOperations<BillingManagementClient>, IBillingPeriodsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BillingPropertyOperations class.
+        /// Initializes a new instance of the BillingPeriodsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BillingPropertyOperations(BillingManagementClient client)
+        internal BillingPeriodsOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -51,10 +51,27 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the billing properties for a subscription. This operation is not
-        /// supported for billing accounts with agreement type Enterprise Agreement.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// Lists the available billing periods for a subscription in reverse
+        /// chronological order. This is only supported for Azure Web-Direct
+        /// subscriptions. Other subscription types which were not purchased directly
+        /// through the Azure web portal are not supported through this preview API.
+        /// <see href="https://go.microsoft.com/fwlink/?linkid=844490" />
         /// </summary>
+        /// <param name='filter'>
+        /// May be used to filter billing periods by billingPeriodEndDate. The filter
+        /// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+        /// support 'ne', 'or', or 'not'.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the
+        /// nextLink element will include a skiptoken parameter that specifies a
+        /// starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N billing
+        /// periods.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -76,13 +93,21 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProperty>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BillingPeriod>>> ListWithHttpMessagesAsync(string filter = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-05-01";
+            if (top > 100)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 100);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2018-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -91,13 +116,210 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("skiptoken", skiptoken);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (skiptoken != null)
+            {
+                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<BillingPeriod>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<BillingPeriod>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets a named billing period.  This is only supported for Azure Web-Direct
+        /// subscriptions. Other subscription types which were not purchased directly
+        /// through the Azure web portal are not supported through this preview API.
+        /// </summary>
+        /// <param name='billingPeriodName'>
+        /// The name of a BillingPeriod resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<BillingPeriod>> GetWithHttpMessagesAsync(string billingPeriodName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (billingPeriodName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingPeriodName");
+            }
+            string apiVersion = "2018-03-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("billingPeriodName", billingPeriodName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{billingPeriodName}", System.Uri.EscapeDataString(billingPeriodName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -191,7 +413,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProperty>();
+            var _result = new AzureOperationResponse<BillingPeriod>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -204,7 +426,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProperty>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingPeriod>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -224,13 +446,14 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Updates the billing property of a subscription. Currently, cost center can
-        /// be updated. The operation is supported only for billing accounts with
-        /// agreement type Microsoft Customer Agreement.
+        /// Lists the available billing periods for a subscription in reverse
+        /// chronological order. This is only supported for Azure Web-Direct
+        /// subscriptions. Other subscription types which were not purchased directly
+        /// through the Azure web portal are not supported through this preview API.
+        /// <see href="https://go.microsoft.com/fwlink/?linkid=844490" />
         /// </summary>
-        /// <param name='parameters'>
-        /// Request parameters that are provided to the update billing property
-        /// operation.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -253,17 +476,12 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProperty>> UpdateWithHttpMessagesAsync(BillingProperty parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<BillingPeriod>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -271,20 +489,14 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -292,7 +504,7 @@ namespace Microsoft.Azure.Management.Billing
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -323,12 +535,6 @@ namespace Microsoft.Azure.Management.Billing
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -379,7 +585,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProperty>();
+            var _result = new AzureOperationResponse<IPage<BillingPeriod>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -392,7 +598,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProperty>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<BillingPeriod>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
