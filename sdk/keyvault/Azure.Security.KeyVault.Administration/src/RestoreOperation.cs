@@ -57,6 +57,22 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
+        /// Initializes a new instance of a RestoreOperation.
+        /// </summary>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore(string, Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync(string, Uri, string, string, CancellationToken)"/>.</param>
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders> response)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(response, nameof(response));
+
+            _value = new RestoreDetailsInternal(null, null, null, response.Headers.JobId(), null, null);
+            _client = client;
+            _response = response.GetRawResponse();
+            _retryAfterSeconds = response.Headers.RetryAfter;
+        }
+
+        /// <summary>
         /// Initializes a new instance of a RestoreOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
