@@ -21,6 +21,7 @@ namespace Azure.Security.KeyVault.Administration
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
+        private readonly string _id;
 
         /// <summary>
         /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -36,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
-            _value = new FullBackupDetailsInternal(null, null, null, null, null, id, string.Empty);
+            _id = id;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
             _response = response;
             _retryAfterSeconds = response.Headers.RetryAfter;
-            _value = new FullBackupDetailsInternal(null, null, null, null, null, response.Headers.JobId(), string.Empty);
+            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
         }
 
         /// <summary>
@@ -66,21 +67,22 @@ namespace Azure.Security.KeyVault.Administration
 
             _response = response;
             _value = value;
+            _id = value.JobId;
             _client = client;
         }
 
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value.StartTime;
+        public DateTimeOffset? StartTime => _value?.StartTime;
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value.EndTime;
+        public DateTimeOffset? EndTime => _value?.EndTime;
 
         /// <inheritdoc/>
-        public override string Id => _value.JobId;
+        public override string Id => _id;
 
         /// <summary>
         /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
@@ -91,6 +93,10 @@ namespace Azure.Security.KeyVault.Administration
             get
             {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new RequestFailedException("The operation is not complete.");
+                }
                 if (EndTime.HasValue && _value.Error != null)
                 {
                     throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
@@ -101,10 +107,10 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _value.EndTime.HasValue;
+        public override bool HasCompleted => EndTime.HasValue;
 
         /// <inheritdoc/>
-        public override bool HasValue => _response != null && _value.Error == null && HasCompleted;
+        public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
