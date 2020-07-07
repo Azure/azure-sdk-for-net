@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Administration
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 if (!HasCompleted)
                 {
-                    throw new RequestFailedException("The operation is not complete.");
+                    throw new InvalidOperationException("The operation is not complete.");
                 }
                 if (EndTime.HasValue && _value.Error != null)
                 {
