@@ -199,8 +199,8 @@ namespace Azure.Messaging.EventGrid
         /// <summary>
         /// Creates a SAS token for use with Event Grid service
         /// </summary>
-        /// <param name="expirationUtc">Expiration time</param>
-        /// <returns></returns>
+        /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication</param>
+        /// <returns>Returns the generated SAS token string</returns>
         public string BuildSharedAccessSignature(DateTimeOffset expirationUtc)
         {
             const char Resource = 'r';
