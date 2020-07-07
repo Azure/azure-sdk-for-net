@@ -1,102 +1,126 @@
 {
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-dbfce049-1691-99ab-58b1-b8e3e8b0b820?restype=container",
+      "RequestUri": "http://seanstage4.blob.core.windows.net/test-container-dbfce049-1691-99ab-58b1-b8e3e8b0b820?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-393a8593e4d0fa45afd961deaff6fdc0-4c0e6ed910f6074a-00",
+        "traceparent": "00-e12a30f133847445a3f81a49bed5fde3-d2c101d2bf40914a-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190918.1\u002bc08104d0e7bb34348df76981f57e5bdd5eac0128",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "ac80c774-ce2d-02bb-fcde-be2327c34522",
-        "x-ms-date": "Wed, 18 Sep 2019 19:47:19 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:17:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 18 Sep 2019 19:47:19 GMT",
-        "ETag": "\u00220x8D73C710472B35A\u0022",
-        "Last-Modified": "Wed, 18 Sep 2019 19:47:19 GMT",
+        "Date": "Thu, 05 Mar 2020 21:17:02 GMT",
+        "ETag": "\u00220x8D7C14A8CD7856B\u0022",
+        "Last-Modified": "Thu, 05 Mar 2020 21:17:03 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "ac80c774-ce2d-02bb-fcde-be2327c34522",
-        "x-ms-request-id": "f2b5a382-e01e-004b-2b59-6eb15d000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "6afa0986-f01e-0012-6633-f3e9eb000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f?comp=list",
+      "RequestUri": "http://seanstage4-secondary.blob.core.windows.net/?comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190918.1\u002bc08104d0e7bb34348df76981f57e5bdd5eac0128",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "216e89f8-0c2f-ecf3-12ac-5d1ddba9d90d",
-        "x-ms-date": "Wed, 18 Sep 2019 19:47:19 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:17:03 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 502,
+      "ResponseHeaders": {
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "close",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Date": "Thu, 05 Mar 2020 21:17:03 GMT",
+        "Timestamp": "13:17:03.754"
+      },
+      "ResponseBody": "[Fiddler] DNS Lookup for \u0022seanstage4-secondary.blob.core.windows.net\u0022 failed. System.Net.Sockets.SocketException No such host is known                                                                                                                                                                                                                                                                                                                                                                                          "
+    },
+    {
+      "RequestUri": "http://seanstage4.blob.core.windows.net/?comp=list",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "216e89f8-0c2f-ecf3-12ac-5d1ddba9d90d",
+        "x-ms-date": "Thu, 05 Mar 2020 21:17:04 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application\u002fxml",
-        "Date": "Wed, 18 Sep 2019 19:47:20 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Thu, 05 Mar 2020 21:17:04 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "Vary": "Origin",
         "x-ms-client-request-id": "216e89f8-0c2f-ecf3-12ac-5d1ddba9d90d",
-        "x-ms-request-id": "70b1ed10-501e-0000-6659-6e3200000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "6afa099a-f01e-0012-7433-f3e9eb000000",
+        "x-ms-version": "2019-12-12"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cEnumerationResults ServiceEndpoint=\u0022http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f\u0022\u003e\u003cContainers\u003e\u003cContainer\u003e\u003cName\u003e$web\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eWed, 18 Sep 2019 01:08:39 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D73BD4BDB8E9C1\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-04796654-55fc-2108-cfec-2c3ffd841109\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:46:29 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E3D0816BCE\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-56dc430b-951e-d762-1cec-62339e9411c8\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:37:53 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E29D3B81F6\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-7e8ac229-204e-7b94-7e4b-e54056d71731\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eSun, 15 Sep 2019 01:07:42 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D739791C21D09A\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003eblob\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-91b086e1-d896-90eb-ff7d-1fa317f870e1\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:32:33 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E1DEA388D6\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-b9af7524-ddad-0be9-2bba-fbac6a024f21\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:28:07 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E13FAFC15D\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-c05831a9-959e-77c8-3063-dd59c949f127\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:49:48 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E44713B324\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-d251e8a4-e914-1626-eed3-de32ad2b3dca\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eThu, 12 Sep 2019 23:52:08 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737DC3932BD79\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-d30c350a-d2d4-6c4c-d9c6-83e3b4ad3d1c\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:50:38 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E464DDE024\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-dc1deb55-17d2-faee-f334-59f96cdaf1f6\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eSun, 15 Sep 2019 01:07:53 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D7397922F30B68\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-e0503d21-892f-b5f3-0640-295fac99e4c6\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eSat, 14 Sep 2019 00:47:04 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D738AD1042D7A4\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003cContainer\u003e\u003cName\u003etest-container-eefc5676-447d-121d-4ab8-536a9ea628af\u003c\u002fName\u003e\u003cProperties\u003e\u003cLast-Modified\u003eFri, 13 Sep 2019 00:51:33 GMT\u003c\u002fLast-Modified\u003e\u003cEtag\u003e\u00220x8D737E485AEEC9A\u0022\u003c\u002fEtag\u003e\u003cLeaseStatus\u003eunlocked\u003c\u002fLeaseStatus\u003e\u003cLeaseState\u003eavailable\u003c\u002fLeaseState\u003e\u003cPublicAccess\u003econtainer\u003c\u002fPublicAccess\u003e\u003cDefaultEncryptionScope\u003e$account-encryption-key\u003c\u002fDefaultEncryptionScope\u003e\u003cDenyEncryptionScopeOverride\u003efalse\u003c\u002fDenyEncryptionScopeOverride\u003e\u003cHasImmutabilityPolicy\u003efalse\u003c\u002fHasImmutabilityPolicy\u003e\u003cHasLegalHold\u003efalse\u003c\u002fHasLegalHold\u003e\u003c\u002fProperties\u003e\u003c\u002fContainer\u003e\u003c\u002fContainers\u003e\u003cNextMarker \u002f\u003e\u003c\u002fEnumerationResults\u003e"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanstage4.blob.core.windows.net/\u0022\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Etest-container-dbfce049-1691-99ab-58b1-b8e3e8b0b820\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Mar 2020 21:17:03 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7C14A8CD7856B\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-dbfce049-1691-99ab-58b1-b8e3e8b0b820?restype=container",
+      "RequestUri": "http://seanstage4.blob.core.windows.net/test-container-dbfce049-1691-99ab-58b1-b8e3e8b0b820?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-d68a1c0b8fe6894ea9b3e12076a3088c-02b8b88673120b40-00",
+        "traceparent": "00-480dcfd6b41aa145a64ea44bbf51e612-5b13abe3d34f7c46-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190918.1\u002bc08104d0e7bb34348df76981f57e5bdd5eac0128",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "9e2b1282-2355-a5f2-f7bd-d6be882ad468",
-        "x-ms-date": "Wed, 18 Sep 2019 19:47:20 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:17:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 18 Sep 2019 19:47:19 GMT",
+        "Date": "Thu, 05 Mar 2020 21:17:04 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "9e2b1282-2355-a5f2-f7bd-d6be882ad468",
-        "x-ms-request-id": "f2b5a5f0-e01e-004b-6759-6eb15d000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "6afa099c-f01e-0012-7533-f3e9eb000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1125547364",
-    "Storage_TestConfigSecondary": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.file.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized\n"
+    "Storage_TestConfigSecondary": "SecondaryTenant\nseanstage4\nU2FuaXRpemVk\nhttp://seanstage4.blob.core.windows.net\nhttp://seanstage4.file.core.windows.net\nhttp://seanstage4.queue.core.windows.net\nhttp://seanstage4.table.core.windows.net\n\n\n\n\nhttp://seanstage4-secondary.blob.core.windows.net\nhttp://seanstage4-secondary.file.core.windows.net\nhttp://seanstage4-secondary.queue.core.windows.net\nhttp://seanstage4-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstage4.blob.core.windows.net/;QueueEndpoint=http://seanstage4.queue.core.windows.net/;FileEndpoint=http://seanstage4.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstage4-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstage4-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstage4-secondary.file.core.windows.net/;AccountName=seanstage4;AccountKey=Sanitized\n"
   }
 }

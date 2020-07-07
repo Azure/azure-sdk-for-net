@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves the next page of search results from the search index. 
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves the next page of search results from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves the next page of search results from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves the next page of search results from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -302,14 +302,14 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
         /// <param name="key">
         /// The key of the document to retrieve; See 
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/> for the rules for constructing valid
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see> for the rules for constructing valid
         /// document keys.
         /// </param>
         /// <param name="selectedFields">
@@ -339,14 +339,14 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
         /// <param name="key">
         /// The key of the document to retrieve; See 
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/> for the rules for constructing valid
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see> for the rules for constructing valid
         /// document keys.
         /// </param>
         /// <param name="selectedFields">
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name="key">
         /// The key of the document to retrieve; See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/> for the rules for constructing valid
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see> for the rules for constructing valid
         /// document keys.
         /// </param>
         /// <param name="selectedFields">
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a document from the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name="key">
         /// The key of the document to retrieve; See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/> for the rules for constructing valid
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see> for the rules for constructing valid
         /// document keys.
         /// </param>
         /// <param name="selectedFields">
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
@@ -638,14 +638,14 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
         /// <param name="searchText">
         /// A full-text search query expression; Use null or "*" to match all documents. See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/> for more information about search
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see> for more information about search
         /// query syntax.
         /// </param>
         /// <param name="searchParameters">
@@ -682,14 +682,14 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
         /// <param name="searchText">
         /// A full-text search query expression; Use null or "*" to match all documents. See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/> for more information about search
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see> for more information about search
         /// query syntax.
         /// </param>
         /// <param name="searchParameters">
@@ -731,7 +731,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -742,7 +742,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name="searchText">
         /// A full-text search query expression; Use null or "*" to match all documents. See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/> for more information about search
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see> for more information about search
         /// query syntax.
         /// </param>
         /// <param name="searchParameters">
@@ -779,7 +779,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -790,7 +790,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         /// <param name="searchText">
         /// A full-text search query expression; Use null or "*" to match all documents. See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/> for more information about search
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see> for more information about search
         /// query syntax.
         /// </param>
         /// <param name="searchParameters">
@@ -832,7 +832,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -870,7 +870,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -913,7 +913,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
@@ -955,7 +955,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents

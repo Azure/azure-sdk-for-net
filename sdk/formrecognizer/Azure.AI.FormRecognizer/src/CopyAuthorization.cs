@@ -50,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Converts the CopyAuthorization object to its equivalent json representation.
+        /// Converts the CopyAuthorization object to its equivalent JSON representation.
         /// </summary>
         public string ToJson()
         {

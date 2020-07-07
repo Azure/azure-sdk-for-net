@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 IList<PathItem> paths = await response.ToListAsync();
                 Assert.AreEqual(1, paths.Count);
 
-                // Append data to an existing DataLake File.  Append is currently limited to 100MB per call.
+                // Append data to an existing DataLake File.  Append is currently limited to 4000 MB per call.
                 // To upload a large file all at once, consider using UploadAsync() instead.
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart1), 0);
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart2), contentLength);

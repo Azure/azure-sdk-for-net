@@ -5,7 +5,10 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
-		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
+		<Description>
+			Provides resource group and resource management capabilities for Microsoft Azure.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
 		<Version>4.0.0</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>

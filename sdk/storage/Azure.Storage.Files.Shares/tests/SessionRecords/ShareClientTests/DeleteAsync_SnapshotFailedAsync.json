@@ -1,0 +1,108 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3ee857d2-0f4a-a0aa-54b7-a30e3a48b6e0?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48a43dc71f81cd42bf8d4d7b2a48e300-5cb5e951f5e4af44-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200625.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "1fddaa7e-839b-19b3-c4b6-f213e18ca1ad",
+        "x-ms-date": "Fri, 26 Jun 2020 01:35:47 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 26 Jun 2020 01:35:47 GMT",
+        "ETag": "\u00220x8D8197140FFDCC3\u0022",
+        "Last-Modified": "Fri, 26 Jun 2020 01:35:48 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "1fddaa7e-839b-19b3-c4b6-f213e18ca1ad",
+        "x-ms-request-id": "03cf4ddd-101a-0025-235a-4be4dc000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3ee857d2-0f4a-a0aa-54b7-a30e3a48b6e0?sharesnapshot=2020-06-26T00:49:21.0000000Z\u0026restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3fc19b18c899fc4787130574ad7da334-66e60e38c0388a40-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200625.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "8f90c9e3-976a-fa44-f666-f9867aeec1d9",
+        "x-ms-date": "Fri, 26 Jun 2020 01:35:48 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "518",
+        "Content-Type": "application/xml",
+        "Date": "Fri, 26 Jun 2020 01:35:47 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "8f90c9e3-976a-fa44-f666-f9867aeec1d9",
+        "x-ms-error-code": "InvalidQueryParameterValue",
+        "x-ms-request-id": "03cf4de0-101a-0025-245a-4be4dc000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidQueryParameterValue\u003C/Code\u003E\u003CMessage\u003EValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:03cf4de0-101a-0025-245a-4be4dc000000\n",
+        "Time:2020-06-26T01:35:48.6194592Z\u003C/Message\u003E\u003CQueryParameterName\u003Esharesnapshot\u003C/QueryParameterName\u003E\u003CQueryParameterValue\u003E2020-06-26T00:49:21.0000000Z\u003C/QueryParameterValue\u003E\u003CReason\u003EThis operation is only allowed on the base share. ShareSnapshot query parameter should not be provided.\u003C/Reason\u003E\u003C/Error\u003E"
+      ]
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3ee857d2-0f4a-a0aa-54b7-a30e3a48b6e0?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e9eecac83c4b75408e4cace7af860925-0e486a5dd72a5240-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200625.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "1830dd32-11fc-3242-929f-c518a335ea66",
+        "x-ms-date": "Fri, 26 Jun 2020 01:35:48 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 26 Jun 2020 01:35:47 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "1830dd32-11fc-3242-929f-c518a335ea66",
+        "x-ms-request-id": "03cf4de1-101a-0025-255a-4be4dc000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "187399296",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
+  }
+}

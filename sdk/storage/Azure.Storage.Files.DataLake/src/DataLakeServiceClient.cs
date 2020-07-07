@@ -420,7 +420,7 @@ namespace Azure.Storage.Files.DataLake
         /// file systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">List Containers</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the file systems.
@@ -453,7 +453,7 @@ namespace Azure.Storage.Files.DataLake
         /// files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">List Containers</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the file systems.
@@ -487,7 +487,7 @@ namespace Azure.Storage.Files.DataLake
         /// file system under the specified account. If the file systen with the
         /// same name already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to create.
@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.DataLake
         /// file system under the specified account. If the file system with the
         /// same name already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to create.

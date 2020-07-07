@@ -37,6 +37,5 @@ namespace Azure.Storage.Files.Shares
 
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
-
     }
 }

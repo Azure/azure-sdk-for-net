@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -110,6 +111,8 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
+
+        // Original path given by the user, unecoded.
         private string _directoryOrFilePath;
 
         /// <summary>
@@ -357,11 +360,12 @@ namespace Azure.Storage.Files.DataLake
                 {
                     if (DirectoryOrFilePath == "/")
                     {
-                        path.Append(DirectoryOrFilePath);
+                        path.Append(_directoryOrFilePath);
                     }
                     else
                     {
-                        path.Append("/").Append(DirectoryOrFilePath);
+                        // Encode path.
+                        path.Append("/").Append(_directoryOrFilePath.EscapePath());
                     }
                 }
             }

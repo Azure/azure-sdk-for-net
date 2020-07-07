@@ -2195,6 +2195,170 @@ namespace Azure.Storage.Files.Shares
                 }
             }
             #endregion Share.GetStatisticsAsync
+
+            #region Share.RestoreAsync
+            /// <summary>
+            /// Restores a previously deleted Share.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedShareName">Specifies the name of the preivously-deleted share.</param>
+            /// <param name="deletedShareVersion">Specifies the version of the preivously-deleted share.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> RestoreAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedShareName = default,
+                string deletedShareVersion = default,
+                bool async = true,
+                string operationName = "ShareClient.Restore",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = RestoreAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        deletedShareName,
+                        deletedShareVersion))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return RestoreAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Share.RestoreAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedShareName">Specifies the name of the preivously-deleted share.</param>
+            /// <param name="deletedShareVersion">Specifies the version of the preivously-deleted share.</param>
+            /// <returns>The Share.RestoreAsync Message.</returns>
+            internal static Azure.Core.HttpMessage RestoreAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedShareName = default,
+                string deletedShareVersion = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "share", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "undelete", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (deletedShareName != null) { _request.Headers.SetValue("x-ms-deleted-share-name", deletedShareName); }
+                if (deletedShareVersion != null) { _request.Headers.SetValue("x-ms-deleted-share-version", deletedShareVersion); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Share.RestoreAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Share.RestoreAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> RestoreAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.Shares.Models.ShareInfo _value = new Azure.Storage.Files.Shares.Models.ShareInfo();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Share.RestoreAsync
         }
         #endregion Share operations
 
@@ -3466,7 +3630,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -3537,7 +3701,7 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -7004,7 +7168,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -7072,7 +7236,7 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -7935,7 +8099,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// metadata
         /// </summary>
-        Metadata
+        Metadata,
+
+        /// <summary>
+        /// deleted
+        /// </summary>
+        Deleted
     }
 }
 
@@ -7951,6 +8120,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Snapshots => "snapshots",
                     Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Metadata => "metadata",
+                    Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Deleted => "deleted",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ListSharesIncludeType value.")
                 };
             }
@@ -7961,6 +8131,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     "snapshots" => Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Snapshots,
                     "metadata" => Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Metadata,
+                    "deleted" => Azure.Storage.Files.Shares.Models.ListSharesIncludeType.Deleted,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.ListSharesIncludeType value.")
                 };
             }
@@ -9550,6 +9721,16 @@ namespace Azure.Storage.Files.Shares.Models
         public string Snapshot { get; internal set; }
 
         /// <summary>
+        /// Deleted
+        /// </summary>
+        public bool? IsDeleted { get; internal set; }
+
+        /// <summary>
+        /// Version
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
         /// Properties of a share.
         /// </summary>
         public Azure.Storage.Files.Shares.Models.ShareProperties Properties { get; internal set; }
@@ -9594,6 +9775,16 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 _value.Snapshot = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
+            if (_child != null)
+            {
+                _value.IsDeleted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.VersionId = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
@@ -9617,13 +9808,17 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareItem ShareItem(
             string name,
             Azure.Storage.Files.Shares.Models.ShareProperties properties,
-            string snapshot = default)
+            string snapshot = default,
+            bool? isDeleted = default,
+            string versionId = default)
         {
             return new ShareItem()
             {
                 Name = name,
                 Properties = properties,
                 Snapshot = snapshot,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
             };
         }
     }
@@ -9963,6 +10158,16 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { get; internal set; }
 
         /// <summary>
+        /// DeletedTime
+        /// </summary>
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
         /// QuotaInGB
         /// </summary>
         public int? QuotaInGB { get; internal set; }
@@ -10032,6 +10237,16 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 _value.NextAllowedQuotaDowngradeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Quota", ""));
             if (_child != null)
             {
@@ -10068,6 +10283,8 @@ namespace Azure.Storage.Files.Shares.Models
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
+            System.DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
@@ -10079,6 +10296,8 @@ namespace Azure.Storage.Files.Shares.Models
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,
             };

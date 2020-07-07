@@ -417,6 +417,11 @@ namespace ResourceGroups.Tests
                             'statusCode': 'InternalServerError',
                             'statusMessage': {
                                 'status': 'InternalServerError',
+                                'error': {
+                                    'code': 'InternalServerError',
+                                    'message': 'InternalServerError',
+                                    'target': null
+                                }
                             }
                           }
                        }

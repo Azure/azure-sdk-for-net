@@ -36,7 +36,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2019-07-07 service version.
             /// </summary>
-            V2019_07_07 = 2
+            V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

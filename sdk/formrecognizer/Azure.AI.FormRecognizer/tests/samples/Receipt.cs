@@ -97,16 +97,15 @@ namespace Azure.AI.FormRecognizer.Samples
         /// <summary>
         /// Converts an item <see cref="FormField"/> into a list of <see cref="ReceiptItem"/>, making the name,
         /// quantity, price and total price of each item strongly-typed. Returns an empty list if the "Items"
-        /// field does not exist or if conversion is not possible.
+        /// field does not exist.
         /// </summary>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A list of <see cref="ReceiptItem"/> with strongly-typed properties. Returns an empty list if the "Items" field does not exist or if conversion is not possible.</returns>
+        /// <returns>A list of <see cref="ReceiptItem"/> with strongly-typed properties. Returns an empty list if the "Items" field does not exist.</returns>
         private IReadOnlyList<ReceiptItem> ConvertReceiptItems(IReadOnlyDictionary<string, FormField> fields)
         {
             List<ReceiptItem> items = new List<ReceiptItem>();
 
-            if (fields.TryGetValue("Items", out FormField itemsField)
-                && itemsField.Value.Type == FieldValueType.List)
+            if (fields.TryGetValue("Items", out FormField itemsField))
             {
                 foreach (FormField itemField in itemsField.Value.AsList())
                 {
@@ -129,15 +128,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <c>string</c>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// <c>string</c>. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<string> ConvertStringField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.String)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<string>(field, field.Value.AsString());
             }
@@ -147,16 +145,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <c>string</c>, but formatted as a phone number. Returns <c>null</c> if field does not exist or if conversion
-        /// is not possible.
+        /// <c>string</c>, but formatted as a phone number. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<string> ConvertPhoneNumberField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.PhoneNumber)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<string>(field, field.Value.AsPhoneNumber());
             }
@@ -166,15 +162,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <c>long</c>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// <c>long</c>. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<long> ConvertInt64Field(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.Float)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<long>(field, field.Value.AsInt64());
             }
@@ -184,15 +179,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <c>float</c>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// <c>float</c>. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<float> ConvertFloatField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.Float)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<float>(field, field.Value.AsFloat());
             }
@@ -202,15 +196,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <see cref="DateTime"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// <see cref="DateTime"/>. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<DateTime> ConvertDateField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.Date)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<DateTime>(field, field.Value.AsDate());
             }
@@ -220,15 +213,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// <summary>
         /// Converts a weakly-typed <see cref="FormField"/> into a strongly-typed <see cref="FormField{T}"/> of type
-        /// <see cref="TimeSpan"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.
+        /// <see cref="TimeSpan"/>. Returns <c>null</c> if field does not exist.
         /// </summary>
         /// <param name="fieldName">The key to retrieve the field to be converted from the <paramref name="fields"/> dictionary.</param>
         /// <param name="fields">The dictionary of fields in the recognized receipt. Returned by the service.</param>
-        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist or if conversion is not possible.</returns>
+        /// <returns>A strongly-typed <see cref="FormField{T}"/>. Returns <c>null</c> if field does not exist.</returns>
         private static FormField<TimeSpan> ConvertTimeField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            if (fields.TryGetValue(fieldName, out FormField field)
-                && field.Value.Type == FieldValueType.Time)
+            if (fields.TryGetValue(fieldName, out FormField field))
             {
                 return new FormField<TimeSpan>(field, field.Value.AsTime());
             }

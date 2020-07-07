@@ -48,7 +48,7 @@ async Task MessageHandler(ProcessMessageEventArgs args)
     Console.WriteLine(body);
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
     tcs.SetResult(true);
 }
 
@@ -128,7 +128,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
     var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message

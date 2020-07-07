@@ -25,7 +25,7 @@ namespace Azure.Search.Documents
         /// Encapsulates the state required to fetch the next page of search
         /// results from the index.
         /// </param>
-        public SearchOptions(string continuationToken) =>
+        internal SearchOptions(string continuationToken) =>
             Copy(SearchContinuationToken.Deserialize(continuationToken), this);
 
         /// <summary>

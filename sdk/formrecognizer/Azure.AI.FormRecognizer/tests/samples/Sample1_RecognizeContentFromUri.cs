@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 
-            FormPageCollection formPages = await client.StartRecognizeContentFromUri(invoiceUri).WaitForCompletionAsync();
+            FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
             foreach (FormPage page in formPages)
             {
                 Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");

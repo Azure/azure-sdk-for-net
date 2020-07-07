@@ -6,6 +6,10 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Search.Documents.csproj" />

@@ -55,7 +55,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that we are not able to upsert an entity to the table.
 
-            Assert.That(async () => await sasTableclient.InsertOrReplaceAsync(CreateTableEntities("partition", 1).First()), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), UpdateMode.Replace), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
         }
 
         /// <summary>
@@ -64,23 +64,23 @@ namespace Azure.Data.Tables.Tests
         [Test]
         [TestCase(null)]
         [TestCase(5)]
-        public async Task InsertedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
+        public async Task CreatedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
             List<IDictionary<string, object>> entityResults;
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 20);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities.
 
             entityResults = await client.QueryAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
         }
 
@@ -88,16 +88,16 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedEntitiesCanBeQueriedWithFilters()
+        public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 20);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -111,7 +111,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task EntitiyCanBeUpserted()
+        public async Task EntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
 
@@ -127,16 +127,16 @@ namespace Azure.Data.Tables.Tests
                     {propertyName, originalValue}
                 };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
             var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             entityToUpdate[propertyName] = updatedValue;
-            await client.InsertOrReplaceAsync(entityToUpdate).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entityToUpdate, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -165,9 +165,9 @@ namespace Azure.Data.Tables.Tests
                     {propertyName, originalValue}
                 };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -176,7 +176,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -188,11 +188,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -221,9 +221,9 @@ namespace Azure.Data.Tables.Tests
                     {propertyName, originalValue}
                 };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -232,7 +232,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.MergeAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -244,11 +244,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.MergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.MergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -285,9 +285,9 @@ namespace Azure.Data.Tables.Tests
                 };
 
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -298,7 +298,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(originalEntity.TryGetValue(mergepropertyName, out var _), Is.False);
             Assert.That(originalEntity[propertyName], Is.EqualTo(originalValue));
 
-            await client.InsertOrMergeAsync(partialEntity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(partialEntity, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -312,7 +312,7 @@ namespace Azure.Data.Tables.Tests
             // Update just the merged value.
 
             partialEntity[mergepropertyName] = mergeUpdatedValue;
-            await client.InsertOrMergeAsync(partialEntity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(partialEntity, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -342,9 +342,9 @@ namespace Azure.Data.Tables.Tests
                     {propertyName, originalValue}
                 };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -361,9 +361,9 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
 
-            // Insert the new entity again.
+            // Create the new entity again.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -388,16 +388,16 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
+        public async Task CreatedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<IDictionary<string, object>> entityResults;
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -421,13 +421,13 @@ namespace Azure.Data.Tables.Tests
         public async Task UpsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<IDictionary<string, object>> entityResults;
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+                await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -448,15 +448,15 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertReturnsEntitiesWithoutOdataAnnoations()
+        public async Task CreateEntityReturnsEntitiesWithoutOdataAnnoations()
         {
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
 
-            // Insert an entity.
+            // Create an entity.
 
-            var insertedEntity = (await client.InsertAsync(entitiesToInsert.First()).ConfigureAwait(false)).Value;
+            var createdEntity = (await client.CreateEntityAsync(entitiesToCreate.First()).ConfigureAwait(false)).Value;
 
-            Assert.That(insertedEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
+            Assert.That(createdEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }
 
         /// <summary>
@@ -466,13 +466,13 @@ namespace Azure.Data.Tables.Tests
         public async Task QueryReturnsEntitiesWithoutOdataAnnoations()
         {
             List<IDictionary<string, object>> entityResults;
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+            List<Dictionary<string, object>> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+                await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -488,23 +488,23 @@ namespace Azure.Data.Tables.Tests
         [Test]
         [TestCase(null)]
         [TestCase(5)]
-        public async Task InsertedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
+        public async Task CreatedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
             List<TestEntity> entityResults;
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities.
 
             entityResults = await client.QueryAsync<TestEntity>(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
         }
 
@@ -512,16 +512,16 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedCustomEntitiesCanBeQueriedWithFilters()
+        public async Task CreatedCustomEntitiesCanBeQueriedWithFilters()
         {
             List<TestEntity> entityResults;
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -551,16 +551,16 @@ namespace Azure.Data.Tables.Tests
                 StringTypeProperty = originalValue,
             };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
             var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             entityToUpdate[propertyName] = updatedValue;
-            await client.InsertOrReplaceAsync(entityToUpdate).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entityToUpdate, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -589,9 +589,9 @@ namespace Azure.Data.Tables.Tests
                 StringTypeProperty = originalValue,
             };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -600,7 +600,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -612,11 +612,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -645,9 +645,9 @@ namespace Azure.Data.Tables.Tests
                 StringTypeProperty = originalValue,
             };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -656,7 +656,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.MergeAsync(originalEntity, "*").ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, "*", UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -668,11 +668,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.MergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.MergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string, UpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -698,9 +698,9 @@ namespace Azure.Data.Tables.Tests
                 StringTypeProperty = originalValue,
             };
 
-            // Insert the new entity.
+            // Create the new entity.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -717,9 +717,9 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
 
-            // Insert the new entity again.
+            // Create the new entity again.
 
-            await client.InsertOrReplaceAsync(entity).ConfigureAwait(false);
+            await client.UpsertEntityAsync(entity, UpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the created entity from the service.
 
@@ -744,16 +744,16 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task InsertedCustomEntitiesAreRoundtrippedProprly()
+        public async Task CreatedCustomEntitiesAreRoundtrippedProprly()
         {
             List<TestEntity> entityResults;
-            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 1);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
 
-            // Insert the new entities.
+            // Create the new entities.
 
-            foreach (var entity in entitiesToInsert)
+            foreach (var entity in entitiesToCreate)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                await client.CreateEntityAsync(entity).ConfigureAwait(false);
             }
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
@@ -763,16 +763,16 @@ namespace Azure.Data.Tables.Tests
 
             for (int i = 0; i < entityResults.Count; i++)
             {
-                Assert.That(entityResults[i].BinaryTypeProperty, Is.EqualTo(entitiesToInsert[i].BinaryTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].DatetimeOffsetTypeProperty, Is.EqualTo(entitiesToInsert[i].DatetimeOffsetTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].DatetimeTypeProperty, Is.EqualTo(entitiesToInsert[i].DatetimeTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToInsert[i].DoubleTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToInsert[i].GuidTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToInsert[i].Int64TypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToInsert[i].IntTypeProperty), "The entities should be equivalent");
-                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToInsert[i].PartitionKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToInsert[i].RowKey), "The entities should be equivalent");
-                Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToInsert[i].StringTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].BinaryTypeProperty, Is.EqualTo(entitiesToCreate[i].BinaryTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DatetimeOffsetTypeProperty, Is.EqualTo(entitiesToCreate[i].DatetimeOffsetTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DatetimeTypeProperty, Is.EqualTo(entitiesToCreate[i].DatetimeTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToCreate[i].DoubleTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToCreate[i].GuidTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToCreate[i].Int64TypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToCreate[i].IntTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToCreate[i].StringTypeProperty), "The entities should be equivalent");
             }
         }
 

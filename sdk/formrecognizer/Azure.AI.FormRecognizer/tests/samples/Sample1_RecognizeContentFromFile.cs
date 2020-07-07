@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
             {
-                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+                FormPageCollection formPages = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();
                 foreach (FormPage page in formPages)
                 {
                     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");

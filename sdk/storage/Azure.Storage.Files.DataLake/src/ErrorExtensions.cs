@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -15,20 +16,26 @@ namespace Azure.Storage.Files.DataLake
     {
 // clientDiagnostics parameter is a pattern expected by the codegenerator
 #pragma warning disable CA1801
-        internal static Exception CreateException(this string jsonMessage, ClientDiagnostics clientDiagnostics, Response response)
+        internal static Exception CreateException(this string body, ClientDiagnostics clientDiagnostics, Response response)
 #pragma warning restore CA1801
         {
-            if (string.IsNullOrWhiteSpace(jsonMessage))
+            // xml
+            if (response.Headers.ContentType != null
+                && response.Headers.ContentType.Contains("application/xml"))
             {
-                return new RequestFailedException(
-                    status: response.Status,
-                    errorCode: response.Status.ToString(CultureInfo.InvariantCulture),
-                    message: response.ReasonPhrase,
-                    innerException: new Exception());
+                XElement error = XDocument.Parse(body).Element("Error");
+                string code = error.Element("Code").Value.ToString(CultureInfo.InvariantCulture);
+                string message = error.Element("Message").Value.ToString(CultureInfo.InvariantCulture);
+                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                    response: response,
+                    message: message,
+                    errorCode: code);
             }
-            else
+            // json
+            else if (response.Headers.ContentType != null
+                && response.Headers.ContentType.Contains("application/json"))
             {
-                JsonDocument json = JsonDocument.Parse(jsonMessage);
+                JsonDocument json = JsonDocument.Parse(body);
                 JsonElement error = json.RootElement.GetProperty("error");
 
                 IDictionary<string, string> details = default;
@@ -46,6 +53,14 @@ namespace Azure.Storage.Files.DataLake
                     message: error.GetProperty("message").GetString(),
                     errorCode: error.GetProperty("code").GetString(),
                     additionalInfo: details);
+            }
+            else
+            {
+                return new RequestFailedException(
+                    status: response.Status,
+                    errorCode: response.Status.ToString(CultureInfo.InvariantCulture),
+                    message: response.ReasonPhrase,
+                    innerException: new Exception());
             }
         }
 

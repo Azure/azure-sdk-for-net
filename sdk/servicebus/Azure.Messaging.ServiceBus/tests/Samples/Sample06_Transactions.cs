@@ -44,6 +44,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+        public async Task TransactionalSetSessionState()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = GetClient();
+                string queueName = scope.QueueName;
+                #region Snippet:ServiceBusTransactionalSetSessionState
+                //@@ string connectionString = "<connection_string>";
+                //@@ string queueName = "<queue_name>";
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                //@@ await using var client = new ServiceBusClient(connectionString);
+                ServiceBusSender sender = client.CreateSender(queueName);
+
+                await sender.SendMessageAsync(new ServiceBusMessage("my message") { SessionId = "sessionId" });
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+                var state = Encoding.UTF8.GetBytes("some state");
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await receiver.CompleteMessageAsync(receivedMessage);
+                    await receiver.SetSessionStateAsync(state);
+                    ts.Complete();
+                }
+                #endregion
+                var bytes = await receiver.GetSessionStateAsync();
+                Assert.AreEqual(state, bytes);
+            };
+        }
+
+        [Test]
         public async Task TransactionalSendVia()
         {
             await using (var scopeA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

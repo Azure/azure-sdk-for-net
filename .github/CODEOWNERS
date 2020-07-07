@@ -32,6 +32,8 @@
 
 /sdk/identity/                                  @schaabs
 
+/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+
 /sdk/keyvault/                                  @schaabs @heaths
 
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
