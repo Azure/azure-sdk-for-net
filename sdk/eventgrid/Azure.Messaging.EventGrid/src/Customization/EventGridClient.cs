@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventGrid.Models;
@@ -20,7 +23,10 @@ namespace Azure.Messaging.EventGrid
     {
         private readonly ServiceRestClient _serviceRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _hostName;
+        private string _hostName => _endpoint.Host;
+        private readonly Uri _endpoint;
+        private readonly AzureKeyCredential _key;
+        private string _apiVersion;
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
         protected EventGridClient()
@@ -28,23 +34,49 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
-        /// <param name="endpoint">topic endpoint</param>
-        /// <param name="credential">used to connect to Azure</param>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new EventGridClientOptions())
         {
         }
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
-        /// <param name="endpoint">topic endpoint</param>
-        /// <param name="credential">used to connect to Azure</param>
-        /// <param name="options">configuring options</param>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential)
+            : this(endpoint, credential, new EventGridClientOptions())
+        {
+        }
+
+        /// <summary>Initalizes an instance of the<see cref="EventGridClient"/> class</summary>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        /// <param name="options">Configuring options</param>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridClientOptions();
-            _hostName = endpoint.Host;
+            _apiVersion = options.GetVersionString();
+            _endpoint = endpoint;
+            _key = credential;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventGridClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Topic endpoint</param>
+        /// <param name="credential">Credential used to connect to Azure</param>
+        /// <param name="options">Configuring options</param>
+        public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridClientOptions();
+            _endpoint = endpoint;
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new SharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -161,6 +193,40 @@ namespace Azure.Messaging.EventGrid
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a SAS token for use with Event Grid service
+        /// </summary>
+        /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication</param>
+        /// <returns>Returns the generated SAS token string</returns>
+        public string BuildSharedAccessSignature(DateTimeOffset expirationUtc)
+        {
+            const char Resource = 'r';
+            const char Expiration = 'e';
+            const char Signature = 's';
+
+            if (_key == null)
+            {
+                throw new NotSupportedException("Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
+            }
+
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(_endpoint);
+            uriBuilder.AppendQuery("api-version", _apiVersion, true);
+            string encodedResource = HttpUtility.UrlEncode(_endpoint.ToString());
+            var culture = CultureInfo.CreateSpecificCulture("en-US");
+            var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
+
+            string unsignedSas = $"{Resource}={encodedResource}&{Expiration}={encodedExpirationUtc}";
+            using (var hmac = new HMACSHA256(Convert.FromBase64String(_key.Key)))
+            {
+                string signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(unsignedSas)));
+                string encodedSignature = HttpUtility.UrlEncode(signature);
+                string signedSas = $"{unsignedSas}&{Signature}={encodedSignature}";
+
+                return signedSas;
             }
         }
     }
