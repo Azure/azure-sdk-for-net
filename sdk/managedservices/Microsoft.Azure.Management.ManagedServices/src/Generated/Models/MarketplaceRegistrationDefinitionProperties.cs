@@ -17,50 +17,45 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of a registration definition.
+    /// Properties of a marketplace registration definition.
     /// </summary>
-    public partial class RegistrationDefinitionProperties
+    public partial class MarketplaceRegistrationDefinitionProperties
     {
         /// <summary>
-        /// Initializes a new instance of the RegistrationDefinitionProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// MarketplaceRegistrationDefinitionProperties class.
         /// </summary>
-        public RegistrationDefinitionProperties()
+        public MarketplaceRegistrationDefinitionProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistrationDefinitionProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// MarketplaceRegistrationDefinitionProperties class.
         /// </summary>
+        /// <param name="managedByTenantId">Id of the managedBy tenant.</param>
         /// <param name="authorizations">Authorization tuple containing
         /// principal id of the user/security group or service principal and id
         /// of the build-in role.</param>
-        /// <param name="managedByTenantId">Id of the managedBy tenant.</param>
-        /// <param name="description">Description of the registration
-        /// definition.</param>
         /// <param name="eligibleAuthorizations">Eligible PIM authorization
         /// tuple containing principal id of the user/security group or service
         /// principal, id of the built-in role, and just-in-time access policy
         /// setting</param>
-        /// <param name="registrationDefinitionName">Name of the registration
-        /// definition.</param>
-        /// <param name="provisioningState">Current state of the registration
-        /// definition. Possible values include: 'NotSpecified', 'Accepted',
-        /// 'Running', 'Ready', 'Creating', 'Created', 'Deleting', 'Deleted',
-        /// 'Canceled', 'Failed', 'Succeeded', 'Updating'</param>
-        /// <param name="managedByTenantName">Name of the managedBy
-        /// tenant.</param>
-        public RegistrationDefinitionProperties(IList<Authorization> authorizations, string managedByTenantId, string description = default(string), IList<EligibleAuthorization> eligibleAuthorizations = default(IList<EligibleAuthorization>), string registrationDefinitionName = default(string), string provisioningState = default(string), string managedByTenantName = default(string))
+        /// <param name="offerDisplayName">The marketplace offer display
+        /// name.</param>
+        /// <param name="publisherDisplayName">The marketplace publisher
+        /// display name.</param>
+        /// <param name="planDisplayName">The marketplace plan display
+        /// name.</param>
+        public MarketplaceRegistrationDefinitionProperties(string managedByTenantId, IList<Authorization> authorizations, IList<EligibleAuthorization> eligibleAuthorizations = default(IList<EligibleAuthorization>), string offerDisplayName = default(string), string publisherDisplayName = default(string), string planDisplayName = default(string))
         {
-            Description = description;
+            ManagedByTenantId = managedByTenantId;
             Authorizations = authorizations;
             EligibleAuthorizations = eligibleAuthorizations;
-            RegistrationDefinitionName = registrationDefinitionName;
-            ManagedByTenantId = managedByTenantId;
-            ProvisioningState = provisioningState;
-            ManagedByTenantName = managedByTenantName;
+            OfferDisplayName = offerDisplayName;
+            PublisherDisplayName = publisherDisplayName;
+            PlanDisplayName = planDisplayName;
             CustomInit();
         }
 
@@ -70,10 +65,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets description of the registration definition.
+        /// Gets or sets id of the managedBy tenant.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        [JsonProperty(PropertyName = "managedByTenantId")]
+        public string ManagedByTenantId { get; set; }
 
         /// <summary>
         /// Gets or sets authorization tuple containing principal id of the
@@ -92,31 +87,22 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         public IList<EligibleAuthorization> EligibleAuthorizations { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the registration definition.
+        /// Gets or sets the marketplace offer display name.
         /// </summary>
-        [JsonProperty(PropertyName = "registrationDefinitionName")]
-        public string RegistrationDefinitionName { get; set; }
+        [JsonProperty(PropertyName = "offerDisplayName")]
+        public string OfferDisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the managedBy tenant.
+        /// Gets or sets the marketplace publisher display name.
         /// </summary>
-        [JsonProperty(PropertyName = "managedByTenantId")]
-        public string ManagedByTenantId { get; set; }
+        [JsonProperty(PropertyName = "publisherDisplayName")]
+        public string PublisherDisplayName { get; set; }
 
         /// <summary>
-        /// Gets current state of the registration definition. Possible values
-        /// include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
-        /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
-        /// 'Succeeded', 'Updating'
+        /// Gets or sets the marketplace plan display name.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets name of the managedBy tenant.
-        /// </summary>
-        [JsonProperty(PropertyName = "managedByTenantName")]
-        public string ManagedByTenantName { get; private set; }
+        [JsonProperty(PropertyName = "planDisplayName")]
+        public string PlanDisplayName { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -126,13 +112,13 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Authorizations == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Authorizations");
-            }
             if (ManagedByTenantId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ManagedByTenantId");
+            }
+            if (Authorizations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Authorizations");
             }
             if (Authorizations != null)
             {
