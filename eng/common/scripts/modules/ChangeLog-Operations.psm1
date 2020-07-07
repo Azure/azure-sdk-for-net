@@ -94,9 +94,8 @@ function Confirm-ChangeLogEntry {
   }
 
   if ($ForRelease -eq $True) {
-    $CurrentDate = Get-Date -Format "yyyy-MM-dd"
-    if ($changeLogEntry.ReleaseStatus -ne "($CurrentDate)") {
-      Write-Host ("##[warning]Incorrect Date: Please use the current date in the Changelog '{0}' before releasing the package" -f $ChangeLogLocation)
+    if ($changeLogEntry.ReleaseStatus -eq "(Unreleased)") {
+      Write-Host ("##[error]No release date set. Please set a release date with format 'yyyy-MM-dd' in the heading for version '{0}' in the changelog '{1}'." -f $VersionString, $ChangelogLocation)
       exit 1
     }
 

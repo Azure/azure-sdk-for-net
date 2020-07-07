@@ -45,6 +45,7 @@ class PackageProps
     }
 }
 
+$ProgressPreference = "SilentlyContinue"
 Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
 
 function Extract-PkgProps ($pkgPath, $serviceName, $pkgName, $lang)
@@ -239,8 +240,14 @@ function Get-PkgListFromYml ($ciYmlPath)
 {
     $ciYmlContent = Get-Content $ciYmlPath -Raw
     $ciYmlObj = ConvertFrom-Yaml $ciYmlContent -Ordered
-    $artifactsInCI = $ciYmlObj["stages"][0]["parameters"]["Artifacts"]
-
+    if ($ciYmlObj.Contains("stages"))
+    {
+      $artifactsInCI = $ciYmlObj["stages"][0]["parameters"]["Artifacts"]
+    }
+    elseif ($ciYmlObj.Contains("extends")) 
+    {
+      $artifactsInCI = $ciYmlObj["extends"]["parameters"]["Artifacts"]
+    }
     if ($artifactsInCI -eq $null)
     {
         Write-Error "Failed to retrive package names in ci $ciYmlPath"
