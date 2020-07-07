@@ -24,7 +24,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 new SharedAccessSignatureCredential("thisIsNotAFakeCredential"));
 
             Assert.That(() => sasTokenClient.BuildSharedAccessSignature(DateTimeOffset.UtcNow.AddMinutes(60)),
-                Throws.InstanceOf<NotSupportedException>(), "Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
+                Throws.InstanceOf<NotSupportedException>(),
+                "Can only create a SAS token when using an EventGridClient created using AzureKeyCredential.");
         }
     }
 }

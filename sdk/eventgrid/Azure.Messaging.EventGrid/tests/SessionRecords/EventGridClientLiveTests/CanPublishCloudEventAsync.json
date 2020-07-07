@@ -7,9 +7,9 @@
         "aeg-sas-key": "Sanitized",
         "Content-Length": "1031",
         "Content-Type": "application/cloudevents-batch\u002Bjson; charset=utf-8",
-        "traceparent": "00-44f1a74c859233418f6397246e85694a-b84444e04dcaf646-00",
+        "traceparent": "00-84232a192303e146a85ee5ba9d87b120-a506fbaeea5a6d4e-00",
         "User-Agent": [
-          "azsdk-net-Messaging.EventGrid/4.0.0-dev.20200702.1",
+          "azsdk-net-Messaging.EventGrid/4.0.0-dev.20200707.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "11a9f32cc8f531497e66023992c35fec",
@@ -20,17 +20,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2018-01-01",
         "Content-Length": "0",
-        "Date": "Thu, 02 Jul 2020 23:24:52 GMT",
+        "Date": "Tue, 07 Jul 2020 21:53:11 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-request-id": "c623df53-13f5-4298-b525-261d4158e221"
+        "x-ms-request-id": "9ebd49ed-012c-4b03-bb7f-8859ac9f70d9"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT": "https://t-kerlee-cloudevent-topic.westus-1.eventgrid.azure.net/api/events",
-    "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY": "Sanitized",
+    "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY": "Kg==",
     "RandomSeed": "1484171398"
   }
 }
