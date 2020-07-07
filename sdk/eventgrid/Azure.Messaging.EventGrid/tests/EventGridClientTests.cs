@@ -58,6 +58,25 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.PublishCloudEventsAsync(GetCloudEventsList());
         }
 
+        [Test]
+        public async Task CanPublishEventUsingSAS()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            EventGridClient client = new EventGridClient(
+                new Uri(TestEnvironment.TopicHost),
+                new AzureKeyCredential(TestEnvironment.TopicKey));
+
+            string sasToken = client.BuildSharedAccessSignature(DateTimeOffset.UtcNow.AddMinutes(60));
+            TestContext.Progress.WriteLine(sasToken);
+
+            EventGridClient sasTokenClient = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    new SharedAccessSignatureCredential(sasToken),
+                    options));
+            await sasTokenClient.PublishEventsAsync(GetEventsList());
+        }
+
         private IList<EventGridEvent> GetEventsList()
         {
             List<EventGridEvent> eventsList = new List<EventGridEvent>();
