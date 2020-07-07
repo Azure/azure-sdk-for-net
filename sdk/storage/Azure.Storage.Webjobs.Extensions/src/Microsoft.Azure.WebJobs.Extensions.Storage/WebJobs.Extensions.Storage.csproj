@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.projitems" Label="Shared" />
   <Import Project="..\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems" Label="Shared" />
   <Import Project="..\..\build\common.props" />  
   
