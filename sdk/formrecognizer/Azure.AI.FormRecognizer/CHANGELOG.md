@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.4 (07-07-2020)
+## 1.0.0-preview.4 (2020-07-07)
 
 ### Renames
 
