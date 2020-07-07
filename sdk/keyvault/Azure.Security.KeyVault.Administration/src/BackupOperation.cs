@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
-            _value = new FullBackupDetailsInternal(string.Empty, string.Empty, null, null, null, id, string.Empty);
+            _value = new FullBackupDetailsInternal(null, null, null, null, null, id, string.Empty);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
             _response = response;
             _retryAfterSeconds = response.Headers.RetryAfter;
-            _value = new FullBackupDetailsInternal(string.Empty, string.Empty, null, null, null, response.Headers.JobId(), string.Empty);
+            _value = new FullBackupDetailsInternal(null, null, null, null, null, response.Headers.JobId(), string.Empty);
         }
 
         /// <summary>

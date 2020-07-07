@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
-            _value = new RestoreDetailsInternal(string.Empty, string.Empty, null, id, null, null);
+            _value = new RestoreDetailsInternal(null, null, null, id, null, null);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
 
-            _value = new RestoreDetailsInternal(string.Empty, string.Empty, null, response.Headers.JobId(), null, null);
+            _value = new RestoreDetailsInternal(null, null, null, response.Headers.JobId(), null, null);
             _client = client;
             _response = response.GetRawResponse();
             _retryAfterSeconds = response.Headers.RetryAfter;
