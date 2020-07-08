@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.Loggers;
@@ -24,16 +22,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     public static class TestHelpers
     {
-        public static IServiceCollection AddSingletonIfNotNull<T>(this IServiceCollection services, T instance) where T : class
-        {
-            if (instance != null)
-            {
-                services.AddSingleton<T>(instance);
-            }
-
-            return services;
-        }
-
         /// <summary>
         /// Helper that builds a test host to configure the options type specified.
         /// </summary>
@@ -96,34 +84,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             await Await(() => Task.FromResult(condition()), timeout, pollingInterval, throwWhenDebugging, userMessageCallback);
         }
 
-        public static void WaitOne(WaitHandle handle, int timeout = 60 * 1000)
-        {
-            bool ok = handle.WaitOne(timeout);
-            if (!ok)
-            {
-                // timeout. Event not signaled in time. 
-                throw new ApplicationException("Condition not reached within timeout.");
-            }
-        }
-
-        public static void SetField(object target, string fieldName, object value)
-        {
-            FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-            if (field == null)
-            {
-                field = target.GetType().GetField($"<{fieldName}>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
-            }
-            field.SetValue(target, value);
-        }
-
-        public static T New<T>()
-        {
-            var constructor = typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { }, null);
-            return (T)constructor.Invoke(null);
-        }
-
-
-
         // Test that we get an indexing error (FunctionIndexingException)  
         // functionName - the function name that has the indexing error. 
         // expectedErrorMessage - inner exception's message with details.
@@ -141,10 +101,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                 return;
             }
             Assert.True(false, "Invoker should have failed");
-        }
-        public static IHostBuilder ConfigureDefaultTestHost(this IHostBuilder builder, params Type[] types)
-        {
-            return builder.ConfigureDefaultTestHost(b => { }, types);
         }
 
         public static IHostBuilder ConfigureDefaultTestHost(this IHostBuilder builder, Action<IWebJobsBuilder> configureWebJobs, params Type[] types)
@@ -173,15 +129,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                     services.AddSingleton<IJobHost, JobHost<TProgram>>();
 
                     services.AddSingleton<IJobActivator>(new FakeActivator(instance));
-                });
-        }
-
-        public static IHostBuilder ConfigureDefaultTestHost<TProgram>(this IHostBuilder builder)
-        {
-            return builder.ConfigureDefaultTestHost(o => { }, typeof(TProgram))
-                .ConfigureServices(services =>
-                {
-                    services.AddSingleton<IJobHost, JobHost<TProgram>>();
                 });
         }
 
@@ -229,23 +176,9 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return builder;
         }
 
-
-        public static IHostBuilder ConfigureTypeLocator(this IHostBuilder builder, params Type[] types)
-        {
-            return builder.ConfigureServices(services =>
-            {
-                services.AddSingleton<ITypeLocator>(new FakeTypeLocator(types));
-            });
-        }
-
         public static TestLoggerProvider GetTestLoggerProvider(this IHost host)
         {
             return host.Services.GetServices<ILoggerProvider>().OfType<TestLoggerProvider>().Single();
-        }
-
-        public static TExtension GetExtension<TExtension>(this IHost host)
-        {
-            return host.Services.GetServices<IExtensionConfigProvider>().OfType<TExtension>().SingleOrDefault();
         }
 
         public static JobHost GetJobHost(this IHost host)
@@ -271,11 +204,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         public static TOptions GetOptions<TOptions>(this IHost host) where TOptions : class, new()
         {
             return host.Services.GetService<IOptions<TOptions>>().Value;
-        }
-
-        public static IJobHostMetadataProvider CreateMetadataProvider(this IHost host)
-        {
-            return host.Services.GetService<IJobHostMetadataProvider>();
         }
 
         public static List<string> GetAssemblyReferences(Assembly assembly)
@@ -319,22 +247,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                     string.Join("\r\n", missingPublicTypes));
                 Assert.True(false, message);
             }
-        }
-
-        public static IDictionary<string, string> CreateInMemoryCollection()
-        {
-            return new Dictionary<string, string>();
-        }
-
-        public static IDictionary<string, string> AddSetting(this IDictionary<string, string> dict, string name, string value)
-        {
-            dict.Add(name, value);
-            return dict;
-        }
-
-        public static IConfiguration BuildConfiguration(this IDictionary<string, string> dict)
-        {
-            return new ConfigurationBuilder().AddInMemoryCollection(dict).Build();
         }
     }
 

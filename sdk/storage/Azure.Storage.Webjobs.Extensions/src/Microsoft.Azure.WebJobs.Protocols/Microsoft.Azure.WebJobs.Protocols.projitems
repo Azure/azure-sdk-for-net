@@ -9,18 +9,10 @@
     <Import_RootNamespace>Microsoft.Azure.WebJobs.Protocols</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AbortHostInstanceMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BinderParameterLogItem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BindingDataParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobMetadataKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobTriggerParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CallAndOverrideMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CallerSuppliedParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CancellationTokenParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CloudStorageAccountParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContainerNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DictionaryExtensions.cs" />
