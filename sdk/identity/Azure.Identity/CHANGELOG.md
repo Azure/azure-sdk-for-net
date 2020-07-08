@@ -7,7 +7,7 @@
     - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
 
 
-## 1.2.0-preview.4
+## 1.2.0-preview.4 (2020-06-10)
 
 ### New Features
 - Makes `AzureCliCredential`, `VisualStudioCredential` and `VisualStudioCodeCredential` public to allow direct usage.
@@ -17,7 +17,7 @@
 - Fix `SharedTokenCacheCredential` account filter to be case-insensitive (Issue [#10816](https://github.com/Azure/azure-sdk-for-net/issues/10816))
 - Update `VisualStudioCodeCredential` to properly throw `CredentialUnavailableException` when re-authentication is needed. (Issue [#11595](https://github.com/Azure/azure-sdk-for-net/issues/11595))
 
-## 1.2.0-preview.3
+## 1.2.0-preview.3 (2020-05-05)
 
 ### New Features
 - First preview of new API for authenticating users with `DeviceCodeCredential` and `InteractiveBrowserCredential`
@@ -27,13 +27,13 @@
     - `DisableAutomaticAuthentication` disables automatic user interaction causing the credential to throw an `AuthenticationRequiredException` when interactive authentication is necessary.
     - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
 
-## 1.2.0-preview.2
+## 1.2.0-preview.2 (2020-04-06)
 
 ### New Features
 - Updates `DefaultAzureCredential` to enable authenticating through Visual Studio
 - Updates `DefaultAzureCredential` to enable authentication through Visual Studio Code
 
-## 1.2.0-preview.1
+## 1.2.0-preview.1 (2020-03-10)
 
 ### New Features
 - Updating `DefaultAzureCredential` to enable authenticating through the Azure CLI
@@ -44,7 +44,7 @@
 - Fix an issue where `EnvironmentCredential` did not behave correctly when `AZURE_USERNAME` and `AZURE_PASSWORD` where set
 - Added `KnownAuthorityHosts` class to aid in sovereign cloud configuration.
 
-## 1.1.1
+## 1.1.1 (2020-02-10)
 
 ### Fixes and improvements
 - Fixed `UsernamePasswordCredential` constructor parameter mishandling
@@ -52,7 +52,7 @@
 - Fixed `ManagedIdentityCredential` to raise `CredentialUnavailableException` on 400 return from the service where no identity has been assigned
 - Updated error messaging from `DefaultAzureCredential` to more easily root cause failures
 
-## 1.1.0
+## 1.1.0 (2019-11-25)
 
 ### Fixes and improvements
 - Update `SharedTokenCacheCredential` to filter accounts by tenant id
@@ -63,7 +63,7 @@
 - Added `InteractiveBrowserTenantId` to `DefaultAzureCredentialOptions`
 - Fixed issue with `ManagedIdentityCredential` authentication with user assigned identities
 
-## 1.0.0
+## 1.0.0 (2019-10-29)
 - First stable release of Azure.Identity package.
 
 ### Breaking Changes
@@ -104,7 +104,7 @@
 - Update `ManagedIdentityCredential` IMDS availability check to handle immediate network failures
 - Added a `DefaultAzureCredential` constructor overload to enable interactive credential types by default
 
-## 1.0.0-preview.5
+## 1.0.0-preview.5 (2019-10-07)
 
 ### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.9
@@ -116,7 +116,7 @@
 ### Fixes and improvements
 - Updated `InteractiveBrowserCredential` and `DeviceCodeCredential` to optionally accept a tenantId to support non-multitenant applications
 
-## 1.0.0-preview.4
+## 1.0.0-preview.4 (2019-09-10)
 
 ### Breaking Changes
 - Modified GetToken abstraction to accept `TokenRequest` structure rather than `string[]` for forwards compatibility
@@ -129,7 +129,7 @@
 - Updated `DefaultAzureCredential`authentication flow to include the `SharedTokenCacheCredential`
 
 
-## 1.0.0-preview.3
+## 1.0.0-preview.3 (2019-08-06)
 
 ### Dependency Changes
 - Adopted Azure.Core 1.0.0-preview.7
@@ -146,13 +146,13 @@
 - Added identity client distributed tracing support
 
 
-## 1.0.0-preview.2
+## 1.0.0-preview.2 (2019-07-02)
 
 ### Fixes and improvements
 - Fix to ManagedIdentityCredential to properly parse expires_on from response
 
 
-## 1.0.0-preview.1
+## 1.0.0-preview.1 (2019-06-27)
 
 Version 1.0.0-preview.1 is the first preview of our efforts to create a user-friendly authentication API for Azure SDK client libraries. For more
 information about preview releases of other Azure SDK libraries, please visit https://aka.ms/azure-sdk-preview1-net.
