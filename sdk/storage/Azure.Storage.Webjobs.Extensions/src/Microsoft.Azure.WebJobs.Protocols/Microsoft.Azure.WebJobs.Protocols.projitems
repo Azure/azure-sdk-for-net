@@ -21,13 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)FunctionDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FunctionFailure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessageExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionStatusMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HeartbeatDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HeartbeatMonitor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HostMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HostOutputMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HostStartedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonSerialization.cs" />
@@ -38,8 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ParameterDisplayHints.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParameterLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PolymorphicJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueueParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueueTriggerParameterDescriptor.cs" />
