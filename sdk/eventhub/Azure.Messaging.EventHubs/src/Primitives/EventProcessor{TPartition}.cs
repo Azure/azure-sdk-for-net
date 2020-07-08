@@ -300,6 +300,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             options = options?.Clone() ?? new EventProcessorOptions();
 
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
