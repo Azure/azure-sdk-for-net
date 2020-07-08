@@ -117,10 +117,7 @@ namespace Azure.Data.Tables
 
             internal static class TableAccountServices
             {
-                public const char Blob = 'b';
-                public const char Queue = 'q';
-                public const char File = 'f';
-                public const char Table = 't';
+                public const string Table = "t";
             }
         }
     }

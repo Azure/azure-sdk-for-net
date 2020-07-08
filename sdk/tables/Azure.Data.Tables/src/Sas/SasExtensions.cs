@@ -57,34 +57,6 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Parse a string representing which services are accessible from a
-        /// shared access signature.
-        /// </summary>
-        /// <param name="s">
-        /// A string representing which services are accessible.
-        /// </param>
-        /// <returns>
-        /// An <see cref="TableAccountSasServices"/> instance.
-        /// </returns>
-        internal static TableAccountSasServices ParseAccountServices(string s)
-        {
-            TableAccountSasServices svcs = default;
-            foreach (var ch in s)
-            {
-                svcs |= ch switch
-                {
-                    TableConstants.Sas.TableAccountServices.Blob => TableAccountSasServices.Blobs,
-                    TableConstants.Sas.TableAccountServices.Queue => TableAccountSasServices.Queues,
-                    TableConstants.Sas.TableAccountServices.File => TableAccountSasServices.Files,
-                    TableConstants.Sas.TableAccountServices.Table => TableAccountSasServices.Tables,
-                    _ => throw Errors.InvalidService(ch),
-                };
-                ;
-            }
-            return svcs;
-        }
-
-        /// <summary>
         /// Parse a string representing which resource types are accessible
         /// from a shared access signature.
         /// </summary>
@@ -206,10 +178,7 @@ namespace Azure.Data.Tables.Sas
                 stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
             }
 
-            if (parameters.Services != null)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, parameters.Services.Value.ToPermissionsString());
-            }
+            stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, TableConstants.Sas.TableAccountServices.Table);
 
             if (parameters.ResourceTypes != null)
             {

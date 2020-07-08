@@ -15,15 +15,12 @@ namespace Azure.Data.Tables.Sas
     /// parameters.  You can construct a new instance using
     /// <see cref="TableAccountSasBuilder"/>.
     ///
-    /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">Create a service SAS</see>.
+    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">Create an account SAS</see>.
     /// </summary>
-    public sealed class TableAccountSasQueryParameters //: SasQueryParameters
+    public class TableAccountSasQueryParameters
     {
         // sv
         private readonly string _version;
-
-        // ss
-        private TableAccountSasServices? _services;
 
         // srt
         private TableAccountSasResourceTypes? _resourceTypes;
@@ -63,12 +60,6 @@ namespace Azure.Data.Tables.Sas
         /// use when handling requests made with this shared access signature.
         /// </summary>
         public string Version => _version ?? TableConstants.Sas.DefaultSasVersion;
-
-        /// <summary>
-        /// Gets the signed services accessible with an account level shared
-        /// access signature.
-        /// </summary>
-        public TableAccountSasServices? Services => _services;
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
@@ -139,7 +130,6 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         internal TableAccountSasQueryParameters(
             string version,
-            TableAccountSasServices? services,
             TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startsOn,
@@ -151,7 +141,6 @@ namespace Azure.Data.Tables.Sas
             string signature)
         {
             _version = version;
-            _services = services;
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
@@ -184,9 +173,6 @@ namespace Azure.Data.Tables.Sas
                 {
                     case TableConstants.Sas.Parameters.VersionUpper:
                         _version = kv.Value;
-                        break;
-                    case TableConstants.Sas.Parameters.ServicesUpper:
-                        _services = SasExtensions.ParseAccountServices(kv.Value);
                         break;
                     case TableConstants.Sas.Parameters.ResourceTypesUpper:
                         _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);

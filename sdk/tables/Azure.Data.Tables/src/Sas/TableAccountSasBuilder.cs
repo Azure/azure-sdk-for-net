@@ -10,7 +10,7 @@ namespace Azure.Data.Tables.Sas
     /// <summary>
     /// <see cref="TableAccountSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage table.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas"/>.
     /// </summary>
     public class TableAccountSasBuilder
     {
@@ -142,7 +142,7 @@ namespace Azure.Data.Tables.Sas
             var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            // String to sign: https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas#constructing-the-signature-string
             var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
@@ -157,7 +157,6 @@ namespace Azure.Data.Tables.Sas
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableAccountSasQueryParameters(
                 version: Version,
-                services: TableAccountSasServices.Tables,
                 resourceTypes: ResourceTypes,
                 protocol: Protocol,
                 startsOn: StartsOn,
