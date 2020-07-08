@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Tests Class Library</Description>
+    <AssemblyTitle>Microsoft Azure Live video analytics Tests</AssemblyTitle>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+</Project>
