@@ -17,6 +17,7 @@ extends:
 
       # AzureUSGovernment
       - ServiceDirectory: keyvault
+        TimeoutInMinutes: 120
         ScenarioName: AzureUSGovernment
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.usgovcloudapi.net' }"
@@ -27,6 +28,7 @@ extends:
 
       # AzureChinaCloud
       - ServiceDirectory: keyvault
+        TimeoutInMinutes: 120
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.cn'; keyVaultSku = 'standard' }"
