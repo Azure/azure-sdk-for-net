@@ -151,6 +151,33 @@ Running the script for a project in `sdk\tables` would look like this:
 eng\scripts\Export-API.ps1 tables
 ```
 
+## Updating Sample Snippets
+If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
+Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
+
+Running the script for a project in `sdk\keyvault` would look like this: 
+```
+eng\scripts\Update-Snippets.ps1 keyvault
+```
+
+When run, the code regions in the format below (where `<snippetName>` is the name of the snippet):
+```c#
+#region Snippet:<snippetName>
+//some sample code
+string snippet = "some snippet code";
+
+// Lines prefixed with the below comment format will be ignored by the snippet updater
+/*@@*/ string ignored = "this code will not appear in the snippet markdown";
+
+#endregion
+```
+ will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match: 
+
+**\`\`\`C# Snippet:\<snippetName>**
+
+**\`\`\`**
+
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
