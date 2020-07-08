@@ -23,8 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HeartbeatDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HostOutputMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IPersistentQueueWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonSerialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonTypeNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JTokenExtensions.cs" />
@@ -37,13 +35,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)QueueParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueueTriggerParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReadBlobParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ServiceBusParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ServiceBusTriggerParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SingletonParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TableEntityParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TableParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TableParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TextParameterLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TriggerParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebJobRunIdentifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebJobTypes.cs" />
