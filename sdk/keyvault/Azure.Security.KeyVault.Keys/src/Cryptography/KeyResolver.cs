@@ -168,6 +168,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case 204:
                     result.Deserialize(response.ContentStream);
                     return Response.FromValue(result, response);
+                case 403:
+                    // IKeyEncryptionKeyResolver.Resolve is designed to delegate access verification to the resolver.
+                    return Response.FromValue<T>(default, response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(response);
             }
