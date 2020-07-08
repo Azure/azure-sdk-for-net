@@ -115,62 +115,6 @@ namespace Azure.Data.Tables.Sas
         /// <param name="stringBuilder">
         /// StringBuilder instance to add the query params to
         /// </param>
-        internal static void AppendProperties(this TableSasQueryParameters parameters, StringBuilder stringBuilder)
-        {
-            if (!string.IsNullOrWhiteSpace(parameters.Version))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
-            }
-
-            if (parameters.Protocol != default)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Protocol, parameters.Protocol.ToProtocolString());
-            }
-
-            if (parameters.StartsOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            if (parameters.ExpiresOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            var ipr = parameters.IPRange.ToString();
-            if (ipr.Length > 0)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.IPRange, ipr);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Identifier))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Identifier, parameters.Identifier);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Resource))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Resource, parameters.Resource);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Permissions))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Permissions, parameters.Permissions);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Signature))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));
-            }
-        }
-
-        /// <summary>
-        /// Builds the query parameter string for the SasQueryParameters instance.
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="stringBuilder">
-        /// StringBuilder instance to add the query params to
-        /// </param>
         internal static void AppendProperties(this TableAccountSasQueryParameters parameters, StringBuilder stringBuilder)
         {
             if (!string.IsNullOrWhiteSpace(parameters.Version))

@@ -118,8 +118,6 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         public string Signature => _signature ?? string.Empty;
 
-        public static TableAccountSasQueryParameters Empty => new TableAccountSasQueryParameters();
-
         internal TableAccountSasQueryParameters()
             : base()
         {
