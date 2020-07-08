@@ -21,4 +21,10 @@
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Synapse.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
