@@ -122,7 +122,10 @@ namespace Azure.Data.Tables.Sas
                 stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
             }
 
-            stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, TableConstants.Sas.TableAccountServices.Table);
+            if (!(parameters is TableSasQueryParameters))
+            {
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, TableConstants.Sas.TableAccountServices.Table);
+            }
 
             if (parameters.ResourceTypes != null)
             {
