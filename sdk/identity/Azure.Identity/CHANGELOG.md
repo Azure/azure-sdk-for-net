@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-preview.5
+## 1.2.0-preview.5 (2020-07-08)
 
 ### New Features
 - Added options classes `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions` which support the following new option
