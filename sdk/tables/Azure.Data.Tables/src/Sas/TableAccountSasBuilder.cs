@@ -8,40 +8,36 @@ using Azure.Core;
 namespace Azure.Data.Tables.Sas
 {
     /// <summary>
-    /// <see cref="TableSasBuilder"/> is used to generate a Shared Access
+    /// <see cref="TableAccountSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage table.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas" />.
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas"/>.
     /// </summary>
-    public class TableSasBuilder
+    public class TableAccountSasBuilder
     {
         /// <summary>
-        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
         /// <param name="permissions">The permissions associated with the shared access signature.</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableSasBuilder(string tableName, TableSasPermissions permissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            TableName = tableName;
             ExpiresOn = expiresOn;
             SetPermissions(permissions);
+            ResourceTypes = resourceTypes;
         }
 
         /// <summary>
-        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// Initializes an instance of a <see cref="TableAccountSasBuilder"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
         /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
-        public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
+        public TableAccountSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
+            ResourceTypes = resourceTypes;
         }
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace Azure.Data.Tables.Sas
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  <see cref="TableSasPermissions"/> can be used to create the
+        /// stored access policy.  <see cref="TableAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
         public string Permissions { get; private set; }
@@ -94,31 +90,10 @@ namespace Azure.Data.Tables.Sas
         public string Identifier { get; set; }
 
         /// <summary>
-        /// The name of the table being made accessible.
+        /// The resource types associated with the shared access signature. The
+        /// user is restricted to operations on the specified resources.
         /// </summary>
-        public string TableName { get; }
-
-        /// <summary>
-        /// The optional start of the partition key values range being made available.
-        /// </summary>
-        public string PartitionKeyStart { get; set; }
-
-        /// <summary>
-        /// The optional start of the row key values range being made available.
-        /// </summary>
-        public string RowKeyStart { get; set; }
-
-        /// <summary>
-        /// The optional end of the partition key values range being made available.
-        /// <see cref="PartitionKeyStart"/> must be specified if this value is set.
-        /// </summary>
-        public string PartitionKeyEnd { get; set; }
-
-        /// <summary>
-        /// The optional end of the partition key values range being made available.
-        /// <see cref="RowKeyStart"/> must be specified if this value is set.
-        /// </summary>
-        public string RowKeyEnd { get; set; }
+        public TableAccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -131,9 +106,9 @@ namespace Azure.Data.Tables.Sas
         /// Sets the permissions for a table SAS.
         /// </summary>
         /// <param name="permissions">
-        /// <see cref="TableSasPermissions"/> containing the allowed permissions.
+        /// <see cref="TableAccountSasPermissions"/> containing the allowed permissions.
         /// </param>
-        public void SetPermissions(TableSasPermissions permissions)
+        public void SetPermissions(TableAccountSasPermissions permissions)
         {
             Permissions = permissions.ToPermissionsString();
         }
@@ -156,9 +131,9 @@ namespace Azure.Data.Tables.Sas
         /// The storage account's <see cref="TableSharedKeyCredential"/>.
         /// </param>
         /// <returns>
-        /// An instance of <see cref="TableSasQueryParameters"/>.
+        /// An instance of <see cref="TableAccountSasQueryParameters"/>.
         /// </returns>
-        public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
+        public TableAccountSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
@@ -167,29 +142,22 @@ namespace Azure.Data.Tables.Sas
             var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            // String to sign: https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas#constructing-the-signature-string
             var stringToSign = string.Join("\n",
+                sharedKeyCredential.AccountName,
                 Permissions,
+                TableConstants.Sas.TableAccountServices.Table,
+                ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, TableName),
-                Identifier,
                 IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
+                Protocol.ToProtocolString(),
                 Version,
-                PartitionKeyStart,
-                RowKeyStart,
-                PartitionKeyEnd,
-                RowKeyEnd);
+                "");
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
-            var p = new TableSasQueryParameters(
+            var p = new TableAccountSasQueryParameters(
                 version: Version,
-                resourceTypes: default,
-                tableName: TableName,
-                partitionKeyStart: PartitionKeyStart,
-                partitionKeyEnd: PartitionKeyEnd,
-                rowKeyStart: RowKeyStart,
-                rowKeyEnd: RowKeyEnd,
+                resourceTypes: ResourceTypes,
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
@@ -216,22 +184,6 @@ namespace Azure.Data.Tables.Sas
             ToSasQueryParameters(sharedKeyCredential).ToString();
 
         /// <summary>
-        /// Computes the canonical name for a table resource for SAS signing.
-        /// </summary>
-        /// <param name="account">
-        /// Account.
-        /// </param>
-        /// <param name="tableName">
-        /// Name of table.
-        /// </param>
-        /// <returns>
-        /// Canonical name as a string.
-        /// </returns>
-        private static string GetCanonicalName(string account, string tableName) =>
-            // Table: "/table/account/tablename"
-            string.Join("", new[] { "/table/", account, "/", tableName });
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
@@ -254,26 +206,26 @@ namespace Azure.Data.Tables.Sas
         public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
-        /// Ensure the <see cref="TableSasBuilder"/>'s properties are in a
+        /// Ensure the <see cref="TableAccountSasBuilder"/>'s properties are in a
         /// consistent state.
         /// </summary>
         private void EnsureState()
         {
-            if (Identifier == default)
+            if (ResourceTypes == default)
             {
-                if (ExpiresOn == default)
-                {
-                    throw Errors.SasMissingData(nameof(ExpiresOn));
-                }
-                if (string.IsNullOrEmpty(Permissions))
-                {
-                    throw Errors.SasMissingData(nameof(Permissions));
-                }
+                throw Errors.SasMissingData(nameof(ResourceTypes));
             }
-
+            if (ExpiresOn == default)
+            {
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
+            }
             if (string.IsNullOrEmpty(Version))
             {
-                Version = TableSasQueryParameters.DefaultSasVersion;
+                Version = TableAccountSasQueryParameters.DefaultSasVersion;
             }
         }
     }

@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,6 +25,110 @@ namespace Azure.Data.Tables.Tests
 
         public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
+
+        [Test]
+        public void ValidateAccountSasCredentialsWithPermissions()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+
+            // Build a shared access signature with only Delete permissions and access to all service resource types.
+
+            TableAccountSasBuilder sasDelete = service.GetSasBuilder(TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenDelete = sasDelete.Sign(credential);
+
+            // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
+
+            TableAccountSasBuilder sasWriteDelete = service.GetSasBuilder(TableAccountSasPermissions.Write, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenWriteDelete = sasWriteDelete.Sign(credential);
+
+            // Build SAS URIs.
+
+            UriBuilder sasUriDelete = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = tokenDelete
+            };
+
+            UriBuilder sasUriWriteDelete = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = tokenWriteDelete
+            };
+
+            // Create the TableServiceClients using the SAS URIs.
+
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
+
+            var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            Assert.That(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+
+            // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
+
+            Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
+
+            Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+        }
+
+        [Test]
+        public void ValidateAccountSasCredentialsWithResourceTypes()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+
+            // Build a shared access signature with all permissions and access to only Service resource types.
+
+            TableAccountSasBuilder sasService = service.GetSasBuilder(TableAccountSasPermissions.All, TableAccountSasResourceTypes.Service, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenService = sasService.Sign(credential);
+
+            // Build a shared access signature with all permissions and access to Service and Container resource types.
+
+            TableAccountSasBuilder sasServiceContainer = service.GetSasBuilder(TableAccountSasPermissions.All, TableAccountSasResourceTypes.Service | TableAccountSasResourceTypes.Container, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenServiceContainer = sasServiceContainer.Sign(credential);
+
+            // Build SAS URIs.
+
+            UriBuilder sasUriService = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = tokenService
+            };
+
+            UriBuilder sasUriServiceContainer = new UriBuilder(TestEnvironment.StorageUri)
+            {
+                Query = tokenServiceContainer
+            };
+
+            // Create the TableServiceClients using the SAS URIs.
+
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(sasUriService.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(sasUriServiceContainer.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
+
+            var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            Assert.That(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+
+            // Validate that we are able to create a table using the SAS URI with access to Service and Container resource types.
+
+            Assert.That(async () => await sasAuthedServiceClientServiceContainer.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to get table service properties using the SAS URI with access to Service resource types.
+
+            Assert.That(async () => await sasAuthedServiceClientService.GetPropertiesAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to get table service properties using the SAS URI with access to Service and Container resource types.
+
+            Assert.That(async () => await sasAuthedServiceClientService.GetPropertiesAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to delete a table using the SAS URI with access to Service and Container resource types.
+
+            Assert.That(async () => await sasAuthedServiceClientServiceContainer.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+        }
 
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
@@ -100,25 +206,31 @@ namespace Azure.Data.Tables.Tests
         public async Task GetPropertiesReturnsProperties()
         {
             // Get current properties
+
             TableServiceProperties responseToChange = await service.GetPropertiesAsync().ConfigureAwait(false);
 
             // Change a property
+
             responseToChange.Logging.Read = !responseToChange.Logging.Read;
 
             // Set properties to the changed one
+
             await service.SetPropertiesAsync(responseToChange).ConfigureAwait(false);
 
             // Wait 20 sec if on Live mode to ensure properties are updated in the service
             // Minimum time: Sync - 20 sec; Async - 12 sec
+
             if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(20000);
             }
 
             // Get configured properties
+
             TableServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
 
             // Test each property
+
             CompareTableServiceProperties(responseToChange, changedResponse);
         }
 
@@ -126,9 +238,11 @@ namespace Azure.Data.Tables.Tests
         public async Task GetTableServiceStatsReturnsStats()
         {
             // Get statistics
+
             TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);
 
             // Test that the secondary location is live
+
             Assert.AreEqual(new GeoReplicationStatusType("live"), stats.GeoReplication.Status);
         }
 

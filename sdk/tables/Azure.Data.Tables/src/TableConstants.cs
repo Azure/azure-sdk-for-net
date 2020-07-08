@@ -86,6 +86,10 @@ namespace Azure.Data.Tables
                 public const string EndRowKey = "endrk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
+                public const string Services = "ss";
+                public const string ServicesUpper = "SS";
+                public const string ResourceTypes = "srt";
+                public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
                 public const string ProtocolUpper = "SPR";
                 public const string StartTime = "st";
@@ -102,6 +106,18 @@ namespace Azure.Data.Tables
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
+            }
+
+            internal static class TableAccountResources
+            {
+                public const char Service = 's';
+                public const char Container = 'c';
+                public const char Object = 'o';
+            }
+
+            internal static class TableAccountServices
+            {
+                public const string Table = "t";
             }
         }
     }
