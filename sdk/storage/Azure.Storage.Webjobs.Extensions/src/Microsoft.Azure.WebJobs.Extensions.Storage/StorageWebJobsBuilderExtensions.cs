@@ -16,7 +16,6 @@ using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Config;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
-using Microsoft.Azure.WebJobs.Host.Tables.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebJobs.Extensions.Storage;
@@ -57,8 +56,6 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<QueueTriggerAttributeBindingProvider>();
 
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IBindingProvider, CloudStorageAccountBindingProvider>());
-
-            builder.AddExtension<TablesExtensionConfigProvider>();
 
             builder.AddExtension<QueuesExtensionConfigProvider>()
                 .BindOptions<QueuesOptions>();

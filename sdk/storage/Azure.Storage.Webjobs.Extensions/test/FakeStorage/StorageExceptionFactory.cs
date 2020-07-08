@@ -21,18 +21,6 @@ namespace FakeStorage
             return Create(httpStatusCode, new XElement("Error", new XElement("Code", errorCode)));
         }
 
-        public static Microsoft.Azure.Cosmos.Table.StorageException CreateTableStorageException(int httpStatusCode, string errorCode)
-        {
-            var result = new Microsoft.Azure.Cosmos.Table.RequestResult();
-            result.HttpStatusCode = httpStatusCode;
-
-            var extendedInfo = Activator.CreateInstance<Microsoft.Azure.Cosmos.Table.StorageExtendedErrorInformation>();
-            extendedInfo.SetInternalProperty("ErrorCode", errorCode);
-            result.SetInternalProperty("ExtendedErrorInformation", extendedInfo);
-
-            return new Microsoft.Azure.Cosmos.Table.StorageException(result, null, null);
-        }
-
         private static StorageException Create(int httpStatusCode, XElement extendedErrorElement)
         {
             // Unfortunately, the RequestResult properties are all internal-only settable. ReadXml is the only way to

@@ -81,9 +81,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueParameterDescriptor.cs" Link="Shared\QueueParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueTriggerParameterDescriptor.cs" Link="Shared\QueueTriggerParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\TableEntityParameterDescriptor.cs" Link="Shared\TableEntityParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\TableParameterDescriptor.cs" Link="Shared\TableParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\TableParameterLog.cs" Link="Shared\TableParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
   </ItemGroup>  
   
@@ -92,7 +89,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.7" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.14" />

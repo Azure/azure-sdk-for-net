@@ -23,7 +23,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
 
             var expectedReferences = new string[]
             {
-                "Microsoft.Azure.Cosmos.Table",
                 "Microsoft.Azure.Storage.Blob",
                 "Microsoft.Azure.Storage.Common",
                 "Microsoft.Azure.Storage.Queue",
@@ -67,9 +66,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "QueueTriggerAttribute",
                 "QueueTriggerParameterDescriptor",
                 "StorageWebJobsBuilderExtensions",
-                "TableAttribute",
-                "TableEntityParameterDescriptor",
-                "TableParameterDescriptor",
                 "StorageAccount",
                 "StorageAccountProvider",
                 "AzureStorageWebJobsStartup",

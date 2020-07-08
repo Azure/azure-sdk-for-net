@@ -2,12 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.Queues;
@@ -18,7 +16,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
-using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -47,9 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static EventWaitHandle _startWaitHandle;
         private static EventWaitHandle _functionChainWaitHandle;
         private CloudStorageAccount _storageAccount;
-        private TableStorageAccount _tableStorageAccount;
         private RandomNameResolver _resolver;
-        private static object testResult;
 
         private static string _lastMessageId;
         private static string _lastMessagePopReceipt;
@@ -57,7 +52,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public AzureStorageEndToEndTests(TestFixture fixture)
         {
             _storageAccount = fixture.StorageAccount;
-            _tableStorageAccount = fixture.TableStorageAccount;
         }
 
         /// <summary>
@@ -102,28 +96,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         /// </summary>
         public static void QueueToICollectorAndQueue(
             [QueueTrigger(TestQueueNameEtag)] CustomObject e2equeue,
-            [Table(TableName)] ICollector<ITableEntity> table,
             [Queue(TestQueueName)] out CustomObject output)
         {
-            const string tableKeys = "testETag";
-
-            DynamicTableEntity result = new DynamicTableEntity
-            {
-                PartitionKey = tableKeys,
-                RowKey = tableKeys,
-                Properties = new Dictionary<string, EntityProperty>()
-                {
-                    { "Text", new EntityProperty("before") },
-                    { "Number", new EntityProperty("1") }
-                }
-            };
-
-            table.Add(result);
-
-            result.Properties["Text"] = new EntityProperty("after");
-            result.ETag = "*";
-            table.Add(result);
-
             output = e2equeue;
         }
 
@@ -135,21 +109,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         /// </summary>
         public static void QueueToTable(
             [QueueTrigger(TestQueueName)] CustomObject e2equeue,
-            [Table(TableName)] CloudTable table,
             [Queue(DoneQueueName)] out string e2edone)
         {
-            const string tableKeys = "test";
-
-            CustomTableEntity result = new CustomTableEntity
-            {
-                PartitionKey = tableKeys,
-                RowKey = tableKeys,
-                Text = e2equeue.Text + " " + "QueueToTable",
-                Number = e2equeue.Number + 1
-            };
-
-            table.ExecuteAsync(TableOperation.InsertOrReplace(result)).Wait();
-
             // Write a queue message to signal the scenario completion
             e2edone = "done";
         }
@@ -183,14 +144,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _badMessage2Calls++;
         }
 
-        [NoAutomaticTrigger]
-        public static void TableWithFilter(
-            [QueueTrigger("test")] Person person,
-            [Table(TableName, Filter = "(Age gt {Age}) and (Location eq '{Location}')")] JArray results)
-        {
-            testResult = results;
-        }
-
         // Uncomment the Fact attribute to run
         // [Fact(Timeout = 20 * 60 * 1000)]
         public async Task AzureStorageEndToEndSlow()
@@ -202,87 +155,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
-        }
-
-        [Fact]
-        public async Task TableFilterTest()
-        {
-            // Reinitialize the name resolver to avoid conflicts
-            _resolver = new RandomNameResolver();
-
-            IHost host = new HostBuilder()
-                .ConfigureDefaultTestHost<AzureStorageEndToEndTests>(b =>
-                {
-                    b.AddAzureStorage();
-                })
-                .ConfigureServices(services =>
-                {
-                    services.AddSingleton<INameResolver>(_resolver);
-                })
-                .Build();
-
-            // write test entities
-            string testTableName = _resolver.ResolveInString(TableName);
-            CloudTableClient tableClient = _tableStorageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference(testTableName);
-            await table.CreateIfNotExistsAsync();
-            var operation = new TableBatchOperation();
-            operation.Insert(new Person
-            {
-                PartitionKey = "1",
-                RowKey = "1",
-                Name = "Lary",
-                Age = 20,
-                Location = "Seattle"
-            });
-            operation.Insert(new Person
-            {
-                PartitionKey = "1",
-                RowKey = "2",
-                Name = "Moe",
-                Age = 35,
-                Location = "Seattle"
-            });
-            operation.Insert(new Person
-            {
-                PartitionKey = "1",
-                RowKey = "3",
-                Name = "Curly",
-                Age = 45,
-                Location = "Texas"
-            });
-            operation.Insert(new Person
-            {
-                PartitionKey = "1",
-                RowKey = "4",
-                Name = "Bill",
-                Age = 28,
-                Location = "Tam O'Shanter"
-            });
-
-            await table.ExecuteBatchAsync(operation);
-
-            JobHost jobHost = host.GetJobHost();
-            var methodInfo = GetType().GetMethod(nameof(TableWithFilter));
-            var input = new Person { Age = 25, Location = "Seattle" };
-            string json = JsonConvert.SerializeObject(input);
-            var arguments = new { person = json };
-            await jobHost.CallAsync(methodInfo, arguments);
-
-            // wait for test results to appear
-            await TestHelpers.Await(() => testResult != null);
-
-            JArray results = (JArray)testResult;
-            Assert.Single(results);
-
-            input = new Person { Age = 25, Location = "Tam O'Shanter" };
-            json = JsonConvert.SerializeObject(input);
-            arguments = new { person = json };
-            await jobHost.CallAsync(methodInfo, arguments);
-            await TestHelpers.Await(() => testResult != null);
-            results = (JArray)testResult;
-            Assert.Single(results);
-            Assert.Equal("Bill", (string)results[0]["Name"]);
         }
 
         private async Task EndToEndTest(bool uploadBlobBeforeHostStart)
@@ -327,9 +199,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await host.StopAsync();
 
             Assert.True(signaled, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
-
-            // Verify
-            await VerifyTableResultsAsync();
         }
 
         [Fact]
@@ -455,51 +324,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _startWaitHandle.WaitOne(30000);
         }
 
-        private async Task VerifyTableResultsAsync()
-        {
-            string testTableName = _resolver.ResolveInString(TableName);
-
-            CloudTableClient tableClient = _tableStorageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference(testTableName);
-
-            Assert.True(await table.ExistsAsync(), "Result table not found");
-
-            TableQuery query = new TableQuery()
-                .Where(TableQuery.CombineFilters(
-                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "test"),
-                    TableOperators.And,
-                    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, "test")))
-                .Take(1);
-            DynamicTableEntity result = (await table.ExecuteQuerySegmentedAsync(query, null)).FirstOrDefault();
-
-            // Ensure expected row found
-            Assert.NotNull(result);
-
-            Assert.Equal("Test testblob QueueToTable", result.Properties["Text"].StringValue);
-            Assert.Equal(44, result.Properties["Number"].Int32Value);
-
-            query = new TableQuery()
-                .Where(TableQuery.CombineFilters(
-                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "testETag"),
-                    TableOperators.And,
-                    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, "testETag")))
-                .Take(1);
-            result = (await table.ExecuteQuerySegmentedAsync(query, null)).FirstOrDefault();
-
-            // Ensure expected row found
-            Assert.NotNull(result);
-
-            Assert.Equal("after", result.Properties["Text"].StringValue);
-        }
-
-        private class CustomTableEntity : TableEntity
+        private class CustomTableEntity
         {
             public string Text { get; set; }
 
             public int Number { get; set; }
         }
 
-        public class Person : TableEntity
+        public class Person
         {
             public int Age { get; set; }
             public string Location { get; set; }
@@ -543,16 +375,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var provider = host.Services.GetService<StorageAccountProvider>();
                 StorageAccount = provider.GetHost().SdkObject;
-                TableStorageAccount = provider.GetHost().TableSdkObject;
             }
 
             public CloudStorageAccount StorageAccount
-            {
-                get;
-                private set;
-            }
-
-            public TableStorageAccount TableStorageAccount
             {
                 get;
                 private set;
@@ -570,12 +395,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 foreach (var testQueue in queueClient.ListQueuesSegmentedAsync(TestArtifactsPrefix, null).Result.Results)
                 {
                     testQueue.DeleteAsync().Wait();
-                }
-
-                CloudTableClient tableClient = TableStorageAccount.CreateCloudTableClient();
-                foreach (var testTable in tableClient.ListTablesSegmentedAsync(TestArtifactsPrefix, null).Result.Results)
-                {
-                    testTable.DeleteAsync().Wait();
                 }
             }
         }

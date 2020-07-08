@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
 
@@ -34,11 +33,6 @@ namespace Microsoft.Azure.WebJobs
         public override CloudBlobClient CreateCloudBlobClient()
         {
             return _account2.CreateCloudBlobClient();
-        }
-
-        public override CloudTableClient CreateCloudTableClient()
-        {
-            return _account2.CreateCloudTableClient();
         }
 
         public override string Name => _account2.Name;

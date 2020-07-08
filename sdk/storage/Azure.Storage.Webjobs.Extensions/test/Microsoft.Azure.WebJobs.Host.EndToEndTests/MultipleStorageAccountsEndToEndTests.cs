@@ -9,10 +9,8 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
-using Microsoft.Azure.Cosmos.Table;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
@@ -128,34 +126,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Fact]
-        public async Task Table_PrimaryAndSecondary_Succeeds()
-        {
-            await _fixture.JobHost.CallAsync(typeof(MultipleStorageAccountsEndToEndTests).GetMethod("Table_PrimaryAndSecondary"));
-
-            TestTableEntity entity1 = null;
-            TestTableEntity entity2 = null;
-            await TestHelpers.Await(async () =>
-            {
-                TableResult result = await _fixture.OutputTable1.ExecuteAsync(TableOperation.Retrieve<TestTableEntity>("test", "test"));
-                if (result != null)
-                {
-                    entity1 = (TestTableEntity)result.Result;
-                }
-
-                result = await _fixture.OutputTable2.ExecuteAsync(TableOperation.Retrieve<TestTableEntity>("test", "test"));
-                if (result != null)
-                {
-                    entity2 = (TestTableEntity)result.Result;
-                }
-
-                return entity1 != null && entity2 != null;
-            });
-
-            Assert.Equal(TestData, entity1.Text);
-            Assert.Equal(TestData, entity2.Text);
-        }
-
-        [Fact]
         public async Task CloudStorageAccount_PrimaryAndSecondary_Succeeds()
         {
             await _fixture.JobHost.CallAsync(typeof(MultipleStorageAccountsEndToEndTests).GetMethod(nameof(MultipleStorageAccountsEndToEndTests.BindToCloudStorageAccount)));
@@ -207,21 +177,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             [Queue(Output)] out string output)
         {
             output = input;
-        }
-
-        [NoAutomaticTrigger]
-        public async static Task Table_PrimaryAndSecondary(
-            [Table(OutputTableName)] CloudTable primaryOutput,
-            [Table(OutputTableName, Connection = Secondary)] CloudTable secondaryOutput)
-        {
-            TestTableEntity entity = new TestTableEntity
-            {
-                PartitionKey = "test",
-                RowKey = "test",
-                Text = TestData
-            };
-            await primaryOutput.ExecuteAsync(TableOperation.InsertOrReplace(entity));
-            await secondaryOutput.ExecuteAsync(TableOperation.InsertOrReplace(entity));
         }
 
         [NoAutomaticTrigger]
@@ -295,10 +250,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 OutputQueue2 = queueClient2.GetQueueReference(outputName);
                 await OutputQueue2.CreateIfNotExistsAsync();
 
-                CloudTableClient tableClient1 = Account1.CreateCloudTableClient();
                 string outputTableName = nameResolver.ResolveWholeString(OutputTableName);
-                OutputTable1 = tableClient1.GetTableReference(outputTableName);
-                OutputTable2 = Account2.CreateCloudTableClient().GetTableReference(outputTableName);
 
                 // upload some test blobs to the input containers of both storage accounts
                 CloudBlockBlob blob = inputContainer1.GetBlockBlobReference("blob1");
@@ -332,10 +284,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public CloudQueue OutputQueue2 { get; private set; }
 
-            public CloudTable OutputTable1 { get; private set; }
-
-            public CloudTable OutputTable2 { get; private set; }
-
             public async Task DisposeAsync()
             {
                 await Host.StopAsync();
@@ -358,12 +306,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await testContainer.DeleteAsync();
             }
 
-            CloudTableClient tableClient = account.CreateCloudTableClient();
-            foreach (var table in await tableClient.ListTablesSegmentedAsync(TestArtifactPrefix, null))
-            {
-                await table.DeleteAsync();
-            }
-
             CloudQueueClient queueClient = account.CreateCloudQueueClient();
             foreach (var queue in (await queueClient.ListQueuesSegmentedAsync(TestArtifactPrefix, null)).Results)
             {
@@ -371,7 +313,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class TestTableEntity : TableEntity
+        public class TestTableEntity
         {
             public string Text { get; set; }
         }

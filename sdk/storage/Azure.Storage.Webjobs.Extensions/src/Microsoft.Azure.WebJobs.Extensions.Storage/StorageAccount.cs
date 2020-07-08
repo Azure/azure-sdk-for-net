@@ -2,12 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
-using TableStorageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -25,7 +23,6 @@ namespace Microsoft.Azure.WebJobs
         /// else use the virtuals. 
         /// </summary>
         public CloudStorageAccount SdkObject { get; protected set; }
-        public TableStorageAccount TableSdkObject { get; protected set; }
 
         public StorageAccount()
         {
@@ -39,13 +36,12 @@ namespace Microsoft.Azure.WebJobs
         public static StorageAccount NewFromConnectionString(string accountConnectionString)
         {
             var account = CloudStorageAccount.Parse(accountConnectionString);
-            var tableAccount = TableStorageAccount.Parse(accountConnectionString);
-            return New(account, tableAccount);
+            return New(account);
         }
 
-        public static StorageAccount New(CloudStorageAccount account, TableStorageAccount tableAccount = null, IDelegatingHandlerProvider delegatingHandlerProvider = null)
+        public static StorageAccount New(CloudStorageAccount account, IDelegatingHandlerProvider delegatingHandlerProvider = null)
         {
-            return new StorageAccount(delegatingHandlerProvider) { SdkObject = account, TableSdkObject = tableAccount };
+            return new StorageAccount(delegatingHandlerProvider) { SdkObject = account };
         }
 
         public virtual bool IsDevelopmentStorageAccount()
@@ -71,21 +67,6 @@ namespace Microsoft.Azure.WebJobs
         public virtual CloudQueueClient CreateCloudQueueClient()
         {
             return new CloudQueueClient(SdkObject.QueueStorageUri, SdkObject.Credentials, _delegatingHandlerProvider?.Create());
-        }
-
-        public virtual CloudTableClient CreateCloudTableClient()
-        {
-            var restConfiguration = new RestExecutorConfiguration()
-            {
-                DelegatingHandler = _delegatingHandlerProvider?.Create()
-            };
-
-            var configuration = new TableClientConfiguration
-            {
-                RestExecutorConfiguration = restConfiguration
-            };
-
-            return new CloudTableClient(TableSdkObject.TableStorageUri, TableSdkObject.Credentials, configuration);
         }
     }
 }
