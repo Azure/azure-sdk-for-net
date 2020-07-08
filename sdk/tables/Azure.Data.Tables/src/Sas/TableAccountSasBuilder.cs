@@ -211,18 +211,18 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         private void EnsureState()
         {
-            if (Identifier == default)
+            if (ResourceTypes == default)
             {
-                if (ExpiresOn == default)
-                {
-                    throw Errors.SasMissingData(nameof(ExpiresOn));
-                }
-                if (string.IsNullOrEmpty(Permissions))
-                {
-                    throw Errors.SasMissingData(nameof(Permissions));
-                }
+                throw Errors.SasMissingData(nameof(ResourceTypes));
             }
-
+            if (ExpiresOn == default)
+            {
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
+            }
             if (string.IsNullOrEmpty(Version))
             {
                 Version = TableAccountSasQueryParameters.DefaultSasVersion;

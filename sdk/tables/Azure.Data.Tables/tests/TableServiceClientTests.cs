@@ -33,7 +33,7 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com")));
+            service_Instrumented = InstrumentClient(new TableServiceClient(_url));
         }
 
         /// <summary>
@@ -81,6 +81,7 @@ namespace Azure.Tables.Tests
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            Assert.That(sas.ResourceTypes, Is.EqualTo(resourceTypes));
         }
 
         [Test]
@@ -94,6 +95,7 @@ namespace Azure.Tables.Tests
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+            Assert.That(sas.ResourceTypes, Is.EqualTo(resourceTypes));
         }
     }
 }
