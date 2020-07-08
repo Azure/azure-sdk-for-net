@@ -155,7 +155,7 @@ eng\scripts\Export-API.ps1 tables
 If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
 Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
 
-Running the script for a project in `sdk\keyvault` would look like this: 
+Running the script for a project, for example in `sdk\keyvault`, would look like this: 
 ```
 eng\scripts\Update-Snippets.ps1 keyvault
 ```
