@@ -64,27 +64,8 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            ValueTask<string?> headerValueTask = _accessTokenCache.GetTokenAsync();
-            var headerValue = async
-                ? await headerValueTask.AwaitWithCancellation(message.CancellationToken)
-                : headerValueTask.IsCompleted ? headerValueTask.Result : WaitSynchronously(headerValueTask, message.CancellationToken);
-
-            if (headerValue == null)
-            {
-                try
-                {
-                    AccessToken token = async
-                        ? await _credential.GetTokenAsync(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken).ConfigureAwait(false)
-                        : _credential.GetToken(new TokenRequestContext(_scopes, message.Request.ClientRequestId), message.CancellationToken);
-
-                    headerValue = _accessTokenCache.SaveToken(token, default);
-                }
-                catch (Exception e)
-                {
-                    _accessTokenCache.SaveToken(default, e);
-                    throw;
-                }
-            }
+            string? headerValue = await GetHeaderValueFromCacheAsync(message, async) ??
+                await GetHeaderValueFromCredentialAsync(message, async);
 
             if (headerValue != null)
             {
@@ -99,17 +80,45 @@ namespace Azure.Core.Pipeline
             {
                 ProcessNext(message, pipeline);
             }
+        }
 
-            static string? WaitSynchronously(ValueTask<string?> headerValueTask, CancellationToken cancellationToken)
+        private async ValueTask<string?> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async) {
+            try
             {
-                Task<string?> task = headerValueTask.AsTask();
-                try
-                {
-                    task.Wait(cancellationToken);
-                }
-                catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
-                return task.EnsureCompleted();
+                var requestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+                AccessToken token = async
+                    ? await _credential.GetTokenAsync(requestContext, message.CancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(requestContext, message.CancellationToken);
+
+                return _accessTokenCache.SaveToken(token);
             }
+            catch (Exception e)
+            {
+                _accessTokenCache.ResetToken(e);
+                throw;
+            }
+        }
+
+        private async ValueTask<string?> GetHeaderValueFromCacheAsync(HttpMessage message, bool async)
+        {
+            ValueTask<string?> headerValueTask = _accessTokenCache.GetHeaderValueAsync();
+            if (headerValueTask.IsCompleted)
+            {
+                return headerValueTask.Result;
+            }
+
+            if (async)
+            {
+                return await headerValueTask.AwaitWithCancellation(message.CancellationToken);
+            }
+
+            Task<string?> task = headerValueTask.AsTask();
+            try
+            {
+                task.Wait(message.CancellationToken);
+            } catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+
+            return task.EnsureCompleted();
         }
 
         private class AccessTokenCache
@@ -128,51 +137,52 @@ namespace Azure.Core.Pipeline
                 _tokenRefreshOffset = tokenRefreshOffset;
             }
 
-            public string? SaveToken(AccessToken token, Exception? exception)
+            public string? SaveToken(AccessToken token)
             {
-                string? headerValue;
+                if (string.IsNullOrEmpty(token.Token))
+                {
+                    ResetToken(new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
+                    return default;
+                }
+
+                string headerValue;
                 TaskCompletionSource<string?>? pendingTcs;
 
                 lock (_syncObj)
                 {
-                    if (!string.IsNullOrEmpty(token.Token))
-                    {
-                        _headerValue = "Bearer " + token.Token;
-                        _refreshOn = token.ExpiresOn - _tokenRefreshOffset;
-                        _expiresOn = token.ExpiresOn;
-                        _tokenState = TokenState.Valid;
-                    }
-                    else
-                    {
-                        _headerValue = default;
-                        _refreshOn = default;
-                        _expiresOn = default;
-                        _tokenState = TokenState.Invalid;
-                    }
+                    _headerValue = "Bearer " + token.Token;
+                    _refreshOn = token.ExpiresOn - _tokenRefreshOffset;
+                    _expiresOn = token.ExpiresOn;
+                    _tokenState = TokenState.Valid;
 
-                    pendingTcs = _pendingTcs;
+                     pendingTcs = _pendingTcs;
                     headerValue = _headerValue;
                     _pendingTcs = null;
                 }
 
-                if (pendingTcs == null)
-                {
-                    return headerValue;
-                }
-
-                if (headerValue != null)
-                {
-                    pendingTcs.SetResult(headerValue);
-                }
-                else
-                {
-                    pendingTcs.SetException(exception ?? new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
-                }
-
+                pendingTcs?.SetResult(headerValue);
                 return headerValue;
             }
 
-            public ValueTask<string?> GetTokenAsync()
+            public void ResetToken(Exception exception)
+            {
+                TaskCompletionSource<string?>? pendingTcs;
+
+                lock (_syncObj)
+                {
+                    _headerValue = default;
+                    _refreshOn = default;
+                    _expiresOn = default;
+                    _tokenState = TokenState.Invalid;
+
+                    pendingTcs = _pendingTcs;
+                    _pendingTcs = null;
+                }
+
+                pendingTcs?.SetException(exception ?? new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
+            }
+
+            public ValueTask<string?> GetHeaderValueAsync()
             {
                 lock (_syncObj)
                 {
@@ -189,7 +199,8 @@ namespace Azure.Core.Pipeline
                         return new ValueTask<string?>();
                     }
 
-                    switch (_tokenState) {
+                    switch (_tokenState)
+                    {
                         case TokenState.Pending:
                             _pendingTcs ??= new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
                             return new ValueTask<string?>(_pendingTcs.Task);
@@ -201,14 +212,14 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
-        }
 
-        private enum TokenState
-        {
-            Invalid,
-            Pending,
-            Valid,
-            AboutToExpire,
+            private enum TokenState
+            {
+                Invalid,
+                Pending,
+                Valid,
+                AboutToExpire,
+            }
         }
     }
 }
