@@ -298,7 +298,7 @@ namespace Azure.Data.Tables.Sas
         Add = 16,
         Update = 64,
     }
-    public sealed partial class TableAccountSasQueryParameters
+    public partial class TableAccountSasQueryParameters
     {
         internal TableAccountSasQueryParameters() { }
         public const string DefaultSasVersion = "2019-07-07";
@@ -310,7 +310,6 @@ namespace Azure.Data.Tables.Sas
         public Azure.Data.Tables.Sas.SasProtocol Protocol { get { throw null; } }
         public string Resource { get { throw null; } }
         public Azure.Data.Tables.Sas.TableAccountSasResourceTypes? ResourceTypes { get { throw null; } }
-        public Azure.Data.Tables.Sas.TableAccountSasServices? Services { get { throw null; } }
         public string Signature { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
         public string Version { get { throw null; } }
@@ -323,15 +322,6 @@ namespace Azure.Data.Tables.Sas
         Service = 1,
         Container = 2,
         Object = 4,
-    }
-    [System.FlagsAttribute]
-    public enum TableAccountSasServices
-    {
-        All = -1,
-        Blobs = 1,
-        Queues = 2,
-        Files = 4,
-        Tables = 8,
     }
     public partial class TableSasBuilder
     {
