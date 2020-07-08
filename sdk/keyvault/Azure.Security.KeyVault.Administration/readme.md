@@ -15,13 +15,9 @@ Install-Package Azure.Security.KeyVault.Administration --version 4.2.0-preview.1
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
-* An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
+* An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the [Azure CLI][azure_cli].
 
-If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names:
-
-```PowerShell
-az keyvault create --resource-group <your-resource-group-name> --name <your-key-vault-name>
-```
+See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
 
 ### Authenticate the client
 In order to interact with the Key Vault service, you'll need to create an instance of the [KeyClient][rbac_client] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
@@ -57,7 +53,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```
     Output:
     ```
-    "<your service principal's object id"
+    "<your-service-principal-object-id>"
     ```
 * Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant) environment variables. The following example shows a way to do this in Powershell:
     ```PowerShell
@@ -66,16 +62,14 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
 
-* Grant the above mentioned application authorization to perform key operations on the Azure Key Vault:
+* Create the Key Vault and grant the above mentioned application authorization to perform administrative operations on the Azure Key Vault (replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
+    az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
     ```
-    > --key-permissions:
-    > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
-    az keyvault show --name <your-key-vault-name>
+    az keyvault show --hsm-name <your-key-vault-name>
     ```
 
 #### Create KeyVaultAccessControlClient
