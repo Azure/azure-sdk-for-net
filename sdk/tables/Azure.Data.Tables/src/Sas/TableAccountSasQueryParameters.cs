@@ -52,7 +52,7 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// The default service version to use for Shared Access Signatures.
         /// </summary>
-        public const string DefaultSasVersion = TableConstants.Sas.DefaultSasVersion;
+        internal const string DefaultSasVersion = TableConstants.Sas.DefaultSasVersion;
 
         /// <summary>
         /// Gets the storage service version to use to authenticate requests

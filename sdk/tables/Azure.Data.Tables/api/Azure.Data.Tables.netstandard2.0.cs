@@ -301,8 +301,6 @@ namespace Azure.Data.Tables.Sas
     public partial class TableAccountSasQueryParameters
     {
         internal TableAccountSasQueryParameters() { }
-        public const string DefaultSasVersion = "2019-07-07";
-        public static Azure.Data.Tables.Sas.TableAccountSasQueryParameters Empty { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string Identifier { get { throw null; } }
         public Azure.Data.Tables.Sas.SasIPRange IPRange { get { throw null; } }
@@ -358,24 +356,14 @@ namespace Azure.Data.Tables.Sas
         Update = 4,
         Delete = 8,
     }
-    public sealed partial class TableSasQueryParameters
+    public sealed partial class TableSasQueryParameters : Azure.Data.Tables.Sas.TableAccountSasQueryParameters
     {
         internal TableSasQueryParameters() { }
-        public const string DefaultSasVersion = "2019-07-07";
         public static Azure.Data.Tables.Sas.TableSasQueryParameters Empty { get { throw null; } }
         public string EndPartitionKey { get { throw null; } set { } }
         public string EndRowKey { get { throw null; } set { } }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public string Identifier { get { throw null; } }
-        public Azure.Data.Tables.Sas.SasIPRange IPRange { get { throw null; } }
-        public string Permissions { get { throw null; } }
-        public Azure.Data.Tables.Sas.SasProtocol Protocol { get { throw null; } }
-        public string Resource { get { throw null; } }
-        public string Signature { get { throw null; } }
         public string StartPartitionKey { get { throw null; } set { } }
         public string StartRowKey { get { throw null; } set { } }
-        public System.DateTimeOffset StartsOn { get { throw null; } }
-        public string Version { get { throw null; } }
         public override string ToString() { throw null; }
     }
 }
