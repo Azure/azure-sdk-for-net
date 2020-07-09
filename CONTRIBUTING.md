@@ -166,8 +166,12 @@ When run, the code regions in the format below (where `<snippetName>` is the nam
 //some sample code
 string snippet = "some snippet code";
 
-// Lines prefixed with the below comment format will be ignored by the snippet updater
+// Lines prefixed with the below comment format will be ignored by the snippet updater.
 /*@@*/ string ignored = "this code will not appear in the snippet markdown";
+
+// Lines prefixed with the below comment format will appear in the snippet markdown, but will remain comments in the C#` code.
+// Note: these comments should only be used for non-critical code as it will not be compiled or refactored as the code changes.
+//@@ snippet = "value that would never pass a test but looks good in a sample!";
 
 #endregion
 ```
@@ -177,7 +181,22 @@ string snippet = "some snippet code";
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md).
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+Note that snippet names need to be globally unique under a given service directory.
+
+Snippets also can be integrated into XML doc comments. For example:
+```c#
+/// <summary>
+/// Some Property.
+/// </summary>
+/// <example>
+/// This is an example of using a snippet in XML docs.
+/// <code snippet="Snippet:<snippetName>">
+/// // some sample code.
+/// string snippet = "some snippet code";
+/// </code>
+public string SomeProperty { get; set; }
+```
 
 For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples)
 
