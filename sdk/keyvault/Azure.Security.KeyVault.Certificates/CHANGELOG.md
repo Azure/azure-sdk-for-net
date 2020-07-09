@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.3 (Unreleased)
+## 4.0.3 (2020-07-09)
 
 ### Fixed
 
