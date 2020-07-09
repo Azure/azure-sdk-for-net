@@ -80,7 +80,7 @@ await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChange
 }
 ```
 
-### Resume with cursor
+### Resume with continuationToken 
 ```C# Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
 IAsyncEnumerator<Page<BlobChangeFeedEvent>> enumerator = changeFeedClient
     .GetChangesAsync()
