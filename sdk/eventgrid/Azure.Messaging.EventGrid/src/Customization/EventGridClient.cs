@@ -168,7 +168,12 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return await _serviceRestClient.PublishCustomEventEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
+                List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
+                foreach (object customEvent in events)
+                {
+                    serializedEvents.Add(new EventGridSerializer(customEvent, cancellationToken));
+                }
+                return await _serviceRestClient.PublishCustomEventEventsAsync(_hostName, serializedEvents, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -187,7 +192,12 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return _serviceRestClient.PublishCustomEventEvents(_hostName, events, cancellationToken);
+                List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
+                foreach (object customEvent in events)
+                {
+                    serializedEvents.Add(new EventGridSerializer(customEvent, cancellationToken));
+                }
+                return _serviceRestClient.PublishCustomEventEvents(_hostName, serializedEvents, cancellationToken);
             }
             catch (Exception e)
             {

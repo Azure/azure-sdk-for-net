@@ -59,6 +59,18 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
+        public async Task CanPublishCustomEvent()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.CustomEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
+                    options));
+            await client.PublishCustomEventsAsync(GetCustomEventsList());
+        }
+
+        [Test]
         public async Task CanPublishEventUsingSAS()
         {
             EventGridClient client = new EventGridClient(
