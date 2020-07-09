@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.5.0-preview.6 (Unreleased)
-
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
 
 ## 12.5.0-preview.5 (2020-07-03)
 - Added support for service version 2019-12-12.
