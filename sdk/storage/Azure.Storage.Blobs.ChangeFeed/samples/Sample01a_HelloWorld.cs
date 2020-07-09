@@ -25,11 +25,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
 
             // Get all the events in the change feed.
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
@@ -48,11 +45,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             // Create the start and end time.  The change feed client will round start time down to
@@ -80,11 +74,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             string continuationToken = null;

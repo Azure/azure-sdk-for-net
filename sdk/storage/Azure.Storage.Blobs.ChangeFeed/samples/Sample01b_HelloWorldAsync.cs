@@ -26,11 +26,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
 
             #region Snippet:SampleSnippetsChangeFeed_GetAllEvents
             // Get all the events in the change feed.
@@ -51,11 +48,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             #region Snippet:SampleSnippetsChangeFeed_GetEventsBetweenStartAndEndTime
@@ -85,11 +79,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
 
-            // Get a new blob service client.
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
             // Get a new change feed client.
-            BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
             #region Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
