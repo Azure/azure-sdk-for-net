@@ -968,6 +968,8 @@ namespace Azure.Storage.Files.Shares.Test
 
             await sasFile.GetPropertiesAsync();
 
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(fileFromConstructor.Uri);
+
             // Assert
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
 
@@ -981,6 +983,10 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(fileName, fileFromConstructor.Name);
             Assert.AreEqual(path, fileFromConstructor.Path);
             Assert.AreEqual(expectedUri, fileFromConstructor.Uri);
+
+            Assert.AreEqual(fileName, shareUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(path, shareUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
 
         [Test]
@@ -1018,6 +1024,8 @@ namespace Azure.Storage.Files.Shares.Test
                 shareFileItems.Add(shareFileItem);
             }
 
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(directoryFromConstructor.Uri);
+
             // Assert
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
 
@@ -1031,6 +1039,10 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(subDirectoryName, directoryFromConstructor.Name);
             Assert.AreEqual(path, directoryFromConstructor.Path);
             Assert.AreEqual(expectedUri, directoryFromConstructor.Uri);
+
+            Assert.AreEqual(subDirectoryName, shareUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(path, shareUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
     }
 }

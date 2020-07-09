@@ -477,8 +477,8 @@ namespace Azure.Storage.Files.DataLake
                 var builder = new DataLakeUriBuilder(Uri);
                 _fileSystemName = builder.FileSystemName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath.UnescapePath();
-                _name = builder.LastDirectoryOrFileName.UnescapePath();
+                _path = builder.DirectoryOrFilePath;
+                _name = builder.LastDirectoryOrFileName;
             }
         }
 

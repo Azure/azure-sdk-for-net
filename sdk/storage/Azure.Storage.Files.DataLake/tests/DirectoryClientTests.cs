@@ -2438,6 +2438,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
 
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subDirectory.Uri);
+
             // Assert
             Assert.IsNotNull(filePathItem);
             Assert.AreEqual(subDirectoryName, subDirectory.Name);
@@ -2446,6 +2448,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, subDirectory.Uri);
             Assert.AreEqual(blobUri, subDirectory.BlobUri);
             Assert.AreEqual(dfsUri, subDirectory.DfsUri);
+
+            Assert.AreEqual(subDirectoryName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
         [Test]
@@ -2478,6 +2484,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             PathItem filePathItem = pathItems.Where(r => r.Name == expectedPath).FirstOrDefault();
 
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri);
+
             // Assert
             Assert.IsNotNull(filePathItem);
             Assert.AreEqual(fileName, file.Name);
@@ -2486,6 +2494,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, file.Uri);
             Assert.AreEqual(blobUri, file.BlobUri);
             Assert.AreEqual(dfsUri, file.DfsUri);
+
+            Assert.AreEqual(fileName, dataLakeUriBuilder.LastDirectoryOrFileName);
+            Assert.AreEqual(expectedPath, dataLakeUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
         [Test]
