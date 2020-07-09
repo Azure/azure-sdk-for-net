@@ -579,11 +579,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual IHubRouteTablesOperations HubRouteTables { get; private set; }
 
         /// <summary>
-        /// Gets the IWebApplicationFirewallPoliciesOperations.
-        /// </summary>
-        public virtual IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -924,7 +919,6 @@ namespace Microsoft.Azure.Management.Network
             VirtualHubBgpConnections = new VirtualHubBgpConnectionsOperations(this);
             VirtualHubIpConfiguration = new VirtualHubIpConfigurationOperations(this);
             HubRouteTables = new HubRouteTablesOperations(this);
-            WebApplicationFirewallPolicies = new WebApplicationFirewallPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

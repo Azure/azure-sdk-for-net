@@ -128,21 +128,9 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "VpnSiteLinks", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "VpnSites", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "VpnSitesConfiguration", "2020-05-01"),
-                new Tuple<string, string, string>("Network", "WebApplicationFirewallPolicies", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "generatevirtualwanvpnserverconfigurationvpnprofile", "2020-05-01"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\git\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "4b2aa12fe415caa4ea0148372466fc15d006d37e";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
