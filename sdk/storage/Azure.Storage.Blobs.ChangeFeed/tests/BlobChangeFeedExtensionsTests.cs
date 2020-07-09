@@ -24,43 +24,43 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/02/1700/meta.json".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/meta.json"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/02/1700/".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700/"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 2, 17, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/02/1700".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/1700"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/02/".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02/"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 2, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/02".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/02"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11/".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11/"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 11, 1, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/11".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/11"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019/".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019/"));
 
             Assert.AreEqual(
                 new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero),
-                "idx/segments/2019".ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset("idx/segments/2019"));
 
             Assert.AreEqual(
                 null,
-                ((string)null).ToDateTimeOffset());
+                BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             // Act
-            Queue<string> segmentPaths = await BlobChangeFeedExtensions.GetSegmentsInYear(
+            Queue<string> segmentPaths = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
                 IsAsync,
                 containerClient.Object,
                 "idx/segments/2020/",

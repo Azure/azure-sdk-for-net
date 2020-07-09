@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Builds a DateTimeOffset from a segment path.
         /// </summary>
-        internal static DateTimeOffset? ToDateTimeOffset(this string segmentPath)
+        internal static DateTimeOffset? ToDateTimeOffset(string segmentPath)
         {
             if (segmentPath == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             return new DateTimeOffset(
-                year: dateTimeOffset.Value.Year,
+                year: dateTimeOffset.Value.ToUniversalTime().Year,
                 month: 1,
                 day: 1,
                 hour: 0,
@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 offset: TimeSpan.Zero);
         }
 
-        internal static async Task<Queue<string>> GetSegmentsInYear(
+        internal static async Task<Queue<string>> GetSegmentsInYearInternal(
             bool async,
             BlobContainerClient containerClient,
             string yearPath,
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    DateTimeOffset segmentDateTime = ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
                     if (startTime.HasValue && segmentDateTime < startTime
                         || endTime.HasValue && segmentDateTime > endTime)
                         continue;
@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    DateTimeOffset segmentDateTime = ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
                     if (startTime.HasValue && segmentDateTime < startTime
                         || endTime.HasValue && segmentDateTime > endTime)
                         continue;

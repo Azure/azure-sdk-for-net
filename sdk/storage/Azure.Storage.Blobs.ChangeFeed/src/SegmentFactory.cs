@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             // Models we need for later
             List<Shard> shards = new List<Shard>();
-            DateTimeOffset dateTime = manifestPath.ToDateTimeOffset().Value;
+            DateTimeOffset dateTime = BlobChangeFeedExtensions.ToDateTimeOffset(manifestPath).Value;
             int shardIndex = cursor?.ShardIndex ?? 0;
 
             // Download segment manifest

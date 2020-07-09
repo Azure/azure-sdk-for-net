@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             if (startTime.HasValue)
             {
                 while (years.Count > 0
-                    && years.Peek().ToDateTimeOffset() < startTime.RoundDownToNearestYear())
+                    && BlobChangeFeedExtensions.ToDateTimeOffset(years.Peek()) < startTime.RoundDownToNearestYear())
                 {
                     years.Dequeue();
                 }
@@ -127,7 +127,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             while (segments.Count == 0 && years.Count > 0)
             {
                 // Get Segments for year
-                segments = await BlobChangeFeedExtensions.GetSegmentsInYear(
+                segments = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
                     async: async,
                     containerClient: _containerClient,
                     yearPath: years.Dequeue(),

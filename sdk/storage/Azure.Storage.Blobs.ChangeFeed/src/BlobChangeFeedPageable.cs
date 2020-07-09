@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 yield return changeFeed.GetPage(
                     async: false,
-                    pageSize: pageSizeHint ?? 512).EnsureCompleted();
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize).EnsureCompleted();
             }
         }
     }

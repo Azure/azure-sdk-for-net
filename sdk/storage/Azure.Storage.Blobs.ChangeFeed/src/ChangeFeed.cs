@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    DateTimeOffset segmentDateTime = BlobChangeFeedExtensions.ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
                     if (startTime.HasValue && segmentDateTime < startTime
                         || endTime.HasValue && segmentDateTime > endTime)
                         continue;
@@ -196,7 +196,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     if (blobHierarchyItem.IsPrefix)
                         continue;
 
-                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    DateTimeOffset segmentDateTime = BlobChangeFeedExtensions.ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
                     if (startTime.HasValue && segmentDateTime < startTime
                         || endTime.HasValue && segmentDateTime > endTime)
                         continue;

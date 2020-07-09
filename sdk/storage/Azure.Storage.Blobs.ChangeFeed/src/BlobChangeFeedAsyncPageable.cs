@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             if (continuationToken != null)
             {
-                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChangesAsync(string) instead");
+                throw new ArgumentException($"{nameof(continuationToken)} not supported.  Use BlobChangeFeedClient.GetChangesAsync(string) instead");
             }
 
             ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 yield return await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSizeHint ?? 512).ConfigureAwait(false);
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize).ConfigureAwait(false);
             }
         }
     }
