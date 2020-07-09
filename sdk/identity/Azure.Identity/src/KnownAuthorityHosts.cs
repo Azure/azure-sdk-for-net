@@ -34,6 +34,11 @@ namespace Azure.Identity
         /// </summary>
         public static readonly Uri AzureUSGovernment = new Uri(AzureUSGovernmentHostUrl);
 
+        internal static Uri GetDefault()
+        {
+            return EnvironmentVariables.AuthorityHost != null ? new Uri(EnvironmentVariables.AuthorityHost) : KnownAuthorityHosts.AzureCloud;
+        }
+
         internal static string GetDefaultScope(Uri authorityHost)
         {
             switch (authorityHost.ToString())

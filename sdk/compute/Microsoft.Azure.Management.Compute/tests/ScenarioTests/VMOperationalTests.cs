@@ -73,7 +73,7 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true, sku: "2019-Datacenter-smalldisk");
 
                 // Create resource group
                 string rg1Name = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;
@@ -90,27 +90,6 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
-
-                    var runCommandImput = new RunCommandInput()
-                    {
-                        CommandId = "RunPowerShellScript",
-                        Script = new List<string>() {
-                            "param(",
-                            "    [string]$arg1,",
-                            "    [string]$arg2",
-                            ")",
-                            "echo This is a sample script with parameters $arg1 $arg2"
-                        },
-                        Parameters = new List<RunCommandInputParameter>()
-                        {
-                            new RunCommandInputParameter("arg1","value1"),
-                            new RunCommandInputParameter("arg2","value2"),
-                        }
-                    };
-                    RunCommandResult result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
-                    Assert.NotNull(result);
-                    Assert.NotNull(result.Value);
-                    Assert.True(result.Value.Count > 0);
 
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
@@ -417,6 +396,67 @@ namespace Compute.Tests
                     var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
                 }
                 Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VM
+        /// Call RunCommand on that VM
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMOperations_RunCommand()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rg1Name = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;
+                string as1Name = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM1;
+
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
+
+                    VirtualMachine vm1 = CreateVM(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
+
+                    var runCommandImput = new RunCommandInput()
+                    {
+                        CommandId = "RunPowerShellScript",
+                        Script = new List<string>() {
+                            "param(",
+                            "    [string]$arg1,",
+                            "    [string]$arg2",
+                            ")",
+                            "echo This is a sample script with parameters $arg1 $arg2"
+                        },
+                        Parameters = new List<RunCommandInputParameter>()
+                        {
+                            new RunCommandInputParameter("arg1","value1"),
+                            new RunCommandInputParameter("arg2","value2"),
+                        }
+                    };
+                    RunCommandResult result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    Assert.NotNull(result);
+                    Assert.NotNull(result.Value);
+                    Assert.True(result.Value.Count > 0);
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rg1Name);
+                }
             }
         }
     }

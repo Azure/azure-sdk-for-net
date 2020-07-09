@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/areaOfInterest",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2FyZWFPZkludGVyZXN0",
+      "RequestUri": "/vision/v3.0/areaOfInterest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2FyZWFPZkludGVyZXN0",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {

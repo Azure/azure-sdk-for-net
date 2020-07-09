@@ -23,14 +23,14 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello 
 };
 
 // send the message
-await sender.SendAsync(message);
+await sender.SendMessageAsync(message);
 
 // create a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 Console.WriteLine(receivedMessage.SessionId);
 
 // we can also set arbitrary session state using this receiver
@@ -53,7 +53,7 @@ ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
     });
 
 // the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 Console.WriteLine(receivedMessage.SessionId);
 ```
 

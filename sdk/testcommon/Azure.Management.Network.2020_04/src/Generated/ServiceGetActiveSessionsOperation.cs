@@ -17,18 +17,20 @@ using Azure.Management.Network.Models;
 namespace Azure.Management.Network
 {
     /// <summary> Returns the list of currently active sessions on the Bastion. </summary>
-    public partial class ServiceGetActiveSessionsOperation : Operation<BastionActiveSessionListResult>, IOperationSource<BastionActiveSessionListResult>
+    public partial class ServiceGetActiveSessionsOperation : Operation<AsyncPageable<BastionActiveSession>>, IOperationSource<AsyncPageable<BastionActiveSession>>
     {
-        private readonly ArmOperationHelpers<BastionActiveSessionListResult> _operation;
-        internal ServiceGetActiveSessionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        private readonly ArmOperationHelpers<AsyncPageable<BastionActiveSession>> _operation;
+        private readonly Func<string, Task<Response>> _nextPageFunc;
+        internal ServiceGetActiveSessionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
         {
-            _operation = new ArmOperationHelpers<BastionActiveSessionListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServiceGetActiveSessionsOperation");
+            _operation = new ArmOperationHelpers<AsyncPageable<BastionActiveSession>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServiceGetActiveSessionsOperation");
+            _nextPageFunc = nextPageFunc;
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override BastionActiveSessionListResult Value => _operation.Value;
+        public override AsyncPageable<BastionActiveSession> Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -46,35 +48,59 @@ namespace Azure.Management.Network
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<BastionActiveSessionListResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<AsyncPageable<BastionActiveSession>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<BastionActiveSessionListResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<AsyncPageable<BastionActiveSession>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        BastionActiveSessionListResult IOperationSource<BastionActiveSessionListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        AsyncPageable<BastionActiveSession> IOperationSource<AsyncPageable<BastionActiveSession>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
+            BastionActiveSessionListResult firstPageResult;
             using var document = JsonDocument.Parse(response.ContentStream);
             if (document.RootElement.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                firstPageResult = null;
             }
             else
             {
-                return BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
+                firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
             }
+            Page<BastionActiveSession> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
+
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
         }
 
-        async ValueTask<BastionActiveSessionListResult> IOperationSource<BastionActiveSessionListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AsyncPageable<BastionActiveSession>> IOperationSource<AsyncPageable<BastionActiveSession>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
+            BastionActiveSessionListResult firstPageResult;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             if (document.RootElement.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                firstPageResult = null;
             }
             else
             {
-                return BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
+                firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
             }
+            Page<BastionActiveSession> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
+
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
+        }
+
+        private async Task<Page<BastionActiveSession>> GetNextPage(string nextLink, CancellationToken cancellationToken)
+        {
+            Response response = await _nextPageFunc(nextLink).ConfigureAwait(false);
+            BastionActiveSessionListResult nextPageResult;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            if (document.RootElement.ValueKind == JsonValueKind.Null)
+            {
+                nextPageResult = null;
+            }
+            else
+            {
+                nextPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
+            }
+            return Page.FromValues(nextPageResult.Value, nextPageResult.NextLink, response);
         }
     }
 }

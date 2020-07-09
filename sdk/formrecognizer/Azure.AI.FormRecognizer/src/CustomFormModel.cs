@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.Training
         {
             ModelId = model.ModelInfo.ModelId.ToString();
             Status = model.ModelInfo.Status;
-            RequestedOn = model.ModelInfo.CreatedDateTime;
-            CompletedOn = model.ModelInfo.LastUpdatedDateTime;
+            TrainingStartedOn = model.ModelInfo.CreatedDateTime;
+            TrainingCompletedOn = model.ModelInfo.LastUpdatedDateTime;
             Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);
@@ -34,14 +34,14 @@ namespace Azure.AI.FormRecognizer.Training
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the training model request started.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
-        public DateTimeOffset RequestedOn { get; }
+        public DateTimeOffset TrainingStartedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTimeOffset CompletedOn { get; }
+        public DateTimeOffset TrainingCompletedOn { get; }
 
         /// <summary>
         /// A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.

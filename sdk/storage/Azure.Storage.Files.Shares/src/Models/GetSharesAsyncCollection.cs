@@ -69,6 +69,10 @@ namespace Azure.Storage.Files.Shares
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation.
             var items = new List<ListSharesIncludeType>();
+            if ((states & ShareStates.Deleted) == ShareStates.Deleted)
+            {
+                items.Add(ListSharesIncludeType.Deleted);
+            }
             if ((traits & ShareTraits.Metadata) == ShareTraits.Metadata)
             {
                 items.Add(ListSharesIncludeType.Metadata);

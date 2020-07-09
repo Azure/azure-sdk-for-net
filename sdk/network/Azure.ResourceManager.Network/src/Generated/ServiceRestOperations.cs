@@ -784,11 +784,96 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal HttpMessage CreatePutBastionShareableLinkNextPageRequest(string nextLink, string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            return message;
+        }
+
+        /// <summary> Creates a Bastion Shareable Links for all the VMs specified in the request. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> PutBastionShareableLinkNextPageAsync(string nextLink, string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+            if (bslRequest == null)
+            {
+                throw new ArgumentNullException(nameof(bslRequest));
+            }
+
+            using var message = CreatePutBastionShareableLinkNextPageRequest(nextLink, resourceGroupName, bastionHostName, bslRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Creates a Bastion Shareable Links for all the VMs specified in the request. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response PutBastionShareableLinkNextPage(string nextLink, string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+            if (bslRequest == null)
+            {
+                throw new ArgumentNullException(nameof(bslRequest));
+            }
+
+            using var message = CreatePutBastionShareableLinkNextPageRequest(nextLink, resourceGroupName, bastionHostName, bslRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetBastionShareableLinkNextPageRequest(string nextLink, string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
@@ -893,11 +978,85 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal HttpMessage CreateGetActiveSessionsNextPageRequest(string nextLink, string resourceGroupName, string bastionHostName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Returns the list of currently active sessions on the Bastion. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> GetActiveSessionsNextPageAsync(string nextLink, string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
+            using var message = CreateGetActiveSessionsNextPageRequest(nextLink, resourceGroupName, bastionHostName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Returns the list of currently active sessions on the Bastion. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response GetActiveSessionsNextPage(string nextLink, string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (bastionHostName == null)
+            {
+                throw new ArgumentNullException(nameof(bastionHostName));
+            }
+
+            using var message = CreateGetActiveSessionsNextPageRequest(nextLink, resourceGroupName, bastionHostName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateDisconnectActiveSessionsNextPageRequest(string nextLink, string resourceGroupName, string bastionHostName, SessionIds sessionIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);

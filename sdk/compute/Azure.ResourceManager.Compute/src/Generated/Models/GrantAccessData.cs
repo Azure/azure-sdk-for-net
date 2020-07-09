@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GrantAccessData
     {
         /// <summary> Initializes a new instance of GrantAccessData. </summary>
-        /// <param name="access"> . </param>
+        /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
         /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
         public GrantAccessData(AccessLevel access, int durationInSeconds)
         {
@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             DurationInSeconds = durationInSeconds;
         }
 
+        /// <summary> The Access Level, accepted values include None, Read, Write. </summary>
         public AccessLevel Access { get; }
         /// <summary> Time duration in seconds until the SAS access expires. </summary>
         public int DurationInSeconds { get; }

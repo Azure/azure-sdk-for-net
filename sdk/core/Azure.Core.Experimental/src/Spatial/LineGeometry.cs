@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
         /// <param name="positions">The collection of <see cref="GeometryPosition"/> that make up the line.</param>
-        public LineGeometry(IEnumerable<GeometryPosition> positions): this(positions, DefaultProperties)
+        public LineGeometry(IEnumerable<GeometryPosition> positions): this(positions, null, DefaultProperties)
         {
         }
 
@@ -23,8 +23,9 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
         /// <param name="positions">The collection of <see cref="GeometryPosition"/> that make up the line.</param>
-        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
-        public LineGeometry(IEnumerable<GeometryPosition> positions, GeometryProperties properties): base(properties)
+        /// <param name="boundingBox">The <see cref="GeometryBoundingBox"/> to use.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
+        public LineGeometry(IEnumerable<GeometryPosition> positions, GeometryBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(positions, nameof(positions));
 

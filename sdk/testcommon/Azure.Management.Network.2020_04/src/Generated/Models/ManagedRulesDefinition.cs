@@ -23,7 +23,7 @@ namespace Azure.Management.Network.Models
                 throw new ArgumentNullException(nameof(managedRuleSets));
             }
 
-            ManagedRuleSets = managedRuleSets.ToArray();
+            ManagedRuleSets = managedRuleSets.ToList();
         }
 
         /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>

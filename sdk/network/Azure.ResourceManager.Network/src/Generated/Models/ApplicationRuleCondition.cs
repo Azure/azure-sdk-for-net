@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationRuleCondition. </summary>
         public ApplicationRuleCondition()
         {
-            RuleConditionType = "ApplicationRuleCondition";
+            RuleConditionType = FirewallPolicyRuleConditionType.ApplicationRuleCondition;
         }
 
         /// <summary> Initializes a new instance of ApplicationRuleCondition. </summary>

@@ -33,18 +33,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the BillingProfileCreationRequest
         /// class.
         /// </summary>
-        /// <param name="displayName">The billing profile name.</param>
-        /// <param name="poNumber">Purchase order number.</param>
-        /// <param name="address">Billing address.</param>
-        /// <param name="invoiceEmailOptIn">If the billing profile is opted in
-        /// to receive invoices via email.</param>
-        /// <param name="enabledAzurePlans">Enabled azure plans for this
-        /// billing profile.</param>
-        public BillingProfileCreationRequest(string displayName = default(string), string poNumber = default(string), AddressDetails address = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>))
+        /// <param name="displayName">The name of the billing profile.</param>
+        /// <param name="poNumber">The purchase order name that will appear on
+        /// the invoices generated for the billing profile.</param>
+        /// <param name="billTo">The address of the individual or organization
+        /// that is responsible for the billing profile.</param>
+        /// <param name="invoiceEmailOptIn">Flag controlling whether the
+        /// invoices for the billing profile are sent through email.</param>
+        /// <param name="enabledAzurePlans">Enabled azure plans for the billing
+        /// profile.</param>
+        public BillingProfileCreationRequest(string displayName = default(string), string poNumber = default(string), AddressDetails billTo = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>))
         {
             DisplayName = displayName;
             PoNumber = poNumber;
-            Address = address;
+            BillTo = billTo;
             InvoiceEmailOptIn = invoiceEmailOptIn;
             EnabledAzurePlans = enabledAzurePlans;
             CustomInit();
@@ -56,35 +58,50 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the billing profile name.
+        /// Gets or sets the name of the billing profile.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets purchase order number.
+        /// Gets or sets the purchase order name that will appear on the
+        /// invoices generated for the billing profile.
         /// </summary>
         [JsonProperty(PropertyName = "poNumber")]
         public string PoNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets billing address.
+        /// Gets or sets the address of the individual or organization that is
+        /// responsible for the billing profile.
         /// </summary>
-        [JsonProperty(PropertyName = "address")]
-        public AddressDetails Address { get; set; }
+        [JsonProperty(PropertyName = "billTo")]
+        public AddressDetails BillTo { get; set; }
 
         /// <summary>
-        /// Gets or sets if the billing profile is opted in to receive invoices
-        /// via email.
+        /// Gets or sets flag controlling whether the invoices for the billing
+        /// profile are sent through email.
         /// </summary>
         [JsonProperty(PropertyName = "invoiceEmailOptIn")]
         public bool? InvoiceEmailOptIn { get; set; }
 
         /// <summary>
-        /// Gets or sets enabled azure plans for this billing profile.
+        /// Gets or sets enabled azure plans for the billing profile.
         /// </summary>
         [JsonProperty(PropertyName = "enabledAzurePlans")]
         public IList<AzurePlan> EnabledAzurePlans { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BillTo != null)
+            {
+                BillTo.Validate();
+            }
+        }
     }
 }

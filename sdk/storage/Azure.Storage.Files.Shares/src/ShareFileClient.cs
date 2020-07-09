@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -183,7 +183,7 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -308,7 +308,7 @@ namespace Azure.Storage.Files.Shares
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="shareSnapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-share">Snapshot Share</see>.
         /// </summary>
         /// <remarks>
         /// Pass null or empty string to remove the snapshot returning a URL to the base file.
@@ -333,10 +333,10 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName;
+                _name = builder.LastDirectoryOrFileName.UnescapePath();
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath;
+                _path = builder.DirectoryOrFilePath.UnescapePath();
             }
         }
 
@@ -344,7 +344,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -403,7 +403,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -460,7 +460,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -519,7 +519,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -576,7 +576,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -801,7 +801,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExists"/> operation immediately removes the file from the storage account,
         /// if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -831,7 +831,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExists"/> operation immediately removes the file from the storage account,
         /// if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -861,7 +861,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExistsInternal"/> operation immediately removes the file from the storage account,
         /// if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -924,7 +924,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -994,7 +994,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -1037,7 +1037,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -1107,7 +1107,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -1150,7 +1150,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -1258,7 +1258,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -1292,7 +1292,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -1324,7 +1324,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -1358,7 +1358,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -1390,7 +1390,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -1458,7 +1458,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
         /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1506,7 +1506,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Download(HttpRange, bool, CancellationToken)"/> operation reads
         /// or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1552,7 +1552,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DownloadAsync(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
         /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1600,7 +1600,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DownloadAsync(HttpRange, bool, CancellationToken)"/> operation reads
         /// or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1645,7 +1645,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="DownloadInternal"/> operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1751,7 +1751,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="StartDownloadAsync"/> operation starts to read or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -1952,7 +1952,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Delete(ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1982,7 +1982,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Delete(CancellationToken)"/> operation immediately
         /// removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2010,7 +2010,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteAsync(ShareFileRequestConditions, CancellationToken)"/> operation
         /// immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2040,7 +2040,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteAsync(CancellationToken)"/> operation
         /// immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2067,7 +2067,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2134,7 +2134,7 @@ namespace Azure.Storage.Files.Shares
         /// and system properties for the file. It does not return the content of the
         /// file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">Get File Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2167,7 +2167,7 @@ namespace Azure.Storage.Files.Shares
         /// and system properties for the file. It does not return the
         /// content of the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">Get File Properties</see>
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2197,7 +2197,7 @@ namespace Azure.Storage.Files.Shares
         /// operation returns all user-defined metadata, standard HTTP properties, and system
         /// properties for the file. It does not return the content of the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">Get File Properties</see>
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2230,7 +2230,7 @@ namespace Azure.Storage.Files.Shares
         /// properties for the file. It does not return the content of the
         /// file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">Get File Properties</see>
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2261,7 +2261,7 @@ namespace Azure.Storage.Files.Shares
         /// properties for the file. It does not return the content of the
         /// file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">Get File Properties</see>
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2333,7 +2333,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation sets system properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -2388,7 +2388,7 @@ namespace Azure.Storage.Files.Shares
         /// operation sets system
         /// properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -2440,7 +2440,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation sets system properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -2494,7 +2494,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, CancellationToken)"/>
         /// operation sets system properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -2546,7 +2546,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeadersInternal"/> operation sets system
         /// properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -2652,7 +2652,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadata(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -2688,7 +2688,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -2722,7 +2722,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadataAsync(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -2758,7 +2758,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -2792,7 +2792,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadataInternal"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -2861,7 +2861,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClearRange"/>
         /// operation clears the <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>.
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
@@ -2898,7 +2898,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ClearRangeAsync"/>
         /// operation clears the <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
@@ -2934,7 +2934,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRangeInternal"/> operation clears the
         /// <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
 
         /// <param name="range">
@@ -3009,7 +3009,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
@@ -3067,7 +3067,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
@@ -3125,7 +3125,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="writeType">Required. Specifies whether to update or clear the range.
         /// </param>
@@ -3182,7 +3182,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="writeType">Required. Specifies whether to update or clear the range.
         /// </param>
@@ -3239,7 +3239,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadRangeInternal"/> operation writes
         /// <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
 
         /// <param name="range">
@@ -3603,7 +3603,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the file to upload.
@@ -3647,7 +3647,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the file to upload.
@@ -3689,7 +3689,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadAsync(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/> operation writes
         /// <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the file to upload.
@@ -3733,7 +3733,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadAsync(Stream, IProgress{long}, CancellationToken)"/> operation writes
         /// <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the file to upload.
@@ -3775,7 +3775,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadInternal"/> operation writes
         /// <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">Put Range</see>
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -3901,7 +3901,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">List Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -3937,7 +3937,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">List Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -3971,7 +3971,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">List Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -4007,7 +4007,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">List Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -4041,7 +4041,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">List Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -4113,7 +4113,7 @@ namespace Azure.Storage.Files.Shares
         /// handles may make multiple requests to the service while fetching
         /// all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4137,7 +4137,7 @@ namespace Azure.Storage.Files.Shares
         /// Enumerating the handles may make multiple requests to the service
         /// while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4159,7 +4159,7 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="GetHandlesInternal"/> operation returns a list of open
         /// handles on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
         /// </summary>
         /// <remarks>
         /// </remarks>
@@ -4241,7 +4241,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -4285,7 +4285,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -4329,7 +4329,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4360,7 +4360,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4391,7 +4391,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -4443,7 +4443,7 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.

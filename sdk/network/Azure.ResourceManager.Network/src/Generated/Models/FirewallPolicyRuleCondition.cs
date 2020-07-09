@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyRuleCondition. </summary>
         public FirewallPolicyRuleCondition()
         {
-            RuleConditionType = null;
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleCondition. </summary>

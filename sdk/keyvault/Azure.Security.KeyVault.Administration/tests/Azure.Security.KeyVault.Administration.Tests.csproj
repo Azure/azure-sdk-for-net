@@ -13,6 +13,11 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
+  <!-- References required for test resource creation -->
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Administration.csproj" />

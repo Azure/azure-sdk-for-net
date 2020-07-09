@@ -23,7 +23,7 @@ namespace Azure.Management.Storage.Models
                 throw new ArgumentNullException(nameof(rules));
             }
 
-            Rules = rules.ToArray();
+            Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>

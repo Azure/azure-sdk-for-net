@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -32,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateClient()
         {
-            var fakeEndpoint = new Uri("http://localhost");
+            var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
             return new FormRecognizerClient(fakeEndpoint, fakeCredential);
@@ -96,6 +97,23 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
+        }
+
+        [Test]
+        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+                await client.StartRecognizeContentFromUriAsync(uri);
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The AccessLevel. </summary>
+    /// <summary> The Access Level, accepted values include None, Read, Write. </summary>
     public readonly partial struct AccessLevel : IEquatable<AccessLevel>
     {
         private readonly string _value;

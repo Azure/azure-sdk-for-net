@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCL2ludm9pY2VTZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNjkyYTFlZjYtNTk1YS01NTc4LTg3NzYtZGUxMGM5ZDY0ODYxJTNBNTg2OWVhMTAtYTIxZS00MjNmLTkyMTMtMmNhMGQxOTM4OTA4XzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0RTTkgtV1VaRS1CRzctVEdCL2ludm9pY2VTZWN0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1698a76f-e153-4ae9-aa78-780f61547e25"
+          "e8d0aef5-f2df-4c28-959d-d1fcd31271a6"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 May 2020 23:52:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.5.1245.541"
         ],
         "api-supported-versions": [
-          "2018-11-01-preview, 2019-10-01-preview"
+          "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
         "x-ms-request-id": [
-          "9066e5fb-089e-4226-8215-9573c9313d21"
+          "5d80ec25-6d5c-4ba1-ba5b-19c7c61e7447"
         ],
         "x-ms-correlation-request-id": [
-          "9066e5fb-089e-4226-8215-9573c9313d21"
+          "5d80ec25-6d5c-4ba1-ba5b-19c7c61e7447"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191119T011315Z:9066e5fb-089e-4226-8215-9573c9313d21"
+          "NORTHEUROPE:20200529T235205Z:5d80ec25-6d5c-4ba1-ba5b-19c7c61e7447"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Tue, 19 Nov 2019 01:13:15 GMT"
-        ],
         "Content-Length": [
-          "2492"
+          "3320"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/ICYS-ZE5B-PJA-PGB\",\r\n      \"name\": \"ICYS-ZE5B-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Canary Test EA Transition 2\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/LE7E-3FVV-PJA-PGB\",\r\n      \"name\": \"LE7E-3FVV-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Default invoice section\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/KWQF-S2JK-PJA-PGB\",\r\n      \"name\": \"KWQF-S2JK-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Finance\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/3Z4U-2JSC-PJA-PGB\",\r\n      \"name\": \"3Z4U-2JSC-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Development\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/FJR7-UUSR-PJA-PGB\",\r\n      \"name\": \"FJR7-UUSR-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Technology\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/VSG7-BYYJ-PJA-PGB\",\r\n      \"name\": \"VSG7-BYYJ-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Research\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoiceSections/HD4B-6QN4-PJA-PGB\",\r\n      \"name\": \"HD4B-6QN4-PJA-PGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Treasury\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/CGPK-BEXW-PJA-TGB\",\r\n      \"name\": \"CGPK-BEXW-PJA-TGB\",\r\n      \"properties\": {\r\n        \"displayName\": \"Kattey Liniuieo\",\r\n        \"systemId\": \"CGPK-BEXW-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/47205a6c-edbc-4eab-bafe-3e740dbd4dca\",\r\n      \"name\": \"47205a6c-edbc-4eab-bafe-3e740dbd4dca\",\r\n      \"properties\": {\r\n        \"displayName\": \"4068f002-51cf-425d-8f2d-0ad35d71d223\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"CTM7-QDXQ-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407\",\r\n      \"name\": \"3b613781-98a4-49ac-b8bb-e4f5c13d6407\",\r\n      \"properties\": {\r\n        \"displayName\": \"SDK Test\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"XHKB-HN2I-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/93b0387d-525e-4594-83d4-bd5c659484a7\",\r\n      \"name\": \"93b0387d-525e-4594-83d4-bd5c659484a7\",\r\n      \"properties\": {\r\n        \"displayName\": \"SDK Test\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"G776-C6GY-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/2eeb7a66-c0ce-40c3-9109-e30329ed6b3b\",\r\n      \"name\": \"2eeb7a66-c0ce-40c3-9109-e30329ed6b3b\",\r\n      \"properties\": {\r\n        \"displayName\": \"b30ceb70-31a9-4a25-92bb-cb5e0819e1b0\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"NPNW-XOYG-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/4a65c4d3-1ff3-4ce1-80ba-29b41f22a1f8\",\r\n      \"name\": \"4a65c4d3-1ff3-4ce1-80ba-29b41f22a1f8\",\r\n      \"properties\": {\r\n        \"displayName\": \"SDK Test\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"SVFI-B3X5-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/e6c48ebd-c44e-4134-91ae-63a28dc9fdab\",\r\n      \"name\": \"e6c48ebd-c44e-4134-91ae-63a28dc9fdab\",\r\n      \"properties\": {\r\n        \"displayName\": \"29976ea6-cf52-42cf-9ae0-1d18018d5b88\",\r\n        \"labels\": {\r\n          \"pcCode\": \"A123456\",\r\n          \"costCategory\": \"Support\"\r\n        },\r\n        \"systemId\": \"4WCO-DDUJ-PJA-TGB\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "0195fcc8-69cd-4440-852b-237bdae4e36c"
   }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #else
+using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
 #endif
 using NUnit.Framework;
@@ -163,10 +164,16 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
         public static PointGeometry CreatePoint(double longitude, double latitude) =>
             new PointGeometry(new GeometryPosition(longitude, latitude));
+
+        public static PointGeometry CreateDynamicPoint(double longitude, double latitude) =>
+            CreatePoint(longitude, latitude);
 #else
         public static GeographyPoint CreatePoint(double longitude, double latitude) =>
             // Note: GeographyPoint takes latitude first, unlike PointGeometry
             GeographyPoint.Create(latitude, longitude);
+
+        public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
+            GeographyPointConverter.AsDocument(CreatePoint(longitude, latitude));
 #endif
     }
 }

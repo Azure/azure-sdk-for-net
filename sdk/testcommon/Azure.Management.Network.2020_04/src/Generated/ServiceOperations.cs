@@ -350,7 +350,7 @@ namespace Azure.Management.Network
             try
             {
                 var originalResponse = await RestClient.PutBastionShareableLinkAsync(resourceGroupName, bastionHostName, bslRequest, cancellationToken).ConfigureAwait(false);
-                return new ServicePutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
+                return new ServicePutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
             }
             catch (Exception e)
             {
@@ -384,7 +384,7 @@ namespace Azure.Management.Network
             try
             {
                 var originalResponse = RestClient.PutBastionShareableLink(resourceGroupName, bastionHostName, bslRequest, cancellationToken);
-                return new ServicePutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
+                return new ServicePutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
             }
             catch (Exception e)
             {
@@ -481,7 +481,7 @@ namespace Azure.Management.Network
             try
             {
                 var originalResponse = await RestClient.GetActiveSessionsAsync(resourceGroupName, bastionHostName, cancellationToken).ConfigureAwait(false);
-                return new ServiceGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse);
+                return new ServiceGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
             }
             catch (Exception e)
             {
@@ -510,7 +510,7 @@ namespace Azure.Management.Network
             try
             {
                 var originalResponse = RestClient.GetActiveSessions(resourceGroupName, bastionHostName, cancellationToken);
-                return new ServiceGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse);
+                return new ServiceGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
             }
             catch (Exception e)
             {
