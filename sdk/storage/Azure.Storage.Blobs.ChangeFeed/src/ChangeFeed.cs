@@ -125,7 +125,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                     cancellationToken).ConfigureAwait(false);
                 blobChangeFeedEvents.AddRange(newEvents);
                 remainingEvents -= newEvents.Count;
-                await AdvanceSegmentIfNecessary(async).ConfigureAwait(false);
+                await AdvanceSegmentIfNecessary(
+                    async,
+                    cancellationToken).ConfigureAwait(false);
             }
 
             return new BlobChangeFeedEventPage(blobChangeFeedEvents, JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor()));
@@ -163,52 +165,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
 
-        internal async Task<Queue<string>> GetSegmentsInYear(
+        private async Task AdvanceSegmentIfNecessary(
             bool async,
-            string yearPath,
-            DateTimeOffset? startTime = default,
-            DateTimeOffset? endTime = default)
-        {
-            List<string> list = new List<string>();
-
-            if (async)
-            {
-                await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
-                    prefix: yearPath)
-                    .ConfigureAwait(false))
-                {
-                    if (blobHierarchyItem.IsPrefix)
-                        continue;
-
-                    DateTimeOffset segmentDateTime = BlobChangeFeedExtensions.ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
-                    if (startTime.HasValue && segmentDateTime < startTime
-                        || endTime.HasValue && segmentDateTime > endTime)
-                        continue;
-
-                    list.Add(blobHierarchyItem.Blob.Name);
-                }
-            }
-            else
-            {
-                foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
-                    prefix: yearPath))
-                {
-                    if (blobHierarchyItem.IsPrefix)
-                        continue;
-
-                    DateTimeOffset segmentDateTime = BlobChangeFeedExtensions.ToDateTimeOffset(blobHierarchyItem.Blob.Name).Value;
-                    if (startTime.HasValue && segmentDateTime < startTime
-                        || endTime.HasValue && segmentDateTime > endTime)
-                        continue;
-
-                    list.Add(blobHierarchyItem.Blob.Name);
-                }
-            }
-
-            return new Queue<string>(list);
-        }
-
-        private async Task AdvanceSegmentIfNecessary(bool async)
+            CancellationToken cancellationToken)
         {
             // If the current segment has more Events, we don't need to do anything.
             if (_currentSegment.HasNext())
@@ -230,11 +189,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 string yearPath = _years.Dequeue();
 
                 // Get Segments for first year
-                _segments = await GetSegmentsInYear(
-                    async: async,
+                _segments = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
+                    containerClient: _containerClient,
                     yearPath: yearPath,
                     startTime: _startTime,
-                    endTime: _endTime)
+                    endTime: _endTime,
+                    async: async,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 if (_segments.Count > 0)
