@@ -113,7 +113,6 @@ namespace Azure.Storage.Blobs
             remainingBytes = 0;
 
             // We've caught up to the end of the _avroStream, but it isn't necessarly the end of the stream.
-            // TODO what to do in this case?  If we return 0, we are indicating the end of stream
             if (!_avroReader.HasNext())
             {
                 return 0;
