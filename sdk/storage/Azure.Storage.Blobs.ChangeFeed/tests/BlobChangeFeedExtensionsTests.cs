@@ -144,11 +144,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Act
             Queue<string> segmentPaths = await BlobChangeFeedExtensions.GetSegmentsInYearInternal(
-                IsAsync,
                 containerClient.Object,
                 "idx/segments/2020/",
                 startTime: new DateTimeOffset(2020, 3, 3, 0, 0, 0, TimeSpan.Zero),
-                endTime: new DateTimeOffset(2020, 3, 3, 22, 0, 0, TimeSpan.Zero));
+                endTime: new DateTimeOffset(2020, 3, 3, 22, 0, 0, TimeSpan.Zero),
+                IsAsync,
+                default);
 
             // Assert
             Queue<string> expectedSegmentPaths = new Queue<string>();

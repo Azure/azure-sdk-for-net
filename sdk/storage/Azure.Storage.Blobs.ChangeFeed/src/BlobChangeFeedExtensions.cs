@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -115,18 +115,20 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         internal static async Task<Queue<string>> GetSegmentsInYearInternal(
-            bool async,
             BlobContainerClient containerClient,
             string yearPath,
-            DateTimeOffset? startTime = default,
-            DateTimeOffset? endTime = default)
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            bool async,
+            CancellationToken cancellationToken)
         {
             List<string> list = new List<string>();
 
             if (async)
             {
                 await foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchyAsync(
-                    prefix: yearPath)
+                    prefix: yearPath,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false))
                 {
                     if (blobHierarchyItem.IsPrefix)
@@ -143,7 +145,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             else
             {
                 foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchy(
-                    prefix: yearPath))
+                    prefix: yearPath,
+                    cancellationToken: cancellationToken))
                 {
                     if (blobHierarchyItem.IsPrefix)
                         continue;

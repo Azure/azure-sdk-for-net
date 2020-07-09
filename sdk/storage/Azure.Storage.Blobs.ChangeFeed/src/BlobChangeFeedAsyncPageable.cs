@@ -61,10 +61,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
-                async: true,
                 _startTime,
                 _endTime,
-                _continuation)
+                _continuation,
+                async: true,
+                cancellationToken: default)
                 .ConfigureAwait(false);
 
             while (changeFeed.HasNext())
