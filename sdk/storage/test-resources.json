@@ -48,7 +48,7 @@
         }      
     },
     "variables": {
-        "mgmtApiVersion": "2019-04-01",
+        "mgmtApiVersion": "2019-06-01",
         "keyvaultApiVersion": "2016-10-01",
         "authorizationApiVersion": "2018-09-01-preview",
         "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
