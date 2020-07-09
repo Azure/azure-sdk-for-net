@@ -20,7 +20,7 @@ Install-Package Azure.Security.KeyVault.Administration --version 4.2.0-preview.1
 See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
 
 ### Authenticate the client
-In order to interact with the Key Vault service, you'll need to create an instance of the [KeyClient][rbac_client] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
+In order to interact with the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
@@ -41,8 +41,8 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```json
     {
         "appId": "generated-app-ID",
-        "displayName": "dummy-app-name",
-        "name": "http://dummy-app-name",
+        "displayName": "some-app-name",
+        "name": "http://some-app-name",
         "password": "random-password",
         "tenant": "tenant-ID"
     }
@@ -63,7 +63,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```
 
 * Create the Key Vault and grant the above mentioned application authorization to perform administrative operations on the Azure Key Vault (replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
-    ```PowerShell
+    ```
     az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
     ```
 
