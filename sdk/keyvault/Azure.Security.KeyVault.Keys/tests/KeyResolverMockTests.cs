@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,16 +19,28 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task ShouldNotRequireGetPermission()
+        public async Task ShouldNotRequireGetPermissionForKey()
         {
             // Test for https://github.com/Azure/azure-sdk-for-net/issues/11574
-            MockTransport transport = new MockTransport(request => new MockResponse(403, "Forbidden"));
+            MockTransport transport = new MockTransport(request => new MockResponse((int)HttpStatusCode.Forbidden, nameof(HttpStatusCode.Forbidden)));
 
             KeyResolver resolver = GetResolver(transport);
             CryptographyClient client = await resolver.ResolveAsync(new Uri("https://mock.vault.azure.net/keys/mock-key"));
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.UnwrapKeyAsync(KeyWrapAlgorithm.A256KW, new byte[] { 0, 1, 2, 3 }));
-            Assert.AreEqual(403, ex.Status);
+            Assert.AreEqual((int)HttpStatusCode.Forbidden, ex.Status);
+        }
+
+        [Test]
+        public void ShouldRequireGetPermissionForSecret()
+        {
+            // Test for https://github.com/Azure/azure-sdk-for-net/issues/11574
+            MockTransport transport = new MockTransport(request => new MockResponse((int)HttpStatusCode.Forbidden, nameof(HttpStatusCode.Forbidden)));
+
+            KeyResolver resolver = GetResolver(transport);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => resolver.ResolveAsync(new Uri("https://mock.vault.azure.net/secrets/mock-secret")));
+            Assert.AreEqual((int)HttpStatusCode.Forbidden, ex.Status);
         }
 
         protected KeyResolver GetResolver(MockTransport transport)
