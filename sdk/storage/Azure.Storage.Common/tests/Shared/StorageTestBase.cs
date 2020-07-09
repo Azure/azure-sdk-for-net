@@ -18,6 +18,8 @@ using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
@@ -225,12 +227,12 @@ namespace Azure.Storage.Test.Shared
 
         public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
             Mode == RecordedTestMode.Playback ?
-            new TestCredential() :
-            (TokenCredential) new ClientSecretCredential(
-                tenantId,
-                appId,
-                secret,
-                new TokenCredentialOptions() { AuthorityHost = authorityHost });
+                (TokenCredential) new StorageTestTokenCredential() :
+                new ClientSecretCredential(
+                    tenantId,
+                    appId,
+                    secret,
+                    new TokenCredentialOptions() { AuthorityHost = authorityHost });
 
         internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
@@ -472,9 +474,7 @@ namespace Azure.Storage.Test.Shared
             return stream;
         }
 
-#pragma warning disable SA1402 // File may only contain a single type
-    private class TestCredential : TokenCredential
-#pragma warning restore SA1402 // File may only contain a single type
+    private class StorageTestTokenCredential : TokenCredential
     {
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
