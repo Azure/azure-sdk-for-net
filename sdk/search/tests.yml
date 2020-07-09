@@ -1,9 +1,36 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    ServiceDirectory: search
-    MaxParallel: 2
-    EnvVars:
-      AZURE_SEARCH_TEST_MODE: Live
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: search
+        MaxParallel: 2
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        EnvVars:
+          AZURE_SEARCH_TEST_MODE: Live
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+          STORAGE_ENDPOINT_SUFFIX: core.windows.net
+      
+      # AzureUSGovernment
+      - ServiceDirectory: search
+        MaxParallel: 2
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        EnvVars:
+          AZURE_SEARCH_TEST_MODE: Live
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+          STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
+
+      # AzureChinaCloud
+      - ServiceDirectory: search
+        MaxParallel: 2
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        EnvVars:
+          AZURE_SEARCH_TEST_MODE: Live
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+          STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
+      

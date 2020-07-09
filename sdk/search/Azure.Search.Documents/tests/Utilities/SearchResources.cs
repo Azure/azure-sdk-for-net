@@ -54,9 +54,13 @@ namespace Azure.Search.Documents.Tests
         public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
+        /// The storage endpoint suffix.
+        /// </summary>
+        public string StorageEndpointSuffix => TestFixture.TestEnvironment.StorageEndpointSuffix;
+        /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix=core.windows.net";
+        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
 
         /// <summary>
         /// The Cognitive Services key.
