@@ -27,6 +27,7 @@ namespace Azure.Messaging.EventGrid
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private string _apiVersion;
+        private EventGridClientOptions _clientOptions;
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
         protected EventGridClient()
@@ -56,7 +57,7 @@ namespace Azure.Messaging.EventGrid
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridClientOptions();
+            _clientOptions = options ?? new EventGridClientOptions();
             _apiVersion = options.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
@@ -74,7 +75,7 @@ namespace Azure.Messaging.EventGrid
         public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new EventGridClientOptions();
+            _clientOptions = options ?? new EventGridClientOptions();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new SharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
@@ -101,7 +102,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
         {
@@ -120,7 +121,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCloudEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
@@ -139,7 +140,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCloudEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
@@ -159,7 +160,7 @@ namespace Azure.Messaging.EventGrid
 
 
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCustomEventsAsync(IEnumerable<object> events, CancellationToken cancellationToken = default)
         {
@@ -171,7 +172,7 @@ namespace Azure.Messaging.EventGrid
                 List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
                 foreach (object customEvent in events)
                 {
-                    serializedEvents.Add(new EventGridSerializer(customEvent, cancellationToken));
+                    serializedEvents.Add(new EventGridSerializer(customEvent, _clientOptions.GetObjectSerializer(), cancellationToken));
                 }
                 return await _serviceRestClient.PublishCustomEventEventsAsync(_hostName, serializedEvents, cancellationToken).ConfigureAwait(false);
             }
@@ -183,7 +184,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCustomEvents(IEnumerable<object> events, CancellationToken cancellationToken = default)
         {
@@ -195,7 +196,7 @@ namespace Azure.Messaging.EventGrid
                 List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
                 foreach (object customEvent in events)
                 {
-                    serializedEvents.Add(new EventGridSerializer(customEvent, cancellationToken));
+                    serializedEvents.Add(new EventGridSerializer(customEvent, _clientOptions.GetObjectSerializer(), cancellationToken));
                 }
                 return _serviceRestClient.PublishCustomEventEvents(_hostName, serializedEvents, cancellationToken);
             }

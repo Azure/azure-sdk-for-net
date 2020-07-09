@@ -37,6 +37,11 @@ namespace Azure.Messaging.EventGrid
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// Used to serialize the given events to JSON.
+        /// </summary>
+        internal ObjectSerializer ObjectSerializer { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EventGridClientOptions"/>
         /// class.
         /// </summary>
@@ -44,9 +49,11 @@ namespace Azure.Messaging.EventGrid
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public EventGridClientOptions(ServiceVersion version = LatestVersion)
+        /// <param name="objectSerializer"> Used to serialize the given events to JSON. </param>
+        public EventGridClientOptions(ServiceVersion version = LatestVersion, ObjectSerializer objectSerializer = default)
         {
             Version = version;
+            ObjectSerializer = objectSerializer ?? new JsonObjectSerializer();
         }
 
 
@@ -60,6 +67,11 @@ namespace Azure.Messaging.EventGrid
                 default:
                     throw new ArgumentException($"Version {Version.ToString()} not supported.");
             }
+        }
+
+        internal ObjectSerializer GetObjectSerializer()
+        {
+            return ObjectSerializer;
         }
     }
 }
