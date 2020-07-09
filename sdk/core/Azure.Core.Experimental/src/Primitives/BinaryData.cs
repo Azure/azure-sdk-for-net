@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
-    /// A lightweight abstraction for a payload of UTF-8 encoded bytes. This type integrates with <see cref="ObjectSerializer"/>
+    /// A lightweight abstraction for a payload of bytes. This type integrates with <see cref="ObjectSerializer"/>
     /// to allow for serializing and deserializing payloads.
     ///
     /// The ownership model of the underlying bytes varies depending on how the instance is constructed:
@@ -66,6 +66,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data">The string data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// <remarks>The byte order mark is not included as part of the encoding process.</remarks>
         public BinaryData(string data)
         {
             Bytes = s_encoding.GetBytes(data);
@@ -256,8 +257,6 @@ namespace Azure.Core
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
-        /// TODO - add cancellation token support
-        /// once ObjectSerializer.DeserializeAsync adds it.
         public async ValueTask<T> DeserializeAsync<T>(CancellationToken cancellationToken = default) =>
             await DeserializeInternalAsync<T>(new JsonObjectSerializer(), true, cancellationToken).ConfigureAwait(false);
 
@@ -284,8 +283,6 @@ namespace Azure.Core
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
-        /// TODO - add cancellation token support
-        /// once ObjectSerializer.DeserializeAsync adds it.
         public async ValueTask<T> DeserializeAsync<T>(ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             await DeserializeInternalAsync<T>(serializer, true, cancellationToken).ConfigureAwait(false);
 
@@ -317,7 +314,12 @@ namespace Azure.Core
             BinaryData data) =>
             data.Bytes;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Two BinaryData objects are equal if the memory regions point to the same array and have the same length.
+        /// The method does not check to see if the contents are equal.
+        /// </summary>
+        /// <param name="obj">The BinaryData to compare.</param>
+        /// <returns>true if the current instance and other are equal; otherwise, false.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)
         {
