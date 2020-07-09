@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -233,9 +234,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
-            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
 
-            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         /// <summary>
@@ -252,9 +254,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithVersion(string versionId)
         {
-            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
 
-            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         #region Create

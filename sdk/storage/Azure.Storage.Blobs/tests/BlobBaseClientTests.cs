@@ -4979,30 +4979,45 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void WithSnapshot()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
+            BlobBaseClient snapshotBlobBaseClient = blobBaseClient.WithSnapshot(snapshot);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, snapshotBlobBaseClient.AccountName);
+            Assert.AreEqual(containerName, snapshotBlobBaseClient.BlobContainerName);
+            Assert.AreEqual(blobName, snapshotBlobBaseClient.Name);
+            Assert.AreEqual(snapshotUri, snapshotBlobBaseClient.Uri);
+        }
 
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+        [Test]
+        public void WithVersion()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string versionId = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
 
-            var builder = new BlobUriBuilder(blob.Uri);
+            // Act
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
+            BlobBaseClient versionBlobBaseClient = blobBaseClient.WithVersion(versionId);
 
-            Assert.AreEqual("", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot("foo"));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
+            // Assert
+            Assert.AreEqual(accountName, versionBlobBaseClient.AccountName);
+            Assert.AreEqual(containerName, versionBlobBaseClient.BlobContainerName);
+            Assert.AreEqual(blobName, versionBlobBaseClient.Name);
+            Assert.AreEqual(versionUri, versionBlobBaseClient.Uri);
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

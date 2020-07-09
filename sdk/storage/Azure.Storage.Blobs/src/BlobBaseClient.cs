@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -388,9 +389,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            var blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
             return new BlobBaseClient(
-                builder.ToUri(),
+                blobUriBuilder.ToUri(),
                 Pipeline,
                 Version,
                 ClientDiagnostics,
@@ -422,9 +424,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
-            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
+
             return new BlobBaseClient(
-                builder.ToUri(),
+                blobUriBuilder.ToUri(),
                 Pipeline,
                 Version,
                 ClientDiagnostics,
