@@ -133,6 +133,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void WithVersion()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+
+            var builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("", builder.VersionId);
+
+            blob = InstrumentClient(blob.WithVersion("foo"));
+
+            builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("foo", builder.VersionId);
+
+            blob = InstrumentClient(blob.WithVersion(null));
+
+            builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("", builder.Snapshot);
+        }
+
+        [Test]
         public async Task StageBlockAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -757,6 +786,44 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var blockName = GetNewBlockName();
+
+            // Stage block
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(blockName), stream);
+            }
+
+            // Commit block
+            var commitList = new string[]
+            {
+                ToBase64(blockName)
+            };
+
+            IDictionary<string, string> tags = BuildTags();
+
+            CommitBlockListOptions options = new CommitBlockListOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            await blob.CommitBlockListAsync(commitList, options);
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value);
+        }
+
+        [Test]
         public async Task CommitBlockListAsync_Committed_and_Uncommited_Blocks()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -949,7 +1016,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1089,6 +1156,78 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var blockName = GetNewBlockName();
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            stream.Position = 0;
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            BlobRequestConditions condition = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.CommitBlockListAsync(
+                commitList,
+                conditions: condition);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var blockName = GetNewBlockName();
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            stream.Position = 0;
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            BlobRequestConditions condition = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CommitBlockListAsync(
+                    commitList,
+                    conditions: condition),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task CommitBlockListAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1194,6 +1333,34 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CommitBlockListAsync(commitList, accessTier: AccessTier.P10),
                 e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_VersionId()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var firstBlockName = GetNewBlockName();
+
+            // Stage blocks
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(firstBlockName), stream);
+            }
+
+            var commitList = new string[]
+            {
+                ToBase64(firstBlockName),
+            };
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CommitBlockListAsync(commitList);
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
         }
 
         [Test]
@@ -1336,6 +1503,77 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetBlockListAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+
+            // Upload to blockBlobUri, so it exists
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var blockId0 = ToBase64(GetNewBlockName());
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(blockId0, stream);
+            }
+            await blob.CommitBlockListAsync(new string[] { blockId0 });
+
+            var blockId1 = ToBase64(GetNewBlobName());
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(blockId1, stream);
+            }
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.GetBlockListAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetBlockListAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+
+            // Upload to blockBlobUri, so it exists
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetBlockListAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task GetBlockListAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1381,6 +1619,36 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            var data = GetRandomBuffer(Size);
+            IDictionary<string, string> tags = BuildTags();
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream,
+                    options: options);
+            }
+
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value);
         }
 
         [LiveOnly]
@@ -1429,7 +1697,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1573,6 +1841,63 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(
+                content: stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+            stream.Position = 0;
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.UploadAsync(
+                content: stream,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(
+                content: stream);
+
+            stream.Position = 0;
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.UploadAsync(
+                    content: stream,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task UploadAsync_Error()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1607,7 +1932,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.UploadAsync(content: stream),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -1657,7 +1982,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blockBlobName, blobs.First().Name);
 
             Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
             Assert.AreEqual(BlobType.Block, getPropertiesResponse.Value.BlobType);
 
             Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
@@ -1694,6 +2019,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            var data = GetRandomBuffer(Size);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                Response<BlobContentInfo> response = await blob.UploadAsync(
+                    content: stream);
+
+                // Assert
+                Assert.IsNotNull(response.Value.VersionId);
+            }
+        }
 
         [Test]
         public async Task GetBlockBlobClient_AsciiName()
@@ -1788,6 +2134,19 @@ namespace Azure.Storage.Blobs.Test
             public BlockListTypes BlockListTypes { get; set; }
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
+        }
+
+        private async Task<BlockBlobClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
+        {
+            blobName ??= GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            return blob;
         }
     }
 }

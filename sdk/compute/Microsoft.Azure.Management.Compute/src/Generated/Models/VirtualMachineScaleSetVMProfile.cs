@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine disks.</param>
         /// <param name="networkProfile">Specifies properties of the network
         /// interfaces of the virtual machines in the scale set.</param>
+        /// <param name="securityProfile">Specifies the Security related
+        /// profile settings for the virtual machines in the scale set.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
         /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2015-06-15.</param>
@@ -60,9 +62,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
         /// Azure Spot virtual machine and Azure Spot scale set.
-        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
-        /// supported value is 'Deallocate' and the minimum api-version is
-        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
+        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
         /// 'Deallocate' and 'Delete' are supported and the minimum api-version
         /// is 2017-10-30-preview. Possible values include: 'Deallocate',
         /// 'Delete'</param>
@@ -71,11 +73,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             ExtensionProfile = extensionProfile;
             LicenseType = licenseType;
@@ -111,6 +114,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkProfile")]
         public VirtualMachineScaleSetNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Security related profile settings for
+        /// the virtual machines in the scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the boot diagnostic settings state.
@@ -158,11 +168,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the eviction policy for the Azure Spot
         /// virtual machine and Azure Spot scale set.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
-        /// machines, the only supported value is 'Deallocate' and the minimum
-        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
-        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
-        /// and the minimum api-version is 2017-10-30-preview. Possible values
-        /// include: 'Deallocate', 'Delete'
+        /// machines, both 'Deallocate' and 'Delete' are supported and the
+        /// minimum api-version is 2019-03-01.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "evictionPolicy")]
         public string EvictionPolicy { get; set; }

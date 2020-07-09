@@ -24,6 +24,9 @@ $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
 $StorageEndpointSuffix = $DeploymentOutputs['STORAGE_ENDPOINT_SUFFIX']
 $AzureAuthorityHost = $DeploymentOutputs['AZURE_AUTHORITY_HOST']
+$SoftDeleteAccountName = $DeploymentOutputs['SOFT_DELETE_ACCOUNT_NAME']
+$SoftDeleteAccountKey = $DeploymentOutputs['SOFT_DELETE_ACCOUNT_KEY']
+$KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -34,6 +37,8 @@ $content =
   <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
+  <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
+  <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
   <TenantConfigurations>
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
@@ -116,7 +121,31 @@ $content =
       <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
+    <TenantConfiguration>
+      <TenantName>SoftDeleteTenant</TenantName>
+      <TenantType>Cloud</TenantType>
+      <AccountName>$SoftDeleteAccountName</AccountName>
+      <AccountKey>$SoftDeleteAccountKey</AccountKey>
+      <BlobServiceEndpoint>https://$SoftDeleteAccountName.blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SoftDeleteAccountName.queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SoftDeleteAccountName.table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SoftDeleteAccountName.file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+    </TenantConfiguration>
   </TenantConfigurations>
+  <KeyVaultConfigurations>
+    <KeyVaultConfiguration>
+      <VaultName>ClientsideEncryptionKeyvault</VaultName>
+      <VaultEndpoint>$KeyVaultUri</VaultEndpoint>
+      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+    </KeyVaultConfiguration>
+  </KeyVaultConfigurations>
 </TestConfigurations>"
 
 # Construct the test configuration path to use based on the devops build variable for artifact staging directory

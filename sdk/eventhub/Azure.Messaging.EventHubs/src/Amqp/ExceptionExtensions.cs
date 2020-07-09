@@ -70,6 +70,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                 case TaskCanceledException _:
                     return new EventHubsException(true, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ServiceCommunicationProblem, instance);
 
+                case ObjectDisposedException _:
+                    return new EventHubsException(false, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ClientClosed, instance);
+
                 default:
                     return instance;
             }

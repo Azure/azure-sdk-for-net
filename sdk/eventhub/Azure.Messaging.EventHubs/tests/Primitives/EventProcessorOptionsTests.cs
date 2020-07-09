@@ -53,6 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "Tracking of last enqueued events should match.");
             Assert.That(clone.DefaultStartingPosition, Is.EqualTo(options.DefaultStartingPosition), "The default starting position should match.");
+            Assert.That(clone.LoadBalancingStrategy, Is.EqualTo(options.LoadBalancingStrategy), "The load balancing strategy should match.");
         }
 
         /// <summary>

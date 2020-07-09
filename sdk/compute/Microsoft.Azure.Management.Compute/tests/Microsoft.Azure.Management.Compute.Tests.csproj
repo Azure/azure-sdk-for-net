@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="4.2.0-preview" />    
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="19.3.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="19.17.1-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <PackageReference Include="WindowsAzure.Storage"  Version="8.7.0"/>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Compute.csproj" />

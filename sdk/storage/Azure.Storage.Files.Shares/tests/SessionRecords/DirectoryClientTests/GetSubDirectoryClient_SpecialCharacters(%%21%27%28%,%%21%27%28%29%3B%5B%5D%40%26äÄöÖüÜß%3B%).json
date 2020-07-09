@@ -1,0 +1,228 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5e8317103926b74b8b8039f65b655d38-cec59ab3482d5d4b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "aa20f855-fcbb-1a84-7c94-7427750834e2",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "ETag": "\u00220x8D81ECB0CE5BD97\u0022",
+        "Last-Modified": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "aa20f855-fcbb-1a84-7c94-7427750834e2",
+        "x-ms-request-id": "29f43417-e01a-007c-78b3-50635f000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6/%2521%2527%2528?restype=directory",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-7ae33fc2e1b7624e8a9a771174399aa6-42c62df8d5cc8f4e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "2e08d0cc-55b5-2c1a-a53d-c914efb9f514",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-file-attributes": "None",
+        "x-ms-file-creation-time": "Now",
+        "x-ms-file-last-write-time": "Now",
+        "x-ms-file-permission": "Inherit",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "ETag": "\u00220x8D81ECB0CF03BA9\u0022",
+        "Last-Modified": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "2e08d0cc-55b5-2c1a-a53d-c914efb9f514",
+        "x-ms-file-attributes": "Directory",
+        "x-ms-file-change-time": "2020-07-02T21:01:11.7190057Z",
+        "x-ms-file-creation-time": "2020-07-02T21:01:11.7190057Z",
+        "x-ms-file-id": "13835128424026341376",
+        "x-ms-file-last-write-time": "2020-07-02T21:01:11.7190057Z",
+        "x-ms-file-parent-id": "0",
+        "x-ms-file-permission-key": "11811099930176499864*14641856446884751121",
+        "x-ms-request-id": "29f4341a-e01a-007c-79b3-50635f000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6/%2521%2527%2528/%2521%2527%2528%2529%253B%255B%255D%2540%2526\u00E4\u00C4\u00F6\u00D6\u00FC\u00DC\u00DF%253B?restype=directory",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1a573d2ae0f8424ead13b978357ded3e-2bbf69cb07828a42-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "a45a3415-05ff-102d-645c-1314531a747b",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-file-attributes": "None",
+        "x-ms-file-creation-time": "Now",
+        "x-ms-file-last-write-time": "Now",
+        "x-ms-file-permission": "Inherit",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "ETag": "\u00220x8D81ECB0CF98C34\u0022",
+        "Last-Modified": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "a45a3415-05ff-102d-645c-1314531a747b",
+        "x-ms-file-attributes": "Directory",
+        "x-ms-file-change-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-creation-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-id": "11529285414812647424",
+        "x-ms-file-last-write-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-parent-id": "13835128424026341376",
+        "x-ms-file-permission-key": "11811099930176499864*14641856446884751121",
+        "x-ms-request-id": "29f4341b-e01a-007c-7ab3-50635f000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6/%2521%2527%2528/%2521%2527%2528%2529%253B%255B%255D%2540%2526\u00E4\u00C4\u00F6\u00D6\u00FC\u00DC\u00DF%253B?restype=directory",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "baff2e29-505e-6715-d4e5-ce97de7ae4af",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "ETag": "\u00220x8D81ECB0CF98C34\u0022",
+        "Last-Modified": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "baff2e29-505e-6715-d4e5-ce97de7ae4af",
+        "x-ms-file-attributes": "Directory",
+        "x-ms-file-change-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-creation-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-id": "11529285414812647424",
+        "x-ms-file-last-write-time": "2020-07-02T21:01:11.7800500Z",
+        "x-ms-file-parent-id": "13835128424026341376",
+        "x-ms-file-permission-key": "11811099930176499864*14641856446884751121",
+        "x-ms-request-id": "31a50f29-601a-0086-0cb3-508119000000",
+        "x-ms-server-encrypted": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6/%2521%2527%2528?restype=directory\u0026comp=list",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "25eb270a-b91b-c71c-f8f6-30047cb5fcc6",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "25eb270a-b91b-c71c-f8f6-30047cb5fcc6",
+        "x-ms-request-id": "29f4341c-e01a-007c-7bb3-50635f000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary.file.core.windows.net/\u0022 ShareName=\u0022test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6\u0022 DirectoryPath=\u0022%21%27%28\u0022\u003E\u003CEntries\u003E\u003CDirectory\u003E\u003CName\u003E%21%27%28%29%3B%5B%5D%40%26\u00E4\u00C4\u00F6\u00D6\u00FC\u00DC\u00DF%3B\u003C/Name\u003E\u003CProperties /\u003E\u003C/Directory\u003E\u003C/Entries\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-3e7815c8-ea6c-303d-bb76-b35e27d6ffd6?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b9f630c45264204d957b61c760a07aa0-2afa0ce0542a3f4a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200702.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "b68cd5b5-bf8f-8e93-ddce-d463deac4d32",
+        "x-ms-date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 02 Jul 2020 21:01:11 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "b68cd5b5-bf8f-8e93-ddce-d463deac4d32",
+        "x-ms-request-id": "29f4341d-e01a-007c-7cb3-50635f000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "267198531",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Kg==;\nseanscope1"
+  }
+}

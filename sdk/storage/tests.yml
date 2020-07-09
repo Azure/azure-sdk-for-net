@@ -27,3 +27,8 @@ extends:
         TimeoutInMinutes: 300
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/' }"
+        # ServiceDirectory: storage
+        # BuildInParallel: false
+        # TimeoutInMinutes: 300
+        # Location: canadacentral
+        # SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)

@@ -323,7 +323,26 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+        {
+            if (directoryName.Length == 0)
+            {
+                return new DataLakeDirectoryClient(
+                    Uri.AppendToPath(directoryName),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics);
+            }
+            else
+            {
+                return new DataLakeDirectoryClient(
+                Uri,
+                directoryName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+            }
+        }
+
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
@@ -344,7 +363,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileClient(
+                Uri,
+                fileName,
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -365,7 +389,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -435,7 +459,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -508,7 +532,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -581,7 +605,7 @@ namespace Azure.Storage.Files.DataLake
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">Create Container</see>.
         /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
@@ -1168,7 +1192,7 @@ namespace Azure.Storage.Files.DataLake
         /// of paths in this file system.  Enumerating the paths may make
         /// multiple requests to the service while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1213,7 +1237,7 @@ namespace Azure.Storage.Files.DataLake
         /// make multiple requests to the service while fetching all the
         /// values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.
@@ -1261,7 +1285,7 @@ namespace Azure.Storage.Files.DataLake
         /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">Path - List</see>.
         /// </summary>
         /// <param name="path">
         /// Filters results to paths within the specified directory.

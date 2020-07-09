@@ -8,7 +8,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20200618.4
+      ref: refs/tags/azure-sdk-build-tools_20200706.4
 
 parameters:
 - name: Artifacts

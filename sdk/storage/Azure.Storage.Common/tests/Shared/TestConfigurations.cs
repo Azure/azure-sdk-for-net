@@ -94,6 +94,12 @@ namespace Azure.Storage.Test
         private string TargetManagedDiskTenantName { get; set; }
 
         /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests related to blob and container soft delete.
+        /// </summary>
+        private string TargetSoftDeleteTenantName { get; set; }
+
+        /// <summary>
         /// Gets the tenant to use by default for our tests.
         /// </summary>
         public static TenantConfiguration DefaultTargetTenant =>
@@ -142,6 +148,13 @@ namespace Azure.Storage.Test
         /// </summary>
         public static TenantConfiguration DefaultTargetManagedDiskTenant =>
             GetTenant("TargetManagedDiskTenant", s_configurations.Value.TargetManagedDiskTenantName);
+
+
+        /// <summary>
+        /// Gets a tenant to use for any tests related to blob or container soft delete.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetSoftDeleteTenant =>
+            GetTenant("TargetBlobAndContainerSoftDeleteTenant", s_configurations.Value.TargetSoftDeleteTenantName);
 
         /// <summary>
         /// When loading our test configuration, we'll check the
@@ -261,6 +274,7 @@ namespace Azure.Storage.Test
                 TargetKeyVaultName = Get("TargetKeyVault"),
                 TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
                 TargetManagedDiskTenantName = Get("TargetManagedDiskTenant"),
+                TargetSoftDeleteTenantName = Get("TargetBlobAndContainerSoftDeleteTenant"),
                 Tenants =
                     config.Element("TenantConfigurations").Elements("TenantConfiguration")
                     .Select(TenantConfiguration.Parse)

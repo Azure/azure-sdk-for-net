@@ -22,7 +22,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
+RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
 
 // To see the list of the supported fields returned by service and its corresponding types, consult:
 // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult

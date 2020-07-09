@@ -1,6 +1,10 @@
 # Release History
 
-## 1.2.0-preview.5 (Unreleased)
+## 1.2.0-preview.5 (2020-07-08)
+
+### New Features
+- Added options classes `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions` which support the following new option
+    - `EnablePersistentCache` configures these credentials to use a persistent cache shared between credentials which set this option. By default the cache is per credential and in memory only.
 
 
 ## 1.2.0-preview.4

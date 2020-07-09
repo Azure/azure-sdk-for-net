@@ -263,7 +263,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _partitionOwnershipExpirationInterval = PartitionOwnershipExpirationInterval,
                 Identifier = Identifier,
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties,
-                DefaultStartingPosition = DefaultStartingPosition
+                DefaultStartingPosition = DefaultStartingPosition,
+                LoadBalancingStrategy = LoadBalancingStrategy
             };
     }
 }

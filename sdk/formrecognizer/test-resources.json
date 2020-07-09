@@ -24,6 +24,12 @@
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string"
         },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
+        },
         "trainingDataAccount": {
             "type": "string",
             "defaultValue": "azuresdktrainingdata"
@@ -60,6 +66,7 @@
         }
     },
     "variables": {
+        "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
     },
@@ -75,6 +82,15 @@
             "kind": "FormRecognizer",
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
             }
         }
     ],

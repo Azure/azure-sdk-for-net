@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 {
     public abstract class ServiceBusTestBase
     {
-        protected IList<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        protected List<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
