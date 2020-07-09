@@ -87,26 +87,23 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             BlobChangeFeedClient changeFeedClient = blobServiceClient.GetChangeFeedClient();
             List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
 
-            IEnumerator<Page<BlobChangeFeedEvent>> enumerator = changeFeedClient
-                .GetChanges()
-                .AsPages(pageSizeHint: 10)
-                .GetEnumerator();
-            ;
-
-            enumerator.MoveNext();
-
-            foreach (BlobChangeFeedEvent changeFeedEvent in enumerator.Current.Values)
+            string continuationToken = null;
+            foreach (Page<BlobChangeFeedEvent> page in changeFeedClient.GetChanges().AsPages(pageSizeHint: 10))
             {
-                changeFeedEvents.Add(changeFeedEvent);
-            }
+                foreach (BlobChangeFeedEvent changeFeedEvent in page.Values)
+                {
+                    changeFeedEvents.Add(changeFeedEvent);
+                }
 
-            // get the change feed cursor.  The cursor is not required to get each page of events,
-            // it is intended to be saved and used to resume iterating at a later date.
-            string cursor = enumerator.Current.ContinuationToken;
+                // Get the change feed continuation token.  The continuation token is not required to get each page of events,
+                // it is intended to be saved and used to resume iterating at a later date.
+                continuationToken = page.ContinuationToken;
+                break;
+            }
 
             // Resume iterating from the pervious position with the cursor.
             foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChanges(
-                continuationToken: cursor))
+                continuationToken: continuationToken))
             {
                 changeFeedEvents.Add(changeFeedEvent);
             }
