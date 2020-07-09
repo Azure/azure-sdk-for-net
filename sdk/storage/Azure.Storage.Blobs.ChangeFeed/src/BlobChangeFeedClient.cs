@@ -61,7 +61,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// every request.
         /// </param>
         public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
-
         {
             _blobServiceClient = new BlobServiceClient(connectionString, options);
         }
