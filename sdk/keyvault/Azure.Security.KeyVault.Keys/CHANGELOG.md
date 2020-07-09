@@ -1,6 +1,10 @@
 # Release History
 
-## 4.0.4 (Unreleased)
+## 4.0.4 (2020-07-09)
+
+### Fixed
+
+- The "get" permission is no longer required to resolve keys for `KeyResolver` ([#11574](https://github.com/Azure/azure-sdk-for-net/issues/11574))
 
 ### Minor changes
 
