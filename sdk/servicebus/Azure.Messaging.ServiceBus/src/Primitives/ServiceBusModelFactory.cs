@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Primitives
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// This class contains methods to create certain ServiceBus models.
@@ -17,30 +19,78 @@ namespace Azure.Messaging.ServiceBus.Primitives
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
-            ServiceBusMessage sentMessage,
-            bool isSettled,
-            int deliveryCount,
-            DateTimeOffset lockedUntil,
-            long sequenceNumber,
-            string deadLetterSource,
-            short partitionId,
-            long enqueuedSequenceNumber,
-            DateTimeOffset enqueuedTime,
-            Guid lockTokenGuid,
-            object bodyObject
-        ) => new ServiceBusReceivedMessage
+            BinaryData body = default,
+            string messageId = default,
+            string partitionKey = default,
+            string viaPartitionKey = default,
+            string sessionId = default,
+            string replyToSessionId = default,
+            TimeSpan timeToLive = default,
+            string correlationId = default,
+            string label = default,
+            string to = default,
+            string contentType = default,
+            string replyTo = default,
+            DateTimeOffset scheduledEnqueueTime = default,
+            IDictionary<string, object> properties = default,
+            Guid lockTokenGuid = default,
+            int deliveryCount = default,
+            DateTimeOffset lockedUntil = default,
+            long sequenceNumber = -1,
+            string deadLetterSource = default,
+            long enqueuedSequenceNumber = default,
+            DateTimeOffset enqueuedTime = default)
         {
-            SentMessage = sentMessage,
-            IsSettled = isSettled,
-            DeliveryCount = deliveryCount,
-            LockedUntil = lockedUntil,
-            SequenceNumber = sequenceNumber,
-            DeadLetterSource = deadLetterSource,
-            PartitionId = partitionId,
-            EnqueuedSequenceNumber = enqueuedSequenceNumber,
-            EnqueuedTime = enqueuedTime,
-            LockTokenGuid = lockTokenGuid,
-            BodyObject = bodyObject
-        };
+            var sentMessage = new ServiceBusMessage
+            {
+                Body = body,
+                CorrelationId = correlationId,
+                Label = label,
+                To = to,
+                ContentType = contentType,
+                ReplyTo = replyTo,
+                ScheduledEnqueueTime = scheduledEnqueueTime
+            };
+            if (messageId != default)
+            {
+                sentMessage.MessageId = messageId;
+            }
+            if (partitionKey != default)
+            {
+                sentMessage.PartitionKey = partitionKey;
+            }
+            if (viaPartitionKey != default)
+            {
+                sentMessage.ViaPartitionKey = viaPartitionKey;
+            }
+            if (sessionId != default)
+            {
+                sentMessage.SessionId = sessionId;
+            }
+            if (replyToSessionId != default)
+            {
+                sentMessage.ReplyToSessionId = replyToSessionId;
+            }
+            if (timeToLive != default)
+            {
+                sentMessage.TimeToLive = timeToLive;
+            }
+            if (properties != default)
+            {
+                sentMessage.Properties = properties;
+            }
+
+            return new ServiceBusReceivedMessage
+            {
+                SentMessage = sentMessage,
+                LockTokenGuid = lockTokenGuid,
+                DeliveryCount = deliveryCount,
+                LockedUntil = lockedUntil,
+                SequenceNumber = sequenceNumber,
+                DeadLetterSource = deadLetterSource,
+                EnqueuedSequenceNumber = enqueuedSequenceNumber,
+                EnqueuedTime = enqueuedTime
+            };
+        }
     }
 }
