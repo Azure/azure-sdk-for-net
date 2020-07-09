@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
         {
-            if (options._clientSideEncryptionOptions != default)
+            if (options?._clientSideEncryptionOptions != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
             }

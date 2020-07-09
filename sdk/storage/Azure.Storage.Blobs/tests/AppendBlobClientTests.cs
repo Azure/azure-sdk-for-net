@@ -110,12 +110,19 @@ namespace Azure.Storage.Blobs.Test
             // Act
             AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
             AppendBlobClient snapshotAppendBlobClient = appendBlobClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotAppendBlobClient.Uri);
 
             // Assert
             Assert.AreEqual(accountName, snapshotAppendBlobClient.AccountName);
             Assert.AreEqual(containerName, snapshotAppendBlobClient.BlobContainerName);
             Assert.AreEqual(blobName, snapshotAppendBlobClient.Name);
             Assert.AreEqual(snapshotUri, snapshotAppendBlobClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
         [Test]
@@ -127,17 +134,24 @@ namespace Azure.Storage.Blobs.Test
             string blobName = "my/blob/name";
             string versionId = "2020-07-03T12:45:46.1234567Z";
             Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
-            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
 
             // Act
             AppendBlobClient appendBlobClient = new AppendBlobClient(uri);
             AppendBlobClient versionAppendBlobClient = appendBlobClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionAppendBlobClient.Uri);
 
             // Assert
             Assert.AreEqual(accountName, versionAppendBlobClient.AccountName);
             Assert.AreEqual(containerName, versionAppendBlobClient.BlobContainerName);
             Assert.AreEqual(blobName, versionAppendBlobClient.Name);
-            Assert.AreEqual(snapshotUri, versionAppendBlobClient.Uri);
+            Assert.AreEqual(versionUri, versionAppendBlobClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
         [Test]

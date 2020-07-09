@@ -4990,12 +4990,19 @@ namespace Azure.Storage.Blobs.Test
             // Act
             BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
             BlobBaseClient snapshotBlobBaseClient = blobBaseClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotBlobBaseClient.Uri);
 
             // Assert
             Assert.AreEqual(accountName, snapshotBlobBaseClient.AccountName);
             Assert.AreEqual(containerName, snapshotBlobBaseClient.BlobContainerName);
             Assert.AreEqual(blobName, snapshotBlobBaseClient.Name);
             Assert.AreEqual(snapshotUri, snapshotBlobBaseClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
         [Test]
@@ -5012,12 +5019,19 @@ namespace Azure.Storage.Blobs.Test
             // Act
             BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
             BlobBaseClient versionBlobBaseClient = blobBaseClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionBlobBaseClient.Uri);
 
             // Assert
             Assert.AreEqual(accountName, versionBlobBaseClient.AccountName);
             Assert.AreEqual(containerName, versionBlobBaseClient.BlobContainerName);
             Assert.AreEqual(blobName, versionBlobBaseClient.Name);
             Assert.AreEqual(versionUri, versionBlobBaseClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

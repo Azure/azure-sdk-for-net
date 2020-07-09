@@ -235,8 +235,6 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
-
             return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
@@ -255,8 +253,6 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithVersion(string versionId)
         {
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
-
             return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
