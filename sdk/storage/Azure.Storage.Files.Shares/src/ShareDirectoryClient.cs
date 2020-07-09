@@ -148,7 +148,9 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -169,7 +171,9 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -298,7 +302,9 @@ namespace Azure.Storage.Files.Shares
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-share">Snapshot Share</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-share">
+        /// Snapshot Share</see>.
         /// </summary>
         /// <remarks>
         /// Pass null or empty string to remove the snapshot returning a URL to the base directory.
@@ -373,7 +379,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="Create"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -413,7 +421,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="CreateAsync"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -453,7 +463,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="CreateInternal"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -542,7 +554,9 @@ namespace Azure.Storage.Files.Shares
         /// if it does not already exists.  If the directory already exists, it is not
         /// modified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -582,7 +596,9 @@ namespace Azure.Storage.Files.Shares
         /// if it does not already exists.  If the directory already exists, it is not
         /// modified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -622,7 +638,9 @@ namespace Azure.Storage.Files.Shares
         /// if it does not already exists.  If the directory already exists, it is not
         /// modified.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
@@ -803,7 +821,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExists"/> operation removes the specified
         /// empty directory, if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -825,7 +845,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExistsAsync"/> operation removes the specified
         /// empty directory, if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -847,7 +869,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteIfExistsInternal"/> operation removes the specified
         /// empty directory, if it exists.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -906,7 +930,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="Delete"/> operation removes the specified empty directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -928,7 +954,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation removes the specified empty directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -951,7 +979,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteInternal"/> operation removes the specified
         /// empty directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1011,7 +1041,9 @@ namespace Azure.Storage.Files.Shares
         /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">Get Directory Properties</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">
+        /// Get Directory Properties</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1038,7 +1070,9 @@ namespace Azure.Storage.Files.Shares
         /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">Get Directory Properties</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">
+        /// Get Directory Properties</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1065,7 +1099,9 @@ namespace Azure.Storage.Files.Shares
         /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">Get Directory Properties</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-directory-properties">
+        /// Get Directory Properties</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1131,7 +1167,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeaders"/> operation sets system
         /// properties on the directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">
+        /// Set Directory Properties</see>.
         /// </summary>
         /// <param name="smbProperties">
         /// Optional SMB properties to set for the directory.
@@ -1201,7 +1239,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeadersInternal"/> operation sets system
         /// properties on the directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">
+        /// Set Directory Properties</see>.
         /// </summary>
         /// <param name="smbProperties">
         /// Optional SMB properties to set for the directory.
@@ -1281,7 +1321,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadata"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">Set Directory Metadata</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">
+        /// Set Directory Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this directory.
@@ -1310,7 +1352,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadataAsync"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">Set Directory Metadata</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">
+        /// Set Directory Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this directory.
@@ -1339,7 +1383,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadataInternal"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">Set Directory Metadata</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata">
+        /// Set Directory Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this directory.
@@ -1403,7 +1449,9 @@ namespace Azure.Storage.Files.Shares
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">List Directories and Files</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
         /// </summary>
         /// <param name="prefix">
         /// Optional string that filters the results to return only
@@ -1432,7 +1480,9 @@ namespace Azure.Storage.Files.Shares
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">List Directories and Files</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
         /// </summary>
         /// <param name="prefix">
         /// Optional string that filters the results to return only
@@ -1460,7 +1510,9 @@ namespace Azure.Storage.Files.Shares
         /// single segment of files and subdirectories in this directory, starting
         /// from the specified <paramref name="marker"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">List Directories and Files</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
         /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -1544,7 +1596,9 @@ namespace Azure.Storage.Files.Shares
         /// handles may make multiple requests to the service while fetching
         /// all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
@@ -1572,7 +1626,9 @@ namespace Azure.Storage.Files.Shares
         /// Enumerating the handles may make multiple requests to the service
         /// while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
@@ -1598,7 +1654,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="GetHandlesAsync"/> operation returns a list of open
         /// handles on a directory or a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">List Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -1685,7 +1743,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -1730,7 +1790,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -1776,7 +1838,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
@@ -1813,7 +1877,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// FFor more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
@@ -1850,7 +1916,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
@@ -1913,7 +1981,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">Force Close Handles</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
@@ -1998,7 +2068,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="CreateSubdirectory"/> operation creates a new
         /// subdirectory under this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="metadata">
@@ -2043,7 +2115,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="CreateSubdirectoryAsync"/> operation creates a new
         /// subdirectory under this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">Create Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="metadata">
@@ -2091,7 +2165,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteSubdirectory"/> operation removes the
         /// specified empty subdirectory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="cancellationToken">
@@ -2114,7 +2190,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteSubdirectoryAsync"/> operation removes the
         /// specified empty subdirectory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">Delete Directory</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory">
+        /// Delete Directory</see>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="cancellationToken">
@@ -2140,7 +2218,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -2203,7 +2283,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -2264,7 +2346,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -2327,7 +2411,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">Create File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
@@ -2391,7 +2477,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="conditions">
@@ -2422,7 +2510,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteFile(string, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="cancellationToken">
@@ -2451,7 +2541,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="conditions">
@@ -2484,7 +2576,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="DeleteFileAsync(string, CancellationToken)"/>
         /// operation immediately removesthe file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">Delete File</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="cancellationToken">

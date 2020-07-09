@@ -10,7 +10,10 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="QueueSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage queue.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Create  a Service SAS</see>.
     /// </summary>
     public class QueueSasBuilder
     {

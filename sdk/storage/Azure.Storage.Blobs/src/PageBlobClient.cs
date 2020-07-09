@@ -62,7 +62,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
@@ -84,7 +86,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this page blob.
@@ -219,7 +223,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// class with an identical <see cref="Uri"/> source but the specified
         /// snapshot timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
@@ -871,7 +877,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the pages to
@@ -932,7 +940,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the pages to
@@ -993,7 +1003,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="content"/> to a range of pages in a page blob,
         /// starting at <paramref name="offset"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the pages to
@@ -1102,7 +1114,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClearPages"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be cleared. Both the start and
@@ -1144,7 +1158,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClearPagesAsync"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be cleared. Both the start and
@@ -1186,7 +1202,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="ClearPagesInternal"/> operation clears one or more
         /// pages from the page blob, as specificed by the <paramref name="range"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-page" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-page">
+        /// Put Page</see>.
         /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be cleared. Both the start and
@@ -1273,7 +1291,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="GetPageRanges"/> operation returns the list of
         /// valid page ranges for a page blob or snapshot of a page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1282,7 +1302,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1317,7 +1338,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="GetPageRangesAsync"/> operation returns the list of
         /// valid page ranges for a page blob or snapshot of a page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1326,7 +1349,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1361,7 +1385,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="GetPageRangesInternal"/> operation returns the list
         /// of valid page ranges for a page blob or snapshot of a page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1370,7 +1396,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1451,7 +1478,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1460,7 +1489,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1508,7 +1538,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1517,7 +1549,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1565,7 +1598,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1574,7 +1609,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
@@ -1681,7 +1717,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// include both updated and cleared pages.  This API only works with
         /// managed disk storage accounts.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1690,7 +1728,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
@@ -1740,7 +1779,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// include both updated and cleared pages.  This API only works with
         /// managed disk storage accounts.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges">
+        /// Get Page Ranges</see>.
         /// </summary>
         /// <param name="range">
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -1749,7 +1790,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="snapshot">
         /// Optionally specifies the blob snapshot to retrieve page ranges
         /// information from. For more information on working with blob snapshots,
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">Create a snapshot of a blob</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </param>
         /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
@@ -1801,7 +1843,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="size">
         /// Specifies the maximum size for the page blob, up to 8 TB.  The
@@ -1842,7 +1886,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="size">
         /// Specifies the maximum size for the page blob, up to 8 TB.  The
@@ -1883,7 +1929,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// specified value is less than the current size of the blob, then
         /// all pages above the specified value are cleared.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="size">
         /// Specifies the maximum size for the page blob, up to 8 TB.  The
@@ -1965,7 +2013,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
@@ -2022,7 +2072,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
@@ -2079,7 +2131,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// sequence number <paramref name="action"/> and <paramref name="sequenceNumber"/>
         /// for this page blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
@@ -2181,8 +2235,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="BlobBaseClient.GetProperties"/> to
         /// determine if the copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob">
+        /// Incremental Copy Blob</see> and
+        /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">
+        /// Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to
@@ -2287,8 +2344,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="BlobBaseClient.GetPropertiesAsync"/>
         /// to determine if thecopy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob">
+        /// Incremental Copy Blob</see> and
+        /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">
+        /// Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to
@@ -2394,8 +2454,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobBaseClient.GetPropertiesAsync"/> to determine if the
         /// copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob" />
-        /// and <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">Back up Azure unmanaged VM disks with incremental snapshots</see>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/incremental-copy-blob">
+        /// Incremental Copy Blob</see> and
+        /// <see href="https://docs.microsoft.com/azure/virtual-machines/windows/incremental-snapshots">
+        /// Back up Azure unmanaged VM disks with incremental snapshots</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the to the source page blob as a <see cref="Uri"/> up to
@@ -2533,7 +2596,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of pages to a page blob where the contents are read from
         /// sourceUri.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url">
+        /// Put Page From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -2608,7 +2673,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of pages to a page blob where the contents are read from
         /// sourceUri.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url">
+        /// Put Page From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -2683,7 +2750,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// range of pages to a page blob where the contents are read from
         /// sourceUri.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url">
+        /// Put Page From URL</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may

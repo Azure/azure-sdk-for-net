@@ -10,7 +10,10 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="ShareSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage share, directory, or file.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Creating a Service SAS</see>.
     /// </summary>
     public class ShareSasBuilder
     {

@@ -37,7 +37,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         public BlobChangeFeedClient(string connectionString)
         {
@@ -53,7 +55,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">
+        /// Configuring Azure Storage conneciton strings</see>.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
