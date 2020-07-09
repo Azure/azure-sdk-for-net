@@ -25,6 +25,13 @@
                 "description": "The storage endpoint suffix. Its value will be changed for different clouds test."
             }
         },
+        "keyVaultEndpointSuffix": {
+            "defaultValue": ".vault.azure.net",
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+            }
+        },
         "azureAuthorityHost": {
             "type": "string",
             "defaultValue": "https://login.microsoftonline.com",
@@ -45,7 +52,7 @@
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
         "softDeleteAccountName": "[concat(parameters('baseName'), 'sftdl')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
+        "azureKeyVaultUrl": "[format('https://{0}{1}', variables('keyvaultName'), parameters('keyVaultEndpointSuffix'))]",
         "location": "[resourceGroup().location]",
         "encryption": {
             "services": {

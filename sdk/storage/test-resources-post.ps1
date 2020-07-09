@@ -126,14 +126,14 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$SoftDeleteAccountName</AccountName>
       <AccountKey>$SoftDeleteAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$SoftDeleteAccountName.blob.core.windows.net</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$SoftDeleteAccountName.queue.core.windows.net</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$SoftDeleteAccountName.table.core.windows.net</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$SoftDeleteAccountName.file.core.windows.net</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$SoftDeleteAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SoftDeleteAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SoftDeleteAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SoftDeleteAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
   <KeyVaultConfigurations>
@@ -143,7 +143,7 @@ $content =
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
 </TestConfigurations>"
@@ -157,7 +157,3 @@ $content | Set-Content $TestConfigurationPath
 Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Storage Tests"
 # https://github.com/microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md#logging-commands
 Write-Host "##vso[task.setvariable variable=AZ_STORAGE_CONFIG_PATH]$TestConfigurationPath"
-
-$filecontent = Get-Content -Path $TestConfigurationPath
-
-Write-Output $filecontent
