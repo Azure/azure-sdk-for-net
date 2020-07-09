@@ -26,7 +26,7 @@ extends:
         BuildInParallel: false
         TimeoutInMinutes: 300
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/'; keyVaultEndpointSuffix = '.vault.azure.cn' }"
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/'; keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard' }"
 
         # ServiceDirectory: storage
         # BuildInParallel: false
