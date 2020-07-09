@@ -8,12 +8,17 @@ guaranteed, durable, immutable, read-only log of these changes. Client applicati
 logs at any time. The change feed enables you to build efficient and scalable solutions that
 process change events that occur in your Blob Storage account at a low cost.
 
-[Source code][source] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 
 ## Getting started
 
 ### Install the package
-- TODO after we have released.
+
+Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
+
+```Powershell
+dotnet add package Azure.Storage.Blobs.ChangeFeed
+```
 
 ### Prerequisites
 
@@ -131,8 +136,10 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/srcs
+[package]: https://www.nuget.org/packages/Azure.Storage.Blobs.ChangeFeed/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed
 [azure_sub]: https://azure.microsoft.com/free/
+[nuget]: https://www.nuget.org/
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
 [storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
