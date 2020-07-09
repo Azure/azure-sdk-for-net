@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private string _apiVersion;
-        private EventGridClientOptions _clientOptions;
+        private ObjectSerializer _serializer;
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
         protected EventGridClient()
@@ -57,7 +57,8 @@ namespace Azure.Messaging.EventGrid
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            _clientOptions = options ?? new EventGridClientOptions();
+            options ??= new EventGridClientOptions();
+            _serializer = options.Serializer ?? new JsonObjectSerializer();
             _apiVersion = options.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
@@ -75,7 +76,8 @@ namespace Azure.Messaging.EventGrid
         public EventGridClient(Uri endpoint, SharedAccessSignatureCredential credential, EventGridClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            _clientOptions = options ?? new EventGridClientOptions();
+            options ??= new EventGridClientOptions();
+            _serializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new SharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
@@ -172,9 +174,16 @@ namespace Azure.Messaging.EventGrid
                 List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
                 foreach (object customEvent in events)
                 {
-                    serializedEvents.Add(new EventGridSerializer(customEvent, _clientOptions.GetObjectSerializer(), cancellationToken));
+                    serializedEvents.Add(
+                        new EventGridSerializer(
+                            customEvent,
+                            _serializer,
+                            cancellationToken));
                 }
-                return await _serviceRestClient.PublishCustomEventEventsAsync(_hostName, serializedEvents, cancellationToken).ConfigureAwait(false);
+                return await _serviceRestClient.PublishCustomEventEventsAsync(
+                    _hostName,
+                    serializedEvents,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -196,9 +205,16 @@ namespace Azure.Messaging.EventGrid
                 List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
                 foreach (object customEvent in events)
                 {
-                    serializedEvents.Add(new EventGridSerializer(customEvent, _clientOptions.GetObjectSerializer(), cancellationToken));
+                    serializedEvents.Add(
+                        new EventGridSerializer(
+                            customEvent,
+                            _serializer,
+                            cancellationToken));
                 }
-                return _serviceRestClient.PublishCustomEventEvents(_hostName, serializedEvents, cancellationToken);
+                return _serviceRestClient.PublishCustomEventEvents(
+                    _hostName,
+                    serializedEvents,
+                    cancellationToken);
             }
             catch (Exception e)
             {

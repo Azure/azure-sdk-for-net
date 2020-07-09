@@ -18,6 +18,7 @@ namespace Azure.Messaging.EventGrid
     public partial class EventGridClientOptions : Azure.Core.ClientOptions
     {
         public EventGridClientOptions(Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.EventGridClientOptions.ServiceVersion.V2018_01_01) { }
+        public Azure.Core.ObjectSerializer Serializer { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
