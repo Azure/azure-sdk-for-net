@@ -9,7 +9,8 @@ extends:
         ScenarioName: AzureCloud
         BuildInParallel: false
         TimeoutInMinutes: 300
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: canadacentral
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureAuthorityHost = 'https://login.microsoftonline.com/'; keyVaultEndpointSuffix = '.vault.azure.net' }"
 
       # AzureUSGovernment
@@ -28,8 +29,3 @@ extends:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/'; keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard' }"
 
-        # ServiceDirectory: storage
-        # BuildInParallel: false
-        # TimeoutInMinutes: 300
-        # Location: canadacentral
-        # SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
