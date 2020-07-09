@@ -33,7 +33,7 @@ namespace Azure.Storage.Shared
         }
 
         /// <summary>
-        /// Boundary at which point we start requesting multiple arrays for our buffer.
+        /// Size to rent from MemoryPool.
         /// </summary>
         public int MaxArraySize { get; }
 
@@ -54,7 +54,7 @@ namespace Azure.Storage.Shared
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        private PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
+        public PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
         {
             AbsolutePosition = absolutePosition;
             ArrayPool = arrayPool;
@@ -225,7 +225,7 @@ namespace Azure.Storage.Shared
 
         public override bool CanSeek => true;
 
-        public override bool CanWrite => false;
+        public override bool CanWrite => true;
 
         public override long Length => BufferSet.Sum(tuple => (long)tuple.DataLength);
 
@@ -315,16 +315,43 @@ namespace Azure.Storage.Shared
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException();
+            while (count > 0)
+            {
+                BufferPartition currentBuffer = GetLatestBufferWithAvailableSpaceOrDefault();
+
+                if (currentBuffer == default)
+                {
+                    byte[] newBytes = ArrayPool.Rent(MaxArraySize);
+                    currentBuffer = new BufferPartition
+                    {
+                        Buffer = newBytes,
+                        DataLength = 0
+                    };
+                    BufferSet.Add(currentBuffer);
+                }
+
+                int copied = Math.Min(currentBuffer.Buffer.Length - currentBuffer.DataLength, count);
+                Array.Copy(buffer, offset, currentBuffer.Buffer, currentBuffer.DataLength, copied);
+                currentBuffer.DataLength += copied;
+                count -= copied;
+                offset += copied;
+                Position += copied;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            foreach (var buffer in BufferSet)
+            Clear();
+        }
+
+        public void Clear()
+        {
+            foreach (BufferPartition buffer in BufferSet)
             {
                 ArrayPool.Return(buffer.Buffer);
             }
             BufferSet.Clear();
+            Position = 0;
         }
 
         private void AssertPositionInBounds()
@@ -337,7 +364,7 @@ namespace Azure.Storage.Shared
 
         private BufferPartition GetLatestBufferWithAvailableSpaceOrDefault()
         {
-            var latestBuffer = BufferSet.LastOrDefault();
+            BufferPartition latestBuffer = BufferSet.LastOrDefault();
 
             if (latestBuffer == default || latestBuffer.DataLength >= latestBuffer.Buffer.Length)
             {
