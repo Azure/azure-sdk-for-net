@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='publicIpAddressName'>
-        /// The name of the subnet.
+        /// The name of the public IP address.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='publicIpAddressName'>
-        /// The name of the subnet.
+        /// The name of the public IP address.
         /// </param>
         /// <param name='expand'>
         /// Expands referenced resources.
@@ -1530,7 +1530,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='publicIpAddressName'>
-        /// The name of the subnet.
+        /// The name of the public IP address.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
