@@ -1399,23 +1399,23 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    return new LazyLoadingReadOnlyStream<BlobDownloadInfo>(
+                    return new LazyLoadingReadOnlyStream<BlobDownloadInfo, BlobRequestConditions>(
                         (HttpRange range,
-                        object conditions,
+                        BlobRequestConditions conditions,
                         bool rangeGetContentHash,
                         CancellationToken cancellationToken)
                             => DownloadAsync(
                                 range,
-                                (BlobRequestConditions)conditions,
+                                conditions,
                                 rangeGetContentHash,
                                 cancellationToken),
                         (HttpRange range,
-                        object conditions,
+                        BlobRequestConditions conditions,
                         bool rangeGetContentHash,
                         CancellationToken cancellationToken)
                             => Download(
                                 range,
-                                (BlobRequestConditions)conditions,
+                                conditions,
                                 rangeGetContentHash,
                                 cancellationToken),
                         position,

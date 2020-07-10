@@ -13,8 +13,7 @@ namespace Azure.Storage
     /// <summary>
     /// Used for Open Read APIs.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal class LazyLoadingReadOnlyStream<T> : Stream
+    internal class LazyLoadingReadOnlyStream<TDownloadInfo, TRequestConditions> : Stream
     {
         /// <summary>
         /// The current position within the blob or file.
@@ -25,11 +24,6 @@ namespace Azure.Storage
         /// Last known length of underlying blob or file.
         /// </summary>
         private long _length;
-
-        /// <summary>
-        /// The number of bytes in the last download call.
-        /// </summary>
-        private int _lastDownloadBytes;
 
         /// <summary>
         /// The number of bytes to download per call.
@@ -44,24 +38,24 @@ namespace Azure.Storage
         /// <summary>
         /// Request conditions to send on the download requests.
         /// </summary>
-        private readonly object _requestConditions;
+        private readonly TRequestConditions _requestConditions;
 
         /// <summary>
         /// Async DownloadTo() function.
         /// </summary>
-        private readonly Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> _downloadAsyncFunc;
+        private readonly Func<HttpRange, TRequestConditions, bool, CancellationToken, Task<Response<TDownloadInfo>>> _downloadAsyncFunc;
 
         /// <summary>
         /// Sync DownloadTo() function.
         /// </summary>
-        private readonly Func<HttpRange, object, bool, CancellationToken, Response<T>> _downloadFunc;
+        private readonly Func<HttpRange, TRequestConditions, bool, CancellationToken, Response<TDownloadInfo>> _downloadFunc;
 
         public LazyLoadingReadOnlyStream(
-            Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> downloadToAsyncFunc,
-            Func<HttpRange, object, bool, CancellationToken, Response<T>> downloadToFunc,
+            Func<HttpRange, TRequestConditions, bool, CancellationToken, Task<Response<TDownloadInfo>>> downloadToAsyncFunc,
+            Func<HttpRange, TRequestConditions, bool, CancellationToken, Response<TDownloadInfo>> downloadToFunc,
             long position = 0,
             int? bufferSize = default,
-            object requestConditions = default)
+            TRequestConditions requestConditions = default)
         {
             _downloadAsyncFunc = downloadToAsyncFunc;
             _downloadFunc = downloadToFunc;
@@ -95,8 +89,8 @@ namespace Azure.Storage
 
             if (_stream.Position == 0)
             {
-                await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
-                if (_lastDownloadBytes == 0)
+                int lastDownloadedByte = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
+                if (lastDownloadedByte == 0)
                 {
                     return 0;
                 }
@@ -133,9 +127,9 @@ namespace Azure.Storage
             return totalCopiedBytes;
         }
 
-        private async Task DownloadInternal(bool async, CancellationToken cancellationToken)
+        private async Task<int> DownloadInternal(bool async, CancellationToken cancellationToken)
         {
-            Response<T> response;
+            Response<TDownloadInfo> response;
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
@@ -143,7 +137,7 @@ namespace Azure.Storage
                 ? await _downloadAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
                 : _downloadFunc(range, _requestConditions, default, cancellationToken);
 
-            Stream networkStream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
+            Stream networkStream = (Stream)typeof(TDownloadInfo).GetProperty("Content").GetValue(response.Value, null);
 
             _stream.SetLength(0);
 
@@ -165,8 +159,9 @@ namespace Azure.Storage
             networkStream.Dispose();
 
             _stream.Position = 0;
-            _lastDownloadBytes = response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
             _length = GetBlobLength(response);
+
+            return response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
         }
 
         private static void ValidateReadParameters(byte[] buffer, int offset, int count)
@@ -197,7 +192,7 @@ namespace Azure.Storage
             }
         }
 
-        private static long GetBlobLength(Response<T> response)
+        private static long GetBlobLength(Response<TDownloadInfo> response)
         {
             response.GetRawResponse().Headers.TryGetValue("Content-Range", out string lengthString);
             string[] split = lengthString.Split('/');
