@@ -73,29 +73,29 @@ namespace Azure.Storage
 
         public override int Read(byte[] buffer, int offset, int count)
             => ReadInternal(
-                async: false,
                 buffer,
                 offset,
                 count,
+                async: false,
                 default)
             .EnsureCompleted();
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             => await ReadInternal(
-                async: true,
                 buffer,
                 offset,
                 count,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        public async Task<int> ReadInternal(bool async, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        public async Task<int> ReadInternal( byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
         {
             ValidateReadParameters(buffer, offset, count);
 
             if (_stream.Position == 0)
             {
-                await Download(async, cancellationToken).ConfigureAwait(false);
+                await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (_lastDownloadBytes == 0)
                 {
                     return 0;
@@ -125,7 +125,7 @@ namespace Azure.Storage
                     // Download the next block
                     else
                     {
-                        await Download(async, cancellationToken).ConfigureAwait(false);
+                        await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
@@ -133,23 +133,15 @@ namespace Azure.Storage
             return totalCopiedBytes;
         }
 
-        private async Task Download(bool async, CancellationToken cancellationToken)
+        private async Task DownloadInternal(bool async, CancellationToken cancellationToken)
         {
             Response<T> response;
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-            try
-            {
-                response = async
-                    ? await _downloadAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
-                    : _downloadFunc(range, _requestConditions, default, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
+            response = async
+                ? await _downloadAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
+                : _downloadFunc(range, _requestConditions, default, cancellationToken);
 
             Stream networkStream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
 
@@ -169,6 +161,8 @@ namespace Azure.Storage
                     _stream,
                     Constants.DefaultBufferSize);
             }
+
+            networkStream.Dispose();
 
             _stream.Position = 0;
             _lastDownloadBytes = response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
@@ -240,5 +234,8 @@ namespace Azure.Storage
         }
 
         public override void Flush() { }
+
+        public override Task FlushAsync(CancellationToken cancellationToken)
+            => Task.CompletedTask;
     }
 }
