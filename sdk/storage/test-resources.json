@@ -85,14 +85,11 @@
             "ipRules": [],
             "defaultAction": "Allow"
         },
-        "versioningEnableProperties": [
-          {
+        "versioningEnableProperties": {
             "isVersioningEnabled": true
-          }],
-        "nullProperties": [
-          {
-          }
-        ],
+        },
+        "nullProperties": {
+        },
         "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]"
     },
     "resources": [
