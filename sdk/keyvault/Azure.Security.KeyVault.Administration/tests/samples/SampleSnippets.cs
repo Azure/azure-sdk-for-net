@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Administration.Tests;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Samples
@@ -16,9 +16,9 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets : AccessControlTestBase
+    public class SampleSnippets : AccessControlTestBase
     {
-        public Snippets(bool isAsync) : base(isAsync /* To record tests, add a second argument of RecordedTestMode.Record */)
+        public SampleSnippets(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -27,7 +27,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
         private string roleDefinitionId;
 #pragma warning restore IDE1006 // Naming Styles
 
-        [OneTimeSetUp]
+        [SetUp]
+        public void TestSetup()
+        {
+            objectId = TestEnvironment.ClientObjectId;
+        }
+
+        [Test]
+        [SyncOnly]
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
@@ -44,14 +51,11 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             // Retrieve all the role assignments.
             List<RoleAssignment> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
-
             #endregion
-            this.client = client;
-            objectId = TestEnvironment.ClientObjectId;
-            roleDefinitionId = roleDefinitions.FirstOrDefault(d => d.RoleName.Equals("Azure Key Vault Managed HSM Crypto User")).Name;
         }
 
-        [Ignore("These tests can't run until the service features are available")]
+        [Test]
+        [SyncOnly]
         public void GetRoleDefinitions()
         {
             client = Client;
@@ -68,11 +72,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Ignore("These tests can't run until the service features are available")]
-        public void CreateRoleAssignment()
+        [Test]
+        [SyncOnly]
+        public async Task CreateRoleAssignment()
         {
             client = Client;
-            #region Snippet:CreateRoleAssignment
+            List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
+            roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == roleName).Id;
+            #region Snippet:ReadmeCreateRoleAssignment
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = roleDefinitionId;
 
@@ -80,7 +87,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = objectId;
 
             RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-            RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
+            //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
+            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, roleAssignmentId);
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);
@@ -101,7 +109,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Ignore("These tests can't run until the service features are available")]
+        [Test]
+        [SyncOnly]
         public void RoleAssignmentNotFound()
         {
             client = Client;

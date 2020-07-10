@@ -13,9 +13,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
-        private const string roleName = "Azure Key Vault Managed HSM Crypto User";
-        private readonly Guid roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
-
         public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
@@ -16,6 +17,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public KeyVaultAccessControlClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
+
+        internal const string roleName = "Azure Key Vault Managed HSM Crypto User";
+        internal readonly Guid roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
 
         private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
 
