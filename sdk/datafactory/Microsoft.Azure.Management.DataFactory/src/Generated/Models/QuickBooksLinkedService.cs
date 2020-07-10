@@ -35,6 +35,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the QuickBooksLinkedService class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="connectVia">The integration runtime reference.</param>
+        /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the linked service.</param>
+        /// <param name="connectionProperties">Properties used to connect to
+        /// QuickBooks. It is mutually exclusive with any other properties in
+        /// the linked service. Type: object.</param>
         /// <param name="endpoint">The endpoint of the QuickBooks server. (i.e.
         /// quickbooks.api.intuit.com)</param>
         /// <param name="companyId">The company ID of the QuickBooks company to
@@ -47,13 +57,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication.</param>
         /// <param name="accessTokenSecret">The access token secret for OAuth
         /// 1.0 authentication.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="connectVia">The integration runtime reference.</param>
-        /// <param name="description">Linked service description.</param>
-        /// <param name="parameters">Parameters for linked service.</param>
-        /// <param name="annotations">List of tags that can be used for
-        /// describing the linked service.</param>
         /// <param name="useEncryptedEndpoints">Specifies whether the data
         /// source endpoints are encrypted using HTTPS. The default value is
         /// true.</param>
@@ -61,9 +64,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object useEncryptedEndpoints = default(object), object encryptedCredential = default(object))
+        public QuickBooksLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionProperties = default(object), object endpoint = default(object), object companyId = default(object), object consumerKey = default(object), SecretBase consumerSecret = default(SecretBase), SecretBase accessToken = default(SecretBase), SecretBase accessTokenSecret = default(SecretBase), object useEncryptedEndpoints = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
             CompanyId = companyId;
             ConsumerKey = consumerKey;
@@ -79,6 +83,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets properties used to connect to QuickBooks. It is
+        /// mutually exclusive with any other properties in the linked service.
+        /// Type: object.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionProperties")]
+        public object ConnectionProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint of the QuickBooks server. (i.e.
@@ -141,30 +153,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Endpoint");
-            }
-            if (CompanyId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CompanyId");
-            }
-            if (ConsumerKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConsumerKey");
-            }
-            if (ConsumerSecret == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConsumerSecret");
-            }
-            if (AccessToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessToken");
-            }
-            if (AccessTokenSecret == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessTokenSecret");
-            }
         }
     }
 }
