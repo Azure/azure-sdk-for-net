@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                 // reduce the liklihood of additional failures.
                                 if(partialDataAttempts >= MaxBufferDownloadAttemptCount)
                                 {
-                                    var ex = new TransferFailedException(string.Format("Failed to retrieve the requested data after {0} attempts for file {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", MaxBufferDownloadAttemptCount, _segmentMetadata.Path));
+                                    var ex = new TransferFailedException(string.Format("Failed to retrieve the requested data after {0} attempts for file {1}. This usually indicates repeated server-side throttling due to exceeding account bandwidth.", MaxBufferDownloadAttemptCount, _segmentMetadata.Path));
                                     TracingHelper.LogError(ex);
 
                                     throw ex;
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 // full validation of the segment.
                 if(outputStream.Position - _segmentMetadata.Offset != _segmentMetadata.Length)
                 {
-                    var ex = new TransferFailedException(string.Format("Post-download stream segment verification failed for file {2}: target stream has a length of {0}, expected {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length, _segmentMetadata.Path));
+                    var ex = new TransferFailedException(string.Format("Post-download stream segment verification failed for file {2}: target stream has a length of {0}, expected {1}. This usually indicates repeated server-side throttling due to exceeding account bandwidth.", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length, _segmentMetadata.Path));
                     TracingHelper.LogError(ex);
 
                     throw ex;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableResponse
+    internal partial class TableResponse
     {
         internal static TableResponse DeserializeTableResponse(JsonElement element)
         {

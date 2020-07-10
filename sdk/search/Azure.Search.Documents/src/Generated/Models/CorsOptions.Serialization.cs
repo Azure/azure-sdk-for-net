@@ -6,23 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CorsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
-            writer.WriteStartArray();
-            foreach (var item in AllowedOrigins)
+            if (AllowedOrigins.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("allowedOrigins");
+                writer.WriteStartArray();
+                foreach (var item in AllowedOrigins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("allowedOrigins");
+            }
             if (MaxAgeInSeconds != null)
             {
                 writer.WritePropertyName("maxAgeInSeconds");

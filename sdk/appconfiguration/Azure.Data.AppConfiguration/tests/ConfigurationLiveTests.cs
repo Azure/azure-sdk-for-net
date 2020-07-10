@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -19,7 +19,7 @@ namespace Azure.Data.AppConfiguration.Tests
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new ConfigurationRecordMatcher(Sanitizer);
+            Matcher = new ConfigurationRecordMatcher();
         }
 
         private string GenerateKeyId(string prefix = null)

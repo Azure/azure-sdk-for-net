@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class ImageAnalysisSkill : IUtf8JsonSerializable
     {
@@ -21,23 +22,23 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (VisualFeatures != null)
+            if (VisualFeatures != null && VisualFeatures.Any())
             {
                 writer.WritePropertyName("visualFeatures");
                 writer.WriteStartArray();
                 foreach (var item in VisualFeatures)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (Details != null)
+            if (Details != null && Details.Any())
             {
                 writer.WritePropertyName("details");
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -58,20 +59,34 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
+            else
             {
-                writer.WriteObjectValue(item);
+                writer.WriteNull("inputs");
             }
-            writer.WriteEndArray();
+            if (Outputs.Any())
+            {
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("outputs");
+            }
             writer.WriteEndObject();
         }
 
@@ -106,7 +121,7 @@ namespace Azure.Search.Documents.Models
                     List<VisualFeature> array = new List<VisualFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVisualFeature());
+                        array.Add(new VisualFeature(item.GetString()));
                     }
                     visualFeatures = array;
                     continue;
@@ -120,7 +135,7 @@ namespace Azure.Search.Documents.Models
                     List<ImageDetail> array = new List<ImageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToImageDetail());
+                        array.Add(new ImageDetail(item.GetString()));
                     }
                     details = array;
                     continue;

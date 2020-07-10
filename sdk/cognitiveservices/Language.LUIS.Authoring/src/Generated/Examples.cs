@@ -62,6 +62,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='exampleLabelObject'>
         /// A labeled example utterance with the expected intent and entities.
         /// </param>
+        /// <param name='enableNestedChildren'>
+        /// Toggles nested/flat format
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -83,7 +86,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, bool? enableNestedChildren = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -106,6 +109,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("enableNestedChildren", enableNestedChildren);
                 tracingParameters.Add("exampleLabelObject", exampleLabelObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
@@ -116,6 +120,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            List<string> _queryParameters = new List<string>();
+            if (enableNestedChildren != null)
+            {
+                _queryParameters.Add(string.Format("enableNestedChildren={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(enableNestedChildren, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -234,6 +247,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='exampleLabelObjectArray'>
         /// Array of example utterances.
         /// </param>
+        /// <param name='enableNestedChildren'>
+        /// Toggles nested/flat format
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -255,7 +271,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, bool? enableNestedChildren = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -278,6 +294,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("enableNestedChildren", enableNestedChildren);
                 tracingParameters.Add("exampleLabelObjectArray", exampleLabelObjectArray);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Batch", tracingParameters);
@@ -288,6 +305,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            List<string> _queryParameters = new List<string>();
+            if (enableNestedChildren != null)
+            {
+                _queryParameters.Add(string.Format("enableNestedChildren={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(enableNestedChildren, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -428,6 +454,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='take'>
         /// The number of entries to return. Maximum page size is 500. Default is 100.
         /// </param>
+        /// <param name='enableNestedChildren'>
+        /// Toggles nested/flat format
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -449,7 +478,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, bool? enableNestedChildren = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -482,6 +511,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("take", take);
+                tracingParameters.Add("enableNestedChildren", enableNestedChildren);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -499,6 +529,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             if (take != null)
             {
                 _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(take, Client.SerializationSettings).Trim('"'))));
+            }
+            if (enableNestedChildren != null)
+            {
+                _queryParameters.Add(string.Format("enableNestedChildren={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(enableNestedChildren, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

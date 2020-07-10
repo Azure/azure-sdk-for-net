@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Security.KeyVault.Secrets;
@@ -20,6 +20,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
             _serviceVersion = serviceVersion;
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         public KeyResolver Resolver { get { return GetResolver(); } }

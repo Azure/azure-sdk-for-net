@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/recognition/general",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-384dc68221179e4ba60e36986c178320-c033862b8b4d9c41-00",
+        "traceparent": "00-0158a63a60f3424d9be86ab3ef664a33-2abfc1362af98f41-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1c4a6dd96bbd6f88ca57be2176dfb3b8",
         "x-ms-return-client-request-id": "true"
@@ -31,14 +31,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ae4062b1-8256-47a9-b28a-b0d2e82d50f6",
+        "apim-request-id": "8fe6cd33-9bf0-4607-8676-1774be106cdd",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 07 Feb 2020 19:13:31 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "x-envoy-upstream-service-time": "93"
       },
       "ResponseBody": {
         "documents": [
@@ -47,57 +47,66 @@
             "entities": [
               {
                 "text": "Microsoft",
-                "type": "Organization",
+                "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "score": 1.0
+                "confidenceScore": 0.83
               },
               {
                 "text": "Bill Gates",
-                "type": "Person",
+                "category": "Person",
                 "offset": 25,
                 "length": 10,
-                "score": 0.67
+                "confidenceScore": 0.85
               },
               {
                 "text": "Paul Allen",
-                "type": "Person",
+                "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "score": 0.81
+                "confidenceScore": 0.9
               }
-            ]
+            ],
+            "warnings": []
           },
           {
             "id": "2",
             "entities": [
               {
                 "text": "Mi",
-                "type": "DateTime",
-                "subtype": "Date",
+                "category": "DateTime",
+                "subcategory": "Date",
                 "offset": 0,
                 "length": 2,
-                "score": 0.8
+                "confidenceScore": 0.8
               },
               {
                 "text": "mi",
-                "type": "DateTime",
-                "subtype": "Date",
+                "category": "DateTime",
+                "subcategory": "Date",
                 "offset": 11,
                 "length": 2,
-                "score": 0.8
+                "confidenceScore": 0.8
+              },
+              {
+                "text": "veterinario",
+                "category": "PersonType",
+                "offset": 36,
+                "length": 11,
+                "confidenceScore": 0.52
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2020-02-01"
+        "modelVersion": "2020-04-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "62484034",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

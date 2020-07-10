@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 return $"RunAs=App;AppId={userId}";
             }
 
-            return default(string);
+            return default;
         }
 
         /// <summary>

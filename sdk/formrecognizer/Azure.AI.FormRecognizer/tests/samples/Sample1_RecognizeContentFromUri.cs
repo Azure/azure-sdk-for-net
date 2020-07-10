@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
@@ -21,12 +20,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
+            Uri invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 
-            Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
-            foreach (FormPage page in formPages.Value)
+            FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
+            foreach (FormPage page in formPages)
             {
                 Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
 

@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// A JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data
     /// structure that represents a cryptographic key.
-    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
+    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18">JSON Web Key (JWK)</see>.
     /// </summary>
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {

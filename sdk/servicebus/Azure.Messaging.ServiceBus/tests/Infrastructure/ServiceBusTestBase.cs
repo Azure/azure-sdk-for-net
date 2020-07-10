@@ -4,18 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public class ServiceBusTestBase
+    public abstract class ServiceBusTestBase
     {
-        protected IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        protected List<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
@@ -29,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             for (int i = 0; i < count; i++)
             {
-                Assert.That(() => batch.TryAdd(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                Assert.That(() => batch.TryAddMessage(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
             }
 
             return batch;

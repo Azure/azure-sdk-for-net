@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
@@ -49,36 +48,13 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual("ms,msft=>Microsoft\naz=>Azure", map.Synonyms);
         }
 
-        [Test]
-        public void CanonicalizesNullPropertyNames()
+        [TestCase(null, null)]
+        [TestCase("*", "*")]
+        [TestCase("\"0123abcd\"", "\"0123abcd\"")]
+        public void ParsesETag(string value, string expected)
         {
-            Assert.IsNull(SynonymMap.CanonicalizePropertyNames(null));
-        }
-
-        [Test]
-        public void CanonicalizesPropertyNames()
-        {
-            IEnumerable<string> actual = SynonymMap.CanonicalizePropertyNames(new[]
-            {
-                nameof(SynonymMap.Name),
-                nameof(SynonymMap.Format),
-                nameof(SynonymMap.Synonyms),
-                nameof(SynonymMap.EncryptionKey),
-                nameof(SynonymMap.ETag),
-                "Other",
-            });
-
-            IEnumerable<string> expected = new[]
-            {
-                "name",
-                "format",
-                "synonyms",
-                "encryptionKey",
-                "@odata.etag",
-                "Other",
-            };
-
-            CollectionAssert.AreEqual(expected, actual);
+            SynonymMap sut = new SynonymMap(null, null, null, null, value);
+            Assert.AreEqual(expected, sut.ETag?.ToString());
         }
     }
 }

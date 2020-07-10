@@ -5,10 +5,13 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.KeyVault</PackageId>
-		<Description>Provides key vault management capabilities for Microsoft Azure.</Description>
+		<Description>
+			Provides key vault management capabilities for Microsoft Azure.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.KeyVault" (https://www.nuget.org/packages/Azure.ResourceManager.KeyVault/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-		<Version>3.0.0</Version>
+		<Version>3.0.1</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
 		<PackageReleaseNotes>      
 			<![CDATA[

@@ -13,9 +13,9 @@ namespace Azure.Data.Tables.Models
     public partial class AccessPolicy
     {
         /// <summary> Initializes a new instance of AccessPolicy. </summary>
-        /// <param name="start"> the date-time the policy is active. </param>
-        /// <param name="expiry"> the date-time the policy expires. </param>
-        /// <param name="permission"> the permissions for the acl policy. </param>
+        /// <param name="start"> The start datetime from which the policy is active. </param>
+        /// <param name="expiry"> The datetime that the policy expires. </param>
+        /// <param name="permission"> The permissions for the acl policy. </param>
         public AccessPolicy(DateTimeOffset start, DateTimeOffset expiry, string permission)
         {
             if (permission == null)
@@ -28,11 +28,11 @@ namespace Azure.Data.Tables.Models
             Permission = permission;
         }
 
-        /// <summary> the date-time the policy is active. </summary>
-        public DateTimeOffset Start { get; }
-        /// <summary> the date-time the policy expires. </summary>
-        public DateTimeOffset Expiry { get; }
-        /// <summary> the permissions for the acl policy. </summary>
-        public string Permission { get; }
+        /// <summary> The start datetime from which the policy is active. </summary>
+        public DateTimeOffset Start { get; set; }
+        /// <summary> The datetime that the policy expires. </summary>
+        public DateTimeOffset Expiry { get; set; }
+        /// <summary> The permissions for the acl policy. </summary>
+        public string Permission { get; set; }
     }
 }

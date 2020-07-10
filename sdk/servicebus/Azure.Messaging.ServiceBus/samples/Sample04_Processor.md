@@ -14,12 +14,12 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions
@@ -44,11 +44,11 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessMessageEventArgs args)
 {
-    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
+    string body = args.Message.Body.ToString();
     Console.WriteLine(body);
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
     tcs.SetResult(true);
 }
 
@@ -87,23 +87,23 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(
+ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
     {
         SessionId = "Session1"
     });
-messageBatch.TryAdd(
+messageBatch.TryAddMessage(
     new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
     {
         SessionId = "Session2"
     });
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
+await sender.SendMessagesAsync(messageBatch);
 
 // get the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+var options = new ServiceBusSessionProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.
@@ -125,11 +125,10 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
-    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
-    Console.WriteLine(body);
+    var body = args.Message.Body.ToString();
 
     // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
+    await args.CompleteMessageAsync(args.Message);
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message

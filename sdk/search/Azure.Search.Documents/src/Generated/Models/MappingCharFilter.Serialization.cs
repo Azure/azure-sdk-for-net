@@ -6,23 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MappingCharFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mappings");
-            writer.WriteStartArray();
-            foreach (var item in Mappings)
+            if (Mappings.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("mappings");
+                writer.WriteStartArray();
+                foreach (var item in Mappings)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("mappings");
+            }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name");

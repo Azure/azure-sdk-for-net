@@ -1,7 +1,25 @@
 # Release History
 
-## 12.2.0-preview.1 (Unreleased)
+## 12.3.0-preview.2 (Unreleased)
+- Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
 
+## 12.3.0-preview.1 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Jumbo Files.
+- Fixed bug where DataLakeFileClient, DataLakeDirectoryClient, and DataLakePathClient.Name and .Path were sometimes URL-encoded.
+- Fixed bug where DataLakeDirectoryClient.GetSubDirectory(), GetFile(), CreateSubDirectory(), and CreateFile() were returning clients with an incorrect URI.
+
+## 12.2.2 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.2.1 (2020-06)
+- Fixed bug where download could hang indefinietly on .NET Framework
+
+## 12.2.0 (2020-05)
+- Added DataLakeFileClient.Upload() overload that allows setting metadata, permissions and umask.
+- Fixed bug where PathClient.Rename() was not functioning correctly with SAS.
+- Added DataLakeFileSystemClient.GetPathClient().
+- Fixed bug where data lake errors weren't parsed correctly.
 
 ## 12.1.0 (2020-04)
 - Fixed bug where DataLakeFileSystemClient.DeleteIfExistsAsync() would throw an exception if the underlying File System did not exist.

@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V7_1_Preview;
 
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 

@@ -1,0 +1,100 @@
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+jobs:
+  - job: SmokeTest
+
+    strategy:
+      matrix:
+        Linux (AzureCloud):
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureCloud):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetFramework (AzureCloud):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        MacOs (AzureCloud):
+          OSVmImage: "macOS-10.15"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureUSGovernment):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetFramework (AzureUSGovernment):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetCoreApp (AzureChinaCloud):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+        Windows_NetFramework (AzureChinaCloud):
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+
+    pool:
+      vmImage: $(OSVmImage)
+
+    variables:
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
+
+    steps:
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+
+      - task: UseDotNet@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
+
+      - task: PowerShell@2
+        inputs:
+          targetType: filePath
+          filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+          arguments: -CI
+          workingDirectory: common/SmokeTests/SmokeTest
+          pwsh: true
+        displayName: Use latest dev feed package versions
+
+      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: Show SmokeTest.csproj
+
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+      - template: /eng/common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
+          ArmTemplateParameters: $(ArmTemplateParameters)
+
+      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
+        displayName: "Run Smoke Tests"
+
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)

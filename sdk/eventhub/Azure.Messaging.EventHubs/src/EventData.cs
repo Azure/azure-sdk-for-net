@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The set of free-form event properties which may be used for passing metadata associated with the event with the event body
+        ///   The set of free-form event properties which may be used for passing metadata associated with the event body
         ///   during Event Hubs operations.
         /// </summary>
         ///

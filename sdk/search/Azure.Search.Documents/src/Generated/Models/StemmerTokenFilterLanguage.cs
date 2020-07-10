@@ -5,118 +5,118 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language to use for a stemmer token filter. </summary>
     public enum StemmerTokenFilterLanguage
     {
-        /// <summary> arabic. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Arabic. </summary>
         Arabic,
-        /// <summary> armenian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Armenian. </summary>
         Armenian,
-        /// <summary> basque. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Basque. </summary>
         Basque,
-        /// <summary> brazilian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese (Brazil). </summary>
         Brazilian,
-        /// <summary> bulgarian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Bulgarian. </summary>
         Bulgarian,
-        /// <summary> catalan. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Catalan. </summary>
         Catalan,
-        /// <summary> czech. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Czech. </summary>
         Czech,
-        /// <summary> danish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Danish. </summary>
         Danish,
-        /// <summary> dutch. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Dutch. </summary>
         Dutch,
-        /// <summary> dutchKp. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
         DutchKp,
-        /// <summary> english. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English. </summary>
         English,
-        /// <summary> lightEnglish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English that does light stemming. </summary>
         LightEnglish,
-        /// <summary> minimalEnglish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English that does minimal stemming. </summary>
         MinimalEnglish,
-        /// <summary> possessiveEnglish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English that removes trailing possessives from words. </summary>
         PossessiveEnglish,
-        /// <summary> porter2. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English that uses the Porter2 stemming algorithm. </summary>
         Porter2,
-        /// <summary> lovins. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
         Lovins,
-        /// <summary> finnish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Finnish. </summary>
         Finnish,
-        /// <summary> lightFinnish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Finnish that does light stemming. </summary>
         LightFinnish,
-        /// <summary> french. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for French. </summary>
         French,
-        /// <summary> lightFrench. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for French that does light stemming. </summary>
         LightFrench,
-        /// <summary> minimalFrench. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for French that does minimal stemming. </summary>
         MinimalFrench,
-        /// <summary> galician. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Galician. </summary>
         Galician,
-        /// <summary> minimalGalician. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Galician that does minimal stemming. </summary>
         MinimalGalician,
-        /// <summary> german. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for German. </summary>
         German,
-        /// <summary> german2. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer that uses the German variant algorithm. </summary>
         German2,
-        /// <summary> lightGerman. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for German that does light stemming. </summary>
         LightGerman,
-        /// <summary> minimalGerman. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for German that does minimal stemming. </summary>
         MinimalGerman,
-        /// <summary> greek. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Greek. </summary>
         Greek,
-        /// <summary> hindi. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Hindi. </summary>
         Hindi,
-        /// <summary> hungarian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Hungarian. </summary>
         Hungarian,
-        /// <summary> lightHungarian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Hungarian that does light stemming. </summary>
         LightHungarian,
-        /// <summary> indonesian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Indonesian. </summary>
         Indonesian,
-        /// <summary> irish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Irish. </summary>
         Irish,
-        /// <summary> italian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Italian. </summary>
         Italian,
-        /// <summary> lightItalian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Italian that does light stemming. </summary>
         LightItalian,
-        /// <summary> sorani. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Sorani. </summary>
         Sorani,
-        /// <summary> latvian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Latvian. </summary>
         Latvian,
-        /// <summary> norwegian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål). </summary>
         Norwegian,
-        /// <summary> lightNorwegian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does light stemming. </summary>
         LightNorwegian,
-        /// <summary> minimalNorwegian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does minimal stemming. </summary>
         MinimalNorwegian,
-        /// <summary> lightNynorsk. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming. </summary>
         LightNynorsk,
-        /// <summary> minimalNynorsk. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does minimal stemming. </summary>
         MinimalNynorsk,
-        /// <summary> portuguese. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese. </summary>
         Portuguese,
-        /// <summary> lightPortuguese. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does light stemming. </summary>
         LightPortuguese,
-        /// <summary> minimalPortuguese. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does minimal stemming. </summary>
         MinimalPortuguese,
-        /// <summary> portugueseRslp. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Portuguese that uses the RSLP stemming algorithm. </summary>
         PortugueseRslp,
-        /// <summary> romanian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Romanian. </summary>
         Romanian,
-        /// <summary> russian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Russian. </summary>
         Russian,
-        /// <summary> lightRussian. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Russian that does light stemming. </summary>
         LightRussian,
-        /// <summary> spanish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Spanish. </summary>
         Spanish,
-        /// <summary> lightSpanish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Spanish that does light stemming. </summary>
         LightSpanish,
-        /// <summary> swedish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Swedish. </summary>
         Swedish,
-        /// <summary> lightSwedish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Swedish that does light stemming. </summary>
         LightSwedish,
-        /// <summary> turkish. </summary>
+        /// <summary> Selects the Lucene stemming tokenizer for Turkish. </summary>
         Turkish
     }
 }

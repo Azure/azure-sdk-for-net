@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Client
@@ -22,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -33,10 +34,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
+                Assert.IsTrue(client.IsDisposed);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
@@ -46,7 +48,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 else
                 {
                     Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }
@@ -63,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
-                await sender.SendAsync(message);
+                await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
@@ -74,8 +78,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 }
-                var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
-                Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
+                var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
+                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 if (!useSessions)
                 {

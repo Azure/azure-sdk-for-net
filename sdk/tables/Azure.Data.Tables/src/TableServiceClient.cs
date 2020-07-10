@@ -2,29 +2,87 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Sas;
 
 namespace Azure.Data.Tables
 {
     public class TableServiceClient
     {
-        private readonly TableInternalClient _tableOperations;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly TableRestClient _tableOperations;
+        private readonly ServiceRestClient _serviceOperations;
+        private readonly ServiceRestClient _secondaryServiceOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+        private readonly string _version;
+        internal readonly bool _isPremiumEndpoint;
 
-        public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint)
+                : this(endpoint, options: null)
+        { }
+
+        public TableServiceClient(Uri endpoint, TableClientOptions options = null)
+            : this(endpoint, default(TableSharedKeyPipelinePolicy), options)
+        {
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+            }
+        }
+
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new TableClientOptions();
+            var endpointString = endpoint.ToString();
+            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            HttpPipeline pipeline;
 
-            var endpoint1 = endpoint.ToString();
-            var pipeline = HttpPipelineBuilder.Build(options, new TablesSharedKeyPipelinePolicy(credential));
-            var diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpoint1, "2019-02-02");
+            if (policy == default)
+            {
+                pipeline = HttpPipelineBuilder.Build(options);
+            }
+            else
+            {
+                pipeline = HttpPipelineBuilder.Build(options, policy);
+            }
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
+            _version = options.VersionString;
+
+            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
+            _isPremiumEndpoint = (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
+                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>
+        /// class for mocking.
+        /// </summary>
+        internal TableServiceClient(TableRestClient internalClient)
+        {
+            _tableOperations = internalClient;
         }
 
         /// <summary>
@@ -34,9 +92,35 @@ namespace Azure.Data.Tables
         protected TableServiceClient()
         { }
 
-        public TableClient GetTableClient(string tableName)
+        /// <summary>
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current account.
+        /// </summary>
+        /// <param name="permissions"><see cref="TableAccountSasPermissions"/> containing the allowed permissions.</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
+        public virtual TableAccountSasBuilder GetSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            return new TableClient(tableName, _tableOperations);
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
+        }
+
+        /// <summary>
+        /// Gets a <see cref="TableAccountSasBuilder"/> instance scoped to the current table.
+        /// </summary>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
+        public virtual TableAccountSasBuilder GetSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
+        {
+            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
+        }
+
+        public virtual TableClient GetTableClient(string tableName)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isPremiumEndpoint);
         }
 
         /// <summary>
@@ -47,18 +131,35 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+            scope.Start();
+            try
             {
-                var response = await _tableOperations.RestClient.QueryAsync(
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _tableOperations.QueryAsync(
+                    null,
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+            }, async (nextLink, _) =>
+            {
+                var response = await _tableOperations.QueryAsync(
+                       null,
+                       nextTableName: nextLink,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                       cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+            });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -69,18 +170,242 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
 
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response = _tableOperations.RestClient.Query(
-                    null,
-                    new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
-                    cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.Query(
+                            null,
+                            null,
+                            new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                            cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }, (nextLink, _) =>
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.Query(
+                        null,
+                        nextTableName: nextLink,
+                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                        cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(CreateTable)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(CreateTable)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.Delete(tableName, null, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceProperties"> The Table Service properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetProperties(TableServiceProperties tableServiceProperties, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
+            scope.Start();
+            try
+            {
+                return _serviceOperations.SetProperties(tableServiceProperties, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="tableServiceProperties"> The Table Service properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties tableServiceProperties, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
+            scope.Start();
+            try
+            {
+                return await _serviceOperations.SetPropertiesAsync(tableServiceProperties, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TableServiceProperties> GetProperties(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
+            scope.Start();
+            try
+            {
+                var response = _serviceOperations.GetProperties(cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TableServiceProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
+            scope.Start();
+            try
+            {
+                var response = await _serviceOperations.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TableServiceStats>> GetTableServiceStatsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = await _secondaryServiceOperations.GetStatisticsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TableServiceStats> GetTableServiceStats(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTableServiceStats)}");
+            scope.Start();
+            try
+            {
+                var response = _secondaryServiceOperations.GetStatistics(cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }

@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="shardKey">A key-value pair of shard keys to be applied
         /// for the request.</param>
         /// <param name="indexes">List of index keys</param>
-        public MongoDBCollectionResource(string id, IDictionary<string, string> shardKey = default(IDictionary<string, string>), IList<MongoIndex> indexes = default(IList<MongoIndex>))
+        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
+        public MongoDBCollectionResource(string id, IDictionary<string, string> shardKey = default(IDictionary<string, string>), IList<MongoIndex> indexes = default(IList<MongoIndex>), int? analyticalStorageTtl = default(int?))
         {
             Id = id;
             ShardKey = shardKey;
             Indexes = indexes;
+            AnalyticalStorageTtl = analyticalStorageTtl;
             CustomInit();
         }
 
@@ -67,6 +69,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "indexes")]
         public IList<MongoIndex> Indexes { get; set; }
+
+        /// <summary>
+        /// Gets or sets analytical TTL.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyticalStorageTtl")]
+        public int? AnalyticalStorageTtl { get; set; }
 
         /// <summary>
         /// Validate the object.

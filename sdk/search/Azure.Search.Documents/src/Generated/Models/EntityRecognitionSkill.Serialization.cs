@@ -6,23 +6,24 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EntityRecognitionSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Categories != null)
+            if (Categories != null && Categories.Any())
             {
                 writer.WritePropertyName("categories");
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -58,20 +59,34 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
+            else
             {
-                writer.WriteObjectValue(item);
+                writer.WriteNull("inputs");
             }
-            writer.WriteEndArray();
+            if (Outputs.Any())
+            {
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("outputs");
+            }
             writer.WriteEndObject();
         }
 
@@ -98,7 +113,7 @@ namespace Azure.Search.Documents.Models
                     List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToEntityCategory());
+                        array.Add(new EntityCategory(item.GetString()));
                     }
                     categories = array;
                     continue;

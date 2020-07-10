@@ -8,7 +8,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -52,6 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         }
 
         [Test]
+        [PremiumOnly]
         public void CreateKey()
         {
             #region Snippet:CreateKey
@@ -81,6 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateKeyAsync()
         {
             #region Snippet:CreateKeyAsync

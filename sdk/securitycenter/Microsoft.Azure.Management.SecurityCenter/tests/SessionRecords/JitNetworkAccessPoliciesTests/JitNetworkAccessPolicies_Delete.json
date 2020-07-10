@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/mainWS/providers/Microsoft.Security/locations/northeurope/jitNetworkAccessPolicies/default?api-version=2015-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL21haW5XUy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2xvY2F0aW9ucy9ub3J0aGV1cm9wZS9qaXROZXR3b3JrQWNjZXNzUG9saWNpZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/mainWS/providers/Microsoft.Security/locations/northeurope/jitNetworkAccessPolicies/default?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL21haW5XUy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2xvY2F0aW9ucy9ub3J0aGV1cm9wZS9qaXROZXR3b3JrQWNjZXNzUG9saWNpZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTAxLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

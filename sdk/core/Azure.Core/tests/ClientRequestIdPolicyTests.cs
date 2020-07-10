@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -52,6 +52,48 @@ namespace Azure.Core.Tests
             }
 
             policy.Verify();
+        }
+
+        [Test]
+        public async Task ReadsRequestIdValueOfScope()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+            using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
+            {
+                await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
+            }
+
+            Assert.AreEqual(transport.SingleRequest.ClientRequestId, "custom-id");
+        }
+
+        [Test]
+        public async Task ReadsRequestIdValueOfNestedScope()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+
+            using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
+            using (HttpPipeline.CreateClientRequestIdScope("nested-custom-id"))
+            {
+                await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
+            }
+
+            Assert.AreEqual(transport.SingleRequest.ClientRequestId, "nested-custom-id");
+        }
+
+        [Test]
+        public async Task CanResetRequestIdValueOfParentScope()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+            using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
+            using (HttpPipeline.CreateClientRequestIdScope(null))
+            {
+                await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
+            }
+
+            Assert.IsNotEmpty(transport.SingleRequest.ClientRequestId);
         }
     }
 }

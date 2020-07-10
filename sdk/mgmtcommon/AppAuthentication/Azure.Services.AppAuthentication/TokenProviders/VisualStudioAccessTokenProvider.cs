@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="tenant"></param>
         /// <returns></returns>
         private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProviderFile visualStudioTokenProviderFile, 
-            string resource, string tenant = default(string))
+            string resource, string tenant = default)
         {
             List<ProcessStartInfo> processStartInfos = new List<ProcessStartInfo>();
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     string arguments = $"{ResourceArgumentName} {resource} ";
 
-                    if (tenant != default(string))
+                    if (tenant != default)
                     {
                         arguments += $"{TenantArgumentName} {tenant} ";
                     }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             try
             {

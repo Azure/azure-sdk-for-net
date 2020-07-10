@@ -6,7 +6,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Represents a word recognized from the input document.
     /// </summary>
-    public class FormWord : FormContent
+    public class FormWord : FormElement
     {
         internal FormWord(TextWord_internal textWord, int pageNumber)
             : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)

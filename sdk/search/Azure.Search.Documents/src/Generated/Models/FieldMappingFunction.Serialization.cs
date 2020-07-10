@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class FieldMappingFunction : IUtf8JsonSerializable
     {
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Parameters != null)
+            if (Parameters != null && Parameters.Any())
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();

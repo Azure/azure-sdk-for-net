@@ -9,6 +9,7 @@ namespace Azure.Data.Tables.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
     [CodeGenModel("Logging")]
+    // Should be unnecessary when https://github.com/Azure/azure-rest-api-specs/pull/8151/files#r411681931 is implemented.
     public partial class LoggingSettings
     {
     }

@@ -23,14 +23,14 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(actions));
             }
 
-            Actions = actions.ToArray();
+            Actions = actions.ToList();
         }
 
         /// <summary> Initializes a new instance of IndexBatch. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         internal IndexBatch(IList<IndexAction> actions)
         {
-            Actions = actions;
+            Actions = actions ?? new List<IndexAction>();
         }
 
         /// <summary> The actions in the batch. </summary>

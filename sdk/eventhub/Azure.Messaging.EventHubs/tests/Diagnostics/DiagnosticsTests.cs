@@ -343,7 +343,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventProcesorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventProcesorAddsAttributesToLinkedActivitiesForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 

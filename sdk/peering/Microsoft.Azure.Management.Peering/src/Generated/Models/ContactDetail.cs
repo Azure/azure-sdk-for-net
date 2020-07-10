@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// Initializes a new instance of the ContactDetail class.
         /// </summary>
         /// <param name="role">The role of the contact. Possible values
-        /// include: 'Noc', 'Policy', 'Technical', 'Service', 'Other'</param>
+        /// include: 'Noc', 'Policy', 'Technical', 'Service', 'Escalation',
+        /// 'Other'</param>
         /// <param name="email">The e-mail address of the contact.</param>
         /// <param name="phone">The phone number of the contact.</param>
         public ContactDetail(string role = default(string), string email = default(string), string phone = default(string))
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Peering.Models
 
         /// <summary>
         /// Gets or sets the role of the contact. Possible values include:
-        /// 'Noc', 'Policy', 'Technical', 'Service', 'Other'
+        /// 'Noc', 'Policy', 'Technical', 'Service', 'Escalation', 'Other'
         /// </summary>
         [JsonProperty(PropertyName = "role")]
         public string Role { get; set; }

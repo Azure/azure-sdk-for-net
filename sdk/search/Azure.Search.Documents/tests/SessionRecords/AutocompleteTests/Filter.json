@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs/search.post.autocomplete?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "112",
         "Content-Type": "application/json",
-        "traceparent": "00-a008f2ee94a929408e33bb6977ccdca0-c1a23588b217bc4f-00",
+        "traceparent": "00-e57fd48a8cb7ef458cea8c6aca99dc09-0a66cd6fc995bc40-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200308.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "4c4f74ccc55692b9ef5f75074d36dcb0",
         "x-ms-return-client-request-id": "true"
@@ -24,19 +25,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "219",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sun, 08 Mar 2020 23:05:16 GMT",
-        "elapsed-time": "102",
+        "client-request-id": "4c4f74cc-c556-92b9-ef5f-75074d36dcb0",
+        "Content-Length": "54",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 26 Jun 2020 05:55:58 GMT",
+        "elapsed-time": "12",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "4c4f74cc-c556-92b9-ef5f-75074d36dcb0",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "4c4f74cc-c556-92b9-ef5f-75074d36dcb0"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.AutocompleteItem)",
         "value": [
           {
             "text": "polite",
@@ -48,7 +50,8 @@
   ],
   "Variables": {
     "RandomSeed": "828291068",
-    "SearchIndexName": "grurisvf",
-    "SearchServiceName": "azs-net-gjxdhkdl"
+    "SearchIndexName": "josgoidr",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

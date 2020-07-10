@@ -1,0 +1,47 @@
+{
+  "parameters": {
+    "models": [
+      {
+        "@id": "dtmi:com:example:Sample;1",
+        "@type": "Interface",
+        "displayName": "Sample Interface",
+        "contents": [
+          {
+            "@type": "Property",
+            "name": "name",
+            "displayName": "Sample instance name",
+            "schema": "string"
+          },
+          {
+            "@type": "Property",
+            "name": "temp",
+            "displayName": "Sample instance temperature",
+            "schema": "integer"
+          },
+          {
+            "@type": "Property",
+            "name": "comfortIndex",
+            "displayName": "Sample instance comfort index",
+            "schema": "integer"
+          }
+        ],
+        "@context": "dtmi:dtdl:context;2"
+      }
+    ],
+    "api-version": "2020-05-31-preview"
+  },
+  "responses": {
+    "200": {
+      "body": [
+        {
+          "id": "dtmi:com:example:Sample;1",
+          "displayName": {
+            "en": "Sample Interface"
+          },
+          "uploadTime": "2020-03-01T17:32:28Z",
+          "decommissioned": false
+        }
+      ]
+    }
+  }
+}

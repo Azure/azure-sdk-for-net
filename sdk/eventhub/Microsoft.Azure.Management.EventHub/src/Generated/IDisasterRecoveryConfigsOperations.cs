@@ -24,6 +24,97 @@ namespace Microsoft.Azure.Management.EventHub
     public partial interface IDisasterRecoveryConfigsOperations
     {
         /// <summary>
+        /// Gets a list of authorization rules for a Namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='alias'>
+        /// The Disaster Recovery configuration name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets an AuthorizationRule for a Namespace by rule name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='alias'>
+        /// The Disaster Recovery configuration name
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// The authorization rule name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AuthorizationRule>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the primary and secondary connection strings for the
+        /// Namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='alias'>
+        /// The Disaster Recovery configuration name
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// The authorization rule name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Check the give Namespace name availability.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -217,14 +308,8 @@ namespace Microsoft.Azure.Management.EventHub
         /// <summary>
         /// Gets a list of authorization rules for a Namespace.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The Namespace name
-        /// </param>
-        /// <param name='alias'>
-        /// The Disaster Recovery configuration name
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -241,70 +326,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets an AuthorizationRule for a Namespace by rule name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The Namespace name
-        /// </param>
-        /// <param name='alias'>
-        /// The Disaster Recovery configuration name
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AuthorizationRule>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the primary and secondary connection strings for the
-        /// Namespace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The Namespace name
-        /// </param>
-        /// <param name='alias'>
-        /// The Disaster Recovery configuration name
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)
         /// </summary>
@@ -327,27 +349,5 @@ namespace Microsoft.Azure.Management.EventHub
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ArmDisasterRecovery>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a list of authorization rules for a Namespace.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -6,23 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class DictionaryDecompounderTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("wordList");
-            writer.WriteStartArray();
-            foreach (var item in WordList)
+            if (WordList.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("wordList");
+                writer.WriteStartArray();
+                foreach (var item in WordList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            else
+            {
+                writer.WriteNull("wordList");
+            }
             if (MinWordSize != null)
             {
                 writer.WritePropertyName("minWordSize");

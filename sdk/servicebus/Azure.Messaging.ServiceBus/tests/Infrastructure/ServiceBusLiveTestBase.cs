@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public class ServiceBusLiveTestBase : ServiceBusTestBase
+    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 

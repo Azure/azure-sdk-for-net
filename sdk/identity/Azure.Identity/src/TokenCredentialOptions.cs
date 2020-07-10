@@ -17,7 +17,7 @@ namespace Azure.Identity
         /// </summary>
         public Uri AuthorityHost
         {
-            get { return _authorityHost ?? (EnvironmentVariables.AuthorityHost != null ? new Uri(EnvironmentVariables.AuthorityHost) : KnownAuthorityHosts.AzureCloud); }
+            get { return _authorityHost ?? KnownAuthorityHosts.GetDefault(); }
             set { _authorityHost = value; }
         }
     }

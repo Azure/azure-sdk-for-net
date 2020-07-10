@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (DetectLanguageResult result in results)
             {
                 Debug.WriteLine($"On document {documents[i++]}:");
-                Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score}.");
+                Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence score {result.PrimaryLanguage.ConfidenceScore}.");
             }
         }
     }

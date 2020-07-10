@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableQueryResponse. </summary>
         /// <param name="odataMetadata"> The metadata response of the table. </param>
         /// <param name="value"> List of tables. </param>
-        internal TableQueryResponse(string odataMetadata, IReadOnlyList<TableResponseProperties> value)
+        internal TableQueryResponse(string odataMetadata, IReadOnlyList<TableItem> value)
         {
             OdataMetadata = odataMetadata;
             Value = value;
@@ -29,6 +29,6 @@ namespace Azure.Data.Tables.Models
         /// <summary> The metadata response of the table. </summary>
         public string OdataMetadata { get; }
         /// <summary> List of tables. </summary>
-        public IReadOnlyList<TableResponseProperties> Value { get; }
+        public IReadOnlyList<TableItem> Value { get; }
     }
 }

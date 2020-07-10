@@ -44,6 +44,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The string formatting mask to apply to the service endpoint to publish events for a given partition.</summary>
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
+        /// <summary>Indicates whether or not this instance has been disposed.</summary>
+        private volatile bool _disposed = false;
+
         /// <summary>
         ///   The version of AMQP to use within the scope.
         /// </summary>
@@ -91,7 +94,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
         ///
-        public bool IsDisposed { get; private set; }
+        public bool IsDisposed
+        {
+            get => _disposed;
+            private set => _disposed = value;
+        }
 
         /// <summary>
         ///   The cancellation token to use with operations initiated by the scope.
@@ -777,8 +784,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                     // At worse, another timer tick will occur and the operation will be retried.
 
                     try
-                    { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); }
-                    catch { }
+                    {
+                        refreshTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                    }
+                    catch
+                    {
+                        // Intentionally ignored.
+                    }
                 }
                 finally
                 {
@@ -826,8 +838,24 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            string[] requiredClaims,
                                                                            TimeSpan timeout)
         {
-            var authLink = connection.Extensions.Find<AmqpCbsLink>();
-            return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+            try
+            {
+                var authLink = connection.Extensions.Find<AmqpCbsLink>();
+                return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+            }
+            catch (Exception ex) when ((ex is ObjectDisposedException) || (ex is OperationCanceledException))
+            {
+                // In the case where the attempt times out, a task cancellation occurs, which in other code paths is
+                // considered a terminal exception.  In this case, it should be viewed as transient.
+                //
+                // When there's a race condition between sending the authorization request and the connection/link closing, the
+                // link can sometimes be disposed when this call is taking place; because retries are likely to succeed, consider
+                // this case transient.
+                //
+                // Wrap the source exception in a custom exception to ensure that it is eligible to be retried.
+
+                throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem, ex);
+            }
         }
 
         /// <summary>

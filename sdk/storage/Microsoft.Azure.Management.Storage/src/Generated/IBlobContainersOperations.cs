@@ -44,6 +44,10 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. When specified, only container names starting with the
         /// filter will be listed.
         /// </param>
+        /// <param name='include'>
+        /// Optional, used to include the properties for soft deleted blob
+        /// containers. Possible values include: 'deleted'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -59,7 +63,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new container under the specified account as described by
         /// request body. The container resource includes metadata and

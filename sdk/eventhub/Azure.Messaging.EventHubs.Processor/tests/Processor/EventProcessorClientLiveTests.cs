@@ -5,19 +5,14 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
-using Azure.Storage.Blobs;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -42,7 +37,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventsCanBeReadByOneProcessorClient()
+        [TestCase(LoadBalancingStrategy.Balanced)]
+        [TestCase(LoadBalancingStrategy.Greedy)]
+        public async Task EventsCanBeReadByOneProcessorClient(LoadBalancingStrategy loadBalancingStrategy)
         {
             // Setup the environment.
 
@@ -63,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250), LoadBalancingStrategy = loadBalancingStrategy };
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();
@@ -150,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(6));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -217,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Discover the partitions.
 
@@ -282,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -363,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -584,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                               string eventHubName,
                                               TokenCredential credential,
                                               Func<EventHubConnection> connectionFactory,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnectionFactory = connectionFactory;
             }

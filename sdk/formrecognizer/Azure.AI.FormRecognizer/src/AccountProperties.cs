@@ -20,11 +20,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The current count of trained custom models.
         /// </summary>
-        public int CustomModelCount { get; internal set; }
+        public int CustomModelCount { get; }
 
         /// <summary>
         /// The maximum number of models that can be trained for this subscription.
         /// </summary>
-        public int CustomModelLimit { get; internal set; }
+        public int CustomModelLimit { get; }
     }
 }

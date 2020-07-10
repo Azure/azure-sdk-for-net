@@ -5,7 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }

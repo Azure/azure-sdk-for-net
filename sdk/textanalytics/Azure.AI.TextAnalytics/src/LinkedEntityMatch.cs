@@ -5,17 +5,15 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Details regarding the specific substring in the document matching
-    /// the linked entity, or well-known item, that the text analytics model
+    /// the linked entity, or well-known item, that the Text Analytics model
     /// identified.
     /// </summary>
     public readonly struct LinkedEntityMatch
     {
-        internal LinkedEntityMatch(string text, double score, int offset, int length)
+        internal LinkedEntityMatch(string text, double score)
         {
             Text = text;
             ConfidenceScore = score;
-            GraphemeOffset = offset;
-            GraphemeLength = length;
         }
 
         /// <summary>
@@ -28,15 +26,5 @@ namespace Azure.AI.TextAnalytics
         /// substring matches the corresponding linked entity.
         /// </summary>
         public double ConfidenceScore { get; }
-
-        /// <summary>
-        /// Gets the starting position (in Unicode graphemes) for the matching text in the document.
-        /// </summary>
-        public int GraphemeOffset { get; }
-
-        /// <summary>
-        /// Gets the length (in Unicode graphemes) of the matching text in the document.
-        /// </summary>
-        public int GraphemeLength { get; }
     }
 }

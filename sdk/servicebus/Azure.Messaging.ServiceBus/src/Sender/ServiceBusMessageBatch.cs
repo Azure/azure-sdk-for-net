@@ -9,8 +9,11 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A set of <see cref="ServiceBusMessageBatch" /> with size constraints known up-front,
+    ///   A set of <see cref="ServiceBusMessage" /> with size constraints known up-front,
     ///   intended to be sent to the Queue/Topic as a single batch.
+    ///   A <see cref="ServiceBusMessageBatch"/> can be created using
+    ///   <see cref="ServiceBusSender.CreateMessageBatchAsync(System.Threading.CancellationToken)"/>.
+    ///   Messages can be added to the batch using the <see cref="TryAddMessage"/> method on the batch.
     /// </summary>
     ///
     public sealed class ServiceBusMessageBatch : IDisposable
@@ -77,12 +80,12 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
-        public bool TryAdd(ServiceBusMessage message)
+        public bool TryAddMessage(ServiceBusMessage message)
         {
             lock (_syncGuard)
             {
                 AssertNotLocked();
-                return InnerBatch.TryAdd(message);
+                return InnerBatch.TryAddMessage(message);
             }
         }
 

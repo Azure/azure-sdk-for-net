@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Tests

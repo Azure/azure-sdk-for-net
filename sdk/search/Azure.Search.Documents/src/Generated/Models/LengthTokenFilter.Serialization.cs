@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LengthTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Min != null)
+            if (MinLength != null)
             {
                 writer.WritePropertyName("min");
-                writer.WriteNumberValue(Min.Value);
+                writer.WriteNumberValue(MinLength.Value);
             }
-            if (Max != null)
+            if (MaxLength != null)
             {
                 writer.WritePropertyName("max");
-                writer.WriteNumberValue(Max.Value);
+                writer.WriteNumberValue(MaxLength.Value);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);

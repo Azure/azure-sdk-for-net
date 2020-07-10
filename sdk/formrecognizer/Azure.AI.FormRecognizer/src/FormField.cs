@@ -19,20 +19,16 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
 
             BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
-            IReadOnlyList<FormContent> labelFormContent = default;
-            if (field.Key.Elements != null)
-            {
-                labelFormContent = ConvertTextReferences(field.Key.Elements, readResults);
-            }
-            LabelText = new FieldText(field.Key.Text, pageNumber, labelBoundingBox, labelFormContent);
+            IReadOnlyList<FormElement> labelFormElement = field.Key.Elements != null
+                ? ConvertTextReferences(field.Key.Elements, readResults)
+                : new List<FormElement>();
+            LabelData = new FieldData(field.Key.Text, pageNumber, labelBoundingBox, labelFormElement);
 
             BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
-            IReadOnlyList<FormContent> valueFormContent = default;
-            if (field.Value.Elements != null)
-            {
-                valueFormContent = ConvertTextReferences(field.Value.Elements, readResults);
-            }
-            ValueText = new FieldText(field.Value.Text, pageNumber, valueBoundingBox, valueFormContent);
+            IReadOnlyList<FormElement> valueFormElement = field.Value.Elements != null
+                ? ConvertTextReferences(field.Value.Elements, readResults)
+                : new List<FormElement>();
+            ValueData = new FieldData(field.Value.Text, pageNumber, valueBoundingBox, valueFormElement);
 
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
@@ -41,60 +37,58 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
-            LabelText = null;
+            LabelData = null;
 
-            IReadOnlyList<FormContent> formContent = default;
-            if (fieldValue.Elements != null)
-            {
-                formContent = ConvertTextReferences(fieldValue.Elements, readResults);
-            }
+            IReadOnlyList<FormElement> FormElement = fieldValue.Elements != null
+                ? ConvertTextReferences(fieldValue.Elements, readResults)
+                : new List<FormElement>();
 
             // TODO: FormEnum<T> ?
             BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
 
-            ValueText = new FieldText(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, formContent);
+            ValueData = new FieldData(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, FormElement);
             Value = new FieldValue(fieldValue, readResults);
         }
 
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; internal set; }
+        public FieldData LabelData { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; internal set; }
+        public FieldData ValueData { get; }
 
         /// <summary>
         /// The strongly-typed value of this <see cref="FormField"/>.
         /// </summary>
-        public FieldValue Value { get; internal set; }
+        public FieldValue Value { get; }
 
         /// <summary>
         /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
         /// </summary>
         public float Confidence { get; }
 
-        internal static IReadOnlyList<FormContent> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<FormElement> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
         {
-            List<FormContent> formContent = new List<FormContent>();
+            List<FormElement> FormElement = new List<FormElement>();
             foreach (var reference in references)
             {
-                formContent.Add(ResolveTextReference(readResults, reference));
+                FormElement.Add(ResolveTextReference(readResults, reference));
             }
-            return formContent;
+            return FormElement;
         }
 
         private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
         private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        private static FormElement ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363

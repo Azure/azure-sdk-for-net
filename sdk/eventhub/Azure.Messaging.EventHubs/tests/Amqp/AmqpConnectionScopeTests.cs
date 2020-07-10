@@ -1382,7 +1382,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task AuthorizationTimerCallbackToleratesDisposal()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";

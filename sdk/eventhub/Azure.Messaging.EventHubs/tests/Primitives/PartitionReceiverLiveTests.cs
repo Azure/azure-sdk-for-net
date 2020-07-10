@@ -9,7 +9,6 @@ using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
@@ -789,7 +788,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(15).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(25).ToList();
 
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -801,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     async Task<bool> closeAfterFiveRead(ReadState state)
                     {
-                        if (state.Events.Count >= 5)
+                        if (state.Events.Count >= 2)
                         {
                             await receiver.CloseAsync(cancellationSource.Token).ConfigureAwait(false);
                         }
@@ -1300,6 +1299,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // there's no way to deterministically predict how many events it can read when restarted.  Validate only that
                     // the reader is able to read without error.
 
+                    await Task.Delay(250);
                     Assert.That(async () => await ReadNothingAsync(lowerReceiver, cancellationSource.Token), Throws.Nothing, "The lower receiver should have been able to read after the higher was closed.");
                 }
 
@@ -1326,12 +1326,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
                 {
                     var waitTime = TimeSpan.FromMilliseconds(250);
-                    var desiredEmptyBatches = 8;
+                    var desiredEmptyBatches = 10;
                     var minimumEmptyBatches = 5;
 
                     var readTime = TimeSpan
                         .FromSeconds(waitTime.TotalSeconds * desiredEmptyBatches)
-                        .Add(TimeSpan.FromSeconds(1));
+                        .Add(TimeSpan.FromSeconds(3));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.
