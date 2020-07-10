@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for importing a Bacpac into a database.
+        /// The database import request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> ImportWithHttpMessagesAsync(string resourceGroupName, string serverName, ImportRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> ImportWithHttpMessagesAsync(string resourceGroupName, string serverName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an import operation that imports a bacpac into an existing
         /// database. The existing database must be empty.
@@ -66,10 +66,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to import into
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for importing a Bacpac into a database.
+        /// The database import request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> CreateImportOperationWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExtensionRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> CreateImportOperationWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Exports a database to a bacpac.
+        /// Exports a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -99,10 +99,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be exported.
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for exporting a database.
+        /// The database export request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> ExportWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> ExportWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns database metrics.
         /// </summary>
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for importing a Bacpac into a database.
+        /// The database import request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> BeginImportWithHttpMessagesAsync(string resourceGroupName, string serverName, ImportRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> BeginImportWithHttpMessagesAsync(string resourceGroupName, string serverName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an import operation that imports a bacpac into an existing
         /// database. The existing database must be empty.
@@ -555,10 +555,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to import into
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for importing a Bacpac into a database.
+        /// The database import request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -575,9 +575,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> BeginCreateImportOperationWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExtensionRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> BeginCreateImportOperationWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Exports a database to a bacpac.
+        /// Exports a database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -588,10 +588,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be exported.
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The required parameters for exporting a database.
+        /// The database export request parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -608,7 +608,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImportExportResponse>> BeginExportWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImportExportOperationResult>> BeginExportWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ImportExportDatabaseDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new database or updates an existing database.
         /// </summary>
