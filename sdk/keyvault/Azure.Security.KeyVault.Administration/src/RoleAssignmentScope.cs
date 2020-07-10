@@ -28,10 +28,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleAssignmentScope"/> structure.
         /// </summary>
-        /// <param name="ResourceId">The Resource Id for the given Resource</param>
+        /// <param name="ResourceId">The Resource Id for the given Resource.</param>
         public RoleAssignmentScope(Uri ResourceId)
         {
-            _value = ResourceId.AbsolutePath ?? throw new ArgumentNullException(nameof(ResourceId));
+            _ = ResourceId ?? throw new ArgumentNullException(nameof(ResourceId));
+
+            // Remove the version segment from a Key Id, if present.
+            if (ResourceId.AbsolutePath.StartsWith("/keys/", StringComparison.Ordinal) && ResourceId.Segments.Length == 4)
+            {
+                _value = ResourceId.AbsolutePath.Remove(ResourceId.AbsolutePath.Length - ResourceId.Segments[3].Length - 1);
+            }
+            else
+            {
+                _value = ResourceId.AbsolutePath;
+            }
         }
 
         /// <summary>

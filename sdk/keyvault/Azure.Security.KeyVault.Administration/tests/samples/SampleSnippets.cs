@@ -21,12 +21,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public SampleSnippets(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
-#pragma warning disable IDE1006 // Naming Styles
-        private KeyVaultAccessControlClient client;
-        private string objectId;
-        private string roleDefinitionId;
-#pragma warning restore IDE1006 // Naming Styles
-
         [SetUp]
         public void TestSetup()
         {
@@ -44,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-            /*@@*/ client = Client;
+            /*@@*/client = Client;
 
             // Retrieve all the role definitions.
             List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();

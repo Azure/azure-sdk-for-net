@@ -7,7 +7,6 @@ using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 using System.Linq;
-using System;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {

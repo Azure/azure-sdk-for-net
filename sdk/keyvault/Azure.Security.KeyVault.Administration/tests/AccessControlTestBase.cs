@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
+using Azure.Security.KeyVault.Keys;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -15,11 +16,17 @@ namespace Azure.Security.KeyVault.Administration.Tests
     public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public KeyVaultAccessControlClient Client { get; set; }
+        public KeyClient Key_Client { get; set; }
 
         public Uri VaultUri { get; set; }
 
+#pragma warning disable IDE1006 // Naming Styles
         internal const string roleName = "Azure Key Vault Managed HSM Crypto User";
         internal readonly Guid roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
+        internal KeyVaultAccessControlClient client;
+        internal string objectId;
+        internal string roleDefinitionId;
+#pragma warning restore IDE1006 // Naming Styles
 
         private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
 
@@ -40,10 +47,22 @@ namespace Azure.Security.KeyVault.Administration.Tests
                     recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
         }
 
+        internal KeyClient GetKeyClient(TestRecording recording = null)
+        {
+            recording ??= Recording;
+
+            return InstrumentClient
+                (new KeyClient(
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
+                    recording.InstrumentClientOptions(new KeyClientOptions())));
+        }
+
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {
             Client = GetClient();
+            Key_Client = GetKeyClient();
 
             // in record mode we reset the challenge cache before each test so that the challenge call
             // is always made.  This allows tests to be replayed independently and in any order

@@ -16,16 +16,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public class HelloWorld : AccessControlTestBase
+    public partial class RbacHelloWorld : AccessControlTestBase
     {
-        public HelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public RbacHelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
-
-#pragma warning disable IDE1006 // Naming Styles
-        private KeyVaultAccessControlClient client;
-        private string objectId;
-        private string roleDefinitionId;
-#pragma warning restore IDE1006 // Naming Styles
 
         [SetUp]
         public void TestSetup()

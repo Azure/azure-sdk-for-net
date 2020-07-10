@@ -5,10 +5,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200709.1",
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "37e8edbb57a5311c41ebbb03435b13ca",
+        "x-ms-client-request-id": "bb313c589840408589435f23f8506c77",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,7 +18,7 @@
         "Content-Type": "application/json",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "52d53336-bb30-11ea-9cf3-0242ac12000d"
+        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
       },
       "ResponseBody": "OK"
     },
@@ -28,10 +28,10 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200709.1",
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "37e8edbb57a5311c41ebbb03435b13ca",
+        "x-ms-client-request-id": "bb313c589840408589435f23f8506c77",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -42,7 +42,7 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "52d53336-bb30-11ea-9cf3-0242ac12000d"
+        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
       },
       "ResponseBody": {
         "value": [
@@ -244,10 +244,10 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200709.1",
+          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
           "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "cd2cf8e08b012ec1519d1992439ed57c",
+        "x-ms-client-request-id": "8e0cc9ce5bbd7e88f4fa00a002903fe9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -258,7 +258,7 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "52d53336-bb30-11ea-9cf3-0242ac12000d"
+        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
       },
       "ResponseBody": {
         "value": [
@@ -369,6 +369,6 @@
   "Variables": {
     "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
     "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
-    "RandomSeed": "778567521"
+    "RandomSeed": "1996890729"
   }
 }
