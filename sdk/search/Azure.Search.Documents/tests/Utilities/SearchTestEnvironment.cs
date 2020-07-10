@@ -66,5 +66,10 @@ namespace Azure.Search.Documents.Tests
         /// Gets the Cognitive Services key for skillsets.
         /// </summary>
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
+
+        /// <summary>
+        /// Gets the storage account suffix for external data sources.
+        /// </summary>
+        public string StorageEndpointSuffix => GetOptionalVariable("STORAGE_ENDPOINT_SUFFIX") ?? "core.windows.net";
     }
 }
