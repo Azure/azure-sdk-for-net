@@ -63,6 +63,7 @@ namespace Azure.Storage
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _stream = new MemoryStream(_bufferSize);
             _requestConditions = requestConditions;
+            _length = -1;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -83,48 +84,36 @@ namespace Azure.Storage
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        public async Task<int> ReadInternal( byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
+        public async Task<int> ReadInternal(byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
         {
             ValidateReadParameters(buffer, offset, count);
 
-            if (_stream.Position == 0)
+            if (_position == _length)
             {
-                int lastDownloadedByte = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
-                if (lastDownloadedByte == 0)
+                return 0;
+            }
+
+            if (_stream.Position == 0 || _stream.Position == _stream.Length)
+            {
+                int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
+                if (lastDownloadedBytes == 0)
                 {
                     return 0;
                 }
             }
 
-            int totalCopiedBytes = 0;
-            do
-            {
-                int copiedBytes = async
-                    ? await _stream.ReadAsync(buffer, offset, count).ConfigureAwait(false)
-                    : _stream.Read(buffer, offset, count);
-                offset += copiedBytes;
-                count -= copiedBytes;
-                _position += copiedBytes;
-                totalCopiedBytes += copiedBytes;
+            int remainingBytesInBuffer = (int)(_stream.Length - _stream.Position);
 
-                // We've run out of bytes in the current block.
-                if (copiedBytes == 0)
-                {
-                    // We hit the end of the blob with the last download call.
-                    if (_position == _length)
-                    {
-                        return totalCopiedBytes;
-                    }
+            // We will return the minimum of remainingBytesInBuffer, the count provided by the user, and the remaining bytes in the buffer.
+            int bytesToWrite = Math.Min(Math.Min(remainingBytesInBuffer, count), buffer.Length - offset);
 
-                    // Download the next block
-                    else
-                    {
-                        await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
-                    }
-                }
-            }
-            while (count > 0);
-            return totalCopiedBytes;
+            int copiedBytes = async
+                ? await _stream.ReadAsync(buffer, offset, bytesToWrite).ConfigureAwait(false)
+                : _stream.Read(buffer, offset, bytesToWrite);
+
+            _position += copiedBytes;
+
+            return copiedBytes;
         }
 
         private async Task<int> DownloadInternal(bool async, CancellationToken cancellationToken)
@@ -184,11 +173,6 @@ namespace Azure.Storage
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
-            }
-
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
         }
 

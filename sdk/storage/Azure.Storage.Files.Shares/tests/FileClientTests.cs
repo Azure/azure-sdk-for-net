@@ -2626,10 +2626,13 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             Stream outputStream = await file.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size / 4);
-            await outputStream.ReadAsync(outputBytes, size / 4, size / 4);
-            await outputStream.ReadAsync(outputBytes, 2 * size / 4, size / 4);
-            await outputStream.ReadAsync(outputBytes, 3 * size / 4, size / 4);
+
+            int downloadedBytes = 0;
+
+            while (downloadedBytes < size)
+            {
+                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
+            }
 
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
@@ -2657,8 +2660,12 @@ namespace Azure.Storage.Files.Shares.Test
                 bufferSize: size / 8)
                 .ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, size / 2, size / 4);
-            await outputStream.ReadAsync(outputBytes, size / 2 + size / 4, size / 4);
+            int downloadedBytes = size / 2;
+
+            while (downloadedBytes < size)
+            {
+                downloadedBytes += await outputStream.ReadAsync(outputBytes, downloadedBytes, size / 4);
+            }
 
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
@@ -2747,15 +2754,19 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             int count = 0;
-            while (offset + count < size)
+            int readBytes = -1;
+            while (readBytes != 0)
             {
                 for (count = 6; count < 37; count += 6)
                 {
-                    await outputStream.ReadAsync(actualData, offset, count);
-                    offset += count;
+                    readBytes = await outputStream.ReadAsync(actualData, offset, count);
+                    if (readBytes == 0)
+                    {
+                        break;
+                    }
+                    offset += readBytes;
                 }
             }
-            await outputStream.ReadAsync(actualData, offset, size - offset);
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);
@@ -2823,12 +2834,6 @@ namespace Azure.Storage.Files.Shares.Test
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
                 e => Assert.AreEqual(
                     $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
-
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                stream.ReadAsync(buffer: new byte[10], offset: 5, count: 15),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset + count cannot exceed buffer length.",
                     e.Message));
         }
 
