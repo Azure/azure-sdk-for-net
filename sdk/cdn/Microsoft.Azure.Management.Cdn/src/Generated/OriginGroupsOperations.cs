@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// OriginsOperations operations.
+    /// OriginGroupsOperations operations.
     /// </summary>
-    internal partial class OriginsOperations : IServiceOperations<CdnManagementClient>, IOriginsOperations
+    internal partial class OriginGroupsOperations : IServiceOperations<CdnManagementClient>, IOriginGroupsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the OriginsOperations class.
+        /// Initializes a new instance of the OriginGroupsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal OriginsOperations(CdnManagementClient client)
+        internal OriginGroupsOperations(CdnManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the existing origins within an endpoint.
+        /// Lists all of the existing origin groups within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Origin>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<OriginGroup>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Origin>>();
+            var _result = new AzureOperationResponse<IPage<OriginGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Origin>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OriginGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing origin within an endpoint.
+        /// Gets an existing origin group within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -277,8 +277,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Origin>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OriginGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
             }
-            if (originName == null)
+            if (originGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "originName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroupName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -352,17 +352,17 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("originName", originName);
+                tracingParameters.Add("originGroupName", originGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{originName}", System.Uri.EscapeDataString(originName));
+            _url = _url.Replace("{originGroupName}", System.Uri.EscapeDataString(originGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Origin>();
+            var _result = new AzureOperationResponse<OriginGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new origin within the specified endpoint.
+        /// Creates a new origin group within the specified endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -501,11 +501,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin that is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
-        /// <param name='origin'>
-        /// Origin properties
+        /// <param name='originGroup'>
+        /// Origin group properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -513,15 +513,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Origin>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OriginGroup>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Origin> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<OriginGroup> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroup, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates an existing origin within an endpoint.
+        /// Updates an existing origin group within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -532,11 +532,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
-        /// <param name='originUpdateProperties'>
-        /// Origin properties
+        /// <param name='originGroupUpdateProperties'>
+        /// Origin group properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -544,15 +544,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OriginGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Origin> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<OriginGroup> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroupUpdateProperties, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes an existing origin within an endpoint.
+        /// Deletes an existing origin group within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -563,8 +563,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -572,15 +572,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates a new origin within the specified endpoint.
+        /// Creates a new origin group within the specified endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -591,11 +591,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin that is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
-        /// <param name='origin'>
-        /// Origin properties
+        /// <param name='originGroup'>
+        /// Origin group properties
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -618,7 +618,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Origin>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OriginGroup>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -647,17 +647,17 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
             }
-            if (originName == null)
+            if (originGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "originName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroupName");
             }
-            if (origin == null)
+            if (originGroup == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "origin");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroup");
             }
-            if (origin != null)
+            if (originGroup != null)
             {
-                origin.Validate();
+                originGroup.Validate();
             }
             if (Client.SubscriptionId == null)
             {
@@ -677,18 +677,18 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("originName", originName);
-                tracingParameters.Add("origin", origin);
+                tracingParameters.Add("originGroupName", originGroupName);
+                tracingParameters.Add("originGroup", originGroup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{originName}", System.Uri.EscapeDataString(originName));
+            _url = _url.Replace("{originGroupName}", System.Uri.EscapeDataString(originGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -733,9 +733,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(origin != null)
+            if(originGroup != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(origin, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(originGroup, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -789,7 +789,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Origin>();
+            var _result = new AzureOperationResponse<OriginGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -820,7 +820,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -838,7 +838,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -858,7 +858,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing origin within an endpoint.
+        /// Updates an existing origin group within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -869,11 +869,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
-        /// <param name='originUpdateProperties'>
-        /// Origin properties
+        /// <param name='originGroupUpdateProperties'>
+        /// Origin group properties
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -896,7 +896,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OriginGroup>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -925,13 +925,13 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
             }
-            if (originName == null)
+            if (originGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "originName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroupName");
             }
-            if (originUpdateProperties == null)
+            if (originGroupUpdateProperties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "originUpdateProperties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroupUpdateProperties");
             }
             if (Client.SubscriptionId == null)
             {
@@ -951,18 +951,18 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("originName", originName);
-                tracingParameters.Add("originUpdateProperties", originUpdateProperties);
+                tracingParameters.Add("originGroupName", originGroupName);
+                tracingParameters.Add("originGroupUpdateProperties", originGroupUpdateProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{originName}", System.Uri.EscapeDataString(originName));
+            _url = _url.Replace("{originGroupName}", System.Uri.EscapeDataString(originGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1007,9 +1007,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(originUpdateProperties != null)
+            if(originGroupUpdateProperties != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(originUpdateProperties, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(originGroupUpdateProperties, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1063,7 +1063,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Origin>();
+            var _result = new AzureOperationResponse<OriginGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1076,7 +1076,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1094,7 +1094,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Origin>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OriginGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1114,7 +1114,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing origin within an endpoint.
+        /// Deletes an existing origin group within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -1125,8 +1125,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='originGroupName'>
+        /// Name of the origin group which is unique within the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1146,7 +1146,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1175,9 +1175,9 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "endpointName");
             }
-            if (originName == null)
+            if (originGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "originName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "originGroupName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -1197,17 +1197,17 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("originName", originName);
+                tracingParameters.Add("originGroupName", originGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{originName}", System.Uri.EscapeDataString(originName));
+            _url = _url.Replace("{originGroupName}", System.Uri.EscapeDataString(originGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1317,7 +1317,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Lists all of the existing origins within an endpoint.
+        /// Lists all of the existing origin groups within an endpoint.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1343,7 +1343,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Origin>>> ListByEndpointNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<OriginGroup>>> ListByEndpointNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1452,7 +1452,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Origin>>();
+            var _result = new AzureOperationResponse<IPage<OriginGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1465,7 +1465,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Origin>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OriginGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

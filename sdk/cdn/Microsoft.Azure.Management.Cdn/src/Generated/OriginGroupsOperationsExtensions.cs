@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for OriginsOperations.
+    /// Extension methods for OriginGroupsOperations.
     /// </summary>
-    public static partial class OriginsOperationsExtensions
+    public static partial class OriginGroupsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the existing origins within an endpoint.
+            /// Lists all of the existing origin groups within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            public static IPage<Origin> ListByEndpoint(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName)
+            public static IPage<OriginGroup> ListByEndpoint(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
                 return operations.ListByEndpointAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the existing origins within an endpoint.
+            /// Lists all of the existing origin groups within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Origin>> ListByEndpointAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OriginGroup>> ListByEndpointAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByEndpointWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing origin within an endpoint.
+            /// Gets an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,16 +82,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            public static Origin Get(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
+            public static OriginGroup Get(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName)
             {
-                return operations.GetAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, profileName, endpointName, originGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets an existing origin within an endpoint.
+            /// Gets an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -105,22 +105,22 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Origin> GetAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OriginGroup> GetAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates a new origin within the specified endpoint.
+            /// Creates a new origin group within the specified endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,19 +134,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin that is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='origin'>
-            /// Origin properties
+            /// <param name='originGroup'>
+            /// Origin group properties
             /// </param>
-            public static Origin Create(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
+            public static OriginGroup Create(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup)
             {
-                return operations.CreateAsync(resourceGroupName, profileName, endpointName, originName, origin).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroup).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a new origin within the specified endpoint.
+            /// Creates a new origin group within the specified endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,25 +160,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin that is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='origin'>
-            /// Origin properties
+            /// <param name='originGroup'>
+            /// Origin group properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Origin> CreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OriginGroup> CreateAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates an existing origin within an endpoint.
+            /// Updates an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,19 +192,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
+            /// <param name='originGroupUpdateProperties'>
+            /// Origin group properties
             /// </param>
-            public static Origin Update(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties)
+            public static OriginGroup Update(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties)
             {
-                return operations.UpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroupUpdateProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing origin within an endpoint.
+            /// Updates an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,25 +218,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
+            /// <param name='originGroupUpdateProperties'>
+            /// Origin group properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Origin> UpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OriginGroup> UpdateAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroupUpdateProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an existing origin within an endpoint.
+            /// Deletes an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,16 +250,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            public static void Delete(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
+            public static void Delete(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName)
             {
-                operations.DeleteAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, profileName, endpointName, originGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes an existing origin within an endpoint.
+            /// Deletes an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -273,19 +273,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Creates a new origin within the specified endpoint.
+            /// Creates a new origin group within the specified endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -299,19 +299,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin that is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='origin'>
-            /// Origin properties
+            /// <param name='originGroup'>
+            /// Origin group properties
             /// </param>
-            public static Origin BeginCreate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
+            public static OriginGroup BeginCreate(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup)
             {
-                return operations.BeginCreateAsync(resourceGroupName, profileName, endpointName, originName, origin).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroup).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a new origin within the specified endpoint.
+            /// Creates a new origin group within the specified endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -325,25 +325,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin that is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='origin'>
-            /// Origin properties
+            /// <param name='originGroup'>
+            /// Origin group properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Origin> BeginCreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OriginGroup> BeginCreateAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroup originGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates an existing origin within an endpoint.
+            /// Updates an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -357,19 +357,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
+            /// <param name='originGroupUpdateProperties'>
+            /// Origin group properties
             /// </param>
-            public static Origin BeginUpdate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties)
+            public static OriginGroup BeginUpdate(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroupUpdateProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing origin within an endpoint.
+            /// Updates an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -383,25 +383,25 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
+            /// <param name='originGroupUpdateProperties'>
+            /// Origin group properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Origin> BeginUpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OriginGroup> BeginUpdateAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, OriginGroupUpdateParameters originGroupUpdateProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, originGroupUpdateProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an existing origin within an endpoint.
+            /// Deletes an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -415,16 +415,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
-            public static void BeginDelete(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
+            public static void BeginDelete(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, profileName, endpointName, originGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes an existing origin within an endpoint.
+            /// Deletes an existing origin group within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -438,19 +438,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointName'>
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
+            /// <param name='originGroupName'>
+            /// Name of the origin group which is unique within the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IOriginGroupsOperations operations, string resourceGroupName, string profileName, string endpointName, string originGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Lists all of the existing origins within an endpoint.
+            /// Lists all of the existing origin groups within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -458,13 +458,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Origin> ListByEndpointNext(this IOriginsOperations operations, string nextPageLink)
+            public static IPage<OriginGroup> ListByEndpointNext(this IOriginGroupsOperations operations, string nextPageLink)
             {
                 return operations.ListByEndpointNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the existing origins within an endpoint.
+            /// Lists all of the existing origin groups within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Origin>> ListByEndpointNextAsync(this IOriginsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OriginGroup>> ListByEndpointNextAsync(this IOriginGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByEndpointNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
