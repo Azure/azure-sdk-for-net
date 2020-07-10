@@ -389,8 +389,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            var blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
+            var blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
+
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 Pipeline,
@@ -424,8 +427,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            blobUriBuilder.BlobName = blobUriBuilder.BlobName.UnescapePath();
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
 
             return new BlobBaseClient(
                 blobUriBuilder.ToUri(),

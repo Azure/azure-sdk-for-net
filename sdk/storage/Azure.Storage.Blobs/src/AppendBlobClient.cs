@@ -234,8 +234,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
+
+            return new AppendBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -252,8 +262,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithVersion(string versionId)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new AppendBlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
+
+            return new AppendBlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         #region Create

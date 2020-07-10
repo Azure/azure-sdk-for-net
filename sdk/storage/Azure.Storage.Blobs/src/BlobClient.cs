@@ -197,8 +197,19 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public new BlobClient WithSnapshot(string snapshot)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
+
+            return new BlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -215,8 +226,19 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public new BlobClient WithVersion(string versionId)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlobClient(blobUriBuilder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
+
+            return new BlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
         }
 
         #region Upload
