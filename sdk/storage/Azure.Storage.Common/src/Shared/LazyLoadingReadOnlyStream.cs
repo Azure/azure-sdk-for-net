@@ -8,8 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Shared
+namespace Azure.Storage
 {
+    /// <summary>
+    /// Used for Open Read APIs.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class LazyLoadingReadOnlyStream<T> : Stream
     {
         /// <summary>
@@ -45,12 +49,12 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Async DownloadTo() function.
         /// </summary>
-        private readonly Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> _downloadToAsyncFunc;
+        private readonly Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> _downloadAsyncFunc;
 
         /// <summary>
         /// Sync DownloadTo() function.
         /// </summary>
-        private readonly Func<HttpRange, object, bool, CancellationToken, Response<T>> _downloadToFunc;
+        private readonly Func<HttpRange, object, bool, CancellationToken, Response<T>> _downloadFunc;
 
         public LazyLoadingReadOnlyStream(
             Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> downloadToAsyncFunc,
@@ -59,8 +63,8 @@ namespace Azure.Storage.Shared
             int bufferSize = Constants.DefaultDownloadCopyBufferSize,
             object requestConditions = default)
         {
-            _downloadToAsyncFunc = downloadToAsyncFunc;
-            _downloadToFunc = downloadToFunc;
+            _downloadAsyncFunc = downloadToAsyncFunc;
+            _downloadFunc = downloadToFunc;
             _position = position;
             _bufferSize = bufferSize;
             _stream = new MemoryStream(bufferSize);
@@ -138,8 +142,8 @@ namespace Azure.Storage.Shared
             try
             {
                 response = async
-                    ? await _downloadToAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
-                    : _downloadToFunc(range, _requestConditions, default, cancellationToken);
+                    ? await _downloadAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
+                    : _downloadFunc(range, _requestConditions, default, cancellationToken);
             }
             catch (Exception ex)
             {

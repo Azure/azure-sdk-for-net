@@ -1323,7 +1323,7 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
-            => OpenReadInteral(
+            => OpenReadInternal(
                 position,
                 bufferSize,
                 conditions);
@@ -1356,7 +1356,7 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
-            => Task.FromResult(OpenReadInteral(
+            => Task.FromResult(OpenReadInternal(
                 position,
                 bufferSize,
                 conditions));
@@ -1381,7 +1381,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
-        internal Stream OpenReadInteral(
+        internal Stream OpenReadInternal(
             long position = 0,
             int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
