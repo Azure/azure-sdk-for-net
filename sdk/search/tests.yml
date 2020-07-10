@@ -33,4 +33,3 @@ extends:
           AZURE_SEARCH_TEST_MODE: Live
           AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
           STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
-      
