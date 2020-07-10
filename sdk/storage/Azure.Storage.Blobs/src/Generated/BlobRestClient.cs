@@ -8287,6 +8287,7 @@ namespace Azure.Storage.Blobs
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -8303,6 +8304,7 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
                 string leaseId = default,
+                string ifTags = default,
                 bool async = true,
                 string operationName = "BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8322,7 +8324,8 @@ namespace Azure.Storage.Blobs
                         timeout,
                         rehydratePriority,
                         requestId,
-                        leaseId))
+                        leaseId,
+                        ifTags))
                     {
                         if (async)
                         {
@@ -8364,6 +8367,7 @@ namespace Azure.Storage.Blobs
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <returns>The Blob.SetAccessTierAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetAccessTierAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8375,7 +8379,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
-                string leaseId = default)
+                string leaseId = default,
+                string ifTags = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -8405,6 +8410,7 @@ namespace Azure.Storage.Blobs
                 if (rehydratePriority != null) { _request.Headers.SetValue("x-ms-rehydrate-priority", rehydratePriority.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
 
                 return _message;
             }
