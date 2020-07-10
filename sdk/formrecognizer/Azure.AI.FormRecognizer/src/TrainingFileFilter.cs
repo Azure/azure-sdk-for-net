@@ -27,6 +27,5 @@ namespace Azure.AI.FormRecognizer.Training
         /// when searching for content to be preprocessed.
         /// </summary>
         public bool IncludeSubFolders { get; set; } = false;
-
     }
 }

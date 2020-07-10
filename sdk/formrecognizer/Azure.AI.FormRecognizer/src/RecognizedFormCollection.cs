@@ -12,7 +12,8 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizedFormCollection : ReadOnlyCollection<RecognizedForm>
     {
         /// <inheritdoc/>
-        internal RecognizedFormCollection(IList<RecognizedForm> list) : base(list)
+        internal RecognizedFormCollection(IList<RecognizedForm> list)
+            : base(list)
         {
         }
     }

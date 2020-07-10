@@ -18,6 +18,13 @@ namespace Azure.AI.FormRecognizer.Training
             Status = modelInfo.Status;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFormModelInfo"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of the model.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="status">The status of the model.</param>
         internal CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status)
         {
             ModelId = modelId;

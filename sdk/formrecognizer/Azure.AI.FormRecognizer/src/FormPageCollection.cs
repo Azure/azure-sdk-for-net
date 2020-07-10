@@ -12,7 +12,8 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormPageCollection : ReadOnlyCollection<FormPage>
     {
         /// <inheritdoc/>
-        internal FormPageCollection(IList<FormPage> list) : base(list)
+        internal FormPageCollection(IList<FormPage> list)
+            : base(list)
         {
         }
     }
