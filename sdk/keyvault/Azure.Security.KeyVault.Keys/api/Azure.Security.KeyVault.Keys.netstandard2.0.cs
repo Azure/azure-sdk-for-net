@@ -67,22 +67,22 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey(System.Security.Cryptography.Aes aesProvider, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
         public JsonWebKey(System.Security.Cryptography.ECDsa ecdsa, bool includePrivateParameters = false, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
         public JsonWebKey(System.Security.Cryptography.RSA rsaProvider, bool includePrivateParameters = false, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Keys.KeyOperation> keyOps = null) { }
-        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { get { throw null; } }
-        public byte[] D { get { throw null; } }
-        public byte[] DP { get { throw null; } }
-        public byte[] DQ { get { throw null; } }
-        public byte[] E { get { throw null; } }
-        public string Id { get { throw null; } }
-        public byte[] K { get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { get { throw null; } set { } }
+        public byte[] D { get { throw null; } set { } }
+        public byte[] DP { get { throw null; } set { } }
+        public byte[] DQ { get { throw null; } set { } }
+        public byte[] E { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public byte[] K { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.Security.KeyVault.Keys.KeyOperation> KeyOps { get { throw null; } }
-        public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } }
-        public byte[] N { get { throw null; } }
-        public byte[] P { get { throw null; } }
-        public byte[] Q { get { throw null; } }
-        public byte[] QI { get { throw null; } }
-        public byte[] T { get { throw null; } }
-        public byte[] X { get { throw null; } }
-        public byte[] Y { get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } set { } }
+        public byte[] N { get { throw null; } set { } }
+        public byte[] P { get { throw null; } set { } }
+        public byte[] Q { get { throw null; } set { } }
+        public byte[] QI { get { throw null; } set { } }
+        public byte[] T { get { throw null; } set { } }
+        public byte[] X { get { throw null; } set { } }
+        public byte[] Y { get { throw null; } set { } }
         public System.Security.Cryptography.Aes ToAes() { throw null; }
         public System.Security.Cryptography.ECDsa ToECDsa(bool includePrivateParameters = false) { throw null; }
         public System.Security.Cryptography.RSA ToRSA(bool includePrivateParameters = false) { throw null; }
