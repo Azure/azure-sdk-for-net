@@ -31,15 +31,8 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 List<Location> locations = new List<Location>();
                 locations.Add(new Location(locationName: "East US"));
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters 
+                DatabaseAccountCreateUpdateProperties databaseAccountCreateUpdateProperties = new DatabaseAccountCreateUpdateProperties
                 {
-                    Location = "EAST US",
-                    Tags = new Dictionary<string, string>
-                    {
-                        {"key1","value1"},
-                        {"key2","value2"}
-                    },
-                    Kind = "MongoDB",
                     ConsistencyPolicy = new ConsistencyPolicy
                     {
                         DefaultConsistencyLevel = DefaultConsistencyLevel.BoundedStaleness,
@@ -57,6 +50,18 @@ namespace CosmosDB.Tests.ScenarioTests
                     EnableCassandraConnector = true,
                     ConnectorOffer = "Small",
                     DisableKeyBasedMetadataWriteAccess = false
+                };
+
+                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                {
+                    Location = "EAST US",
+                    Tags = new Dictionary<string, string>
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
+                    Kind = "MongoDB",
+                    Properties = databaseAccountCreateUpdateProperties
                 };
 
                 DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -141,13 +146,13 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(databaseAccount.Tags.Count, parameters.Tags.Count);
             Assert.True(databaseAccount.Tags.SequenceEqual(parameters.Tags));
             Assert.Equal(databaseAccount.Kind, parameters.Kind);
-            VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.ConsistencyPolicy);
-            Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
-            Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
-            Assert.Equal(databaseAccount.EnableMultipleWriteLocations, parameters.EnableMultipleWriteLocations);
-            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.EnableCassandraConnector);
-            Assert.Equal(databaseAccount.ConnectorOffer, parameters.ConnectorOffer);
-            Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
+            VerifyConsistencyPolicy(databaseAccount.ConsistencyPolicy, parameters.Properties.ConsistencyPolicy);
+            Assert.Equal(databaseAccount.IsVirtualNetworkFilterEnabled, parameters.Properties.IsVirtualNetworkFilterEnabled);
+            Assert.Equal(databaseAccount.EnableAutomaticFailover, parameters.Properties.EnableAutomaticFailover);
+            Assert.Equal(databaseAccount.EnableMultipleWriteLocations, parameters.Properties.EnableMultipleWriteLocations);
+            Assert.Equal(databaseAccount.EnableCassandraConnector, parameters.Properties.EnableCassandraConnector);
+            Assert.Equal(databaseAccount.ConnectorOffer, parameters.Properties.ConnectorOffer);
+            Assert.Equal(databaseAccount.DisableKeyBasedMetadataWriteAccess, parameters.Properties.DisableKeyBasedMetadataWriteAccess);
         }
 
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountUpdateParameters parameters)
