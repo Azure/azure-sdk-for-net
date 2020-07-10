@@ -94,7 +94,22 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return await _serviceRestClient.PublishEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
+                List<EventGridEvent> eventsWithSerializedPaylaods = new List<EventGridEvent>();
+                foreach (EventGridEvent egEvent in events)
+                {
+                    eventsWithSerializedPaylaods.Add(
+                        new EventGridEvent(
+                            egEvent.Id,
+                            egEvent.Subject,
+                            new EventGridSerializer(
+                                egEvent.Data,
+                                _serializer,
+                                cancellationToken),
+                            egEvent.EventType,
+                            egEvent.EventTime,
+                            egEvent.DataVersion));
+                }
+                return await _serviceRestClient.PublishEventsAsync(_hostName, eventsWithSerializedPaylaods, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -113,7 +128,22 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return _serviceRestClient.PublishEvents(_hostName, events, cancellationToken);
+                List<EventGridEvent> eventsWithSerializedPaylaods = new List<EventGridEvent>();
+                foreach (EventGridEvent egEvent in events)
+                {
+                    eventsWithSerializedPaylaods.Add(
+                        new EventGridEvent(
+                            egEvent.Id,
+                            egEvent.Subject,
+                            new EventGridSerializer(
+                                egEvent.Data,
+                                _serializer,
+                                cancellationToken),
+                            egEvent.EventType,
+                            egEvent.EventTime,
+                            egEvent.DataVersion));
+                }
+                return _serviceRestClient.PublishEvents(_hostName, eventsWithSerializedPaylaods, cancellationToken);
             }
             catch (Exception e)
             {
@@ -132,7 +162,25 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return await _serviceRestClient.PublishCloudEventEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
+                List<CloudEvent> eventsWithSerializedPaylaods = new List<CloudEvent>();
+                foreach (CloudEvent cloudEvent in events)
+                {
+                    eventsWithSerializedPaylaods.Add(
+                        new CloudEvent(
+                            cloudEvent.Id,
+                            cloudEvent.Source,
+                            new EventGridSerializer(
+                                cloudEvent.Data,
+                                _serializer,
+                                cancellationToken),
+                            cloudEvent.Type,
+                            cloudEvent.Time,
+                            cloudEvent.Specversion,
+                            cloudEvent.Dataschema,
+                            cloudEvent.Datacontenttype,
+                            cloudEvent.Subject));
+                }
+                return await _serviceRestClient.PublishCloudEventEventsAsync(_hostName, eventsWithSerializedPaylaods, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -151,7 +199,25 @@ namespace Azure.Messaging.EventGrid
 
             try
             {
-                return _serviceRestClient.PublishCloudEventEvents(_hostName, events, cancellationToken);
+                List<CloudEvent> eventsWithSerializedPaylaods = new List<CloudEvent>();
+                foreach (CloudEvent cloudEvent in events)
+                {
+                    eventsWithSerializedPaylaods.Add(
+                        new CloudEvent(
+                            cloudEvent.Id,
+                            cloudEvent.Source,
+                            new EventGridSerializer(
+                                cloudEvent.Data,
+                                _serializer,
+                                cancellationToken),
+                            cloudEvent.Type,
+                            cloudEvent.Time,
+                            cloudEvent.Specversion,
+                            cloudEvent.Dataschema,
+                            cloudEvent.Datacontenttype,
+                            cloudEvent.Subject));
+                }
+                return _serviceRestClient.PublishCloudEventEvents(_hostName, eventsWithSerializedPaylaods, cancellationToken);
             }
             catch (Exception e)
             {
