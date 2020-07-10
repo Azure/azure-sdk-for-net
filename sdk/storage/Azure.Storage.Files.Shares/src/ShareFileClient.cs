@@ -1916,20 +1916,13 @@ namespace Azure.Storage.Files.Shares
                     (HttpRange range,
                     ShareFileRequestConditions conditions,
                     bool rangeGetContentHash,
+                    bool async,
                     CancellationToken cancellationToken)
-                        => DownloadAsync(
+                        => DownloadInternal(
                             range,
                             rangeGetContentHash,
                             conditions,
-                            cancellationToken),
-                    (HttpRange range,
-                    ShareFileRequestConditions conditions,
-                    bool rangeGetContentHash,
-                    CancellationToken cancellationToken)
-                        => Download(
-                            range,
-                            rangeGetContentHash,
-                            conditions,
+                            async,
                             cancellationToken),
                     position,
                     bufferSize,

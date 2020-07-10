@@ -41,24 +41,17 @@ namespace Azure.Storage
         private readonly TRequestConditions _requestConditions;
 
         /// <summary>
-        /// Async DownloadTo() function.
+        /// Download() function.
         /// </summary>
-        private readonly Func<HttpRange, TRequestConditions, bool, CancellationToken, Task<Response<TDownloadInfo>>> _downloadAsyncFunc;
-
-        /// <summary>
-        /// Sync DownloadTo() function.
-        /// </summary>
-        private readonly Func<HttpRange, TRequestConditions, bool, CancellationToken, Response<TDownloadInfo>> _downloadFunc;
+        private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<TDownloadInfo>>> _downloadInternalFunc;
 
         public LazyLoadingReadOnlyStream(
-            Func<HttpRange, TRequestConditions, bool, CancellationToken, Task<Response<TDownloadInfo>>> downloadToAsyncFunc,
-            Func<HttpRange, TRequestConditions, bool, CancellationToken, Response<TDownloadInfo>> downloadToFunc,
+            Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<TDownloadInfo>>> downloadInternalFunc,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
         {
-            _downloadAsyncFunc = downloadToAsyncFunc;
-            _downloadFunc = downloadToFunc;
+            _downloadInternalFunc = downloadInternalFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _stream = new MemoryStream(_bufferSize);
@@ -122,9 +115,9 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-            response = async
-                ? await _downloadAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
-                : _downloadFunc(range, _requestConditions, default, cancellationToken);
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            response = await _downloadInternalFunc(range, _requestConditions, default, async, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
             Stream networkStream = (Stream)typeof(TDownloadInfo).GetProperty("Content").GetValue(response.Value, null);
 

@@ -1403,20 +1403,13 @@ namespace Azure.Storage.Blobs.Specialized
                         (HttpRange range,
                         BlobRequestConditions conditions,
                         bool rangeGetContentHash,
+                        bool async,
                         CancellationToken cancellationToken)
-                            => DownloadAsync(
+                            => DownloadInternal(
                                 range,
                                 conditions,
                                 rangeGetContentHash,
-                                cancellationToken),
-                        (HttpRange range,
-                        BlobRequestConditions conditions,
-                        bool rangeGetContentHash,
-                        CancellationToken cancellationToken)
-                            => Download(
-                                range,
-                                conditions,
-                                rangeGetContentHash,
+                                async,
                                 cancellationToken),
                         position,
                         bufferSize,
