@@ -548,7 +548,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Setup(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), null, null, cancellationToken)).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
+#pragma warning disable xUnit2002 // Do not use null check on value type
             Assert.NotNull(result);
+#pragma warning restore xUnit2002 // Do not use null check on value type
             await result.Wait;
         }
 

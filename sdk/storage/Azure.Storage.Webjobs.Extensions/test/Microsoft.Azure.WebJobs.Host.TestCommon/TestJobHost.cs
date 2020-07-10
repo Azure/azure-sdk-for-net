@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
                 Assert.Equal("Error indexing method '" + functionName + "'", e.Message);
-                Assert.True(e.InnerException.Message.Contains(expectedErrorMessage));
+                Assert.Contains(expectedErrorMessage, e.InnerException.Message);
                 return;
             }
             Assert.True(false, "Invoker should have failed");

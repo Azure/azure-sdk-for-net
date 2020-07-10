@@ -61,26 +61,38 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             rule.AddOpenConverter<MultiBlobContext, IEnumerable<BlobCollectionType>>(typeof(BlobCollectionConverter<>), this);
 
             // BindToStream will also handle the custom Stream-->T converters.
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                 BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
 
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob. 
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<CloudBlockBlob>((attr, cts) => CreateBlobReference<CloudBlockBlob>(attr, cts));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<CloudPageBlob>((attr, cts) => CreateBlobReference<CloudPageBlob>(attr, cts));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                  BindToInput<CloudAppendBlob>((attr, cts) => CreateBlobReference<CloudAppendBlob>(attr, cts));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<ICloudBlob>((attr, cts) => CreateBlobReference<ICloudBlob>(attr, cts));
 
             // CloudBlobStream's derived functionality is only relevant to writing. 
+#pragma warning disable CS0618 // Type or member is obsolete
             rule.When("Access", FileAccess.Write).
                 SetPostResolveHook(ToBlobDescr).
+#pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<CloudBlobStream>(ConvertToCloudBlobStreamAsync);
         }
 

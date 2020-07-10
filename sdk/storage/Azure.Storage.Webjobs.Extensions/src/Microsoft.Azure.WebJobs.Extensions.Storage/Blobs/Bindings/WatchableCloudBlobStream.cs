@@ -11,7 +11,9 @@ using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     internal class WatchableCloudBlobStream : DelegatingCloudBlobStream, IWatcher
+#pragma warning restore CS0618 // Type or member is obsolete
     {
         private readonly IBlobCommitedAction _committedAction;
 

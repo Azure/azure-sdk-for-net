@@ -8,14 +8,20 @@ using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     internal sealed class BlobWatchableValueProvider : IValueProvider, IWatchable
+#pragma warning restore CS0618 // Type or member is obsolete
     {
         private readonly ICloudBlob _blob;
         private readonly object _value;
         private readonly Type _valueType;
+#pragma warning disable CS0618 // Type or member is obsolete
         private readonly IWatcher _watcher;
+#pragma warning restore CS0618 // Type or member is obsolete
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public BlobWatchableValueProvider(ICloudBlob blob, object value, Type valueType, IWatcher watcher)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (value != null && !valueType.IsAssignableFrom(value.GetType()))
             {
@@ -33,12 +39,16 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             get { return _valueType; }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public IWatcher Watcher
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             get { return _watcher; }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public static BlobWatchableValueProvider Create<T>(ICloudBlob blob, T value, IWatcher watcher)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             return new BlobWatchableValueProvider(blob, value: value, valueType: typeof(T), watcher: watcher);
         }

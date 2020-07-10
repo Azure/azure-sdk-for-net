@@ -53,6 +53,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _storageAccount = fixture.StorageAccount;
         }
 
+#pragma warning disable xUnit1013 // Public method should be marked as test
         /// <summary>
         /// Used to syncronize the application start and blob creation
         /// </summary>
@@ -130,7 +131,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public static void BadMessage_CloudQueueMessage(
             [QueueTrigger(BadMessageQueue1)] CloudQueueMessage badMessageIn,
             [Queue(BadMessageQueue2)] out CloudQueueMessage badMessageOut,
+#pragma warning disable CS0618 // Type or member is obsolete
             TraceWriter log)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             _badMessage1Calls++;
             badMessageOut = badMessageIn;
@@ -138,7 +141,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public static void BadMessage_String(
             [QueueTrigger(BadMessageQueue2)] string message,
+#pragma warning disable CS0618 // Type or member is obsolete
             TraceWriter log)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             _badMessage2Calls++;
         }
@@ -149,6 +154,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await EndToEndTest(uploadBlobBeforeHostStart: false);
         }
+
+#pragma warning restore xUnit1013 // Public method should be marked as test
 
         [Fact]
         public async Task AzureStorageEndToEndFast()

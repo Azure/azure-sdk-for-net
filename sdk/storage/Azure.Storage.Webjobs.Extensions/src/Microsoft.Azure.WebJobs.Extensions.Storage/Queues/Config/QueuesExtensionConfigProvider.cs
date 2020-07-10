@@ -80,13 +80,19 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
                 binding.AddValidator(ValidateQueueAttribute);
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 binding.SetPostResolveHook(ToWriteParameterDescriptorForCollector)
+#pragma warning restore CS0618 // Type or member is obsolete
                         .BindToCollector<CloudQueueMessage>(this);
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
+#pragma warning restore CS0618 // Type or member is obsolete
                         .BindToInput<CloudQueue>(builder);
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 binding.SetPostResolveHook(ToReadWriteParameterDescriptorForCollector)
+#pragma warning restore CS0618 // Type or member is obsolete
                         .BindToInput<CloudQueue>(builder);
             }
 

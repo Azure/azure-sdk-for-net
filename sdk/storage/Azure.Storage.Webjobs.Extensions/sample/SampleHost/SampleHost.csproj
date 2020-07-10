@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
     <None Include="*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
@@ -19,7 +18,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" />
   </ItemGroup>
 
   <ItemGroup>

@@ -336,6 +336,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         // This function just exists to force initialization of the
         // blob listener pipeline
+#pragma warning disable xUnit1013 // Public method should be marked as test
         public static void TestBlobTrigger([BlobTrigger("test/test")] string blob)
         {
         }
@@ -458,7 +459,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 byte[] bytes = new byte[512];
                 int byteCount = await blob.DownloadToByteArrayAsync(bytes, 0);
                 string content = Encoding.UTF8.GetString(bytes, 0, byteCount);
-                Assert.True(content.StartsWith(TestData));
+                Assert.StartsWith(TestData, content);
             }
             _numBlobsRead = blobs.Count();
         }
@@ -684,6 +685,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(TestData, result);
             _numBlobsRead = 1;
         }
+#pragma warning restore xUnit1013 // Public method should be marked as test
 
         public class TestFixture : IAsyncLifetime
         {

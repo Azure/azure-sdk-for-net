@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems" Label="Shared" />
-  <Import Project="..\..\build\common.props" />  
-  
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
   <PropertyGroup>
     <Version>$(ExtensionsStorageVersion)</Version>
     <InformationalVersion>$(Version) Commit hash: $(CommitHash)</InformationalVersion>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Microsoft.Azure.WebJobs.Extensions.Storage</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Extensions.Storage</RootNamespace>
   </PropertyGroup>  
@@ -82,17 +82,10 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
   </ItemGroup>  
-  
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.14" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
 </Project>

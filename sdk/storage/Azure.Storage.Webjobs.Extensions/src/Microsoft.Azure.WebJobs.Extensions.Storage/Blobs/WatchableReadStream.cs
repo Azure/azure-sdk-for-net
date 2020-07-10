@@ -12,7 +12,9 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     internal class WatchableReadStream : DelegatingStream, IWatcher
+#pragma warning restore CS0618 // Type or member is obsolete
     {
         private readonly Stopwatch _timeRead = new Stopwatch();
         private readonly long _totalLength;

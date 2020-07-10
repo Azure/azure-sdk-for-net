@@ -134,6 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(_fixture.Account2.SdkObject.Credentials.AccountName, secondaryAccountResult.Credentials.AccountName);
         }
 
+#pragma warning disable xUnit1013 // Public method should be marked as test
         public static void BlobToBlob_DifferentAccounts_PrimaryToSecondary(
             [BlobTrigger(Input + "/{name}")] string input,
             [Blob(Output + "/{name}", Connection = Secondary)] out string output)
@@ -187,6 +188,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             primaryAccountResult = primary;
             secondaryAccountResult = secondary;
         }
+
+#pragma warning restore xUnit1013 // Public method should be marked as test
 
         private class TestNameResolver : RandomNameResolver
         {

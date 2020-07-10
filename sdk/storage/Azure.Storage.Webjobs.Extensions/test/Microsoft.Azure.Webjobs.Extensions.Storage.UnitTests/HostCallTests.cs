@@ -896,7 +896,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static void FuncWithValueT([Blob(BlobPath)] CustomDataValue value)
             {
                 // default(T) is blob is missing 
+#pragma warning disable xUnit2002 // Do not use null check on value type
                 Assert.NotNull(value);
+#pragma warning restore xUnit2002 // Do not use null check on value type
                 Assert.Equal(0, value.ValueId);
             }
 

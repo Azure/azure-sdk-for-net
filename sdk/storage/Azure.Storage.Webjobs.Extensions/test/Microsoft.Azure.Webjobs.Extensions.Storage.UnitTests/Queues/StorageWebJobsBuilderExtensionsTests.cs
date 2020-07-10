@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
                 b.AddAzureStorage();
             }, values);
 
-            Assert.Equal(true, options.CentralizedPoisonQueue);
+            Assert.True(options.CentralizedPoisonQueue);
         }
     }
 }

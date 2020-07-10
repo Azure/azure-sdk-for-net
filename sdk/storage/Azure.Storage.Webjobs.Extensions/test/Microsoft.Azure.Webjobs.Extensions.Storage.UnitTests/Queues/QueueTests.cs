@@ -229,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             {
                 // binding to subobject work 
                 Assert.NotNull(prop1);
-                Assert.Equal(prop1.xyz, "abc");
+                Assert.Equal("abc", prop1.xyz);
 
                 Assert.Equal("bad", xyz);
 
