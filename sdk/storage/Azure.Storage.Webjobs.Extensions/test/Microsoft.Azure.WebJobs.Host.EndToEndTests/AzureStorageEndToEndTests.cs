@@ -13,7 +13,6 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
@@ -322,20 +321,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await queue.AddMessageAsync(new CloudQueueMessage(String.Empty));
 
             _startWaitHandle.WaitOne(30000);
-        }
-
-        private class CustomTableEntity
-        {
-            public string Text { get; set; }
-
-            public int Number { get; set; }
-        }
-
-        public class Person
-        {
-            public int Age { get; set; }
-            public string Location { get; set; }
-            public string Name { get; set; }
         }
 
         private class TestQueueProcessorFactory : IQueueProcessorFactory

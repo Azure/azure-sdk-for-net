@@ -14,8 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.16" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.EventHubs" Version="3.0.5" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="3.1.1" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" Version="3.0.14" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" Version="3.0.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.0" />

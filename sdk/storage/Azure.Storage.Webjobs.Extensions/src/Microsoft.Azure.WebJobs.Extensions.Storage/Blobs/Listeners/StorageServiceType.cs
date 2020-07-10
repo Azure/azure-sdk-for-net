@@ -10,7 +10,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     internal enum StorageServiceType
     {
         Blob,
-        Table,
         Queue
     }
 }
