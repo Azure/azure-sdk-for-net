@@ -19,7 +19,7 @@ extends:
         BuildInParallel: false
         TimeoutInMinutes: 300
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
-        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureAuthorityHost = 'https://login.microsoftonline.us/'; keyVaultEndpointSuffix = '.vault.usgovcloudapi.net' }"
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureAuthorityHost = 'https://login.microsoftonline.us/'; keyVaultEndpointSuffix = '.vault.usgovcloudapi.net'; enableStorageVersioning = false }"
 
       # AzureChinaCloud
       - ServiceDirectory: storage
@@ -27,5 +27,5 @@ extends:
         BuildInParallel: false
         TimeoutInMinutes: 300
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/'; keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard' }"
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureAuthorityHost = 'https://login.chinacloudapi.cn/'; keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard'; enableStorageVersioning = false }"
 
