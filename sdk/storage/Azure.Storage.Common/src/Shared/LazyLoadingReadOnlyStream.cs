@@ -60,14 +60,14 @@ namespace Azure.Storage
             Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> downloadToAsyncFunc,
             Func<HttpRange, object, bool, CancellationToken, Response<T>> downloadToFunc,
             long position = 0,
-            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
+            int? bufferSize = default,
             object requestConditions = default)
         {
             _downloadAsyncFunc = downloadToAsyncFunc;
             _downloadFunc = downloadToFunc;
             _position = position;
-            _bufferSize = bufferSize;
-            _stream = new MemoryStream(bufferSize);
+            _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
+            _stream = new MemoryStream(_bufferSize);
             _requestConditions = requestConditions;
         }
 

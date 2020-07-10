@@ -3618,7 +3618,7 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             DataLakeRequestConditions conditions = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
@@ -3668,7 +3668,7 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             DataLakeRequestConditions conditions = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");

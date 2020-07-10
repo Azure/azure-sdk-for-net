@@ -1321,7 +1321,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             BlobRequestConditions conditions = default)
             => OpenReadInternal(
                 position,
@@ -1354,7 +1354,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             BlobRequestConditions conditions = default)
             => Task.FromResult(OpenReadInternal(
                 position,
@@ -1383,7 +1383,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         internal Stream OpenReadInternal(
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             BlobRequestConditions conditions = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))

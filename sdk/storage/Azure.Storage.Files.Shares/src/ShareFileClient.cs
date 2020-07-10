@@ -1843,7 +1843,7 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             ShareFileRequestConditions conditions = default)
             => OpenReadInteral(
                 position,
@@ -1876,7 +1876,7 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0015 // Unexpected client method return type.
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             ShareFileRequestConditions conditions = default)
             => Task.FromResult(OpenReadInteral(
                 position,
@@ -1905,7 +1905,7 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         internal Stream OpenReadInteral(
             long position = 0,
-            int bufferSize = Constants.DefaultStreamingDownloadSize,
+            int? bufferSize = default,
             ShareFileRequestConditions conditions = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
