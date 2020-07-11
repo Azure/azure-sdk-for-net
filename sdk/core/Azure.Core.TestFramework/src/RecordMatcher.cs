@@ -186,10 +186,10 @@ namespace Azure.Core.TestFramework
         private bool AreUrisSame(string entryUri, string otherEntryUri) =>
             NormalizeUri(entryUri) == NormalizeUri(otherEntryUri);
 
-        private string NormalizeUri(string uriToTranslate)
+        private string NormalizeUri(string uriToNormalize)
         {
             var req = new RequestUriBuilder();
-            var uri = new Uri(uriToTranslate);
+            var uri = new Uri(uriToNormalize);
             req.Reset(uri);
             req.Query = "";
             NameValueCollection queryParams = HttpUtility.ParseQueryString(uri.Query);
