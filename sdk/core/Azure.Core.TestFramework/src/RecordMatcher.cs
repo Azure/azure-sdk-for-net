@@ -184,9 +184,9 @@ namespace Azure.Core.TestFramework
             CompareHeaderDictionaries(entry.Request.Headers, otherEntry.Request.Headers, VolatileHeaders) == 0;
 
         private bool AreUrisSame(string entryUri, string otherEntryUri) =>
-            TranslateUri(entryUri) == TranslateUri(otherEntryUri);
+            NormalizeUri(entryUri) == NormalizeUri(otherEntryUri);
 
-        private string TranslateUri(string uriToTranslate)
+        private string NormalizeUri(string uriToTranslate)
         {
             var req = new RequestUriBuilder();
             var uri = new Uri(uriToTranslate);
@@ -199,7 +199,7 @@ namespace Azure.Core.TestFramework
                     param,
                     VolatileQueryParameters.Contains(param) ? VolatileValue : queryParams[param]);
             }
-            return req.ToUri().ToString();
+            return req.ToUri().AbsoluteUri;
         }
 
         protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
