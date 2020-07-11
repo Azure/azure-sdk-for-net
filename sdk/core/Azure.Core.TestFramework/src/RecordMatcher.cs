@@ -199,7 +199,7 @@ namespace Azure.Core.TestFramework
                     param,
                     VolatileQueryParameters.Contains(param) ? VolatileValue : queryParams[param]);
             }
-            return req.ToUri().AbsoluteUri;
+            return req.ToUri().ToString();
         }
 
         protected virtual bool IsEquivalentUri(string entryUri, string otherEntryUri) =>
