@@ -13,7 +13,6 @@ using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
