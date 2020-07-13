@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         internal ChangeFeedCursor GetCursor()
             => new ChangeFeedCursor(
-                urlHash: _containerClient.Uri.ToString().GetHashCode(),
+                urlHash: _containerClient.Uri.AbsoluteUri.GetHashCode(),
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
 
