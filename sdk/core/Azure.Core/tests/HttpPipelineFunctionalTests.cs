@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -265,6 +267,47 @@ namespace Azure.Core.Tests
              Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());
 
              testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public async Task SendMultipartformData()
+        {
+            IFormCollection formCollection = null;
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    formCollection = context.Request.Form;
+                    return Task.CompletedTask;
+                });
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Uri.Reset(testServer.Address);
+
+            request.Headers.Add("Content-Type", "multipart/form-data;boundary=\"test_boundary\"");
+
+            var content = new MultipartFormDataContent("test_boundary");
+            var headers = new Dictionary<string, string>
+            {
+                { "Content-Type", "text/plain; charset=utf-8" }
+            };
+            content.Add(RequestContent.Create(Encoding.UTF8.GetBytes("Hello World -1")), "field1", "file_name.txt", headers);
+
+            request.Content = content;
+
+            using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
+            Assert.AreEqual(response.Status, 200);
+            Assert.AreEqual(formCollection.Files.Count, 1);
+
+            var formData = formCollection.Files.GetEnumerator();
+            formData.MoveNext();
+            Assert.AreEqual(formData.Current.Name, "field1");
+            Assert.AreEqual(formData.Current.FileName, "file_name.txt");
+            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
+            Assert.AreEqual(formData.Current.Headers.Count, 2);
+            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
+            Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=field1; filename=file_name.txt");
         }
 
         private class TestOptions : ClientOptions
