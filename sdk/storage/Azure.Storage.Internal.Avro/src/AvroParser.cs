@@ -95,12 +95,9 @@ namespace Azure.Storage.Internal.Avro
         {
             byte b = await ReadByteAsync(stream, async, cancellationToken).ConfigureAwait(false);
 
-            if (b == 1)
+            if (b != 0)
                 return true;
-            else if (b == 0)
-                return false;
-            else
-                throw new InvalidOperationException("Byte was not a bool.");
+            return false;
         }
 
         /// <summary>
