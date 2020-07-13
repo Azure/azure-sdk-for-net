@@ -129,6 +129,12 @@ namespace Azure.Storage.Blobs
                     // Data Record
                     case Constants.QuickQuery.DataRecordName:
                         record.TryGetValue(Constants.QuickQuery.Data, out object byteObject);
+
+                        if (byteObject == null)
+                        {
+                            throw new InvalidOperationException($"Avro data record is missing {Constants.QuickQuery.Data} property");
+                        }
+
                         byte[] bytes = (byte[])byteObject;
                         Array.Copy(
                             sourceArray: bytes,
@@ -148,6 +154,12 @@ namespace Azure.Storage.Blobs
                         if (_progressHandler != default)
                         {
                             record.TryGetValue(Constants.QuickQuery.BytesScanned, out object progress);
+
+                            if (progress == null)
+                            {
+                                throw new InvalidOperationException($"Avro progress record is mssing {Constants.QuickQuery.BytesScanned} property");
+                            }
+
                             _progressHandler.Report((long)progress);
                         }
                         break;
@@ -162,6 +174,12 @@ namespace Azure.Storage.Blobs
                         if (_progressHandler != default)
                         {
                             record.TryGetValue(Constants.QuickQuery.TotalBytes, out object progress);
+
+                            if (progress == null)
+                            {
+                                throw new InvalidOperationException($"Avro end record is missing {Constants.QuickQuery.TotalBytes} property");
+                            }
+
                             _progressHandler.Report((long)progress);
                         }
                         return 0;
@@ -210,6 +228,26 @@ namespace Azure.Storage.Blobs
             record.TryGetValue(Constants.QuickQuery.Name, out object name);
             record.TryGetValue(Constants.QuickQuery.Description, out object description);
             record.TryGetValue(Constants.QuickQuery.Position, out object position);
+
+            if (fatal == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(fatal)} property");
+            }
+
+            if (name == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(name)} property");
+            }
+
+            if (description == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(description)} property");
+            }
+
+            if (position == null)
+            {
+                throw new InvalidOperationException($"Avro error record is missing {nameof(position)} property");
+            }
 
             if (_errorHandler != null)
             {
