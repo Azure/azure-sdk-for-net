@@ -5,7 +5,7 @@ For information about interacting with a `KeyVaultKey` with a `KeyClient`, see t
 
 ## Assigning a Role to the All Keys Scope
 
-Let's assign a role to a service principal soo that it applies to all keys. To do this we'll need a role definition Id and a service principal object Id.
+Let's assign a role to a service principal so that it applies to all keys. To do this we'll need a role definition Id and a service principal object Id.
 
 A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleAssignments`.
 
@@ -16,11 +16,11 @@ az ad signed-in-user show --query objectId
 ```
 
 ```C# Snippet:CreateRoleAssignmentKeysScope
-string definitionIdToAssign = <roleDefinitionId>;
-string servicePrincipalObjectId = <objectId>;
+string definitionIdToAssign = "<roleDefinitionId>";
+string servicePrincipalObjectId = "<objectId>";
 
 RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties).ConfigureAwait(false);
+RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
 ```
 
 ## Assigning a Role to a specific Key Scope
@@ -30,7 +30,7 @@ We'll also need the name of an existing `KeyVaultKey` to get it from the service
 
 ```C# Snippet:CreateRoleAssignmentKeyScope
 string keyName = "<your-key-name>";
-KeyVaultKey key = await keyClient.GetKeyAsync(keyName).ConfigureAwait(false);
+KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
-RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties).ConfigureAwait(false);
+RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), properties);
 ```

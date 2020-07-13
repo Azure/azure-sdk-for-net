@@ -35,10 +35,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public async Task CreateRoleAssignment()
         {
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
 
             var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
-            RoleAssignment result = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, roleAssignmentId).ConfigureAwait(false);
+            RoleAssignment result = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
 
             RegisterForCleanup(result);
 
@@ -53,10 +53,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public async Task GetRoleAssignment()
         {
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
 
             var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
-            RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, roleAssignmentId).ConfigureAwait(false);
+            RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
 
             RegisterForCleanup(assignment);
 
@@ -74,10 +74,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public async Task DeleteRoleAssignment()
         {
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
 
             var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
-            RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, roleAssignmentId).ConfigureAwait(false);
+            RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
 
             RoleAssignment result = await Client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Global, assignment.Name).ConfigureAwait(false);
 

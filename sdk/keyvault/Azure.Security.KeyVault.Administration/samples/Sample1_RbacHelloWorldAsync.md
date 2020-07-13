@@ -51,11 +51,11 @@ az ad signed-in-user show --query objectId
 ```
 
 ```C# Snippet:CreateRoleAssignmentAsync
-string definitionIdToAssign = <roleDefinitionId>;
-string servicePrincipalObjectId = <objectId>;
+string definitionIdToAssign = "<roleDefinitionId>";
+string servicePrincipalObjectId = "<objectId>";
 
 RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties).ConfigureAwait(false);
+RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
 ```
 
 # Getting a Role Assignment
@@ -63,14 +63,14 @@ RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAs
 To get an existing role assignment, we'll need the `Name` property from an existing assignment. Let's use the `createdAssignment` from the previous example.
 
 ```C# Snippet:GetRoleAssignmentAsync
-RoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name).ConfigureAwait(false);
+RoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name);
 ```
 
 # Deleting a Role Assignment
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignmentAsync
-RoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name).ConfigureAwait(false);
+RoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name);
 ```
 
 <!-- LINKS -->

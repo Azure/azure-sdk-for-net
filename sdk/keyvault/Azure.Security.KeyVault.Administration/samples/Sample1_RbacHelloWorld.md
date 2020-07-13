@@ -43,8 +43,8 @@ az ad signed-in-user show --query objectId
 ```
 
 ```C# Snippet:CreateRoleAssignment
-string definitionIdToAssign = <roleDefinitionId>;
-string servicePrincipalObjectId = <objectId>;
+string definitionIdToAssign = "<roleDefinitionId>";
+string servicePrincipalObjectId = "<objectId>";
 
 RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
 RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);

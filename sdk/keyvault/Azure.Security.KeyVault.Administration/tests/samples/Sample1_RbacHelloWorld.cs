@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         [SetUp]
         public void TestSetup()
         {
-            objectId = TestEnvironment.ClientObjectId;
+            _objectId = TestEnvironment.ClientObjectId;
         }
 
         [Test]
@@ -93,21 +93,21 @@ namespace Azure.Security.KeyVault.Administration.Samples
             client = Client;
 
             List<RoleDefinition> definitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
-            roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == roleName).Id;
+            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleAssignments.
-            string definitionIdToAssign = roleDefinitionId;
+            string definitionIdToAssign = _roleDefinitionId;
 
             // Replace objectId with the service principal object id.
-            string servicePrincipalObjectId = objectId;
+            string servicePrincipalObjectId = _objectId;
 
             #region Snippet:CreateRoleAssignment
-            //@@string definitionIdToAssign = <roleDefinitionId>;
-            //@@string servicePrincipalObjectId = <objectId>;
+            //@@string definitionIdToAssign = "<roleDefinitionId>";
+            //@@string servicePrincipalObjectId = "<objectId>";
 
             RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
             //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, roleAssignmentId);
+            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, _roleAssignmentId);
             #endregion
 
             #region Snippet:GetRoleAssignment
@@ -127,29 +127,29 @@ namespace Azure.Security.KeyVault.Administration.Samples
             client = Client;
 
             List<RoleDefinition> definitions = await client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == roleName).Id;
+            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
-            string definitionIdToAssign = roleDefinitionId;
+            string definitionIdToAssign = _roleDefinitionId;
 
             // Replace objectId with the service principal object id.
-            string servicePrincipalObjectId = objectId;
+            string servicePrincipalObjectId = _objectId;
 
             #region Snippet:CreateRoleAssignmentAsync
-            //@@string definitionIdToAssign = <roleDefinitionId>;
-            //@@string servicePrincipalObjectId = <objectId>;
+            //@@string definitionIdToAssign = "<roleDefinitionId>";
+            //@@string servicePrincipalObjectId = "<objectId>";
 
             RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-            //@@RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties).ConfigureAwait(false);
-            /*@@*/RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, roleAssignmentId).ConfigureAwait(false);
+            //@@RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
+            /*@@*/RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
             #endregion
 
             #region Snippet:GetRoleAssignmentAsync
-            RoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name).ConfigureAwait(false);
+            RoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name);
             #endregion
 
             #region Snippet:DeleteRoleAssignmentAsync
-            RoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name).ConfigureAwait(false);
+            RoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Global, createdAssignment.Name);
             #endregion
         }
     }

@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         [SetUp]
         public void TestSetup()
         {
-            objectId = TestEnvironment.ClientObjectId;
+            _objectId = TestEnvironment.ClientObjectId;
         }
 
         [Test]
@@ -72,17 +72,24 @@ namespace Azure.Security.KeyVault.Administration.Samples
         {
             client = Client;
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == roleName).Id;
-            #region Snippet:ReadmeCreateRoleAssignment
+            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
-            string definitionIdToAssign = roleDefinitionId;
+            string definitionIdToAssign = _roleDefinitionId;
 
             // Replace objectId with the service principal object id from the Create/Get credentials section above
-            string servicePrincipalObjectId = objectId;
+            string servicePrincipalObjectId = _objectId;
+
+            #region Snippet:ReadmeCreateRoleAssignment
+            // Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
+            //@@string definitionIdToAssign = "<roleDefinitionId>";
+
+            // Replace <objectId> with the service principal object id from the Create/Get credentials section above
+            //@@string servicePrincipalObjectId = "<objectId>";
 
             RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
             //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, roleAssignmentId);
+            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, _roleAssignmentId);
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);

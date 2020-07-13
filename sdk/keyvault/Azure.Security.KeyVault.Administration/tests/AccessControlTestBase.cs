@@ -16,17 +16,18 @@ namespace Azure.Security.KeyVault.Administration.Tests
     public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public KeyVaultAccessControlClient Client { get; set; }
-        public KeyClient Key_Client { get; set; }
+        public KeyClient KeyClient { get; set; }
 
         public Uri VaultUri { get; set; }
 
 #pragma warning disable IDE1006 // Naming Styles
-        internal const string roleName = "Azure Key Vault Managed HSM Crypto User";
-        internal readonly Guid roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
         internal KeyVaultAccessControlClient client;
-        internal string objectId;
-        internal string roleDefinitionId;
 #pragma warning restore IDE1006 // Naming Styles
+
+        internal const string RoleName = "Azure Key Vault Managed HSM Crypto User";
+        internal readonly Guid _roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
+        internal string _roleDefinitionId;
+        internal string _objectId;
 
         private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
 
@@ -62,7 +63,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void ClearChallengeCacheforRecord()
         {
             Client = GetClient();
-            Key_Client = GetKeyClient();
+            KeyClient = GetKeyClient();
 
             // in record mode we reset the challenge cache before each test so that the challenge call
             // is always made.  This allows tests to be replayed independently and in any order

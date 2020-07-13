@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -28,19 +29,21 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleAssignmentScope"/> structure.
         /// </summary>
-        /// <param name="ResourceId">The Resource Id for the given Resource.</param>
-        public RoleAssignmentScope(Uri ResourceId)
+        /// <param name="resourceId">The Resource Id for the given Resource.</param>
+        public RoleAssignmentScope(Uri resourceId)
         {
-            _ = ResourceId ?? throw new ArgumentNullException(nameof(ResourceId));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             // Remove the version segment from a Key Id, if present.
-            if (ResourceId.AbsolutePath.StartsWith("/keys/", StringComparison.Ordinal) && ResourceId.Segments.Length == 4)
+            string[] segments = resourceId.Segments;
+
+            if (resourceId.AbsolutePath.StartsWith("/keys/", StringComparison.Ordinal) && segments.Length == 4)
             {
-                _value = ResourceId.AbsolutePath.Remove(ResourceId.AbsolutePath.Length - ResourceId.Segments[3].Length - 1);
+                _value = resourceId.AbsolutePath.Remove(resourceId.AbsolutePath.Length - segments[3].Length - 1);
             }
             else
             {
-                _value = ResourceId.AbsolutePath;
+                _value = resourceId.AbsolutePath;
             }
         }
 
