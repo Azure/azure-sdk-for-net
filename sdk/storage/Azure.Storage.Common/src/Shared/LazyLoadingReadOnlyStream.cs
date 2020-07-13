@@ -7,13 +7,14 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
     /// <summary>
     /// Used for Open Read APIs.
     /// </summary>
-    internal class LazyLoadingReadOnlyStream<TDownloadInfo, TRequestConditions> : Stream
+    internal class LazyLoadingReadOnlyStream<TRequestConditions> : Stream
     {
         /// <summary>
         /// The current position within the blob or file.
@@ -43,10 +44,10 @@ namespace Azure.Storage
         /// <summary>
         /// Download() function.
         /// </summary>
-        private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<TDownloadInfo>>> _downloadInternalFunc;
+        private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> _downloadInternalFunc;
 
         public LazyLoadingReadOnlyStream(
-            Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<TDownloadInfo>>> downloadInternalFunc,
+            Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
@@ -111,7 +112,7 @@ namespace Azure.Storage
 
         private async Task<int> DownloadInternal(bool async, CancellationToken cancellationToken)
         {
-            Response<TDownloadInfo> response;
+            Response<IDownloadedContent> response;
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
@@ -119,7 +120,7 @@ namespace Azure.Storage
             response = await _downloadInternalFunc(range, _requestConditions, default, async, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
-            Stream networkStream = (Stream)typeof(TDownloadInfo).GetProperty("Content").GetValue(response.Value, null);
+            using Stream networkStream = response.Value.Content;
 
             _stream.SetLength(0);
 
@@ -169,7 +170,7 @@ namespace Azure.Storage
             }
         }
 
-        private static long GetBlobLength(Response<TDownloadInfo> response)
+        private static long GetBlobLength(Response<IDownloadedContent> response)
         {
             response.GetRawResponse().Headers.TryGetValue("Content-Range", out string lengthString);
             string[] split = lengthString.Split('/');

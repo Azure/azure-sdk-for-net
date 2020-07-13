@@ -1912,18 +1912,24 @@ namespace Azure.Storage.Files.Shares
             try
             {
                 scope.Start();
-                return new LazyLoadingReadOnlyStream<ShareFileDownloadInfo, ShareFileRequestConditions>(
-                    (HttpRange range,
+                return new LazyLoadingReadOnlyStream<ShareFileRequestConditions>(
+                    async (HttpRange range,
                     ShareFileRequestConditions conditions,
                     bool rangeGetContentHash,
                     bool async,
-                    CancellationToken cancellationToken)
-                        => DownloadInternal(
+                    CancellationToken cancellationToken) =>
+                    {
+                        Response<ShareFileDownloadInfo> response = await DownloadInternal(
                             range,
                             rangeGetContentHash,
                             conditions,
                             async,
-                            cancellationToken),
+                            cancellationToken).ConfigureAwait(false);
+
+                        return Response.FromValue(
+                            (IDownloadedContent)response.Value,
+                            response.GetRawResponse());
+                    },
                     position,
                     bufferSize,
                     conditions);
