@@ -25,9 +25,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
-        {
-        }
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
@@ -35,13 +33,15 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-        {
+            : this(credential, scopes, TimeSpan.FromMinutes(2)) { }
+
+        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset) {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             _credential = credential;
             _scopes = scopes.ToArray();
-            _accessTokenCache = new AccessTokenCache(_credential.RefreshOptions.Offset);
+            _accessTokenCache = new AccessTokenCache(tokenRefreshOffset);
         }
 
         /// <inheritdoc />
@@ -82,7 +82,8 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private async ValueTask<string?> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async) {
+        private async ValueTask<string?> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async)
+        {
             try
             {
                 var requestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
