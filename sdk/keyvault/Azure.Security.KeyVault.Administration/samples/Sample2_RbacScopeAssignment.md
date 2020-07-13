@@ -5,15 +5,15 @@ For information about interacting with a `KeyVaultKey` with a `KeyClient`, see t
 
 ## Assigning a Role to the All Keys Scope
 
-Let's assign a role to a service principal so that it applies to all keys. To do this we'll need a role definition Id and a service principal object Id.
-
-A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleAssignments`.
+Let's assign a role to a service principal so that it applies to all keys. To do this we'll need a service principal object Id and a role definition Id.
 
 See the [README](../README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
 You can also get the object Id for your currently signed in account by running the following [Azure CLI][azure_cli] command.
 ```
 az ad signed-in-user show --query objectId
 ```
+
+A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleAssignments`.
 
 ```C# Snippet:CreateRoleAssignmentKeysScope
 string definitionIdToAssign = "<roleDefinitionId>";
