@@ -92,6 +92,15 @@ namespace Azure.Core
         }
 
         /// <summary>
+        ///  Add content type header to the request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        public void ApplyToRequest(Request request)
+        {
+            request.Headers.Add("Content-Type", $"multipart/form-data;boundary=\"{_boundary}\"");
+        }
+
+        /// <summary>
         ///  Add HTTP content to a collection of RequestContent objects that
         ///  get serialized to multipart/form-data MIME type.
         /// </summary>
