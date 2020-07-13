@@ -1,6 +1,27 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    ServiceDirectory: extensions
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: extensions
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.azure.net' }"
+        EnvVars:
+          BLOB_STORAGE_ENDPOINT_SUFFIX: core.windows.net
+      # AzureUSGovernment
+      - ServiceDirectory: extensions
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.usgovcloudapi.net'; }"
+        EnvVars:
+          BLOB_STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
+      # AzureChinaCloud
+      - ServiceDirectory: extensions
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{  keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard'; }"
+        EnvVars:
+          BLOB_STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
