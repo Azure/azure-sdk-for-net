@@ -15,12 +15,32 @@ namespace Azure.Core.TestFramework
     {
         public static readonly string SyncOnlyKey = "SyncOnly";
 
+        private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
         private readonly int? _maxServiceVersion;
 
+        /// <summary>
+        /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+        /// </summary>
+        /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
         public ClientTestFixtureAttribute(params object[] serviceVersions)
         {
             _serviceVersions = serviceVersions;
+
+            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
+        }
+
+        /// <summary>
+        /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+        /// </summary>
+        /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
+        /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
+        public ClientTestFixtureAttribute(object[] serviceVersions, object[] additionalParameters)
+        {
+            Assert.IsNotNull(additionalParameters, nameof(additionalParameters));
+
+            _additionalParameters = additionalParameters  ?? new object[] { };
+            _serviceVersions = serviceVersions ?? new object[] { };
 
             _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
         }
@@ -34,41 +54,93 @@ namespace Azure.Core.TestFramework
         {
             if (_serviceVersions.Any())
             {
-                foreach (object serviceVersion in _serviceVersions)
+                if (_additionalParameters?.Any() ?? false)
                 {
-                    var syncFixture = new TestFixtureAttribute(false, serviceVersion);
-                    var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
-
-                    foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                    foreach (var parameter in _additionalParameters)
                     {
-                        Process(testSuite, serviceVersion, true);
-                        yield return testSuite;
+                        foreach (object serviceVersion in _serviceVersions)
+                        {
+                            var syncFixture = new TestFixtureAttribute(false, serviceVersion, parameter);
+                            var asyncFixture = new TestFixtureAttribute(true, serviceVersion, parameter);
+
+                            foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                            {
+                                Process(testSuite, serviceVersion, true);
+                                yield return testSuite;
+                            }
+
+                            foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
+                            {
+                                Process(testSuite, serviceVersion, false);
+                                yield return testSuite;
+                            }
+                        }
                     }
-
-                    foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
+                }
+                else
+                {
+                    // No additional paramters defined
+                    foreach (object serviceVersion in _serviceVersions)
                     {
-                        Process(testSuite, serviceVersion, false);
-                        yield return testSuite;
+                        var syncFixture = new TestFixtureAttribute(false, serviceVersion);
+                        var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
+
+                        foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                        {
+                            Process(testSuite, serviceVersion, true);
+                            yield return testSuite;
+                        }
+
+                        foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
+                        {
+                            Process(testSuite, serviceVersion, false);
+                            yield return testSuite;
+                        }
                     }
                 }
             }
             else
             {
-                // No service versions defined
-                var syncFixture = new TestFixtureAttribute(false);
-                var asyncFixture = new TestFixtureAttribute(true);
-
-                foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                // No service versions defined. Check if any additional paramters are defined
+                if (_additionalParameters?.Any() ?? false)
                 {
-                    Process(testSuite, null, true);
-                    yield return testSuite;
+                    foreach (var parameter in _additionalParameters)
+                    {
+                        var syncFixture = new TestFixtureAttribute(false, parameter);
+                        var asyncFixture = new TestFixtureAttribute(true, parameter);
+
+                        foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                        {
+                            Process(testSuite, null, true);
+                            yield return testSuite;
+                        }
+
+                        foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
+                        {
+                            Process(testSuite, null, false);
+                            yield return testSuite;
+                        }
+                    }
+                }
+                // No additional paramters defined
+                else
+                {
+                    var syncFixture = new TestFixtureAttribute(false);
+                    var asyncFixture = new TestFixtureAttribute(true);
+
+                    foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
+                    {
+                        Process(testSuite, null, true);
+                        yield return testSuite;
+                    }
+
+                    foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
+                    {
+                        Process(testSuite, null, false);
+                        yield return testSuite;
+                    }
                 }
 
-                foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
-                {
-                    Process(testSuite, null, false);
-                    yield return testSuite;
-                }
             }
         }
 

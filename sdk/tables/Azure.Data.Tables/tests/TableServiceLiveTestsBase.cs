@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
 {
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     /// <summary>
     /// The suite of tests for the <see cref="TableServiceClient"/> class.
     /// </summary>
@@ -20,13 +21,15 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
 
-        public TableServiceLiveTestsBase(bool isAsync, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
         {
+            _endpointType = endpointType;
             Sanitizer = new TablesRecordedTestSanitizer();
         }
 
-        public TableServiceLiveTestsBase(bool isAsync) : base(isAsync)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
         {
+            _endpointType = endpointType;
             Sanitizer = new TablesRecordedTestSanitizer();
         }
 
@@ -43,6 +46,7 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleTypePropertyName = "SomeDoubleProperty0";
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
+        protected readonly TableEndpointType _endpointType;
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -51,9 +55,24 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-            service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
-                                                              new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
-                                                              Recording.InstrumentClientOptions(new TableClientOptions())));
+            service = _endpointType switch
+            {
+
+                TableEndpointType.Storage => InstrumentClient(new TableServiceClient(
+                    new Uri(TestEnvironment.StorageUri),
+                    new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
+                    Recording.InstrumentClientOptions(new TableClientOptions()))),
+
+                //TODO: Replace this with a Cosmos endpoint constructed client
+                TableEndpointType.CosmosTable => InstrumentClient(new TableServiceClient(
+                    new Uri(TestEnvironment.StorageUri),
+                    new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
+                    Recording.InstrumentClientOptions(new TableClientOptions()))),
+
+                _ => throw new NotSupportedException("Unknown endpoint type")
+
+            };
+
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             await service.CreateTableAsync(tableName).ConfigureAwait(false);
             client = service.GetTableClient(tableName);
@@ -177,7 +196,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task CreateTestEntities(List<Dictionary<string,object>> entitiesToCreate)
+        protected async Task CreateTestEntities(List<Dictionary<string, object>> entitiesToCreate)
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -375,5 +394,11 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
         }
+    }
+
+    public enum TableEndpointType
+    {
+        Storage,
+        CosmosTable
     }
 }
