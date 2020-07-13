@@ -188,13 +188,13 @@ namespace Azure.Core.Tests
         [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal", false, false)]
         [TestCase("http://localhost?param=paramVal&VolatileParam1=Value1", "http://localhost?param=paramVal&VolatileParam1=Value2", false, false)]
         [TestCase("http://localhost?VolatileParam1=Value1&param=paramVal", "http://localhost?VolatileParam1=Value2&param=paramVal2", false, false)]
-        public void RecordMatcherRespectsVolatiledQueryParameters(string requestUri, string entryUri, bool includeVolatile, bool shouldMatch)
+        public void RecordMatcherRespectsIgnoredQueryParameters(string requestUri, string entryUri, bool includeVolatile, bool shouldMatch)
         {
             var matcher = new RecordMatcher();
             if (includeVolatile)
             {
-                matcher.VolatileQueryParameters.Add("VolatileParam1");
-                matcher.VolatileQueryParameters.Add("VolatileParam2");
+                matcher.IgnoredQueryParameters.Add("VolatileParam1");
+                matcher.IgnoredQueryParameters.Add("VolatileParam2");
             }
 
             var mockRequest = new RecordEntry()

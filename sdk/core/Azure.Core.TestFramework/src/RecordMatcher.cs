@@ -64,11 +64,11 @@ namespace Azure.Core.TestFramework
         /// Query parameters whose values can change between recording and playback without causing URI matching
         /// to fail. The presence or absence of the query parameter itself is still respected in matching.
         /// </summary>
-        public HashSet<string> VolatileQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        public HashSet<string> IgnoredQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
         };
 
-        private const string VolatileValue = "Volatile";
+        private const string IgnoredValue = "Ignored";
 
         public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
         {
@@ -197,7 +197,7 @@ namespace Azure.Core.TestFramework
             {
                 req.AppendQuery(
                     param,
-                    VolatileQueryParameters.Contains(param) ? VolatileValue : queryParams[param]);
+                    IgnoredQueryParameters.Contains(param) ? IgnoredValue : queryParams[param]);
             }
             return req.ToUri().ToString();
         }
