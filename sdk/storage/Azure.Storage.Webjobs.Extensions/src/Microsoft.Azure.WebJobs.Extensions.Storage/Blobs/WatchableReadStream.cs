@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             try
             {
                 _timeRead.Start();
-                await baseTask;
+                await baseTask.ConfigureAwait(false);
                 _countRead += _totalLength;
             }
             finally
@@ -86,7 +86,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             try
             {
                 _timeRead.Start();
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+                // TODO: This fails tests if fixed...
                 int bytesRead = await baseTask;
+#pragma warning restore AZC0100 // ConfigureAwait(false) must be used.
                 _countRead += bytesRead;
                 return bytesRead;
             }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// a single line in Storage Analytics Log file.
         /// </summary>
         /// <param name="fields">
-        /// Array of string values of fields as extracted from a single line in a log file. 
+        /// Array of string values of fields as extracted from a single line in a log file.
         /// It must not be null and should contain exactly 30 items.
         /// </param>
         /// <returns>A valid instance of <see cref="StorageAnalyticsLogEntry"/> if given fields match expected format,
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             Uri keyAsUri = new Uri(RequestedObjectKey, UriKind.RelativeOrAbsolute);
             if (keyAsUri.IsAbsoluteUri)
             {
-                // assuming key is "https://storagesample.blob.core.windows.net/sample-container/sample-blob.txt"       
+                // assuming key is "https://storagesample.blob.core.windows.net/sample-container/sample-blob.txt"
                 path = keyAsUri.Segments.Length > 1 ? keyAsUri.LocalPath.Substring(1) : String.Empty;
             }
             else

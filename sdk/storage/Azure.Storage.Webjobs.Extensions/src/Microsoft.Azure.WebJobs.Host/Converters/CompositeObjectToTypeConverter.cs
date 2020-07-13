@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
         {
             if (converters == null)
             {
-                throw new ArgumentNullException("converters");
+                throw new ArgumentNullException(nameof(converters));
             }
             _converters = converters;
         }

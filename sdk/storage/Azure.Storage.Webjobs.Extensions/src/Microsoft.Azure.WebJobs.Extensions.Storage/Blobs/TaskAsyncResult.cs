@@ -1,10 +1,11 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
@@ -30,7 +31,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 // Because ContinueWith/ExecuteSynchronously will run immediately for a completed task, ensure this is
                 // the last line of the constructor (all other state should be initialized before invoking the
                 // callback).
-                _task.ContinueWith(InvokeCallback, TaskContinuationOptions.ExecuteSynchronously);
+#pragma warning disable CA2008 // Do not create tasks without passing a TaskScheduler
+                _ = _task.ContinueWith(InvokeCallback, TaskContinuationOptions.ExecuteSynchronously);
+#pragma warning restore CA2008 // Do not create tasks without passing a TaskScheduler
             }
         }
 
@@ -83,7 +86,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
         public void End()
         {
             ThrowIfDisposed();
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             _task.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
         private void InvokeCallback(Task ignore)

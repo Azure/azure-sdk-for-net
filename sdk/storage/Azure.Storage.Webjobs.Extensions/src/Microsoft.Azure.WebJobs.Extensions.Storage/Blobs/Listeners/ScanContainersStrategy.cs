@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     break;
                 }
 
-                await NotifyRegistrationsAsync(blob, failedNotifications, cancellationToken);
+                await NotifyRegistrationsAsync(blob, failedNotifications, cancellationToken).ConfigureAwait(false);
             }
 
             foreach (CloudBlobContainer container in _registrations.Keys)
@@ -86,14 +86,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 cancellationToken.ThrowIfCancellationRequested();
                 DateTime lastScanTimestamp = _lastModifiedTimestamps[container];
                 Tuple<IEnumerable<ICloudBlob>, DateTime> newBlobsResult = await PollNewBlobsAsync(container,
-                    lastScanTimestamp, cancellationToken);
+                    lastScanTimestamp, cancellationToken).ConfigureAwait(false);
                 IEnumerable<ICloudBlob> newBlobs = newBlobsResult.Item1;
                 _lastModifiedTimestamps[container] = newBlobsResult.Item2;
 
                 foreach (ICloudBlob newBlob in newBlobs)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    await NotifyRegistrationsAsync(newBlob, failedNotifications, cancellationToken);
+                    await NotifyRegistrationsAsync(newBlob, failedNotifications, cancellationToken).ConfigureAwait(false);
                 }
             }
 
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     TriggerSource = BlobTriggerSource.ContainerScan
                 };
 
-                FunctionResult result = await registration.ExecuteAsync(context, cancellationToken);
+                FunctionResult result = await registration.ExecuteAsync(context, cancellationToken).ConfigureAwait(false);
                 if (!result.Succeeded)
                 {
                     // If notification failed, try again on the next iteration.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             try
             {
                 currentBlobs = (await container.ListBlobsAsync(prefix: null, useFlatBlobListing: true,
-                    cancellationToken: cancellationToken)).ToList();
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).ToList();
             }
             catch (StorageException exception)
             {

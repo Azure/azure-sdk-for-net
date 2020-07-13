@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Diagnostics;
 using System.Threading;
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             string contents = JsonConvert.SerializeObject(message, JsonSerialization.Settings);
             var queueMessage = new CloudQueueMessage(contents);
-            await _queue.AddMessageAndCreateIfNotExistsAsync(queueMessage, cancellationToken);
+            await _queue.AddMessageAndCreateIfNotExistsAsync(queueMessage, cancellationToken).ConfigureAwait(false);
             _watcher.Notify(_queue.Name);
             return (QueueName: _queue.Name, MessageId: queueMessage.Id);
         }

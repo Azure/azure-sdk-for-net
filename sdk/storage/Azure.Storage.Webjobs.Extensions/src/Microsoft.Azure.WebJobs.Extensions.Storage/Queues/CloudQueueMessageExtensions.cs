@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +10,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 {
     internal static class CloudQueueMessageExtensions
     {
-        private static PropertyHelper _idProp;
-        private static PropertyHelper _popReceiptProp;
-
-        static CloudQueueMessageExtensions()
-        {
-            IReadOnlyList<PropertyHelper> messageProperties = PropertyHelper.GetProperties(typeof(CloudQueueMessage));
-            _idProp = messageProperties.Single(p => p.Name == nameof(CloudQueueMessage.Id));
-            _popReceiptProp = messageProperties.Single(p => p.Name == nameof(CloudQueueMessage.PopReceipt));
-        }
+        private static PropertyHelper _idProp = PropertyHelper.GetProperties(typeof(CloudQueueMessage)).Single(p => p.Name == nameof(CloudQueueMessage.Id));
+        private static PropertyHelper _popReceiptProp = PropertyHelper.GetProperties(typeof(CloudQueueMessage)).Single(p => p.Name == nameof(CloudQueueMessage.PopReceipt));
 
         /// <summary>
         /// Overwrites the message's Id and PopReceipt properties with the specified values, if different.

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -25,21 +25,22 @@ namespace Microsoft.Azure.WebJobs.Description
         // Tested against storage service on July 2016. All other unsafe and reserved characters work fine.
         private static readonly char[] UnsafeBlobNameCharacters = { '\\' };
 
-        // Called by the framework. 
+        // Called by the framework.
         // This has already resolved any %%, { }  in the path.
+        /// <inheritdoc/>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            string path = (string)value; 
+            string path = (string)value;
             if (value == null)
             {
                 return new ValidationResult("Blob path can't be null");
             }
 
-            // Could be either just a container, container/blob, or url            
+            // Could be either just a container, container/blob, or url
             Uri uri;
             if (Uri.TryCreate(path, UriKind.Absolute, out uri))
             {
-                // still get container and blob name 
+                // still get container and blob name
                 return null;
             }
 
@@ -77,6 +78,11 @@ namespace Microsoft.Azure.WebJobs.Description
             return null;
         }
 
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <returns></returns>
         public static bool IsValidContainerName(string containerName)
         {
             if (containerName == null)
@@ -84,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Description
                 return false;
             }
 
-            if (containerName.Equals("$root"))
+            if (containerName.Equals("$root", StringComparison.InvariantCulture))
             {
                 return true;
             }
@@ -93,6 +99,12 @@ namespace Microsoft.Azure.WebJobs.Description
         }
 
         // See http://msdn.microsoft.com/en-us/library/windowsazure/dd135715.aspx.
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="blobName"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
         public static bool IsValidBlobName(string blobName, out string errorMessage)
         {
             const string UnsafeCharactersMessage =

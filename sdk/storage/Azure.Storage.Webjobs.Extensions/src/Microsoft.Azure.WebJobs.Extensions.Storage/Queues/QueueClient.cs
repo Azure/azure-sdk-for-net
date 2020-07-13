@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using Microsoft.Azure.WebJobs.Host;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 
             if (!IsValidQueueName(name, out errorMessage))
             {
-                throw new ArgumentException(errorMessage, "name");
+                throw new ArgumentException(errorMessage, nameof(name));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 
             Char previousCharacter = 'a';
 
-            // A queue name must start with a letter or number, and may 
+            // A queue name must start with a letter or number, and may
             // contain only letters, numbers and the dash (-) character
             // All letters in a queue name must be lowercase.
             foreach (Char ch in name)

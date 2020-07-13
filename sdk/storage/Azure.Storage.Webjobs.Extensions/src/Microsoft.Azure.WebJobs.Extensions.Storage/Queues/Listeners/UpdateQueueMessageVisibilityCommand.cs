@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -22,17 +22,17 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         {
             if (queue == null)
             {
-                throw new ArgumentNullException("queue");
+                throw new ArgumentNullException(nameof(queue));
             }
 
             if (message == null)
             {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
 
             if (speedupStrategy == null)
             {
-                throw new ArgumentNullException("speedupStrategy");
+                throw new ArgumentNullException(nameof(speedupStrategy));
             }
 
             _queue = queue;
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                await _queue.UpdateMessageAsync(_message, _visibilityTimeout, MessageUpdateFields.Visibility, cancellationToken);
+                await _queue.UpdateMessageAsync(_message, _visibilityTimeout, MessageUpdateFields.Visibility, cancellationToken).ConfigureAwait(false);
                 // The next execution should occur after a normal delay.
                 delay = _speedupStrategy.GetNextDelay(executionSucceeded: true);
             }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
+using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             if (!_logListeners.ContainsKey(client))
             {
-                BlobLogListener logListener = await BlobLogListener.CreateAsync(client, _exceptionHandler, _logger, cancellationToken);
+                BlobLogListener logListener = await BlobLogListener.CreateAsync(client, _exceptionHandler, _logger, cancellationToken).ConfigureAwait(false);
                 _logListeners.Add(client, logListener);
             }
         }
@@ -101,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     break;
                 }
 
-                await NotifyRegistrationsAsync(notification.Blob, notification.PollId, cancellationToken);
+                await NotifyRegistrationsAsync(notification.Blob, notification.PollId, cancellationToken).ConfigureAwait(false);
             }
 
             // Poll the logs (to detect ongoing writes).
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // assign a unique id for tracking
                 string pollId = Guid.NewGuid().ToString();
 
-                IEnumerable<ICloudBlob> recentWrites = await logListener.GetRecentBlobWritesAsync(cancellationToken);
+                IEnumerable<ICloudBlob> recentWrites = await logListener.GetRecentBlobWritesAsync(cancellationToken).ConfigureAwait(false);
 
                 // Filter and group these by container for easier logging.
                 var recentWritesGroupedByContainer = recentWrites
@@ -128,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     foreach (ICloudBlob blob in blobs)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        await NotifyRegistrationsAsync(blob, pollId, cancellationToken);
+                        await NotifyRegistrationsAsync(blob, pollId, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
@@ -186,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     TriggerSource = BlobTriggerSource.LogScan
                 };
 
-                FunctionResult result = await registration.ExecuteAsync(context, cancellationToken);
+                FunctionResult result = await registration.ExecuteAsync(context, cancellationToken).ConfigureAwait(false);
                 if (!result.Succeeded)
                 {
                     // If notification failed, try again on the next iteration.
@@ -218,7 +219,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     // Non-async is correct here. ScanContainers occurs on a background thread. Unless it blocks, no one
                     // else is around to observe the results.
                     items = container.ListBlobsAsync(prefix: null, useFlatBlobListing: true,
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                         cancellationToken: CancellationToken.None).GetAwaiter().GetResult().ToList();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
                 }
                 catch (StorageException exception)
                 {

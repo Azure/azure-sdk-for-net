@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 
@@ -16,6 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
 #if PUBLICPROTOCOL
     public sealed class JsonTypeNameAttribute : Attribute
 #else
+    [AttributeUsage(AttributeTargets.Class)]
     internal sealed class JsonTypeNameAttribute : Attribute
 #endif
     {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
         {
             if (typeName == null)
             {
-                throw new ArgumentNullException("typeName");
+                throw new ArgumentNullException(nameof(typeName));
             }
 
             _typeName = typeName;

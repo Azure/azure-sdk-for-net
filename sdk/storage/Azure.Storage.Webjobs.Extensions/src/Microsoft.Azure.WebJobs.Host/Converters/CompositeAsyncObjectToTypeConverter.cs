@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Threading;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.Converters
         {
             foreach (IAsyncObjectToTypeConverter<T> converter in _converters)
             {
-                ConversionResult<T> result = await converter.TryConvertAsync(value, cancellationToken);
+                ConversionResult<T> result = await converter.TryConvertAsync(value, cancellationToken).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {

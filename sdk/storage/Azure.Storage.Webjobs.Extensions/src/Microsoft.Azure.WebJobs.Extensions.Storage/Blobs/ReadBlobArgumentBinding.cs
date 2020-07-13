@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.IO;
 using System.Threading.Tasks;
@@ -22,12 +22,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             Stream rawStream;
             try
             {
-                rawStream = await blob.OpenReadAsync(cancellationToken);
+                rawStream = await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {
-                // Testing generic error case since specific error codes are not available for FetchAttributes 
-                // (HEAD request), including OpenRead. 
+                // Testing generic error case since specific error codes are not available for FetchAttributes
+                // (HEAD request), including OpenRead.
                 if (!exception.IsNotFound())
                 {
                     throw;
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 
                 return null;
             }
-            
+
             return new WatchableReadStream(rawStream);
         }
 

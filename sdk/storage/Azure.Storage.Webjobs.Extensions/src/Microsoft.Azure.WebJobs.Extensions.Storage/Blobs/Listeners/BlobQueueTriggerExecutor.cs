@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -15,6 +15,7 @@ using Microsoft.Azure.Storage.Queue;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using System.Globalization;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             try
             {
-                blob = await container.GetBlobReferenceFromServerAsync(blobName);
+                blob = await container.GetBlobReferenceFromServerAsync(blobName).ConfigureAwait(false);
             }
             catch (StorageException exception) when (exception.IsNotFound() || exception.IsOk())
             {
@@ -103,19 +104,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             // If the blob still exists and its ETag is still valid, execute.
             // Note: it's possible the blob could change/be deleted between now and when the function executes.
-            Guid? parentId = await _causalityReader.GetWriterAsync(blob, cancellationToken);
+            Guid? parentId = await _causalityReader.GetWriterAsync(blob, cancellationToken).ConfigureAwait(false);
 
             // Include the queue details here.
             IDictionary<string, string> details = QueueTriggerExecutor.PopulateTriggerDetails(value);
 
             if (blob?.Properties?.Created != null && blob.Properties.Created.HasValue)
             {
-                details[BlobCreatedKey] = blob.Properties.Created.Value.ToString(Constants.DateTimeFormatString);
+                details[BlobCreatedKey] = blob.Properties.Created.Value.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }
 
             if (blob?.Properties?.LastModified != null && blob.Properties.LastModified.HasValue)
             {
-                details[BlobLastModifiedKey] = blob.Properties.LastModified.Value.ToString(Constants.DateTimeFormatString);
+                details[BlobLastModifiedKey] = blob.Properties.LastModified.Value.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }
 
             TriggeredFunctionData input = new TriggeredFunctionData
@@ -125,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 TriggerDetails = details
             };
 
-            return await registration.Executor.TryExecuteAsync(input, cancellationToken);
+            return await registration.Executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             _setter.Invoke(instance, value);
@@ -34,27 +34,27 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             if (property == null)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
 
             if (typeof(TReflected) != property.ReflectedType)
             {
-                throw new ArgumentException("The property's ReflectedType must exactly match TReflected.", "property");
+                throw new ArgumentException("The property's ReflectedType must exactly match TReflected.", nameof(property));
             }
 
             if (typeof(TProperty) != property.PropertyType)
             {
-                throw new ArgumentException("The property's PropertyType must exactly match TProperty.", "property");
+                throw new ArgumentException("The property's PropertyType must exactly match TProperty.", nameof(property));
             }
 
             if (!property.CanWrite)
             {
-                throw new ArgumentException("The property must be writable.", "property");
+                throw new ArgumentException("The property must be writable.", nameof(property));
             }
 
             if (property.GetIndexParameters().Length != 0)
             {
-                throw new ArgumentException("The property must not have index parameters.", "property");
+                throw new ArgumentException("The property must not have index parameters.", nameof(property));
             }
 
             MethodInfo setMethod = property.SetMethod;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Host
 
             if (setMethod.IsStatic)
             {
-                throw new ArgumentException("The property must not be static.", "property");
+                throw new ArgumentException("The property must not be static.", nameof(property));
             }
 
             Debug.Assert(setMethod.ReflectedType == typeof(TReflected));

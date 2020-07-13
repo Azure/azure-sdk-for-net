@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections;
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.Listeners
                 tasks.Add(listener.StartAsync(cancellationToken));
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.Listeners
                 tasks.Add(listener.StopAsync(cancellationToken));
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         public void Cancel()

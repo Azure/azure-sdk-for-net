@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     /// </summary>
     /// <remarks>
     /// Custom <see cref="QueueProcessor"/> implementations can be registered by implementing
-    /// a custom <see cref="IQueueProcessorFactory"/> and setting it via <see cref="QueuesOptions.QueueProcessorFactory"/>.
+    /// a custom <see cref="IQueueProcessorFactory"/>.
     /// </remarks>
     public class QueueProcessor
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             _queue = context.Queue;
@@ -90,10 +90,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (message.DequeueCount > MaxDequeueCount)
             {
-                await HandlePoisonMessageAsync(message, cancellationToken);
-                return await Task.FromResult<bool>(false);
+                await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                return await Task.FromResult<bool>(false).ConfigureAwait(false);
             }
-            return await Task.FromResult<bool>(true);
+            return await Task.FromResult<bool>(true).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,17 +112,17 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (result.Succeeded)
             {
-                await DeleteMessageAsync(message, cancellationToken);
+                await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else if (_poisonQueue != null)
             {
                 if (message.DequeueCount >= MaxDequeueCount)
                 {
-                    await HandlePoisonMessageAsync(message, cancellationToken);
+                    await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    await ReleaseMessageAsync(message, result, VisibilityTimeout, cancellationToken);
+                    await ReleaseMessageAsync(message, result, VisibilityTimeout, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
@@ -142,12 +142,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
                 string id = message.Id;
                 string popReceipt = message.PopReceipt;
 
-                await CopyMessageToPoisonQueueAsync(message, _poisonQueue, cancellationToken);
+                await CopyMessageToPoisonQueueAsync(message, _poisonQueue, cancellationToken).ConfigureAwait(false);
 
                 // TEMP: Re-evaluate these property updates when we update Storage SDK: https://github.com/Azure/azure-webjobs-sdk/issues/1144
                 message.UpdateChangedProperties(id, popReceipt);
 
-                await DeleteMessageAsync(message, cancellationToken);
+                await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
-            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message, cancellationToken);
+            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message, cancellationToken).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
             OnMessageAddedToPoisonQueue(eventArgs);
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             try
             {
                 // We couldn't process the message. Let someone else try.
-                await _queue.UpdateMessageAsync(message, visibilityTimeout, MessageUpdateFields.Visibility, null, null, cancellationToken);
+                await _queue.UpdateMessageAsync(message, visibilityTimeout, MessageUpdateFields.Visibility, null, null, cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             try
             {
-                await _queue.DeleteMessageAsync(message, cancellationToken);
+                await _queue.DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {

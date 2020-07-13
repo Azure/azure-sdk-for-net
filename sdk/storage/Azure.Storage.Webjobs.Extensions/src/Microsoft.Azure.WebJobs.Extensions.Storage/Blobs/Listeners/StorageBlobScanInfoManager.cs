@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -23,11 +23,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             if (string.IsNullOrEmpty(hostId))
             {
-                throw new ArgumentNullException("hostId");
+                throw new ArgumentNullException(nameof(hostId));
             }
             if (blobClient == null)
             {
-                throw new ArgumentNullException("blobClient");
+                throw new ArgumentNullException(nameof(blobClient));
             }
 
             _hostId = hostId;
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             DateTime? latestScan = null;
             try
             {
-                string scanInfoLine = await scanInfoBlob.DownloadTextAsync(CancellationToken.None);
+                string scanInfoLine = await scanInfoBlob.DownloadTextAsync(CancellationToken.None).ConfigureAwait(false);
                 ScanInfo scanInfo;
                 using (StringReader stringReader = new StringReader(scanInfoLine))
                 {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             try
             {
                 CloudBlockBlob scanInfoBlob = GetScanInfoBlobReference(storageAccountName, containerName);
-                await scanInfoBlob.UploadTextAsync(scanInfoLine);
+                await scanInfoBlob.UploadTextAsync(scanInfoLine).ConfigureAwait(false);
             }
             catch
             {

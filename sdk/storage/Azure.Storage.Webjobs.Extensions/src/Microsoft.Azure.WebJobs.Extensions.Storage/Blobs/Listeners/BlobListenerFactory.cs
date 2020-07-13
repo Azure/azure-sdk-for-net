@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             var targetBlobClient = _dataAccount.CreateCloudBlobClient();
             var targetQueueClient = _dataAccount.CreateCloudQueueClient();
 
-            string hostId = await _hostIdProvider.GetHostIdAsync(cancellationToken);
+            string hostId = await _hostIdProvider.GetHostIdAsync(cancellationToken).ConfigureAwait(false);
             string hostBlobTriggerQueueName = HostQueueNames.GetHostBlobTriggerQueueName(hostId);
             var hostBlobTriggerQueue = primaryQueueClient.GetQueueReference(hostBlobTriggerQueueName);
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             // Register the blob container we wish to monitor with the shared blob listener.
             await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
-                hostBlobTriggerQueue, sharedQueueWatcher, cancellationToken);
+                hostBlobTriggerQueue, sharedQueueWatcher, cancellationToken).ConfigureAwait(false);
 
             // Create a "bridge" listener that will monitor the blob
             // notification queue and dispatch to the target job function.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // as the blob container we're monitoring
             var poisonQueueClient = targetQueueClient;
             if (
-                // _dataAccount.Type != StorageAccountType.GeneralPurpose || $$$ 
+                // _dataAccount.Type != StorageAccountType.GeneralPurpose || $$$
                 _blobsOptions.CentralizedPoisonQueue)
             {
                 // use the primary storage account if the centralize flag is true,
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 BlobETagReader.Instance, new BlobReceiptManager(blobClient),
                 new BlobTriggerQueueWriter(hostBlobTriggerQueue, messageEnqueuedWatcher), _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(_container, triggerExecutor, cancellationToken);
+            await sharedBlobListener.RegisterAsync(_container, triggerExecutor, cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(

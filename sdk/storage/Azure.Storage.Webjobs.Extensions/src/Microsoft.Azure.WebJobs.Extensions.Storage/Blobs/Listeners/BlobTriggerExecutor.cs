@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Next, check to see if the blob currently exists (and, if so, what the current ETag is).
-            string possibleETag = await _eTagReader.GetETagAsync(value, cancellationToken);
+            string possibleETag = await _eTagReader.GetETagAsync(value, cancellationToken).ConfigureAwait(false);
 
             if (possibleETag == null)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 value.Name, possibleETag);
 
             // Check for the completed receipt. If it's already there, noop.
-            BlobReceipt unleasedReceipt = await _receiptManager.TryReadAsync(receiptBlob, cancellationToken);
+            BlobReceipt unleasedReceipt = await _receiptManager.TryReadAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
 
             if (unleasedReceipt != null && unleasedReceipt.IsCompleted)
             {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             else if (unleasedReceipt == null)
             {
                 // Try to create (if not exists) an incomplete receipt.
-                if (!await _receiptManager.TryCreateAsync(receiptBlob, cancellationToken))
+                if (!await _receiptManager.TryCreateAsync(receiptBlob, cancellationToken).ConfigureAwait(false))
                 {
                     // Someone else just created the receipt; wait to try to trigger until later.
                     // Alternatively, we could just ignore the return result and see who wins the race to acquire the
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 }
             }
 
-            string leaseId = await _receiptManager.TryAcquireLeaseAsync(receiptBlob, cancellationToken);
+            string leaseId = await _receiptManager.TryAcquireLeaseAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
 
             if (leaseId == null)
             {
@@ -104,14 +104,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             try
             {
                 // Check again for the completed receipt. If it's already there, noop.
-                BlobReceipt receipt = await _receiptManager.TryReadAsync(receiptBlob, cancellationToken);
+                BlobReceipt receipt = await _receiptManager.TryReadAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
                 Debug.Assert(receipt != null); // We have a (30 second) lease on the blob; it should never disappear on us.
 
                 if (receipt.IsCompleted)
                 {
                     Logger.BlobAlreadyProcessed(_logger, _functionDescriptor.LogName, value.Name, possibleETag, pollId, triggerSource);
 
-                    await _receiptManager.ReleaseLeaseAsync(receiptBlob, leaseId, cancellationToken);
+                    await _receiptManager.ReleaseLeaseAsync(receiptBlob, leaseId, cancellationToken).ConfigureAwait(false);
                     return new FunctionResult(true);
                 }
 
@@ -128,18 +128,18 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     ETag = possibleETag
                 };
 
-                var (queueName, messageId) = await _queueWriter.EnqueueAsync(message, cancellationToken);
+                var (queueName, messageId) = await _queueWriter.EnqueueAsync(message, cancellationToken).ConfigureAwait(false);
 
                 Logger.BlobMessageEnqueued(_logger, _functionDescriptor.LogName, value.Name, messageId, queueName, pollId, triggerSource);
 
                 // Complete the receipt
-                await _receiptManager.MarkCompletedAsync(receiptBlob, leaseId, cancellationToken);
+                await _receiptManager.MarkCompletedAsync(receiptBlob, leaseId, cancellationToken).ConfigureAwait(false);
 
                 return new FunctionResult(true);
             }
             finally
             {
-                await _receiptManager.ReleaseLeaseAsync(receiptBlob, leaseId, cancellationToken);
+                await _receiptManager.ReleaseLeaseAsync(receiptBlob, leaseId, cancellationToken).ConfigureAwait(false);
             }
         }
     }

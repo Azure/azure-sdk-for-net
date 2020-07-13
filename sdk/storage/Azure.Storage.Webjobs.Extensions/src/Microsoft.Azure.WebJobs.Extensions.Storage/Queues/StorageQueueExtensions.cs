@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -17,14 +17,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (queue == null)
             {
-                throw new ArgumentNullException("queue");
+                throw new ArgumentNullException(nameof(queue));
             }
 
             bool isQueueNotFoundException = false;
 
             try
             {
-                await queue.AddMessageAsync(message, cancellationToken);
+                await queue.AddMessageAsync(message, cancellationToken).ConfigureAwait(false);
                 return;
             }
             catch (StorageException exception)
@@ -38,8 +38,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
 
             Debug.Assert(isQueueNotFoundException);
-            await queue.CreateIfNotExistsAsync(cancellationToken);
-            await queue.AddMessageAsync(message, cancellationToken);
+            await queue.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
+            await queue.AddMessageAsync(message, cancellationToken).ConfigureAwait(false);
         }
     }
 }

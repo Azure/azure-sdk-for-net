@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 if (value > MaxBatchSize)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _batchSize = value;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _newBatchThreshold = value;
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Host
                 {
                     string message = String.Format(CultureInfo.CurrentCulture,
                         "MaxPollingInterval must not be less than {0}.", QueuePollingIntervals.Minimum);
-                    throw new ArgumentException(message, "value");
+                    throw new ArgumentException(message, nameof(value));
                 }
 
                 _maxPollingInterval = value;
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException("MaxDequeueCount must not be less than 1.", "value");
+                    throw new ArgumentException("MaxDequeueCount must not be less than 1.", nameof(value));
                 }
 
                 _maxDequeueCount = value;
@@ -155,6 +155,7 @@ namespace Microsoft.Azure.WebJobs.Host
             }
         }
 
+        /// <inheritdoc/>
         public string Format()
         {
             JObject options = new JObject

@@ -1,10 +1,11 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.WebJobs.Host.Timers
 {
@@ -26,17 +27,17 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
         {
             if (command == null)
             {
-                throw new ArgumentNullException("command");
+                throw new ArgumentNullException(nameof(command));
             }
 
             if (exceptionHandler == null)
             {
-                throw new ArgumentNullException("exceptionHandler");
+                throw new ArgumentNullException(nameof(exceptionHandler));
             }
 
             if (initialWait == null)
             {
-                throw new ArgumentNullException("initialWait");
+                throw new ArgumentNullException(nameof(initialWait));
             }
 
             _command = command;
@@ -78,13 +79,13 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
 
         private async Task StopAsyncCore(CancellationToken cancellationToken)
         {
-            await Task.Delay(0);
-            TaskCompletionSource<object> cancellationTaskSource = new TaskCompletionSource<object>();
+            await Task.Delay(0).ConfigureAwait(false);
+            TaskCompletionSource<object> cancellationTaskSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using (cancellationToken.Register(() => cancellationTaskSource.SetCanceled()))
             {
                 // Wait for all pending command tasks to complete (or cancellation of the token) before returning.
-                await Task.WhenAny(_run, cancellationTaskSource.Task);
+                await Task.WhenAny(_run, cancellationTaskSource.Task).ConfigureAwait(false);
             }
 
             _stopped = true;
@@ -123,13 +124,13 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
                 // Execute tasks one at a time (in a series) until stopped.
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    TaskCompletionSource<object> cancellationTaskSource = new TaskCompletionSource<object>();
+                    TaskCompletionSource<object> cancellationTaskSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
                     using (cancellationToken.Register(() => cancellationTaskSource.SetCanceled()))
                     {
                         try
                         {
-                            await Task.WhenAny(wait, cancellationTaskSource.Task);
+                            await Task.WhenAny(wait, cancellationTaskSource.Task).ConfigureAwait(false);
                         }
                         catch (OperationCanceledException)
                         {
@@ -144,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
 
                     try
                     {
-                        TaskSeriesCommandResult result = await _command.ExecuteAsync(cancellationToken);
+                        TaskSeriesCommandResult result = await _command.ExecuteAsync(cancellationToken).ConfigureAwait(false);
                         wait = result.Wait;
                     }
                     catch (Exception ex) when (ex.InnerException is OperationCanceledException)
@@ -163,7 +164,9 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
                 // Immediately report any unhandled exception from this background task.
                 // (Don't capture the exception as a fault of this Task; that would delay any exception reporting until
                 // Stop is called, which might never happen.)
+#pragma warning disable AZC0103 // Do not wait synchronously in asynchronous scope.
                 _exceptionHandler.OnUnhandledExceptionAsync(ExceptionDispatchInfo.Capture(exception)).GetAwaiter().GetResult();
+#pragma warning restore AZC0103 // Do not wait synchronously in asynchronous scope.
             }
         }
 

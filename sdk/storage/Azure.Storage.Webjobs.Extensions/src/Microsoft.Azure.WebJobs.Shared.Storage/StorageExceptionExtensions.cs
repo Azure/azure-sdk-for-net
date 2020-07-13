@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -499,7 +499,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -571,7 +571,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -620,7 +620,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -658,7 +658,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             return exception.InnerException is TaskCanceledException;
@@ -747,7 +747,7 @@ namespace Microsoft.Azure.WebJobs
 
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             RequestResult result = exception.RequestInformation;
@@ -800,14 +800,14 @@ namespace Microsoft.Azure.WebJobs
         {
             if (exception == null)
             {
-                throw new ArgumentNullException("exception");
+                throw new ArgumentNullException(nameof(exception));
             }
 
             string message = exception.Message;
 
             if (exception.RequestInformation != null)
             {
-                message += $" (HTTP status code {exception.RequestInformation.HttpStatusCode.ToString()}: "
+                message += $" (HTTP status code {exception.RequestInformation.HttpStatusCode}: "
                     + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorCode}. "
                     + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorMessage})";
             }

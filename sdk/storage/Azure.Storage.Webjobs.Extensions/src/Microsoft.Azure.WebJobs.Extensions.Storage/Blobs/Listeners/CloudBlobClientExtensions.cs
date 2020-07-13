@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             if (client == null)
             {
-                throw new ArgumentNullException("client");
+                throw new ArgumentNullException(nameof(client));
             }
 
             List<IListBlobItem> allResults = new List<IListBlobItem>();
@@ -32,11 +32,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             {
                 OperationContext context = new OperationContext { ClientRequestID = Guid.NewGuid().ToString() };
                 result = await TimeoutHandler.ExecuteWithTimeout(operationName, context.ClientRequestID, exceptionHandler,
-                    logger, cancellationToken, () =>
+                    logger, () =>
                 {
                     return client.ListBlobsSegmentedAsync(prefix, useFlatBlobListing, blobListingDetails, maxResults: null,
                         currentToken: continuationToken, options: null, operationContext: context, cancellationToken: cancellationToken);
-                });
+                }, cancellationToken).ConfigureAwait(false);
 
                 if (result != null)
                 {

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -24,8 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
 
         public static Task DeleteMessageAsync(this CloudQueue queue, CloudQueueMessage message, CancellationToken cancellationToken)
         {
-            // $$$ How to pass cancellationtoken?
-            return queue.DeleteMessageAsync(message);
+            return queue.DeleteMessageAsync(message, cancellationToken);
         }
 
         public static Task UpdateMessageAsync(this CloudQueue queue, CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, CancellationToken cancellationToken)

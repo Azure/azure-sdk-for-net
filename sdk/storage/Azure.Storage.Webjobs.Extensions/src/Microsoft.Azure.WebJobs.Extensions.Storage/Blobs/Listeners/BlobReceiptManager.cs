@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<BlobReceipt> TryReadAsync(CloudBlockBlob blob, CancellationToken cancellationToken)
         {
-            if (!await blob.TryFetchAttributesAsync(cancellationToken))
+            if (!await blob.TryFetchAttributesAsync(cancellationToken).ConfigureAwait(false))
             {
                 return null;
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     accessCondition: accessCondition,
                     options: null,
                     operationContext: null,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 return true;
             }
             catch (StorageException exception)
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             Debug.Assert(isContainerNotFoundException);
-            await blob.Container.CreateIfNotExistsAsync(cancellationToken);
+            await blob.Container.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
 
             try
             {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     accessCondition: accessCondition,
                     options: null,
                     operationContext: null,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 return true;
             }
             catch (StorageException exception)
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             try
             {
-                return await blob.AcquireLeaseAsync(LeasePeriod, null, cancellationToken);
+                return await blob.AcquireLeaseAsync(LeasePeriod, null, cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     accessCondition: new AccessCondition { LeaseId = leaseId },
                     options: null,
                     operationContext: null,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     accessCondition: new AccessCondition { LeaseId = leaseId },
                     options: null,
                     operationContext: null,
-                    cancellationToken: cancellationToken);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (StorageException exception)
             {

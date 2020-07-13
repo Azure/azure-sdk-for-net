@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     {
         private const string FieldPattern =
             // x - ignore whitespace and comments.
-            // n - do not capture unnamed groups. 
+            // n - do not capture unnamed groups.
             @"(?xn)" +
             // Non-capturing group
             // asserts position at start of the string, or
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // 1st Alternative of named capturing group field:
             // greedy match of " embraced sequence of 0 to unlimited number of characters
             @"""(?<field>[^""]*)"" | " +
-            // 2nd Alternative of named capturing group field: 
+            // 2nd Alternative of named capturing group field:
             // greedy match of zero to unlimited number of characters not present in the list below
             @"(?<field>[^;""]*)" +
             @")" +
@@ -69,10 +69,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// <exception cref="FormatException">If unable to parse a line in given log.</exception>
         /// <seealso cref="StorageAnalyticsLogEntry"/>
         /// <remarks>
-        /// The method scans log file lines one at a time. 
+        /// The method scans log file lines one at a time.
         /// First it attempts to detect a line format version and throws an exception if failed to do so.
         /// It skips all lines with version different than supported one, i.e. 1.0.
-        /// Then it calls TryParseLogEntry to create a log entry out of every line of supported version and throws 
+        /// Then it calls TryParseLogEntry to create a log entry out of every line of supported version and throws
         /// an exception if the parse method returns null.
         /// </remarks>
         public async Task<IEnumerable<StorageAnalyticsLogEntry>> ParseLogAsync(ICloudBlob blob,
@@ -80,12 +80,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             List<StorageAnalyticsLogEntry> entries = new List<StorageAnalyticsLogEntry>();
 
-            using (TextReader tr = new StreamReader(await blob.OpenReadAsync(cancellationToken)))
+            using (TextReader tr = new StreamReader(await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false)))
             {
                 for (int lineNumber = 1; ; lineNumber++)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    string line = await tr.ReadLineAsync();
+                    string line = await tr.ReadLineAsync().ConfigureAwait(false);
                     if (line == null)
                     {
                         break;
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         }
 
         /// <summary>
-        /// Attempts to parse first field of a log line assuming it's in 'Major.Minor' version format 
+        /// Attempts to parse first field of a log line assuming it's in 'Major.Minor' version format
         /// followed by ';'
         /// </summary>
         /// <param name="line">A line as extracted from a Storage Analytics Log file.</param>

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 #if PUBLICPROTOCOL
 namespace Microsoft.Azure.WebJobs.Protocols
@@ -17,6 +17,6 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
         /// <summary>
         /// Gets the name of the blob metadata key used to store ID of the function instance that wrote the blob.
         /// </summary>
-        public static readonly string ParentId = "AzureWebJobsParentId";
+        public const string ParentId = "AzureWebJobsParentId";
     }
 }

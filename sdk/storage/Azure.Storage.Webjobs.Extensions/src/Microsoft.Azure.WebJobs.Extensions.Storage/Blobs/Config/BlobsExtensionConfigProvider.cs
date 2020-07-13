@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 BindToStream(CreateStreamAsync, FileAccess.ReadWrite); // Precedence, must beat CloudBlobStream
 
             // Normal blob
-            // These are not converters because Blob/Page/Append affects how we *create* the blob. 
+            // These are not converters because Blob/Page/Append affects how we *create* the blob.
 #pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 #pragma warning restore CS0618 // Type or member is obsolete
                 BindToInput<ICloudBlob>((attr, cts) => CreateBlobReference<ICloudBlob>(attr, cts));
 
-            // CloudBlobStream's derived functionality is only relevant to writing. 
+            // CloudBlobStream's derived functionality is only relevant to writing.
 #pragma warning disable CS0618 // Type or member is obsolete
             rule.When("Access", FileAccess.Write).
                 SetPostResolveHook(ToBlobDescr).
@@ -106,12 +106,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             // Common converters shared between [Blob] and [BlobTrigger]
 
-            // Trigger already has the IStorageBlob. Whereas BindToInput defines: Attr-->Stream. 
+            // Trigger already has the IStorageBlob. Whereas BindToInput defines: Attr-->Stream.
             //  Converter manager already has Stream-->Byte[],String,TextReader
             context.AddConverter<ICloudBlob, Stream>(ConvertToStreamAsync);
 
-            // Blob type is a property of an existing blob.             
-            // $$$ did we lose CloudBlob. That's a base class for Cloud*Blob, but does not implement ICloudBlob? 
+            // Blob type is a property of an existing blob.
+            // $$$ did we lose CloudBlob. That's a base class for Cloud*Blob, but does not implement ICloudBlob?
             context.AddConverter(new StorageBlobConverter<CloudAppendBlob>());
             context.AddConverter(new StorageBlobConverter<CloudBlockBlob>());
             context.AddConverter(new StorageBlobConverter<CloudPageBlob>());
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             return GetContainer(blobAttribute);
         }
 
-        // Write-only rule. 
+        // Write-only rule.
         CloudBlobDirectory IConverter<BlobAttribute, CloudBlobDirectory>.Convert(
             BlobAttribute blobAttribute)
         {
@@ -142,26 +142,26 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         #endregion
 
-        #region CloudBlob rules 
+        #region CloudBlob rules
 
         // Produce a write only stream.
         private async Task<CloudBlobStream> ConvertToCloudBlobStreamAsync(
            BlobAttribute blobAttribute, ValueBindingContext context)
         {
-            var stream = await CreateStreamAsync(blobAttribute, context);
+            var stream = await CreateStreamAsync(blobAttribute, context).ConfigureAwait(false);
             return (CloudBlobStream)stream;
         }
 
         private async Task<T> CreateBlobReference<T>(BlobAttribute blobAttribute, CancellationToken cancellationToken)
         {
-            var blob = await GetBlobAsync(blobAttribute, cancellationToken, typeof(T));
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken, typeof(T)).ConfigureAwait(false);
             return (T)(blob);
         }
 
         #endregion
 
-        #region Support for binding to Multiple blobs 
-        // Open type matching types that can bind to an IEnumerable<T> blob collection. 
+        #region Support for binding to Multiple blobs
+        // Open type matching types that can bind to an IEnumerable<T> blob collection.
         private class BlobCollectionType : OpenType
         {
             private static readonly Type[] _types = new Type[]
@@ -182,8 +182,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             }
         }
 
-        // Converter to produce an IEnumerable<T> for binding to multiple blobs. 
-        // T must have been matched by MultiBlobType        
+        // Converter to produce an IEnumerable<T> for binding to multiple blobs.
+        // T must have been matched by MultiBlobType
         private class BlobCollectionConverter<T> : IAsyncConverter<MultiBlobContext, IEnumerable<T>>
         {
             private readonly FuncAsyncConverter<ICloudBlob, T> _converter;
@@ -206,10 +206,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 // bind to CloudBlobDirectory.
                 string prefix = context.Prefix;
                 var container = context.Container;
-                IEnumerable<IListBlobItem> blobItems = await container.ListBlobsAsync(prefix, true, cancellationToken);
+                IEnumerable<IListBlobItem> blobItems = await container.ListBlobsAsync(prefix, true, cancellationToken).ConfigureAwait(false);
 
                 // create an IEnumerable<T> of the correct type, performing any required conversions on the blobs
-                var list = await ConvertBlobs(blobItems);
+                var list = await ConvertBlobs(blobItems).ConfigureAwait(false);
                 return list;
             }
 
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                     var funcCtx = new FunctionBindingContext(Guid.Empty, CancellationToken.None);
                     var valueCtx = new ValueBindingContext(funcCtx, CancellationToken.None);
 
-                    var converted = await _converter(src, null, valueCtx);
+                    var converted = await _converter(src, null, valueCtx).ConfigureAwait(false);
 
                     list.Add(converted);
                 }
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             }
         }
 
-        // Internal context object to aide in binding to  multiple blobs. 
+        // Internal context object to aide in binding to  multiple blobs.
         private class MultiBlobContext
         {
             public string Prefix;
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         private async Task<Stream> ConvertToStreamAsync(ICloudBlob input, CancellationToken cancellationToken)
         {
-            WatchableReadStream watchableStream = await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken);
+            WatchableReadStream watchableStream = await ReadBlobArgumentBinding.TryBindStreamAsync(input, cancellationToken).ConfigureAwait(false);
             return watchableStream;
         }
 
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             var client = account.CreateCloudBlobClient();
             BlobPath path = BlobPath.ParseAndValidate(input.Value);
             var container = client.GetContainerReference(path.ContainerName);
-            var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName);
+            var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
 
             return blob;
         }
@@ -279,17 +279,17 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             ValueBindingContext context)
         {
             var cancellationToken = context.CancellationToken;
-            var blob = await GetBlobAsync(blobAttribute, cancellationToken);
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
 
             switch (blobAttribute.Access)
             {
                 case FileAccess.Read:
-                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob, context);
+                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob, context).ConfigureAwait(false);
                     return readStream;
 
                 case FileAccess.Write:
                     var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
-                    context, _blobWrittenWatcherGetter.Value);
+                    context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
                     return writeStream;
 
                 default:
@@ -325,15 +325,15 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             var container = client.GetContainerReference(boundPath.ContainerName);
 
-            // Call ExistsAsync before attempting to create. This reduces the number of 
+            // Call ExistsAsync before attempting to create. This reduces the number of
             // 40x calls that App Insights may be tracking automatically
-            if (blobAttribute.Access != FileAccess.Read && !await container.ExistsAsync())
+            if (blobAttribute.Access != FileAccess.Read && !await container.ExistsAsync().ConfigureAwait(false))
             {
-                await container.CreateIfNotExistsAsync(cancellationToken);
+                await container.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
             }
 
             var blob = await container.GetBlobReferenceForArgumentTypeAsync(
-                boundPath.BlobName, requestedType, cancellationToken);
+                boundPath.BlobName, requestedType, cancellationToken).ConfigureAwait(false);
 
             return blob;
         }

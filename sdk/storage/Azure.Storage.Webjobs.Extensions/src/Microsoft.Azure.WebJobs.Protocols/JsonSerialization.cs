@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
         {
             if (json == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException(nameof(json));
             }
 
             StringReader stringReader = null;
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
                     {
                         return null;
                     }
-                    
+
                     // Behave as similarly to JObject.Parse as possible (except for the settings used).
                     if (jsonReader.Read() && jsonReader.TokenType != JsonToken.Comment)
                     {

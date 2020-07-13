@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal static class CloudBlobContainerExtensions
     {
-        public static async Task<IEnumerable<IListBlobItem>> ListBlobsAsync(this CloudBlobContainer container, string prefix, 
+        public static async Task<IEnumerable<IListBlobItem>> ListBlobsAsync(this CloudBlobContainer container, string prefix,
             bool useFlatBlobListing, CancellationToken cancellationToken)
         {
             if (container == null)
             {
-                throw new ArgumentNullException("container");
+                throw new ArgumentNullException(nameof(container));
             }
 
             List<IListBlobItem> allResults = new List<IListBlobItem>();
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             {
                 result = await container.ListBlobsSegmentedAsync(prefix: prefix, useFlatBlobListing: useFlatBlobListing,
                     blobListingDetails: BlobListingDetails.None, maxResults: null, currentToken: continuationToken,
-                    options: null, operationContext: null, cancellationToken: cancellationToken);
+                    options: null, operationContext: null, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (result != null)
                 {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
                     continuationToken = result.ContinuationToken;
                 }
-            } 
+            }
             while (result != null && continuationToken != null);
 
             return allResults;

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -12,9 +12,6 @@ namespace Microsoft.Azure.WebJobs
 {
     internal static class BlobClient
     {
-        // Tested against storage service on July 2016. All other unsafe and reserved characters work fine.
-        private static readonly char[] UnsafeBlobNameCharacters = { '\\' };
-
         public static string GetAccountName(this CloudStorageAccount account)
         {
             return account.Credentials?.AccountName;
@@ -32,7 +29,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (containerName == null)
             {
-                throw new ArgumentNullException("containerName");
+                throw new ArgumentNullException(nameof(containerName));
             }
 
             if (!IsValidContainerName(containerName))

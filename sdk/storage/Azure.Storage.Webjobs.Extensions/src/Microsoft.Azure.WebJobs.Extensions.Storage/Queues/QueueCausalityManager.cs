@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -12,14 +12,14 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
     /// <summary>
-    /// Tracks causality via JSON formatted queue message content. 
+    /// Tracks causality via JSON formatted queue message content.
     /// Adds an extra field to the JSON object for the parent guid name.
     /// </summary>
     /// <remarks>
-    /// Important that this class can interoperate with external queue messages, 
-    /// so be resilient to a missing guid marker. 
-    /// Can we switch to some auxiliary table? Beware, CloudQueueMessage. 
-    /// Id is not filled out until after the message is queued, 
+    /// Important that this class can interoperate with external queue messages,
+    /// so be resilient to a missing guid marker.
+    /// Can we switch to some auxiliary table? Beware, CloudQueueMessage.
+    /// Id is not filled out until after the message is queued,
     /// but then there's a race between updating the aux storage and another function picking up the message.
     /// </remarks>
     internal static class QueueCausalityManager
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (token == null)
             {
-                throw new ArgumentNullException("token");
+                throw new ArgumentNullException(nameof(token));
             }
 
             if (!Guid.Equals(Guid.Empty, functionOwner))

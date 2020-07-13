@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             
             if (isFetchSuccess.HasValue)
             {
-                var fetchAttributesSetup = blobMock.Setup(s => s.FetchAttributesAsync());
+                var fetchAttributesSetup = blobMock.Setup(s => s.FetchAttributesAsync(It.IsAny<CancellationToken>()));
                 if (isFetchSuccess.Value)
                 {
                     fetchAttributesSetup.Returns(Task.FromResult(0));

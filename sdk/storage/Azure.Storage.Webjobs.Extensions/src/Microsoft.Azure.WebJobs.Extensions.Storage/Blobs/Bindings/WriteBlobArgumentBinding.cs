@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             BlobCausalityManager.SetWriter(blob.Metadata, context.FunctionInstanceId);
 
-            CloudBlobStream rawStream = await blockBlob.OpenWriteAsync(context.CancellationToken);
+            CloudBlobStream rawStream = await blockBlob.OpenWriteAsync(context.CancellationToken).ConfigureAwait(false);
             IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
             return new WatchableCloudBlobStream(rawStream, committedAction);
         }

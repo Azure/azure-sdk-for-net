@@ -1,13 +1,15 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
     internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>
     {
-        const int NumberOfSamplesToConsider = 5;
+        private const int NumberOfSamplesToConsider = 5;
 
         internal static readonly QueueRequestOptions DefaultQueueRequestOptions = new QueueRequestOptions { NetworkTimeout = TimeSpan.FromSeconds(100) };
 
@@ -124,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower());
+            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -150,8 +152,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             {
                 ThrowIfDisposed();
                 _timer.Cancel();
-                await Task.WhenAll(_processing);
-                await _timer.StopAsync(cancellationToken);
+                await Task.WhenAll(_processing).ConfigureAwait(false);
+                await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -174,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     _stopWaitingTaskSource.TrySetResult(null);
                 }
 
-                _stopWaitingTaskSource = new TaskCompletionSource<object>();
+                _stopWaitingTaskSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             }
 
             IEnumerable<CloudQueueMessage> batch = null;
@@ -190,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     // check anymore (steady state).
                     // However the queue can always be deleted from underneath us, in which case
                     // we need to recheck. That is handled below.
-                    _queueExists = await _queue.ExistsAsync();
+                    _queueExists = await _queue.ExistsAsync().ConfigureAwait(false);
                 }
 
                 if (_queueExists.Value)
@@ -199,14 +201,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     OperationContext context = new OperationContext { ClientRequestID = clientRequestId };
 
                     batch = await TimeoutHandler.ExecuteWithTimeout(nameof(CloudQueue.GetMessageAsync), context.ClientRequestID,
-                        _exceptionHandler, _logger, cancellationToken, () =>
+                        _exceptionHandler, _logger, () =>
                         {
                             return _queue.GetMessagesAsync(_queueProcessor.BatchSize,
                                 _visibilityTimeout,
                                 options: DefaultQueueRequestOptions,
                                 operationContext: context,
                                 cancellationToken: cancellationToken);
-                        });
+                        }, cancellationToken).ConfigureAwait(false);
 
                     int count = batch?.Count() ?? -1;
                     Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, context.ClientRequestID, count, sw.ElapsedMilliseconds);
@@ -310,7 +312,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         {
             while (_processing.Count > _queueProcessor.NewBatchThreshold)
             {
-                Task processed = await Task.WhenAny(_processing);
+                Task processed = await Task.WhenAny(_processing).ConfigureAwait(false);
                 _processing.Remove(processed);
             }
         }
@@ -319,7 +321,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         {
             try
             {
-                if (!await _queueProcessor.BeginProcessingMessageAsync(message, cancellationToken))
+                if (!await _queueProcessor.BeginProcessingMessageAsync(message, cancellationToken).ConfigureAwait(false))
                 {
                     return;
                 }
@@ -329,15 +331,15 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 {
                     timer.Start();
 
-                    result = await _triggerExecutor.ExecuteAsync(message, cancellationToken);
+                    result = await _triggerExecutor.ExecuteAsync(message, cancellationToken).ConfigureAwait(false);
 
-                    await timer.StopAsync(cancellationToken);
+                    await timer.StopAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 // Use a different cancellation token for shutdown to allow graceful shutdown.
                 // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
                 // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
-                await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token);
+                await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (StorageException ex) when (ex.IsTaskCanceled())
             {
@@ -352,7 +354,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 // Immediately report any unhandled exception from this background task.
                 // (Don't capture the exception as a fault of this Task; that would delay any exception reporting until
                 // Stop is called, which might never happen.)
+#pragma warning disable AZC0103 // Do not wait synchronously in asynchronous scope.
                 _exceptionHandler.OnUnhandledExceptionAsync(ExceptionDispatchInfo.Capture(exception)).GetAwaiter().GetResult();
+#pragma warning restore AZC0103 // Do not wait synchronously in asynchronous scope.
             }
         }
 
@@ -420,7 +424,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
         async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
         {
-            return await GetMetricsAsync();
+            return await GetMetricsAsync().ConfigureAwait(false);
         }
 
         public async Task<QueueTriggerMetrics> GetMetricsAsync()
@@ -430,12 +434,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                await _queue.FetchAttributesAsync();
+                await _queue.FetchAttributesAsync().ConfigureAwait(false);
                 queueLength = _queue.ApproximateMessageCount.GetValueOrDefault();
 
                 if (queueLength > 0)
                 {
-                    CloudQueueMessage message = await _queue.PeekMessageAsync();
+                    CloudQueueMessage message = await _queue.PeekMessageAsync().ConfigureAwait(false);
                     if (message != null)
                     {
                         if (message.InsertionTime.HasValue)

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 };
             }
 
-            var blob = await _innerConverter.ConvertAsync(typedInput, cancellationToken);
+            var blob = await _innerConverter.ConvertAsync(typedInput, cancellationToken).ConfigureAwait(false);
 
             return new ConversionResult<ICloudBlob>
             {

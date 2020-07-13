@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -48,11 +48,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             _committed = true;
 
-            await base.CommitAsync();
+            await base.CommitAsync().ConfigureAwait(false);
 
             if (_committedAction != null)
             {
-                await _committedAction.ExecuteAsync(cancellationToken);
+                await _committedAction.ExecuteAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -60,7 +60,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             if (!_committed)
             {
-                Task.Run(async () => await CommitAsync()).GetAwaiter().GetResult();
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                Task.Run(async () => await CommitAsync().ConfigureAwait(false)).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
             base.Close();
@@ -80,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         private async Task FlushAsyncCore(Task task)
         {
-            await task;
+            await task.ConfigureAwait(false);
             _flushed = true;
         }
 
@@ -98,7 +100,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
         private async Task WriteAsyncCore(Task task, int count)
         {
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+            // TODO: This fails tests if fixed...
             await task;
+#pragma warning restore AZC0100 // ConfigureAwait(false) must be used.
             _countWritten += count;
         }
 
@@ -132,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             if (!_committed && (_countWritten > 0 || _flushed))
             {
-                await CommitAsync(cancellationToken);
+                await CommitAsync(cancellationToken).ConfigureAwait(false);
             }
 
             _completed = true;

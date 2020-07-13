@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Host
         /// on the specified type.
         /// </para>
         /// <para>
-        /// <see cref="M:GetVisibleProperties"/> excludes properties defined on base types that have been
+        /// <see cref="GetVisibleProperties(object)"/> excludes properties defined on base types that have been
         /// hidden by definitions using the <c>new</c> keyword.
         /// </para>
         /// </summary>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.WebJobs.Host
         /// on the specified type.
         /// </para>
         /// <para>
-        /// <see cref="M:GetVisibleProperties"/> excludes properties defined on base types that have been
+        /// <see cref="GetVisibleProperties(Type)"/> excludes properties defined on base types that have been
         /// hidden by definitions using the <c>new</c> keyword.
         /// </para>
         /// </summary>

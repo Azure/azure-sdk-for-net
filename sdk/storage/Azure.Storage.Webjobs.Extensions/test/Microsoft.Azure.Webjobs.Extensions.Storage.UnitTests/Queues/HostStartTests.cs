@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
     public class HostStartTests
     {
         [Fact]
-        public void Queue_IfNameIsInvalid_ThrowsDuringIndexing()
+        public async Task Queue_IfNameIsInvalid_ThrowsDuringIndexing()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
     "The dash (-) character may not be the first or last letter - \"-illegalname-\"{0}Parameter " +
     "name: name", Environment.NewLine);
 
-            jobHost.AssertIndexingError(nameof(InvalidQueueNameProgram.Invalid), expectedMessage); 
+            await jobHost.AssertIndexingError(nameof(InvalidQueueNameProgram.Invalid), expectedMessage); 
         }
 
         private class InvalidQueueNameProgram

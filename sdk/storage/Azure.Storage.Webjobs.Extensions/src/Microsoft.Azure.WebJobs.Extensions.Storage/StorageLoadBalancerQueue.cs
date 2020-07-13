@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -56,10 +56,10 @@ namespace WebJobs.Extensions.Storage
             return new QueueWriter<T>(this, Convert(queue));
         }
 
-        class QueueWriter<T> : IAsyncCollector<T>
+        private class QueueWriter<T> : IAsyncCollector<T>
         {
-            StorageLoadBalancerQueue _parent;
-            CloudQueue _queue;
+            private readonly StorageLoadBalancerQueue _parent;
+            private readonly CloudQueue _queue;
 
             public QueueWriter(StorageLoadBalancerQueue parent, CloudQueue queue)
             {
@@ -75,7 +75,7 @@ namespace WebJobs.Extensions.Storage
                     JsonSerialization.Settings);
 
                 var msg = new CloudQueueMessage(contents);
-                await _queue.AddMessageAndCreateIfNotExistsAsync(msg, cancellationToken);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(msg, cancellationToken).ConfigureAwait(false);
 
                 _parent._sharedWatcher.Notify(_queue.Name);
             }

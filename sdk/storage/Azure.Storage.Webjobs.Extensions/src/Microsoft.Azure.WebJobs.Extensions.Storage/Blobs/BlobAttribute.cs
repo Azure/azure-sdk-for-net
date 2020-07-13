@@ -1,14 +1,17 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
-{ 
+{
+
+#pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Blob. The attribute supports binding
     /// to single blobs, blob containers, or collections of blobs.
@@ -34,7 +37,7 @@ namespace Microsoft.Azure.WebJobs
     /// </list>
     /// In addition to single blob bindings,  parameters can be bound to multiple blobs.
     /// The parameter type can be CloudBlobContainer, CloudBlobDirectory or <see cref="IEnumerable{T}"/>
-    /// of one of the following element types: 
+    /// of one of the following element types:
     /// <list type = "bullet" >
     /// <item><description>ICloudBlob</description></item>
     /// <item><description>CloudBlockBlob</description></item>
@@ -45,6 +48,7 @@ namespace Microsoft.Azure.WebJobs
     /// </list>
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1019:DefineAccessorsForAttributeArguments", Justification = "There is an accessor for FileAccess")]
+#pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [DebuggerDisplay("{BlobPath,nq}")]
     [ConnectionProvider(typeof(StorageAccountAttribute))]
@@ -91,5 +95,5 @@ namespace Microsoft.Azure.WebJobs
         /// Gets or sets the app setting name that contains the Azure Storage connection string.
         /// </summary>
         public string Connection { get; set; }
-    }   
+    }
 }

@@ -2,6 +2,10 @@
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
+  <PropertyGroup>
+    <SupportsNetStandard20>true</SupportsNetStandard20>
+  </PropertyGroup>
+
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
@@ -10,6 +14,7 @@
      -->
     <NoWarn>
       $(NoWarn);
+      AZC0001;
       AZC0006;
       AZC0007;
     </NoWarn>
@@ -29,8 +34,6 @@
     <!-- Turn on the DEBUG constant -->
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
-  <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">

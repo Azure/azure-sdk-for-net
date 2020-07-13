@@ -1,7 +1,8 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
@@ -25,10 +26,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     "Container '{containerName}' does not exist.");
 
             public static void InitializedScanInfo(ILogger<BlobListener> logger, string container, DateTime latestScanInfo) =>
-                _initializedScanInfo(logger, container, latestScanInfo.ToString(Constants.DateTimeFormatString), null);
+                _initializedScanInfo(logger, container, latestScanInfo.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture), null);
 
             public static void PollBlobContainer(ILogger<BlobListener> logger, string container, DateTime latestScanInfo, string clientRequestId, int blobCount, long latencyInMilliseconds, bool hasContinuationToken) =>
-                _pollBlobContainer(logger, latestScanInfo.ToString(Constants.DateTimeFormatString), container, clientRequestId, blobCount, latencyInMilliseconds, hasContinuationToken, null);
+                _pollBlobContainer(logger, latestScanInfo.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture), container, clientRequestId, blobCount, latencyInMilliseconds, hasContinuationToken, null);
 
             public static void ContainerDoesNotExist(ILogger<BlobListener> logger, string container) =>
                 _containerDoesNotExist(logger, container, null);

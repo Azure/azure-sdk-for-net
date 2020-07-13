@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Globalization;
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
     {
         /// <summary>
         /// Convert a parameter value of supported type into path compatible string value.
-        /// The set of supported types is limited to built-in signed/unsigned integer types, 
+        /// The set of supported types is limited to built-in signed/unsigned integer types,
         /// strings, JToken, and Guid (which is translated in canonical form without curly braces).
         /// </summary>
         /// <param name="parameterValue">The parameter value to convert</param>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
         {
             if (string.IsNullOrWhiteSpace(format))
             {
-                format = null; // normalize. 
+                format = null; // normalize.
             }
             if (parameterValue != null)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
                         return ((Byte)parameterValue).ToString(CultureInfo.InvariantCulture);
                     case TypeCode.SByte:
                         return ((SByte)parameterValue).ToString(CultureInfo.InvariantCulture);
-                    case TypeCode.DateTime:                        
+                    case TypeCode.DateTime:
                         format = format ?? "yyyy-MM-ddTHH-mm-ssK"; // default to ISO 8601
                         var dateTime = (DateTime)parameterValue;
                         return dateTime.ToString(format, CultureInfo.InvariantCulture);
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
                         }
                         if (parameterValue is Newtonsoft.Json.Linq.JToken)
                         {
-                            // Only accept primitive Json values. Don't accept complex objects. 
+                            // Only accept primitive Json values. Don't accept complex objects.
                             if (!(parameterValue is JContainer))
                             {
                                 return parameterValue.ToString();

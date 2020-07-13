@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems" Label="Shared" />
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <Version>$(ExtensionsStorageVersion)</Version>
@@ -20,7 +20,7 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-  </PropertyGroup>  
+  </PropertyGroup>
   
   <ItemGroup>
     <Compile Include="..\Microsoft.Azure.WebJobs.Host.Storage\Utility.cs" Link="Utility.cs" />
@@ -81,11 +81,28 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueTriggerParameterDescriptor.cs" Link="Shared\QueueTriggerParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
+    <Compile Include="..\Microsoft.Azure.WebJobs.Shared.Storage\StorageExceptionExtensions.cs" Link="StorageExceptionExtensions.cs" />
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
-    <PackageReference Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.14" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Azure.Storage.Queue" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
+
+  <Target Name="TestMessage" AfterTargets="Build">
+
+    <!-- Use $(Property Name) to reference a property -->
+    <Message Text="#################################################################################" Importance="high" />
+    <Message Text="MSBuildProjectName: $(MSBuildProjectName)" Importance="high" />
+    <Message Text="IsClientLibrary: $(IsClientLibrary)" Importance="high" />
+    <Message Text="IsTestProject: $(IsTestProject)" Importance="high" />
+    <Message Text="IsDataPlaneProject: $(IsDataPlaneProject)" Importance="high" />
+    <Message Text="IsMgmtClientLibrary: $(IsMgmtClientLibrary)" Importance="high" />
+    <Message Text="IsSamplesProject: $(IsSamplesProject)" Importance="high" />
+    <Message Text="IsShippingClientLibrary: $(IsShippingClientLibrary)" Importance="high" />
+    <Message Text="EnableStyleCopAnalyzers: $(EnableStyleCopAnalyzers)" Importance="high" />
+    <Message Text="SupportsNetStandard20: $(SupportsNetStandard20)" Importance="high" />
+    <Message Text="#################################################################################" Importance="high" />
+  </Target>
 </Project>

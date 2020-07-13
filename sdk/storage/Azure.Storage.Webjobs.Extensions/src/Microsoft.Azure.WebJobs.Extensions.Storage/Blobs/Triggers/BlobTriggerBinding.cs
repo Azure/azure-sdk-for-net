@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -57,7 +57,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             _parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
             _hostAccount = hostAccount ?? throw new ArgumentNullException(nameof(hostAccount));
             _dataAccount = dataAccount ?? throw new ArgumentNullException(nameof(dataAccount));
-                        
 
             _blobClient = dataAccount.CreateCloudBlobClient();
             _accountName = BlobClient.GetAccountName(_blobClient);
@@ -155,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
 
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
-            ConversionResult<ICloudBlob> conversionResult = await _converter.TryConvertAsync(value, context.CancellationToken);
+            ConversionResult<ICloudBlob> conversionResult = await _converter.TryConvertAsync(value, context.CancellationToken).ConfigureAwait(false);
 
             if (!conversionResult.Succeeded)
             {
@@ -171,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var container = _blobClient.GetContainerReference(_path.ContainerNamePattern);

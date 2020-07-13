@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace Microsoft.Azure.WebJobs
 {
     internal static class StorageExtensions
     {
-        // $$$ Move to better place. From 
+        // $$$ Move to better place. From
         internal static void ValidateContractCompatibility<TPath>(this IBindablePath<TPath> path, IReadOnlyDictionary<string, Type> bindingDataContract)
         {
             if (path == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
 
             BindingTemplateExtensions.ValidateContractCompatibility(path.ParameterNames, bindingDataContract);
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs
         {
             if (blob == null)
             {
-                throw new ArgumentNullException("blob");
+                throw new ArgumentNullException(nameof(blob));
             }
 
             return new BlobPath(blob.Container.Name, blob.Name);

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             // Starts the entire shared listener (if not yet started).
             // There is currently no scenario for controlling a single blob listener independently.
-            await _sharedListener.EnsureAllStartedAsync(cancellationToken);
+            await _sharedListener.EnsureAllStartedAsync(cancellationToken).ConfigureAwait(false);
             _started = true;
         }
 
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             // Stops the entire shared listener (if not yet stopped).
             // There is currently no scenario for controlling a single blob listener independently.
-            await _sharedListener.EnsureAllStoppedAsync(cancellationToken);
+            await _sharedListener.EnsureAllStoppedAsync(cancellationToken).ConfigureAwait(false);
             _started = false;
         }
 

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 throw new InvalidOperationException("Unable to convert trigger to IStorageQueueMessage.");
             }
 
-            ITriggerData triggerData = await _argumentBinding.BindAsync(message, context);
+            ITriggerData triggerData = await _argumentBinding.BindAsync(message, context).ConfigureAwait(false);
             IReadOnlyDictionary<string, object> bindingData = CreateBindingData(message, triggerData.BindingData);
 
             return new TriggerData(triggerData.ValueProvider, bindingData);
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var factory = new QueueListenerFactory(_queue, _queueOptions, _exceptionHandler,

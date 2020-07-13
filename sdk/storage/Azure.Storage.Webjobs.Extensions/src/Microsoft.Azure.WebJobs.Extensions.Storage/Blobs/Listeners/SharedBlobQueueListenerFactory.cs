@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             {
                 if (message == null)
                 {
-                    throw new ArgumentNullException("message");
+                    throw new ArgumentNullException(nameof(message));
                 }
 
                 var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.AsString);

@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Microsoft.Azure.Storage.Blob;
 using System;
@@ -14,11 +14,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             if (x == null)
             {
-                throw new ArgumentNullException("x");
+                throw new ArgumentNullException(nameof(x));
             }
             if (y == null)
             {
-                throw new ArgumentNullException("y");
+                throw new ArgumentNullException(nameof(y));
             }
 
             return x.Credentials.AccountName == y.Credentials.AccountName;
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             return obj.Credentials.AccountName.GetHashCode();

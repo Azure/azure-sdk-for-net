@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Host.Timers
 
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
         {
-            bool succeeded = await _innerCommand.TryExecuteAsync(cancellationToken);
+            bool succeeded = await _innerCommand.TryExecuteAsync(cancellationToken).ConfigureAwait(false);
             Task wait = Task.Delay(_delayStrategy.GetNextDelay(succeeded));
             return new TaskSeriesCommandResult(wait);
         }

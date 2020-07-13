@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 get { return _valueType; }
             }
 
-            public IReadOnlyDictionary<string, Type> BindingDataContract 
+            public IReadOnlyDictionary<string, Type> BindingDataContract
             {
                 get { return _bindingDataProvider != null ? _bindingDataProvider.Contract : null; }
             }
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 object convertedValue;
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 }
                 catch (JsonException e)
                 {
-                    // Easy to have the queue payload not deserialize properly. So give a useful error. 
-                    string msg = String.Format(CultureInfo.CurrentCulture, 
+                    // Easy to have the queue payload not deserialize properly. So give a useful error.
+                    string msg = String.Format(CultureInfo.CurrentCulture,
 @"Binding parameters to complex objects (such as '{0}') uses Json.NET serialization. 
 1. Bind the parameter type as 'string' instead of '{0}' to get the raw values and avoid JSON deserialization, or
 2. Change the queue payload to be valid json. The JSON parser failed: {1}

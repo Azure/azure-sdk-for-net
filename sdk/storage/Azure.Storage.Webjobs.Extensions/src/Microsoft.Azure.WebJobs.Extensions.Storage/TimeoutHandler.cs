@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage
         private static readonly TimeSpan DefaultTimeout = TimeSpan.FromMinutes(3);
 
         public static async Task<T> ExecuteWithTimeout<T>(string operationName, string clientRequestId,
-            IWebJobsExceptionHandler exceptionHandler, ILogger logger, CancellationToken cancellationToken, Func<Task<T>> operation)
+            IWebJobsExceptionHandler exceptionHandler, ILogger logger, Func<Task<T>> operation, CancellationToken cancellationToken)
         {
             using (var cts = new CancellationTokenSource())
             {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage
                 Task timeoutTask = Task.Delay(DefaultTimeout, cts.Token);
                 Task<T> operationTask = operation();
 
-                Task completedTask = await Task.WhenAny(timeoutTask, operationTask);
+                Task completedTask = await Task.WhenAny(timeoutTask, operationTask).ConfigureAwait(false);
 
                 if (Equals(timeoutTask, completedTask))
                 {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage
                         exceptionDispatchInfo = ExceptionDispatchInfo.Capture(ex);
                     }
 
-                    await exceptionHandler.OnUnhandledExceptionAsync(exceptionDispatchInfo);
+                    await exceptionHandler.OnUnhandledExceptionAsync(exceptionDispatchInfo).ConfigureAwait(false);
 
                     return default(T);
                 }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage
                     // Determine if this was a deadlock. If so, log it and rethrow. Use the passed-in cancellationToken
                     // to detemrine of this operation was canceled explicitly or was due to an internal network timeout.
 
-                    return await operationTask;
+                    return await operationTask.ConfigureAwait(false);
                 }
                 catch (StorageException ex) when (ex.InnerException is OperationCanceledException && !cancellationToken.IsCancellationRequested) // network timeout
                 {

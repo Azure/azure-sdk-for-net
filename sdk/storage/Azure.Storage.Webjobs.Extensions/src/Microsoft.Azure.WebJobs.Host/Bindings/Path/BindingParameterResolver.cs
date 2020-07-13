@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.ObjectModel;
@@ -9,21 +9,17 @@ using System.Linq;
 namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
 {
     /// <summary>
-    /// Support for adding built-in values to binding data. 
+    /// Support for adding built-in values to binding data.
     /// Don't add new resolvers here. Instead, add it to <see cref="SystemBindingData"/>
     /// </summary>
     [Obsolete("Use SystemBindingData instead")]
     internal abstract class BindingParameterResolver
     {
-        private static Collection<BindingParameterResolver> _resolvers;
-
-        static BindingParameterResolver()
+        private static Collection<BindingParameterResolver> _resolvers = new Collection<BindingParameterResolver>()
         {
-            // create the static set of built in system resolvers
-            _resolvers = new Collection<BindingParameterResolver>();
-            _resolvers.Add(new RandGuidResolver());
-            _resolvers.Add(new DateTimeResolver());
-        }
+            new RandGuidResolver(),
+            new DateTimeResolver(),
+        };
 
         public abstract string Name { get; }
 
@@ -31,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             BindingParameterResolver resolver = null;
@@ -42,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             resolver = _resolvers.FirstOrDefault(p => value.StartsWith(p.Name, StringComparison.OrdinalIgnoreCase));
@@ -55,12 +51,12 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             if (!value.StartsWith(Name, StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value specified is not a '{0}' binding parameter.", Name), "value");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value specified is not a '{0}' binding parameter.", Name), nameof(value));
             }
 
             if (value.Length > Name.Length && value[Name.Length] == ':')
@@ -88,14 +84,14 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
             public override string Resolve(string value)
             {
                 string format = GetFormatOrNull(value);
-                var val = new SystemBindingData().RandGuid;
-                return BindingDataPathHelper.ConvertParameterValueToString(val, format);                
+                var val = SystemBindingData.RandGuid;
+                return BindingDataPathHelper.ConvertParameterValueToString(val, format);
             }
         }
 
         // This can't be aliases to 'sys.UtcNow' because
-        // 'sys.UtcNow' always resolves to DateTime.UtcNow. 
-        // But 'datetime' may either resolve to user bidning data or to DateTime.UtcNow.        
+        // 'sys.UtcNow' always resolves to DateTime.UtcNow.
+        // But 'datetime' may either resolve to user bidning data or to DateTime.UtcNow.
         private class DateTimeResolver : BindingParameterResolver
         {
             public override string Name
@@ -109,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings.Path
             public override string Resolve(string value)
             {
                 string format = GetFormatOrNull(value);
-                var val = new SystemBindingData().UtcNow;
+                var val = SystemBindingData.UtcNow;
                 return BindingDataPathHelper.ConvertParameterValueToString(val, format);
             }
         }

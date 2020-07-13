@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.Storage.Queue;
+using System.Globalization;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
@@ -29,16 +30,16 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 TriggerValue = value,
                 TriggerDetails = PopulateTriggerDetails(value)
             };
-            return await _innerExecutor.TryExecuteAsync(input, cancellationToken);
+            return await _innerExecutor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         internal static Dictionary<string, string> PopulateTriggerDetails(CloudQueueMessage value)
         {
             return new Dictionary<string, string>()
             {
-                { "MessageId", value.Id.ToString() },
-                { nameof(CloudQueueMessage.DequeueCount), value.DequeueCount.ToString() },
-                { nameof(CloudQueueMessage.InsertionTime), value.InsertionTime?.ToString(Constants.DateTimeFormatString) }
+                { "MessageId", value.Id },
+                { nameof(CloudQueueMessage.DequeueCount), value.DequeueCount.ToString(CultureInfo.InvariantCulture) },
+                { nameof(CloudQueueMessage.InsertionTime), value.InsertionTime?.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture) }
             };
         }
     }

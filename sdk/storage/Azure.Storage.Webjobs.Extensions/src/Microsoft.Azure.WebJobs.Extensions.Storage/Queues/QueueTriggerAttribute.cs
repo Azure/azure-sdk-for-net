@@ -1,5 +1,5 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -7,6 +7,8 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
 {
+
+#pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Queue message, causing the function to run when a
     /// message is enqueued.
@@ -21,6 +23,7 @@ namespace Microsoft.Azure.WebJobs
     /// </list>
     /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter)]
+#pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [DebuggerDisplay("{QueueName,nq}")]
     [ConnectionProvider(typeof(StorageAccountAttribute))]
     [Binding]
