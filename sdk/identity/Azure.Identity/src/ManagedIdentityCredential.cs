@@ -34,6 +34,17 @@ namespace Azure.Identity
         }
 
         /// <summary>
+        /// Creates an instance of the <see cref="ManagedIdentityCredential"/>, capable of authenticating a resource with a managed identity, with the specified options.
+        /// </summary>
+        /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public ManagedIdentityCredential(ManagedIdentityCredentialOptions options)
+        {
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+
+            _client = options?.Client ?? new ManagedIdentityClient(_pipeline, options?.ClientId);
+        }
+
+        /// <summary>
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
         /// </summary>
         /// <param name="clientId">
@@ -42,21 +53,8 @@ namespace Azure.Identity
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
-            : this(clientId, CredentialPipeline.GetInstance(options))
+            : this(new ManagedIdentityCredentialOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options), AuthorityHost = options?.AuthorityHost })
         {
-        }
-
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(pipeline, new ManagedIdentityClient(pipeline, clientId))
-        {
-        }
-
-        internal ManagedIdentityCredential(CredentialPipeline pipeline, ManagedIdentityClient client)
-        {
-
-            _pipeline = pipeline;
-
-            _client = client;
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Security.Cryptography;
 
 namespace Azure.Identity
 {
@@ -37,7 +38,7 @@ namespace Azure.Identity
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
-            : this(CredentialPipeline.GetInstance(null))
+            : this(new TokenCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null) })
         {
         }
 
@@ -47,13 +48,8 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options))
         {
-        }
-
-        internal EnvironmentCredential(CredentialPipeline pipeline)
-        {
-            _pipeline = pipeline;
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
@@ -66,18 +62,17 @@ namespace Azure.Identity
             {
                 if (clientSecret != null)
                 {
-                    _credential = new ClientSecretCredential(new MsalConfidentialClientOptions(tenantId, clientId, clientSecret, _pipeline));
+                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new ClientSecretCredentialOptions { Pipeline = _pipeline, AuthorityHost = options?.AuthorityHost });
                 }
                 else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
+                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, new UsernamePasswordCredentialOptions { Pipeline = _pipeline, AuthorityHost = options?.AuthorityHost });
                 }
                 else if (clientCertificatePath != null)
                 {
-                    _credential = new ClientCertificateCredential(new MsalConfidentialClientOptions(tenantId, clientId, new ClientCertificateCredential.X509Certificate2FromFileProvider(clientCertificatePath), _pipeline));
+                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, new ClientCertificateCredentialOptions { Pipeline = _pipeline, AuthorityHost = options?.AuthorityHost });
                 }
             }
-
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)

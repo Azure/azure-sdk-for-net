@@ -33,7 +33,7 @@ namespace Azure.Identity
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
         public SharedTokenCacheCredential()
-            : this(null, null, CredentialPipeline.GetInstance(null))
+            : this(null)
         {
 
         }
@@ -43,8 +43,16 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(SharedTokenCacheCredentialOptions options)
-            : this(options?.TenantId, options?.Username, CredentialPipeline.GetInstance(options))
         {
+            _tenantId = options?.TenantId;
+
+            _username = options?.Username;
+
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+
+            _client = options?.Client ?? new MsalPublicClient(_pipeline.HttpPipeline, options?.AuthorityHost, Constants.DeveloperSignOnClientId, tenantId: _tenantId, attachSharedCache: true);
+
+            _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
 
         /// <summary>
@@ -53,26 +61,8 @@ namespace Azure.Identity
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
-            : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options))
+            : this(new SharedTokenCacheCredentialOptions { Username = username, Pipeline = CredentialPipeline.GetInstance(options), AuthorityHost = options?.AuthorityHost })
         {
-        }
-
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline)
-            : this(tenantId: tenantId, username: username, pipeline: pipeline, client: pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, tenantId: tenantId, attachSharedCache: true))
-        {
-        }
-
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline, MsalPublicClient client)
-        {
-            _tenantId = tenantId;
-
-            _username = username;
-
-            _pipeline = pipeline;
-
-            _client = client;
-
-            _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
 
         /// <summary>

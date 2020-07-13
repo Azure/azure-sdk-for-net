@@ -44,7 +44,7 @@ namespace Azure.Identity
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
-            : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
+            : this(username, password, tenantId, clientId, (UsernamePasswordCredentialOptions)null)
         {
 
         }
@@ -59,24 +59,28 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
-            : this(username, password, tenantId, clientId, CredentialPipeline.GetInstance(options))
+            : this(username, password, tenantId, clientId, new UsernamePasswordCredentialOptions { Pipeline = CredentialPipeline.GetInstance(options), AuthorityHost = options?.AuthorityHost })
         {
         }
 
-        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
-            : this(username, password, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId))
-        {
-        }
-
-        internal UsernamePasswordCredential(string username, string password, CredentialPipeline pipeline, MsalPublicClient client)
+        /// <summary>
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// and password.
+        /// </summary>
+        /// <param name="username">The user account's user name, UPN.</param>
+        /// <param name="password">The user account's password.</param>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
+        /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, UsernamePasswordCredentialOptions options)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
             _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _pipeline = pipeline;
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client;
+            _client = options?.Client ?? new MsalPublicClient(_pipeline.HttpPipeline, _pipeline.AuthorityHost, clientId, tenantId, redirectUrl: null, options?.EnablePersistentCache ?? false);
         }
 
         /// <summary>

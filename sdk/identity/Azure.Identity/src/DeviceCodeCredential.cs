@@ -53,7 +53,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, CredentialPipeline.GetInstance(options), false)
+            : this(deviceCodeCallback, new DeviceCodeCredentialOptions { TenantId = tenantId, ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options), AuthorityHost = options?.AuthorityHost })
         {
         }
 
@@ -63,26 +63,18 @@ namespace Azure.Identity
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user.</param>
         /// <param name="options">The client options for the newly created <see cref="DeviceCodeCredential"/>.</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, DeviceCodeCredentialOptions options = default)
-            : this(deviceCodeCallback, options?.TenantId, options?.ClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
         {
-            _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
-            _record = options?.AuthenticationRecord;
-        }
-
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)
-            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: KnownAuthorityHosts.GetDeviceCodeRedirectUri(pipeline.AuthorityHost).ToString(), attachSharedCache))
-        {
-        }
-
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, CredentialPipeline pipeline, MsalPublicClient client)
-        {
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _pipeline = pipeline;
+            _clientId = options?.ClientId ?? Constants.DeveloperSignOnClientId;
 
-            _client = client;
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+
+            _client = options?.Client ?? _pipeline.CreateMsalPublicClient(_clientId, options?.TenantId, redirectUrl: KnownAuthorityHosts.GetDeviceCodeRedirectUri(_pipeline.AuthorityHost).ToString(), options?.EnablePersistentCache ?? false);
+
+            _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+
+            _record = options?.AuthenticationRecord;
         }
 
         /// <summary>

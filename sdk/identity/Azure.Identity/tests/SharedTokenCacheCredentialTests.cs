@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -50,7 +50,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = tenantId, Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -115,7 +115,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = tenantId, Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -137,14 +137,14 @@ namespace Azure.Identity.Tests
             };
 
             // without username
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex.Message);
 
             // with username
-            var credential2 = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential2 = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex2 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential2.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -152,14 +152,14 @@ namespace Azure.Identity.Tests
 
 
             // with tenantId
-            var credential3 = InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential3 = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = Guid.NewGuid().ToString(), Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex3 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential3.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.AreEqual(SharedTokenCacheCredential.NoAccountsInCacheMessage, ex3.Message);
 
             // with tenantId and username
-            var credential4= InstrumentClient(new SharedTokenCacheCredential(Guid.NewGuid().ToString(), "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential4 = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = Guid.NewGuid().ToString(), Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex4 = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential4.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -182,7 +182,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -206,7 +206,7 @@ namespace Azure.Identity.Tests
             };
 
             // with username
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -231,7 +231,7 @@ namespace Azure.Identity.Tests
             };
 
             // with username
-            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = tenantId, Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -256,7 +256,7 @@ namespace Azure.Identity.Tests
             };
 
             // with username
-            var credential = InstrumentClient(new SharedTokenCacheCredential(tenantId, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = tenantId, Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -280,7 +280,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -304,7 +304,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(mockuserGuestTenantId, null, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = mockuserGuestTenantId, Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -328,7 +328,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(mockuserTenantId, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = mockuserTenantId, Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -350,7 +350,7 @@ namespace Azure.Identity.Tests
             };
 
             // with username
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 

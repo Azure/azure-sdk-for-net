@@ -35,5 +35,7 @@ namespace Azure.Identity
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
         public AuthenticationRecord AuthenticationRecord { get; set; }
+
+        internal MsalPublicClient Client { get; set; }
     }
 }

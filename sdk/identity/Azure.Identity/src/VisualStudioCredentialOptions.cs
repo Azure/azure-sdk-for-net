@@ -12,5 +12,9 @@ namespace Azure.Identity
         /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to their home tenant.
         /// </summary>
         public string TenantId { get; set; }
+
+        internal IFileSystemService FileSystem { get; set; }
+
+        internal IProcessService ProcessService { get; set; }
     }
 }

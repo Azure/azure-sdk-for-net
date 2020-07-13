@@ -13,5 +13,7 @@ namespace Azure.Identity
         /// If set to true the credential will store tokens in a persistent cache shared by other credentials.
         /// </summary>
         public bool EnablePersistentCache { get; set; }
+
+        internal MsalConfidentialClient Client { get; set; }
     }
 }

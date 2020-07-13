@@ -41,8 +41,9 @@ namespace Azure.Identity.Tests
             var fileSystem = CreateTestFileSystemService(cloudName: cloudName);
             using IDisposable fixture = await CreateRefreshTokenFixtureAsync(tenantId, cloudName);
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystem, default));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystem });
+
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -55,8 +56,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = new TestFileSystemService { ReadAllHandler = s => throw new FileNotFoundException() };
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystemService, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -69,8 +70,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = new TestFileSystemService { ReadAllHandler = s => "{a,}" };
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystemService, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -84,8 +85,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = CreateTestFileSystemService();
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(default, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { FileSystem = fileSystemService, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -101,8 +102,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = CreateTestFileSystemService(tenantId, cloudName);
             using IDisposable fixture = await CreateRefreshTokenFixtureAsync(tenantId, cloudName);
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(options), fileSystemService, default));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { FileSystem = fileSystemService });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -115,8 +116,8 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CreateTestFileSystemService();
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystem, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystem, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 
             Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
@@ -128,8 +129,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = CreateTestFileSystemService();
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystemService, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
@@ -141,8 +142,8 @@ namespace Azure.Identity.Tests
             var fileSystemService = CreateTestFileSystemService();
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", Guid.NewGuid().ToString());
 
-            TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
+            var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId, FileSystem = fileSystemService, VscAdapter = vscAdapter });
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }

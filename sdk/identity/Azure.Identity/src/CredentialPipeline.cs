@@ -25,7 +25,7 @@ namespace Azure.Identity
 
         public static CredentialPipeline GetInstance(TokenCredentialOptions options)
         {
-            return (options is null) ? s_Singleton.Value : new CredentialPipeline(options);
+            return (options is null) ? s_Singleton.Value : options.Pipeline ?? new CredentialPipeline(options);
         }
 
         public Uri AuthorityHost { get; }

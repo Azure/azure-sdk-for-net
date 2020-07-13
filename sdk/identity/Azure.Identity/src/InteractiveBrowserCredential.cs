@@ -27,7 +27,7 @@ namespace Azure.Identity
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users.
         /// </summary>
         public InteractiveBrowserCredential()
-            : this(null, Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(null), false)
+            : this((InteractiveBrowserCredentialOptions)null)
         {
 
         }
@@ -37,10 +37,16 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
         public InteractiveBrowserCredential(InteractiveBrowserCredentialOptions options)
-            : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+
             _record = options?.AuthenticationRecord;
+
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+
+            var clientId = options?.ClientId ?? Constants.DeveloperSignOnClientId;
+
+            _client = options?.Client ?? new MsalPublicClient(_pipeline.HttpPipeline, _pipeline.AuthorityHost, clientId, options?.TenantId, "http://localhost", options?.EnablePersistentCache ?? false);
         }
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         public InteractiveBrowserCredential(string clientId)
-            : this(null, clientId, CredentialPipeline.GetInstance(null), false)
+            : this(new InteractiveBrowserCredentialOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(null) })
         {
 
         }
@@ -61,24 +67,8 @@ namespace Azure.Identity
         /// TODO: need to link to info on how the application has to be created to authenticate users, for multiple applications
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(tenantId, clientId, CredentialPipeline.GetInstance(options), false)
+            : this(new InteractiveBrowserCredentialOptions { TenantId = tenantId, ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options), AuthorityHost = options?.AuthorityHost })
         {
-        }
-
-        internal InteractiveBrowserCredential(string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)
-        {
-            if (clientId is null) throw new ArgumentNullException(nameof(clientId));
-
-            _pipeline = pipeline;
-
-            _client = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost", attachSharedCache);
-        }
-
-        internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClient client)
-        {
-            _pipeline = pipeline;
-
-            _client = client;
         }
 
         /// <summary>

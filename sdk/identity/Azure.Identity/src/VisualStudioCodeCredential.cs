@@ -36,20 +36,17 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
-
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, pipeline, default, fileSystem, vscAdapter)
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options)
         {
-        }
+            _tenantId = options?.TenantId ?? "common";
 
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-        {
-            _tenantId = tenantId ?? "common";
-            _pipeline = pipeline;
-            _client = client ?? pipeline.CreateMsalPublicClient(ClientId);
-            _fileSystem = fileSystem ?? FileSystemService.Default;
-            _vscAdapter = vscAdapter ?? GetVscAdapter();
+            _fileSystem = options?.FileSystem ?? FileSystemService.Default;
+
+            _vscAdapter = options?.VscAdapter ?? GetVscAdapter();
+
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+
+            _client = options?.Client ?? new MsalPublicClient(_pipeline.HttpPipeline, options?.AuthorityHost, ClientId, options?.TenantId);
         }
 
         /// <inheritdoc />

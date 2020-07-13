@@ -16,22 +16,22 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateEnvironmentCredential()
         {
-            return new EnvironmentCredential(Pipeline);
+            return new EnvironmentCredential(new TokenCredentialOptions { Pipeline = Pipeline });
         }
 
         public virtual TokenCredential CreateManagedIdentityCredential(string clientId)
         {
-            return new ManagedIdentityCredential(clientId, Pipeline);
+            return new ManagedIdentityCredential(new ManagedIdentityCredentialOptions { ClientId = clientId, Pipeline = Pipeline });
         }
 
         public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
-            return new SharedTokenCacheCredential(tenantId, username, Pipeline);
+            return new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { TenantId = tenantId, Username = username, Pipeline = Pipeline });
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline, true);
+            return new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { TenantId = tenantId, Pipeline = Pipeline, EnablePersistentCache = true });
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
@@ -41,12 +41,12 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCredential(string tenantId)
         {
-            return new VisualStudioCredential(tenantId, Pipeline, default, default);
+            return new VisualStudioCredential(new VisualStudioCredentialOptions { TenantId = tenantId, Pipeline = Pipeline });
         }
 
         public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
         {
-            return new VisualStudioCodeCredential(tenantId, Pipeline, default, default);
+            return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId, Pipeline = Pipeline });
         }
     }
 }

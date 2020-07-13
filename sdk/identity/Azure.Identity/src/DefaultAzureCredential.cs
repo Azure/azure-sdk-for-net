@@ -52,15 +52,10 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
-            : this(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(options)), options)
         {
-        }
+            _pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
 
-        internal DefaultAzureCredential(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
-        {
-            _pipeline = factory.Pipeline;
-
-            _sources = GetDefaultAzureCredentialChain(factory, options);
+            _sources = GetDefaultAzureCredentialChain(options?.CredentialFactory ?? new DefaultAzureCredentialFactory(_pipeline), options);
         }
 
         /// <summary>

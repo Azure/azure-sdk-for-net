@@ -102,7 +102,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
 
-            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient);
+            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new ClientSecretCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient });
 
             var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred));
 

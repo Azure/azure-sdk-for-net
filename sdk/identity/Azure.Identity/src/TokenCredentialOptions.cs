@@ -20,5 +20,7 @@ namespace Azure.Identity
             get { return _authorityHost ?? KnownAuthorityHosts.GetDefault(); }
             set { _authorityHost = value; }
         }
+
+        internal CredentialPipeline Pipeline { get; set; }
     }
 }

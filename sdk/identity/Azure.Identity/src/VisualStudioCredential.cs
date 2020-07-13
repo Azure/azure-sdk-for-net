@@ -40,14 +40,12 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
-
-        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
+        public VisualStudioCredential(VisualStudioCredentialOptions options)
         {
-            _tenantId = tenantId;
-            _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
-            _fileSystem = fileSystem ?? FileSystemService.Default;
-            _processService = processService ?? ProcessService.Default;
+            _tenantId = options?.TenantId;
+            _pipeline = CredentialPipeline.GetInstance(options);
+            _fileSystem = options?.FileSystem ?? FileSystemService.Default;
+            _processService = options?.ProcessService ?? ProcessService.Default;
         }
 
         /// <inheritdoc />

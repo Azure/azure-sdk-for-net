@@ -27,6 +27,8 @@ namespace Azure.Identity
         {
             tenantId ??= Constants.OrganizationsTenantId;
 
+            authorityHost ??= KnownAuthorityHosts.GetDefault();
+
             var authorityUri = new UriBuilder(authorityHost.Scheme, authorityHost.Host, authorityHost.Port, tenantId).Uri;
 
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(clientId).WithAuthority(authorityUri).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline));

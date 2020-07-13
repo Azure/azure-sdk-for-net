@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CreateTestFileSystem();
             var (expectedToken, expectedExpiresOn, processOutput) = CreateTestToken();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None);
 
             Assert.AreEqual(token.Token, expectedToken);
@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
             var (expectedToken, expectedExpiresOn, processOutput) = CreateTestToken();
             var testProcess1 = new TestProcess { Error = "Error" };
             var testProcess2 = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess1, testProcess2)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess1, testProcess2) }));
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None);
 
             Assert.AreEqual(token.Token, expectedToken);
@@ -73,7 +73,7 @@ namespace Azure.Identity.Tests
                 }
             };
 
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, testProcessFactory));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = testProcessFactory }));
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None);
 
             Assert.AreEqual(token.Token, expectedToken);
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
                 return false;
             };
 
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), cts.Token));
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Timeout = 10000 };
             testProcess.Started += (o, e) => cts.Cancel();
 
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), cts.Token));
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Identity.Tests
 
             var (_, _, processOutput) = CreateTestToken();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Identity.Tests
         {
             var (_, _, processOutput) = CreateTestToken();
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, new TestFileSystemService(), new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = new TestFileSystemService(), ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Identity.Tests
             var (_, _, processOutput) = CreateTestToken();
             var fileSystem = new TestFileSystemService { ReadAllHandler = s => throw new DirectoryNotFoundException() };
             var testProcess = new TestProcess { Output = processOutput };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Identity.Tests
             var (_, _, processOutput) = CreateTestToken();
             var testProcess = new TestProcess { Output = processOutput };
             var fileSystem = new TestFileSystemService { ReadAllHandler = p => "{\"Some\": false}" };
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
@@ -156,7 +156,7 @@ namespace Azure.Identity.Tests
         {
             var testProcess = new TestProcess { Error = "Some error" };
             var fileSystem = CreateTestFileSystem();
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Identity.Tests
         {
             var testProcess = new TestProcess { Output = "Not Json" };
             var fileSystem = CreateTestFileSystem();
-            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            var credential = InstrumentClient(new VisualStudioCredential(new VisualStudioCredentialOptions { FileSystem = fileSystem, ProcessService = new TestProcessService(testProcess) }));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 

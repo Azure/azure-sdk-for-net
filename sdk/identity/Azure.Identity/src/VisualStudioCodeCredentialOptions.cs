@@ -16,5 +16,11 @@ namespace Azure.Identity
         /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to the tenant the user originally authenticated to via the Visual Studio Code Azure Account plugin.
         /// </summary>
         public string TenantId { get; set; }
+
+        internal IFileSystemService FileSystem { get; set; }
+
+        internal IVisualStudioCodeAdapter VscAdapter { get; set; }
+
+        internal MsalPublicClient Client { get; set; }
     }
 }

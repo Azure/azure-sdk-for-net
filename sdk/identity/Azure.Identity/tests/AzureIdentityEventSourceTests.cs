@@ -52,7 +52,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
 
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new ClientSecretCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "ClientSecretCredential.GetToken";
 
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
 
             var mockAadClient = new MockAadIdentityClient(() => new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(10)));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), new ClientCertificateCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "ClientCertificateCredential.GetToken";
 
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalPublicClient() { DeviceCodeAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); } };
 
-            var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, new DeviceCodeCredentialOptions { ClientId = Guid.NewGuid().ToString(), Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "DeviceCodeCredential.GetToken";
 
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalPublicClient() { InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); } };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "InteractiveBrowserCredential.GetToken";
 
@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); }
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "SharedTokenCacheCredential.GetToken";
 
@@ -120,7 +120,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expExMessage));
 
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new ClientSecretCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "ClientSecretCredential.GetToken";
 
@@ -134,7 +134,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expExMessage));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), new ClientCertificateCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "ClientCertificateCredential.GetToken";
 
@@ -148,7 +148,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient() { DeviceCodeAuthFactory = (_) => throw new MockClientException(expExMessage) };
 
-            var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, new DeviceCodeCredentialOptions { TenantId = Guid.NewGuid().ToString(), Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "DeviceCodeCredential.GetToken";
 
@@ -162,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient() { InteractiveAuthFactory = (_) => throw new MockClientException(expExMessage) };
 
-            var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "InteractiveBrowserCredential.GetToken";
 
@@ -180,7 +180,7 @@ namespace Azure.Identity.Tests
                 SilentAuthFactory = (_) => throw new MockClientException(expExMessage)
             };
 
-            var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { Username = "mockuser@mockdomain.com", Pipeline = CredentialPipeline.GetInstance(null), Client = mockMsalClient }));
 
             var method = "SharedTokenCacheCredential.GetToken";
 

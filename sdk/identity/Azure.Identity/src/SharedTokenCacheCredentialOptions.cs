@@ -19,5 +19,7 @@ namespace Azure.Identity
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
         public string TenantId { get; set; }
+
+        internal MsalPublicClient Client { get; set; }
     }
 }
