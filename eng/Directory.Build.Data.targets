@@ -29,19 +29,18 @@
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
     <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
   </Target>
 
-    <!-- Runs eng/scripts/Aggregate-Dev-Updates.ps1  -->
-  <Target Name="RunAggregateDevUpdates" Condition="'$(UpdateSource)' == 'true' or '$(AZURE_DEV_UPDATESOURCES)' == 'true'" >
+  <!--Run Aggregate Updates to Source -->
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
     <PropertyGroup>
-      <AggregateDevUpdatesScriptPath>$(MSBuildThisFileDirectory)scripts/Aggregate-Dev-Updates.ps1</AggregateDevUpdatesScriptPath>
+      <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
     </PropertyGroup>
-    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(AggregateDevUpdatesScriptPath) -ServiceDirectory $(ServiceDirectory)">
-    </Exec>
+    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
