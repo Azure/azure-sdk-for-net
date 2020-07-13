@@ -1369,8 +1369,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [Ignore("#9855: Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync()
         {
@@ -1391,8 +1391,10 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
             var prevSnapshot = response.Value.Snapshot;
 
-            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
-            uriBuilder.Query = "snapshot=" + prevSnapshot;
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Snapshot = prevSnapshot
+            };
 
             // Upload additional Pages
             using (var stream = new MemoryStream(data))
@@ -1408,7 +1410,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
                 range: new HttpRange(0, 4 * Constants.KB),
                 snapshot,
-                previousSnapshotUri: uriBuilder.Uri);
+                previousSnapshotUri: blobUriBuilder.ToUri());
 
             // Assert
             Assert.AreEqual(1, result.Value.PageRanges.Count());
@@ -1418,8 +1420,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
         }
 
-        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_Error()
         {
@@ -1440,8 +1442,8 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
-        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
         {
@@ -1465,8 +1467,10 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
                 var prevSnapshot = snapshotCreateResult.Value.Snapshot;
 
-                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
-                uriBuilder.Query = "snapshot=" + prevSnapshot;
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+                {
+                    Snapshot = prevSnapshot
+                };
 
                 // Upload additional Pages
                 using (var stream = new MemoryStream(data))
@@ -1484,7 +1488,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
                     range: new HttpRange(0, Constants.KB),
-                    previousSnapshotUri: uriBuilder.Uri,
+                    previousSnapshotUri: blobUriBuilder.ToUri(),
                     conditions: accessConditions);
 
                 // Assert
@@ -1492,8 +1496,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
         {
@@ -1517,8 +1521,10 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
                 var prevSnapshot = response.Value.Snapshot;
 
-                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
-                uriBuilder.Query = "snapshot=" + prevSnapshot;
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+                {
+                    Snapshot = prevSnapshot
+                };
 
                 // Upload additional Pages
                 using (var stream = new MemoryStream(data))
@@ -1539,14 +1545,14 @@ namespace Azure.Storage.Blobs.Test
                     {
                         var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
-                            previousSnapshotUri: uriBuilder.Uri,
+                            previousSnapshotUri: blobUriBuilder.ToUri(),
                             conditions: accessConditions)).Value;
                     });
             }
         }
 
-        [Ignore("#9855: Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [PlaybackOnly("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
         {
@@ -1568,8 +1574,10 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
             var prevSnapshot = response.Value.Snapshot;
 
-            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
-            uriBuilder.Query = "snapshot=" + prevSnapshot;
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Snapshot = prevSnapshot
+            };
 
             // Upload additional Pages
             using (var stream = new MemoryStream(data))
@@ -1585,7 +1593,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
                 range: new HttpRange(0, 4 * Constants.KB),
                 snapshot,
-                previousSnapshotUri: uriBuilder.Uri);
+                previousSnapshotUri: blobUriBuilder.ToUri());
 
             // Assert
             Assert.AreEqual(1, result.Value.PageRanges.Count());
