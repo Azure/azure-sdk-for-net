@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A query specification containing either a query statement or a continuation token from a previous query result. </summary>
     internal partial class QuerySpecification

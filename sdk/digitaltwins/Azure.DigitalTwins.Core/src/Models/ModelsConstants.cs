@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// Constants useful for use with the digital twins client.
