@@ -717,7 +717,6 @@ directive:
     $.properties.Permissions = $.properties.Permission;
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
-    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
 ### ShareQuota properties renaming

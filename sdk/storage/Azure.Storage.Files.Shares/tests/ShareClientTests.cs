@@ -615,6 +615,43 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task SetAccessPolicyAsync_OptionalProperties()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareSignedIdentifier[] signedIdentifiersAfter =
+                new[]
+                {
+                    new ShareSignedIdentifier
+                    {
+                        Id = GetNewString(),
+                        // Create an AccessPolicy without Expiry
+                        AccessPolicy = new ShareAccessPolicy
+                        {
+                            StartsOn = Recording.UtcNow.AddHours(-1),
+                            Permissions = "rw"
+                        }
+                    }
+                };
+
+            // Act
+            Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiersAfter);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            // Check values and the expiresOn (Expiry) time did not change
+            Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
+            ShareSignedIdentifier afterAcl = responseAfter.Value.First();
+            Assert.AreEqual(1, responseAfter.Value.Count());
+            Assert.AreEqual(signedIdentifiersAfter[0].Id, afterAcl.Id);
+            Assert.IsNull(afterAcl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiersAfter[0].AccessPolicy.Permissions, afterAcl.AccessPolicy.Permissions);
+        }
+
+        [Test]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange

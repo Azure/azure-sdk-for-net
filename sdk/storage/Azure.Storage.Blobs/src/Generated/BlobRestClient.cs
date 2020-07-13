@@ -7573,7 +7573,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
-            /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7601,7 +7600,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
-                string sourceIfTags = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7633,7 +7631,6 @@ namespace Azure.Storage.Blobs
                         sourceIfUnmodifiedSince,
                         sourceIfMatch,
                         sourceIfNoneMatch,
-                        sourceIfTags,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -7686,7 +7683,6 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
-            /// <param name="sourceIfTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7710,7 +7706,6 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
-                string sourceIfTags = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7759,7 +7754,6 @@ namespace Azure.Storage.Blobs
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
                 if (sourceIfNoneMatch != null) { _request.Headers.SetValue("x-ms-source-if-none-match", sourceIfNoneMatch.Value.ToString()); }
-                if (sourceIfTags != null) { _request.Headers.SetValue("x-ms-source-if-tags", sourceIfTags); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }

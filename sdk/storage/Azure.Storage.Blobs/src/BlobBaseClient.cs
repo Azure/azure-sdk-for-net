@@ -1697,7 +1697,6 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        sourceIfTags: sourceConditions?.TagConditions,
                         ifModifiedSince: destinationConditions?.IfModifiedSince,
                         ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         ifMatch: destinationConditions?.IfMatch,
