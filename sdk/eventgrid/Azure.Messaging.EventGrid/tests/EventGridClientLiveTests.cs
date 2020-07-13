@@ -45,7 +45,6 @@ namespace Azure.Messaging.EventGrid.Tests
                     new AzureKeyCredential(TestEnvironment.DomainKey),
                     options));
             await client.PublishEventsAsync(GetEventsWithTopicsList());
-
         }
 
         [Test]
@@ -132,16 +131,16 @@ namespace Azure.Messaging.EventGrid.Tests
 
             for (int i = 0; i < 10; i++)
             {
-                eventsList.Add(
-                    new EventGridEvent(
+                EventGridEvent newEGEvent = new EventGridEvent(
                         Recording.Random.NewGuid().ToString(),
-                        $"Topic-{i}",
                         $"Subject-{i}",
                         "hello",
                         "Microsoft.MockPublisher.TestEvent",
                         Recording.Now,
-                        "1",
-                        "1.0"));
+                        "1.0");
+                newEGEvent.Topic = $"Topic-{i}";
+
+                eventsList.Add(newEGEvent);
             }
 
             return eventsList;
