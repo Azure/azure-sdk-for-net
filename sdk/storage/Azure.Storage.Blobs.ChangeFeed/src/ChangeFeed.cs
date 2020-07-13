@@ -41,7 +41,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// The latest time the Change Feed can safely be read from.
         /// </summary>
-        private DateTimeOffset _lastConsumable;
+        public DateTimeOffset LastConsumable { get; private set; }
 
         /// <summary>
         /// User-specified start time.  If the start time occurs before Change Feed was enabled
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _years = years;
             _segments = segments;
             _currentSegment = currentSegment;
-            _lastConsumable = lastConsumable;
+            LastConsumable = lastConsumable;
             _startTime = startTime;
             _endTime = endTime;
             _empty = false;
@@ -152,11 +152,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             return true;
-        }
-
-        public DateTimeOffset LastConsumable()
-        {
-            return _lastConsumable;
         }
 
         internal ChangeFeedCursor GetCursor()
