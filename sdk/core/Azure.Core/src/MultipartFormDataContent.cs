@@ -150,7 +150,7 @@ namespace Azure.Core
 
         private void AddInternal(RequestContent content, Dictionary<string, string>? headers, string? name, string? fileName)
         {
-            if (headers == null || headers.Count == 0)
+            if (headers == null)
             {
                 headers = new Dictionary<string, string>();
             }
@@ -185,7 +185,7 @@ namespace Azure.Core
         {
             foreach (MultipartRequestContent content in _nestedContent)
             {
-                content._requestContent.Dispose();
+                content.RequestContent.Dispose();
             }
             _nestedContent.Clear();
 
@@ -223,8 +223,8 @@ namespace Azure.Core
                 for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
                 {
                     // Write divider, headers, and content.
-                    RequestContent content = _nestedContent[contentIndex]._requestContent;
-                    Dictionary<string, string> headers = _nestedContent[contentIndex]._headers;
+                    RequestContent content = _nestedContent[contentIndex].RequestContent;
+                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
                     content.WriteTo(stream, cancellationToken);
                 }
@@ -268,8 +268,8 @@ namespace Azure.Core
                 for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
                 {
                     // Write divider, headers, and content.
-                    RequestContent content = _nestedContent[contentIndex]._requestContent;
-                    Dictionary<string, string> headers = _nestedContent[contentIndex]._headers;
+                    RequestContent content = _nestedContent[contentIndex].RequestContent;
+                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     await EncodeStringToStreamAsync(stream, SerializeHeadersToString(output, contentIndex, headers), cancellationToken).ConfigureAwait(false);
                     await content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
                 }
@@ -350,7 +350,7 @@ namespace Azure.Core
                 }
 
                 // Headers.
-                foreach (KeyValuePair<string, string> headerPair in content._headers)
+                foreach (KeyValuePair<string, string> headerPair in content.Headers)
                 {
                     currentLength += GetEncodedLength(headerPair.Key) + s_colonSpaceLength;
                     currentLength += GetEncodedLength(headerPair.Value);
@@ -360,7 +360,7 @@ namespace Azure.Core
                 currentLength += s_crlfLength;
 
                 // Content.
-                if (!content._requestContent.TryComputeLength(out long tempContentLength))
+                if (!content.RequestContent.TryComputeLength(out long tempContentLength))
                 {
                     length = 0;
                     return false;
@@ -384,13 +384,13 @@ namespace Azure.Core
 
         private class MultipartRequestContent
         {
-            public readonly RequestContent _requestContent;
-            public Dictionary<string, string> _headers;
+            public readonly RequestContent RequestContent;
+            public Dictionary<string, string> Headers;
 
             public MultipartRequestContent(RequestContent content, Dictionary<string, string> headers)
             {
-                _requestContent = content;
-                _headers = headers;
+                RequestContent = content;
+                Headers = headers;
             }
         }
     }
