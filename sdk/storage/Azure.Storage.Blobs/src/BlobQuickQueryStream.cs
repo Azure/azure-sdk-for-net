@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs
         {
             _avroStream = avroStream;
             _avroReader = new AvroReader(_avroStream);
-            _buffer = new byte[4 * Constants.MB];
+            _buffer = new byte[Constants.Blob.QuickQueryDownloadSize];
             _bufferOffset = 0;
             _bufferLength = 0;
             _progressHandler = progressHandler;

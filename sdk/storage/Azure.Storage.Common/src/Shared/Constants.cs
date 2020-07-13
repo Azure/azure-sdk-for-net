@@ -153,6 +153,7 @@ namespace Azure.Storage
         {
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
+            public const int QuickQueryDownloadSize = 4 * Constants.MB;
 
             internal static class Append
             {
