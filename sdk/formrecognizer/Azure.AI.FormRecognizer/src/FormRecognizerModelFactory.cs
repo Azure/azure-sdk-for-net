@@ -12,8 +12,6 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public static class FormRecognizerModelFactory
     {
-        // TODO: Should we include Operations?
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.AccountProperties"/> class.
         /// </summary>
@@ -25,7 +23,20 @@ namespace Azure.AI.FormRecognizer.Models
 
         // TODO: BoundingBox
         // TODO: CopyAuthorization
-        // TODO: CustomFormModel
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Training.CustomFormModel"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of this model.</param>
+        /// <param name="status">A status indicating this model's readiness for use.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
+        /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
+        /// <param name="errors">A list of errors ocurred during the training operation.</param>
+        /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
+        public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors) =>
+            new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModelField"/> class.
@@ -58,11 +69,30 @@ namespace Azure.AI.FormRecognizer.Models
         public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields) =>
             new CustomFormSubmodel(formType, accuracy, fields);
 
-        // TODO: FieldData
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Models.FieldData"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of this form element.</param>
+        /// <param name="fieldElements">A list of references to the field elements constituting this data.</param>
+        /// <returns>A new <see cref="Models.FieldData"/> instance for mocking.</returns>
+        public static FieldData FieldData(BoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormElement> fieldElements) =>
+            new FieldData(boundingBox, pageNumber, text, fieldElements);
+
         // TODO: FieldValue
-        // TODO: should we include mockability for FormElement?
-        // TODO: FormField
-        // TODO: should we add for FormField{T}?
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Models.FormField"/> class.
+        /// </summary>
+        /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
+        /// <param name="labelData">Contains the text, bounding box and content of the label of the field in the form.</param>
+        /// <param name="valueData">Contains the text, bounding box and content of the value of the field in the form.</param>
+        /// <param name="value">The strongly-typed value of this field.</param>
+        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
+        /// <returns>A new <see cref="Models.FormField"/> instance for mocking.</returns>
+        public static FormField FormField(string name, FieldData labelData, FieldData valueData, FieldValue value, float confidence) =>
+            new FormField(name, labelData, valueData, value, confidence);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Models.FormLine"/> class.
@@ -89,7 +119,15 @@ namespace Azure.AI.FormRecognizer.Models
         public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables) =>
             new FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
 
-        // TODO: FormPageCollection
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Models.FormPageCollection"/> class.
+        /// This class is a read-only wrapper around the specified list.
+        /// </summary>
+        /// <param name="list">The list to wrap.</param>
+        /// <returns>A new <see cref="Models.FormPageCollection"/> instance for mocking.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
+        public static FormPageCollection FormPageCollection(IList<FormPage> list) =>
+            new FormPageCollection(list);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Models.FormPageRange"/> struct.
@@ -149,9 +187,26 @@ namespace Azure.AI.FormRecognizer.Models
         public static FormWord FormWord(BoundingBox boundingBox, int pageNumber, string text, float confidence) =>
             new FormWord(boundingBox, pageNumber, text, confidence);
 
-        // TODO: RecognizedForm
-        // TODO: RecognizedFormCollection
-        // TODO: RecognizeOptions?
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Models.RecognizedForm"/> class.
+        /// </summary>
+        /// <param name="formType">The type of form the model identified the submitted form to be.</param>
+        /// <param name="pageRange">The range of pages this form spans.</param>
+        /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
+        /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
+        /// <returns>A new <see cref="Models.RecognizedForm"/> instance for mocking.</returns>
+        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages) =>
+            new RecognizedForm(formType, pageRange, fields, pages);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Models.RecognizedFormCollection"/> class.
+        /// This class is a read-only wrapper around the specified list.
+        /// </summary>
+        /// <param name="list">The list to wrap.</param>
+        /// <returns>A new <see cref="Models.RecognizedFormCollection"/> instance for mocking.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
+        public static RecognizedFormCollection RecognizedFormCollection(IList<RecognizedForm> list) =>
+            new RecognizedFormCollection(list);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.
@@ -163,7 +218,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
         public static TrainingDocumentInfo TrainingDocumentInfo(string documentName, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status) =>
             new TrainingDocumentInfo(documentName, pageCount, errors, status);
-
-        // TODO: TrainingFileFilter??? Shouldn't it have a public constructor?
     }
 }
