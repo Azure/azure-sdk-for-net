@@ -173,6 +173,12 @@ namespace Azure.Storage
         private static long GetBlobLength(Response<IDownloadedContent> response)
         {
             response.GetRawResponse().Headers.TryGetValue("Content-Range", out string lengthString);
+
+            if (lengthString == null)
+            {
+                throw new ArgumentException("Content-Range header is mssing on download response.");
+            }
+
             string[] split = lengthString.Split('/');
             return Convert.ToInt64(split[1], CultureInfo.InvariantCulture);
         }
