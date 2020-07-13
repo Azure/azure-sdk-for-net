@@ -642,7 +642,6 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-            // Check values and the expiresOn (Expiry) time did not change
             Response<System.Collections.Generic.IEnumerable<ShareSignedIdentifier>> responseAfter = await share.GetAccessPolicyAsync();
             ShareSignedIdentifier afterAcl = responseAfter.Value.First();
             Assert.AreEqual(1, responseAfter.Value.Count());

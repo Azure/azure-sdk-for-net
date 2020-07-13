@@ -327,9 +327,9 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareAccessPolicy
     {
         public ShareAccessPolicy() { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
-        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class ShareCorsRule
     {
