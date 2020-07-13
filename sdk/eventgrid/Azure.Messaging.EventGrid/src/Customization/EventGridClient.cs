@@ -165,7 +165,9 @@ namespace Azure.Messaging.EventGrid
                 List<CloudEvent> eventsWithSerializedPaylaods = new List<CloudEvent>();
                 foreach (CloudEvent cloudEvent in events)
                 {
-                    eventsWithSerializedPaylaods.Add(
+                    if (cloudEvent.Data != null)
+                    {
+                        eventsWithSerializedPaylaods.Add(
                         new CloudEvent(
                             cloudEvent.Id,
                             cloudEvent.Source,
@@ -179,6 +181,11 @@ namespace Azure.Messaging.EventGrid
                             cloudEvent.Dataschema,
                             cloudEvent.Datacontenttype,
                             cloudEvent.Subject));
+                    }
+                    else
+                    {
+                        eventsWithSerializedPaylaods.Add(cloudEvent);
+                    }
                 }
                 return await _serviceRestClient.PublishCloudEventEventsAsync(_hostName, eventsWithSerializedPaylaods, cancellationToken).ConfigureAwait(false);
             }
@@ -202,7 +209,9 @@ namespace Azure.Messaging.EventGrid
                 List<CloudEvent> eventsWithSerializedPaylaods = new List<CloudEvent>();
                 foreach (CloudEvent cloudEvent in events)
                 {
-                    eventsWithSerializedPaylaods.Add(
+                    if (cloudEvent.Data != null)
+                    {
+                        eventsWithSerializedPaylaods.Add(
                         new CloudEvent(
                             cloudEvent.Id,
                             cloudEvent.Source,
@@ -216,6 +225,11 @@ namespace Azure.Messaging.EventGrid
                             cloudEvent.Dataschema,
                             cloudEvent.Datacontenttype,
                             cloudEvent.Subject));
+                    }
+                    else
+                    {
+                        eventsWithSerializedPaylaods.Add(cloudEvent);
+                    }
                 }
                 return _serviceRestClient.PublishCloudEventEvents(_hostName, eventsWithSerializedPaylaods, cancellationToken);
             }
