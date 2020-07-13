@@ -2,6 +2,9 @@
 
 ## 1.0.0-preview.5 (Unreleased)
 
+### Fixes
+
+- Constructor in `TrainingFileFilter` made public.
 
 ## 1.0.0-preview.4 (2020-07-07)
 
