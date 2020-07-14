@@ -258,7 +258,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
         /// </summary>
         /// <param name="moduleIdentities">The modules to update.</param>
         /// <param name="precondition">The condition on which to update each module identity.</param>
@@ -282,7 +282,7 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary>
-        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
+        /// Update multiple modules. A maximum of 100 updates can be done per call, and each operation must be done on a different module identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
         /// </summary>
         /// <param name="moduleIdentities">The modules to update.</param>
         /// <param name="precondition">The condition on which to update each module identity.</param>
