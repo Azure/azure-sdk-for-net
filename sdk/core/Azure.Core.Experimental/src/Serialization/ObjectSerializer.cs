@@ -9,10 +9,17 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// An abstraction from reading typed objects.
+    /// An abstraction for reading typed objects.
     /// </summary>
     public abstract class ObjectSerializer
     {
+        /// <summary>
+        /// Gets <see cref="SerializableTypeInfo"/> for the given <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> from which <see cref="SerializableTypeInfo"/> is created.</param>
+        /// <returns>The <see cref="SerializableTypeInfo"/> for the given <see cref="Type"/>.</returns>
+        public abstract SerializableTypeInfo GetTypeInfo(Type type);
+
         /// <summary>
         /// Convert the provided value to it's binary representation and write it to <see cref="System.IO.Stream"/>.
         /// </summary>

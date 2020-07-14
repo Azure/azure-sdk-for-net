@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Implementation of Azure.Core serialization and type discovery for Newtonsoft.Json</Description>
+    <AssemblyTitle>Microsoft Azure Implementation for Newtonsoft.Json</AssemblyTitle>
+    <RootNamespace>Azure.Core</RootNamespace>
+    <Version>0.1.0-preview.1</Version>
+    <PackageTags>Microsoft Azure Newtonsoft Json</PackageTags>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <!-- Pull in Shared Source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

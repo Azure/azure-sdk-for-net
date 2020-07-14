@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +30,15 @@ namespace Azure.Core
         public JsonObjectSerializer(JsonSerializerOptions options)
         {
             _options = options;
+        }
+
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public override SerializableTypeInfo GetTypeInfo(Type type)
+        {
+            Argument.AssertNotNull(type, nameof(type));
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
