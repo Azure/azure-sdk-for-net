@@ -224,6 +224,9 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.DeleteBlobVersion,
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.FilterByTags,
         };
 
         /// <summary>

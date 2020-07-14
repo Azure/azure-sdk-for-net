@@ -169,10 +169,16 @@ namespace Azure.Storage.Sas
         private static readonly List<char> s_validPermissionsInOrder = new List<char>
         {
             Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Add,
             Constants.Sas.Permissions.Create,
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
-            Constants.Sas.Permissions.List
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.FilterByTags,
         };
 
         /// <summary>

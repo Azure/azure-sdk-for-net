@@ -138,7 +138,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => blobSasBuilder.SetPermissions("ptsdfsd"),
-                new ArgumentException("p is not a valid SAS permission"));
+                new ArgumentException("s is not a valid SAS permission"));
         }
     }
 }
