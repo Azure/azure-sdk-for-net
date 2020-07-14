@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
-using Azure.Messaging.EventGrid.Tests.SessionRecords;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
