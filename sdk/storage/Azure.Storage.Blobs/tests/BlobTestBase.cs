@@ -291,7 +291,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
+                Version = ToSasVersion(BlobClientOptions.ServiceVersion.V2019_12_12)
             };
             builder.SetPermissions(accountSasPermissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
@@ -299,14 +299,14 @@ namespace Azure.Storage.Test.Shared
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
-            var builder = GetBlobSasBuilder(containerName);
+            var builder = GetBlobSasBuilder(containerName, sasVersion: ToSasVersion(BlobClientOptions.ServiceVersion.V2019_12_12));
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
         {
-            var builder = GetBlobSasBuilder(containerName);
+            var builder = GetBlobSasBuilder(containerName, sasVersion: ToSasVersion(BlobClientOptions.ServiceVersion.V2019_12_12));
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
