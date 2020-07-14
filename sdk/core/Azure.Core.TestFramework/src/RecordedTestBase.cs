@@ -58,10 +58,13 @@ namespace Azure.Core.TestFramework
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
+            string directorySuffix = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectoryKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectoryKey).ToString() :
+                string.Empty;
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
+            return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, directorySuffix, fileName);
         }
 
         /// <summary>

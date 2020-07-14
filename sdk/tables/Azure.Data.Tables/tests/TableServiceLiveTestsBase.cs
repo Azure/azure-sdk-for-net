@@ -395,10 +395,4 @@ namespace Azure.Data.Tables.Tests
             }
         }
     }
-
-    public enum TableEndpointType
-    {
-        Storage,
-        CosmosTable
-    }
 }
