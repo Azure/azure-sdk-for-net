@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Storage
 {
     internal static class Constants
@@ -384,6 +386,21 @@ namespace Azure.Storage
         /// </summary>
         internal static class Sas
         {
+            public static readonly HashSet<char> ValidPermissions = new HashSet<char>
+            {
+                Permissions.Read,
+                Permissions.Write,
+                Permissions.Delete,
+                Permissions.DeleteBlobVersion,
+                Permissions.List,
+                Permissions.Add,
+                Permissions.Update,
+                Permissions.Process,
+                Permissions.Create,
+                Permissions.Tag,
+                Permissions.FilterByTags
+            };
+
             internal static class Permissions
             {
                 public const char Read = 'r';

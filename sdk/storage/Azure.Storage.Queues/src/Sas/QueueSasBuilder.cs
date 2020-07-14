@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using Azure.Storage.Queues;
 
 namespace Azure.Storage.Sas
@@ -104,7 +106,7 @@ namespace Azure.Storage.Sas
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
-            Permissions = rawPermissions;
+            Permissions = ValidateAndSanitizeRawPermissions(rawPermissions);
         }
 
         /// <summary>
@@ -214,6 +216,75 @@ namespace Azure.Storage.Sas
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }
+        }
+
+        private static string ValidateAndSanitizeRawPermissions(string permissions)
+        {
+            if (permissions == null)
+            {
+                return null;
+            }
+
+            // Convert permissions string to lower case.
+            permissions = permissions.ToLowerInvariant();
+
+            HashSet<char> permissionsSet = new HashSet<char>();
+
+            foreach (char permission in permissions)
+            {
+                // Check that each permission is a real SAS permission.
+                if (!Constants.Sas.ValidPermissions.Contains(permission))
+                {
+                    throw new ArgumentException($"{permission} is not a valid SAS permission");
+                }
+
+                // Add permission to permissionsSet for re-ordering.
+                permissionsSet.Add(permission);
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Read))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Read);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Write))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Write);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Delete))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Delete);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.List))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.List);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Add))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Add);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Create))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Create);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Update))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Update);
+            }
+
+            if (permissionsSet.Contains(Constants.Sas.Permissions.Process))
+            {
+                stringBuilder.Append(Constants.Sas.Permissions.Process);
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }
