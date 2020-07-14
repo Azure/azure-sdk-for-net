@@ -554,11 +554,11 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -568,7 +568,7 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 response.Value.Value.CastAndRemoveAnnotations();
@@ -582,7 +582,7 @@ namespace Azure.Data.Tables
 
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
                     nextRowKey: NextRowKey,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -605,11 +605,11 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
         {
 
             return PageableHelpers.CreateEnumerable(_ =>
@@ -619,7 +619,7 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                         cancellationToken: cancellationToken);
 
                     response.Value.Value.CastAndRemoveAnnotations();
@@ -644,7 +644,7 @@ namespace Azure.Data.Tables
 
                     var response = _tableOperations.QueryEntities(
                         _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                         nextPartitionKey: NextPartitionKey,
                         nextRowKey: NextRowKey,
                         cancellationToken: cancellationToken);
@@ -668,17 +668,17 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return QueryAsync(Bind(filter), maxResultsPerPage, select, cancellationToken);
+                return QueryAsync(Bind(filter), maxPerPage, select, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -687,13 +687,13 @@ namespace Azure.Data.Tables
             }
         }
 
-        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return Query(Bind(filter), maxResultsPerPage, select, cancellationToken);
+                return Query(Bind(filter), maxPerPage, select, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -706,17 +706,17 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return QueryAsync<T>(Bind(filter), maxResultsPerPage, select, cancellationToken);
+                return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -729,11 +729,11 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -743,7 +743,7 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
@@ -755,7 +755,7 @@ namespace Azure.Data.Tables
 
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
                     nextRowKey: NextRowKey,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -776,17 +776,17 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return Query<T>(Bind(filter), maxResultsPerPage, select, cancellationToken);
+                return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -799,11 +799,11 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual Pageable<T> Query<T>(string filter = null, int? maxResultsPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
 
             return PageableHelpers.CreateEnumerable((int? _) =>
@@ -813,7 +813,7 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                         cancellationToken: cancellationToken);
 
                     return Page.FromValues(
@@ -836,7 +836,7 @@ namespace Azure.Data.Tables
 
                     var response = _tableOperations.QueryEntities(
                         _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxResultsPerPage, Filter = filter, Select = @select },
+                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = @select },
                         nextPartitionKey: NextPartitionKey,
                         nextRowKey: NextRowKey,
                         cancellationToken: cancellationToken);

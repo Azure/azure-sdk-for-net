@@ -128,10 +128,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns only the maxResultsPerPage n tables or entities from the set.</param>
+        /// <param name="maxPerPage">Returns only the maxPerPage n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? maxResultsPerPage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
             scope.Start();
@@ -142,7 +142,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                     null,
                     null,
-                    new QueryOptions() { Filter = filter, Select = select, Top = maxResultsPerPage, Format = _format },
+                    new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
@@ -150,7 +150,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.QueryAsync(
                        null,
                        nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = select, Top = maxResultsPerPage, Format = _format },
+                       new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                        cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -167,10 +167,10 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxResultsPerPage">Returns only the maxResultsPerPage n tables or entities from the set.</param>
+        /// <param name="maxPerPage">Returns only the maxPerPage n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? maxResultsPerPage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
 
             return PageableHelpers.CreateEnumerable(_ =>
@@ -182,7 +182,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                             null,
                             null,
-                            new QueryOptions() { Filter = filter, Select = select, Top = maxResultsPerPage, Format = _format },
+                            new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                             cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
@@ -200,7 +200,7 @@ namespace Azure.Data.Tables
                     var response = _tableOperations.Query(
                         null,
                         nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = select, Top = maxResultsPerPage, Format = _format },
+                        new QueryOptions() { Filter = filter, Select = select, Top = maxPerPage, Format = _format },
                         cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                 }
