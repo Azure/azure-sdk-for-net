@@ -357,6 +357,21 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task ExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeFileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -394,6 +409,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_FileSystemNotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = service.GetFileSystemClient(GetNewFileSystemName());
+            DataLakeFileClient file = InstrumentClient(fileSystemClient.GetFileClient(GetNewFileName()));
 
             // Act
             Response<bool> response = await file.DeleteIfExistsAsync();

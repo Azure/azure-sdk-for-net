@@ -266,6 +266,8 @@ namespace Azure.Storage
             /// The Azure Storage error codes for Datalake Client.
             /// </summary>
             public const string AlreadyExists = "ContainerAlreadyExists";
+            public const string FilesystemNotFound = "FilesystemNotFound";
+            public const string PathNotFound = "PathNotFound";
 
             /// <summary>
             /// Default concurrent transfers count.

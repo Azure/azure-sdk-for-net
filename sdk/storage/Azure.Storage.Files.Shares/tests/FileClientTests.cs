@@ -384,6 +384,21 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -420,6 +435,21 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
+            ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
             // Act

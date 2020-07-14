@@ -315,6 +315,21 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            Response<bool> response = await directory.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task Exists_Exists()
         {
             // Arrange
@@ -371,6 +386,21 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            // Act
+            Response<bool> response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExists_ShareNotExists()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
