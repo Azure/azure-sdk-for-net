@@ -200,7 +200,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 10);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxResultsPerPage: 10);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 5);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxResultsPerPage: 5);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {

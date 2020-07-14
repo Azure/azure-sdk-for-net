@@ -78,7 +78,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities.
 
-            entityResults = await client.QueryAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
+            entityResults = await client.QueryAsync(maxResultsPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
@@ -502,7 +502,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities.
 
-            entityResults = await client.QueryAsync<TestEntity>(top: pageCount).ToEnumerableAsync().ConfigureAwait(false);
+            entityResults = await client.QueryAsync<TestEntity>(maxResultsPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
             entityResults.Clear();
