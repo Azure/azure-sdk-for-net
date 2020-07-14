@@ -168,8 +168,7 @@ namespace Azure.Core.Pipeline
 
             public void ResetTokenIfExpired(Exception exception)
             {
-                string? headerValue = default;
-                TaskCompletionSource<string?>? pendingTcs;
+                TaskCompletionSource<string?>? pendingTcs = default;
 
                 lock (_syncObj)
                 {
@@ -179,25 +178,21 @@ namespace Azure.Core.Pipeline
                         _refreshOn = default;
                         _expiresOn = default;
                         _tokenState = TokenState.Invalid;
+
+                        pendingTcs = _pendingTcs;
+                        _pendingTcs = null;
                     }
                     else if (_tokenState == TokenState.AboutToExpire)
                     {
                         _tokenState = TokenState.Valid;
-                        headerValue = _headerValue;
+                        if (_pendingTcs != default)
+                        {
+                            exception = new InvalidOperationException($"{nameof(GetHeaderValueAsync)} shouldn't wait in {TokenState.AboutToExpire} state.", exception);
+                        }
                     }
-
-                    pendingTcs = _pendingTcs;
-                    _pendingTcs = null;
                 }
 
-                if (headerValue != null)
-                {
-                    pendingTcs?.SetResult(headerValue);
-                }
-                else
-                {
-                    pendingTcs?.SetException(exception);
-                }
+                pendingTcs?.SetException(exception);
             }
 
             public ValueTask<string?> GetHeaderValueAsync()
