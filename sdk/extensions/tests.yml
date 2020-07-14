@@ -10,6 +10,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.azure.net' }"
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
           BLOB_STORAGE_ENDPOINT_SUFFIX: core.windows.net
       # AzureUSGovernment
       - ServiceDirectory: extensions
@@ -17,6 +18,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.usgovcloudapi.net'; }"
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
           BLOB_STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
       # AzureChinaCloud
       - ServiceDirectory: extensions
@@ -24,4 +26,5 @@ extends:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ArmTemplateParameters: "@{  keyVaultEndpointSuffix = '.vault.azure.cn'; keyVaultSku = 'standard'; }"
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
           BLOB_STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
