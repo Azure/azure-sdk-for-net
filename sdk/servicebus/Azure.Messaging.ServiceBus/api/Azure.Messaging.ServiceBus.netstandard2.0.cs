@@ -130,20 +130,19 @@ namespace Azure.Messaging.ServiceBus
         public enum FailureReason
         {
             GeneralError = 0,
-            ClientClosed = 1,
-            MessagingEntityNotFound = 2,
-            MessageLockLost = 3,
-            MessageNotFound = 4,
-            MessageSizeExceeded = 5,
-            MessagingEntityDisabled = 6,
-            QuotaExceeded = 7,
-            ServiceBusy = 8,
-            ServiceTimeout = 9,
-            ServiceCommunicationProblem = 10,
-            SessionCannotBeLocked = 11,
-            SessionLockLost = 12,
-            Unauthorized = 13,
-            MessagingEntityAlreadyExists = 14,
+            MessagingEntityNotFound = 1,
+            MessageLockLost = 2,
+            MessageNotFound = 3,
+            MessageSizeExceeded = 4,
+            MessagingEntityDisabled = 5,
+            QuotaExceeded = 6,
+            ServiceBusy = 7,
+            ServiceTimeout = 8,
+            ServiceCommunicationProblem = 9,
+            SessionCannotBeLocked = 10,
+            SessionLockLost = 11,
+            Unauthorized = 12,
+            MessagingEntityAlreadyExists = 13,
         }
     }
     public partial class ServiceBusMessage
@@ -153,7 +152,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
-        public ServiceBusMessage(string body, System.Text.Encoding encoding) { }
         public Azure.Core.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
@@ -178,6 +176,12 @@ namespace Azure.Messaging.ServiceBus
         public long SizeInBytes { get { throw null; } }
         public void Dispose() { }
         public bool TryAddMessage(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public static partial class ServiceBusModelFactory
+    {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(Azure.Core.BinaryData body = default(Azure.Core.BinaryData), string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string label = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
     }
     public partial class ServiceBusProcessor
     {

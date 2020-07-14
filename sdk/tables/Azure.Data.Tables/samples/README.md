@@ -18,6 +18,6 @@ Description of Azure Tables. Covers following functions:
 You can find samples for each of this main functions below.
 To get started you'll need an Azure Tables endpoint and credentials. See Azure Tables Client Library [Readme][README] for more information and instructions.
 
-- [Create/delete table](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTable.md)
+- [Create/delete table](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/readme.md

@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -17,9 +17,28 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCreateBinaryDataFromBytes()
         {
-            var payload = Encoding.UTF8.GetBytes("some data");
-            var data = new BinaryData(payload);
-            Assert.AreEqual(payload, data.AsBytes().ToArray());
+            byte[] payload = Encoding.UTF8.GetBytes("some data");
+            BinaryData data = BinaryData.FromMemory(payload);
+            Assert.AreEqual(payload, data.Bytes.ToArray());
+
+            MemoryMarshal.TryGetArray<byte>(payload, out var array);
+            Assert.AreSame(payload, array.Array);
+
+            // using implicit conversion
+            ReadOnlyMemory<byte> bytes = data;
+            Assert.AreEqual(payload, bytes.ToArray());
+        }
+
+        [Test]
+        public void CanCreateBinaryDataUsingSpanCtor()
+        {
+            byte[] payload = Encoding.UTF8.GetBytes("some data");
+            BinaryData data = new BinaryData(payload);
+
+            Assert.AreNotSame(payload, data.Bytes);
+            Assert.AreNotEqual(payload, data.Bytes);
+
+            Assert.AreEqual(payload, data.Bytes.ToArray());
 
             // using implicit conversion
             ReadOnlyMemory<byte> bytes = data;
@@ -35,22 +54,12 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ToStringThrowsOnNullEncoding()
-        {
-            var payload = "some data";
-            var data = new BinaryData(payload);
-            Assert.That(
-                () => data.ToString(null),
-                Throws.InstanceOf<ArgumentException>());
-        }
-
-        [Test]
         public void ToStringRespectsArraySegmentBoundaries()
         {
             var payload = "pre payload post";
             var bytes = Encoding.UTF8.GetBytes(payload);
             var segment = new ArraySegment<byte>(bytes, 4, 7);
-            var data = new BinaryData(segment);
+            var data = BinaryData.FromMemory(segment);
             Assert.AreEqual("payload", data.ToString());
         }
 
@@ -60,7 +69,7 @@ namespace Azure.Core.Tests
             var payload = "pre payload post";
             var bytes = Encoding.UTF8.GetBytes(payload);
             var segment = new ArraySegment<byte>(bytes, 4, 7);
-            var data = new BinaryData(segment);
+            var data = BinaryData.FromMemory(segment);
             var stream = data.ToStream();
             var sr = new StreamReader(stream);
             Assert.AreEqual("payload", await sr.ReadToEndAsync());
@@ -73,12 +82,12 @@ namespace Azure.Core.Tests
             var buffer = Encoding.UTF8.GetBytes("some data");
             var payload = new MemoryStream(buffer);
             var data = BinaryData.FromStream(payload);
-            Assert.AreEqual(buffer, data.AsBytes().ToArray());
+            Assert.AreEqual(buffer, data.Bytes.ToArray());
             Assert.AreEqual(payload, data.ToStream());
 
             payload.Position = 0;
             data = await BinaryData.FromStreamAsync(payload);
-            Assert.AreEqual(buffer, data.AsBytes().ToArray());
+            Assert.AreEqual(buffer, data.Bytes.ToArray());
             Assert.AreEqual(payload, data.ToStream());
         }
 
@@ -98,8 +107,12 @@ namespace Azure.Core.Tests
         {
             var payload = new TestModel { A = "value", B = 5, C = true};
             var serializer = new JsonObjectSerializer();
-            await AssertData(BinaryData.FromSerializable(payload, serializer));
-            await AssertData(await BinaryData.FromSerializableAsync(payload, serializer));
+
+            await AssertData(BinaryData.Serialize(payload, serializer));
+            await AssertData(await BinaryData.SerializeAsync(payload, serializer));
+
+            await AssertData(BinaryData.Serialize(payload));
+            await AssertData(await BinaryData.SerializeAsync(payload));
 
             async Task AssertData(BinaryData data)
             {
@@ -109,6 +122,13 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(payload.A, (await data.DeserializeAsync<TestModel>(serializer)).A);
                 Assert.AreEqual(payload.B, (await data.DeserializeAsync<TestModel>(serializer)).B);
                 Assert.AreEqual(payload.C, (await data.DeserializeAsync<TestModel>(serializer)).C);
+
+                Assert.AreEqual(payload.A, data.Deserialize<TestModel>().A);
+                Assert.AreEqual(payload.B, data.Deserialize<TestModel>().B);
+                Assert.AreEqual(payload.C, data.Deserialize<TestModel>().C);
+                Assert.AreEqual(payload.A, (await data.DeserializeAsync<TestModel>()).A);
+                Assert.AreEqual(payload.B, (await data.DeserializeAsync<TestModel>()).B);
+                Assert.AreEqual(payload.C, (await data.DeserializeAsync<TestModel>()).C);
             }
         }
 
@@ -117,10 +137,10 @@ namespace Azure.Core.Tests
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             Assert.That(
-                () => BinaryData.FromSerializable(payload, null),
+                () => BinaryData.Serialize(payload, null),
                 Throws.InstanceOf<ArgumentNullException>());
             Assert.That(
-                async () => await BinaryData.FromSerializableAsync(payload, null),
+                async () => await BinaryData.SerializeAsync(payload, null),
                 Throws.InstanceOf<ArgumentNullException>());
         }
 
@@ -140,17 +160,16 @@ namespace Azure.Core.Tests
         public async Task DeserializeThrowsExceptionOnIncompatibleType()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
-            var serializer = new JsonObjectSerializer();
-            AssertData(BinaryData.FromSerializable(payload, serializer));
-            AssertData(await BinaryData.FromSerializableAsync(payload, serializer));
+            AssertData(BinaryData.Serialize(payload));
+            AssertData(await BinaryData.SerializeAsync(payload));
 
             void AssertData(BinaryData data)
             {
                 Assert.That(
-                    () => data.Deserialize<string>(serializer),
+                    () => data.Deserialize<string>(),
                     Throws.InstanceOf<Exception>());
                 Assert.That(
-                    async () => await data.DeserializeAsync<string>(serializer),
+                    async () => await data.DeserializeAsync<string>(),
                     Throws.InstanceOf<Exception>());
             }
         }
@@ -160,7 +179,7 @@ namespace Azure.Core.Tests
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             var serializer = new JsonObjectSerializer();
-            var data = BinaryData.FromSerializable(payload, serializer);
+            var data = BinaryData.Serialize(payload, serializer);
             Assert.That(
                 () => data.Deserialize<TestModel>(null),
                 Throws.InstanceOf<ArgumentNullException>());
@@ -173,11 +192,11 @@ namespace Azure.Core.Tests
         public void EqualsRespectsReferenceEquality()
         {
             var payload = Encoding.UTF8.GetBytes("some data");
-            var a = new BinaryData(payload);
-            var b = new BinaryData(payload);
+            var a = BinaryData.FromMemory(payload);
+            var b = BinaryData.FromMemory(payload);
             Assert.AreEqual(a, b);
 
-            var c = new BinaryData(Encoding.UTF8.GetBytes("some data"));
+            var c = BinaryData.FromMemory(Encoding.UTF8.GetBytes("some data"));
             Assert.AreNotEqual(a, c);
 
             Assert.AreNotEqual(a, "string data");
@@ -187,8 +206,8 @@ namespace Azure.Core.Tests
         public void GetHashCodeWorks()
         {
             var payload = Encoding.UTF8.GetBytes("some data");
-            var a = new BinaryData(payload);
-            var b = new BinaryData(payload);
+            var a = BinaryData.FromMemory(payload);
+            var b = BinaryData.FromMemory(payload);
             var set = new HashSet<BinaryData>
             {
                 a
@@ -196,7 +215,7 @@ namespace Azure.Core.Tests
             // hashcodes of a and b should match since instances use same memory.
             Assert.IsTrue(set.Contains(b));
 
-            var c = new BinaryData(Encoding.UTF8.GetBytes("some data"));
+            var c = BinaryData.FromMemory(Encoding.UTF8.GetBytes("some data"));
             // c should have a different hash code
             Assert.IsFalse(set.Contains(c));
             set.Add(c);

@@ -11,8 +11,8 @@ function Get-ChangeLogEntries {
 
   $changeLogEntries = @{}
   if (!(Test-Path $ChangeLogLocation)) {
-    Write-Host "ChangeLog '{0}' was not found" -f $ChangeLogLocation
-    exit 1
+    Write-Error "ChangeLog[${ChangeLogLocation}] does not exist"
+    return $null
   }
 
   try {
@@ -51,14 +51,12 @@ function Get-ChangeLogEntry {
     [Parameter(Mandatory = $true)]
     [String]$VersionString
   )
-
   $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
 
-  if ($changeLogEntries.ContainsKey($VersionString)) {
+  if ($changeLogEntries -and $changeLogEntries.ContainsKey($VersionString)) {
     return $changeLogEntries[$VersionString]
   }
-  Write-Error "Release Notes for the Specified version ${VersionString} was not found"
-  exit 1
+  return $null
 }
 
 #Returns the changelog for a particular version as string
@@ -70,9 +68,16 @@ function Get-ChangeLogEntryAsString {
     [String]$VersionString
   )
 
-  $changeLogEntries = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
-  [string]$releaseTitle = $changeLogEntries.ReleaseTitle
-  [string]$releaseContent = $changeLogEntries.ReleaseContent -Join [Environment]::NewLine
+  $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
+  return ChangeLogEntryAsString $changeLogEntry
+}
+
+function ChangeLogEntryAsString($changeLogEntry) {
+  if (!$changeLogEntry) {
+    return "[Missing change log entry]"
+  }
+  [string]$releaseTitle = $changeLogEntry.ReleaseTitle
+  [string]$releaseContent = $changeLogEntry.ReleaseContent -Join [Environment]::NewLine
   return $releaseTitle, $releaseContent -Join [Environment]::NewLine
 }
 
@@ -87,28 +92,33 @@ function Confirm-ChangeLogEntry {
 
   $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString
 
+  if (!$changeLogEntry) {
+    Write-Error "ChangeLog[${ChangeLogLocation}] does not have an entry for version ${VersionString}."
+    return $false
+  }
+
+  Write-Host "Found the following change log entry for version '${VersionString}' in [${ChangeLogLocation}]."
+  Write-Host "-----"
+  Write-Host (ChangeLogEntryAsString $changeLogEntry)
+  Write-Host "-----"
+
   if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus)) {
-    Write-Host ("##[error]Changelog '{0}' has wrong release note title" -f $ChangeLogLocation)
-    Write-Host "##[info]Ensure the release date is included i.e. (yyyy-MM-dd) or (Unreleased) if not yet released"
-    exit 1
+    Write-Error "Entry does not have a correct release status. Please ensure the status is set to a date '(yyyy-MM-dd)' or '(Unreleased)' if not yet released."
+    return $false
   }
 
   if ($ForRelease -eq $True) {
-    $CurrentDate = Get-Date -Format "yyyy-MM-dd"
-    if ($changeLogEntry.ReleaseStatus -ne "($CurrentDate)") {
-      Write-Host ("##[warning]Incorrect Date: Please use the current date in the Changelog '{0}' before releasing the package" -f $ChangeLogLocation)
-      exit 1
+    if ($changeLogEntry.ReleaseStatus -eq "(Unreleased)") {
+      Write-Error "Entry has no release date set. Please ensure to set a release date with format 'yyyy-MM-dd'."
+      return $false
     }
 
     if ([System.String]::IsNullOrWhiteSpace($changeLogEntry.ReleaseContent)) {
-      Write-Host ("##[error]Empty Release Notes for '{0}' in '{1}'" -f $VersionString, $ChangeLogLocation)
-      Write-Host "##[info]Please ensure there is a release notes entry before releasing the package."
-      exit 1
+      Write-Error "Entry has no content. Please ensure to provide some content of what changed in this version."
+      return $false
     }
   }
-
-  Write-Host $changeLogEntry.ReleaseTitle
-  Write-Host $changeLogEntry.ReleaseContent
+  return $true
 }
  
 Export-ModuleMember -Function 'Get-ChangeLogEntries'

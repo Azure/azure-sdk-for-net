@@ -43,7 +43,7 @@ Use the Azure.Search.Documents client library to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents --version 1.0.0-preview.5
+dotnet add package Azure.Search.Documents
 ```
 
 ### Prerequisites
@@ -161,7 +161,7 @@ exposes operations on these resources through two main client types.
   * [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
   * [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
 
-_The `Azure.Search.Documents` client library (v1) is a brand new offering for
+_The `Azure.Search.Documents` client library (v11) is a brand new offering for
 .NET developers who want to use search technology in their applications.  There
 is an older, fully featured `Microsoft.Azure.Search` client library (v10) with
 many similar looking APIs, so please be careful to avoid confusion when

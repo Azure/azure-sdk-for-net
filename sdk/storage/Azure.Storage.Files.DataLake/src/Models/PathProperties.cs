@@ -172,6 +172,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset AccessTierChangedOn { get; internal set; }
 
         /// <summary>
+        /// The time the path will be deleted.
+        /// </summary>
+        public DateTimeOffset ExpiresOn { get; internal set; }
+
+        /// <summary>
         /// If this path represents a directory.
         /// </summary>
         public bool IsDirectory

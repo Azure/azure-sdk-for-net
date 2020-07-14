@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
-        /// Both the <paramref name="endpoint"/> URI <c>string</c> and the <paramref name="credential"/> <c>string</c> key
+        /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
         /// </remarks>
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
-        /// Both the <paramref name="endpoint"/> URI <c>string</c> and the <paramref name="credential"/> <c>string</c> key
+        /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
         /// </remarks>
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
-        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
         /// </remarks>
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormTrainingClient(Uri endpoint, TokenCredential credential)
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
-        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
         /// </remarks>
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormTrainingClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation"/>.Value upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -138,7 +138,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation"/>.Value upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -306,7 +306,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation"/>.Value upon successful
+        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
         [ForwardsClientCalls]
         public virtual CopyModelOperation StartCopyModel(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
@@ -332,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation"/>.Value upon successful
+        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
         [ForwardsClientCalls]
         public virtual async Task<CopyModelOperation> StartCopyModelAsync(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)

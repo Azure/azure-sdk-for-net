@@ -152,6 +152,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobUriBuilder_RegularUrl_VersionIdTest()
+        {
+            // Arrange
+            var uriString = "https://account.blob.core.windows.net/container/blob?versionid=2011-03-09T01:42:34.9360000Z";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blob", blobUriBuilder.BlobName);
+            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.VersionId);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
         public void BlobUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
@@ -334,6 +358,31 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
             Assert.AreEqual("blob", blobUriBuilder.BlobName);
             Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void BlobUriBuilder_IPStyleUrl_VersionIdTest()
+        {
+            // Arrange
+            var uriString = "https://127.0.0.1/account/container/blob?versionid=2011-03-09T01:42:34.9360000Z";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("127.0.0.1", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual("blob", blobUriBuilder.BlobName);
+            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", blobUriBuilder.VersionId);
             Assert.IsNull(blobUriBuilder.Sas);
             Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);

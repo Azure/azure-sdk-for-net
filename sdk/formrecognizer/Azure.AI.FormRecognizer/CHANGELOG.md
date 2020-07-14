@@ -1,14 +1,26 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.5 (Unreleased)
+
+### Fixes
+
+- Constructor in `TrainingFileFilter` made public.
+
+## 1.0.0-preview.4 (2020-07-07)
 
 ### Renames
 
 - Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
 - Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `LabelText` renamed to `LabelData` on `FormField`.
+- Property `ValueText` renamed to `ValueData` on `FormField`.
+- Property `TextContent` renamed to `FieldElements` on `FieldData` and `FormTableCell`.
 - Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
 - Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
 - Parameter `accessToken` in `CopyAuthorization.FromJson` has been renamed to `copyAuthorization`.
+- Parameter `IncludeTextContent` in `RecognizeOptions` has been renamed to `IncludeFieldElements`.
+- Model `FieldText` renamed to `FieldData`.
+- Model `FormContent` renamed to `FormElement`.
 
 ### Other breaking changes
 

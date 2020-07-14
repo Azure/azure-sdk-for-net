@@ -9,7 +9,7 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
-      - template: tools/daily-dev-build-variable/daily-dev-build-variable.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and

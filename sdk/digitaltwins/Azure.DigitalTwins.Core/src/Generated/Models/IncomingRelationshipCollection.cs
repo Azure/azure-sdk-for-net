@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of incoming relationships which relate digital twins together. </summary>
     internal partial class IncomingRelationshipCollection

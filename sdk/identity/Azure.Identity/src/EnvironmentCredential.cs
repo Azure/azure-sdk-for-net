@@ -66,7 +66,7 @@ namespace Azure.Identity
             {
                 if (clientSecret != null)
                 {
-                    _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
+                    _credential = new ClientSecretCredential(new MsalConfidentialClientOptions(tenantId, clientId, clientSecret, _pipeline));
                 }
                 else if (username != null && password != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.Identity
                 }
                 else if (clientCertificatePath != null)
                 {
-                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath);
+                    _credential = new ClientCertificateCredential(new MsalConfidentialClientOptions(tenantId, clientId, new ClientCertificateCredential.X509Certificate2FromFileProvider(clientCertificatePath), _pipeline));
                 }
             }
 

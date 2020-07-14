@@ -32,10 +32,55 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheConnectionString(string connectionString)
+        public void ConstructorValidatesTheConnectionStringIsPopulated(string connectionString)
         {
             Assert.That(() => new EventHubProducerClient(connectionString, "dummy"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should ensure a connection string.");
             Assert.That(() => new EventHubProducerClient(connectionString, "dummy", new EventHubProducerClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should ensure a connection string.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
+        [TestCase("Endpoint=value.com;SharedAccessKey=[value];EntityPath=[value]")]
+        [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
+        [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
+        public void ConstructorValidatesConnectionString(string connectionString)
+        {
+            Assert.That(() =>new EventHubProducerClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorDetectsMultipleEventHubNamesFromTheConnectionString()
+        {
+            var eventHubName = "myHub";
+            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=[unique_fake]";
+
+            Assert.That(() => new EventHubProducerClient(connectionString, eventHubName), Throws.ArgumentException.And.Message.StartsWith(Resources.OnlyOneEventHubNameMayBeSpecified));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorAllowsMultipleEventHubNamesFromTheConnectionStringIfEqual()
+        {
+            var eventHubName = "myHub";
+            var connectionString = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+
+            Assert.That(() => new EventHubProducerClient(connectionString, eventHubName), Throws.Nothing);
         }
 
         /// <summary>

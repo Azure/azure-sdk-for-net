@@ -21,14 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />

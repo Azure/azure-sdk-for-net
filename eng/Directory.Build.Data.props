@@ -49,6 +49,10 @@
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
   <!-- TODO. REVIEW -->
   <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
     <NoWarn>

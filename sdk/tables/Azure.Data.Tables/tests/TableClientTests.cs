@@ -36,43 +36,23 @@ namespace Azure.Tables.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await client_Instrumented.InsertAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.CreateEntityAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.InsertAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.CreateEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync<TableEntity>(null, UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync(new TableEntity { PartitionKey = null, RowKey = "row" }), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync(new TableEntity { PartitionKey = "partition", RowKey = null }), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new TableEntity { PartitionKey = "partition", RowKey = null }, UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(null, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync(entityWithoutPK), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, null, UpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
 
-            Assert.That(async () => await client_Instrumented.InsertOrReplaceAsync(entityWithoutRK), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-
-            Assert.That(async () => await client_Instrumented.UpdateAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
-
-            Assert.That(async () => await client_Instrumented.UpdateAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
-
-            Assert.That(async () => await client_Instrumented.UpdateAsync(entityWithoutRK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
-
-            Assert.That(async () => await client_Instrumented.InsertOrMergeAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-
-            Assert.That(async () => await client_Instrumented.InsertOrMergeAsync(entityWithoutPK), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
-
-            Assert.That(async () => await client_Instrumented.InsertOrMergeAsync(entityWithoutRK), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
-
-            Assert.That(async () => await client_Instrumented.MergeAsync(null, "etag"), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-
-            Assert.That(async () => await client_Instrumented.MergeAsync(validEntity, null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the eTag is not null.");
-
-            Assert.That(async () => await client_Instrumented.MergeAsync(entityWithoutPK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
-
-            Assert.That(async () => await client_Instrumented.MergeAsync(entityWithoutRK, "etag"), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, "etag", UpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]

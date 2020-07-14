@@ -34,7 +34,7 @@ The `Receipt` class is composed of multiple `FormField<T>` properties. `FormFiel
 public Receipt(RecognizedForm recognizedForm)
 {
     // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+    // https://aka.ms/azsdk/python/formrecognizer/receiptfields
 
     ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
     MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
@@ -56,7 +56,7 @@ public Receipt(RecognizedForm recognizedForm)
 Here we illustrate how to use the `Receipt` wrapper class described above.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
-RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(receiptUri).WaitForCompletionAsync();
+RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
 
 foreach (RecognizedForm recognizedForm in recognizedForms)
 {

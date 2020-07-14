@@ -1,44 +1,44 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-9df038df-1d07-079b-4e0d-e2a9f13a0bcc/test-file-59ef6374-3369-6643-653d-bbfea711be81",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-9df038df-1d07-079b-4e0d-e2a9f13a0bcc/test-file-59ef6374-3369-6643-653d-bbfea711be81",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-a0cac6604c109d41a8e7258b06820a4b-5ee365bc0fe49b42-00",
+        "traceparent": "00-9963ffe8178c5d46a65f7092029b5551-f8b4e8235469ce4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200220.1",
+          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200305.1",
           "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "be231349-aaba-ab08-f589-37c9619d603c",
-        "x-ms-date": "Thu, 20 Feb 2020 22:59:33 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:45:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Thu, 20 Feb 2020 22:59:33 GMT",
+        "Date": "Thu, 05 Mar 2020 21:45:19 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "be231349-aaba-ab08-f589-37c9619d603c",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "f4e97a1c-f01a-0073-1341-e87ac9000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "c9ef6795-f01a-0012-6b37-f3e9eb000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:f4e97a1c-f01a-0073-1341-e87ac9000000\n",
-        "Time:2020-02-20T22:59:33.7259742Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:c9ef6795-f01a-0012-6b37-f3e9eb000000\n",
+        "Time:2020-03-05T21:45:19.3116817Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "611620055",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttps://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1"
   }
 }

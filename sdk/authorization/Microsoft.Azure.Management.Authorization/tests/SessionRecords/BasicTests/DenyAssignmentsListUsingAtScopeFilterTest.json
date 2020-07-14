@@ -7,37 +7,27 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c57528ea-5845-43bf-9367-a7e8dcb11258"
+          "18a1573d-fecc-426e-a2f8-8f75f0dd774f"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
+          "FxVersion/4.6.28928.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.11.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Mon, 22 Oct 2018 21:30:11 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
-        ],
-        "x-ms-request-charge": [
-          "1"
-        ],
         "x-ms-request-id": [
-          "95b52645-6b7f-43c4-afa7-d4d65b6339cb"
+          "aaea4ce6-da83-4086-99d3-7d997df37005"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -45,17 +35,23 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=Production; path=/; SameSite=None; secure; HttpOnly"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "4dfc8733-f38c-40e1-937f-7d4c79a8655f"
+          "38b14468-5b84-4a64-a5d5-30c90cf23e42"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181022T213012Z:4dfc8733-f38c-40e1-937f-7d4c79a8655f"
+          "WESTUS2:20200626T172148Z:38b14468-5b84-4a64-a5d5-30c90cf23e42"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2020 17:21:47 GMT"
         ],
         "Content-Length": [
-          "842"
+          "3962"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,7 +60,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_22704996-FBD0-4AB1-8625-722D897825D2\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"foo/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"foo/*/read\"\r\n            ],\r\n            \"dataActions\": [\r\n              \"foo/*\"\r\n            ],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"f9e08843d2b74dbca5845e88a7e229a6\",\r\n            \"type\": \"Group\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2018-09-20T20:32:31.7438709Z\",\r\n        \"updatedOn\": \"2018-09-20T21:40:03.4634449Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/denyAssignments/22704996-fbd0-4ab1-8625-722d897825d2\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"22704996-fbd0-4ab1-8625-722d897825d2\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_22704996-FBD0-4AB1-8625-722D897825D2\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"foo/*\"\r\n            ],\r\n            \"notActions\": [\r\n              \"foo/*/read\"\r\n            ],\r\n            \"dataActions\": [\r\n              \"foo/*\"\r\n            ],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"f9e08843-d2b7-4dbc-a584-5e88a7e229a6\",\r\n            \"type\": \"Group\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2018-09-20T20:32:31.7438709Z\",\r\n        \"updatedOn\": \"2018-09-20T21:40:03.4634449Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/denyAssignments/22704996-fbd0-4ab1-8625-722d897825d2\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"22704996-fbd0-4ab1-8625-722d897825d2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"Deny registrations from Azure Portal\",\r\n        \"description\": \"Deny registrations from Azure Portal.\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/register/action\"\r\n            ],\r\n            \"notActions\": [],\r\n            \"dataActions\": [],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"type\": \"SystemDefined\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [\r\n          {\r\n            \"id\": \"fc6c8339-646b-4fb2-a2e2-80f95c0baf96\",\r\n            \"type\": \"User\"\r\n          }\r\n        ],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2019-08-17T01:16:45.2014367Z\",\r\n        \"updatedOn\": \"2020-02-11T22:22:46.4309286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/denyAssignments/cfb839c5-3849-492f-9b0e-5f205f1a3d94\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"cfb839c5-3849-492f-9b0e-5f205f1a3d94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"Deny registrations from Azure Portal\",\r\n        \"description\": \"Deny registrations from Azure Portal.\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/register/action\"\r\n            ],\r\n            \"notActions\": [],\r\n            \"dataActions\": [],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"type\": \"SystemDefined\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [\r\n          {\r\n            \"id\": \"fc6c8339-646b-4fb2-a2e2-80f95c0baf96\",\r\n            \"type\": \"User\"\r\n          }\r\n        ],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2019-08-17T01:16:45.2014367Z\",\r\n        \"updatedOn\": \"2020-02-11T22:22:46.4309286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/denyAssignments/cfb839c5-3849-492f-9b0e-5f205f1a3d94\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"cfb839c5-3849-492f-9b0e-5f205f1a3d94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"Deny registrations from Azure Portal\",\r\n        \"description\": \"Deny registrations from Azure Portal.\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/register/action\"\r\n            ],\r\n            \"notActions\": [],\r\n            \"dataActions\": [],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"type\": \"SystemDefined\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [\r\n          {\r\n            \"id\": \"fc6c8339-646b-4fb2-a2e2-80f95c0baf96\",\r\n            \"type\": \"User\"\r\n          }\r\n        ],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2019-08-17T01:16:45.2014367Z\",\r\n        \"updatedOn\": \"2020-02-11T22:22:46.4309286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/denyAssignments/cfb839c5-3849-492f-9b0e-5f205f1a3d94\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"cfb839c5-3849-492f-9b0e-5f205f1a3d94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"Deny registrations from Azure Portal\",\r\n        \"description\": \"Deny registrations from Azure Portal.\",\r\n        \"permissions\": [\r\n          {\r\n            \"actions\": [\r\n              \"*/register/action\"\r\n            ],\r\n            \"notActions\": [],\r\n            \"dataActions\": [],\r\n            \"notDataActions\": []\r\n          }\r\n        ],\r\n        \"scope\": \"/\",\r\n        \"doNotApplyToChildScopes\": false,\r\n        \"principals\": [\r\n          {\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"type\": \"SystemDefined\"\r\n          }\r\n        ],\r\n        \"excludePrincipals\": [\r\n          {\r\n            \"id\": \"fc6c8339-646b-4fb2-a2e2-80f95c0baf96\",\r\n            \"type\": \"User\"\r\n          }\r\n        ],\r\n        \"isSystemProtected\": true,\r\n        \"createdOn\": \"2019-08-17T01:16:45.2014367Z\",\r\n        \"updatedOn\": \"2020-02-11T22:22:46.4309286Z\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/denyAssignments/cfb839c5-3849-492f-9b0e-5f205f1a3d94\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"cfb839c5-3849-492f-9b0e-5f205f1a3d94\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

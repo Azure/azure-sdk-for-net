@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the names of all token filters supported by Azure Cognitive Search.
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
+    /// For more information, see <see href="https://docs.microsoft.com/azure/search/index-add-custom-analyzers">Add custom analyzers to string fields in an Azure Cognitive Search index</see>.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenFilterName>))]
     public struct TokenFilterName : IEquatable<TokenFilterName>

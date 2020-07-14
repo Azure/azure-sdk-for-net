@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -109,6 +110,17 @@ namespace Azure.Storage.Blobs
         }
         private string _snapshot;
 
+        /// <summary>
+        /// Gets or sets the name of a blob version.  The value defaults to
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// </summary>
+        public string VersionId
+        {
+            get => _versionId;
+            set { ResetUri(); _versionId = value; }
+        }
+        private string _versionId;
+
         ///// <summary>
         ///// Gets or sets the VersionId.  The value defaults to
         ///// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
@@ -162,7 +174,7 @@ namespace Azure.Storage.Blobs
             BlobName = "";
 
             Snapshot = "";
-            //this.VersionId = "";
+            VersionId = "";
             Sas = null;
             Query = "";
 
@@ -204,7 +216,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath();   // The blob name is after the container slash
                 }
             }
 
@@ -219,13 +231,18 @@ namespace Azure.Storage.Blobs
                 paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
-            //if(paramsMap.TryGetValue(VersionIdParameterName, out var versionId))
-            //{
-            //    this.VersionId = versionId;
+            if (paramsMap.TryGetValue(Constants.VersionIdParameterName, out var versionId))
+            {
+                VersionId = versionId;
 
-            //    // If we recognized the query parameter, remove it from the map
-            //    paramsMap.Remove(VersionIdParameterName);
-            //}
+                // If we recognized the query parameter, remove it from the map
+                paramsMap.Remove(Constants.VersionIdParameterName);
+            }
+
+            if (!string.IsNullOrEmpty(Snapshot) && !string.IsNullOrEmpty(VersionId))
+            {
+                throw new ArgumentException("Snapshot and VersionId cannot both be set.");
+            }
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
@@ -285,7 +302,7 @@ namespace Azure.Storage.Blobs
             if (!string.IsNullOrWhiteSpace(BlobContainerName))
             {
                 path.Append("/").Append(BlobContainerName);
-                if (!string.IsNullOrWhiteSpace(BlobName))
+                if (BlobName != null && BlobName.Length > 0)
                 {
                     path.Append("/").Append(Uri.EscapeDataString(BlobName));
                 }
@@ -299,11 +316,12 @@ namespace Azure.Storage.Blobs
                 { query.Append("&"); }
                 query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
-            //if (!String.IsNullOrWhiteSpace(this.VersionId))
-            //{
-            //    if (query.Length > 0) { query += "&"; }
-            //    query.Append(VersionIdParameterName).Append("=").Append(this.VersionId);
-            //}
+            if (!string.IsNullOrWhiteSpace(VersionId))
+            {
+                if (query.Length > 0)
+                { query.Append("&"); }
+                query.Append(Constants.VersionIdParameterName).Append("=").Append(VersionId);
+            }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
