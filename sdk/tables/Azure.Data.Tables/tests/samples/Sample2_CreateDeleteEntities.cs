@@ -6,7 +6,6 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -14,12 +13,12 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public async Task InsertDeleteAsync()
+        public void CreateDeleteEntity()
         {
             string storageUri = StorageUri;
             string accountName = AccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies2p2";
+            string tableName = "OfficeSupplies2p1";
             string partitionKey = "somePartition";
             string rowKey = "A1";
 
@@ -27,14 +26,16 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            await serviceClient.CreateTableAsync(tableName).ConfigureAwait(false);
+            serviceClient.CreateTable(tableName);
 
             try
             {
+                #region Snippet:TablesSample2GetTableClient
                 // Get a reference to the <see cref="TableClient" /> of the table.
                 var client = serviceClient.GetTableClient(tableName);
+                #endregion
 
-                #region Snippet:TablesSample2InsertEntityAsync
+                #region Snippet:TablesSample2CreateEntity
                 // Make an entity by defining a <see cref="Dictionary"> that includes the partition and row key.
                 var entity = new Dictionary<string, object>
                 {
@@ -45,18 +46,18 @@ namespace Azure.Data.Tables.Samples
                 };
 
                 // Insert the newly created entity.
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                client.CreateEntity(entity);
                 #endregion
 
-                #region Snippet:TablesSample2DeleteEntityAsync
+                #region Snippet:TablesSample2DeleteEntity
                 // Delete the entity given the partition and row key.
-                await client.DeleteAsync(partitionKey, rowKey).ConfigureAwait(false);
+                client.Delete(partitionKey, rowKey);
                 #endregion
 
             }
             finally
             {
-                await serviceClient.DeleteTableAsync(tableName).ConfigureAwait(false);
+                serviceClient.DeleteTable(tableName);
             }
         }
     }
