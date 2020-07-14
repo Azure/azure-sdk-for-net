@@ -33,7 +33,7 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromMinutes(2)) { }
+            : this(credential, scopes, TimeSpan.FromMinutes(5)) { }
 
         internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset) {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -95,7 +95,7 @@ namespace Azure.Core.Pipeline
             }
             catch (Exception e)
             {
-                _accessTokenCache.ResetToken(e);
+                _accessTokenCache.ResetTokenIfExpired(e);
                 throw;
             }
         }
@@ -142,8 +142,9 @@ namespace Azure.Core.Pipeline
             {
                 if (string.IsNullOrEmpty(token.Token))
                 {
-                    ResetToken(new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
-                    return default;
+                    var exception = new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error.");
+                    ResetTokenIfExpired(exception);
+                    throw exception;
                 }
 
                 string headerValue;
@@ -165,22 +166,38 @@ namespace Azure.Core.Pipeline
                 return headerValue;
             }
 
-            public void ResetToken(Exception exception)
+            public void ResetTokenIfExpired(Exception exception)
             {
+                string? headerValue = default;
                 TaskCompletionSource<string?>? pendingTcs;
 
                 lock (_syncObj)
                 {
-                    _headerValue = default;
-                    _refreshOn = default;
-                    _expiresOn = default;
-                    _tokenState = TokenState.Invalid;
+                    if (DateTimeOffset.UtcNow >= _expiresOn)
+                    {
+                        _headerValue = default;
+                        _refreshOn = default;
+                        _expiresOn = default;
+                        _tokenState = TokenState.Invalid;
+                    }
+                    else if (_tokenState == TokenState.AboutToExpire)
+                    {
+                        _tokenState = TokenState.Valid;
+                        headerValue = _headerValue;
+                    }
 
                     pendingTcs = _pendingTcs;
                     _pendingTcs = null;
                 }
 
-                pendingTcs?.SetException(exception ?? new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error."));
+                if (headerValue != null)
+                {
+                    pendingTcs?.SetResult(headerValue);
+                }
+                else
+                {
+                    pendingTcs?.SetException(exception);
+                }
             }
 
             public ValueTask<string?> GetHeaderValueAsync()
@@ -190,7 +207,7 @@ namespace Azure.Core.Pipeline
                     if (DateTimeOffset.UtcNow >= _expiresOn && _tokenState != TokenState.Pending)
                     {
                         _tokenState = TokenState.Pending;
-                        _headerValue = null;
+                        _headerValue = default;
                         return new ValueTask<string?>();
                     }
 
