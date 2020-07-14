@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             var account = new FakeAccount();
             string functionId = "FunctionId";
 
-            // by default, Blob doesn't exist in the fake account, so it's as if it were deleted. 
+            // by default, Blob doesn't exist in the fake account, so it's as if it were deleted.
             BlobQueueTriggerExecutor product = CreateProductUnderTest();
 
             BlobQueueRegistration registration = new BlobQueueRegistration

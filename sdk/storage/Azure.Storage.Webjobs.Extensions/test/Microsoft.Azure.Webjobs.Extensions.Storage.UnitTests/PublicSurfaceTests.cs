@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "Microsoft.Extensions.DependencyInjection.Abstractions",
                 "Microsoft.Extensions.Hosting.Abstractions",
                 "Microsoft.Extensions.Logging.Abstractions",
-                "Microsoft.Extensions.Options",                
+                "Microsoft.Extensions.Options",
                 "netstandard",
                 "Newtonsoft.Json",
                 "System.ComponentModel.Annotations"

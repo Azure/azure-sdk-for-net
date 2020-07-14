@@ -13,7 +13,7 @@ using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs
 {
-    static class MoreStorageExtensions
+    internal static class MoreStorageExtensions
     {
         public static StorageAccount GetStorageAccount(this IHost host)
         {
@@ -69,6 +69,6 @@ namespace Microsoft.Azure.WebJobs
             {
                 await stream.CommitAsync();
             }
-        }        
+        }
     }
 }

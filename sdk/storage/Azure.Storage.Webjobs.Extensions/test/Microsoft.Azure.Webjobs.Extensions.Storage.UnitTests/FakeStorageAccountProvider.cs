@@ -22,7 +22,9 @@ namespace Microsoft.Azure.WebJobs
         }
     }
 
+#pragma warning disable SA1402 // File may only contain a single type
     public class FakeStorageAccount : StorageAccount
+#pragma warning restore SA1402 // File may only contain a single type
     {
         private FakeStorage.FakeAccount _account2 = new FakeStorage.FakeAccount();
 
@@ -39,8 +41,10 @@ namespace Microsoft.Azure.WebJobs
         public override bool IsDevelopmentStorageAccount() { return true; }
     }
 
-    // Helpeful test extensions 
+    // Helpeful test extensions
+#pragma warning disable SA1402 // File may only contain a single type
     public static class FakeStorageAccountExtensions
+#pragma warning restore SA1402 // File may only contain a single type
     {
         public static async Task AddQueueMessageAsync(this StorageAccount account, CloudQueueMessage message, string queueName)
         {

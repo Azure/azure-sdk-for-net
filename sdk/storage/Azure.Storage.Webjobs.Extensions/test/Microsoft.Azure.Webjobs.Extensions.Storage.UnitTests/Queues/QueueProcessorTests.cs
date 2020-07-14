@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             _queue = fixture.Queue;
             _poisonQueue = fixture.PoisonQueue;
-            
+
             _queuesOptions = new QueuesOptions();
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions);
             _processor = new QueueProcessor(context);

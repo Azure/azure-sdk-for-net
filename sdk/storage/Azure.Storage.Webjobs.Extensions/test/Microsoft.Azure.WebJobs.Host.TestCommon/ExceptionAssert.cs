@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                 return message;
             }
 
-            return String.Format("{0}{1}Parameter name: {2}", message, Environment.NewLine, parameterName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}{1}Parameter name: {2}", message, Environment.NewLine, parameterName);
         }
     }
 }

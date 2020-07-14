@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<byte[], int, int, AsyncCallback, object>((a1, a2, a3, callback, state) =>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<AsyncCallback, object>((callback, state) =>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<byte[], int, int, AsyncCallback, object>((a1, a2, a3, a4, state) => new UncompletedCancellableAsyncResult(state));

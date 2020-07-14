@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             product.Execute();
             Assert.Equal(1, count);
 
-            // Now run again; shouldn't show up. 
+            // Now run again; shouldn't show up.
             executor.ExecuteLambda = (_) =>
             {
                 throw new InvalidOperationException("shouldn't retrigger the same blob");

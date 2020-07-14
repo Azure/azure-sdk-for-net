@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             IQueueTriggerArgumentBindingProvider provider = new UserTypeArgumentBindingProvider();
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
-            
+
             var fakeAccount = new FakeStorage.FakeAccount();
             CloudQueue queue = fakeAccount.CreateCloudQueueClient().GetQueueReference("queueName");
 

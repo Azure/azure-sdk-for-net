@@ -205,10 +205,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             int timeToProcess;
 
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
-            
+
             // make sure they both have the same id
             var host = NewBuilder(prog, builder => builder.UseHostId(Guid.NewGuid().ToString("N")))
-                .Build();           
+                .Build();
 
             // Process the blob first
             using (prog._completedEvent = new ManualResetEvent(initialState: false))
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 string[] loggerOutputLines = host.GetTestLoggerProvider().GetAllLogMessages()
                     .Where(p => p.FormattedMessage != null)
-                    .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine, StringSplitOptions.None))
+                    .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.None))
                     .ToArray();
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
@@ -235,12 +235,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await host.StopAsync();
 
 
-                // Can't restart 
+                // Can't restart
                 Assert.Throws<InvalidOperationException>(() => host.Start());
             }
 
             Assert.Equal(1, prog._timesProcessed);
-        } // host 
+        } // host
 
         [Fact]
         public async Task BlobChainTest()
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
 
-            
+
             string hostId = Guid.NewGuid().ToString("N");
             var host1 = NewBuilder(prog, builder=>builder.UseHostId(hostId))
                 .Build();

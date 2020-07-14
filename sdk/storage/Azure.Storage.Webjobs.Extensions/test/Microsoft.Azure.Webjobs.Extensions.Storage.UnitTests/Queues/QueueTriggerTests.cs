@@ -500,7 +500,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 var account = CreateFakeStorageAccount();
                 await SetupAsync(account, expectedContents);
 
-                // Act            
+                // Act
                 await RunTriggerAsync<object>(account, typeof(MaxDequeueCountProgram),
                     (s) => MaxDequeueCountProgram.TaskSource = s,
                     new string[] { typeof(MaxDequeueCountProgram).FullName + ".PutInPoisonQueue" });

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    static class TestExtensions
+    internal static class TestExtensions
     {
         public static StorageAccount GetStorageAccount(this IHost host)
         {

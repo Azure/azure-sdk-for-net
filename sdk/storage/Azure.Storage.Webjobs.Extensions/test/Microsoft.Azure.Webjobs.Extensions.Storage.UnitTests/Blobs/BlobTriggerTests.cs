@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 })
                 .Build();
 
-            // Set the binding data, and verify it's accessible in the function. 
+            // Set the binding data, and verify it's accessible in the function.
             var container = CreateContainer(account, ContainerName);
             var blob = container.GetBlockBlobReference(BlobName);
             blob.Metadata["m1"] = "v1";

@@ -1218,7 +1218,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         }
 
         [Fact]
-        public void Write_DelegatesToInnerStreamWrite()
+        public void WriteDelegatesToInnerStreamWrite()
         {
             byte[] expectedBuffer = new byte[0];
             int expectedOffset = 123;
@@ -1514,7 +1514,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         }
 
         [Fact]
-        public void GetStatus_AfterReadAsync_ReturnsBytesRead()
+        public async Task GetStatus_AfterReadAsync_ReturnsBytesRead()
         {
             // Arrange
             string contents = "abc";
@@ -1523,7 +1523,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             using (WatchableReadStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = new byte[contents.Length];
-                int bytesRead = product.ReadAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
+                int bytesRead = await product.ReadAsync(buffer, 0, buffer.Length);
                 Assert.Equal(bytesRead, buffer.Length); // Guard
 
                 // Act

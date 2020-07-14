@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         [Fact]
         public void TestMethodExtension()
         {
-            // {name} is greedy when matching up to an extension. 
+            // {name} is greedy when matching up to an extension.
             var d = Match(@"container/{name}.csv", @"container/foo.alpha.csv");
             Assert.NotNull(d);
             Assert.Equal(1, d.Count);
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         [Fact]
         public void TestMethod6()
         {
-            // Test corner case where matching on last 
+            // Test corner case where matching on last
             var d = Match(@"daas-test-input/{name}.txt", @"daas-test-input/bob.txtoutput");
             Assert.Null(d);
         }
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         [Fact]
         public void TestMethod5()
         {
-            // Test corner case where matching on last 
+            // Test corner case where matching on last
             var d = Match(@"container/{name}-{date}.csv", @"container/foo-Jan1st.csv");
             Assert.NotNull(d);
             Assert.Equal(2, d.Count);

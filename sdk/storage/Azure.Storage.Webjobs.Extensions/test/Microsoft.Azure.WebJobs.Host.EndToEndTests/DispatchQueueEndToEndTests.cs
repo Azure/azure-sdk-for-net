@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     .AddExtension<DispatchQueueTestConfig>();
                 })
                 .Build();
-                        
+
             {
                 _funcInvocation = new ConcurrentStringSet();
 
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     .AddExtension<DispatchQueueTestConfig>();
                 })
                 .Build();
-                        
+
             {
                 _funcInvocation = new ConcurrentStringSet();
 

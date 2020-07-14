@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private const string TriggerQueueName = "input";
         private const string QueueName = "output";
 
-        // Test binding to generics. 
+        // Test binding to generics.
         public class GenericProgram<T>
         {
             public void Func([Queue(QueueName)] T q)
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             await host.GetJobHost().CallAsync<GenericProgram<ICollector<string>>>("Func");
 
-            // Now peek at messages. 
+            // Now peek at messages.
             var queue = account.CreateCloudQueueClient().GetQueueReference(QueueName);
             var msgs = (await queue.GetMessagesAsync(10)).ToArray();
 
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("123", msgs[0].AsString);
         }
 
-        // Program with a static bad queue name (no { } ). 
-        // Use this to test queue name validation. 
+        // Program with a static bad queue name (no { } ).
+        // Use this to test queue name validation.
         public class ProgramWithStaticBadName
         {
             public const string BadQueueName = "test*"; // Don't include any { }
@@ -83,11 +83,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private static string GetErrorMessageForBadQueueName(string value, string parameterName)
         {
             return "A queue name can contain only letters, numbers, and dash(-) characters - \"" + value + "\"" +
-                "\r\nParameter name: " + parameterName; // from ArgumentException 
+                "\r\nParameter name: " + parameterName; // from ArgumentException
         }
 
         // Program with variable queue name containing both %% and { }.
-        // Has valid parameter binding.   Use this to test queue name validation at various stages. 
+        // Has valid parameter binding.   Use this to test queue name validation at various stages.
         public class ProgramWithVariableQueueName
         {
             public const string QueueNamePattern = "q%key%-test{x}";
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             try
             {
-                await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "*" }); // produces an error pattern. 
+                await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "*" }); // produces an error pattern.
                 Assert.False(true, "should have failed");
             }
             catch (FunctionInvocationException e)
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        // The presence of { } defers validation until runtime. Even if there are illegal chars known at index time! 
+        // The presence of { } defers validation until runtime. Even if there are illegal chars known at index time!
         [Fact]
         public async Task Catch_Bad_Name_At_Runtime_With_Illegal_Static_Chars()
         {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .Build();
             try
             {
-                await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "1" }); // produces an error pattern. 
+                await host.GetJobHost().CallAsync<ProgramWithVariableQueueName>("Func", new { x = "1" }); // produces an error pattern.
                 Assert.False(true, "should have failed");
             }
             catch (FunctionInvocationException e) // Not an index exception!
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 public string xyz { get; set; }
             }
 
-            // BindingData is case insensitive. 
-            // And queue name is normalized to lowercase. 
+            // BindingData is case insensitive.
+            // And queue name is normalized to lowercase.
             // Connection="" is same as Connection=null
             public const string QueueOutName = "qName-{XYZ}";
             public void Func([QueueTrigger(QueueName, Connection = "")] Poco triggers, [Queue(QueueOutName)] ICollector<string> q)
@@ -196,8 +196,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
             });
 
-            // Now peek at messages. 
-            // queue name is normalized to lowercase. 
+            // Now peek at messages.
+            // queue name is normalized to lowercase.
             var queue = account.CreateCloudQueueClient().GetQueueReference("qname-abc");
             var msgs = (await queue.GetMessagesAsync(10)).ToArray();
 
@@ -218,16 +218,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 public string xyz { get; set; }
             }
 
-            // BindingData is case insensitive. 
-            // And queue name is normalized to lowercase. 
+            // BindingData is case insensitive.
+            // And queue name is normalized to lowercase.
             public const string QueueOutName = "qName-{prop1.xyz}";
             public void Func(
                 [QueueTrigger(QueueName)] Poco triggers,
                 [Queue(QueueOutName)] ICollector<string> q,
                 string xyz, // {xyz}
-                SubOject prop1) // Bind to a object 
+                SubOject prop1) // Bind to a object
             {
-                // binding to subobject work 
+                // binding to subobject work
                 Assert.NotNull(prop1);
                 Assert.Equal("abc", prop1.xyz);
 
@@ -265,8 +265,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
             });
 
-            // Now peek at messages. 
-            // queue name is normalized to lowercase. 
+            // Now peek at messages.
+            // queue name is normalized to lowercase.
             var queue = account.CreateCloudQueueClient().GetQueueReference("qname-abc");
             var msgs = (await queue.GetMessagesAsync(10)).ToArray();
 
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public void Fails_BindingContract_Mismatch()
         {
-            // Verify that indexing fails if the [Queue] trigger needs binding data that's not present. 
+            // Verify that indexing fails if the [Queue] trigger needs binding data that's not present.
             var account = CreateFakeStorageAccount();
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<ProgramBadContract>(b =>

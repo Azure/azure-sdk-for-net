@@ -301,7 +301,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private async static Task Clean(StorageAccount account)
+        private static async Task Clean(StorageAccount account)
         {
             CloudBlobClient blobClient = account.CreateCloudBlobClient();
             foreach (var testContainer in (await blobClient.ListContainersSegmentedAsync(TestArtifactPrefix, null)).Results)

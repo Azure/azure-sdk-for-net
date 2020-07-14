@@ -827,7 +827,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await Host.StopAsync();
 
-                // $$$ reenalbe this 
+                // $$$ reenalbe this
                 VerifyLockState("WebJobs.Internal.Blobs.Listener", LeaseState.Available, LeaseStatus.Unlocked).Wait();
 
                 CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();

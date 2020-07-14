@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -46,13 +47,13 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return options;
         }
 
-        // Test error if not reached within a timeout 
+        // Test error if not reached within a timeout
         public static Task<TResult> AwaitWithTimeout<TResult>(this TaskCompletionSource<TResult> taskSource)
         {
             return taskSource.Task;
         }
 
-        // Test error if not reached within a timeout 
+        // Test error if not reached within a timeout
         public static TResult AwaitWithTimeout<TResult>(this Task<TResult> taskSource)
         {
             Await(() => taskSource.IsCompleted).Wait();
@@ -84,10 +85,10 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             await Await(() => Task.FromResult(condition()), timeout, pollingInterval, throwWhenDebugging, userMessageCallback);
         }
 
-        // Test that we get an indexing error (FunctionIndexingException)  
-        // functionName - the function name that has the indexing error. 
+        // Test that we get an indexing error (FunctionIndexingException)
+        // functionName - the function name that has the indexing error.
         // expectedErrorMessage - inner exception's message with details.
-        // Invoking func() should cause an indexing error. 
+        // Invoking func() should cause an indexing error.
         public static void AssertIndexingError(Action func, string functionName, string expectedErrorMessage)
         {
             try
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             catch (FunctionIndexingException e)
             {
                 Assert.Equal("Error indexing method '" + functionName + "'", e.Message);
-                Assert.StartsWith(expectedErrorMessage, e.InnerException.Message);
+                Assert.StartsWith(expectedErrorMessage, e.InnerException.Message, StringComparison.InvariantCulture);
                 return;
             }
             Assert.True(false, "Invoker should have failed");
@@ -230,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
             if (newlyIntroducedPublicTypes.Length > 0)
             {
-                string message = string.Format("Found {0} unexpected public type{1}: \r\n{2}",
+                string message = string.Format(CultureInfo.InvariantCulture, "Found {0} unexpected public type{1}: \r\n{2}",
                     newlyIntroducedPublicTypes.Length,
                     newlyIntroducedPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", newlyIntroducedPublicTypes));
@@ -241,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
             if (missingPublicTypes.Length > 0)
             {
-                string message = string.Format("missing {0} public type{1}: \r\n{2}",
+                string message = string.Format(CultureInfo.InvariantCulture, "missing {0} public type{1}: \r\n{2}",
                     missingPublicTypes.Length,
                     missingPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", missingPublicTypes));

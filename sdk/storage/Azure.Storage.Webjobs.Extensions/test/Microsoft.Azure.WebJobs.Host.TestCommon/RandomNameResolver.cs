@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     public class RandomNameResolver : INameResolver
     {
         // Convert to lowercase because many Azure services expect only lowercase
-        private readonly string _randomString = Guid.NewGuid().ToString("N").ToLower();
+        private readonly string _randomString = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture);
 
         public virtual string Resolve(string name)
         {

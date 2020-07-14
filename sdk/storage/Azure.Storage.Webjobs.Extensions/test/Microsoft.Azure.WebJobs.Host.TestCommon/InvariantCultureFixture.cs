@@ -20,6 +20,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         public void Dispose()
         {
             Thread.CurrentThread.CurrentCulture = _originalCultureInfo;
+            GC.SuppressFinalize(this);
         }
     }
 }

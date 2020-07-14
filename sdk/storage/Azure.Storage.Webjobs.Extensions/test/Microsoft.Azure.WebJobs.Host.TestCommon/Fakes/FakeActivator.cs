@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
     public class FakeActivator : IJobActivator
     {
-        public Dictionary<Type, object> _instances = new Dictionary<Type, object>();
+        private Dictionary<Type, object> _instances = new Dictionary<Type, object>();
 
         public FakeActivator(params object[] objs)
         {

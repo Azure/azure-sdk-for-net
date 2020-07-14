@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         private readonly IJobActivator _jobActivator;
 
         public JobHost(
-            IOptions<JobHostOptions> options, 
+            IOptions<JobHostOptions> options,
             IJobHostContextFactory contextFactory,
             IJobActivator jobActivator)
             : base(options, contextFactory)
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             await base.CallAsync(typeof(TProgram).GetMethod(methodName), arguments);
         }
 
-        // Start listeners and run until the Task source is set. 
+        // Start listeners and run until the Task source is set.
         public async Task<TResult> RunTriggerAsync<TResult>(TaskCompletionSource<TResult> taskSource= null)
         {
             // Program was registered with the job activator, so we can get it
@@ -57,26 +58,26 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return result;
         }
 
-        // Helper for quickly testing indexing errors 
+        // Helper for quickly testing indexing errors
         public async Task AssertIndexingError(string methodName, string expectedErrorMessage)
         {
             try
             {
-                // Indexing is lazy, so must actually try a call first. 
+                // Indexing is lazy, so must actually try a call first.
                 await this.CallAsync(methodName);
             }
             catch (FunctionIndexingException e)
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
                 Assert.Equal("Error indexing method '" + functionName + "'", e.Message);
-                Assert.Contains(expectedErrorMessage, e.InnerException.Message);
+                Assert.Contains(expectedErrorMessage, e.InnerException.Message, StringComparison.InvariantCulture);
                 return;
             }
             Assert.True(false, "Invoker should have failed");
         }
     }
 
-    // $$$ Meanth to simplify some tests - is this worth it? 
+    // $$$ Meanth to simplify some tests - is this worth it?
     public interface IProgramWithResult<TResult>
     {
         TaskCompletionSource<TResult> TaskSource { get; set; }

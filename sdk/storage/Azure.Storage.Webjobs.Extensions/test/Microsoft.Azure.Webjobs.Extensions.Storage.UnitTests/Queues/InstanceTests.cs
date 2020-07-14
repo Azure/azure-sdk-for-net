@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        // $$$ this test should apply to any trigger and be in the Unit tests. 
+        // $$$ this test should apply to any trigger and be in the Unit tests.
         [Fact]
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
               }, null, activator)
               .Build();
 
-            // Act            
+            // Act
             var jobHost = host.GetJobHost<InstanceCustomActivatorProgram>();
             Assert.NotNull(jobHost);
 
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public InstanceCustomActivatorProgram(IFactory<string> resultFactory)
             {
-                _resultFactory = resultFactory ?? throw new ArgumentNullException("resultFactory");
+                _resultFactory = resultFactory ?? throw new ArgumentNullException(nameof(resultFactory));
             }
 
             public static TaskCompletionSource<string> TaskSource { get; set; } = new TaskCompletionSource<string>();

@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Dictionary<string, string> metadata = new Dictionary<string, string>();
             var blobMock = new Mock<ICloudBlob>(MockBehavior.Strict);
             blobMock.Setup(s => s.Metadata).Returns(metadata);
-            
+
             if (isFetchSuccess.HasValue)
             {
                 var fetchAttributesSetup = blobMock.Setup(s => s.FetchAttributesAsync(It.IsAny<CancellationToken>()));

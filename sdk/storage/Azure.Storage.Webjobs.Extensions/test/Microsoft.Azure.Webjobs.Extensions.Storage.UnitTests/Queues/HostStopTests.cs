@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             CloudQueue queue = client.GetQueueReference(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
-        }        
+        }
 
         private class CallbackCancellationTokenProgram
         {

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<byte[], int, int, AsyncCallback, object>((i1, i2, i3, callback, state) =>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<byte[], int, int, AsyncCallback, object>((i1, i2, i3, callback, state) =>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         {
             if (setup == null)
             {
-                throw new ArgumentNullException("setup");
+                throw new ArgumentNullException(nameof(setup));
             }
 
             return setup.Returns<byte[], int, int, AsyncCallback, object>((i1, i2, i3, i4, state) =>

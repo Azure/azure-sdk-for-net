@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
                 {
                     b.UseFakeStorage();
                 });
-                
+
 
             var host = builder.Build().GetJobHost<TestFunctions>();
 
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             {
                 TestFunctions.Result = null;
             }
-        }             
+        }
 
         private class MessageWithStringableProperty
         {

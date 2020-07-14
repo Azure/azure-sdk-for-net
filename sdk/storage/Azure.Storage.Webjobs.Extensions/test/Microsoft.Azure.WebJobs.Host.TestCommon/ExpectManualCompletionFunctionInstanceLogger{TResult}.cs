@@ -11,7 +11,7 @@ using Microsoft.Azure.WebJobs.Host.Protocols;
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles
 {
     // Hook IFunctionInstanceLogger to capture a notification when a function instance has completed.
-    // This can catch failure notifications (including binding falilures) 
+    // This can catch failure notifications (including binding falilures)
     public class ExpectManualCompletionFunctionInstanceLogger<TResult> : IFunctionInstanceLogger
     {
         private readonly bool _signalOnFirst;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles
         private readonly HashSet<string> _ignoreFailureFunctions;
 
         public ExpectManualCompletionFunctionInstanceLogger(
-            TaskCompletionSource<TResult> taskSource, 
+            TaskCompletionSource<TResult> taskSource,
             bool signalOnFirst, // if true, signal after the first instance has run
             IEnumerable<string> ignoreFailureFunctions = null // whitelist expected failures
             )

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         {
             if (task == null)
             {
-                throw new ArgumentNullException("task");
+                throw new ArgumentNullException(nameof(task));
             }
 
             CreateCompletionTask(task).Wait();
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         {
             if (task == null)
             {
-                throw new ArgumentNullException("task");
+                throw new ArgumentNullException(nameof(task));
             }
 
             return CreateCompletionTask(task).Wait(millisecondsTimeout);
@@ -30,6 +30,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
         private static Task CreateCompletionTask(Task task)
         {
+#pragma warning disable CA2008 // Do not create tasks without passing a TaskScheduler
             return task.ContinueWith((t) =>
             {
                 if (t.IsFaulted)
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                     var observed = t.Exception;
                 }
             }, TaskContinuationOptions.ExecuteSynchronously);
+#pragma warning restore CA2008 // Do not create tasks without passing a TaskScheduler
         }
     }
 }

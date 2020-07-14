@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
 
             try
             {
-                // Make sure that using our StorageAccount uses the underlying SdkAccount                
+                // Make sure that using our StorageAccount uses the underlying SdkAccount
                 CloudQueueClient client = storageAccount.CreateCloudQueueClient();
                 Assert.NotNull(client); // Guard
                 CloudQueue queue = client.GetQueueReference(queueName);

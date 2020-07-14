@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <PublicSign>false</PublicSign>
+    <DelaySign>true</DelaySign>
+    <AssemblyName>Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests</AssemblyName>
+    <RootNamespace>Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests</RootNamespace>
+    <NoWarn></NoWarn>
+    <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Azure.Storage.Queue" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" VersionOverride="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Microsoft.Azure.WebJobs.Extensions.Storage\Azure.WebJobs.Extensions.Storage.csproj" />
+    <ProjectReference Include="..\FakeStorage\FakeAzureStorage.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <Target Name="TestMessage" AfterTargets="Build;Clean">
+
+    <!-- Use $(Property Name) to reference a property -->
+    <Message Text="#################################################################################" Importance="high" />
+    <Message Text="MSBuildProjectName: $(MSBuildProjectName)" Importance="high" />
+    <Message Text="IsClientLibrary: $(IsClientLibrary)" Importance="high" />
+    <Message Text="IsTestProject: $(IsTestProject)" Importance="high" />
+    <Message Text="IsTestSupportProject: $(IsTestSupportProject)" Importance="high" />
+    <Message Text="IsDataPlaneProject: $(IsDataPlaneProject)" Importance="high" />
+    <Message Text="IsMgmtClientLibrary: $(IsMgmtClientLibrary)" Importance="high" />
+    <Message Text="IsSamplesProject: $(IsSamplesProject)" Importance="high" />
+    <Message Text="IsShippingClientLibrary: $(IsShippingClientLibrary)" Importance="high" />
+    <Message Text="EnableStyleCopAnalyzers: $(EnableStyleCopAnalyzers)" Importance="high" />
+    <Message Text="SupportsNetStandard20: $(SupportsNetStandard20)" Importance="high" />
+    <Message Text="#################################################################################" Importance="high" />
+  </Target>
+</Project>

@@ -23,7 +23,7 @@ using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    // $$$ - this should be split up into blob/table/queue 
+    // $$$ - this should be split up into blob/table/queue
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)
     public class HostCallTests
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 TextWriter tw = binder.Bind<TextWriter>(new BlobAttribute(OutputBlobPath));
                 tw.Write("output");
 
-                // closed automatically 
+                // closed automatically
             }
         }
 
@@ -778,7 +778,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private class PocoBlob
         {
             public string Value;
-        }      
+        }
 
         private static async Task CallAsync(StorageAccount account, Type programType, string methodName, params Type[] customExtensions)
         {
@@ -880,7 +880,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public static void FuncWithT([Blob(BlobPath)] CustomDataObject value)
             {
-                Assert.Null(value); // null value is Blob is Missing 
+                Assert.Null(value); // null value is Blob is Missing
             }
 
             public static void FuncWithOutT([Blob(BlobPath)] out CustomDataObject value)
@@ -895,7 +895,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public static void FuncWithValueT([Blob(BlobPath)] CustomDataValue value)
             {
-                // default(T) is blob is missing 
+                // default(T) is blob is missing
 #pragma warning disable xUnit2002 // Do not use null check on value type
                 Assert.NotNull(value);
 #pragma warning restore xUnit2002 // Do not use null check on value type
@@ -1106,7 +1106,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 value = new StructMessage { Value = TestQueueMessage };
             }
         }
-        
+
 
         internal class CustomBlobConverterExtensionConfigProvider : IExtensionConfigProvider
         {
@@ -1133,7 +1133,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
                 context.AddConverter<Stream, CustomDataObject>(s =>
                 {
-                    // Read() shouldn't be called if the stream is missing. 
+                    // Read() shouldn't be called if the stream is missing.
                     Assert.False(true, "If stream is missing, should never call Read() converter");
                     return null;
                 });
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
                 context.AddConverter<Stream, CustomDataValue>(s =>
                 {
-                    // Read() shouldn't be called if the stream is missing. 
+                    // Read() shouldn't be called if the stream is missing.
                     Assert.False(true, "If stream is missing, should never call Read() converter");
                     return default(CustomDataValue);
                 });

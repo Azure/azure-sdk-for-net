@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     public class FakeNameResolver : INameResolver
     {
-        public IDictionary<string, string> _dict = new Dictionary<string, string>();
+        private IDictionary<string, string> _dict = new Dictionary<string, string>();
 
         public string Resolve(string name)
         {

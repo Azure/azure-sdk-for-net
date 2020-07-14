@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
     "The dash (-) character may not be the first or last letter - \"-illegalname-\"{0}Parameter " +
     "name: name", Environment.NewLine);
 
-            await jobHost.AssertIndexingError(nameof(InvalidQueueNameProgram.Invalid), expectedMessage); 
+            await jobHost.AssertIndexingError(nameof(InvalidQueueNameProgram.Invalid), expectedMessage);
         }
 
         private class InvalidQueueNameProgram

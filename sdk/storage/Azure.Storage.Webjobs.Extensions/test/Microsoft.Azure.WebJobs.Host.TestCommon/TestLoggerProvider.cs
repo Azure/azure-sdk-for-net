@@ -47,6 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
     }
 }

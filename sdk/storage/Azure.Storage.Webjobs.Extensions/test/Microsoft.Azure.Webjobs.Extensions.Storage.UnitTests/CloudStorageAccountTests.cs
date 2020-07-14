@@ -36,9 +36,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Act
             var t = typeof(CloudStorageAccountProgram);
             var result = await FunctionalTest.CallAsync<CloudStorageAccount>(
-                account, 
-                t, 
-                t.GetMethod(nameof(CloudStorageAccountProgram.BindToCloudStorageAccount)), 
+                account,
+                t,
+                t.GetMethod(nameof(CloudStorageAccountProgram.BindToCloudStorageAccount)),
                 null, // args
                 (s) => CloudStorageAccountProgram.TaskSource = s);
 

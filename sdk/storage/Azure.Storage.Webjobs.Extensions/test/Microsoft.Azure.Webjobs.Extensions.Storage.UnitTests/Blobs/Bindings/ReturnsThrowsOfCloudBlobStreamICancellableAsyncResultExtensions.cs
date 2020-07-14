@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             if (returnsThrows == null)
             {
-                throw new ArgumentNullException("returnsThrows");
+                throw new ArgumentNullException(nameof(returnsThrows));
             }
 
             return returnsThrows.Returns<AsyncCallback, object>((callback, state) =>

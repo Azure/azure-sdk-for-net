@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 
@@ -24,10 +25,10 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
         public DateTime Timestamp { get; set; }
 
-        public override string ToString() => $"[{Timestamp.ToString("HH:mm:ss.fff")}] [{Category}] {FormattedMessage} {Exception}";
+        public override string ToString() => $"[{Timestamp.ToString("HH:mm:ss.fff", CultureInfo.InvariantCulture)}] [{Category}] {FormattedMessage} {Exception}";
 
         /// <summary>
-        /// Returns the value for the key in State. Will throw an exception if there is not 
+        /// Returns the value for the key in State. Will throw an exception if there is not
         /// exactly one instance of this key in the dictionary.
         /// </summary>
         /// <typeparam name="T">The type to cast the value to.</typeparam>

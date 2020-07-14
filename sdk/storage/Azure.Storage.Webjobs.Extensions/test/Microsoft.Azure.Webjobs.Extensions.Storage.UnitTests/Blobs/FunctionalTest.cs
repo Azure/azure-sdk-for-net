@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    // $$$  Remove all this. See Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob for an example of what it should be. 
+    // $$$  Remove all this. See Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob for an example of what it should be.
     internal class FunctionalTest
     {
         // $$$ Reconcile with TestJobHost.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             try
             {
-                using (var jobHost = host.GetJobHost())
+                using (JobHost jobHost = host.GetJobHost())
                 {
                     // start listeners. One of them will set the completition task
                     await jobHost.StartAsync();
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
             catch (Exception exception)
             {
-                // Unwrap 
+                // Unwrap
                 var e = exception;
                 while (e != null)
                 {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // Caller has already setup a trigger.
-        // Runs the first triggered function and then returns. 
+        // Runs the first triggered function and then returns.
         // Expected that this instance provided some side-effect (ie, wrote to storage)
         // that the caller can monitor.
         internal static async Task RunTriggerAsync(StorageAccount account, Type programType)
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return null;
         }
 
-        // Call the method, and expect a failure. Return the exception. 
+        // Call the method, and expect a failure. Return the exception.
         internal static async Task<Exception> CallFailureAsync(StorageAccount account, Type programType, MethodInfo methodInfo, object arguments)
         {
             var host = new HostBuilder()

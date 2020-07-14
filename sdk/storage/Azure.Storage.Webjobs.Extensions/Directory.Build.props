@@ -5,6 +5,15 @@
   <PropertyGroup>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.TestCommon'))">
+    <IsTestProject>false</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
+  </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
@@ -28,6 +37,17 @@
     -->
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' ">
+    <NoWarn>
+      $(NoWarn);
+      AZC0100;
+      CA1307;
+      CS1591;
+      SA1402;
+      SA1649;
+    </NoWarn>
+  </PropertyGroup>
+
 
   <!-- DEBUG specific settings -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,7 +56,7 @@
   </PropertyGroup>
 
   <!-- Add references for CLIENT LIBRARY projects -->
-  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
+  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
