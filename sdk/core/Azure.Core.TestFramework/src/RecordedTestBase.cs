@@ -58,8 +58,8 @@ namespace Azure.Core.TestFramework
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
-            string directorySuffix = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectoryKey) ?
-                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectoryKey).ToString() :
+            string directorySuffix = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
                 string.Empty;
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);

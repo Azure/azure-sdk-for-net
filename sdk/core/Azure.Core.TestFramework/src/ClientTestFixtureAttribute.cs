@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
         public static readonly string SyncOnlyKey = "SyncOnly";
-        public static readonly string RecordingDirectoryKey = "RecordingDirectory";
+        public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
 
         private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
@@ -24,12 +24,8 @@ namespace Azure.Core.TestFramework
         /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
         /// </summary>
         /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
-        public ClientTestFixtureAttribute(params object[] serviceVersions)
-        {
-            _serviceVersions = serviceVersions;
-
-            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
-        }
+        public ClientTestFixtureAttribute(params object[] serviceVersions) : this(serviceVersions: serviceVersions, default)
+        { }
 
         /// <summary>
         /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
@@ -38,8 +34,6 @@ namespace Azure.Core.TestFramework
         /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
         public ClientTestFixtureAttribute(object[] serviceVersions, object[] additionalParameters)
         {
-            Assert.IsNotNull(additionalParameters, nameof(additionalParameters));
-
             _additionalParameters = additionalParameters ?? new object[] { };
             _serviceVersions = serviceVersions ?? new object[] { };
 
@@ -66,15 +60,15 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object paramter)> GeneratePermutations()
+        private List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)> GeneratePermutations()
         {
-            var result = new List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object paramter)>();
+            var result = new List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)>();
 
             if (_serviceVersions.Any())
             {
                 foreach (object serviceVersion in _serviceVersions)
                 {
-                    if (_additionalParameters?.Any() ?? false)
+                    if (_additionalParameters.Any())
                     {
                         foreach (var parameter in _additionalParameters)
                         {
@@ -84,7 +78,7 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        // No additional paramters defined
+                        // No additional parameters defined
                         result.Add((new TestFixtureAttribute(false, serviceVersion), false, serviceVersion, null));
                         result.Add((new TestFixtureAttribute(true, serviceVersion), true, serviceVersion, null));
                     }
@@ -92,7 +86,7 @@ namespace Azure.Core.TestFramework
             }
             else
             {
-                if (_additionalParameters?.Any() ?? false)
+                if (_additionalParameters.Any())
                 {
                     foreach (var parameter in _additionalParameters)
                     {
@@ -102,7 +96,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    // No additional paramters defined
+                    // No additional parameters defined
                     result.Add((new TestFixtureAttribute(false), false, null, null));
                     result.Add((new TestFixtureAttribute(true), true, null, null));
                 }
@@ -134,7 +128,7 @@ namespace Azure.Core.TestFramework
         {
             if (parameter != null)
             {
-                test.Properties.Set(RecordingDirectoryKey, parameter.ToString());
+                test.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
             }
             if (test.GetCustomAttributes<SyncOnlyAttribute>(true).Any())
             {
