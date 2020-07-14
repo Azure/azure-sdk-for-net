@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             TestHelper.AssertExpectedException(
                 () => queueSasBuilder.SetPermissions("ptsdfsd"),
-                new ArgumentException("s is not a valid SAS permission"));
+                new ArgumentException("t is not a valid SAS permission"));
         }
 
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)

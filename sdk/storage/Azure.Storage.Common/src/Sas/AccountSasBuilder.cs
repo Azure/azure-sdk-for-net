@@ -94,8 +94,25 @@ namespace Azure.Storage.Sas
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
-            Permissions = ValidateAndSanitizeRawPermissions(rawPermissions);
+            Permissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                permissions: rawPermissions,
+                validPermissionsInOrder: s_validPermissionsInOrder);
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.FilterByTags,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -152,90 +169,6 @@ namespace Azure.Storage.Sas
                 Permissions,
                 signature);
             return p;
-        }
-
-        private static string ValidateAndSanitizeRawPermissions(string permissions)
-        {
-            if (permissions == null)
-            {
-                return null;
-            }
-
-            // Convert permissions string to lower case.
-            permissions = permissions.ToLowerInvariant();
-
-            HashSet<char> permissionsSet = new HashSet<char>();
-
-            foreach (char permission in permissions)
-            {
-                // Check that each permission is a real SAS permission.
-                if (!Constants.Sas.ValidPermissions.Contains(permission))
-                {
-                    throw new ArgumentException($"{permission} is not a valid SAS permission");
-                }
-
-                // Add permission to permissionsSet for re-ordering.
-                permissionsSet.Add(permission);
-            }
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Read))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Read);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Write))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Write);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Delete))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Delete);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.DeleteBlobVersion))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.DeleteBlobVersion);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.List))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.List);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Add))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Add);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Create))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Create);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Update))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Update);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Process))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Process);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.Tag))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.Tag);
-            }
-
-            if (permissionsSet.Contains(Constants.Sas.Permissions.FilterByTags))
-            {
-                stringBuilder.Append(Constants.Sas.Permissions.FilterByTags);
-            }
-
-            return stringBuilder.ToString();
         }
 
         /// <summary>

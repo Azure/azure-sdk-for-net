@@ -361,7 +361,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             TestHelper.AssertExpectedException(
                 () => blobSasBuilder.SetPermissions("ptsdfsd"),
-                new ArgumentException("s is not a valid SAS permission"));
+                new ArgumentException("p is not a valid SAS permission"));
         }
 
         private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)

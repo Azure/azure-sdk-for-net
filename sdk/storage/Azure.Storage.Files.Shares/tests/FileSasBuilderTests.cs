@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             TestHelper.AssertExpectedException(
                 () => blobSasBuilder.SetPermissions("ptsdfsd"),
-                new ArgumentException("s is not a valid SAS permission"));
+                new ArgumentException("p is not a valid SAS permission"));
         }
 
         private ShareSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath, TestConstants constants, string shareName, string filePath)
