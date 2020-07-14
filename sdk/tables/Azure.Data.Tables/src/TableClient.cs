@@ -553,8 +553,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
@@ -604,8 +604,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
@@ -667,8 +667,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
@@ -705,8 +705,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
@@ -728,8 +728,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
@@ -775,8 +775,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
@@ -798,8 +798,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns this number of tables or entities per page.</param>
+        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 

@@ -127,8 +127,8 @@ namespace Azure.Data.Tables
         /// Gets a list of tables from the storage account.
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns only the maxPerPage n tables or entities from the set.</param>
+        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
@@ -167,7 +167,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">Returns only the maxPerPage n tables or entities from the set.</param>
+        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
