@@ -11,7 +11,7 @@
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version supports the StorageSync API version 2020-03-01 and includes support for private links, and additional cloud tiering status.
+            This version supports the StorageSync API version 2020-03-01 and includes support for private links, and additional cloud tiering status. This change includes the code generation changes for tiering policy properties.
         ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
