@@ -31,7 +31,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 List<Location> locations = new List<Location>();
                 locations.Add(new Location(locationName: "East US"));
-                DatabaseAccountCreateUpdateProperties databaseAccountCreateUpdateProperties = new DatabaseAccountCreateUpdateProperties
+                DefaultRequestDatabaseAccountCreateUpdateProperties databaseAccountCreateUpdateProperties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                 {
                     ConsistencyPolicy = new ConsistencyPolicy
                     {

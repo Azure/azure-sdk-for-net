@@ -55,7 +55,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Properties = new DatabaseAccountCreateUpdateProperties
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
                             Locations = new List<Location>
                             {

@@ -57,7 +57,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Properties = new DatabaseAccountCreateUpdateProperties
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
                             Locations = new List<Location>()
                             {
