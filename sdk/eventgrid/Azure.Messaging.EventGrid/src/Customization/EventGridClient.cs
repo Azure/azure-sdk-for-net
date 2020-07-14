@@ -87,17 +87,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-        {
-            return await PublishEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
-        }
+            => await PublishEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-        {
-            return PublishEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
-        }
+            => PublishEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
@@ -154,17 +150,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCloudEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-        {
-            return await PublishCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
-        }
+            => await PublishCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCloudEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-        {
-            return PublishCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
-        }
+            => PublishCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
@@ -230,17 +222,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCustomEventsAsync(IEnumerable<object> events, CancellationToken cancellationToken = default)
-        {
-            return await PublishCustomEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
-        }
+            => await PublishCustomEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCustomEvents(IEnumerable<object> events, CancellationToken cancellationToken = default)
-        {
-            return PublishCustomEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
-        }
+            => PublishCustomEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
         {

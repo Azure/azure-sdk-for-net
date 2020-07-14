@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Messaging.EventGrid.Tests.SessionRecords
+namespace Azure.Messaging.EventGrid.Tests
 {
     internal class TestPayload
     {
