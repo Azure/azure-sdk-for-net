@@ -28,6 +28,10 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkSessionCollection class.
         /// </summary>
+        /// <param name="fromProperty">The start index to fetch
+        /// sessions.</param>
+        /// <param name="total">Number of sessions to fetch.</param>
+        /// <param name="sessions">Session list.</param>
         public SparkSessionCollection(int? fromProperty = default(int?), int? total = default(int?), IList<SparkSessionJob> sessions = default(IList<SparkSessionJob>))
         {
             FromProperty = fromProperty;
@@ -42,16 +46,19 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the start index to fetch sessions.
         /// </summary>
         [JsonProperty(PropertyName = "from")]
         public int? FromProperty { get; set; }
 
         /// <summary>
+        /// Gets or sets number of sessions to fetch.
         /// </summary>
         [JsonProperty(PropertyName = "total")]
         public int? Total { get; set; }
 
         /// <summary>
+        /// Gets or sets session list.
         /// </summary>
         [JsonProperty(PropertyName = "sessions")]
         public IList<SparkSessionJob> Sessions { get; set; }

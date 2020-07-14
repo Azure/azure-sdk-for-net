@@ -26,6 +26,13 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkStatement class.
         /// </summary>
+        /// <param name="id">The statement id.</param>
+        /// <param name="code">The execution code.</param>
+        /// <param name="state">The execution state. Possible values include:
+        /// 'waiting', 'running', 'available', 'error', 'cancelling',
+        /// 'cancelled'</param>
+        /// <param name="output">The execution output.</param>
+        /// <param name="progress">The execution progress.</param>
         public SparkStatement(int? id = default(int?), string code = default(string), string state = default(string), SparkStatementOutput output = default(SparkStatementOutput), double? progress = default(double?))
         {
             Id = id;
@@ -42,26 +49,33 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the statement id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the execution code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets the execution state. Possible values include:
+        /// 'waiting', 'running', 'available', 'error', 'cancelling',
+        /// 'cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
+        /// Gets or sets the execution output.
         /// </summary>
         [JsonProperty(PropertyName = "output")]
         public SparkStatementOutput Output { get; set; }
 
         /// <summary>
+        /// Gets or sets the execution progress.
         /// </summary>
         [JsonProperty(PropertyName = "progress")]
         public double? Progress { get; set; }

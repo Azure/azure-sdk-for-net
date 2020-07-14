@@ -26,6 +26,10 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkJobState class.
         /// </summary>
+        /// <param name="id">Session id.</param>
+        /// <param name="state">The current state of session. Possible values
+        /// include: 'not_started', 'starting', 'idle', 'running', 'busy',
+        /// 'shutting_down', 'error', 'dead', 'killed', 'success'</param>
         public SparkJobState(int? id = default(int?), string state = default(string))
         {
             Id = id;
@@ -39,11 +43,15 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets session id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the current state of session. Possible values include:
+        /// 'not_started', 'starting', 'idle', 'running', 'busy',
+        /// 'shutting_down', 'error', 'dead', 'killed', 'success'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
