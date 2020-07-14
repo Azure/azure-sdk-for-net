@@ -187,12 +187,13 @@ namespace Azure.Core.Tests
         {
             var requestMre = new ManualResetEventSlim(true);
             var responseMre = new ManualResetEventSlim(true);
-            var expiresOnOffset = 2;
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddSeconds(2), currentTime.AddMinutes(6) });
             var credential = new TokenCredentialStub((r, c) =>
             {
                 requestMre.Set();
                 responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(expiresOnOffset++));
+                return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, new[]{ "scope" }, TimeSpan.FromSeconds(2));
@@ -201,7 +202,7 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string authValue));
 
-            await Task.Delay(2_000);
+            await Task.Delay(3_000);
 
             requestMre.Reset();
             responseMre.Reset();
@@ -209,6 +210,7 @@ namespace Azure.Core.Tests
             var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/1"));
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2"));
             requestMre.Wait();
+            await Task.Delay(1_000);
             responseMre.Set();
 
             await Task.WhenAll(firstRequestTask, secondRequestTask);
@@ -247,7 +249,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void BearerTokenAuthenticationPolicy_GatedConcurrentCallsFailed()
+        public async Task BearerTokenAuthenticationPolicy_GatedConcurrentCallsFailed()
         {
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
@@ -263,7 +265,53 @@ namespace Azure.Core.Tests
 
             var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+
             requestMre.Wait();
+            await Task.Delay(1_000);
+            responseMre.Set();
+
+            Assert.CatchAsync(async () => await Task.WhenAll(firstRequestTask, secondRequestTask));
+
+            Assert.IsTrue(firstRequestTask.IsFaulted);
+            Assert.IsTrue(secondRequestTask.IsFaulted);
+            Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_TokenExpiredThenFailed()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var fail = false;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                if (fail)
+                {
+                    throw new InvalidOperationException("Error");
+                }
+
+                fail = true;
+                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[]{ "scope" }, TimeSpan.FromSeconds(2));
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string _));
+
+            await Task.Delay(3_000);
+
+            requestMre.Reset();
+            responseMre.Reset();
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
+
+            requestMre.Wait();
+            await Task.Delay(1_000);
             responseMre.Set();
 
             Assert.CatchAsync(async () => await Task.WhenAll(firstRequestTask, secondRequestTask));
