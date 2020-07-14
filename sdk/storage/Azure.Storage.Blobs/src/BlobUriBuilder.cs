@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -215,7 +216,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath();   // The blob name is after the container slash
                 }
             }
 

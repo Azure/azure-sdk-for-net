@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     public partial class EventRoutesListOptions

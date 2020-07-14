@@ -5,11 +5,11 @@ languages:
 products:
 - azure
 - azure-storage
-name: Azure.Storage.ChangeFeed samples for .NET
+name: Azure.Storage.Blobs.ChangeFeed samples for .NET
 description: Samples for the Azure.Storage.Blobs.ChangeFeed client library
 ---
 
-# Azure.Storage.ChangeFeed Samples
+# Azure.Storage.Blobs.ChangeFeed Samples
 
 - Iterate through the entire Change Feed [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/Sample01a_HelloWorld.cs#L23) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/Sample01b_HelloWorldAsync.cs#L24)
 - Iterate through the Change Feed between a start and end date [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/Sample01a_HelloWorld.cs#L46) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/Sample01b_HelloWorldAsync.cs#L49)

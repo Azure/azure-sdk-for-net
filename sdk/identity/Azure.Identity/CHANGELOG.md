@@ -1,5 +1,8 @@
 # Release History
 
+## 1.2.0-preview.6 (Unreleased)
+
+
 ## 1.2.0-preview.5 (2020-07-08)
 
 ### New Features

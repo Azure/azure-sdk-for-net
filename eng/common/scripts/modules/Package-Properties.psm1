@@ -3,13 +3,24 @@
 class PackageProps
 {
     [string]$pkgName
-    [AzureEngSemanticVersion]$pkgVersion
+    [string]$pkgVersion
     [string]$pkgDirectoryPath
     [string]$pkgServiceName
     [string]$pkgReadMePath
     [string]$pkgChangeLogPath
+    [string]$pkgGroup
 
-    PackageProps(
+    PackageProps([string]$pkgName,[string]$pkgVersion,[string]$pkgDirectoryPath,[string]$pkgServiceName)
+    {
+        $this.Initialize($pkgName, $pkgVersion, $pkgDirectoryPath, $pkgServiceName)
+    }
+
+    PackageProps([string]$pkgName,[string]$pkgVersion,[string]$pkgDirectoryPath,[string]$pkgServiceName,[string]$pkgGroup="")
+    {
+        $this.Initialize($pkgName, $pkgVersion, $pkgDirectoryPath, $pkgServiceName, $pkgGroup)
+    }
+
+    hidden [void]Initialize(
         [string]$pkgName,
         [string]$pkgVersion,
         [string]$pkgDirectoryPath,
@@ -17,11 +28,7 @@ class PackageProps
     )
     {
         $this.pkgName = $pkgName
-        $this.pkgVersion = [AzureEngSemanticVersion]::ParseVersionString($pkgVersion)
-        if ($this.pkgVersion -eq $null)
-        {
-            Write-Error "Invalid version in $pkgDirectoryPath"
-        }
+        $this.pkgVersion = $pkgVersion
         $this.pkgDirectoryPath = $pkgDirectoryPath
         $this.pkgServiceName = $pkgServiceName
 
@@ -43,9 +50,24 @@ class PackageProps
             $this.pkgChangeLogPath = $null
         }
     }
+
+    hidden [void]Initialize(
+        [string]$pkgName,
+        [string]$pkgVersion,
+        [string]$pkgDirectoryPath,
+        [string]$pkgServiceName,
+        [string]$pkgGroup
+    )
+    {
+        $this.Initialize($pkgName, $pkgVersion, $pkgDirectoryPath, $pkgServiceName)
+        $this.pkgGroup = $pkgGroup
+    }
 }
 
 $ProgressPreference = "SilentlyContinue"
+
+
+Register-PSRepository -Default -ErrorAction:SilentlyContinue
 Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
 
 function Extract-PkgProps ($pkgPath, $serviceName, $pkgName, $lang)
@@ -127,10 +149,11 @@ function Extract-JavaPkgProps ($pkgPath, $serviceName, $pkgName)
         $projectData.load($projectPath)
         $projectPkgName = $projectData.project.artifactId
         $pkgVersion = $projectData.project.version
+        $pkgGroup = $projectData.project.groupId
 
         if ($projectPkgName -eq $pkgName)
         {
-            return [PackageProps]::new($pkgName, $pkgVersion.ToString(), $pkgPath, $serviceName)
+            return [PackageProps]::new($pkgName, $pkgVersion.ToString(), $pkgPath, $serviceName, $pkgGroup)
         }
     }
     return $null

@@ -2633,7 +2633,9 @@ namespace Azure.Storage.Files.DataLake
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream, DataLakeFileUploadOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeFileUploadOptions.Conditions"/> or alternatively use
+        /// <see cref="Upload(Stream)"/>, <see cref="Upload(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2668,7 +2670,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeRequestConditions"/> or alternatively use
+        /// <see cref="Upload(Stream)"/>, <see cref="Upload(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2722,7 +2726,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2747,7 +2751,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2782,7 +2786,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, DataLakeFileUploadOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeFileUploadOptions.Conditions"/> or alternatively use
+        /// <see cref="UploadAsync(Stream)"/>, <see cref="UploadAsync(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2817,7 +2823,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeRequestConditions"/> or alternatively use
+        /// <see cref="UploadAsync(Stream)"/>, <see cref="UploadAsync(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2872,7 +2880,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2898,7 +2906,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2933,7 +2941,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(string, DataLakeFileUploadOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeFileUploadOptions.Conditions"/> or alternatively use
+        /// <see cref="Upload(Stream)"/>, <see cref="Upload(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2969,7 +2979,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeRequestConditions"/> or alternatively use
+        /// <see cref="Upload(Stream)"/>, <see cref="Upload(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3031,7 +3043,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3057,7 +3069,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3092,7 +3104,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(string, DataLakeFileUploadOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeFileUploadOptions.Conditions"/> or alternatively use
+        /// <see cref="UploadAsync(Stream)"/>, <see cref="UploadAsync(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3133,7 +3147,9 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwritten,
+        /// unless otherwise specified in the <see cref="DataLakeRequestConditions"/> or alternatively use
+        /// <see cref="Upload(Stream)"/>, <see cref="Upload(Stream, bool, CancellationToken)"/>.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3188,7 +3204,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -3214,7 +3230,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
-        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        /// operation creates and uploads content to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>

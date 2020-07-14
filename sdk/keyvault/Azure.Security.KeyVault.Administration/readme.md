@@ -123,12 +123,12 @@ foreach (RoleDefinition roleDefinition in allDefinitions)
 ### Create, Get, and Delete a role assignment
 Assign a role to a service principal. This will require a role definition id from the list retrieved in the [above snippet](#list-the-role-definitions) and the principal object id retrieved in the [Create/Get credentials](#create/get-credentials)
 
-```C# Snippet:CreateRoleAssignment
-// Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
-string definitionIdToAssign = roleDefinitionId;
+```C# Snippet:ReadmeCreateRoleAssignment
+// Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
+string definitionIdToAssign = "<roleDefinitionId>";
 
-// Replace objectId with the service principal object id from the Create/Get credentials section above
-string servicePrincipalObjectId = objectId;
+// Replace <objectId> with the service principal object id from the Create/Get credentials section above
+string servicePrincipalObjectId = "<objectId>";
 
 RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
 RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
