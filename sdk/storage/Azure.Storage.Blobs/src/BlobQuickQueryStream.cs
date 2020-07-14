@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Internal.Avro;
 using Azure.Storage.Blobs.Models;
+using System.Buffers;
 
 namespace Azure.Storage.Blobs
 {
@@ -58,7 +59,7 @@ namespace Azure.Storage.Blobs
         {
             _avroStream = avroStream;
             _avroReader = new AvroReader(_avroStream);
-            _buffer = new byte[Constants.Blob.QuickQueryDownloadSize];
+            _buffer = ArrayPool<byte>.Shared.Rent(Constants.Blob.QuickQueryDownloadSize);
             _bufferOffset = 0;
             _bufferLength = 0;
             _progressHandler = progressHandler;
@@ -296,6 +297,13 @@ namespace Azure.Storage.Blobs
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            // Return the buffer to the pool if we're called from Dispose or a finalizer
+            if (_buffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                _buffer = null;
+            }
+
             _avroStream.Dispose();
         }
     }
