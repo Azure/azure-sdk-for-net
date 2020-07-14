@@ -3,16 +3,6 @@ steps:
     displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
     inputs:
       version: $(DotNetCoreSDKVersion)
-  - task: UsePythonVersion@0
-    displayName: 'Use Python 3.6'
-    inputs:
-      versionSpec: '3.6'
-  - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
-    parameters:
-      TargetFolder: '.'
-      RootFolder: '.'
-      BuildSHA: $(Build.SourceVersion)
-      RepoId: 'Azure/azure-sdk-for-net'
   - pwsh: |
       # Download and Extract or restore Packages required for Doc Generation
       Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
