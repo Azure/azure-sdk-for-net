@@ -7,7 +7,7 @@ extends:
       # Azure Cloud
       - ServiceDirectory: extensions
         ScenarioName: AzureCloud
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ArmTemplateParameters: "@{ keyVaultEndpointSuffix = '.vault.azure.net' }"
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
