@@ -70,194 +70,19 @@ namespace Microsoft.Azure.Management.Synapse
 
 
         /// <summary>
-        /// Gets the IBigDataPoolsOperations.
-        /// </summary>
-        IBigDataPoolsOperations BigDataPools { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IIpFirewallRulesOperations.
+        /// Gets the ISqlPoolsV3Operations.
         /// </summary>
-        IIpFirewallRulesOperations IpFirewallRules { get; }
+        ISqlPoolsV3Operations SqlPoolsV3 { get; }
 
         /// <summary>
-        /// Gets the ISqlPoolsOperations.
+        /// Gets the ISqlDatabasesOperations.
         /// </summary>
-        ISqlPoolsOperations SqlPools { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolMetadataSyncConfigsOperations.
-        /// </summary>
-        ISqlPoolMetadataSyncConfigsOperations SqlPoolMetadataSyncConfigs { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolOperationResultsOperations.
-        /// </summary>
-        ISqlPoolOperationResultsOperations SqlPoolOperationResults { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolGeoBackupPoliciesOperations.
-        /// </summary>
-        ISqlPoolGeoBackupPoliciesOperations SqlPoolGeoBackupPolicies { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolDataWarehouseUserActivitiesOperations.
-        /// </summary>
-        ISqlPoolDataWarehouseUserActivitiesOperations SqlPoolDataWarehouseUserActivities { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolRestorePointsOperations.
-        /// </summary>
-        ISqlPoolRestorePointsOperations SqlPoolRestorePoints { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolReplicationLinksOperations.
-        /// </summary>
-        ISqlPoolReplicationLinksOperations SqlPoolReplicationLinks { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolTransparentDataEncryptionsOperations.
-        /// </summary>
-        ISqlPoolTransparentDataEncryptionsOperations SqlPoolTransparentDataEncryptions { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolBlobAuditingPoliciesOperations.
-        /// </summary>
-        ISqlPoolBlobAuditingPoliciesOperations SqlPoolBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolOperations.
-        /// </summary>
-        ISqlPoolOperations SqlPoolOperations { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolUsagesOperations.
-        /// </summary>
-        ISqlPoolUsagesOperations SqlPoolUsages { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolSensitivityLabelsOperations.
-        /// </summary>
-        ISqlPoolSensitivityLabelsOperations SqlPoolSensitivityLabels { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolSchemasOperations.
-        /// </summary>
-        ISqlPoolSchemasOperations SqlPoolSchemas { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolTablesOperations.
-        /// </summary>
-        ISqlPoolTablesOperations SqlPoolTables { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolTableColumnsOperations.
-        /// </summary>
-        ISqlPoolTableColumnsOperations SqlPoolTableColumns { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolConnectionPoliciesOperations.
-        /// </summary>
-        ISqlPoolConnectionPoliciesOperations SqlPoolConnectionPolicies { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessmentsOperations.
-        /// </summary>
-        ISqlPoolVulnerabilityAssessmentsOperations SqlPoolVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessmentScansOperations.
-        /// </summary>
-        ISqlPoolVulnerabilityAssessmentScansOperations SqlPoolVulnerabilityAssessmentScans { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolSecurityAlertPoliciesOperations.
-        /// </summary>
-        ISqlPoolSecurityAlertPoliciesOperations SqlPoolSecurityAlertPolicies { get; }
-
-        /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations.
-        /// </summary>
-        ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; }
-
-        /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        IWorkspacesOperations Workspaces { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceAadAdminsOperations.
-        /// </summary>
-        IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
-        /// </summary>
-        IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
-        /// </summary>
-        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
-        /// </summary>
-        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeCredentialsOperations.
-        /// </summary>
-        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
-        /// </summary>
-        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeAuthKeysOperations.
-        /// </summary>
-        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
-        /// </summary>
-        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeStatusOperations.
-        /// </summary>
-        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkHubsOperations.
-        /// </summary>
-        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+        ISqlDatabasesOperations SqlDatabases { get; }
 
     }
 }

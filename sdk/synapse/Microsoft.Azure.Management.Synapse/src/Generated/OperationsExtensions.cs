@@ -24,46 +24,6 @@ namespace Microsoft.Azure.Management.Synapse
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Check name availability
-            /// </summary>
-            /// <remarks>
-            /// Check whether a workspace name is available
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='request'>
-            /// The check request
-            /// </param>
-            public static CheckNameAvailabilityResponse CheckNameAvailability(this IOperations operations, CheckNameAvailabilityRequest request)
-            {
-                return operations.CheckNameAvailabilityAsync(request).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check name availability
-            /// </summary>
-            /// <remarks>
-            /// Check whether a workspace name is available
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='request'>
-            /// The check request
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IOperations operations, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// All operations
             /// </summary>
             /// <remarks>
@@ -110,7 +70,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
@@ -133,7 +93,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
@@ -159,7 +119,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
@@ -182,7 +142,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID

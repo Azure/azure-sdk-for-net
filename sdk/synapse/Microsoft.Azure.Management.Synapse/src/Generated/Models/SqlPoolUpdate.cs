@@ -21,32 +21,20 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// A sql pool resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SqlPool : TrackedResource
+    public partial class SqlPoolUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the SqlPool class.
+        /// Initializes a new instance of the SqlPoolUpdate class.
         /// </summary>
-        public SqlPool()
+        public SqlPoolUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SqlPool class.
+        /// Initializes a new instance of the SqlPoolUpdate class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="sku">The sql pool SKU. The list of SKUs may vary by
-        /// region and support offer.</param>
-        /// <param name="kind">Kind of SqlPool.</param>
-        /// <param name="systemData">SystemData of SqlPool.</param>
+        /// <param name="sku">The name and tier of the SKU.</param>
         /// <param name="status">The status of the sql pool. Possible values
         /// include: 'Invisible', 'Online', 'Offline', 'Creating',
         /// 'Inaccessible', 'Pausing', 'Paused', 'Resuming', 'Scaling',
@@ -56,16 +44,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// objective name of the sql pool.</param>
         /// <param name="requestedServiceObjectiveName">The requested service
         /// level objective name of the sql pool.</param>
-        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), SystemData systemData = default(SystemData), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string))
-            : base(location, id, name, type, tags)
+        /// <param name="tags">Resource tags.</param>
+        public SqlPoolUpdate(Sku sku = default(Sku), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
-            Kind = kind;
-            SystemData = systemData;
             Status = status;
             SqlPoolGuid = sqlPoolGuid;
             CurrentServiceObjectiveName = currentServiceObjectiveName;
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
+            Tags = tags;
             CustomInit();
         }
 
@@ -75,23 +62,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sql pool SKU. The list of SKUs may vary by region
-        /// and support offer.
+        /// Gets or sets the name and tier of the SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
-
-        /// <summary>
-        /// Gets kind of SqlPool.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
-        /// Gets systemData of SqlPool.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets the status of the sql pool. Possible values include:
@@ -121,14 +95,19 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public string RequestedServiceObjectiveName { get; private set; }
 
         /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Sku != null)
             {
                 Sku.Validate();
