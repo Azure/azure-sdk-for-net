@@ -15,9 +15,13 @@ namespace SampleHost.Filters
     /// Sample invocation filter that demonstrates how declarative validation logic
     /// can be integrated into the execution pipeline.
     /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
     public class WorkItemValidatorAttribute : FunctionInvocationFilterAttribute
+#pragma warning restore CS0618 // Type or member is obsolete
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         public override Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             executingContext.Logger.LogInformation("WorkItemValidator executing...");
 
@@ -28,7 +32,7 @@ namespace SampleHost.Filters
                 executingContext.Logger.LogError(errorMessage);
                 throw new ValidationException(errorMessage);
             }
-                
+
             return base.OnExecutingAsync(executingContext, cancellationToken);
         }
 

@@ -29,7 +29,9 @@ namespace SampleHost
             logger.LogInformation("Processed blob: " + blob);
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public void BlobPoisonBlobHandler(
+#pragma warning restore CA1822 // Mark members as static
             [QueueTrigger("webjobs-blobtrigger-poison")] JObject blobInfo, ILogger logger)
         {
             string container = (string)blobInfo["ContainerName"];

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SampleHost
 {
-    class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {

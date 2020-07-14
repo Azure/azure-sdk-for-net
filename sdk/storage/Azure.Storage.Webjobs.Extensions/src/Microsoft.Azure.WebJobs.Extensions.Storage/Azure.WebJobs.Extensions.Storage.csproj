@@ -89,20 +89,4 @@
     <PackageReference Include="Microsoft.Azure.Storage.Queue" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
-
-  <Target Name="TestMessage" AfterTargets="Build">
-
-    <!-- Use $(Property Name) to reference a property -->
-    <Message Text="#################################################################################" Importance="high" />
-    <Message Text="MSBuildProjectName: $(MSBuildProjectName)" Importance="high" />
-    <Message Text="IsClientLibrary: $(IsClientLibrary)" Importance="high" />
-    <Message Text="IsTestProject: $(IsTestProject)" Importance="high" />
-    <Message Text="IsDataPlaneProject: $(IsDataPlaneProject)" Importance="high" />
-    <Message Text="IsMgmtClientLibrary: $(IsMgmtClientLibrary)" Importance="high" />
-    <Message Text="IsSamplesProject: $(IsSamplesProject)" Importance="high" />
-    <Message Text="IsShippingClientLibrary: $(IsShippingClientLibrary)" Importance="high" />
-    <Message Text="EnableStyleCopAnalyzers: $(EnableStyleCopAnalyzers)" Importance="high" />
-    <Message Text="SupportsNetStandard20: $(SupportsNetStandard20)" Importance="high" />
-    <Message Text="#################################################################################" Importance="high" />
-  </Target>
 </Project>

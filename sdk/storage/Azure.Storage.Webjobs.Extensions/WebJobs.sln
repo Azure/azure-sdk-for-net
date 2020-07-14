@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{639967B0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{72A798F0-699B-4C8E-8D43-C1749661471E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleHost", "sample\SampleHost\SampleHost.csproj", "{93429246-CCE9-4EB0-B94D-68522862BA79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Samples", "sample\SampleHost\Azure.WebJobs.Extensions.Storage.Samples.csproj", "{93429246-CCE9-4EB0-B94D-68522862BA79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.TestCommon", "test\Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj", "{4A832C21-66EA-4DE4-8124-F27F8900CBA9}"
 EndProject

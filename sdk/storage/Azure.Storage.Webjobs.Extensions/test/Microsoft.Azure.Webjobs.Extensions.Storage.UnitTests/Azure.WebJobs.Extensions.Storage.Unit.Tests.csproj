@@ -30,21 +30,4 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
-  <Target Name="TestMessage" AfterTargets="Build;Clean">
-
-    <!-- Use $(Property Name) to reference a property -->
-    <Message Text="#################################################################################" Importance="high" />
-    <Message Text="MSBuildProjectName: $(MSBuildProjectName)" Importance="high" />
-    <Message Text="IsClientLibrary: $(IsClientLibrary)" Importance="high" />
-    <Message Text="IsTestProject: $(IsTestProject)" Importance="high" />
-    <Message Text="IsTestSupportProject: $(IsTestSupportProject)" Importance="high" />
-    <Message Text="IsDataPlaneProject: $(IsDataPlaneProject)" Importance="high" />
-    <Message Text="IsMgmtClientLibrary: $(IsMgmtClientLibrary)" Importance="high" />
-    <Message Text="IsSamplesProject: $(IsSamplesProject)" Importance="high" />
-    <Message Text="IsShippingClientLibrary: $(IsShippingClientLibrary)" Importance="high" />
-    <Message Text="EnableStyleCopAnalyzers: $(EnableStyleCopAnalyzers)" Importance="high" />
-    <Message Text="SupportsNetStandard20: $(SupportsNetStandard20)" Importance="high" />
-    <Message Text="#################################################################################" Importance="high" />
-  </Target>
 </Project>

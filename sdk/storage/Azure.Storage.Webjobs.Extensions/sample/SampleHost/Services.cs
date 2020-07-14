@@ -8,7 +8,9 @@ namespace SampleHost
     /// <summary>
     /// Sample services used to demonstrate DI capabilities
     /// </summary>
+#pragma warning disable SA1649 // File name should match first type name
     public interface ISampleServiceA
+#pragma warning restore SA1649 // File name should match first type name
     {
         void DoIt();
     }
@@ -33,7 +35,9 @@ namespace SampleHost
         void DoIt();
     }
 
+#pragma warning disable SA1402 // File may only contain a single type
     public class SampleServiceB : ISampleServiceB
+#pragma warning restore SA1402 // File may only contain a single type
     {
         private readonly ILogger _logger;
 
