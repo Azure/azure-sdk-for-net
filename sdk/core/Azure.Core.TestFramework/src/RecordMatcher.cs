@@ -26,7 +26,11 @@ namespace Azure.Core.TestFramework
             _compareBodies = compareBodies;
         }
 
-        public HashSet<string> ExcludeHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        /// <summary>
+        /// Request headers whose values can change between recording and playback without causing request matching
+        /// to fail. The presence or absence of the header itself is still respected in matching.
+        /// </summary>
+        public HashSet<string> IgnoredHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
             "x-ms-date",
@@ -105,7 +109,7 @@ namespace Azure.Core.TestFramework
                 //we only check Uri + RequestMethod for track1 record
                 if (!entry.IsTrack1Recording)
                 {
-                    score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, ExcludeHeaders);
+                    score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, IgnoredHeaders);
                     score += CompareBodies(request.Request.Body, entry.Request.Body);
                 }
 
@@ -247,7 +251,7 @@ namespace Azure.Core.TestFramework
 
             builder.AppendLine("Header differences:");
 
-            CompareHeaderDictionaries(request.Request.Headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
+            CompareHeaderDictionaries(request.Request.Headers, bestScoreEntry.Request.Headers, IgnoredHeaders, builder);
 
             builder.AppendLine("Body differences:");
 
@@ -277,13 +281,13 @@ namespace Azure.Core.TestFramework
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
 
-                if (ignoredHeaders.Contains(headerName))
-                {
-                    continue;
-                }
-
                 if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
                 {
+                    if (ignoredHeaders.Contains(headerName))
+                    {
+                        continue;
+                    }
+
                     // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
                     if (_normalizedHeaders.Contains(headerName))
                     {
