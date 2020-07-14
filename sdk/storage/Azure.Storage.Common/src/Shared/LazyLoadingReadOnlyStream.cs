@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -32,9 +33,19 @@ namespace Azure.Storage
         private readonly int _bufferSize;
 
         /// <summary>
-        /// The stream we will download to.
+        /// The backing buffer.
         /// </summary>
-        private Stream _stream;
+        private byte[] _buffer;
+
+        /// <summary>
+        /// The current position within the buffer.
+        /// </summary>
+        private int _bufferPosition;
+
+        /// <summary>
+        /// The current length of the buffer that is populated.
+        /// </summary>
+        private int _bufferLength;
 
         /// <summary>
         /// Request conditions to send on the download requests.
@@ -55,7 +66,9 @@ namespace Azure.Storage
             _downloadInternalFunc = downloadInternalFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
-            _stream = new MemoryStream(_bufferSize);
+            _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
+            _bufferPosition = 0;
+            _bufferLength = 0;
             _requestConditions = requestConditions;
             _length = -1;
         }
@@ -87,7 +100,7 @@ namespace Azure.Storage
                 return 0;
             }
 
-            if (_stream.Position == 0 || _stream.Position == _stream.Length)
+            if (_bufferPosition == 0 || _bufferPosition == _buffer.Length)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
@@ -96,18 +109,16 @@ namespace Azure.Storage
                 }
             }
 
-            int remainingBytesInBuffer = (int)(_stream.Length - _stream.Position);
+            int remainingBytesInBuffer = _bufferLength - _bufferPosition;
 
-            // We will return the minimum of remainingBytesInBuffer, the count provided by the user, and the remaining bytes in the buffer.
-            int bytesToWrite = Math.Min(Math.Min(remainingBytesInBuffer, count), buffer.Length - offset);
+            // We will return the minimum of remainingBytesInBuffer and the count provided by the user
+            int bytesToWrite = Math.Min(remainingBytesInBuffer, count);
 
-            int copiedBytes = async
-                ? await _stream.ReadAsync(buffer, offset, bytesToWrite).ConfigureAwait(false)
-                : _stream.Read(buffer, offset, bytesToWrite);
+            Array.Copy(_buffer, _bufferPosition, buffer, offset, bytesToWrite);
 
-            _position += copiedBytes;
+            _position += bytesToWrite;
 
-            return copiedBytes;
+            return bytesToWrite;
         }
 
         private async Task<int> DownloadInternal(bool async, CancellationToken cancellationToken)
@@ -122,26 +133,28 @@ namespace Azure.Storage
 
             using Stream networkStream = response.Value.Content;
 
-            _stream.SetLength(0);
+            int copiedBytes;
 
             if (async)
             {
-                await networkStream.CopyToAsync(
-                    _stream,
-                    Constants.DefaultBufferSize,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                copiedBytes = await networkStream.ReadAsync(
+                    buffer: _buffer,
+                    offset: 0,
+                    count: _buffer.Length,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                networkStream.CopyTo(
-                    _stream,
-                    Constants.DefaultBufferSize);
+                copiedBytes = networkStream.Read(
+                    buffer: _buffer,
+                    offset: 0,
+                    count: _buffer.Length);
             }
 
             networkStream.Dispose();
 
-            _stream.Position = 0;
+            _bufferPosition = 0;
+            _bufferLength = copiedBytes;
             _length = GetBlobLength(response);
 
             return response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
@@ -167,6 +180,16 @@ namespace Azure.Storage
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // Return the buffer to the pool if we're called from Dispose or a finalizer
+            if (_buffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                _buffer = null;
             }
         }
 
