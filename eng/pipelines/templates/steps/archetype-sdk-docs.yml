@@ -20,7 +20,7 @@ steps:
       -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
 
       Write-Host "Download and Extract docfx to Build.BinariesDirectory/docfx"
-      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/$(DocFxVersion)/docfx.zip" `
       -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
 
       Write-Host "Restore ${{parameters.DocGenerationDir}}/assets/docgen.csproj, to get ECMA2Yml and popimport"
