@@ -151,8 +151,6 @@ namespace Azure.Storage
                     count: _buffer.Length);
             }
 
-            networkStream.Dispose();
-
             _bufferPosition = 0;
             _bufferLength = copiedBytes;
             _length = GetBlobLength(response);
