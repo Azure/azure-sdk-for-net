@@ -165,6 +165,7 @@ namespace Azure.Core.Tests
             {
                 requestMre.Set();
                 responseMre.Wait(c);
+                requestMre.Reset();
                 return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
             }, IsAsync);
 
@@ -172,18 +173,18 @@ namespace Azure.Core.Tests
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
-            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
-
-            requestMre.Reset();
             responseMre.Reset();
+
+            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
 
             Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
             requestMre.Wait();
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
-            responseMre.Set();
-
             await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
             Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
@@ -191,8 +192,8 @@ namespace Azure.Core.Tests
             Assert.True(transport.Requests[3].Headers.TryGetValue("Authorization", out string auth4Value));
 
             Assert.AreEqual(auth1Value, auth2Value);
-            Assert.AreNotEqual(auth2Value, auth3Value);
-            Assert.AreEqual(auth3Value, auth4Value);
+            Assert.AreEqual(auth2Value, auth3Value);
+            Assert.AreNotEqual(auth3Value, auth4Value);
         }
 
         [Test]
@@ -344,6 +345,7 @@ namespace Azure.Core.Tests
             {
                 requestMre.Set();
                 responseMre.Wait(c);
+                requestMre.Reset();
                 if (fail)
                 {
                     throw new InvalidOperationException("Error");
@@ -354,38 +356,40 @@ namespace Azure.Core.Tests
             }, IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
-            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1"));
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
 
-            requestMre.Reset();
             responseMre.Reset();
 
-            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/GetTokenFailed"));
-            requestMre.Wait();
-
-            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/TokenFromCache"));
-            responseMre.Set();
-
-            Assert.CatchAsync(async () => await requestTask);
-
-            requestMre.Reset();
-            responseMre.Reset();
-
-            requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/GetTokenFailed"));
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/TokenFromCache/GetTokenFailed"));
             requestMre.Wait();
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/TokenFromCache"));
             responseMre.Set();
 
-            Assert.CatchAsync(async () => await requestTask);
+            await requestTask;
+
+            responseMre.Reset();
+
+            requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/TokenFromCache/GetTokenFailed"));
+            requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/5/TokenFromCache"));
+            responseMre.Set();
+
+            await requestTask;
 
             Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
             Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
+            Assert.True(transport.Requests[3].Headers.TryGetValue("Authorization", out string auth4Value));
+            Assert.True(transport.Requests[4].Headers.TryGetValue("Authorization", out string auth5Value));
 
             Assert.AreEqual(auth1Value, auth2Value);
             Assert.AreEqual(auth2Value, auth3Value);
+            Assert.AreEqual(auth3Value, auth4Value);
+            Assert.AreEqual(auth4Value, auth5Value);
         }
 
         [Test]
