@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.10.0
+###  Feature Additions
+- Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
+
 ## Version 4.9.0
 ###  Feature Additions
 - Added support for specifying a linked service as a Data Flow source and sink type
