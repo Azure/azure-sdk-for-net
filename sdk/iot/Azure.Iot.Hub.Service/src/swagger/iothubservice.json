@@ -1765,7 +1765,7 @@
                 }
             }
         },
-        "/messages/deviceBound/{deviceId}": {
+        "/devices/{deviceId}/message": {
             "post": {
                 "summary": "Send a cloud-to-device message to device.",
                 "description": "Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information.",
@@ -3124,41 +3124,56 @@
                     "description": "Unique identifier for the C2D message being sent.",
                     "type": "string"
                 },
-                "to": {
+                "destination": {
                     "description": "Destination of the message.",
                     "type": "string"
                 },
-                "payload": {
+                "messagePayload": {
                     "description": "Payload",
                     "type": "object"
                 },
                 "messageSchema": {
-                    "description": "The schema of the message content.",
+                    "description": "The schema of the message payload content.",
                     "type": "string"
                 },
                 "contentType": {
-                    "description": "The content type of the message.",
+                    "description": "The content type of the message payload.",
                     "type": "string"
                 },
                 "contentEncoding": {
-                    "description": "The content encoding type of the message.",
+                    "description": "The content encoding type of the message payload.",
                     "type": "string"
                 },
                 "creationTimeUtc": {
                     "description": "Custom date property set by the originator of the message.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                 },
-                "expiryTimeUtc": {
+                "expirationTimeUtc": {
                     "description": "The time when this message is considered expired.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                 },
                 "correlationId": {
                     "description": "Used in message responses and feedback.",
                     "type": "string"
                 },
+                "ack": {
+                    "description": "Indicates whether consumption or expiration of the message should post data to the feedback queue.",
+                    "enum": [
+                        "none",
+                        "positive",
+                        "negative",
+                        "full"
+                    ],
+                    "type": "string"
+                },
                 "properties": {
-                    "description": "Collection of user defined application properties which are set when user sends the message.",
-                    "type": "object"
+                    "description": "Collection of user-defined properties on the message.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object"
+                    }
                 }
             }
         }

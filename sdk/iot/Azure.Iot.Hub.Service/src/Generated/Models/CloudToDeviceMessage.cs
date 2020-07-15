@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> Parameters to send on a cloud to device message to the device. </summary>
@@ -17,48 +20,52 @@ namespace Azure.Iot.Hub.Service.Models
 
         /// <summary> Initializes a new instance of CloudToDeviceMessage. </summary>
         /// <param name="messageId"> Unique identifier for the C2D message being sent. </param>
-        /// <param name="to"> Destination of the message. </param>
-        /// <param name="payload"> Payload. </param>
-        /// <param name="messageSchema"> The schema of the message content. </param>
-        /// <param name="contentType"> The content type of the message. </param>
-        /// <param name="contentEncoding"> The content encoding type of the message. </param>
+        /// <param name="destination"> Destination of the message. </param>
+        /// <param name="messagePayload"> Payload. </param>
+        /// <param name="messageSchema"> The schema of the message payload content. </param>
+        /// <param name="contentType"> The content type of the message payload. </param>
+        /// <param name="contentEncoding"> The content encoding type of the message payload. </param>
         /// <param name="creationTimeUtc"> Custom date property set by the originator of the message. </param>
-        /// <param name="expiryTimeUtc"> The time when this message is considered expired. </param>
+        /// <param name="expirationTimeUtc"> The time when this message is considered expired. </param>
         /// <param name="correlationId"> Used in message responses and feedback. </param>
-        /// <param name="properties"> Collection of user defined application properties which are set when user sends the message. </param>
-        internal CloudToDeviceMessage(string messageId, string to, object payload, string messageSchema, string contentType, string contentEncoding, string creationTimeUtc, string expiryTimeUtc, string correlationId, object properties)
+        /// <param name="ack"> Indicates whether consumption or expiration of the message should post data to the feedback queue. </param>
+        /// <param name="properties"> Collection of user-defined properties on the message. </param>
+        internal CloudToDeviceMessage(string messageId, string destination, object messagePayload, string messageSchema, string contentType, string contentEncoding, DateTimeOffset? creationTimeUtc, DateTimeOffset? expirationTimeUtc, string correlationId, CloudToDeviceMessageAck? ack, IDictionary<string, object> properties)
         {
             MessageId = messageId;
-            To = to;
-            Payload = payload;
+            Destination = destination;
+            MessagePayload = messagePayload;
             MessageSchema = messageSchema;
             ContentType = contentType;
             ContentEncoding = contentEncoding;
             CreationTimeUtc = creationTimeUtc;
-            ExpiryTimeUtc = expiryTimeUtc;
+            ExpirationTimeUtc = expirationTimeUtc;
             CorrelationId = correlationId;
+            Ack = ack;
             Properties = properties;
         }
 
         /// <summary> Unique identifier for the C2D message being sent. </summary>
         public string MessageId { get; set; }
         /// <summary> Destination of the message. </summary>
-        public string To { get; set; }
+        public string Destination { get; set; }
         /// <summary> Payload. </summary>
-        public object Payload { get; set; }
-        /// <summary> The schema of the message content. </summary>
+        public object MessagePayload { get; set; }
+        /// <summary> The schema of the message payload content. </summary>
         public string MessageSchema { get; set; }
-        /// <summary> The content type of the message. </summary>
+        /// <summary> The content type of the message payload. </summary>
         public string ContentType { get; set; }
-        /// <summary> The content encoding type of the message. </summary>
+        /// <summary> The content encoding type of the message payload. </summary>
         public string ContentEncoding { get; set; }
         /// <summary> Custom date property set by the originator of the message. </summary>
-        public string CreationTimeUtc { get; set; }
+        public DateTimeOffset? CreationTimeUtc { get; set; }
         /// <summary> The time when this message is considered expired. </summary>
-        public string ExpiryTimeUtc { get; set; }
+        public DateTimeOffset? ExpirationTimeUtc { get; set; }
         /// <summary> Used in message responses and feedback. </summary>
         public string CorrelationId { get; set; }
-        /// <summary> Collection of user defined application properties which are set when user sends the message. </summary>
-        public object Properties { get; set; }
+        /// <summary> Indicates whether consumption or expiration of the message should post data to the feedback queue. </summary>
+        public CloudToDeviceMessageAck? Ack { get; set; }
+        /// <summary> Collection of user-defined properties on the message. </summary>
+        public IDictionary<string, object> Properties { get; set; }
     }
 }

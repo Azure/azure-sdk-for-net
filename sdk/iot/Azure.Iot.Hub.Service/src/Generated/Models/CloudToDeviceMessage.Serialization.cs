@@ -20,15 +20,15 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("messageId");
                 writer.WriteStringValue(MessageId);
             }
-            if (To != null)
+            if (Destination != null)
             {
-                writer.WritePropertyName("to");
-                writer.WriteStringValue(To);
+                writer.WritePropertyName("destination");
+                writer.WriteStringValue(Destination);
             }
-            if (Payload != null)
+            if (MessagePayload != null)
             {
-                writer.WritePropertyName("payload");
-                writer.WriteObjectValue(Payload);
+                writer.WritePropertyName("messagePayload");
+                writer.WriteObjectValue(MessagePayload);
             }
             if (MessageSchema != null)
             {
@@ -48,22 +48,33 @@ namespace Azure.Iot.Hub.Service.Models
             if (CreationTimeUtc != null)
             {
                 writer.WritePropertyName("creationTimeUtc");
-                writer.WriteStringValue(CreationTimeUtc);
+                writer.WriteStringValue(CreationTimeUtc.Value, "O");
             }
-            if (ExpiryTimeUtc != null)
+            if (ExpirationTimeUtc != null)
             {
-                writer.WritePropertyName("expiryTimeUtc");
-                writer.WriteStringValue(ExpiryTimeUtc);
+                writer.WritePropertyName("expirationTimeUtc");
+                writer.WriteStringValue(ExpirationTimeUtc.Value, "O");
             }
             if (CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId");
                 writer.WriteStringValue(CorrelationId);
             }
+            if (Ack != null)
+            {
+                writer.WritePropertyName("ack");
+                writer.WriteStringValue(Ack.Value.ToString());
+            }
             if (Properties != null)
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

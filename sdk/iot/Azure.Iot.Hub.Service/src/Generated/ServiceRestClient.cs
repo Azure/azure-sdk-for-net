@@ -49,8 +49,9 @@ namespace Azure.Iot.Hub.Service
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendPath("/messages/deviceBound/", false);
+            uri.AppendPath("/devices/", false);
             uri.AppendPath(deviceId, true);
+            uri.AppendPath("/message", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
