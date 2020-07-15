@@ -18,8 +18,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
     using System.Linq;
 
     /// <summary>
-    /// A sql pool resource.
+    /// SQL pool
     /// </summary>
+    /// <remarks>
+    /// A SQL Analytics pool
+    /// </remarks>
     [Rest.Serialization.JsonTransformation]
     public partial class SqlPool : TrackedResource
     {
@@ -43,29 +46,31 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="sku">The sql pool SKU. The list of SKUs may vary by
-        /// region and support offer.</param>
-        /// <param name="kind">Kind of SqlPool.</param>
-        /// <param name="systemData">SystemData of SqlPool.</param>
-        /// <param name="status">The status of the sql pool. Possible values
-        /// include: 'Invisible', 'Online', 'Offline', 'Creating',
-        /// 'Inaccessible', 'Pausing', 'Paused', 'Resuming', 'Scaling',
-        /// 'Dropping', 'Error', 'Unknown'</param>
-        /// <param name="sqlPoolGuid">The Guid of the sql pool.</param>
-        /// <param name="currentServiceObjectiveName">The current service level
-        /// objective name of the sql pool.</param>
-        /// <param name="requestedServiceObjectiveName">The requested service
-        /// level objective name of the sql pool.</param>
-        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), SystemData systemData = default(SystemData), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string))
+        /// <param name="sku">SQL pool SKU</param>
+        /// <param name="maxSizeBytes">Maximum size in bytes</param>
+        /// <param name="collation">Collation mode</param>
+        /// <param name="sourceDatabaseId">Source database to create
+        /// from</param>
+        /// <param name="recoverableDatabaseId">Backup database to restore
+        /// from</param>
+        /// <param name="provisioningState">Resource state</param>
+        /// <param name="status">Resource status</param>
+        /// <param name="restorePointInTime">Snapshot time to restore</param>
+        /// <param name="createMode">What is this?</param>
+        /// <param name="creationDate">Date the SQL pool was created</param>
+        public SqlPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), long? maxSizeBytes = default(long?), string collation = default(string), string sourceDatabaseId = default(string), string recoverableDatabaseId = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string createMode = default(string), System.DateTime? creationDate = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
-            Kind = kind;
-            SystemData = systemData;
+            MaxSizeBytes = maxSizeBytes;
+            Collation = collation;
+            SourceDatabaseId = sourceDatabaseId;
+            RecoverableDatabaseId = recoverableDatabaseId;
+            ProvisioningState = provisioningState;
             Status = status;
-            SqlPoolGuid = sqlPoolGuid;
-            CurrentServiceObjectiveName = currentServiceObjectiveName;
-            RequestedServiceObjectiveName = requestedServiceObjectiveName;
+            RestorePointInTime = restorePointInTime;
+            CreateMode = createMode;
+            CreationDate = creationDate;
             CustomInit();
         }
 
@@ -75,50 +80,64 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sql pool SKU. The list of SKUs may vary by region
-        /// and support offer.
+        /// Gets or sets SQL pool SKU
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets kind of SqlPool.
+        /// Gets or sets maximum size in bytes
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
+        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
+        public long? MaxSizeBytes { get; set; }
 
         /// <summary>
-        /// Gets systemData of SqlPool.
+        /// Gets or sets collation mode
         /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
+        [JsonProperty(PropertyName = "properties.collation")]
+        public string Collation { get; set; }
 
         /// <summary>
-        /// Gets the status of the sql pool. Possible values include:
-        /// 'Invisible', 'Online', 'Offline', 'Creating', 'Inaccessible',
-        /// 'Pausing', 'Paused', 'Resuming', 'Scaling', 'Dropping', 'Error',
-        /// 'Unknown'
+        /// Gets or sets source database to create from
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceDatabaseId")]
+        public string SourceDatabaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets backup database to restore from
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.recoverableDatabaseId")]
+        public string RecoverableDatabaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource state
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource status
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
         /// <summary>
-        /// Gets the Guid of the sql pool.
+        /// Gets or sets snapshot time to restore
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sqlPoolGuid")]
-        public System.Guid? SqlPoolGuid { get; private set; }
+        [JsonProperty(PropertyName = "properties.restorePointInTime")]
+        public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets the current service level objective name of the sql pool.
+        /// Gets or sets what is this?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.currentServiceObjectiveName")]
-        public string CurrentServiceObjectiveName { get; private set; }
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
-        /// Gets the requested service level objective name of the sql pool.
+        /// Gets or sets date the SQL pool was created
         /// </summary>
-        [JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
-        public string RequestedServiceObjectiveName { get; private set; }
+        [JsonProperty(PropertyName = "properties.creationDate")]
+        public System.DateTime? CreationDate { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -129,10 +148,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public override void Validate()
         {
             base.Validate();
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
         }
     }
 }

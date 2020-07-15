@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Synapse
     /// <summary>
     /// SqlDatabasesOperations operations.
     /// </summary>
-    internal partial class SqlDatabasesOperations : IServiceOperations<SynapseManagementClient>, ISqlDatabasesOperations
+    internal partial class SqlDatabasesOperations : IServiceOperations<SynapseSqlV3ManagementClient>, ISqlDatabasesOperations
     {
         /// <summary>
         /// Initializes a new instance of the SqlDatabasesOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SqlDatabasesOperations(SynapseManagementClient client)
+        internal SqlDatabasesOperations(SynapseSqlV3ManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Synapse
         }
 
         /// <summary>
-        /// Gets a reference to the SynapseManagementClient
+        /// Gets a reference to the SynapseSqlV3ManagementClient
         /// </summary>
-        public SynapseManagementClient Client { get; private set; }
+        public SynapseSqlV3ManagementClient Client { get; private set; }
 
         /// <summary>
         /// Gets a SqlDatabase.

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='sqlPoolName'>
             /// The name of the sql pool.
             /// </param>
-            public static SqlPool Get(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            public static SqlPoolV3 Get(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
             {
                 return operations.GetAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
             }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SqlPool> GetAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SqlPoolV3> GetAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='parameters'>
             /// The requested SqlPool resource state.
             /// </param>
-            public static SqlPool CreateOrUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPool parameters)
+            public static SqlPoolV3 CreateOrUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolV3 parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SqlPool> CreateOrUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPool parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SqlPoolV3> CreateOrUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolV3 parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='parameters'>
             /// The requested SqlPool resource state.
             /// </param>
-            public static SqlPool Update(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters)
+            public static SqlPoolV3 Update(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
             }
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SqlPool> UpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SqlPoolV3> UpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IPage<SqlPool> ListByWorkspace(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName)
+            public static IPage<SqlPoolV3> ListByWorkspace(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName)
             {
                 return operations.ListByWorkspaceAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPool>> ListByWorkspaceAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolV3>> ListByWorkspaceAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='parameters'>
             /// The requested SqlPool resource state.
             /// </param>
-            public static SqlPool BeginCreateOrUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPool parameters)
+            public static SqlPoolV3 BeginCreateOrUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolV3 parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
             }
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SqlPool> BeginCreateOrUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPool parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SqlPoolV3> BeginCreateOrUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolV3 parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='parameters'>
             /// The requested SqlPool resource state.
             /// </param>
-            public static SqlPool BeginUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters)
+            public static SqlPoolV3 BeginUpdate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
             }
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SqlPool> BeginUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SqlPoolV3> BeginUpdateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SqlPool> ListByWorkspaceNext(this ISqlPoolsV3Operations operations, string nextPageLink)
+            public static IPage<SqlPoolV3> ListByWorkspaceNext(this ISqlPoolsV3Operations operations, string nextPageLink)
             {
                 return operations.ListByWorkspaceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPool>> ListByWorkspaceNextAsync(this ISqlPoolsV3Operations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolV3>> ListByWorkspaceNextAsync(this ISqlPoolsV3Operations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

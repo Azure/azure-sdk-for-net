@@ -19,50 +19,10 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for SqlV3Operations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class SqlV3OperationsExtensions
     {
-            /// <summary>
-            /// Check name availability
-            /// </summary>
-            /// <remarks>
-            /// Check whether a workspace name is available
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='request'>
-            /// The check request
-            /// </param>
-            public static CheckNameAvailabilityResponse CheckNameAvailability(this IOperations operations, CheckNameAvailabilityRequest request)
-            {
-                return operations.CheckNameAvailabilityAsync(request).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check name availability
-            /// </summary>
-            /// <remarks>
-            /// Check whether a workspace name is available
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='request'>
-            /// The check request
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IOperations operations, CheckNameAvailabilityRequest request, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
             /// <summary>
             /// All operations
             /// </summary>
@@ -72,7 +32,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<AvailableRpOperation> List(this IOperations operations)
+            public static IList<AvailableRpOperation> List(this ISqlV3Operations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -89,7 +49,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AvailableRpOperation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AvailableRpOperation>> ListAsync(this ISqlV3Operations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -110,12 +70,12 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
             /// </param>
-            public static void GetLocationHeaderResult(this IOperations operations, string resourceGroupName, string workspaceName, string operationId)
+            public static void GetLocationHeaderResult(this ISqlV3Operations operations, string resourceGroupName, string workspaceName, string operationId)
             {
                 operations.GetLocationHeaderResultAsync(resourceGroupName, workspaceName, operationId).GetAwaiter().GetResult();
             }
@@ -133,7 +93,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
@@ -141,7 +101,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetLocationHeaderResultAsync(this IOperations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GetLocationHeaderResultAsync(this ISqlV3Operations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GetLocationHeaderResultWithHttpMessagesAsync(resourceGroupName, workspaceName, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -159,12 +119,12 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
             /// </param>
-            public static object GetAzureAsyncHeaderResult(this IOperations operations, string resourceGroupName, string workspaceName, string operationId)
+            public static OperationResource GetAzureAsyncHeaderResult(this ISqlV3Operations operations, string resourceGroupName, string workspaceName, string operationId)
             {
                 return operations.GetAzureAsyncHeaderResultAsync(resourceGroupName, workspaceName, operationId).GetAwaiter().GetResult();
             }
@@ -182,7 +142,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='operationId'>
             /// Operation ID
@@ -190,7 +150,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAzureAsyncHeaderResultAsync(this IOperations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResource> GetAzureAsyncHeaderResultAsync(this ISqlV3Operations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAzureAsyncHeaderResultWithHttpMessagesAsync(resourceGroupName, workspaceName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
