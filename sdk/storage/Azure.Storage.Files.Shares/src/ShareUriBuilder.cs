@@ -212,7 +212,7 @@ namespace Azure.Storage.Files.Shares
                     ShareName = path.Substring(startIndex, shareEndIndex - startIndex);
 
                     // The directory/file path name is after the share slash
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1).Trim('/');
+                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1).Trim('/').UnescapePath();
                 }
             }
 

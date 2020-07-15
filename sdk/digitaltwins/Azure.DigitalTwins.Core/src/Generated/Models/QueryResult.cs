@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> The results of a query operation and an optional continuation token. </summary>
     internal partial class QueryResult

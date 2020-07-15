@@ -333,10 +333,10 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName.UnescapePath();
+                _name = builder.LastDirectoryOrFileName;
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath.UnescapePath();
+                _path = builder.DirectoryOrFilePath;
             }
         }
 

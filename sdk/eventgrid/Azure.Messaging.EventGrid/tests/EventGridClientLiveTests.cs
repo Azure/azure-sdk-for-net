@@ -6,7 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
@@ -59,6 +61,18 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
+        public async Task CanPublishCustomEvent()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.CustomEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
+                    options));
+            await client.PublishCustomEventsAsync(GetCustomEventsList());
+        }
+
+        [Test]
         public async Task CanPublishEventUsingSAS()
         {
             EventGridClient client = new EventGridClient(
@@ -73,6 +87,24 @@ namespace Azure.Messaging.EventGrid.Tests
                     new SharedAccessSignatureCredential(sasToken),
                     Recording.InstrumentClientOptions(new EventGridClientOptions())));
             await sasTokenClient.PublishEventsAsync(GetEventsList());
+        }
+
+        [Test]
+        public async Task CustomizeSerializedJSONPropertiesToCamelCase()
+        {
+            EventGridClientOptions options = Recording.InstrumentClientOptions(new EventGridClientOptions());
+            options.Serializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+            EventGridClient client = InstrumentClient(
+                new EventGridClient(
+                    new Uri(TestEnvironment.CustomEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
+                    options));
+            await client.PublishCustomEventsAsync(GetCustomEventsList());
         }
 
         private IList<EventGridEvent> GetEventsList()
@@ -140,12 +172,12 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(new TestEvent()
                 {
-                    dataVersion = "1.0",
-                    eventTime = Recording.Now,
-                    eventType = "Microsoft.MockPublisher.TestEvent",
-                    id = Recording.Random.NewGuid().ToString(),
-                    subject = $"Subject-{i}",
-                    topic = $"Topic-{i}"
+                    DataVersion = "1.0",
+                    EventTime = Recording.Now,
+                    EventType = "Microsoft.MockPublisher.TestEvent",
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Subject = $"Subject-{i}",
+                    Topic = $"Topic-{i}"
                 });
             }
 

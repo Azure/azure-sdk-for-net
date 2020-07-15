@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -388,9 +389,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            var blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
+
             return new BlobBaseClient(
-                builder.ToUri(),
+                blobUriBuilder.ToUri(),
                 Pipeline,
                 Version,
                 ClientDiagnostics,
@@ -422,9 +427,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
-            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
+
             return new BlobBaseClient(
-                builder.ToUri(),
+                blobUriBuilder.ToUri(),
                 Pipeline,
                 Version,
                 ClientDiagnostics,
@@ -441,7 +450,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (_name == null || _containerName == null || _accountName == null)
             {
                 var builder = new BlobUriBuilder(Uri);
-                _name = Uri.UnescapeDataString(builder.BlobName);
+                _name = builder.BlobName;
                 _containerName = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
@@ -3380,6 +3389,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)

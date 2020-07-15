@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body.AsBytes();
+            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body;
             var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var amqpMessage = AmqpMessage.Create(new Data { Value = body });
             amqpMessage.Properties.MessageId = sbMessage.MessageId;

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.DigitalTwins.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 

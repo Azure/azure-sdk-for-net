@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Administration.csproj" />
+    <ProjectReference Include="..\..\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />

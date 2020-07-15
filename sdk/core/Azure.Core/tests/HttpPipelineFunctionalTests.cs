@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.Tracing;
+using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -258,13 +258,63 @@ namespace Azure.Core.Tests
             message.BufferResponse = false;
             await httpPipeline.SendAsync(message, CancellationToken.None);
 
-             Assert.AreEqual(message.Response.Status, 200);
-             var responseContentStream = message.Response.ContentStream;
-             var buffer = new byte[10];
-             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
-             Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());
+            Assert.AreEqual(message.Response.Status, 200);
+            var responseContentStream = message.Response.ContentStream;
+            var buffer = new byte[10];
+            Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
+            Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());
 
-             testDoneTcs.Cancel();
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public async Task SendMultipartformData()
+        {
+            IFormCollection formCollection = null;
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    formCollection = context.Request.Form;
+                    return Task.CompletedTask;
+                });
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Put;
+            request.Uri.Reset(testServer.Address);
+
+            var content = new MultipartFormDataContent("test_boundary");
+            content.ApplyToRequest(request);
+            content.Add(RequestContent.Create(Encoding.UTF8.GetBytes("John")), "FirstName", "file_name.txt", new Dictionary<string, string>
+            {
+                { "Content-Type", "text/plain; charset=utf-8" }
+            });
+            content.Add(RequestContent.Create(Encoding.UTF8.GetBytes("Doe")), "LastName", "file_name.txt", new Dictionary<string, string>
+            {
+                { "Content-Type", "text/plain; charset=utf-8" }
+            });
+
+            request.Content = content;
+
+            using Response response = await httpPipeline.SendRequestAsync(request, CancellationToken.None);
+            Assert.AreEqual(response.Status, 200);
+            Assert.AreEqual(formCollection.Files.Count, 2);
+
+            var formData = formCollection.Files.GetEnumerator();
+            formData.MoveNext();
+            Assert.AreEqual(formData.Current.Name, "FirstName");
+            Assert.AreEqual(formData.Current.FileName, "file_name.txt");
+            Assert.AreEqual(formData.Current.Headers.Count, 2);
+            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
+            Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=FirstName; filename=file_name.txt");
+
+            formData.MoveNext();
+            Assert.AreEqual(formData.Current.Name, "LastName");
+            Assert.AreEqual(formData.Current.FileName, "file_name.txt");
+            Assert.AreEqual(formData.Current.Headers.Count, 2);
+            Assert.AreEqual(formData.Current.ContentType, "text/plain; charset=utf-8");
+            Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
         }
 
         private class TestOptions : ClientOptions

@@ -326,7 +326,6 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient GetFileClient(string fileName)
         {
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
-            shareUriBuilder.DirectoryOrFilePath = shareUriBuilder.DirectoryOrFilePath.UnescapePath();
             shareUriBuilder.DirectoryOrFilePath += $"/{fileName}";
             return new ShareFileClient(
                 shareUriBuilder.ToUri(),
@@ -346,7 +345,6 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
         {
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
-            shareUriBuilder.DirectoryOrFilePath = shareUriBuilder.DirectoryOrFilePath.UnescapePath();
             shareUriBuilder.DirectoryOrFilePath += $"/{subdirectoryName}";
             return new ShareDirectoryClient(
                 shareUriBuilder.ToUri(),
@@ -363,10 +361,10 @@ namespace Azure.Storage.Files.Shares
             if (_name == null || _shareName == null || _accountName == null || _path == null)
             {
                 var builder = new ShareUriBuilder(Uri);
-                _name = builder.LastDirectoryOrFileName.UnescapePath();
+                _name = builder.LastDirectoryOrFileName;
                 _shareName = builder.ShareName;
                 _accountName = builder.AccountName;
-                _path = builder.DirectoryOrFilePath.UnescapePath();
+                _path = builder.DirectoryOrFilePath;
             }
         }
 

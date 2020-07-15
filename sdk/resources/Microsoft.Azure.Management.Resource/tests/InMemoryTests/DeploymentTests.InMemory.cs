@@ -175,7 +175,7 @@ namespace ResourceGroups.Tests
                 'parameters': {
                     'storageAccountName': {
 		                'value': 'tianotest04'
-	                }
+                     }
                 }
             }";
 
@@ -217,8 +217,8 @@ namespace ResourceGroups.Tests
 
                 // Validate payload
                 Assert.Equal("Incremental", json["properties"]["mode"].Value<string>());
-                Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
                 Assert.Equal("1.0.0.0", json["properties"]["template"]["contentVersion"].Value<string>());
+                Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
 
                 // Validate result
                 Assert.Equal("foo", result.Id);
@@ -251,7 +251,9 @@ namespace ResourceGroups.Tests
                             'timestamp': '2014-02-25T23:08:21.8183932Z',
                             'correlationId': 'afb170c6-fe57-4b38-a43b-900fe09be4ca',
                             'statusCode': 'InternalServerError',
-                            'statusMessage': 'InternalServerError',           
+                            'statusMessage': {
+                                    'status': 'InternalServerError'
+                                }
                           }
                        }
                     ],
@@ -278,7 +280,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Microsoft.Web", result.First().Properties.TargetResource.ResourceType);
             Assert.Equal("Succeeded", result.First().Properties.ProvisioningState);
             Assert.Equal("InternalServerError", result.First().Properties.StatusCode);
-            Assert.Equal("InternalServerError", result.First().Properties.StatusMessage);
+            Assert.Equal("InternalServerError", result.First().Properties.StatusMessage.Status);
             Assert.Equal("https://wa.com/subscriptions/mysubid/resourcegroups/TestRG/deployments/test-release-3/operations?$skiptoken=983fknw", result.NextPageLink);
         }
 
@@ -308,7 +310,7 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void ListDeploymentOperationsWithRealPayloadReadsJsonInStatusMessage()
+        public void ListDeploymentOperationsWithRealPayloadReadsStatusMessageModelling()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -326,30 +328,12 @@ namespace ResourceGroups.Tests
                         'trackingId': '4f258f91-edd5-4d71-87c2-fac9a4b5cbbd',
                         'statusCode': 'Conflict',
                         'statusMessage': {
-                          'Code': 'Conflict',
-                          'Message': 'Website with given name ilygreTest4 already exists.',
-                          'Target': null,
-                          'Details': [
-                            {
-                              'Message': 'Website with given name ilygreTest4 already exists.'
-                            },
-                            {
-                              'Code': 'Conflict'
-                            },
-                            {
-                              'ErrorEntity': {
-                                'Code': 'Conflict',
-                                'Message': 'Website with given name ilygreTest4 already exists.',
-                                'ExtendedCode': '54001',
-                                'MessageTemplate': 'Website with given name {0} already exists.',
-                                'Parameters': [
-                                  'ilygreTest4'
-                                ],
-                                'InnerErrors': null
-                              }
-                            }
-                          ],
-                          'Innererror': null
+                          'status': 'Website with given name ilygreTest4 already exists.',
+                          'error': {
+                            'code': 'Conflict',
+                            'message': 'Website with given name ilygreTest4 already exists.',
+                            'target': null
+                          }
                         },
                         'targetResource': {
                           'id':
@@ -389,6 +373,10 @@ namespace ResourceGroups.Tests
                   ]
                 }")
             };
+
+            StatusMessage statusMessage = new StatusMessage("Website with given name ilygreTest4 already exists.",
+                new ErrorResponse("Conflict", "Website with given name ilygreTest4 already exists.", null));
+
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
 
             var client = GetResourceManagementClient(handler);
@@ -398,8 +386,10 @@ namespace ResourceGroups.Tests
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-            Assert.True(JObject.Parse(result.First().Properties.StatusMessage.ToString()).HasValues);
+            Assert.Equal(statusMessage.Status, result.First().Properties.StatusMessage.Status);
+            Assert.Equal(statusMessage.Error.Target, result.First().Properties.StatusMessage.Error.Target);
+            Assert.Equal(statusMessage.Error.Message, result.First().Properties.StatusMessage.Error.Message);
+            Assert.Equal(statusMessage.Error.Code, result.First().Properties.StatusMessage.Error.Code);
         }
 
         [Fact]
@@ -425,7 +415,14 @@ namespace ResourceGroups.Tests
                             'timestamp': '2014-02-25T23:08:21.8183932Z',
                             'correlationId': 'afb170c6-fe57-4b38-a43b-900fe09be4ca',
                             'statusCode': 'InternalServerError',
-                            'statusMessage': 'InternalServerError',    
+                            'statusMessage': {
+                                'status': 'InternalServerError',
+                                'error': {
+                                    'code': 'InternalServerError',
+                                    'message': 'InternalServerError',
+                                    'target': null
+                                }
+                            }
                           }
                        }
                     ],
@@ -483,7 +480,9 @@ namespace ResourceGroups.Tests
                             'timestamp': '2014-02-25T23:08:21.8183932Z',
                             'correlationId': 'afb170c6-fe57-4b38-a43b-900fe09be4ca',
                             'statusCode': 'OK',
-                            'statusMessage': 'OK',    
+                            'statusMessage':{
+                                'status': 'OK'
+                            }
                           }
                        }")
             };
@@ -505,7 +504,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Microsoft.Web", result.Properties.TargetResource.ResourceType);
             Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal("OK", result.Properties.StatusCode);
-            Assert.Equal("OK", result.Properties.StatusMessage);
+            Assert.Equal("OK", result.Properties.StatusMessage.Status);
         }
 
         [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
