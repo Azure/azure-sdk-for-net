@@ -123,6 +123,8 @@ namespace SignalR.Tests
             }
         }
 
+
+
         private void SignalRScenarioVerification(SignalRManagementClient signalrClient, ResourceGroup resourceGroup, SignalRResource signalr, bool isStandard, int capacity = 1)
         {
             // Validate the newly created SignalR instance
@@ -148,10 +150,12 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
-            Assert.Equal(1, signalr.Features.Count); // ServiceMode will be set as Default
+            Assert.Equal(3, signalr.Features.Count); // ServiceMode will be set as Default
             Assert.Equal("Default", signalr.Features.First().Value);
             Assert.Equal(1, signalr.Cors.AllowedOrigins.Count); // all origins(*) are allowed by default.
             Assert.Equal("*", signalr.Cors.AllowedOrigins.First());
+            Assert.Equal("SignalR", signalr.Kind);
+            Assert.Equal(1, signalr.Upstream.Templates.Count);
 
             // List the SignalR instances by resource group
             var signalrByResourceGroup = signalrClient.SignalR.ListByResourceGroup(resourceGroup.Name);
@@ -173,7 +177,7 @@ namespace SignalR.Tests
 
             // Update the SignalR instance
             capacity = isStandard ? 1 : 5;
-            signalr = signalrClient.SignalR.Update(resourceGroup.Name, signalr.Name, new SignalRUpdateParameters
+            signalr = signalrClient.SignalR.Update(resourceGroup.Name, signalr.Name, new SignalRResource
             {
                 Tags = SignalRTestUtilities.DefaultNewTags,
                 Sku = new ResourceSku
@@ -183,20 +187,17 @@ namespace SignalR.Tests
                     Size = isStandard ? "F1" : "S1",
                     Capacity = capacity,
                 },
-                Properties = new SignalRCreateOrUpdateProperties
-                {
-                    HostNamePrefix = TestUtilities.GenerateName("signalr-service-test"),
-                    Features = new List<SignalRFeature> {
+                HostNamePrefix = TestUtilities.GenerateName("signalr-service-test"),
+                Features = new List<SignalRFeature> {
                         new SignalRFeature { Value = "Serverless" }
                     },
-                    Cors = new SignalRCorsSettings
-                    {
-                        AllowedOrigins = new List<string>
+                Cors = new SignalRCorsSettings
+                {
+                    AllowedOrigins = new List<string>
                         {
                             "http://example.com:12345",
                             "https://contoso.com",
                         }
-                    },
                 },
             });
 
@@ -223,7 +224,7 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
-            Assert.Equal(1, signalr.Features.Count);
+            Assert.Equal(3, signalr.Features.Count);
             Assert.Equal("Serverless", signalr.Features.First().Value);
             Assert.Equal(2, signalr.Cors.AllowedOrigins.Count);
             Assert.Equal("http://example.com:12345", signalr.Cors.AllowedOrigins.First());

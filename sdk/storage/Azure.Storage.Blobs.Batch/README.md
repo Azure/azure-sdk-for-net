@@ -1,6 +1,6 @@
 # Azure Storage Blobs Batch client library for .NET
 
-> Server Version: 2019-07-07 and 2019-02-02
+> Server Version: 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.  This
@@ -162,7 +162,7 @@ catch (AggregateException)
 
 ## Next steps
 
-Check out our [sync](../Azure.Storage.Blobs/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs/samples/Sample03b_BatchingAsync.cs) samples for more.
+Check out our [sync](../Azure.Storage.Blobs.Batch/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs.Batch/samples/Sample03b_BatchingAsync.cs) samples for more.
 
 ## Contributing
 

@@ -49,7 +49,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                         {
-                            GetTestVMSSVMExtension(),
+                            GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                         }
                     };
 
@@ -360,7 +360,7 @@ namespace Compute.Tests
         // Create VMSS in Automatic Mode
         // Perform an extension rolling upgrade
         // Delete ResourceGroup
-        [Fact(Skip = "TODO: Re-record due to version update")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
         public void TestVMScaleSetExtensionUpgradeAPIs()
         {
@@ -381,7 +381,7 @@ namespace Compute.Tests
                     // Windows VM image
                     ImageReference imageRef = GetPlatformVMImage(true);
                     imageRef.Version = "latest";
-                    var extension = GetTestVMSSVMExtension();
+                    var extension = GetTestVMSSVMExtension(autoUpdateMinorVersion:false);
                     VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()

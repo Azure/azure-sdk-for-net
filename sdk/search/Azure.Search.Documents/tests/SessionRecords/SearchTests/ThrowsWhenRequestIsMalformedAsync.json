@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
+        "api-key": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-10cff4162038bd4187d70a803e45f7a7-e7475af0eb439c45-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "f18dbf637d46a3edd29262677b02b0cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "facets": [],
+        "filter": "This is not a valid filter.",
+        "scoringParameters": [],
+        "search": "*"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "f18dbf63-7d46-a3ed-d292-62677b02b0cd",
+        "Content-Language": "en",
+        "Content-Length": "141",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 26 Jun 2020 06:36:24 GMT",
+        "elapsed-time": "3",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f18dbf63-7d46-a3ed-d292-62677b02b0cd",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "f18dbf63-7d46-a3ed-d292-62677b02b0cd"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "",
+          "message": "Invalid expression: Syntax error at position 7 in \u0027This is not a valid filter.\u0027.\r\nParameter name: $filter"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1660709923",
+    "SearchIndexName": "josgoidr",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+  }
+}

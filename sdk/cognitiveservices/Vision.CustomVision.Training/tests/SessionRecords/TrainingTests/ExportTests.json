@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucw==",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,15 +10,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "1eca8f4e-143f-4d1d-a7ba-ec95d0335b11"
+        ],
         "apim-request-id": [
-          "09acb325-0e29-4b85-b46b-ec76f9d03267"
+          "1eca8f4e-143f-4d1d-a7ba-ec95d0335b11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -27,21 +30,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:20 GMT"
+          "Sat, 06 Jun 2020 16:52:33 GMT"
         ],
         "Content-Length": [
-          "696"
+          "735"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"33a19aa8-13dc-47cb-85b8-38dce183080f\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-09-16T15:04:00.983Z\",\r\n    \"lastModified\": \"2019-09-16T15:04:20.146Z\",\r\n    \"trainedAt\": \"2019-09-16T15:04:19.624Z\",\r\n    \"projectId\": \"0558a556-033a-4d62-acef-13b7e0e950a6\",\r\n    \"exportable\": true,\r\n    \"exportableTo\": [\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/84f34372-f4a7-4cd4-a77d-9f81df31682b/resourceGroups/All/providers/Microsoft.CognitiveServices/accounts/Allpred\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"41cb5f1e-c6ae-4cbc-8983-3016b59ac777\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2020-06-06T16:51:39.846Z\",\r\n    \"lastModified\": \"2020-06-06T16:52:33.839Z\",\r\n    \"trainedAt\": \"2020-06-06T16:52:32.892Z\",\r\n    \"projectId\": \"8cd98fb4-9b10-4d6b-842a-e27f870d9fbb\",\r\n    \"exportable\": true,\r\n    \"exportableTo\": [\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export?platform=TensorFlow",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0P3BsYXRmb3JtPVRlbnNvckZsb3c=",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export?platform=TensorFlow",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0P3BsYXRmb3JtPVRlbnNvckZsb3c=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -49,15 +52,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "7f867ac0-0128-47eb-bc67-a6e943cf6e22"
+        ],
         "apim-request-id": [
-          "7c470241-1c9c-4143-bc6d-8c1fdf6654de"
+          "7f867ac0-0128-47eb-bc67-a6e943cf6e22"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -66,21 +72,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:21 GMT"
+          "Sat, 06 Jun 2020 16:52:33 GMT"
         ],
         "Content-Length": [
-          "123"
+          "109"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"platform\": \"TensorFlow\",\r\n  \"status\": \"Exporting\",\r\n  \"downloadUri\": null,\r\n  \"flavor\": \"TensorFlowNormal\",\r\n  \"newerVersionAvailable\": false\r\n}",
+      "ResponseBody": "{\r\n  \"platform\": \"TensorFlow\",\r\n  \"status\": \"Exporting\",\r\n  \"downloadUri\": null,\r\n  \"flavor\": null,\r\n  \"newerVersionAvailable\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -88,15 +94,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "a87adb06-2919-4457-9dc0-62183694d813"
+        ],
         "apim-request-id": [
-          "1b1610c2-6d9d-421f-9c1b-a5b80a401f3e"
+          "a87adb06-2919-4457-9dc0-62183694d813"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -105,21 +114,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:21 GMT"
+          "Sat, 06 Jun 2020 16:52:33 GMT"
         ],
         "Content-Length": [
-          "125"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": \"TensorFlowNormal\",\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -127,15 +136,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "ba80f4e6-08d7-4ca9-8e18-a51067adc370"
+        ],
         "apim-request-id": [
-          "0d170195-82c6-4faa-b5ef-d477019f2e0a"
+          "ba80f4e6-08d7-4ca9-8e18-a51067adc370"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -144,21 +156,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:22 GMT"
+          "Sat, 06 Jun 2020 16:52:34 GMT"
         ],
         "Content-Length": [
-          "125"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": \"TensorFlowNormal\",\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -166,15 +178,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "b009bb89-f350-48ae-8d2d-28db043f2910"
+        ],
         "apim-request-id": [
-          "cd0efaf9-ec1a-4fee-a360-dba64fff1568"
+          "b009bb89-f350-48ae-8d2d-28db043f2910"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -183,21 +198,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:23 GMT"
+          "Sat, 06 Jun 2020 16:52:35 GMT"
         ],
         "Content-Length": [
-          "125"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": \"TensorFlowNormal\",\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -205,15 +220,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "08cba3f5-4200-4056-bb9e-cce85cc8db21"
+        ],
         "apim-request-id": [
-          "f907b427-fa54-4495-a16c-943597a8a022"
+          "08cba3f5-4200-4056-bb9e-cce85cc8db21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -222,21 +240,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:24 GMT"
+          "Sat, 06 Jun 2020 16:52:36 GMT"
         ],
         "Content-Length": [
-          "125"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": \"TensorFlowNormal\",\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0558a556-033a-4d62-acef-13b7e0e950a6/iterations/33a19aa8-13dc-47cb-85b8-38dce183080f/export",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wNTU4YTU1Ni0wMzNhLTRkNjItYWNlZi0xM2I3ZTBlOTUwYTYvaXRlcmF0aW9ucy8zM2ExOWFhOC0xM2RjLTQ3Y2ItODViOC0zOGRjZTE4MzA4MGYvZXhwb3J0",
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -244,15 +262,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "3ea1932b-8a68-430e-a2ce-b6e8b9225d06"
+        ],
         "apim-request-id": [
-          "59b528a1-bd14-4cb3-86fd-904bb23f8696"
+          "3ea1932b-8a68-430e-a2ce-b6e8b9225d06"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -261,16 +282,58 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 15:04:25 GMT"
+          "Sat, 06 Jun 2020 16:52:37 GMT"
         ],
         "Content-Length": [
-          "352"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Done\",\r\n    \"downloadUri\": \"https://irisusscppestore.blob.core.windows.net/m-0558a556033a4d62acef13b7e0e950a6/33a19aa813dc47cb85b838dce183080f.TensorFlow.zip?sv=2017-04-17&sr=b&sig=6lcbWW6mtT2mnBqa6Y0yKKnCMXvC6Vx%2FW2Fq9XQYFvQ%3D&se=2019-09-17T15%3A04%3A25Z&sp=r\",\r\n    \"flavor\": \"TensorFlowNormal\",\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.3/training/projects/8cd98fb4-9b10-4d6b-842a-e27f870d9fbb/iterations/41cb5f1e-c6ae-4cbc-8983-3016b59ac777/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84Y2Q5OGZiNC05YjEwLTRkNmItODQyYS1lMjdmODcwZDlmYmIvaXRlcmF0aW9ucy80MWNiNWYxZS1jNmFlLTRjYmMtODk4My0zMDE2YjU5YWM3NzcvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "4998e40e-b57b-4560-bf53-e5f7b3fb3ce2"
+        ],
+        "apim-request-id": [
+          "4998e40e-b57b-4560-bf53-e5f7b3fb3ce2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 06 Jun 2020 16:52:39 GMT"
+        ],
+        "Content-Length": [
+          "343"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Done\",\r\n    \"downloadUri\": \"https://irisprodeu2training.blob.core.windows.net/m-8cd98fb49b104d6b842ae27f870d9fbb/41cb5f1ec6ae4cbc89833016b59ac777.TensorFlow.zip?sv=2017-04-17&sr=b&sig=M3kBxT6k7c0YX4pJkMGra4nWg0%2FGW2H3kI%2BAoorrxO8%3D&se=2020-06-07T16%3A52%3A39Z&sp=r\",\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

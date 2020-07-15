@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/c1089427-83d3-4286-9f35-5af546a6eb67/providers/Microsoft.ContainerService/locations/westus2/orchestrators?api-version=2017-09-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzEwODk0MjctODNkMy00Mjg2LTlmMzUtNWFmNTQ2YTZlYjY3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyU2VydmljZS9sb2NhdGlvbnMvd2VzdHVzMi9vcmNoZXN0cmF0b3JzP2FwaS12ZXJzaW9uPTIwMTctMDktMzA=",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.ContainerService/locations/westus2/orchestrators?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyU2VydmljZS9sb2NhdGlvbnMvd2VzdHVzMi9vcmNoZXN0cmF0b3JzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a43eceda-7c38-4e62-9243-10d452144cf9"
+          "cd47e17b-51fe-458f-a5c9-5cb135c1a954"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18290.",
-          "Microsoft.Azure.Management.ContainerService.ContainerServiceClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ContainerService.ContainerServiceClient/2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 28 Jan 2019 20:48:20 GMT"
+          "Wed, 18 Mar 2020 10:54:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,16 +33,16 @@
           "nginx"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20190128T204821Z:03660401-442e-41d7-85e6-3341a2c586bf"
+          "JAPANEAST:20200318T105449Z:d9fd496f-ea34-4715-9819-e037cd6df6c0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11986"
         ],
         "x-ms-correlation-request-id": [
-          "03660401-442e-41d7-85e6-3341a2c586bf"
+          "d9fd496f-ea34-4715-9819-e037cd6df6c0"
         ],
         "x-ms-request-id": [
-          "39445047-df7e-4d7c-aee0-e431eafeca35"
+          "fa6507b8-aacf-4759-9ce6-ac10dd2783cc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "3982"
+          "4038"
         ],
         "Content-Type": [
           "application/json"
@@ -60,12 +60,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c1089427-83d3-4286-9f35-5af546a6eb67/providers/Microsoft.ContainerService/locations/westus2/orchestrators\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.ContainerService/locations/orchestrators\",\r\n  \"properties\": {\r\n    \"orchestrators\": [\r\n      {\r\n        \"orchestratorType\": \"Swarm\",\r\n        \"orchestratorVersion\": \"swarm:1.1.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DockerCE\",\r\n        \"orchestratorVersion\": \"17.03.*\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.6.9\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.7.15\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.7.16\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.7.15\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.7.16\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.8.14\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.8.15\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.7.16\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.8.14\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.8.15\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.8.14\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.8.15\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.9.10\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.9.11\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.8.15\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.9.10\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.9.11\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.9.10\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.9.11\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.10.9\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.10.12\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.9.11\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.10.9\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.10.12\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.10.9\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.10.12\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.11.5\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.11.6\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.10.12\",\r\n        \"default\": true,\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.11.5\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.11.6\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.11.5\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.11.6\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.12.2\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.12.4\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.11.6\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.12.2\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.12.4\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.12.2\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.12.4\"\r\n          },\r\n          {\r\n            \"orchestratorVersion\": \"1.13.1\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.12.4\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorVersion\": \"1.13.1\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.13.1\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.10.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.9.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.8.8\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.ContainerService/locations/westus2/orchestrators\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.ContainerService/locations/orchestrators\",\r\n  \"properties\": {\r\n    \"orchestrators\": [\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.6.9\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.13.11\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.13.12\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.13.11\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.13.12\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.14.7\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.14.8\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.13.12\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.14.7\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.14.8\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.14.7\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.14.8\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.15.5\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.15.7\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.14.8\",\r\n        \"default\": true,\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.15.5\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.15.7\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.15.5\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.15.7\"\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.16.1\",\r\n            \"isPreview\": true\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.16.4\",\r\n            \"isPreview\": true\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.15.7\",\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.16.1\",\r\n            \"isPreview\": true\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.16.4\",\r\n            \"isPreview\": true\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.16.1\",\r\n        \"isPreview\": true,\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.16.4\",\r\n            \"isPreview\": true\r\n          },\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.17.0\",\r\n            \"isPreview\": true\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.16.4\",\r\n        \"isPreview\": true,\r\n        \"upgrades\": [\r\n          {\r\n            \"orchestratorType\": \"Kubernetes\",\r\n            \"orchestratorVersion\": \"1.17.0\",\r\n            \"isPreview\": true\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Kubernetes\",\r\n        \"orchestratorVersion\": \"1.17.0\",\r\n        \"isPreview\": true\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.10.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.9.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"DCOS\",\r\n        \"orchestratorVersion\": \"1.8.8\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"Swarm\",\r\n        \"orchestratorVersion\": \"swarm:1.1.0\"\r\n      },\r\n      {\r\n        \"orchestratorType\": \"SwarmMode\",\r\n        \"orchestratorVersion\": \"17.03.*\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "c1089427-83d3-4286-9f35-5af546a6eb67"
+    "SubscriptionId": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
   }
 }

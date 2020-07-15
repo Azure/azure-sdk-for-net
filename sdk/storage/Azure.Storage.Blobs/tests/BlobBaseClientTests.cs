@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -62,6 +63,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task Ctor_ConnectionStringEscapeBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
+
+            BlockBlobClient initalBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            // Act
+            BlobBaseClient blob = new BlobBaseClient(TestConfigDefault.ConnectionString, test.Container.Name, blobName, GetOptions());
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+
+            // Act
+            BlobBaseClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: test.Container.Name,
+                    blobName: blobName)
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            propertiesResponse = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+        }
+
+        [Test]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -69,6 +104,27 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = InstrumentClient(new BlobBaseClient(blobEndpoint));
             var builder = new BlobUriBuilder(blob.Uri);
 
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_UriNonIpStyle()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
+
+            // Act
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
+
+            // Assert
+            BlobUriBuilder builder = new BlobUriBuilder(blobBaseClient.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
@@ -142,6 +198,48 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task DownloadAsync_ZeroSizeBlob()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = new byte[] { };
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            var actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            IDictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags);
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreEqual(tags.Count, response.Value.Details.TagCount);
         }
 
         #region Secondary Storage
@@ -249,20 +347,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DownloadAsync_WithUnreliableConnection()
+        [TestCase(10 * Constants.KB, 1 * Constants.KB)]
+        [TestCase(256 * Constants.KB, 255 * Constants.KB)]
+        [TestCase(257 * Constants.KB, 256 * Constants.KB)]
+        [TestCase(1 * Constants.MB, 1 * Constants.KB)]
+        [LiveOnly] // Stream copy uses ArrayPool under the hood. Which brings undeterministic behavior for larger content.
+        public async Task DownloadAsync_WithUnreliableConnection(int dataSize, int faultPoint)
         {
             // Arrange
+            int timesFaulted = 0;
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigDefault.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     GetFaultyBlobConnectionOptions(
-                        raiseAt: 256 * Constants.KB,
-                        raise: new Exception("Unexpected"))));
+                        raiseAt: faultPoint,
+                        raise: new IOException("Manually injected testing fault"),
+                        () => {
+                            timesFaulted++;
+                        })));
 
             await using DisposingContainer test = await GetTestContainerAsync(service: service);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(dataSize);
 
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
@@ -278,6 +385,7 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]
@@ -367,6 +475,57 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.DownloadAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DownloadAsync(
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task DownloadAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -428,6 +587,59 @@ namespace Azure.Storage.Blobs.Test
                 await response.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
+            using (var stream = new MemoryStream(data))
+            {
+                uploadResponse = await blob.UploadAsync(stream);
+            }
+
+            // Act
+            BlockBlobClient versionBlob = blob.WithVersion(uploadResponse.Value.VersionId);
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Details.VersionId);
+        }
+
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+
+            // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+
+            // Arrange
+            string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
+
+            //Act
+            Response<BlobDownloadInfo> sourceResponse = await sourceBlob.DownloadAsync();
+            Response<BlobDownloadInfo> destResponse = await destBlob.DownloadAsync();
+
+            //Assert
+            Assert.AreEqual(1, sourceResponse.Value.Details.ObjectReplicationSourceProperties.Count);
+            Assert.IsNull(sourceResponse.Value.Details.ObjectReplicationDestinationPolicyId);
+            Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicyId);
+            Assert.IsNull(destResponse.Value.Details.ObjectReplicationSourceProperties);
         }
         #endregion Sequential Download
 
@@ -523,6 +735,40 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task DownloadToAsync_ZeroSizeBlob()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(new byte[] { });
+            await blob.UploadAsync(stream);
+
+            // Act
+            using Stream resultStream = new MemoryStream();
+            await blob.DownloadToAsync(resultStream);
+        }
+
+        [Test]
+        [Ignore("Don't want to record 300 MB of data in the tests")]
+        public async Task DownloadToAsync_LargeStream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(300 * Constants.MB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await blob.DownloadToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [Test]
         public async Task DownloadTo_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -580,7 +826,8 @@ namespace Azure.Storage.Blobs.Test
                             new StorageTransferOptions
                             {
                                 MaximumConcurrency = 1,
-                                MaximumTransferLength = Constants.KB
+                                MaximumTransferLength = Constants.KB,
+                                InitialTransferLength = Constants.KB
                             });
                 });
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
@@ -662,6 +909,21 @@ namespace Azure.Storage.Blobs.Test
         #endregion Parallel Download
 
         [Test]
+        public async Task DownloadEmptyBlobTest()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream())
+            {
+                await blobClient.UploadAsync(stream, overwrite: true);
+            }
+
+            // Act
+            await blobClient.DownloadAsync();
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -688,6 +950,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
+            AssertDictionaryEquality(tags, response.Value);
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Metadata()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -695,17 +989,21 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             IDictionary<string, string> metadata = BuildMetadata();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                Metadata = metadata
+            };
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
             await destBlob.StartCopyFromUriAsync(
                 source: srcBlob.Uri,
-                metadata: metadata);
+                options);
 
             // Assert
             Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -723,13 +1021,17 @@ namespace Azure.Storage.Blobs.Test
                 parameters.LeaseId = await SetupBlobLeaseCondition(srcBlob, parameters.LeaseId, garbageLeaseId);
                 BlobRequestConditions sourceAccessConditions = BuildAccessConditions(
                     parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
                 // Act
                 Operation<long> response = await destBlob.StartCopyFromUriAsync(
                     source: srcBlob.Uri,
-                    sourceConditions: sourceAccessConditions);
+                    options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -751,6 +1053,10 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions sourceAccessConditions = BuildAccessConditions(
                     parameters: parameters,
                     lease: false);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -758,10 +1064,79 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.StartCopyFromUriAsync(
                         source: srcBlob.Uri,
-                        sourceConditions: sourceAccessConditions),
+                        options),
                     e => { });
 
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Source_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await srcBlob.SetTagsAsync(tags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                SourceConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                srcBlob.Uri,
+                options: options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Source_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                SourceConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.StartCopyFromUriAsync(
+                            srcBlob.Uri,
+                            options: options),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -792,11 +1167,15 @@ namespace Azure.Storage.Blobs.Test
                 parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
 
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    DestinationConditions = accessConditions
+                };
 
                 // Act
                 Operation<long> response = await destBlob.StartCopyFromUriAsync(
                     source: srcBlob.Uri,
-                    destinationConditions: accessConditions);
+                    options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -830,15 +1209,88 @@ namespace Azure.Storage.Blobs.Test
 
                 parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    DestinationConditions = accessConditions
+                };
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     destBlob.StartCopyFromUriAsync(
                         source: srcBlob.Uri,
-                        destinationConditions: accessConditions),
+                        options),
                     e => { });
 
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destBlob.SetTagsAsync(tags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                srcBlob.Uri,
+                options: options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.StartCopyFromUriAsync(
+                            srcBlob.Uri,
+                            options: options),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -849,11 +1301,15 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cool
+            };
 
             // Act
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(
                 srcBlob.Uri,
-                accessTier: AccessTier.Cool);
+                options);
 
             // Assert
             // data copied within an account, so copy should be instantaneous
@@ -868,7 +1324,38 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
+        }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Seal()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient srcBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await srcBlob.CreateAsync();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                IsSealed = true
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.IsSealed);
         }
 
         [Test]
@@ -908,11 +1395,16 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Archive,
+                RehydratePriority = RehydratePriority.High
+            };
+
             // Act
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(
                 srcBlob.Uri,
-                accessTier: AccessTier.Archive,
-                rehydratePriority: RehydratePriority.High);
+                options);
 
             // Assert
             // data copied within an account, so copy should be instantaneous
@@ -945,14 +1437,46 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.P20
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.StartCopyFromUriAsync(
                 srcBlob.Uri,
-                accessTier: AccessTier.P20),
+                options),
                 e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
 
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.VersionId, out var _));
         }
 
         [Test]
@@ -1123,6 +1647,355 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task SyncCopyFromUriAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
+
+            // Check that destBlob actually exists
+            await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(copyResponse.Value.ETag);
+            Assert.IsNotNull(copyResponse.Value.LastModified);
+            Assert.IsNotNull(copyResponse.Value.CopyId);
+            Assert.AreEqual(CopyStatus.Success, copyResponse.Value.CopyStatus);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
+            AssertDictionaryEquality(tags, response.Value);
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Metadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = BuildMetadata();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                Metadata = metadata
+            };
+
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                source: srcBlob.Uri,
+                options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Source_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+
+                parameters.Match = await SetupBlobMatchCondition(srcBlob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(srcBlob, parameters.LeaseId, garbageLeaseId);
+                BlobRequestConditions sourceAccessConditions = BuildAccessConditions(
+                    parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                // Act
+                Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
+                    source: srcBlob.Uri,
+                    options);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Source_AccessConditionsFail()
+        {
+            foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(srcBlob, parameters.NoneMatch);
+
+                BlobRequestConditions sourceAccessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: false);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    destBlob.SyncCopyFromUriAsync(
+                        source: srcBlob.Uri,
+                        options),
+                    e => { });
+            }
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Destination_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+
+                // Arrange
+                var data = GetRandomBuffer(Constants.KB);
+                BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await srcBlob.UploadAsync(stream);
+                }
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                // destBlob needs to exist so we can get its lease and etag
+                using (var stream = new MemoryStream(data))
+                {
+                    await destBlob.UploadAsync(stream);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(destBlob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
+
+                BlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    DestinationConditions = accessConditions
+                };
+
+                // Act
+                Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
+                    source: srcBlob.Uri,
+                    options);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            }
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Destination_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+
+                // Arrange
+                var data = GetRandomBuffer(Constants.KB);
+                BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await srcBlob.UploadAsync(stream);
+                }
+
+                // destBlob needs to exist so we can get its etag
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await destBlob.UploadAsync(stream);
+                }
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
+                BlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
+                BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+                {
+                    DestinationConditions = accessConditions
+                };
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    destBlob.SyncCopyFromUriAsync(
+                        source: srcBlob.Uri,
+                        options),
+                    e => { });
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destBlob.SetTagsAsync(tags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncCopyFromUriAsync(
+                    srcBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        [Ignore("Inducing a 500 in the service")]
+        public async Task SyncCopyFromUriAsync_AccessTier()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cool
+            };
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options);
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(AccessTier.Cool, response.Value.AccessTier);
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_AccessTierFail()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.P20
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options),
+                e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task SyncCopyFromUriAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncCopyFromUriAsync(srcBlob.Uri),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1136,7 +2009,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
-
         }
 
         [Test]
@@ -1206,6 +2078,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response response = await blob.DeleteAsync(conditions: conditions);
+
+            // Assert
+            bool exists = await blob.ExistsAsync();
+            Assert.IsFalse(exists);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DeleteAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task DeleteAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1217,6 +2134,289 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.DeleteAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_VersionSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobVersionSas(
+                test.Container.Name,
+                blob.Name,
+                createResponse.Value.VersionId,
+                BlobVersionSasPermissions.Delete,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_InvalidVersionSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Read);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.DeleteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_VersionIdentitySAS()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetBlobVersionIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                createResponse.Value.VersionId,
+                BlobVersionSasPermissions.Delete,
+                userDelegationKey,
+                oauthService.AccountName,
+                Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_VersionInvalidSAS()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Read,
+                userDelegationKey,
+                oauthService.AccountName,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.DeleteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_VersionBlobSAS(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_VersionBlobIdentitySAS(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                userDelegationKey,
+                oauthService.AccountName,
+                Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobContainerSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_VersionContainerSAS(BlobContainerSasPermissions blobContainerSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetContainerSas(
+                test.Container.Name,
+                blobContainerSasPermissions,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(BlobContainerSasPermissions.DeleteBlobVersion)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_VersionContainerIdentitySAS(BlobContainerSasPermissions blobContainerSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                blobContainerSasPermissions,
+                userDelegationKey,
+                oauthService.AccountName,
+                Constants.DefaultSasVersion);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(AccountSasPermissions.DeleteVersion)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task DeleteAsync_VersionAccountSAS(AccountSasPermissions accountSasPermissions)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(
+                accountSasResourceTypes: AccountSasResourceTypes.All,
+                accountSasPermissions: AccountSasPermissions.All);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_InvalidSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(test.Container.Name, blob.Name, BlobSasPermissions.Read);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
         }
 
         [Test]
@@ -1237,12 +2437,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DeleteIfExistsAsync_Exists()
+        public async Task DeleteIfExistsAsync_NotExists()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<bool> response = await blob.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_ContainerNotExists()
+        {
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+
+            // Arrange
+            BlobBaseClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
             Response<bool> response = await blob.DeleteIfExistsAsync();
@@ -1364,6 +2582,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task ExistsAsync_ContainerNotExists()
+        {
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+
+            // Arrange
+            BlobBaseClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task ExistsAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
@@ -1375,7 +2609,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode));
+                e => { });
         }
 
         [Test]
@@ -1391,7 +2625,52 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(tags.Count, response.Value.TagCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task GetPropertiesAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority.HasValue ? rehydratePriority.Value.ToString() : null, propertiesResponse.Value.RehydratePriority);
         }
 
         [Test]
@@ -1649,6 +2928,26 @@ namespace Azure.Storage.Blobs.Test
 
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Act
+            Response<BlobProperties> response = await versionBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+            Assert.IsFalse(response.Value.IsLatestVersion);
+        }
+
         private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
         {
             BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
@@ -1796,6 +3095,80 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync(conditions: conditions);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetPropertiesAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+
+            // This is a PLAYBACK ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+
+            // Arrange
+            string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
+
+            // Act
+            Response<BlobProperties> source_response = await sourceBlob.GetPropertiesAsync();
+            Response<BlobProperties> dest_response = await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(1, source_response.Value.ObjectReplicationSourceProperties.Count);
+            Assert.IsNull(source_response.Value.ObjectReplicationDestinationPolicyId);
+            Assert.IsNotEmpty(dest_response.Value.ObjectReplicationDestinationPolicyId);
+            Assert.IsNull(dest_response.Value.ObjectReplicationSourceProperties);
+        }
+
+        [Test]
         public async Task GetPropertiesAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1907,6 +3280,59 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetHttpHeadersAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<BlobInfo> response = await blob.SetHttpHeadersAsync(
+                new BlobHttpHeaders
+                {
+                    ContentEncoding = "deflate, gzip",
+                    ContentLanguage = "de-DE, en-CA",
+                },
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetHttpHeadersAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetHttpHeadersAsync(
+                    new BlobHttpHeaders
+                    {
+                        ContentEncoding = "deflate, gzip",
+                        ContentLanguage = "de-DE, en-CA",
+                    },
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task SetHttpHeadersAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1932,7 +3358,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetMetadataAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
         }
 
         [Test]
@@ -2013,6 +3455,55 @@ namespace Azure.Storage.Blobs.Test
                         conditions: accessConditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetMetadataAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(
+                metadata: metadata,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetMetadataAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetMetadataAsync(
+                    metadata: metadata,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -2125,6 +3616,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateSnapshotAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync(conditions: conditions);
+
+            // Assert
+            bool exists = await blob.WithSnapshot(response.Value.Snapshot).ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateSnapshotAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CreateSnapshotAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task CreateSnapshotAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2135,6 +3671,22 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateSnapshotAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateSnapshotAsync_Version()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+
         }
 
         [Test]
@@ -2202,6 +3754,59 @@ namespace Azure.Storage.Blobs.Test
                         conditions: accessConditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AcquireLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            // Act
+            await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
+                duration,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AcquireLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
+                    duration,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -2292,6 +3897,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RenewLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.RenewAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RenewLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.RenewAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task RenewLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2375,6 +4035,61 @@ namespace Azure.Storage.Blobs.Test
                     lease.ReleaseAsync(conditions: accessConditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ReleaseLeaseAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.ReleaseAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ReleaseLeaseAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.ReleaseAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -2485,6 +4200,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task BreakLeaseAsync_IfTag()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.BreakAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task BreakLeaseAsync_IfTagFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.BreakAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task BreakLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2577,6 +4347,67 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ChangeLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var newLeaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.ChangeAsync(
+                newLeaseId,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ChangeLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var newLeaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.ChangeAsync(
+                newLeaseId,
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task ChangeLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2656,6 +4487,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.SetAccessTierAsync(
+                accessTier: AccessTier.Cool,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetAccessTierAsync(
+                    accessTier: AccessTier.Cool,
+                    conditions: conditions),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
         public async Task SetTierAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2686,6 +4562,484 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual("rehydrate-pending-to-cool", propertiesResponse.Value.ArchiveStatus);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_Snapshot()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(snapshotResponse.Value.Snapshot);
+
+            // Act
+            await snapshotBlob.SetAccessTierAsync(AccessTier.Cool);
+            Response<BlobProperties> propertiesResponse = await snapshotBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(AccessTier.Cool.ToString(), propertiesResponse.Value.AccessTier);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_SnapshotError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            string fakeVersion = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient snapshotBlob = blob.WithSnapshot(fakeVersion);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                snapshotBlob.SetAccessTierAsync(AccessTier.Cool),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_Version()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
+            using (var stream = new MemoryStream(data))
+            {
+                uploadResponse = await blob.UploadAsync(stream);
+            }
+
+            // Act
+            BlobBaseClient versionBlob = blob.WithVersion(uploadResponse.Value.VersionId);
+
+            // Act
+            await versionBlob.SetAccessTierAsync(AccessTier.Cool);
+            Response<BlobProperties> propertiesResponse = await versionBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(AccessTier.Cool.ToString(), propertiesResponse.Value.AccessTier);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTierAsync_VersionError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string fakeVersion = "2020-04-17T20:37:16.5129130Z";
+            BlobBaseClient versionBlob = blob.WithVersion(fakeVersion);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.SetAccessTierAsync(AccessTier.Cool),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await blob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_BlobTagSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Tag,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidBlobSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name, blob.Name,
+                BlobSasPermissions.Read,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_BlobIdentityTagSas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Tag,
+                userDelegationKey,
+                oauthService.AccountName,
+                sasVersion: Constants.DefaultSasVersion);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await identitySasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidBlobIdentitySas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Read,
+                userDelegationKey,
+                oauthService.AccountName,
+                sasVersion: Constants.DefaultSasVersion);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_ContainerTagSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetContainerSas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Tag,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidContainerSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetContainerSas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Read,
+                sasVersion: Constants.DefaultSasVersion);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_ContainerIdentityTagSas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Tag,
+                userDelegationKey,
+                oauthService.AccountName,
+                sasVersion: Constants.DefaultSasVersion);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await identitySasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidContainerIdentitySas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Read,
+                userDelegationKey,
+                oauthService.AccountName,
+                sasVersion: Constants.DefaultSasVersion);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(AccountSasPermissions.Tag)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task GetSetTagsAsync_AccountSas(AccountSasPermissions accountSasPermissions)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            tags.Add("anotherTag", "anotherValue");
+
+            // Act
+            await blob.SetTagsAsync(
+                tags,
+                conditions: conditions);
+            Response<IDictionary<string, string>> getTagsResponse = await blob.GetTagsAsync(
+                conditions: conditions);
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetTagsAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetTagsAsync(
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTagsAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetTagsAsync(
+                    tags,
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(BuildMetadata());
+            BlobBaseClient versionBlob = blob.WithVersion(metadataResponse.Value.VersionId);
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await versionBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getVersionTagsResponse = await versionBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getVersionTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_VersionError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string fakeVersion = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(fakeVersion);
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.GetTagsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetTagsAsync_Error()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = InstrumentClient(test.Container.GetBlobBaseClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetTagsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTagsAsync_Error()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = InstrumentClient(test.Container.GetBlobBaseClient(GetNewBlobName()));
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
 
         //[Test]
@@ -2725,30 +5079,59 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void WithSnapshot()
         {
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
 
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            // Act
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
+            BlobBaseClient snapshotBlobBaseClient = blobBaseClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotBlobBaseClient.Uri);
 
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            // Assert
+            Assert.AreEqual(accountName, snapshotBlobBaseClient.AccountName);
+            Assert.AreEqual(containerName, snapshotBlobBaseClient.BlobContainerName);
+            Assert.AreEqual(blobName, snapshotBlobBaseClient.Name);
+            Assert.AreEqual(snapshotUri, snapshotBlobBaseClient.Uri);
 
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
+        }
 
-            var builder = new BlobUriBuilder(blob.Uri);
+        [Test]
+        public void WithVersion()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string versionId = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
 
-            Assert.AreEqual("", builder.Snapshot);
+            // Act
+            BlobBaseClient blobBaseClient = new BlobBaseClient(uri);
+            BlobBaseClient versionBlobBaseClient = blobBaseClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionBlobBaseClient.Uri);
 
-            blob = InstrumentClient(blob.WithSnapshot("foo"));
+            // Assert
+            Assert.AreEqual(accountName, versionBlobBaseClient.AccountName);
+            Assert.AreEqual(containerName, versionBlobBaseClient.BlobContainerName);
+            Assert.AreEqual(blobName, versionBlobBaseClient.Name);
+            Assert.AreEqual(versionUri, versionBlobBaseClient.Uri);
 
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("foo", builder.Snapshot);
-
-            blob = InstrumentClient(blob.WithSnapshot(null));
-
-            builder = new BlobUriBuilder(blob.Uri);
-
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

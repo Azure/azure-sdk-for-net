@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ContainerService.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -51,7 +50,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// ranges or the Kubernetes service address range.</param>
         /// <param name="loadBalancerSku">The load balancer sku for the managed
         /// cluster. Possible values include: 'standard', 'basic'</param>
-        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string loadBalancerSku = default(string))
+        /// <param name="loadBalancerProfile">Profile of the cluster load
+        /// balancer.</param>
+        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
@@ -60,6 +61,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             DnsServiceIP = dnsServiceIP;
             DockerBridgeCidr = dockerBridgeCidr;
             LoadBalancerSku = loadBalancerSku;
+            LoadBalancerProfile = loadBalancerProfile;
             CustomInit();
         }
 
@@ -120,40 +122,22 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string LoadBalancerSku { get; set; }
 
         /// <summary>
+        /// Gets or sets profile of the cluster load balancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "loadBalancerProfile")]
+        public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (PodCidr != null)
+            if (LoadBalancerProfile != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(PodCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "PodCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
-                }
-            }
-            if (ServiceCidr != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(ServiceCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "ServiceCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
-                }
-            }
-            if (DnsServiceIP != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(DnsServiceIP, "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "DnsServiceIP", "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-                }
-            }
-            if (DockerBridgeCidr != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(DockerBridgeCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "DockerBridgeCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
-                }
+                LoadBalancerProfile.Validate();
             }
         }
     }

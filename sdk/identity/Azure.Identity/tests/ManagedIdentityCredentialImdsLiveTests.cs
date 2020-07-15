@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     // These tests are intended to be only run live on an azure VM with managed identity enabled.
-    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
+    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
         {
@@ -25,16 +25,17 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsSystemAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
             var cred = CreateManagedIdentityCredential();
 
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
+            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
@@ -48,18 +49,19 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsUserAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var clientId = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
+            var clientId = TestEnvironment.IMDSClientId;
 
             var cred = CreateManagedIdentityCredential(clientId);
 
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
+            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 

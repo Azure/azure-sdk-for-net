@@ -48,5 +48,34 @@ namespace Azure.Messaging.EventHubs.Amqp
                     return instance;
             }
         }
+
+        /// <summary>
+        ///   Considers an exception surfaced during the creation of an AMQP link, determining if the cause was a race condition
+        ///   with the connection closing and translating it into the form that should be considered for error handling decisions.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the service operation was targeting.</param>
+        ///
+        /// <returns>The <see cref="Exception" /> that corresponds to the <paramref name="instance" /> and which represents the service error.</returns>
+        ///
+        public static Exception TranslateConnectionCloseDuringLinkCreationException(this Exception instance,
+                                                                                    string eventHubName)
+        {
+            Argument.AssertNotNull(instance, nameof(instance));
+
+            switch (instance)
+            {
+                case InvalidOperationException _ when (instance.Message.IndexOf("when the connection is closing", StringComparison.InvariantCultureIgnoreCase) >= 0):
+                case TaskCanceledException _:
+                    return new EventHubsException(true, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ServiceCommunicationProblem, instance);
+
+                case ObjectDisposedException _:
+                    return new EventHubsException(false, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ClientClosed, instance);
+
+                default:
+                    return instance;
+            }
+        }
     }
 }

@@ -4,9 +4,9 @@
     <PackageId>HealthcareApis.Tests</PackageId>
     <Description>HealthcareApis.Tests Class Library</Description>
     <AssemblyName>HealthcareApis.Tests</AssemblyName>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Microsoft Corporation</Authors>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

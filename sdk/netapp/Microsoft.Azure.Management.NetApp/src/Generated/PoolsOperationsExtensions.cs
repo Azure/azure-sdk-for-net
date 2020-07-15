@@ -345,6 +345,64 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Update a capacity pool
+            /// </summary>
+            /// <remarks>
+            /// Patch the specified capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Capacity pool object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            public static CapacityPool BeginUpdate(this IPoolsOperations operations, CapacityPoolPatch body, string resourceGroupName, string accountName, string poolName)
+            {
+                return operations.BeginUpdateAsync(body, resourceGroupName, accountName, poolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a capacity pool
+            /// </summary>
+            /// <remarks>
+            /// Patch the specified capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Capacity pool object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CapacityPool> BeginUpdateAsync(this IPoolsOperations operations, CapacityPoolPatch body, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete a capacity pool
             /// </summary>
             /// <remarks>

@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
-        ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
+        ///   The options used for configuring the connection to the Event Hubs service.
         /// </summary>
         ///
         public EventHubConnectionOptions ConnectionOptions

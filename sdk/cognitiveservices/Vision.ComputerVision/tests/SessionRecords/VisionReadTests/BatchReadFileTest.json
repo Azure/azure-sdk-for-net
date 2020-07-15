@@ -1,0 +1,120 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v3.0/read/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL3JlYWQvYW5hbHl6ZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27414.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Operation-Location": [
+          "https://westcentralus.api.cognitive.microsoft.com/vision/v3.0/read/analyzeResults/213313c8-eb1d-41dc-82eb-69a566532ddd"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "4d0a9fee-8037-445f-a89c-832090813618"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 29 May 2019 05:58:07 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/vision/v3.0/read/analyzeResults/213313c8-eb1d-41dc-82eb-69a566532ddd",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvb3BlcmF0aW9ucy8yMTMzMTNjOC1lYjFkLTQxZGMtODJlYi02OWE1NjY1MzJkZGQ=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27414.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "edef3d50-e44b-4c48-88e5-0e83663ec3cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 29 May 2019 05:58:07 GMT"
+        ],
+        "Content-Length": [
+          "528"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResults\": [\r\n    {\r\n      \"page\": 1,\r\n      \"clockwiseOrientation\": 2.47,\r\n      \"width\": 250,\r\n      \"height\": 258,\r\n      \"unit\": \"pixel\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": [\r\n            64,\r\n            41,\r\n            104,\r\n            42,\r\n            103,\r\n            61,\r\n            61,\r\n            60\r\n          ],\r\n          \"text\": \"520\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                67,\r\n                41,\r\n                102,\r\n                41,\r\n                102,\r\n                60,\r\n                66,\r\n                60\r\n              ],\r\n              \"text\": \"520\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            123,\r\n            31,\r\n            204,\r\n            35,\r\n            202,\r\n            57,\r\n            121,\r\n            54\r\n          ],\r\n          \"text\": \"WEST\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                126,\r\n                32,\r\n                203,\r\n                36,\r\n                203,\r\n                57,\r\n                124,\r\n                53\r\n              ],\r\n              \"text\": \"WEST\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            60,\r\n            102,\r\n            204,\r\n            108,\r\n            202,\r\n            139,\r\n            58,\r\n            132\r\n          ],\r\n          \"text\": \"Seattle\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                64,\r\n                103,\r\n                204,\r\n                109,\r\n                201,\r\n                140,\r\n                64,\r\n                134\r\n              ],\r\n              \"text\": \"Seattle\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -5,15 +5,16 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.NetApp</PackageId>
+        
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.4.0</Version>
+    <Version>1.5.1</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.4.0 relates to NetApp Files (ANF) RP R7 GA.
-          - added replication functionality
+        Version 1.5.1 relates to NetApp Files (ANF) 2019-11-01.
+          - Fix MountTarget property in Volume
 
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.

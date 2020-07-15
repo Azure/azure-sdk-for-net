@@ -53,7 +53,8 @@ namespace Azure.Core.Pipeline
 
             private readonly int _maxRetries;
 
-            private readonly Stream _initialStream;
+            private readonly long _length;
+            private readonly ExceptionDispatchInfo _lengthException;
 
             private Stream _currentStream;
 
@@ -65,7 +66,15 @@ namespace Azure.Core.Pipeline
 
             public RetriableStreamImpl(Stream initialStream, Func<long, Stream> streamFactory, Func<long, ValueTask<Stream>> asyncStreamFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
-                _initialStream = EnsureStream(initialStream);
+                try
+                {
+                    _length = EnsureStream(initialStream).Length;
+                }
+                catch (Exception ex)
+                {
+                    _lengthException = ExceptionDispatchInfo.Capture(ex);
+                }
+
                 _currentStream = EnsureStream(initialStream);
                 _streamFactory = streamFactory;
                 _responseClassifier = responseClassifier;
@@ -90,14 +99,17 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        await RetryAsync(e, true).ConfigureAwait(false);
+                        await RetryAsync(e, true, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
 
-            private async Task RetryAsync(Exception exception, bool async)
+            private async Task RetryAsync(Exception exception, bool async, CancellationToken cancellationToken)
             {
-                if (!_responseClassifier.IsRetriableException(exception))
+                bool isNonCustomerCancelledException = exception is OperationCanceledException &&
+                                                    !cancellationToken.IsCancellationRequested;
+
+                if (!_responseClassifier.IsRetriableException(exception) && !isNonCustomerCancelledException)
                 {
                     ExceptionDispatchInfo.Capture(exception).Throw();
                 }
@@ -116,6 +128,8 @@ namespace Azure.Core.Pipeline
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
 
+                _currentStream.Dispose();
+
                 _currentStream = EnsureStream(async ? (await _asyncStreamFactory(_position).ConfigureAwait(false)) : _streamFactory(_position));
             }
 
@@ -132,16 +146,21 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        Task task = RetryAsync(e, false);
-                        Debug.Assert(task.IsCompleted);
-                        task.GetAwaiter().GetResult();
+                        RetryAsync(e, false, default).EnsureCompleted();
                     }
                 }
             }
 
             public override bool CanRead => _currentStream.CanRead;
             public override bool CanSeek { get; } = false;
-            public override long Length => _initialStream.Length;
+            public override long Length
+            {
+                get
+                {
+                    _lengthException?.Throw();
+                    return _length;
+                }
+            }
 
             public override long Position
             {
@@ -173,7 +192,13 @@ namespace Azure.Core.Pipeline
 
             public override void Flush()
             {
-                throw new NotSupportedException();
+                // Flush is allowed on read-only stream
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                _currentStream?.Dispose();
             }
         }
     }

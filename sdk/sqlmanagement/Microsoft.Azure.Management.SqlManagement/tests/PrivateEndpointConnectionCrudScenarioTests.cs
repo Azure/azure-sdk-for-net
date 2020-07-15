@@ -46,12 +46,30 @@ namespace Sql.Tests
                 PrivateEndpointConnection pec2r = sqlClient.PrivateEndpointConnections.Get(resourceGroup.Name, server.Name, pec2.Name);
                 SqlManagementTestUtilities.ValidatePrivateEndpointConnection(pec2, pec2r);
 
+                // Get server and verify correct PECs are returned
+                Server retrievedServer = sqlClient.Servers.Get(resourceGroup.Name, server.Name);
+
+                Assert.Equal(2, retrievedServer.PrivateEndpointConnections.Count());
+                ValidatePECOnServer(pec1, retrievedServer.PrivateEndpointConnections[0]);
+                ValidatePECOnServer(pec2, retrievedServer.PrivateEndpointConnections[1]);
+
                 sqlClient.PrivateEndpointConnections.Delete(resourceGroup.Name, server.Name, pec1.Name);
                 Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.PrivateEndpointConnections.Get(resourceGroup.Name, server.Name, pec1.Name));
 
                 sqlClient.PrivateEndpointConnections.Delete(resourceGroup.Name, server.Name, pec2.Name);
                 Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.PrivateEndpointConnections.Get(resourceGroup.Name, server.Name, pec2.Name));
             }
+        }
+
+        /// <summary>
+        /// Verify PEC and PEC on server match
+        /// </summary>
+        /// <param name="pec">Private endpoint connections</param>
+        /// <param name="serverPEC">Server private endpoint connections</param>
+        private void ValidatePECOnServer(PrivateEndpointConnection pec, ServerPrivateEndpointConnection serverPEC)
+        {
+            Assert.Equal(pec.Id, serverPEC.Id);
+            Assert.Equal(pec.PrivateEndpoint.Id, serverPEC.Properties.PrivateEndpoint.Id);
         }
 
         private IList<PrivateEndpointConnection> CreatePrivateEndpoints(ResourceGroup resourceGroup, string location, Server server, VirtualNetwork vnet, int n = 1)

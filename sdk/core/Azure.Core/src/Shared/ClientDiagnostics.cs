@@ -10,12 +10,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 #nullable enable
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed class ClientDiagnostics: DiagnosticScopeFactory
+    internal sealed partial class ClientDiagnostics : DiagnosticScopeFactory
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -30,18 +31,32 @@ namespace Azure.Core.Pipeline
                 options.Diagnostics.LoggedHeaderNames.ToArray());
         }
 
+        /// <summary>
+        /// Partial method that can optionally be defined to extract the error
+        /// message, code, and details in a service specific manner.
+        /// </summary>
+        /// <param name="content">The error content.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="errorCode">The error code.</param>
+        /// <param name="additionalInfo">Additional error details.</param>
+        partial void ExtractFailureContent(
+            string? content,
+            ref string? message,
+            ref string? errorCode,
+            ref IDictionary<string, string>? additionalInfo);
+
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-
+            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            ValueTask<string?> contentTask = ReadContentAsync(response, false);
-            Debug.Assert(contentTask.IsCompleted);
-            return CreateRequestFailedExceptionWithContent(response, message, contentTask.GetAwaiter().GetResult(), errorCode, additionalInfo, innerException);
+            string? content = ReadContentAsync(response, false).EnsureCompleted();
+            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
+            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedExceptionWithContent(
@@ -68,14 +83,12 @@ namespace Azure.Core.Pipeline
 
         public ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message = null, string? errorCode= null, IDictionary<string, string>? additionalInfo = null)
         {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, async: true);
+            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, true);
         }
 
         public string CreateRequestFailedMessage(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
         {
-            ValueTask<string> messageTask = CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false);
-            Debug.Assert(messageTask.IsCompleted);
-            return messageTask.GetAwaiter().GetResult();
+            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false).EnsureCompleted();
         }
 
         private async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
@@ -90,10 +103,18 @@ namespace Azure.Core.Pipeline
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message ?? DefaultMessage)
                 .Append("Status: ")
-                .Append(response.Status.ToString(CultureInfo.InvariantCulture))
-                .Append(" (")
-                .Append(response.ReasonPhrase)
-                .AppendLine(")");
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+
+            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            {
+                messageBuilder.Append(" (")
+                    .Append(response.ReasonPhrase)
+                    .AppendLine(")");
+            }
+            else
+            {
+                messageBuilder.AppendLine();
+            }
 
             if (!string.IsNullOrWhiteSpace(errorCode))
             {

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractKeyPhrasesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
@@ -30,14 +30,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents);
             #endregion
 
-            Debug.WriteLine($"Extracted key phrases for each input are:");
+            Debug.WriteLine($"Extracted key phrases for each document are:");
             int i = 0;
             foreach (ExtractKeyPhrasesResult result in results)
             {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
+                Debug.WriteLine($"For document: \"{documents[i++]}\",");
                 Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
 
                 foreach (string keyPhrase in result.KeyPhrases)

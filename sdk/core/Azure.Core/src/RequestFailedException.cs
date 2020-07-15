@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
+    #pragma warning disable CA2229, CA2235 // False positive
     /// <summary>
     /// An exception thrown when service request fails.
     /// </summary>
-    public class RequestFailedException : Exception
+    [Serializable]
+    public class RequestFailedException : Exception, ISerializable
     {
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -60,6 +64,25 @@ namespace Azure
         {
             Status = status;
             ErrorCode = errorCode;
+        }
+
+        /// <inheritdoc />
+        protected RequestFailedException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            Status = info.GetInt32(nameof(Status));
+            ErrorCode = info.GetString(nameof(ErrorCode));
+        }
+
+        /// <inheritdoc />
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            Argument.AssertNotNull(info, nameof(info));
+
+            info.AddValue(nameof(Status), Status);
+            info.AddValue(nameof(ErrorCode), ErrorCode);
+
+            base.GetObjectData(info, context);
         }
     }
 }

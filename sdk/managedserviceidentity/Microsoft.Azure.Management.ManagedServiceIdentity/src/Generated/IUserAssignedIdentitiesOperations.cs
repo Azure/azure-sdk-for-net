@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Identity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IdentityUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the identity.
         /// </summary>

@@ -1,5 +1,14 @@
 # Release History
 
+## 4.1.3 (2020-04-17)
+- Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)
+- Increase version range allowed for `System.IdentityModel.Tokens.Jwt` [PR 10885](https://github.com/Azure/azure-sdk-for-net/pull/10885)
+- Improved XML API-documentation [PR 11028](https://github.com/Azure/azure-sdk-for-net/pull/11028)
+- Bugfix - `ForwardTo` should not error on 260 character name [PR 11059](https://github.com/Azure/azure-sdk-for-net/pull/11059)
+
+## 4.1.2
+- Same as version 4.1.1 but has pdb symbols published
+
 ## 4.1.1
 ### Bug fixes
 - Ignore OperationCanceledException while closing Message Pump. [PR 8449](https://github.com/Azure/azure-sdk-for-net/pull/8449)

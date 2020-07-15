@@ -48,6 +48,8 @@ namespace Azure.Core.Pipeline
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
+            policies.Add(ReadClientRequestIdPolicy.Shared);
+
             policies.AddRange(perCallPolicies);
 
             policies.AddRange(options.PerCallPolicies);
@@ -69,11 +71,13 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
+                string assemblyName = options.GetType().Assembly.GetName().Name;
+
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
             }
 
-            policies.Add(BufferResponsePolicy.Shared);
+            policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 

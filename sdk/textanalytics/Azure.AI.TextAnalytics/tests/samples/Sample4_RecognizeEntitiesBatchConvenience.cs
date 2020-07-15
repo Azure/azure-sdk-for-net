@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntitiesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
@@ -30,19 +30,19 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
+            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(documents);
             #endregion
 
-            Debug.WriteLine($"Recognized entities for each input are:");
+            Debug.WriteLine($"Recognized entities for each document are:");
             int i = 0;
             foreach (RecognizeEntitiesResult result in results)
             {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
+                Debug.WriteLine($"For document: \"{documents[i++]}\",");
                 Debug.WriteLine($"the following {result.Entities.Count()} entities were found: ");
 
                 foreach (CategorizedEntity entity in result.Entities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
                 }
             }
         }

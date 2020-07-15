@@ -82,6 +82,24 @@ namespace Azure.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is a positive value, throwing an
+        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is not positive <see cref="TimeSpan"/> value.</exception>
+        ///
+        public static void AssertPositive(TimeSpan argumentValue, string argumentName)
+        {
+            if (argumentValue <= TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a positive timespan value. The provided value was {argumentValue}.");
+            }
+        }
+
+        /// <summary>
         ///   Ensures that an argument's value is at least as large as a given lower bound, throwing
         ///   <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>
@@ -92,9 +110,9 @@ namespace Azure.Core
         ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
         ///
-        public static void AssertAtLeast(long argumentValue, long minimumValue, string argumentName)
+        public static void AssertAtLeast<T>(T argumentValue, T minimumValue, string argumentName)where T : notnull, IComparable<T>
         {
-            if (argumentValue < minimumValue)
+            if (minimumValue.CompareTo(argumentValue) > 0)
             {
                 throw new ArgumentOutOfRangeException(argumentName, $"The value supplied must be greater than or equal to {minimumValue}.");
             }
@@ -112,23 +130,28 @@ namespace Azure.Core
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
             }
         }
 
         /// <summary>
-        ///   Ensures that an instance has not been closed, throwing an
-        ///   <see cref="ServiceBusException" /> if that invariant is not met.
+        ///   Ensures that an argument's value is a well-formed Service Bus fully qualified namespace value,
+        ///   throwing a <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>
         ///
-        /// <param name="wasClosed"><c>true</c> if the target instance has been closed; otherwise, <c>false</c>.</param>
-        /// <param name="targetName">The name of the target instance that is being verified.</param>
+        /// <param name="argumentValue">The argument value.</param>
+        /// <param name="argumentName">Name of the argument.</param>
         ///
-        public static void AssertNotClosed(bool wasClosed, string targetName)
+        ///
+        /// <exception cref="ArgumentException"><paramref name="argumentValue"/> is not a well-formed Service Bus fully qualified namespace.</exception>
+        ///
+        public static void AssertWellFormedServiceBusNamespace(string argumentValue, string argumentName)
         {
-            if (wasClosed)
+            argumentValue ??= string.Empty;
+
+            if (Uri.CheckHostName(argumentValue) == UriHostNameType.Unknown)
             {
-                throw new ServiceBusException(targetName, string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName), ServiceBusException.FailureReason.ClientClosed);
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
             }
         }
     }

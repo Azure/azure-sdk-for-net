@@ -75,7 +75,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -358,103 +358,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
 
             /// <summary>
-            /// Recognize Text operation. When you use the Recognize Text interface, the
-            /// response contains a field called 'Operation-Location'. The
-            /// 'Operation-Location' field contains the URL that you must use for your Get
-            /// Recognize Text Operation Result operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='mode'>
-            /// Type of text to recognize. Possible values include: 'Handwritten',
-            /// 'Printed'
-            /// </param>
-            /// <param name='url'>
-            /// Publicly reachable URL of an image.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionClient operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
-            }
-
-            /// <summary>
-            /// This interface is used for getting text operation result. The URL to this
-            /// interface should be retrieved from 'Operation-Location' field returned from
-            /// Recognize Text interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='operationId'>
-            /// Id of the text operation returned in the response of the 'Recognize Text'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TextOperationResult> GetTextOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetTextOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Use this interface to get the result of a Read operation, employing the
-            /// state-of-the-art Optical Character Recognition (OCR) algorithms optimized
-            /// for text-heavy documents. When you use the Read File interface, the
-            /// response contains a field called 'Operation-Location'. The
-            /// 'Operation-Location' field contains the URL that you must use for your
-            /// 'GetReadOperationResult' operation to access OCR results.​
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='url'>
-            /// Publicly reachable URL of an image.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BatchReadFileHeaders> BatchReadFileAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
-            }
-
-            /// <summary>
-            /// This interface is used for getting OCR results of Read operation. The URL
-            /// to this interface should be retrieved from 'Operation-Location' field
-            /// returned from Batch Read File interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='operationId'>
-            /// Id of read operation returned in the response of the 'Batch Read File'
-            /// interface.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ReadOperationResult> GetReadOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetReadOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// This operation extracts a rich set of visual features based on the image
             /// content.
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
@@ -507,7 +410,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -577,7 +480,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude> descriptionExclude = default(IList<DescriptionExclude>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, descriptionExclude, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -768,39 +671,68 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
 
             /// <summary>
-            /// Recognize Text operation. When you use the Recognize Text interface, the
-            /// response contains a field called 'Operation-Location'. The
-            /// 'Operation-Location' field contains the URL that you must use for your Get
-            /// Recognize Text Operation Result operation.
+            /// Use this interface to get the result of a Read operation, employing the
+            /// state-of-the-art Optical Character Recognition (OCR) algorithms optimized
+            /// for text-heavy documents. When you use the Read interface, the response
+            /// contains a field called 'Operation-Location'. The 'Operation-Location'
+            /// field contains the URL that you must use for your 'GetReadResult' operation
+            /// to access OCR results.​
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='image'>
-            /// An image stream.
+            /// <param name='url'>
+            /// Publicly reachable URL of an image.
             /// </param>
-            /// <param name='mode'>
-            /// Type of text to recognize. Possible values include: 'Handwritten',
-            /// 'Printed'
+            /// <param name='language'>
+            /// The BCP-47 language code of the text in the document. Currently, only
+            /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+            /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+            /// language identification and multilanguage documents, so only provide a
+            /// language code if you would like to force the documented to be processed as
+            /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+            /// 'it', 'nl', 'pt'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadHeaders> ReadAsync(this IComputerVisionClient operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Use this interface to get the result of a Read Document operation,
-            /// employing the state-of-the-art Optical Character Recognition (OCR)
-            /// algorithms optimized for text-heavy documents. When you use the Read
-            /// Document interface, the response contains a field called
-            /// 'Operation-Location'. The 'Operation-Location' field contains the URL that
-            /// you must use for your 'Get Read Result operation' to access OCR results.​
+            /// This interface is used for getting OCR results of Read operation. The URL
+            /// to this interface should be retrieved from 'Operation-Location' field
+            /// returned from Read interface.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='operationId'>
+            /// Id of read operation returned in the response of the 'Read' interface.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReadOperationResult> GetReadResultAsync(this IComputerVisionClient operations, System.Guid operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetReadResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Use this interface to get the result of a Read operation, employing the
+            /// state-of-the-art Optical Character Recognition (OCR) algorithms optimized
+            /// for text-heavy documents. When you use the Read interface, the response
+            /// contains a field called 'Operation-Location'. The 'Operation-Location'
+            /// field contains the URL that you must use for your 'GetReadResult' operation
+            /// to access OCR results.​
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -808,12 +740,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
+            /// <param name='language'>
+            /// The BCP-47 language code of the text in the document. Currently, only
+            /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+            /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
+            /// language identification and multilanguage documents, so only provide a
+            /// language code if you would like to force the documented to be processed as
+            /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+            /// 'it', 'nl', 'pt'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BatchReadFileInStreamHeaders> BatchReadFileInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReadInStreamHeaders> ReadInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReadInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

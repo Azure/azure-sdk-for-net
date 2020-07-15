@@ -24,7 +24,7 @@ namespace PolicyInsights.Tests
         private static string PolicySetDefinitionName = "1f3afdf9-d0c9-4c3d-847f-89da613e70a8";
         private static string PolicyDefinitionName = "02a84be7-c304-421f-9bb7-5d2c26af54ad";
         private static string PolicyAssignmentName = "8e6d811f59d145db97ca9f16";
-        private static QueryOptions DefaultQueryOptions = new QueryOptions { FromProperty = DateTime.Parse("2019-11-21 00:00:00Z"), Top = 10 };
+        private static QueryOptions DefaultQueryOptions = new QueryOptions { FromProperty = DateTime.Parse("2020-03-04 00:00:00Z"), Top = 10 };
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -114,7 +114,13 @@ namespace PolicyInsights.Tests
                     Assert.Null(policyState.PolicyEvaluationDetails);
                 }
 
+                Assert.NotNull(policyState.PolicyDefinitionVersion);
+                Assert.NotNull(policyState.PolicySetDefinitionVersion);
+                Assert.NotNull(policyState.PolicyAssignmentVersion);
                 Assert.NotNull(policyState.AdditionalProperties);
+                Assert.False(policyState.AdditionalProperties.ContainsKey("policyDefinitionVersion"));
+                Assert.False(policyState.AdditionalProperties.ContainsKey("policySetDefinitionVersion"));
+                Assert.False(policyState.AdditionalProperties.ContainsKey("policyAssignmentVersion"));
             }
         }
 
@@ -605,6 +611,30 @@ namespace PolicyInsights.Tests
 
         #endregion
 
+        #region Trigger Evaluation
+
+        [Fact]
+        public void TriggerEvaluation_SubscriptionScope()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                policyInsightsClient.PolicyStates.TriggerSubscriptionEvaluation(SubscriptionId);
+            }
+        }
+
+        [Fact]
+        public void TriggerEvaluation_ResourceGroupScope()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                policyInsightsClient.PolicyStates.TriggerResourceGroupEvaluation(SubscriptionId, ResourceGroupName);
+            }
+        }
+
+        #endregion
+
         #region Query options
 
         [Fact]
@@ -663,7 +693,7 @@ namespace PolicyInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, ComplianceState, PolicyDefinitionGroupNames, SubscriptionId, PolicyDefinitionAction" };
+                var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, ComplianceState, PolicyDefinitionGroupNames, SubscriptionId, PolicyDefinitionAction, PolicyDefinitionVersion, PolicyAssignmentVersion, PolicySetDefinitionVersion" };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }

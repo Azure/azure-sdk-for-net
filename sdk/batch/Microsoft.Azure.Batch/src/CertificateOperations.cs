@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
@@ -124,16 +125,16 @@
         /// <summary>
         /// Creates a new <see cref="Certificate"/> from a .cer file.
         /// </summary>
-        /// <param name="cerFileName">The path to the .cer file.</param>
+        /// <param name="path">The path to the .cer file.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(string cerFileName)
+        public Certificate CreateCertificateFromCer(string path)
         {
-            if (string.IsNullOrWhiteSpace(cerFileName))
+            if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentOutOfRangeException("cerFileName");
+                throw new ArgumentOutOfRangeException(nameof(path));
             }
 
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(cerFileName);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(path);
             Certificate omCert = new Certificate(
                 this.ParentBatchClient,
                 protoCert,
@@ -145,11 +146,11 @@
         /// <summary>
         /// Creates a new <see cref="Certificate"/> from .cer format data in memory.
         /// </summary>
-        /// <param name="cerRawData">The certificate data in .cer format.</param>
+        /// <param name="data">The certificate data in .cer format.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(byte[] cerRawData)
+        public Certificate CreateCertificateFromCer(byte[] data)
         {
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(cerRawData);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(data);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
@@ -158,17 +159,17 @@
         /// <summary>
         /// Creates a new <see cref="Certificate"/> from a .pfx file.
         /// </summary>
-        /// <param name="pfxFileName">The path to the .pfx file.</param>
-        /// <param name="password">The password to access the certificate private key.</param>
+        /// <param name="path">The path to the .pfx file.</param>
+        /// <param name="password">The password to access the certificate private key. This can be null if the PFX is not protected by a password.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(string pfxFileName, string password)
+        public Certificate CreateCertificateFromPfx(string path, string password = null)
         {
-            if (string.IsNullOrWhiteSpace(pfxFileName))
+            if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentOutOfRangeException("pfxFileName");
+                throw new ArgumentOutOfRangeException(nameof(path));
             }
 
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(pfxFileName, password);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(path, password);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
@@ -177,12 +178,12 @@
         /// <summary>
         /// Creates a new <see cref="Certificate"/> from .pfx format data in memory.
         /// </summary>
-        /// <param name="pfxRawData">The certificate data in .pfx format.</param>
-        /// <param name="password">The password to access the certificate private key.</param>
+        /// <param name="data">The certificate data in .pfx format.</param>
+        /// <param name="password">The password to access the certificate private key. This can be null if the PFX is not protected by a password.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(byte[] pfxRawData, string password)
+        public Certificate CreateCertificateFromPfx(byte[] data, string password = null)
         {
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(pfxRawData, password);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(data, password);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
@@ -190,9 +191,9 @@
 
         #region Private
 
-        private Models.CertificateAddParameter GetCertificateInfo(string pfxFileName, string password)
+        private Models.CertificateAddParameter GetCertificateInfo(string pfxPath, string password)
         {
-            byte[] rawData = System.IO.File.ReadAllBytes(pfxFileName);
+            byte[] rawData = System.IO.File.ReadAllBytes(pfxPath);
 
             return GetCertificateInfo(rawData, password);
         }
@@ -209,10 +210,9 @@
             return cert;
         }
 
-        private Models.CertificateAddParameter GetCertificateInfo(string cerFileName)
+        private Models.CertificateAddParameter GetCertificateInfo(string certFilePath)
         {
-            byte[] rawData = System.IO.File.ReadAllBytes(cerFileName);
-
+            byte[] rawData = System.IO.File.ReadAllBytes(certFilePath);
             return GetCertificateInfo(rawData);
         }
 

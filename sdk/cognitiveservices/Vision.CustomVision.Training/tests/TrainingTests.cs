@@ -257,7 +257,7 @@
                 using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
                     var domains = client.GetDomainsAsync().Result;
-                    Assert.Equal(12, domains.Count);
+                    Assert.Equal(14, domains.Count);
 
                     var foodDomain = domains.FirstOrDefault(d => d.Id == ProjectBuilderHelper.FoodDomain);
                     Assert.NotNull(foodDomain);
@@ -417,7 +417,9 @@
                         Assert.Equal(1, exports.Count);
                         export = exports.Where(e => e.Platform == ExportPlatform.TensorFlow).FirstOrDefault();
                         Assert.NotNull(export);
+#if RECORD_MODE
                         Thread.Sleep(1000);
+#endif
                     }
                     Assert.NotEmpty(export.DownloadUri);
                 }
@@ -444,7 +446,9 @@
 
                     // Need to ensure we wait 1 second between training calls from the previous project.Or
                     // We get 429s.
+#if RECORD_MODE
                     Thread.Sleep(1000);
+#endif
                     var trainedIteration = await client.TrainProjectAsync(project.ProjectId);
 
                     Assert.NotEqual(iterationToDelete.Name, trainedIteration.Name);
@@ -457,7 +461,9 @@
                     // Wait for training to complete.
                     while (trainedIteration.Status != "Completed")
                     {
+#if RECORD_MODE
                         Thread.Sleep(1000);
+#endif
                         trainedIteration = client.GetIteration(project.ProjectId, trainedIteration.Id);
                     }
 
@@ -647,6 +653,10 @@
                 {
                     ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
+#if RECORD_MODE
+                    // Give time for the predictio nto show up.
+                    Thread.Sleep(5000);
+#endif
                     var token = new PredictionQueryToken()
                     {
                         OrderBy = "Newest",
@@ -920,11 +930,21 @@
                     var tags = await client.GetTagsAsync(project.ProjectId, project.IterationId);
 
                     // We expect to get Tag1 as the primary suggestion, so query with a high prediction
-                    var countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                    IDictionary<string, int?> countMapping;
+                    var loopCount = 0;
+                    do
                     {
-                        Threshold = 0.75,
-                        TagIds = new Guid[] { tags[0].Id }
-                    });
+#if RECORD_MODE
+                        Thread.Sleep(5000);
+#endif
+                        countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                        {
+                            Threshold = 0.75,
+                            TagIds = new Guid[] { tags[0].Id }
+                        });
+                        loopCount++;
+                    } while (countMapping.Count == 0 && loopCount < 5);
+
                     Assert.Equal(1, countMapping.Count);
                     Assert.Equal(1, countMapping[tags[0].Id.ToString()]);
 
@@ -984,8 +1004,113 @@
                     };
 
                     // This will return all suggested images (1 in this case)
-                    var suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query);
+                    SuggestedTagAndRegionQuery suggestedImages;
+                    var loopCount = 0;
+                    do
+                    {
+#if RECORD_MODE
+                        Thread.Sleep(5000);
+#endif
+                        suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query); loopCount++;
+                    } while (suggestedImages.Results.Count == 0 && loopCount < 5);
+
                     Assert.Equal(1, suggestedImages.Results.Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void ImportExportProject()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "ImportExportProject", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var exportInfo = await client.ExportProjectAsync(project.ProjectId);
+                    Assert.NotEmpty(exportInfo.Token);
+
+                    var importProject = await client.ImportProjectAsync(exportInfo.Token);
+                    int loopCount = 0;
+                    while (loopCount < 5 && importProject.Status != ProjectStatus.Succeeded)
+                    {
+#if RECORD_MODE
+                        Thread.Sleep(20000);
+#endif
+                        importProject = await client.GetProjectAsync(importProject.Id);
+                        loopCount++;
+                    }
+
+                    Assert.Equal(ProjectStatus.Succeeded, importProject.Status);
+                    Assert.Equal(client.GetTaggedImageCount(importProject.Id), client.GetTaggedImageCount(project.ProjectId));
+                    Assert.Equal(client.GetTags(importProject.Id).Count, client.GetTags(project.ProjectId).Count);
+                    Assert.Equal(client.GetIterations(importProject.Id).Count, client.GetIterations(project.ProjectId).Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void GetArtifacts()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "GetArtifacts", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var images = await client.GetImagesAsync(project.ProjectId);
+                    var imageData = await client.GetArtifactAsync(project.ProjectId, images[0].OriginalImageUri);
+                    Assert.NotNull(imageData);
+                }
+            }
+        }
+
+        [Fact]
+        public async void GetImagesAndCount()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "GetImagesAndCount", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var imageData = await client.GetImageCountAsync(project.ProjectId, null, taggingStatus: "All");
+                    Assert.Equal(10, imageData);
+
+                    var images = await client.GetImagesAsync(project.ProjectId, null, null, taggingStatus: "All", null, null, 5, 0);
+                    Assert.Equal(5, images.Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void UpdateImageMetadata()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "UpdateImageMetadata", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var images = await client.GetImagesAsync(project.ProjectId, null, null, taggingStatus: "All", null, null, 1, 0);
+                    Assert.Equal(1, images.Count);
+
+                    var metadata = new Dictionary<string, string>()
+                    {
+                        { "type", "unit test" },
+                        { "value", "30" }
+                    };
+                    var results = await client.UpdateImageMetadataAsync(project.ProjectId, new Guid[] { images[0].Id }, metadata);
+                    Assert.True(results.IsBatchSuccessful);
+                    Assert.Equal(1, results.Images.Count);
+                    Assert.Equal(metadata.Keys.Count, results.Images[0].Metadata.Keys.Count);
+                    Assert.Equal(metadata["type"], results.Images[0].Metadata["type"]);
+                    Assert.Equal(metadata["value"], results.Images[0].Metadata["value"]);
                 }
             }
         }

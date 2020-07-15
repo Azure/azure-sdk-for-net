@@ -383,19 +383,33 @@ namespace NetApp.Tests.ResourceTests
 
         private void WaitForReplicationStatus(AzureNetAppFilesManagementClient netAppMgmtClient, string targetState)
         {
-            var replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
-
-            while (replicationStatus.MirrorState != targetState)
+            ReplicationStatus replicationStatus;
+            int attempts = 0;
+            do
             {
                 replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
                 Thread.Sleep(1);
+            } while (replicationStatus.MirrorState != targetState);
+            //sometimes they dont sync up right away
+            if (!replicationStatus.Healthy.Value)
+            {
+                do
+                {
+                    replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                    attempts++;
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(100);
+                    }
+                } while (replicationStatus.Healthy.Value || attempts == 5);
             }
-
             Assert.True(replicationStatus.Healthy);
         }
 
-        private void WaitForSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume,Volume  dpVolume)
+        private void WaitForSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient)
         {
+            Volume sourceVolume;
+            Volume  dpVolume;
             do
             {
                 sourceVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
@@ -435,7 +449,7 @@ namespace NetApp.Tests.ResourceTests
 
                 netAppMgmtClient.Volumes.AuthorizeReplication(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, authorizeRequest);
 
-                WaitForSucceeded(netAppMgmtClient, sourceVolume, dpVolume);
+                WaitForSucceeded(netAppMgmtClient);
 
                 WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
 
@@ -450,7 +464,7 @@ namespace NetApp.Tests.ResourceTests
 
                 // sync to the test
 
-                WaitForSucceeded(netAppMgmtClient, sourceVolume, dpVolume);
+                WaitForSucceeded(netAppMgmtClient);
 
                 // resync 
                 netAppMgmtClient.Volumes.ResyncReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);

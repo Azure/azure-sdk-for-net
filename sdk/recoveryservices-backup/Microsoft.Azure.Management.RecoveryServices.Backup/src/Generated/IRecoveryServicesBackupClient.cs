@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Open API 2.0 Specs for Azure RecoveryServices Backup service
@@ -63,6 +67,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
 
         /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
@@ -143,6 +152,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IOperationOperations.
         /// </summary>
         IOperationOperations Operation { get; }
+
+        /// <summary>
+        /// Gets the IAadPropertiesOperations.
+        /// </summary>
+        IAadPropertiesOperations AadProperties { get; }
+
+        /// <summary>
+        /// Gets the ICrossRegionRestoreOperations.
+        /// </summary>
+        ICrossRegionRestoreOperations CrossRegionRestore { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobDetailsOperations.
+        /// </summary>
+        IBackupCrrJobDetailsOperations BackupCrrJobDetails { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobsOperations.
+        /// </summary>
+        IBackupCrrJobsOperations BackupCrrJobs { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationResultsOperations.
+        /// </summary>
+        ICrrOperationResultsOperations CrrOperationResults { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationStatusOperations.
+        /// </summary>
+        ICrrOperationStatusOperations CrrOperationStatus { get; }
+
+        /// <summary>
+        /// Gets the IRecoveryPointsCrrOperations.
+        /// </summary>
+        IRecoveryPointsCrrOperations RecoveryPointsCrr { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectedItemsCrrOperations.
+        /// </summary>
+        IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
 
         /// <summary>
         /// Gets the IProtectionIntentOperations.
@@ -253,6 +302,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the operation status for a private endpoint connection.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
+        /// </param>
+        /// <param name='operationId'>
+        /// Operation id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationStatus>> GetOperationStatusWithHttpMessagesAsync(string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

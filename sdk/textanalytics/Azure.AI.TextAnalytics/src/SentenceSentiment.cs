@@ -10,36 +10,27 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(SentenceSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore)
         {
             Sentiment = sentiment;
-            ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
-            Offset = offset;
-            Length = length;
+            Text = text;
+            ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed input document
-        /// or substring.
+        /// Gets the predicted sentiment for the analyzed sentence.
         /// </summary>
-        public SentenceSentimentLabel Sentiment { get; }
+        public TextSentiment Sentiment { get; }
+
+        /// <summary>
+        /// Gets the sentence text.
+        /// </summary>
+        public string Text { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for each sentiment label. Higher values signify higher confidence.
+        /// for each sentiment. Higher values signify higher confidence.
         /// </summary>
-        public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
-
-        /// <summary>
-        /// Gets the start position for the matching text in the input document.
-        /// The offset unit is unicode character count.
-        /// </summary>
-        public int Offset { get; }
-
-        /// <summary>
-        /// Gets the length of the matching text in the input document.
-        /// The length unit is unicode character count.
-        /// </summary>
-        public int Length { get; }
+        public SentimentConfidenceScores ConfidenceScores { get; }
     }
 }

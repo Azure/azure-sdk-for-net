@@ -97,6 +97,16 @@ namespace Microsoft.Azure.Management.EventGrid
         ITopicsOperations Topics { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the ITopicTypesOperations.
         /// </summary>
         ITopicTypesOperations TopicTypes { get; }

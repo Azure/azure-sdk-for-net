@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=..\..\..
-2019-10-22 23:01:34 UTC
+2020-05-19 04:32:56 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      282efa7dd8301ba615d8741f740f1ed7f500fed1
+Commit:      3db4f7d4adfb69524af23765ae4cdb4cf4d9ccb3
 AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+Bootstrapper version:    autorest@3.0.6187

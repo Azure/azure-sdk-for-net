@@ -41,7 +41,7 @@ namespace Azure.Identity
 
         public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
         {
-            return new MsalPublicClient(HttpPipeline, clientId, tenantId, redirectUrl, attachSharedCache);
+            return new MsalPublicClient(HttpPipeline, AuthorityHost, clientId, tenantId, redirectUrl, attachSharedCache);
         }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)

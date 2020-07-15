@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg9608/tagValues/csmtgv2511?api-version=2019-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjlmMTM4YTEtMWQ2NC00MTA4LTg0MTMtOWVhM2JlMWMxYjJkL3RhZ05hbWVzL2NzbXRnOTYwOC90YWdWYWx1ZXMvY3NtdGd2MjUxMT9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg1569/tagValues/csmtgv5?api-version=2020-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnMTU2OS90YWdWYWx1ZXMvY3NtdGd2NT9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "da8bb7a4-06ea-48f5-82fa-71280d3b2f0a"
+          "36e66a8a-a423-49ab-b611-678db7188992"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.04",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -33,13 +33,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "b22c7b5d-9a5a-427a-874b-1039576896af"
+          "4053218e-476f-413e-a25e-7485fb92cc40"
         ],
         "x-ms-correlation-request-id": [
-          "b22c7b5d-9a5a-427a-874b-1039576896af"
+          "4053218e-476f-413e-a25e-7485fb92cc40"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20191226T005514Z:b22c7b5d-9a5a-427a-874b-1039576896af"
+          "NORTHCENTRALUS:20200623T153317Z:4053218e-476f-413e-a25e-7485fb92cc40"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +48,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 26 Dec 2019 00:55:14 GMT"
+          "Tue, 23 Jun 2020 15:33:16 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,20 +57,20 @@
           "-1"
         ],
         "Content-Length": [
-          "114"
+          "110"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"SubscriptionTagNameNotFound\",\r\n    \"message\": \"Subscription tag name 'csmtg9608' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PredefinedTagNameNotFound\",\r\n    \"message\": \"Predefined tag name 'csmtg1569' could not be found.\"\r\n  }\r\n}",
       "StatusCode": 404
     }
   ],
   "Names": {
     "CreateTagValueWithoutCreatingTag": [
-      "csmtg9608",
-      "csmtgv2511"
+      "csmtg1569",
+      "csmtgv5"
     ]
   },
   "Variables": {
-    "SubscriptionId": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }

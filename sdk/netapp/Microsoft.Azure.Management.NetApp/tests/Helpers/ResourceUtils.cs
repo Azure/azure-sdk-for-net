@@ -1,5 +1,6 @@
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.NetApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
@@ -10,7 +11,7 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        private const string remoteSuffix = "-R";
+        private const string remoteSuffix = "-RSC";
         public const string vnet = "sdknettestqa2vnet464";
         public const string repVnet = "sdktestqa2vnet464";
         public const string remoteVnet = repVnet + remoteSuffix;
@@ -91,7 +92,10 @@ namespace NetApp.Tests.Helpers
             var resource = netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, resourceGroup, accountName);
             Assert.Equal(resource.Name, accountName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -123,7 +127,10 @@ namespace NetApp.Tests.Helpers
             }
             Assert.Equal(resource.Name, accountName + '/' + poolName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -136,14 +143,13 @@ namespace NetApp.Tests.Helpers
             }
             var defaultProtocolType = new List<string>() { "NFSv3" };
             var volumeProtocolTypes = protocolTypes == null ? defaultProtocolType : protocolTypes;
-
             var volume = new Volume
             {
                 Location = location,
                 UsageThreshold = 100 * gibibyte,
                 ProtocolTypes = volumeProtocolTypes,
                 CreationToken = volumeName,
-                SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
+                SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
                 SnapshotId = snapshotId
@@ -152,7 +158,10 @@ namespace NetApp.Tests.Helpers
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -182,18 +191,22 @@ namespace NetApp.Tests.Helpers
                 UsageThreshold = 100 * gibibyte,
                 ProtocolTypes = volumeProtocolTypes,
                 CreationToken = volumeName,
-                SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
+                //SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
+                SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
                 SnapshotId = snapshotId,
                 VolumeType = "DataProtection",
                 DataProtection = dataProtection
             };
-
+            
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName);
 
-            Thread.Sleep(delay); // some robustness against ARM caching
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
 
             return resource;
         }
@@ -210,7 +223,6 @@ namespace NetApp.Tests.Helpers
                 snapshot = new Snapshot
                 {
                     Location = location,
-                    FileSystemId = volume?.FileSystemId
                 };
             }
             else
@@ -256,7 +268,10 @@ namespace NetApp.Tests.Helpers
             // e.g. snapshot deletion might not be complete and therefore pool has child resource
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {
@@ -291,7 +306,10 @@ namespace NetApp.Tests.Helpers
             // e.g. snapshot deletion might not be complete and therefore volume has child resource
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {
@@ -327,7 +345,10 @@ namespace NetApp.Tests.Helpers
             // all levels
             while (retry == true)
             {
-                Thread.Sleep(delay);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
 
                 try
                 {

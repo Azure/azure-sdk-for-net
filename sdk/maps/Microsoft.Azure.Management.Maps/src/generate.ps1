@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "maps/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "maps/resource-manager" -AutoRestVersion "v2"

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;

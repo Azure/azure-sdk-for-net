@@ -36,7 +36,12 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2019-07-07 service version.
             /// </summary>
-            V2019_07_07 = 2
+            V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -55,12 +60,10 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public DataLakeClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
-            if (version == ServiceVersion.V2019_07_07
-                || version == ServiceVersion.V2019_02_02)
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= LatestVersion)
             {
                 Version = version;
             }

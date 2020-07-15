@@ -162,7 +162,7 @@ namespace ResourceGroups.Tests
                 var managementGroup = ((JObject) managementGroupsClient.ManagementGroups.CreateOrUpdate(groupId,
                     new CreateManagementGroupRequest(
                         id: "/providers/Microsoft.Management/managementGroups/TestGroup1Child2",
-                        type: "/providers/Microsoft.Management/managementGroups", 
+                        type: "/providers/Microsoft.Management/managementGroups",
                         name: "TestGroup1Child2",
                         displayName: "TestGroup1->Child2",
                         details: new CreateManagementGroupDetails()
@@ -194,7 +194,7 @@ namespace ResourceGroups.Tests
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
 
                 var groupId = "TestGroup1Child1Child1";
-                var subscriptionId = "7635efed-eeec-4c03-885d-fa004067132a";
+                var subscriptionId = "afe8f803-7190-48e3-b41a-bc454e8aad1a";
 
                 managementGroupsClient.ManagementGroupSubscriptions.Create(groupId, subscriptionId, cacheControl: "no-cache");
             }
@@ -209,7 +209,7 @@ namespace ResourceGroups.Tests
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
 
                 var groupId = "TestGroup1Child1Child1";
-                var subscriptionId = "394ae65d-9e71-4462-930f-3332dedf845c";
+                var subscriptionId = "afe8f803-7190-48e3-b41a-bc454e8aad1a";
 
                 managementGroupsClient.ManagementGroupSubscriptions.Create(groupId, subscriptionId, cacheControl: "no-cache");
                 managementGroupsClient.ManagementGroupSubscriptions.Delete(groupId, subscriptionId, cacheControl: "no-cache");
