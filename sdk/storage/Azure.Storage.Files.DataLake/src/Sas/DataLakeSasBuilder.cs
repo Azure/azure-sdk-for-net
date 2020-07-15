@@ -167,12 +167,34 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: s_validPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions)
         {
-            Permissions = SasExtensions.ValidateAndSanitizeRawPermissions(
-                permissions: rawPermissions,
-                validPermissionsInOrder: s_validPermissionsInOrder);
+            Permissions = rawPermissions;
         }
 
         private static readonly List<char> s_validPermissionsInOrder = new List<char>

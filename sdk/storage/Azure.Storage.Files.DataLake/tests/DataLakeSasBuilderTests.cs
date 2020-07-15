@@ -104,7 +104,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = test.FileSystem.Name
             };
 
-            dataLakeSasBuilder.SetPermissions(permissionsString);
+            dataLakeSasBuilder.SetPermissions(
+                rawPermissions: permissionsString,
+                normalize: true);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
 
@@ -137,7 +139,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             TestHelper.AssertExpectedException(
-                () => blobSasBuilder.SetPermissions("ptsdfsd"),
+                () => blobSasBuilder.SetPermissions(
+                    rawPermissions: "ptsdfsd",
+                    normalize: true),
                 new ArgumentException("s is not a valid SAS permission"));
         }
     }

@@ -178,7 +178,9 @@ namespace Azure.Storage.Files.Shares.Test
                 ShareName = test.Share.Name
             };
 
-            blobSasBuilder.SetPermissions(permissionsString);
+            blobSasBuilder.SetPermissions(
+                rawPermissions: permissionsString,
+                normalize: true);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 
@@ -207,7 +209,9 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => blobSasBuilder.SetPermissions("ptsdfsd"),
+                () => blobSasBuilder.SetPermissions(
+                    rawPermissions: "ptsdfsd",
+                    normalize: true),
                 new ArgumentException("s is not a valid SAS permission"));
         }
 

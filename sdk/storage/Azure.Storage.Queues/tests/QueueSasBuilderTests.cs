@@ -172,7 +172,9 @@ namespace Azure.Storage.Queues.Test
                 QueueName = test.Queue.Name
             };
 
-            queueSasBuilder.SetPermissions(permissionsString);
+            queueSasBuilder.SetPermissions(
+                rawPermissions: permissionsString,
+                normalize: true);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
 
@@ -202,7 +204,9 @@ namespace Azure.Storage.Queues.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => queueSasBuilder.SetPermissions("ptsdfsd"),
+                () => queueSasBuilder.SetPermissions(
+                    rawPermissions: "ptsdfsd",
+                    normalize: true),
                 new ArgumentException("s is not a valid SAS permission"));
         }
 

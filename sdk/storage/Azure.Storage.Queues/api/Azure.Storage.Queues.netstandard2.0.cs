@@ -369,7 +369,9 @@ namespace Azure.Storage.Sas
         public override int GetHashCode() { throw null; }
         public void SetPermissions(Azure.Storage.Sas.QueueAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.QueueSasPermissions permissions) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions) { }
+        public void SetPermissions(string rawPermissions, bool normalize = false) { }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
