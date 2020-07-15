@@ -23,7 +23,7 @@ namespace Azure.Identity
         {
         }
 
-        public MsalPublicClient(HttpPipeline pipeline, Uri authorityHost, string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
+        public MsalPublicClient(HttpPipeline pipeline, Uri authorityHost, string clientId, string tenantId = default, string redirectUrl = default, ITokenCacheOptions cacheOptions = default)
         {
             tenantId ??= Constants.OrganizationsTenantId;
 
@@ -44,7 +44,7 @@ namespace Azure.Identity
 
             _ensureInitAsync = new Lazy<Task>(InitializeAsync);
 
-            _attachSharedCache = attachSharedCache;
+            _attachSharedCache = cacheOptions?.EnablePersistentCache ?? false;
         }
 
         private async Task InitializeAsync()

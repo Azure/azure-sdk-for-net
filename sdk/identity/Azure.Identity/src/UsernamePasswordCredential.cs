@@ -63,8 +63,8 @@ namespace Azure.Identity
         {
         }
 
-        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
-            : this(username, password, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId))
+        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline, TokenCredentialOptions options = default)
+            : this(username, password, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, cacheOptions: options as ITokenCacheOptions))
         {
         }
 

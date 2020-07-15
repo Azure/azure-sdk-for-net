@@ -212,6 +212,11 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public UsernamePasswordCredentialOptions() { }
+        public bool EnablePersistentCache { get { throw null; } set { } }
+    }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
     {
         public VisualStudioCodeCredential() { }
