@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of ConfigurationStoreUpdateParameters. </summary>
         public ConfigurationStoreUpdateParameters()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationStoreUpdateParameters. </summary>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The SKU of the configuration store. </summary>
         public Sku Sku { get; set; }
         /// <summary> The ARM resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
         public EncryptionProperties Encryption { get; set; }
     }

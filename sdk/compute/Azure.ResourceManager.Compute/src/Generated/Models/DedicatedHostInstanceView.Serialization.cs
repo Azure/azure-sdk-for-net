@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AssetId != null)
+            if (Optional.IsDefined(AssetId))
             {
                 writer.WritePropertyName("assetId");
                 writer.WriteStringValue(AssetId);
             }
-            if (AvailableCapacity != null)
+            if (Optional.IsDefined(AvailableCapacity))
             {
                 writer.WritePropertyName("availableCapacity");
                 writer.WriteObjectValue(AvailableCapacity);
             }
-            if (Statuses != null)
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses");
                 writer.WriteStartArray();
@@ -41,52 +41,33 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element)
         {
-            string assetId = default;
-            DedicatedHostAvailableCapacity availableCapacity = default;
-            IList<InstanceViewStatus> statuses = default;
+            Optional<string> assetId = default;
+            Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
+            Optional<IList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     assetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("availableCapacity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     availableCapacity = DedicatedHostAvailableCapacity.DeserializeDedicatedHostAvailableCapacity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statuses"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
-                        }
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
                     }
                     statuses = array;
                     continue;
                 }
             }
-            return new DedicatedHostInstanceView(assetId, availableCapacity, statuses);
+            return new DedicatedHostInstanceView(assetId.Value, availableCapacity.Value, Optional.ToList(statuses));
         }
     }
 }

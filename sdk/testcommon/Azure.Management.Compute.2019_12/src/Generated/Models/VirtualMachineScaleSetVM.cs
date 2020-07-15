@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,9 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            Resources = new ChangeTrackingList<VirtualMachineExtension>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVM. </summary>

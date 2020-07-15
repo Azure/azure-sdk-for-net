@@ -256,14 +256,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         Gallery value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Gallery.DeserializeGallery(document.RootElement);
-                        }
+                        value = Gallery.DeserializeGallery(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -294,14 +287,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         Gallery value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Gallery.DeserializeGallery(document.RootElement);
-                        }
+                        value = Gallery.DeserializeGallery(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,14 +404,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,14 +430,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +465,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -520,14 +485,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -570,14 +528,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,14 +559,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -653,14 +597,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -686,14 +623,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         GalleryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryList.DeserializeGalleryList(document.RootElement);
-                        }
+                        value = GalleryList.DeserializeGalleryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

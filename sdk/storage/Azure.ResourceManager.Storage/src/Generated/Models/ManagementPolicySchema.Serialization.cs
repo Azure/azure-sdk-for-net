@@ -36,14 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyRule> array = new List<ManagementPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
-                        }
+                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
                     }
                     rules = array;
                     continue;

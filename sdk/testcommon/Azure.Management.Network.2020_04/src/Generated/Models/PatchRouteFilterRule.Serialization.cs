@@ -16,34 +16,34 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Access != null)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access");
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (RouteFilterRuleType != null)
+            if (Optional.IsDefined(RouteFilterRuleType))
             {
                 writer.WritePropertyName("routeFilterRuleType");
-                writer.WriteStringValue(RouteFilterRuleType);
+                writer.WriteStringValue(RouteFilterRuleType.Value.ToString());
             }
-            if (Communities != null)
+            if (Optional.IsCollectionDefined(Communities))
             {
                 writer.WritePropertyName("communities");
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.Management.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -64,39 +64,27 @@ namespace Azure.Management.Network.Models
 
         internal static PatchRouteFilterRule DeserializePatchRouteFilterRule(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            Access? access = default;
-            string routeFilterRuleType = default;
-            IList<string> communities = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<Access> access = default;
+            Optional<RouteFilterRuleType> routeFilterRuleType = default;
+            Optional<IList<string>> communities = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -106,49 +94,26 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("access"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             access = new Access(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("routeFilterRuleType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            routeFilterRuleType = property0.Value.GetString();
+                            routeFilterRuleType = new RouteFilterRuleType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("communities"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
+                                array.Add(item.GetString());
                             }
                             communities = array;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -156,7 +121,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new PatchRouteFilterRule(id, name, etag, access, routeFilterRuleType, communities, provisioningState);
+            return new PatchRouteFilterRule(id.Value, name.Value, etag.Value, Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }

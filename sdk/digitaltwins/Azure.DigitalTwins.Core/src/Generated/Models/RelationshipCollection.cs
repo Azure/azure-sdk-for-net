@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -15,6 +16,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>
         internal RelationshipCollection()
         {
+            Value = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RelationshipCollection. </summary>

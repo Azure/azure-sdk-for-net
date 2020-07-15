@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="preserveOriginal"> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </param>
         internal PatternCaptureTokenFilter(string oDataType, string name, IList<string> patterns, bool? preserveOriginal) : base(oDataType, name)
         {
-            Patterns = patterns ?? new List<string>();
+            Patterns = patterns;
             PreserveOriginal = preserveOriginal;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }

@@ -15,12 +15,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier);
@@ -30,30 +30,22 @@ namespace Azure.Management.Compute.Models
 
         internal static DiskSku DeserializeDiskSku(JsonElement element)
         {
-            DiskStorageAccountTypes? name = default;
-            string tier = default;
+            Optional<DiskStorageAccountTypes> name = default;
+            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = new DiskStorageAccountTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString();
                     continue;
                 }
             }
-            return new DiskSku(name, tier);
+            return new DiskSku(Optional.ToNullable(name), tier.Value);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -23,6 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
+            BoundingBox = new ChangeTrackingList<float>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyValueElement_internal. </summary>

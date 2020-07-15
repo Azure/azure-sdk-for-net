@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ExportTemplateRequest. </summary>
         public ExportTemplateRequest()
         {
+            Resources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExportTemplateRequest. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry &apos;*&apos;. </summary>
-        public IList<string> Resources { get; set; }
+        public IList<string> Resources { get; }
         /// <summary> The export template options. A CSV-formatted list containing zero or more of the following: &apos;IncludeParameterDefaultValue&apos;, &apos;IncludeComments&apos;, &apos;SkipResourceNameParameterization&apos;, &apos;SkipAllParameterization&apos;. </summary>
         public string Options { get; set; }
     }

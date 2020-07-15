@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
         public VirtualMachineScaleSetUpdateOSDisk()
         {
+            VhdContainers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided, the destination VirtualHardDisk should not exist. </summary>
         public VirtualHardDisk Image { get; set; }
         /// <summary> The list of virtual hard disk container uris. </summary>
-        public IList<string> VhdContainers { get; set; }
+        public IList<string> VhdContainers { get; }
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
     }

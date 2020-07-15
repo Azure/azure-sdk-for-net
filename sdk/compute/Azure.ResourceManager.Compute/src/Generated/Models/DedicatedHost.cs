@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Sku = sku;
+            VirtualMachines = new ChangeTrackingList<SubResourceReadOnly>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHost. </summary>

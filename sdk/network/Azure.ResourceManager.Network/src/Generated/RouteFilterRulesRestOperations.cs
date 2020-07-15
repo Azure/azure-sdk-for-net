@@ -177,14 +177,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
-                        }
+                        value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,14 +213,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
-                        }
+                        value = RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,14 +361,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
-                        }
+                        value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,14 +392,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
-                        }
+                        value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,14 +440,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
-                        }
+                        value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -511,14 +476,7 @@ namespace Azure.ResourceManager.Network
                     {
                         RouteFilterRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
-                        }
+                        value = RouteFilterRuleListResult.DeserializeRouteFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

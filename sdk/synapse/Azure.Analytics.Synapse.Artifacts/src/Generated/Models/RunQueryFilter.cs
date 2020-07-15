@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Operand = operand;
             Operator = @operator;
-            Values = values ?? new List<string>();
+            Values = values;
         }
 
         /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>

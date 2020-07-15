@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of AvailableProvidersListParameters. </summary>
         public AvailableProvidersListParameters()
         {
+            AzureLocations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AvailableProvidersListParameters. </summary>
@@ -31,7 +33,7 @@ namespace Azure.Management.Network.Models
         }
 
         /// <summary> A list of Azure regions. </summary>
-        public IList<string> AzureLocations { get; set; }
+        public IList<string> AzureLocations { get; }
         /// <summary> The country for available providers list. </summary>
         public string Country { get; set; }
         /// <summary> The state for available providers list. </summary>

@@ -34,7 +34,7 @@ namespace Azure.Management.Storage.Models
         internal BlobRestoreParameters(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)
         {
             TimeToRestore = timeToRestore;
-            BlobRanges = blobRanges ?? new List<BlobRestoreRange>();
+            BlobRanges = blobRanges;
         }
 
         /// <summary> Restore blob to the specified time. </summary>

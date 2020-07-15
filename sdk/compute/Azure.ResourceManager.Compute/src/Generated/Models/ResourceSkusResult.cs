@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </param>
         internal ResourceSkusResult(IReadOnlyList<ResourceSku> value, string nextLink)
         {
-            Value = value ?? new List<ResourceSku>();
+            Value = value;
             NextLink = nextLink;
         }
 

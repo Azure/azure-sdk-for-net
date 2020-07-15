@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,10 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            VirtualMachines = new ChangeTrackingList<SubResourceWithColocationStatus>();
+            VirtualMachineScaleSets = new ChangeTrackingList<SubResourceWithColocationStatus>();
+            AvailabilitySets = new ChangeTrackingList<SubResourceWithColocationStatus>();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroup. </summary>

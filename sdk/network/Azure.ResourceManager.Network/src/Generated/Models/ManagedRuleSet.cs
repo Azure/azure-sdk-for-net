@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Network.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
@@ -47,6 +49,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Defines the version of the rule set to use. </summary>
         public string RuleSetVersion { get; set; }
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
-        public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; set; }
+        public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
     }
 }

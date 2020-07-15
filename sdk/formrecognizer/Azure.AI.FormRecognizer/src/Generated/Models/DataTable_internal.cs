@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             Rows = rows;
             Columns = columns;
-            Cells = cells.ToArray();
+            Cells = cells.ToList();
         }
 
         /// <summary> Initializes a new instance of DataTable_internal. </summary>
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Rows = rows;
             Columns = columns;
-            Cells = cells ?? new List<DataTableCell_internal>();
+            Cells = cells;
         }
 
         /// <summary> Number of rows. </summary>

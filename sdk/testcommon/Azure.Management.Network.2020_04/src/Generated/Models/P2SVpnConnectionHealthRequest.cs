@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of P2SVpnConnectionHealthRequest. </summary>
         public P2SVpnConnectionHealthRequest()
         {
+            VpnUserNamesFilter = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of P2SVpnConnectionHealthRequest. </summary>
@@ -27,7 +29,7 @@ namespace Azure.Management.Network.Models
         }
 
         /// <summary> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </summary>
-        public IList<string> VpnUserNamesFilter { get; set; }
+        public IList<string> VpnUserNamesFilter { get; }
         /// <summary> The sas-url to download the P2S Vpn connection health detail. </summary>
         public string OutputBlobSasUrl { get; set; }
     }

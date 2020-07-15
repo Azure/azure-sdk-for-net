@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicy. </summary>
         public WebApplicationFirewallPolicy()
         {
+            CustomRules = new ChangeTrackingList<WebApplicationFirewallCustomRule>();
+            ApplicationGateways = new ChangeTrackingList<ApplicationGateway>();
+            HttpListeners = new ChangeTrackingList<SubResource>();
+            PathBasedRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicy. </summary>
@@ -50,7 +55,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The PolicySettings for policy. </summary>
         public PolicySettings PolicySettings { get; set; }
         /// <summary> The custom rules inside the policy. </summary>
-        public IList<WebApplicationFirewallCustomRule> CustomRules { get; set; }
+        public IList<WebApplicationFirewallCustomRule> CustomRules { get; }
         /// <summary> A collection of references to application gateways. </summary>
         public IList<ApplicationGateway> ApplicationGateways { get; }
         /// <summary> The provisioning state of the web application firewall policy resource. </summary>

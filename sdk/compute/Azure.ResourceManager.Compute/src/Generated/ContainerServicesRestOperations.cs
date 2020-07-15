@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -241,14 +227,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerService.DeserializeContainerService(document.RootElement);
-                        }
+                        value = ContainerService.DeserializeContainerService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,14 +258,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerService.DeserializeContainerService(document.RootElement);
-                        }
+                        value = ContainerService.DeserializeContainerService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -401,14 +373,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,14 +399,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -479,14 +437,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -512,14 +463,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -562,14 +506,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -600,14 +537,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

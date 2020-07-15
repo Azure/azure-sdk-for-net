@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets. </param>
         internal AvailabilitySetListResult(IReadOnlyList<AvailabilitySet> value, string nextLink)
         {
-            Value = value ?? new List<AvailabilitySet>();
+            Value = value;
             NextLink = nextLink;
         }
 

@@ -92,14 +92,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicies value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicies.DeserializeObjectReplicationPolicies(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicies.DeserializeObjectReplicationPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,14 +123,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicies value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicies.DeserializeObjectReplicationPolicies(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicies.DeserializeObjectReplicationPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +179,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,14 +215,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -308,14 +280,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -356,14 +321,7 @@ namespace Azure.Management.Storage
                     {
                         ObjectReplicationPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
-                        }
+                        value = ObjectReplicationPolicy.DeserializeObjectReplicationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

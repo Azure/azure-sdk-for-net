@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -16,6 +17,8 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinData. </summary>
         public TwinData()
         {
+            Tags = new ChangeTrackingDictionary<string, object>();
+            ParentScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>
@@ -64,7 +67,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Gets and sets the Module Id. </summary>
         public string ModuleId { get; set; }
         /// <summary> A JSON document read and written by the solution back end. Tags are not visible to device apps. </summary>
-        public IDictionary<string, object> Tags { get; set; }
+        public IDictionary<string, object> Tags { get; }
         /// <summary> Gets and sets the Twin properties. </summary>
         public TwinProperties Properties { get; set; }
         /// <summary> Twin&apos;s ETag. </summary>
@@ -92,6 +95,6 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Status of Capabilities enabled on the device. </summary>
         public DeviceCapabilities Capabilities { get; set; }
         public string DeviceScope { get; set; }
-        public IList<string> ParentScopes { get; set; }
+        public IList<string> ParentScopes { get; }
     }
 }

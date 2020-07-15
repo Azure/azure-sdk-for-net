@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -24,6 +25,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             AzCliVersion = azCliVersion;
+            SupportingScriptUris = new ChangeTrackingList<string>();
+            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
             RetentionInterval = retentionInterval;
         }
 
@@ -61,13 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public string PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; set; }
+        public IList<string> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; set; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; set; }
+        public IList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </summary>

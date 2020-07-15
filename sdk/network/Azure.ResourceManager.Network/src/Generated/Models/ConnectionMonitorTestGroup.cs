@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             Name = name;
             Disable = disable;
-            TestConfigurations = testConfigurations ?? new List<string>();
-            Sources = sources ?? new List<string>();
-            Destinations = destinations ?? new List<string>();
+            TestConfigurations = testConfigurations;
+            Sources = sources;
+            Destinations = destinations;
         }
 
         /// <summary> The name of the connection monitor test group. </summary>

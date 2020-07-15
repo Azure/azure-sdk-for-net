@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorParameters. </summary>
         public ConnectionMonitorParameters()
         {
+            Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
+            TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
+            TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
+            Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorParameters. </summary>
@@ -49,13 +54,13 @@ namespace Azure.Management.Network.Models
         /// <summary> Monitoring interval in seconds. </summary>
         public int? MonitoringIntervalInSeconds { get; set; }
         /// <summary> List of connection monitor endpoints. </summary>
-        public IList<ConnectionMonitorEndpoint> Endpoints { get; set; }
+        public IList<ConnectionMonitorEndpoint> Endpoints { get; }
         /// <summary> List of connection monitor test configurations. </summary>
-        public IList<ConnectionMonitorTestConfiguration> TestConfigurations { get; set; }
+        public IList<ConnectionMonitorTestConfiguration> TestConfigurations { get; }
         /// <summary> List of connection monitor test groups. </summary>
-        public IList<ConnectionMonitorTestGroup> TestGroups { get; set; }
+        public IList<ConnectionMonitorTestGroup> TestGroups { get; }
         /// <summary> List of connection monitor outputs. </summary>
-        public IList<ConnectionMonitorOutput> Outputs { get; set; }
+        public IList<ConnectionMonitorOutput> Outputs { get; }
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
         public string Notes { get; set; }
     }

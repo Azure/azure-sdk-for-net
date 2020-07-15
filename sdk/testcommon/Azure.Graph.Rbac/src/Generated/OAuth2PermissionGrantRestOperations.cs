@@ -82,14 +82,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +103,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,14 +146,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrant value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,14 +167,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrant value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrant.DeserializeOAuth2PermissionGrant(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -295,14 +267,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -328,14 +293,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,14 +331,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,14 +357,7 @@ namespace Azure.Graph.Rbac
                     {
                         OAuth2PermissionGrantListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
-                        }
+                        value = OAuth2PermissionGrantListResult.DeserializeOAuth2PermissionGrantListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

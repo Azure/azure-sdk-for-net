@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
         public StorageAccountUpdateParameters()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
@@ -49,7 +51,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </summary>
         public Sku Sku { get; set; }
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
         public Identity Identity { get; set; }
         /// <summary> Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server. </summary>

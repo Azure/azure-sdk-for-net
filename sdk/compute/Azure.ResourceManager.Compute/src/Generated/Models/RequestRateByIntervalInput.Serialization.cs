@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime");
             writer.WriteStringValue(ToTime, "O");
-            if (GroupByThrottlePolicy != null)
+            if (Optional.IsDefined(GroupByThrottlePolicy))
             {
                 writer.WritePropertyName("groupByThrottlePolicy");
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
-            if (GroupByOperationName != null)
+            if (Optional.IsDefined(GroupByOperationName))
             {
                 writer.WritePropertyName("groupByOperationName");
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
-            if (GroupByResourceName != null)
+            if (Optional.IsDefined(GroupByResourceName))
             {
                 writer.WritePropertyName("groupByResourceName");
                 writer.WriteBooleanValue(GroupByResourceName.Value);

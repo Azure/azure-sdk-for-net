@@ -15,42 +15,27 @@ namespace Azure.Management.Network.Models
     {
         internal static VirtualNetworkGatewayListResult DeserializeVirtualNetworkGatewayListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkGateway>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkGateway> array = new List<VirtualNetworkGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualNetworkGateway.DeserializeVirtualNetworkGateway(item));
-                        }
+                        array.Add(VirtualNetworkGateway.DeserializeVirtualNetworkGateway(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayListResult(value, nextLink);
+            return new VirtualNetworkGatewayListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

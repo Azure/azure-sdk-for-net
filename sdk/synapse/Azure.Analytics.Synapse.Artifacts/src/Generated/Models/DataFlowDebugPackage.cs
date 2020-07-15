@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
         public DataFlowDebugPackage()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Datasets = new ChangeTrackingList<DatasetDebugResource>();
+            LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
@@ -35,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LinkedServices = linkedServices;
             Staging = staging;
             DebugSettings = debugSettings;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The ID of data flow debug session. </summary>
@@ -43,9 +46,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Data flow instance. </summary>
         public DataFlowDebugResource DataFlow { get; set; }
         /// <summary> List of datasets. </summary>
-        public IList<DatasetDebugResource> Datasets { get; set; }
+        public IList<DatasetDebugResource> Datasets { get; }
         /// <summary> List of linked services. </summary>
-        public IList<LinkedServiceDebugResource> LinkedServices { get; set; }
+        public IList<LinkedServiceDebugResource> LinkedServices { get; }
         /// <summary> Staging info for debug session. </summary>
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>

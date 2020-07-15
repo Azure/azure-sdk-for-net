@@ -15,12 +15,12 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimaryThumbprint != null)
+            if (Optional.IsDefined(PrimaryThumbprint))
             {
                 writer.WritePropertyName("primaryThumbprint");
                 writer.WriteStringValue(PrimaryThumbprint);
             }
-            if (SecondaryThumbprint != null)
+            if (Optional.IsDefined(SecondaryThumbprint))
             {
                 writer.WritePropertyName("secondaryThumbprint");
                 writer.WriteStringValue(SecondaryThumbprint);
@@ -30,30 +30,22 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static X509Thumbprint DeserializeX509Thumbprint(JsonElement element)
         {
-            string primaryThumbprint = default;
-            string secondaryThumbprint = default;
+            Optional<string> primaryThumbprint = default;
+            Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryThumbprint"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryThumbprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryThumbprint"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondaryThumbprint = property.Value.GetString();
                     continue;
                 }
             }
-            return new X509Thumbprint(primaryThumbprint, secondaryThumbprint);
+            return new X509Thumbprint(primaryThumbprint.Value, secondaryThumbprint.Value);
         }
     }
 }

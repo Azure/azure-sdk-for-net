@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,23 +15,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class LinkedServiceReference
     {
         /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
+        /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
-        public LinkedServiceReference(string referenceName)
+        public LinkedServiceReference(Type type, string referenceName)
         {
             if (referenceName == null)
             {
                 throw new ArgumentNullException(nameof(referenceName));
             }
 
-            Type = "LinkedServiceReference";
+            Type = type;
             ReferenceName = referenceName;
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
-        internal LinkedServiceReference(string type, string referenceName, IDictionary<string, object> parameters)
+        internal LinkedServiceReference(Type type, string referenceName, IDictionary<string, object> parameters)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -38,10 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Linked service reference type. </summary>
-        public string Type { get; set; }
+        public Type Type { get; set; }
         /// <summary> Reference LinkedService name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for LinkedService. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

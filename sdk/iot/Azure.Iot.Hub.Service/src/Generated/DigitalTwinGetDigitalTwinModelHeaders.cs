@@ -17,8 +17,11 @@ namespace Azure.Iot.Hub.Service
         {
             _response = response;
         }
+        /// <summary> Digital twin model id. </summary>
         public string XMsModelId => _response.Headers.TryGetValue("x-ms-model-id", out string value) ? value : null;
+        /// <summary> Digital twin model resolution status: enum [Pending, Success, NotFound, Failed, Resolved, Deleted]. </summary>
         public string XMsModelResolutionStatus => _response.Headers.TryGetValue("x-ms-model-resolution-status", out string value) ? value : null;
+        /// <summary> Digital twin model resolution status description. </summary>
         public string XMsModelResolutionDescription => _response.Headers.TryGetValue("x-ms-model-resolution-description", out string value) ? value : null;
     }
 }

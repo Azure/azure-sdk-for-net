@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (UniqueName != null)
+            if (Optional.IsDefined(UniqueName))
             {
                 writer.WritePropertyName("uniqueName");
                 writer.WriteStringValue(UniqueName);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryIdentifier DeserializeGalleryIdentifier(JsonElement element)
         {
-            string uniqueName = default;
+            Optional<string> uniqueName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     uniqueName = property.Value.GetString();
                     continue;
                 }
             }
-            return new GalleryIdentifier(uniqueName);
+            return new GalleryIdentifier(uniqueName.Value);
         }
     }
 }

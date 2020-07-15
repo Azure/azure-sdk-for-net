@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ApiError. </summary>
         public ApiError()
         {
+            Details = new ChangeTrackingList<ApiErrorBase>();
         }
 
         /// <summary> Initializes a new instance of ApiError. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The Api error details. </summary>
-        public IList<ApiErrorBase> Details { get; set; }
+        public IList<ApiErrorBase> Details { get; }
         /// <summary> The Api inner error. </summary>
         public InnerError Innererror { get; set; }
         /// <summary> The error code. </summary>

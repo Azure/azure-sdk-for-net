@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -33,14 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder");
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (Sources != null)
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources");
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Sinks != null)
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks");
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Transformations != null)
+            if (Optional.IsCollectionDefined(Transformations))
             {
                 writer.WritePropertyName("transformations");
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script");
                 writer.WriteStringValue(Script);
@@ -82,13 +82,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static MappingDataFlow DeserializeMappingDataFlow(JsonElement element)
         {
             string type = default;
-            string description = default;
-            IList<object> annotations = default;
-            DataFlowFolder folder = default;
-            IList<DataFlowSource> sources = default;
-            IList<DataFlowSink> sinks = default;
-            IList<Transformation> transformations = default;
-            string script = default;
+            Optional<string> description = default;
+            Optional<IList<object>> annotations = default;
+            Optional<DataFlowFolder> folder = default;
+            Optional<IList<DataFlowSource>> sources = default;
+            Optional<IList<DataFlowSink>> sinks = default;
+            Optional<IList<Transformation>> transformations = default;
+            Optional<string> script = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -98,40 +98,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetObject());
                     }
                     annotations = array;
                     continue;
                 }
                 if (property.NameEquals("folder"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
                     continue;
                 }
@@ -141,73 +122,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("sources"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DataFlowSource.DeserializeDataFlowSource(item));
-                                }
+                                array.Add(DataFlowSource.DeserializeDataFlowSource(item));
                             }
                             sources = array;
                             continue;
                         }
                         if (property0.NameEquals("sinks"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DataFlowSink.DeserializeDataFlowSink(item));
-                                }
+                                array.Add(DataFlowSink.DeserializeDataFlowSink(item));
                             }
                             sinks = array;
                             continue;
                         }
                         if (property0.NameEquals("transformations"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<Transformation> array = new List<Transformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(Transformation.DeserializeTransformation(item));
-                                }
+                                array.Add(Transformation.DeserializeTransformation(item));
                             }
                             transformations = array;
                             continue;
                         }
                         if (property0.NameEquals("script"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             script = property0.Value.GetString();
                             continue;
                         }
@@ -215,7 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description, annotations, folder, sources, sinks, transformations, script);
+            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value);
         }
     }
 }

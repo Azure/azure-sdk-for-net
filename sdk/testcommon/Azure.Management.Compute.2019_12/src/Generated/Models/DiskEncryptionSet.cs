@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -21,6 +22,8 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            PreviousKeys = new ChangeTrackingList<KeyVaultAndKeyReference>();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionSet. </summary>

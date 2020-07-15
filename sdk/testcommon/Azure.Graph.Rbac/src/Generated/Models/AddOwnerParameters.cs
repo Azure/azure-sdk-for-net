@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Url = url;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of AddOwnerParameters. </summary>
@@ -33,7 +34,7 @@ namespace Azure.Graph.Rbac.Models
         internal AddOwnerParameters(string url, IDictionary<string, object> additionalProperties)
         {
             Url = url;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> A owner object URL, such as &quot;https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd&quot;, where &quot;0b1f9851-1bf0-433f-aec3-cb9272f093dc&quot; is the tenantId and &quot;f260bbc4-c254-447b-94cf-293b5ec434dd&quot; is the objectId of the owner (user, application, servicePrincipal, group) to be added. </summary>

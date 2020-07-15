@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
 
             AggregationLevel = aggregationLevel;
             ProviderLocation = providerLocation;
-            ReachabilityReport = reachabilityReport.ToArray();
+            ReachabilityReport = reachabilityReport.ToList();
         }
 
         /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             AggregationLevel = aggregationLevel;
             ProviderLocation = providerLocation;
-            ReachabilityReport = reachabilityReport ?? new List<AzureReachabilityReportItem>();
+            ReachabilityReport = reachabilityReport;
         }
 
         /// <summary> The aggregation level of Azure reachability report. Can be Country, State or City. </summary>

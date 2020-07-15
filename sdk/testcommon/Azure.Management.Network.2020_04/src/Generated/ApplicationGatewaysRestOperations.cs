@@ -159,14 +159,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
-                        }
+                        value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,14 +190,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
-                        }
+                        value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,14 +334,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
-                        }
+                        value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,14 +370,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
-                        }
+                        value = ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -441,14 +413,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -474,14 +439,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -516,14 +474,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -543,14 +494,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -903,26 +847,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -942,26 +872,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -996,26 +912,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1035,26 +937,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1089,26 +977,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1128,26 +1002,12 @@ namespace Azure.Management.Network
                     {
                         IReadOnlyList<string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1182,14 +1042,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableWafRuleSetsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1209,14 +1062,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableWafRuleSetsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableWafRuleSetsResult.DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1251,14 +1097,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslOptions value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1278,14 +1117,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslOptions value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslOptions.DeserializeApplicationGatewayAvailableSslOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1320,14 +1152,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslPredefinedPolicies value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1347,14 +1172,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslPredefinedPolicies value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1396,14 +1214,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewaySslPredefinedPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
-                        }
+                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1429,14 +1240,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewaySslPredefinedPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
-                        }
+                        value = ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1479,14 +1283,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1517,14 +1314,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1562,14 +1352,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1595,14 +1378,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
-                        }
+                        value = ApplicationGatewayListResult.DeserializeApplicationGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1640,14 +1416,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslPredefinedPolicies value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1673,14 +1442,7 @@ namespace Azure.Management.Network
                     {
                         ApplicationGatewayAvailableSslPredefinedPolicies value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
-                        }
+                        value = ApplicationGatewayAvailableSslPredefinedPolicies.DeserializeApplicationGatewayAvailableSslPredefinedPolicies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

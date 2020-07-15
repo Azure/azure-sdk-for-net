@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OfferName != null)
+            if (Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName");
                 writer.WriteStringValue(OfferName);
             }
-            if (ValueInGbps != null)
+            if (Optional.IsDefined(ValueInGbps))
             {
                 writer.WritePropertyName("valueInGbps");
                 writer.WriteNumberValue(ValueInGbps.Value);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRoutePortsLocationBandwidths DeserializeExpressRoutePortsLocationBandwidths(JsonElement element)
         {
-            string offerName = default;
-            int? valueInGbps = default;
+            Optional<string> offerName = default;
+            Optional<int> valueInGbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     offerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("valueInGbps"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     valueInGbps = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocationBandwidths(offerName, valueInGbps);
+            return new ExpressRoutePortsLocationBandwidths(offerName.Value, Optional.ToNullable(valueInGbps));
         }
     }
 }

@@ -23,14 +23,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(tokens));
             }
 
-            Tokens = tokens.ToArray();
+            Tokens = tokens.ToList();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
         internal AnalyzeResult(IReadOnlyList<AnalyzedTokenInfo> tokens)
         {
-            Tokens = tokens ?? new List<AnalyzedTokenInfo>();
+            Tokens = tokens;
         }
 
         /// <summary> The list of tokens returned by the analyzer specified in the request. </summary>

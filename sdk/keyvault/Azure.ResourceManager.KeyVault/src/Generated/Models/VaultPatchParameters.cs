@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultPatchParameters. </summary>
         public VaultPatchParameters()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of VaultPatchParameters. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the vault. </summary>
         public VaultPatchProperties Properties { get; set; }
     }

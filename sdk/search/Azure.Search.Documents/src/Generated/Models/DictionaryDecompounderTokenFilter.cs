@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="onlyLongestMatch"> A value indicating whether to add only the longest matching subword to the output. Default is false. </param>
         internal DictionaryDecompounderTokenFilter(string oDataType, string name, IList<string> wordList, int? minWordSize, int? minSubwordSize, int? maxSubwordSize, bool? onlyLongestMatch) : base(oDataType, name)
         {
-            WordList = wordList ?? new List<string>();
+            WordList = wordList;
             MinWordSize = minWordSize;
             MinSubwordSize = minSubwordSize;
             MaxSubwordSize = maxSubwordSize;

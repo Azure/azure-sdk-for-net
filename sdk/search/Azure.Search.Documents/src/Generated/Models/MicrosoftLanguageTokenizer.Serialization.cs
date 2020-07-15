@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (IsSearchTokenizer != null)
+            if (Optional.IsDefined(IsSearchTokenizer))
             {
                 writer.WritePropertyName("isSearchTokenizer");
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -39,37 +39,25 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element)
         {
-            int? maxTokenLength = default;
-            bool? isSearchTokenizer = default;
-            MicrosoftTokenizerLanguage? language = default;
+            Optional<int> maxTokenLength = default;
+            Optional<bool> isSearchTokenizer = default;
+            Optional<MicrosoftTokenizerLanguage> language = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("isSearchTokenizer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("language"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     language = property.Value.GetString().ToMicrosoftTokenizerLanguage();
                     continue;
                 }
@@ -84,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
+            return new MicrosoftLanguageTokenizer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToNullable(isSearchTokenizer), Optional.ToNullable(language));
         }
     }
 }

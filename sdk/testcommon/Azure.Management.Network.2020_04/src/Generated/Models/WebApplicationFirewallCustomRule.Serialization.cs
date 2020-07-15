@@ -16,12 +16,12 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
@@ -44,8 +44,8 @@ namespace Azure.Management.Network.Models
 
         internal static WebApplicationFirewallCustomRule DeserializeWebApplicationFirewallCustomRule(JsonElement element)
         {
-            string name = default;
-            string etag = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
             int priority = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
@@ -54,19 +54,11 @@ namespace Azure.Management.Network.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
@@ -85,14 +77,7 @@ namespace Azure.Management.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(MatchCondition.DeserializeMatchCondition(item));
-                        }
+                        array.Add(MatchCondition.DeserializeMatchCondition(item));
                     }
                     matchConditions = array;
                     continue;
@@ -103,7 +88,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name, etag, priority, ruleType, matchConditions, action);
+            return new WebApplicationFirewallCustomRule(name.Value, etag.Value, priority, ruleType, matchConditions, action);
         }
     }
 }

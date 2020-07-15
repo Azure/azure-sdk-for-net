@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             Location = location;
             Properties = properties;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ScopedDeployment. </summary>
@@ -47,6 +49,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment properties. </summary>
         public DeploymentProperties Properties { get; }
         /// <summary> Deployment tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

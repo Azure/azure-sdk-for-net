@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
                 writer.WriteStringValue(PrincipalId);
             }
-            if (TenantId != null)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId);
@@ -35,40 +35,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSetIdentity DeserializeEncryptionSetIdentity(JsonElement element)
         {
-            string type = default;
-            string principalId = default;
-            string tenantId = default;
+            Optional<DiskEncryptionSetIdentityType> type = default;
+            Optional<string> principalId = default;
+            Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = property.Value.GetString();
+                    type = new DiskEncryptionSetIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
             }
-            return new EncryptionSetIdentity(type, principalId, tenantId);
+            return new EncryptionSetIdentity(Optional.ToNullable(type), principalId.Value, tenantId.Value);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
         public P2SVpnConnectionRequest()
         {
+            VpnConnectionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of p2s vpn connection Ids. </summary>
-        public IList<string> VpnConnectionIds { get; set; }
+        public IList<string> VpnConnectionIds { get; }
     }
 }

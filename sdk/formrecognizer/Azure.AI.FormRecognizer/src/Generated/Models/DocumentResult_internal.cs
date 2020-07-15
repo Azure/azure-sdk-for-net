@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             DocType = docType;
-            PageRange = pageRange.ToArray();
+            PageRange = pageRange.ToList();
             Fields = fields;
         }
 
@@ -45,8 +45,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal DocumentResult_internal(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DocType = docType;
-            PageRange = pageRange ?? new List<int>();
-            Fields = fields ?? new Dictionary<string, FieldValue_internal>();
+            PageRange = pageRange;
+            Fields = fields;
         }
 
         /// <summary> Document type. </summary>

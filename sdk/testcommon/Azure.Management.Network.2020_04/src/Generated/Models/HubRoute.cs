@@ -60,7 +60,7 @@ namespace Azure.Management.Network.Models
         {
             Name = name;
             DestinationType = destinationType;
-            Destinations = destinations ?? new List<string>();
+            Destinations = destinations;
             NextHopType = nextHopType;
             NextHop = nextHop;
         }

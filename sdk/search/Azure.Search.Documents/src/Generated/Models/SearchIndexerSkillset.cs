@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             Description = description;
-            Skills = skills ?? new List<SearchIndexerSkill>();
+            Skills = skills;
             CognitiveServicesAccount = cognitiveServicesAccount;
             _etag = Etag;
         }

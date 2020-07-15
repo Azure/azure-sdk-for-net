@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("vm");
             writer.WriteObjectValue(Vm);
-            if (Bsl != null)
+            if (Optional.IsDefined(Bsl))
             {
                 writer.WritePropertyName("bsl");
                 writer.WriteStringValue(Bsl);
             }
-            if (CreatedAt != null)
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt");
                 writer.WriteStringValue(CreatedAt);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message");
                 writer.WriteStringValue(Message);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         internal static BastionShareableLink DeserializeBastionShareableLink(JsonElement element)
         {
             Resource vm = default;
-            string bsl = default;
-            string createdAt = default;
-            string message = default;
+            Optional<string> bsl = default;
+            Optional<string> createdAt = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vm"))
@@ -50,33 +50,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("bsl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bsl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdAt"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdAt = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionShareableLink(vm, bsl, createdAt, message);
+            return new BastionShareableLink(vm, bsl.Value, createdAt.Value, message.Value);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,16 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of ApplicationBase. </summary>
         public ApplicationBase()
         {
+            AppRoles = new ChangeTrackingList<AppRole>();
+            AppPermissions = new ChangeTrackingList<string>();
+            KeyCredentials = new ChangeTrackingList<KeyCredential>();
+            KnownClientApplications = new ChangeTrackingList<string>();
+            Oauth2Permissions = new ChangeTrackingList<OAuth2Permission>();
+            OrgRestrictions = new ChangeTrackingList<string>();
+            PasswordCredentials = new ChangeTrackingList<PasswordCredential>();
+            PreAuthorizedApplications = new ChangeTrackingList<PreAuthorizedApplication>();
+            ReplyUrls = new ChangeTrackingList<string>();
+            RequiredResourceAccess = new ChangeTrackingList<RequiredResourceAccess>();
         }
 
         /// <summary> Initializes a new instance of ApplicationBase. </summary>
@@ -87,9 +98,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> The url for the application logo image stored in a CDN. </summary>
         public string AppLogoUrl { get; set; }
         /// <summary> The collection of application roles that an application may declare. These roles can be assigned to users, groups or service principals. </summary>
-        public IList<AppRole> AppRoles { get; set; }
+        public IList<AppRole> AppRoles { get; }
         /// <summary> The application permissions. </summary>
-        public IList<string> AppPermissions { get; set; }
+        public IList<string> AppPermissions { get; }
         /// <summary> Whether the application is available to other tenants. </summary>
         public bool? AvailableToOtherTenants { get; set; }
         /// <summary> A URL provided by the author of the application to report errors when using the application. </summary>
@@ -103,9 +114,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Specifies whether this application supports device authentication without a user. The default is false. </summary>
         public bool? IsDeviceOnlyAuthSupported { get; set; }
         /// <summary> A collection of KeyCredential objects. </summary>
-        public IList<KeyCredential> KeyCredentials { get; set; }
+        public IList<KeyCredential> KeyCredentials { get; }
         /// <summary> Client applications that are tied to this resource application. Consent to any of the known client applications will result in implicit consent to the resource application through a combined consent dialog (showing the OAuth permission scopes required by the client and the resource). </summary>
-        public IList<string> KnownClientApplications { get; set; }
+        public IList<string> KnownClientApplications { get; }
         /// <summary> the url of the logout page. </summary>
         public string LogoutUrl { get; set; }
         /// <summary> Whether to allow implicit grant flow for OAuth2. </summary>
@@ -113,25 +124,25 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Specifies whether during a token Request Azure AD will allow path matching of the redirect URI against the applications collection of replyURLs. The default is false. </summary>
         public bool? Oauth2AllowUrlPathMatching { get; set; }
         /// <summary> The collection of OAuth 2.0 permission scopes that the web API (resource) application exposes to client applications. These permission scopes may be granted to client applications during consent. </summary>
-        public IList<OAuth2Permission> Oauth2Permissions { get; set; }
+        public IList<OAuth2Permission> Oauth2Permissions { get; }
         /// <summary> Specifies whether, as part of OAuth 2.0 token requests, Azure AD will allow POST requests, as opposed to GET requests. The default is false, which specifies that only GET requests will be allowed. </summary>
         public bool? Oauth2RequirePostResponse { get; set; }
         /// <summary> A list of tenants allowed to access application. </summary>
-        public IList<string> OrgRestrictions { get; set; }
+        public IList<string> OrgRestrictions { get; }
         /// <summary> Specifying the claims to be included in the token. </summary>
         public OptionalClaims OptionalClaims { get; set; }
         /// <summary> A collection of PasswordCredential objects. </summary>
-        public IList<PasswordCredential> PasswordCredentials { get; set; }
+        public IList<PasswordCredential> PasswordCredentials { get; }
         /// <summary> list of pre-authorized applications. </summary>
-        public IList<PreAuthorizedApplication> PreAuthorizedApplications { get; set; }
+        public IList<PreAuthorizedApplication> PreAuthorizedApplications { get; }
         /// <summary> Specifies whether this application is a public client (such as an installed application running on a mobile device). Default is false. </summary>
         public bool? PublicClient { get; set; }
         /// <summary> Reliable domain which can be used to identify an application. </summary>
         public string PublisherDomain { get; set; }
         /// <summary> A collection of reply URLs for the application. </summary>
-        public IList<string> ReplyUrls { get; set; }
+        public IList<string> ReplyUrls { get; }
         /// <summary> Specifies resources that this application requires access to and the set of OAuth permission scopes and application roles that it needs under each of those resources. This pre-configuration of required resource access drives the consent experience. </summary>
-        public IList<RequiredResourceAccess> RequiredResourceAccess { get; set; }
+        public IList<RequiredResourceAccess> RequiredResourceAccess { get; }
         /// <summary> The URL to the SAML metadata for the application. </summary>
         public string SamlMetadataUrl { get; set; }
         /// <summary> Audience for signing in to the application (AzureADMyOrganization, AzureADAllOrganizations, AzureADAndMicrosoftAccounts). </summary>

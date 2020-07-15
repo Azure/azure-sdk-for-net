@@ -98,14 +98,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -141,14 +134,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,14 +190,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,14 +226,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -310,14 +282,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -353,14 +318,7 @@ namespace Azure.Management.Storage
                     {
                         Table value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Table.DeserializeTable(document.RootElement);
-                        }
+                        value = Table.DeserializeTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -492,14 +450,7 @@ namespace Azure.Management.Storage
                     {
                         ListTableResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListTableResource.DeserializeListTableResource(document.RootElement);
-                        }
+                        value = ListTableResource.DeserializeListTableResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -530,14 +481,7 @@ namespace Azure.Management.Storage
                     {
                         ListTableResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListTableResource.DeserializeListTableResource(document.RootElement);
-                        }
+                        value = ListTableResource.DeserializeListTableResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -585,14 +529,7 @@ namespace Azure.Management.Storage
                     {
                         ListTableResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListTableResource.DeserializeListTableResource(document.RootElement);
-                        }
+                        value = ListTableResource.DeserializeListTableResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,14 +565,7 @@ namespace Azure.Management.Storage
                     {
                         ListTableResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListTableResource.DeserializeListTableResource(document.RootElement);
-                        }
+                        value = ListTableResource.DeserializeListTableResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

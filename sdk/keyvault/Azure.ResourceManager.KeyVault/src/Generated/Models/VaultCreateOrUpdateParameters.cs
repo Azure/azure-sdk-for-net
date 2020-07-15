@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The supported Azure location where the key vault should be created. </summary>
         public string Location { get; }
         /// <summary> The tags that will be assigned to the key vault. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the vault. </summary>
         public VaultProperties Properties { get; }
     }

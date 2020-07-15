@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexAction. </summary>
         public IndexAction()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexAction. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
         internal IndexAction(IndexActionType? actionType, IDictionary<string, object> additionalProperties)
         {
             ActionType = actionType;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>

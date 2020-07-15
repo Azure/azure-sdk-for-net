@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
         internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSet> value, string nextLink)
         {
-            Value = value ?? new List<DiskEncryptionSet>();
+            Value = value;
             NextLink = nextLink;
         }
 

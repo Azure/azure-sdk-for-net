@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostUpdate. </summary>
         public DedicatedHostUpdate()
         {
+            VirtualMachines = new ChangeTrackingList<SubResourceReadOnly>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostUpdate. </summary>

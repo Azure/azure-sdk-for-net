@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceGroupProperties DeserializeResourceGroupProperties(JsonElement element)
         {
-            string provisioningState = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceGroupProperties(provisioningState);
+            return new ResourceGroupProperties(provisioningState.Value);
         }
     }
 }

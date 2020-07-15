@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetworkCommunity");
             writer.WriteStringValue(VirtualNetworkCommunity);
-            if (RegionalCommunity != null)
+            if (Optional.IsDefined(RegionalCommunity))
             {
                 writer.WritePropertyName("regionalCommunity");
                 writer.WriteStringValue(RegionalCommunity);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkBgpCommunities DeserializeVirtualNetworkBgpCommunities(JsonElement element)
         {
             string virtualNetworkCommunity = default;
-            string regionalCommunity = default;
+            Optional<string> regionalCommunity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkCommunity"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("regionalCommunity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     regionalCommunity = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity);
+            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity.Value);
         }
     }
 }

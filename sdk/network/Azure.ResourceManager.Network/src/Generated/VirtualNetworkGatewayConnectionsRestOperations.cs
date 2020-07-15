@@ -170,14 +170,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnection.DeserializeVirtualNetworkGatewayConnection(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnection.DeserializeVirtualNetworkGatewayConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,14 +201,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnection.DeserializeVirtualNetworkGatewayConnection(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnection.DeserializeVirtualNetworkGatewayConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -512,14 +498,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionSharedKey value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
-                        }
+                        value = ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,14 +529,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionSharedKey value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
-                        }
+                        value = ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -600,14 +572,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -633,14 +598,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -939,14 +897,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -977,14 +928,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualNetworkGatewayConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkGatewayConnectionListResult.DeserializeVirtualNetworkGatewayConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

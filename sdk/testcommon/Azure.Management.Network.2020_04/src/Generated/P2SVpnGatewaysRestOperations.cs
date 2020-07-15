@@ -84,14 +84,7 @@ namespace Azure.Management.Network
                     {
                         P2SVpnGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
-                        }
+                        value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,14 +115,7 @@ namespace Azure.Management.Network
                     {
                         P2SVpnGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
-                        }
+                        value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,14 +259,7 @@ namespace Azure.Management.Network
                     {
                         P2SVpnGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
-                        }
+                        value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -316,14 +295,7 @@ namespace Azure.Management.Network
                     {
                         P2SVpnGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
-                        }
+                        value = P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +412,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,14 +438,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,14 +473,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,14 +493,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -926,14 +870,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -964,14 +901,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1009,14 +939,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1042,14 +965,7 @@ namespace Azure.Management.Network
                     {
                         ListP2SVpnGatewaysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
-                        }
+                        value = ListP2SVpnGatewaysResult.DeserializeListP2SVpnGatewaysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

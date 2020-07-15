@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of NetworkSecurityGroup. </summary>
         public NetworkSecurityGroup()
         {
+            SecurityRules = new ChangeTrackingList<SecurityRule>();
+            DefaultSecurityRules = new ChangeTrackingList<SecurityRule>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            Subnets = new ChangeTrackingList<Subnet>();
+            FlowLogs = new ChangeTrackingList<FlowLog>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroup. </summary>
@@ -46,7 +52,7 @@ namespace Azure.Management.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A collection of security rules of the network security group. </summary>
-        public IList<SecurityRule> SecurityRules { get; set; }
+        public IList<SecurityRule> SecurityRules { get; }
         /// <summary> The default security rules of network security group. </summary>
         public IList<SecurityRule> DefaultSecurityRules { get; }
         /// <summary> A collection of references to network interfaces. </summary>

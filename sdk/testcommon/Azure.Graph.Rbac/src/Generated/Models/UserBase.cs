@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of UserBase. </summary>
         public UserBase()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of UserBase. </summary>
@@ -33,7 +34,7 @@ namespace Azure.Graph.Rbac.Models
             GivenName = givenName;
             Surname = surname;
             UserType = userType;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> This must be specified if you are using a federated domain for the user&apos;s userPrincipalName (UPN) property when creating a new user account. It is used to associate an on-premises Active Directory user account with their Azure AD user object. </summary>

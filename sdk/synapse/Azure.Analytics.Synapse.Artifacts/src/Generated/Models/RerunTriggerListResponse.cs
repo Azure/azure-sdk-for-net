@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal RerunTriggerListResponse(IReadOnlyList<RerunTriggerResource> value, string nextLink)
         {
-            Value = value ?? new List<RerunTriggerResource>();
+            Value = value;
             NextLink = nextLink;
         }
 

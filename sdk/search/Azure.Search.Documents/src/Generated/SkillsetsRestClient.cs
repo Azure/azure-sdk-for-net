@@ -108,14 +108,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -149,14 +142,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,14 +264,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -311,14 +290,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,14 +333,7 @@ namespace Azure.Search.Documents
                     {
                         ListSkillsetsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
-                        }
+                        value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -389,14 +354,7 @@ namespace Azure.Search.Documents
                     {
                         ListSkillsetsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
-                        }
+                        value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -444,14 +402,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -477,14 +428,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerSkillset value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
-                        }
+                        value = SearchIndexerSkillset.DeserializeSearchIndexerSkillset(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

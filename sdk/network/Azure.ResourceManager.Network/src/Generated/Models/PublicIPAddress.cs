@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPAddress. </summary>
         public PublicIPAddress()
         {
+            Zones = new ChangeTrackingList<string>();
+            IpTags = new ChangeTrackingList<IpTag>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddress. </summary>
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> The public IP address allocation method. </summary>
         public IPAllocationMethod? PublicIPAllocationMethod { get; set; }
         /// <summary> The public IP address version. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
         public DdosSettings DdosSettings { get; set; }
         /// <summary> The list of tags associated with the public IP address. </summary>
-        public IList<IpTag> IpTags { get; set; }
+        public IList<IpTag> IpTags { get; }
         /// <summary> The IP address associated with the public IP address resource. </summary>
         public string IpAddress { get; set; }
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>

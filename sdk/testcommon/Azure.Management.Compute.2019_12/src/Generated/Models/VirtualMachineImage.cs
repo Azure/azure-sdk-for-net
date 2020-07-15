@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -26,6 +27,8 @@ namespace Azure.Management.Compute.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            DataDiskImages = new ChangeTrackingList<DataDiskImage>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
@@ -51,7 +54,7 @@ namespace Azure.Management.Compute.Models
         public PurchasePlan Plan { get; set; }
         /// <summary> Contains the os disk image information. </summary>
         public OSDiskImage OsDiskImage { get; set; }
-        public IList<DataDiskImage> DataDiskImages { get; set; }
+        public IList<DataDiskImage> DataDiskImages { get; }
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
         public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
         /// <summary> Specifies the HyperVGeneration Type. </summary>

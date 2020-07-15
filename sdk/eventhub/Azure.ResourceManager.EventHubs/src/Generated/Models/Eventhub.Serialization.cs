@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PartitionIds != null)
+            if (Optional.IsCollectionDefined(PartitionIds))
             {
                 writer.WritePropertyName("partitionIds");
                 writer.WriteStartArray();
@@ -44,32 +44,32 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CreatedAt != null)
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt");
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
-            if (UpdatedAt != null)
+            if (Optional.IsDefined(UpdatedAt))
             {
                 writer.WritePropertyName("updatedAt");
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (MessageRetentionInDays != null)
+            if (Optional.IsDefined(MessageRetentionInDays))
             {
                 writer.WritePropertyName("messageRetentionInDays");
                 writer.WriteNumberValue(MessageRetentionInDays.Value);
             }
-            if (PartitionCount != null)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount");
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (CaptureDescription != null)
+            if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription");
                 writer.WriteObjectValue(CaptureDescription);
@@ -80,42 +80,30 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static Eventhub DeserializeEventhub(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            IList<string> partitionIds = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
-            long? messageRetentionInDays = default;
-            long? partitionCount = default;
-            EntityStatus? status = default;
-            CaptureDescription captureDescription = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<IList<string>> partitionIds = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<long> messageRetentionInDays = default;
+            Optional<long> partitionCount = default;
+            Optional<EntityStatus> status = default;
+            Optional<CaptureDescription> captureDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -125,76 +113,41 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("partitionIds"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
+                                array.Add(item.GetString());
                             }
                             partitionIds = array;
                             continue;
                         }
                         if (property0.NameEquals("createdAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("messageRetentionInDays"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             messageRetentionInDays = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("partitionCount"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             partitionCount = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("status"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             status = property0.Value.GetString().ToEntityStatus();
                             continue;
                         }
                         if (property0.NameEquals("captureDescription"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
                             continue;
                         }
@@ -202,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new Eventhub(id, name, type, partitionIds, createdAt, updatedAt, messageRetentionInDays, partitionCount, status, captureDescription);
+            return new Eventhub(id.Value, name.Value, type.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
         }
     }
 }

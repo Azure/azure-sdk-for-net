@@ -189,14 +189,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,14 +225,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -388,14 +374,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,14 +415,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorResult.DeserializeConnectionMonitorResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -748,14 +720,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -786,14 +751,7 @@ namespace Azure.ResourceManager.Network
                     {
                         ConnectionMonitorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
-                        }
+                        value = ConnectionMonitorListResult.DeserializeConnectionMonitorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

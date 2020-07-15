@@ -80,15 +80,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Check if a DigitalTwinsInstance name is available. </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DigitalTwinsOperations.CheckNameAvailability");
             scope.Start();
             try
             {
-                return await RestClient.CheckNameAvailabilityAsync(location, name, type, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CheckNameAvailabilityAsync(location, name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -100,15 +99,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Check if a DigitalTwinsInstance name is available. </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameResult> CheckNameAvailability(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameResult> CheckNameAvailability(string location, string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DigitalTwinsOperations.CheckNameAvailability");
             scope.Start();
             try
             {
-                return RestClient.CheckNameAvailability(location, name, type, cancellationToken);
+                return RestClient.CheckNameAvailability(location, name, cancellationToken);
             }
             catch (Exception e)
             {

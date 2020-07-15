@@ -15,22 +15,22 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SuccessfulInstanceCount != null)
+            if (Optional.IsDefined(SuccessfulInstanceCount))
             {
                 writer.WritePropertyName("successfulInstanceCount");
                 writer.WriteNumberValue(SuccessfulInstanceCount.Value);
             }
-            if (FailedInstanceCount != null)
+            if (Optional.IsDefined(FailedInstanceCount))
             {
                 writer.WritePropertyName("failedInstanceCount");
                 writer.WriteNumberValue(FailedInstanceCount.Value);
             }
-            if (InProgressInstanceCount != null)
+            if (Optional.IsDefined(InProgressInstanceCount))
             {
                 writer.WritePropertyName("inProgressInstanceCount");
                 writer.WriteNumberValue(InProgressInstanceCount.Value);
             }
-            if (PendingInstanceCount != null)
+            if (Optional.IsDefined(PendingInstanceCount))
             {
                 writer.WritePropertyName("pendingInstanceCount");
                 writer.WriteNumberValue(PendingInstanceCount.Value);
@@ -40,50 +40,34 @@ namespace Azure.Management.Compute.Models
 
         internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element)
         {
-            int? successfulInstanceCount = default;
-            int? failedInstanceCount = default;
-            int? inProgressInstanceCount = default;
-            int? pendingInstanceCount = default;
+            Optional<int> successfulInstanceCount = default;
+            Optional<int> failedInstanceCount = default;
+            Optional<int> inProgressInstanceCount = default;
+            Optional<int> pendingInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     successfulInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("failedInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     failedInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("inProgressInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     inProgressInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("pendingInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pendingInstanceCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RollingUpgradeProgressInfo(successfulInstanceCount, failedInstanceCount, inProgressInstanceCount, pendingInstanceCount);
+            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount));
         }
     }
 }

@@ -95,14 +95,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -141,14 +134,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -200,14 +186,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,14 +217,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

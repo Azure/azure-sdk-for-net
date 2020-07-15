@@ -16,24 +16,24 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,22 +46,22 @@ namespace Azure.Management.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy");
                 writer.WriteObjectValue(Policy);
             }
-            if (RunningStatus != null)
+            if (Optional.IsDefined(RunningStatus))
             {
                 writer.WritePropertyName("runningStatus");
                 writer.WriteObjectValue(RunningStatus);
             }
-            if (Progress != null)
+            if (Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress");
                 writer.WriteObjectValue(Progress);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error");
                 writer.WriteObjectValue(Error);
@@ -72,41 +72,29 @@ namespace Azure.Management.Compute.Models
 
         internal static RollingUpgradeStatusInfo DeserializeRollingUpgradeStatusInfo(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            RollingUpgradePolicy policy = default;
-            RollingUpgradeRunningStatus runningStatus = default;
-            RollingUpgradeProgressInfo progress = default;
-            ApiError error = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<RollingUpgradePolicy> policy = default;
+            Optional<RollingUpgradeRunningStatus> runningStatus = default;
+            Optional<RollingUpgradeProgressInfo> progress = default;
+            Optional<ApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -117,21 +105,10 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -142,37 +119,21 @@ namespace Azure.Management.Compute.Models
                     {
                         if (property0.NameEquals("policy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runningStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("progress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("error"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             error = ApiError.DeserializeApiError(property0.Value);
                             continue;
                         }
@@ -180,7 +141,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new RollingUpgradeStatusInfo(id, name, type, location, tags, policy, runningStatus, progress, error);
+            return new RollingUpgradeStatusInfo(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), policy.Value, runningStatus.Value, progress.Value, error.Value);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,8 +24,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Text = text;
-            TokenFilters = new List<TokenFilterName>();
-            CharFilters = new List<string>();
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
@@ -38,8 +39,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Text = text;
             AnalyzerName = analyzerName;
             TokenizerName = tokenizerName;
-            TokenFilters = tokenFilters ?? new List<TokenFilterName>();
-            CharFilters = charFilters ?? new List<string>();
+            TokenFilters = tokenFilters;
+            CharFilters = charFilters;
         }
 
         /// <summary> The text to break into tokens. </summary>

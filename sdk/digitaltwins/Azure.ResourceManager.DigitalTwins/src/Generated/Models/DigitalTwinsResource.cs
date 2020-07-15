@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsResource. </summary>
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> The resource location. </summary>
         public string Location { get; set; }
         /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> This property is reserved for future use, and will be ignored/omitted. </summary>
         public DigitalTwinsSkuInfo Sku { get; set; }
     }

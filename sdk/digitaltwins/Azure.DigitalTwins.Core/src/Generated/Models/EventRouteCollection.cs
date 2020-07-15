@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -15,6 +16,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Initializes a new instance of EventRouteCollection. </summary>
         internal EventRouteCollection()
         {
+            Value = new ChangeTrackingList<EventRoute>();
         }
 
         /// <summary> Initializes a new instance of EventRouteCollection. </summary>

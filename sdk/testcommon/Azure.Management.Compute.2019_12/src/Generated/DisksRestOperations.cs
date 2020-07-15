@@ -256,14 +256,7 @@ namespace Azure.Management.Compute
                     {
                         Disk value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Disk.DeserializeDisk(document.RootElement);
-                        }
+                        value = Disk.DeserializeDisk(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -294,14 +287,7 @@ namespace Azure.Management.Compute
                     {
                         Disk value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Disk.DeserializeDisk(document.RootElement);
-                        }
+                        value = Disk.DeserializeDisk(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,14 +404,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,14 +430,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +465,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -520,14 +485,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -730,14 +688,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -768,14 +719,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -813,14 +757,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -846,14 +783,7 @@ namespace Azure.Management.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

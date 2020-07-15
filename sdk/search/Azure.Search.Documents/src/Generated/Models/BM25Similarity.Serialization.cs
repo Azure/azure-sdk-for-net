@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (K1 != null)
+            if (Optional.IsDefined(K1))
             {
                 writer.WritePropertyName("k1");
                 writer.WriteNumberValue(K1.Value);
             }
-            if (B != null)
+            if (Optional.IsDefined(B))
             {
                 writer.WritePropertyName("b");
                 writer.WriteNumberValue(B.Value);
@@ -32,26 +32,18 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static BM25Similarity DeserializeBM25Similarity(JsonElement element)
         {
-            double? k1 = default;
-            double? b = default;
+            Optional<double> k1 = default;
+            Optional<double> b = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("k1"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     k1 = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("b"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     b = property.Value.GetDouble();
                     continue;
                 }
@@ -61,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new BM25Similarity(odataType, k1, b);
+            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b));
         }
     }
 }
