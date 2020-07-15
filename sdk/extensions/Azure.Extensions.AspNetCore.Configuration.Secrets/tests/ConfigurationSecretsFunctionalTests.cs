@@ -16,13 +16,10 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         [Category("Live")]
         public async Task SecretsAreLoadedFromKeyVault()
         {
-            TokenCredentialOptions tokenCredentialOptions = new TokenCredentialOptions();
-            tokenCredentialOptions.AuthorityHost = new Uri(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST"));
             var credential = new ClientSecretCredential(
                 ConfigurationTestEnvironment.Instance.TenantId,
                 ConfigurationTestEnvironment.Instance.ClientId,
-                ConfigurationTestEnvironment.Instance.ClientSecret,
-                tokenCredentialOptions);
+                ConfigurationTestEnvironment.Instance.ClientSecret);
             var vaultUri = new Uri(ConfigurationTestEnvironment.Instance.KeyVaultUrl);
 
             var client = new SecretClient(vaultUri, credential);
