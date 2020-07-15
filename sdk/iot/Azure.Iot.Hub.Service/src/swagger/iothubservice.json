@@ -1765,14 +1765,32 @@
                 }
             }
         },
-        "/messages/deviceBound": {
+        "/messages/deviceBound/{deviceId}": {
             "post": {
+                "summary": "Send a cloud-to-device message to device.",
+                "description": "Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information.",
                 "operationId": "SendDeviceCommand",
-                "consumes": [],
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "deviceId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "messageRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CloudToDeviceMessage"
+                        }
+                    },
                     {
                         "$ref": "#/parameters/api-version"
                     }
@@ -3095,6 +3113,52 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "CloudToDeviceMessage": {
+            "description": "Parameters to send on a cloud to device message to the device",
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "description": "Unique identifier for the C2D message being sent.",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "Destination of the message.",
+                    "type": "string"
+                },
+                "payload": {
+                    "description": "Payload",
+                    "type": "object"
+                },
+                "messageSchema": {
+                    "description": "The schema of the message content.",
+                    "type": "string"
+                },
+                "contentType": {
+                    "description": "The content type of the message.",
+                    "type": "string"
+                },
+                "contentEncoding": {
+                    "description": "The content encoding type of the message.",
+                    "type": "string"
+                },
+                "creationTimeUtc": {
+                    "description": "Custom date property set by the originator of the message.",
+                    "type": "string"
+                },
+                "expiryTimeUtc": {
+                    "description": "The time when this message is considered expired.",
+                    "type": "string"
+                },
+                "correlationId": {
+                    "description": "Used in message responses and feedback.",
+                    "type": "string"
+                },
+                "properties": {
+                    "description": "Collection of user defined application properties which are set when user sends the message.",
+                    "type": "object"
                 }
             }
         }

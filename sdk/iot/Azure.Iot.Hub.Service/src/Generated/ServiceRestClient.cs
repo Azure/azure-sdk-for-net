@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
@@ -41,23 +42,40 @@ namespace Azure.Iot.Hub.Service
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendDeviceCommandRequest()
+        internal HttpMessage CreateSendDeviceCommandRequest(string deviceId, CloudToDeviceMessage messageRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendPath("/messages/deviceBound", false);
+            uri.AppendPath("/messages/deviceBound/", false);
+            uri.AppendPath(deviceId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(messageRequest);
+            request.Content = content;
             return message;
         }
 
+        /// <summary> Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information. </summary>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="messageRequest"> The CloudToDeviceMessage to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> SendDeviceCommandAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> SendDeviceCommandAsync(string deviceId, CloudToDeviceMessage messageRequest, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendDeviceCommandRequest();
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (messageRequest == null)
+            {
+                throw new ArgumentNullException(nameof(messageRequest));
+            }
+
+            using var message = CreateSendDeviceCommandRequest(deviceId, messageRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -68,10 +86,22 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
+        /// <summary> Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information. </summary>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="messageRequest"> The CloudToDeviceMessage to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response SendDeviceCommand(CancellationToken cancellationToken = default)
+        public Response SendDeviceCommand(string deviceId, CloudToDeviceMessage messageRequest, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendDeviceCommandRequest();
+            if (deviceId == null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            if (messageRequest == null)
+            {
+                throw new ArgumentNullException(nameof(messageRequest));
+            }
+
+            using var message = CreateSendDeviceCommandRequest(deviceId, messageRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
