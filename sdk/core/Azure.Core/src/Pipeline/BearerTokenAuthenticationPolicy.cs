@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
             }
             else if (scheduleRefreshToken)
             {
-                _ = Task.Run(() => GetHeaderValueFromCredentialAsync(message, true));
+                _ = Task.Run(() => GetHeaderValueFromCredentialAsync(message, async));
             }
 
             message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
