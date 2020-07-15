@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The content of the event request message. </summary>
-    internal partial class ContainerRegistryArtifactEventData
+    public partial class ContainerRegistryArtifactEventData
     {
         /// <summary> Initializes a new instance of ContainerRegistryArtifactEventData. </summary>
         internal ContainerRegistryArtifactEventData()

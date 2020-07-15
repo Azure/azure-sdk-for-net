@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Encoder disconnected event data. </summary>
-    internal partial class MediaLiveEventEncoderDisconnectedEventData
+    public partial class MediaLiveEventEncoderDisconnectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>
         internal MediaLiveEventEncoderDisconnectedEventData()

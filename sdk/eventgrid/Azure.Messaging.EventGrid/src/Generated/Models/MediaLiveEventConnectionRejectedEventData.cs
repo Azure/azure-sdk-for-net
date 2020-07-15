@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Encoder connection rejected event data. </summary>
-    internal partial class MediaLiveEventConnectionRejectedEventData
+    public partial class MediaLiveEventConnectionRejectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventConnectionRejectedEventData. </summary>
         internal MediaLiveEventConnectionRejectedEventData()

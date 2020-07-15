@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.AppServicePlanUpdated event. </summary>
-    internal partial class WebAppServicePlanUpdatedEventData
+    public partial class WebAppServicePlanUpdatedEventData
     {
         /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventData. </summary>
         internal WebAppServicePlanUpdatedEventData()

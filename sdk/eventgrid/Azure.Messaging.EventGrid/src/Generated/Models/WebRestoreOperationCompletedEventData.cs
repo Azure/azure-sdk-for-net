@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.RestoreOperationCompleted event. </summary>
-    internal partial class WebRestoreOperationCompletedEventData
+    public partial class WebRestoreOperationCompletedEventData
     {
         /// <summary> Initializes a new instance of WebRestoreOperationCompletedEventData. </summary>
         internal WebRestoreOperationCompletedEventData()

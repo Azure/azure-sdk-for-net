@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a device connection state event (DeviceConnected, DeviceDisconnected). </summary>
-    internal partial class DeviceConnectionStateEventProperties
+    public partial class DeviceConnectionStateEventProperties
     {
         /// <summary> Initializes a new instance of DeviceConnectionStateEventProperties. </summary>
         internal DeviceConnectionStateEventProperties()

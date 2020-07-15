@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Metadata information for the properties JSON document. </summary>
-    internal partial class DeviceTwinMetadata
+    public partial class DeviceTwinMetadata
     {
         /// <summary> Initializes a new instance of DeviceTwinMetadata. </summary>
         internal DeviceTwinMetadata()

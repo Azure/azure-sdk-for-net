@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds. </summary>
-    internal partial class ResourceDeleteSuccessData
+    public partial class ResourceDeleteSuccessData
     {
         /// <summary> Initializes a new instance of ResourceDeleteSuccessData. </summary>
         internal ResourceDeleteSuccessData()

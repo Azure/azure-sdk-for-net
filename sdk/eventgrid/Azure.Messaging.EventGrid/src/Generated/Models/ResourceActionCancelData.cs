@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is canceled. </summary>
-    internal partial class ResourceActionCancelData
+    public partial class ResourceActionCancelData
     {
         /// <summary> Initializes a new instance of ResourceActionCancelData. </summary>
         internal ResourceActionCancelData()

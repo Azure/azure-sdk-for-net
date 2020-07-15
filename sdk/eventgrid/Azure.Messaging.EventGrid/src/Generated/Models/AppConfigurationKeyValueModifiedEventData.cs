@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.AppConfiguration.KeyValueModified event. </summary>
-    internal partial class AppConfigurationKeyValueModifiedEventData
+    public partial class AppConfigurationKeyValueModifiedEventData
     {
         /// <summary> Initializes a new instance of AppConfigurationKeyValueModifiedEventData. </summary>
         internal AppConfigurationKeyValueModifiedEventData()

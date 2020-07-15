@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Information about the device connection state event. </summary>
-    internal partial class DeviceConnectionStateEventInfo
+    public partial class DeviceConnectionStateEventInfo
     {
         /// <summary> Initializes a new instance of DeviceConnectionStateEventInfo. </summary>
         internal DeviceConnectionStateEventInfo()

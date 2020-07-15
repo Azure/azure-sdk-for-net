@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event. </summary>
-    internal partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
+    public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
     {
         /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailableWithNoListenersEventData. </summary>
         internal ServiceBusActiveMessagesAvailableWithNoListenersEventData()

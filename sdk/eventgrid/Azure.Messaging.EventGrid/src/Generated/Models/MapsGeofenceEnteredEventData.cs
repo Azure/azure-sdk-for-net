@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceEntered event. </summary>
-    internal partial class MapsGeofenceEnteredEventData : MapsGeofenceEventProperties
+    public partial class MapsGeofenceEnteredEventData : MapsGeofenceEventProperties
     {
         /// <summary> Initializes a new instance of MapsGeofenceEnteredEventData. </summary>
         internal MapsGeofenceEnteredEventData()

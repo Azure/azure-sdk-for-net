@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The geofence geometry. </summary>
-    internal partial class MapsGeofenceGeometry
+    public partial class MapsGeofenceGeometry
     {
         /// <summary> Initializes a new instance of MapsGeofenceGeometry. </summary>
         internal MapsGeofenceGeometry()

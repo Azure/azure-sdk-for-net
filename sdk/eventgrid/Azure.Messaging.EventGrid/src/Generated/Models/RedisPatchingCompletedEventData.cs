@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.PatchingCompleted event. </summary>
-    internal partial class RedisPatchingCompletedEventData
+    public partial class RedisPatchingCompletedEventData
     {
         /// <summary> Initializes a new instance of RedisPatchingCompletedEventData. </summary>
         internal RedisPatchingCompletedEventData()

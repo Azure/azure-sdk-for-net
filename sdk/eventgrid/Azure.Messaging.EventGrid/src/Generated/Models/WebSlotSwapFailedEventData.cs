@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.SlotSwapFailed event. </summary>
-    internal partial class WebSlotSwapFailedEventData
+    public partial class WebSlotSwapFailedEventData
     {
         /// <summary> Initializes a new instance of WebSlotSwapFailedEventData. </summary>
         internal WebSlotSwapFailedEventData()

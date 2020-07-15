@@ -3,6 +3,12 @@
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-accessibility"] = "public"
+
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/e93e9529ffa1a3ace9b260070de4bfdf57be17e4/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/00ac1cbffba123ba5e30cb324935100495d0700d/specification/eventgrid/data-plane/Microsoft.Storage/stable/2018-01-01/Storage.json

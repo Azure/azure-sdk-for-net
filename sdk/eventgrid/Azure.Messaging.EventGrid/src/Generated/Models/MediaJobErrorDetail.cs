@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Details of JobOutput errors. </summary>
-    internal partial class MediaJobErrorDetail
+    public partial class MediaJobErrorDetail
     {
         /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
         internal MediaJobErrorDetail()

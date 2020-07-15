@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Incoming video stream out of synch event data. </summary>
-    internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
+    public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingVideoStreamsOutOfSyncEventData. </summary>
         internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData()

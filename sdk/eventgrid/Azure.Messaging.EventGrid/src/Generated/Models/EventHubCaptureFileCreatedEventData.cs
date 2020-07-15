@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.EventHub.CaptureFileCreated event. </summary>
-    internal partial class EventHubCaptureFileCreatedEventData
+    public partial class EventHubCaptureFileCreatedEventData
     {
         /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
         internal EventHubCaptureFileCreatedEventData()

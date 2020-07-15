@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.BackupOperationFailed event. </summary>
-    internal partial class WebBackupOperationFailedEventData
+    public partial class WebBackupOperationFailedEventData
     {
         /// <summary> Initializes a new instance of WebBackupOperationFailedEventData. </summary>
         internal WebBackupOperationFailedEventData()

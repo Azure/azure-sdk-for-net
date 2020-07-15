@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The request that generated the event. </summary>
-    internal partial class ContainerRegistryEventRequest
+    public partial class ContainerRegistryEventRequest
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventRequest. </summary>
         internal ContainerRegistryEventRequest()

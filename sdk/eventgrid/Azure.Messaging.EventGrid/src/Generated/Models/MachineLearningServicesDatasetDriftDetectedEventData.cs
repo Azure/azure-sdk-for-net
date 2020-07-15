@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.DatasetDriftDetected event. </summary>
-    internal partial class MachineLearningServicesDatasetDriftDetectedEventData
+    public partial class MachineLearningServicesDatasetDriftDetectedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesDatasetDriftDetectedEventData. </summary>
         internal MachineLearningServicesDatasetDriftDetectedEventData()

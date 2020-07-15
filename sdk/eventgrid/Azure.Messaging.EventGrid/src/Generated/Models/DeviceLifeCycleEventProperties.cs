@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a device life cycle event (DeviceCreated, DeviceDeleted). </summary>
-    internal partial class DeviceLifeCycleEventProperties
+    public partial class DeviceLifeCycleEventProperties
     {
         /// <summary> Initializes a new instance of DeviceLifeCycleEventProperties. </summary>
         internal DeviceLifeCycleEventProperties()

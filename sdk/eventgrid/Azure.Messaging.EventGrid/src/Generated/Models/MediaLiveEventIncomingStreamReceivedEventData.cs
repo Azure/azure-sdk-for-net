@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Encoder connect event data. </summary>
-    internal partial class MediaLiveEventIncomingStreamReceivedEventData
+    public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
         internal MediaLiveEventIncomingStreamReceivedEventData()

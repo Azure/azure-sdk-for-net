@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The target of the event. </summary>
-    internal partial class ContainerRegistryEventTarget
+    public partial class ContainerRegistryEventTarget
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventTarget. </summary>
         internal ContainerRegistryEventTarget()

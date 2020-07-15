@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Ingest fragment dropped event data. </summary>
-    internal partial class MediaLiveEventIncomingDataChunkDroppedEventData
+    public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
         internal MediaLiveEventIncomingDataChunkDroppedEventData()

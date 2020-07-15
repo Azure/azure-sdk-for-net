@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteCancel event. This is raised when a resource create or update operation is canceled. </summary>
-    internal partial class ResourceWriteCancelData
+    public partial class ResourceWriteCancelData
     {
         /// <summary> Initializes a new instance of ResourceWriteCancelData. </summary>
         internal ResourceWriteCancelData()

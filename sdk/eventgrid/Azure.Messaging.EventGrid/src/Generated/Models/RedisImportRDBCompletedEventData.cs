@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ImportRDBCompleted event. </summary>
-    internal partial class RedisImportRDBCompletedEventData
+    public partial class RedisImportRDBCompletedEventData
     {
         /// <summary> Initializes a new instance of RedisImportRDBCompletedEventData. </summary>
         internal RedisImportRDBCompletedEventData()

@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an CertificateNearExpiry event. </summary>
-    internal partial class KeyVaultCertificateNearExpiryEventData
+    public partial class KeyVaultCertificateNearExpiryEventData
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateNearExpiryEventData. </summary>
         internal KeyVaultCertificateNearExpiryEventData()

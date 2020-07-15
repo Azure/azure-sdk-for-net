@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImagePushed event. </summary>
-    internal partial class ContainerRegistryImagePushedEventData : ContainerRegistryEventData
+    public partial class ContainerRegistryImagePushedEventData : ContainerRegistryEventData
     {
         /// <summary> Initializes a new instance of ContainerRegistryImagePushedEventData. </summary>
         internal ContainerRegistryImagePushedEventData()

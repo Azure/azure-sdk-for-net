@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Detail of action on the app. </summary>
-    internal partial class AppEventTypeDetail
+    public partial class AppEventTypeDetail
     {
         /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
         internal AppEventTypeDetail()

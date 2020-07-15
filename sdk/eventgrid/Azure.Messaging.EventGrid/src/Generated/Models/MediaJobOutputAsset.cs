@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The event data for a Job output asset. </summary>
-    internal partial class MediaJobOutputAsset : MediaJobOutput
+    public partial class MediaJobOutputAsset : MediaJobOutput
     {
         /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImageDeleted event. </summary>
-    internal partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData
+    public partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData
     {
         /// <summary> Initializes a new instance of ContainerRegistryImageDeletedEventData. </summary>
         internal ContainerRegistryImageDeletedEventData()

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Job output processing event data. </summary>
-    internal partial class MediaJobOutputProcessingEventData : MediaJobOutputStateChangeEventData
+    public partial class MediaJobOutputProcessingEventData : MediaJobOutputStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
         internal MediaJobOutputProcessingEventData()

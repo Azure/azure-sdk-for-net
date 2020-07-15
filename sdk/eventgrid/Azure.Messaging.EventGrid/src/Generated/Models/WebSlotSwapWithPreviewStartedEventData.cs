@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.SlotSwapWithPreviewStarted event. </summary>
-    internal partial class WebSlotSwapWithPreviewStartedEventData
+    public partial class WebSlotSwapWithPreviewStartedEventData
     {
         /// <summary> Initializes a new instance of WebSlotSwapWithPreviewStartedEventData. </summary>
         internal WebSlotSwapWithPreviewStartedEventData()

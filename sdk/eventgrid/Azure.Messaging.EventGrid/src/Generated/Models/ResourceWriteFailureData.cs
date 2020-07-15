@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update operation fails. </summary>
-    internal partial class ResourceWriteFailureData
+    public partial class ResourceWriteFailureData
     {
         /// <summary> Initializes a new instance of ResourceWriteFailureData. </summary>
         internal ResourceWriteFailureData()

@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Event data for Microsoft.Devices.DeviceConnected event. </summary>
-    internal partial class IotHubDeviceConnectedEventData : DeviceConnectionStateEventProperties
+    public partial class IotHubDeviceConnectedEventData : DeviceConnectionStateEventProperties
     {
         /// <summary> Initializes a new instance of IotHubDeviceConnectedEventData. </summary>
         internal IotHubDeviceConnectedEventData()

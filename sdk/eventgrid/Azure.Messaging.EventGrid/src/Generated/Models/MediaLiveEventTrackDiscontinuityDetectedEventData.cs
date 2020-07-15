@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Ingest track discontinuity detected event data. </summary>
-    internal partial class MediaLiveEventTrackDiscontinuityDetectedEventData
+    public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
         internal MediaLiveEventTrackDiscontinuityDetectedEventData()

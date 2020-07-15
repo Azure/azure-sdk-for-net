@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Details of JobOutput errors. </summary>
-    internal partial class MediaJobError
+    public partial class MediaJobError
     {
         /// <summary> Initializes a new instance of MediaJobError. </summary>
         internal MediaJobError()

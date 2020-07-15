@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
-    internal partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
+    public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
     {
         /// <summary> Initializes a new instance of IotHubDeviceTelemetryEventData. </summary>
         internal IotHubDeviceTelemetryEventData()

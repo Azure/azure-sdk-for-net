@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Job canceled event data. </summary>
-    internal partial class MediaJobCanceledEventData : MediaJobStateChangeEventData
+    public partial class MediaJobCanceledEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobCanceledEventData. </summary>
         internal MediaJobCanceledEventData()

@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
-    internal partial class ContainerRegistryEventSource
+    public partial class ContainerRegistryEventSource
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventSource. </summary>
         internal ContainerRegistryEventSource()

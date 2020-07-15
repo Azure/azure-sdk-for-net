@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
-    internal partial class DeviceTwinInfo
+    public partial class DeviceTwinInfo
     {
         /// <summary> Initializes a new instance of DeviceTwinInfo. </summary>
         internal DeviceTwinInfo()

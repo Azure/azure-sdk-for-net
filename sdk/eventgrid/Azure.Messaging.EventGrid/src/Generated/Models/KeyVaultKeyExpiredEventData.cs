@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an KeyExpired event. </summary>
-    internal partial class KeyVaultKeyExpiredEventData
+    public partial class KeyVaultKeyExpiredEventData
     {
         /// <summary> Initializes a new instance of KeyVaultKeyExpiredEventData. </summary>
         internal KeyVaultKeyExpiredEventData()

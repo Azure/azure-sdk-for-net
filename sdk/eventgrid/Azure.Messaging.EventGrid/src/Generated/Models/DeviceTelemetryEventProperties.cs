@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a device telemetry event (DeviceTelemetry). </summary>
-    internal partial class DeviceTelemetryEventProperties
+    public partial class DeviceTelemetryEventProperties
     {
         /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
         internal DeviceTelemetryEventProperties()

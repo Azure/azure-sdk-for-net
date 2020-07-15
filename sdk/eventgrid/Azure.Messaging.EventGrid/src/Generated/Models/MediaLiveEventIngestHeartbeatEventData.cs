@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Ingest fragment dropped event data. </summary>
-    internal partial class MediaLiveEventIngestHeartbeatEventData
+    public partial class MediaLiveEventIngestHeartbeatEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
         internal MediaLiveEventIngestHeartbeatEventData()

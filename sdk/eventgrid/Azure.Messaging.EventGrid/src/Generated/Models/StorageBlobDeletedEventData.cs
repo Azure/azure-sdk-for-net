@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobDeleted event. </summary>
-    internal partial class StorageBlobDeletedEventData
+    public partial class StorageBlobDeletedEventData
     {
         /// <summary> Initializes a new instance of StorageBlobDeletedEventData. </summary>
         internal StorageBlobDeletedEventData()

@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteSuccess event. This is raised when a resource create or update operation succeeds. </summary>
-    internal partial class ResourceWriteSuccessData
+    public partial class ResourceWriteSuccessData
     {
         /// <summary> Initializes a new instance of ResourceWriteSuccessData. </summary>
         internal ResourceWriteSuccessData()

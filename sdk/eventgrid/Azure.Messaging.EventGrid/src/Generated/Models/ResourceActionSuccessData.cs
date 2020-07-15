@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation succeeds. </summary>
-    internal partial class ResourceActionSuccessData
+    public partial class ResourceActionSuccessData
     {
         /// <summary> Initializes a new instance of ResourceActionSuccessData. </summary>
         internal ResourceActionSuccessData()

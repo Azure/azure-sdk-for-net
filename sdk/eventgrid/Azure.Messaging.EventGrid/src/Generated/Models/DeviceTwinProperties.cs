@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
-    internal partial class DeviceTwinProperties
+    public partial class DeviceTwinProperties
     {
         /// <summary> Initializes a new instance of DeviceTwinProperties. </summary>
         internal DeviceTwinProperties()

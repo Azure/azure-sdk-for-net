@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
-    internal partial class ContainerRegistryEventActor
+    public partial class ContainerRegistryEventActor
     {
         /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
         internal ContainerRegistryEventActor()

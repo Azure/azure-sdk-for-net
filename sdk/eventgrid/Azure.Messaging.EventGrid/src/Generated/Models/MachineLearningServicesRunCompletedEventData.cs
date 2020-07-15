@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.RunCompleted event. </summary>
-    internal partial class MachineLearningServicesRunCompletedEventData
+    public partial class MachineLearningServicesRunCompletedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesRunCompletedEventData. </summary>
         internal MachineLearningServicesRunCompletedEventData()

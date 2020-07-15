@@ -10,7 +10,7 @@ using System;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionDisconnected event. </summary>
-    internal partial class SignalRServiceClientConnectionDisconnectedEventData
+    public partial class SignalRServiceClientConnectionDisconnectedEventData
     {
         /// <summary> Initializes a new instance of SignalRServiceClientConnectionDisconnectedEventData. </summary>
         internal SignalRServiceClientConnectionDisconnectedEventData()
