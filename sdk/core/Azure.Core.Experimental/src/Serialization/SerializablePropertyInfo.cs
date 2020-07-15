@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 
 namespace Azure.Core
 {
@@ -15,9 +11,6 @@ namespace Azure.Core
     /// </summary>
     public abstract class SerializablePropertyInfo
     {
-        private bool _detectedCollectionElementType;
-        private Type? _collectionElementType;
-
         /// <summary>
         /// Gets the underlying type of the property.
         /// </summary>
@@ -34,61 +27,15 @@ namespace Azure.Core
         public abstract string SerializedName { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the <see cref="PropertyType"/> represents a collection.
+        /// Gets a value indicating whether the property should be ignored.
+        /// TODO: Consider whether ignored properties should just not be returned.
         /// </summary>
-        public virtual bool IsCollection => typeof(IEnumerable).IsAssignableFrom(PropertyType);
+        public bool ShouldIgnore { get; }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> of the elements within a collection, or null if the <see cref="PropertyType"/> is not a collection.
+        /// Gets all attributes declared on the property or inherited from base classes.
         /// </summary>
-        public virtual Type? CollectionElementType
-        {
-            get
-            {
-                if (IsCollection && !_detectedCollectionElementType)
-                {
-                    _detectedCollectionElementType = TryGetElementType(out _collectionElementType);
-                    Debug.Assert(_detectedCollectionElementType, "expected collection");
-                }
-
-                return _collectionElementType;
-            }
-        }
-
-        private bool TryGetElementType(out Type? collectionElementType)
-        {
-            static Type? GetElementType(Type t) =>
-                t.IsConstructedGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>) ?
-                t.GetGenericArguments()[0] :
-                null;
-
-            collectionElementType = GetElementType(PropertyType);
-            if (collectionElementType != null)
-            {
-                return true;
-            }
-
-            Type?[] enumerableTypes = PropertyType.GetTypeInfo()
-                .ImplementedInterfaces
-                .Select(t => GetElementType(t))
-                .Where(t => t != null)
-                .ToArray();
-
-            if (enumerableTypes.Length == 1)
-            {
-                collectionElementType = enumerableTypes[0];
-                return true;
-            }
-
-            if (typeof(IEnumerable).IsAssignableFrom(PropertyType))
-            {
-                // Fall back to a collection of object if no specific element type discovered.
-                collectionElementType = typeof(object);
-                return true;
-            }
-
-            collectionElementType = null;
-            return false;
-        }
+        /// <param name="inherit">Whether to return all attributes inherited from any base classes.</param>
+        public abstract IReadOnlyCollection<Attribute> GetAttributes(bool inherit);
     }
 }
