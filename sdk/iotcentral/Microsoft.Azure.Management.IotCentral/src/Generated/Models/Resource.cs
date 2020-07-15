@@ -95,6 +95,13 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
+            if (Name != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,99}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Name", "^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{2,99}[a-zA-Z0-9]$");
+                }
+            }
         }
     }
 }

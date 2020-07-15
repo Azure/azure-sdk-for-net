@@ -139,7 +139,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="devices">The pairs of devices their twins that will be created. For fields such as deviceId
+        /// <param name="devices">The pairs of devices and their twins that will be created. For fields such as deviceId
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
@@ -168,7 +168,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="devices">The pairs of devices their twins that will be created. For fields such as deviceId
+        /// <param name="devices">The pairs of devices and their twins that will be created. For fields such as deviceId
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
@@ -197,7 +197,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Create multiple devices. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
         /// </summary>
-        /// <param name="deviceIdentities">The devices identities to create.</param>
+        /// <param name="deviceIdentities">The device identities to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
@@ -357,7 +357,6 @@ namespace Azure.Iot.Hub.Service
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
-
 
         /// <summary>
         /// List a set of device twins.

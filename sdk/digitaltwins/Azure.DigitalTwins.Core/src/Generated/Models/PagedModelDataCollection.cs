@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of ModelData objects. </summary>
     internal partial class PagedModelDataCollection

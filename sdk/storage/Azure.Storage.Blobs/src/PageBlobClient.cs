@@ -238,9 +238,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            var builder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
 
-            return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new PageBlobClient(
+                builder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         /// <summary>
@@ -251,9 +260,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns></returns>
         public new PageBlobClient WithVersion(string versionId)
         {
-            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            var builder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
 
-            return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new PageBlobClient(
+                builder.ToUri(), Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                EncryptionScope);
         }
 
         #region Create

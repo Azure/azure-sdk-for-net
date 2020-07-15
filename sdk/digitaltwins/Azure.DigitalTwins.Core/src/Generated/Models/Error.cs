@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error definition. </summary>
     internal partial class Error

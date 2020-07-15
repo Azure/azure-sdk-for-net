@@ -5,11 +5,11 @@ languages:
 products:
 - azure
 - azure-storage
-name: Azure.Storage.ChangeFeed samples for .NET
+name: Azure.Storage.Blobs.ChangeFeed samples for .NET
 description: Samples for the Azure.Storage.Blobs.ChangeFeed client library
 ---
 
-# Azure.Storage.ChangeFeed Samples
+# Azure.Storage.Blobs.ChangeFeed Samples
 
 - sample 0
 - sample 1

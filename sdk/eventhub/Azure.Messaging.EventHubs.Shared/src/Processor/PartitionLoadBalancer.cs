@@ -219,19 +219,18 @@ namespace Azure.Messaging.EventHubs.Primitives
             // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
             // increase its ownership list, if no claimable ownership could be found or if a claim attempt has failed.
 
-            var claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, unclaimedPartitions, partitionIds.Length, cancellationToken).ConfigureAwait(false);
+            var (claimAttempted, claimedOwnership) = await FindAndClaimOwnershipAsync(completeOwnershipList, unclaimedPartitions, partitionIds.Length, cancellationToken).ConfigureAwait(false);
 
             if (claimedOwnership != null)
             {
                 InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
-                unclaimedPartitions.Remove(claimedOwnership.PartitionId);
             }
 
-            // Update the balanced state.  Consider the load balanced if this processor has its minimum share of partitions, no partitions
-            // remain unclaimed and this cycle did not claim a partition.
+            // Update the balanced state.  Consider the load balanced if this processor has its minimum share of partitions and did not
+            // attempt to claim a partition.
 
             var minimumDesiredPartitions = partitionIds.Length / ActiveOwnershipWithDistribution.Keys.Count;
-            IsBalanced = ((InstanceOwnership.Count >= minimumDesiredPartitions) && (unclaimedPartitions.Count <= 0) && (claimedOwnership == null));
+            IsBalanced = ((InstanceOwnership.Count >= minimumDesiredPartitions) && (!claimAttempted));
 
             return claimedOwnership;
         }
@@ -270,12 +269,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionCount">The count of partitions.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
+        /// <returns>A tuple indicating whether a claim was attempted and any ownership that was claimed.  The claimed ownership will be <c>null</c> if no claim was attempted or if the claim attempt failed.</returns>
         ///
-        private ValueTask<EventProcessorPartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
-                                                                                       HashSet<string> unclaimedPartitions,
-                                                                                       int partitionCount,
-                                                                                       CancellationToken cancellationToken)
+        private ValueTask<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
+                                                                                                                                  HashSet<string> unclaimedPartitions,
+                                                                                                                                  int partitionCount,
+                                                                                                                                  CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -313,7 +312,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count);
                     var returnTask = ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable, cancellationToken);
 
-                    return new ValueTask<EventProcessorPartitionOwnership>(returnTask);
+                    return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
                 }
 
                 // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
@@ -368,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         completeOwnershipEnumerable,
                         cancellationToken);
 
-                    return new ValueTask<EventProcessorPartitionOwnership>(returnTask);
+                    return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
                 }
                 else if (ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
@@ -383,13 +382,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                         completeOwnershipEnumerable,
                         cancellationToken);
 
-                    return new ValueTask<EventProcessorPartitionOwnership>(returnTask);
+                    return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
                 }
             }
 
             // No ownership has been claimed.
 
-            return new ValueTask<EventProcessorPartitionOwnership>(default(EventProcessorPartitionOwnership));
+            return new ValueTask<(bool, EventProcessorPartitionOwnership)>((false, default(EventProcessorPartitionOwnership)));
         }
 
         /// <summary>
@@ -453,11 +452,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The claimed ownership. <c>null</c> if the claim attempt failed.</returns>
+        /// <returns>A tuple indicating whether a claim was attempted and the claimed ownership. The claimed ownership will be <c>null</c> if the claim attempt failed.</returns>
         ///
-        private async Task<EventProcessorPartitionOwnership> ClaimOwnershipAsync(string partitionId,
-                                                                                 IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
-                                                                                 CancellationToken cancellationToken)
+        private async Task<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> ClaimOwnershipAsync(string partitionId,
+                                                                                                                            IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
+                                                                                                                            CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -505,7 +504,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
-            return claimedOwnership.FirstOrDefault();
+            return (true, claimedOwnership.FirstOrDefault());
         }
     }
 }

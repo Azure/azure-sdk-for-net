@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A collection of EventRoute objects. </summary>
     internal partial class EventRouteCollection

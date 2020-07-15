@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Administration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleAssignmentScope(string value) { throw null; }
-        public RoleAssignmentScope(System.Uri ResourceId) { throw null; }
+        public RoleAssignmentScope(System.Uri resourceId) { throw null; }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Global { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Keys { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.RoleAssignmentScope other) { throw null; }

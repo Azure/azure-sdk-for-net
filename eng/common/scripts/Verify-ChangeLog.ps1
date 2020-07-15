@@ -1,14 +1,14 @@
 # Wrapper Script for ChangeLog Verification
 param (
-    [String]$ChangeLogLocation,
-    [String]$VersionString,
-    [string]$PackageName,
-    [string]$ServiceName,
-    [string]$RepoRoot,
-    [ValidateSet("net","java","js","python")]
-    [string]$Language,
-    [string]$RepoName,
-    [boolean]$ForRelease=$False
+  [String]$ChangeLogLocation,
+  [String]$VersionString,
+  [string]$PackageName,
+  [string]$ServiceName,
+  [string]$RepoRoot,
+  [ValidateSet("net", "java", "js", "python")]
+  [string]$Language,
+  [string]$RepoName,
+  [boolean]$ForRelease = $False
 )
 
 $ProgressPreference = "SilentlyContinue"
@@ -16,23 +16,32 @@ $ProgressPreference = "SilentlyContinue"
 Import-Module (Join-Path $PSScriptRoot modules ChangeLog-Operations.psm1)
 
 $validChangeLog = $false
-if ($ChangeLogLocation -and $VersionString)
+if ($ChangeLogLocation -and $VersionString) 
 {
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString -ForRelease $ForRelease
 }
-else 
+else
 {
   Import-Module (Join-Path $PSScriptRoot modules Package-Properties.psm1)
   if ([System.String]::IsNullOrEmpty($Language))
   {
-    $Language = $RepoName.Substring($RepoName.LastIndexOf('-') + 1)
+    if ($RepoName -match "azure-sdk-for-(?<lang>[^-]+)")
+    {
+      $Language = $matches["lang"]
+    }
+    else
+    {
+      Write-Error "Failed to set Language automatically. Please pass the appropriate Language as a parameter."
+      exit 1
+    }
   }
 
   $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceName $ServiceName -Language $Language -RepoRoot $RepoRoot
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.pkgChangeLogPath -VersionString $PackageProp.pkgVersion -ForRelease $ForRelease
 }
 
-if (!$validChangeLog) {
+if (!$validChangeLog)
+{
   exit 1
 }
 
