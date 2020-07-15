@@ -22,10 +22,6 @@ jobs:
           artifactName: packages
           targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
 
-      - pwsh: Remove-Item Microsoft.Azure.*
-        workingDirectory: $(System.ArtifactsDirectory)/BuildArtifacts
-        displayName: Remove Track 1 Packages
-
       - pwsh: |
           mkdir "$(Build.ArtifactStagingDirectory)/reports"
           Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
