@@ -16,7 +16,7 @@ extends:
       
       # AzureUSGovernment
       - ServiceDirectory: search
-        MaxParallel: 2
+        MaxParallel: 1
         ScenarioName: AzureUSGovernment
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         EnvVars:
@@ -26,7 +26,7 @@ extends:
 
       # AzureChinaCloud
       - ServiceDirectory: search
-        MaxParallel: 2
+        MaxParallel: 1
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         EnvVars:
