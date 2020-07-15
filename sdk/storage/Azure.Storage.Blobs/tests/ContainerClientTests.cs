@@ -2208,13 +2208,13 @@ namespace Azure.Storage.Blobs.Test
         public async Task DeleteBlobIfExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient unauthorizedContainerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                unauthorizedContainerClient.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => { });
         }
 
         [Test]
