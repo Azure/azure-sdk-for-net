@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> sku of app service plan. </summary>
-    internal partial class WebAppServicePlanUpdatedEventDataSku
+    public partial class WebAppServicePlanUpdatedEventDataSku
     {
         /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventDataSku. </summary>
         internal WebAppServicePlanUpdatedEventDataSku()

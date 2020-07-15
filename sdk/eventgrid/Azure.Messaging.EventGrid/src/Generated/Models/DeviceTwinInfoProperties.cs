@@ -8,7 +8,7 @@
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Properties JSON element. </summary>
-    internal partial class DeviceTwinInfoProperties
+    public partial class DeviceTwinInfoProperties
     {
         /// <summary> Initializes a new instance of DeviceTwinInfoProperties. </summary>
         internal DeviceTwinInfoProperties()
