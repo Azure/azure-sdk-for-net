@@ -19,21 +19,15 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// OriginsOperations operations.
+    /// PoliciesOperations operations.
     /// </summary>
-    public partial interface IOriginsOperations
+    public partial interface IPoliciesOperations
     {
         /// <summary>
-        /// Lists all of the existing origins within an endpoint.
+        /// Lists all of the protection policies within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,21 +44,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Origin>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CdnWebApplicationFirewallPolicy>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an existing origin within an endpoint.
+        /// Retrieve protection policy with specified name within a resource
+        /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,24 +70,19 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Origin>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new origin within the specified endpoint.
+        /// Create or update policy with specified rule set name within a
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin that is unique within the endpoint.
-        /// </param>
-        /// <param name='origin'>
-        /// Origin properties
+        /// <param name='cdnWebApplicationFirewallPolicy'>
+        /// Policy to be created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,24 +99,20 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Origin>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicy cdnWebApplicationFirewallPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing origin within an endpoint.
+        /// Update an existing CdnWebApplicationFirewallPolicy with the
+        /// specified policy name under the specified subscription and resource
+        /// group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
-        /// </param>
-        /// <param name='originUpdateProperties'>
-        /// Origin properties
+        /// <param name='tags'>
+        /// CdnWebApplicationFirewallPolicy tags
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,21 +129,15 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing origin within an endpoint.
+        /// Deletes Policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -171,30 +145,25 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new origin within the specified endpoint.
+        /// Create or update policy with specified rule set name within a
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin that is unique within the endpoint.
-        /// </param>
-        /// <param name='origin'>
-        /// Origin properties
+        /// <param name='cdnWebApplicationFirewallPolicy'>
+        /// Policy to be created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -211,24 +180,20 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Origin>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicy cdnWebApplicationFirewallPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing origin within an endpoint.
+        /// Update an existing CdnWebApplicationFirewallPolicy with the
+        /// specified policy name under the specified subscription and resource
+        /// group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
-        /// </param>
-        /// <param name='originUpdateProperties'>
-        /// Origin properties
+        /// <param name='tags'>
+        /// CdnWebApplicationFirewallPolicy tags
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -245,37 +210,9 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing origin within an endpoint.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile which is unique within the resource group.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint under the profile which is unique globally.
-        /// </param>
-        /// <param name='originName'>
-        /// Name of the origin which is unique within the endpoint.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all of the existing origins within an endpoint.
+        /// Lists all of the protection policies within a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -295,6 +232,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Origin>>> ListByEndpointNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CdnWebApplicationFirewallPolicy>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
