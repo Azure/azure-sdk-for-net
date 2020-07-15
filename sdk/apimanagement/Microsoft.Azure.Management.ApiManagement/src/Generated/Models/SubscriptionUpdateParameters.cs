@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// date and was deactivated. Possible values include: 'suspended',
         /// 'active', 'expired', 'submitted', 'rejected', 'cancelled'</param>
         /// <param name="stateComment">Comments describing subscription state
-        /// change by the administrator.</param>
+        /// change by the administrator when the state is changed to the
+        /// 'rejected'.</param>
         /// <param name="allowTracing">Determines whether tracing can be
         /// enabled</param>
         public SubscriptionUpdateParameters(string ownerId = default(string), string scope = default(string), System.DateTime? expirationDate = default(System.DateTime?), string displayName = default(string), string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?), string stateComment = default(string), bool? allowTracing = default(bool?))
@@ -137,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets comments describing subscription state change by the
-        /// administrator.
+        /// administrator when the state is changed to the 'rejected'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stateComment")]
         public string StateComment { get; set; }
@@ -148,5 +149,36 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.allowTracing")]
         public bool? AllowTracing { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PrimaryKey != null)
+            {
+                if (PrimaryKey.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "PrimaryKey", 256);
+                }
+                if (PrimaryKey.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "PrimaryKey", 1);
+                }
+            }
+            if (SecondaryKey != null)
+            {
+                if (SecondaryKey.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SecondaryKey", 256);
+                }
+                if (SecondaryKey.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SecondaryKey", 1);
+                }
+            }
+        }
     }
 }

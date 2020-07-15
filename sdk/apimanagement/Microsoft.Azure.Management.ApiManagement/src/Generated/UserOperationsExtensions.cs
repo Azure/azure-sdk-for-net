@@ -191,13 +191,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create or update parameters.
             /// </param>
+            /// <param name='notify'>
+            /// Send an Email notification to the User.
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static UserContract CreateOrUpdate(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, string ifMatch = default(string))
+            public static UserContract CreateOrUpdate(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, userId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, userId, parameters, notify, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -219,6 +222,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create or update parameters.
             /// </param>
+            /// <param name='notify'>
+            /// Send an Email notification to the User.
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
@@ -226,9 +232,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserContract> CreateOrUpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserContract> CreateOrUpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, userId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, userId, parameters, notify, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -322,9 +328,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='notify'>
             /// Send an Account Closed Email notification to the User.
             /// </param>
-            public static void Delete(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?))
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
+            public static void Delete(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), string appType = default(string))
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify, appType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -354,12 +365,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='notify'>
             /// Send an Account Closed Email notification to the User.
             /// </param>
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), string appType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify, appType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

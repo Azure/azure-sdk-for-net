@@ -113,6 +113,39 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "VersioningScheme");
             }
+            if (VersionQueryName != null)
+            {
+                if (VersionQueryName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionQueryName", 100);
+                }
+                if (VersionQueryName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionQueryName", 1);
+                }
+            }
+            if (VersionHeaderName != null)
+            {
+                if (VersionHeaderName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionHeaderName", 100);
+                }
+                if (VersionHeaderName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionHeaderName", 1);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 100);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
         }
     }
 }

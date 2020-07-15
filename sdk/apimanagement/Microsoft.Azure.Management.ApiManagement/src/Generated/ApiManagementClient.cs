@@ -152,11 +152,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        public virtual IApiExportOperations ApiExport { get; private set; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         public virtual IApiVersionSetOperations ApiVersionSet { get; private set; }
@@ -395,6 +390,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         public virtual IUserConfirmationPasswordOperations UserConfirmationPassword { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        public virtual IApiExportOperations ApiExport { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ApiManagementClient class.
@@ -652,7 +652,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiIssueAttachment = new ApiIssueAttachmentOperations(this);
             ApiTagDescription = new ApiTagDescriptionOperations(this);
             Operation = new OperationOperations(this);
-            ApiExport = new ApiExportOperations(this);
             ApiVersionSet = new ApiVersionSetOperations(this);
             AuthorizationServer = new AuthorizationServerOperations(this);
             Backend = new BackendOperations(this);
@@ -701,6 +700,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserSubscription = new UserSubscriptionOperations(this);
             UserIdentities = new UserIdentitiesOperations(this);
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
+            ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-12-01";
             AcceptLanguage = "en-US";
