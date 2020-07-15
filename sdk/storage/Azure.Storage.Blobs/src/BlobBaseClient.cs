@@ -2301,7 +2301,9 @@ namespace Azure.Storage.Blobs.Specialized
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
+                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2490,7 +2492,8 @@ namespace Azure.Storage.Blobs.Specialized
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
+                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

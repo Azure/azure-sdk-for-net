@@ -681,7 +681,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DeleteIfExistsAsync_Exists()
+        public async Task DeleteIfExistsAsync_NotExists()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -2186,16 +2186,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task DeleteBlobIfExistsAsync_ContainerNotExists()
+        {
+            var name = GetNewBlobName();
+
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+
+            // Act
+            Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
+        }
+
+        [Test]
         public async Task DeleteBlobIfExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient unauthorizedContainerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                unauthorizedContainerClient.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => { });
         }
 
         [Test]

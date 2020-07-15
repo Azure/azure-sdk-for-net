@@ -2437,12 +2437,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DeleteIfExistsAsync_Exists()
+        public async Task DeleteIfExistsAsync_NotExists()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<bool> response = await blob.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_ContainerNotExists()
+        {
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+
+            // Arrange
+            BlobBaseClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
             Response<bool> response = await blob.DeleteIfExistsAsync();
@@ -2555,6 +2573,22 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlobBaseClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_ContainerNotExists()
+        {
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+
+            // Arrange
+            BlobBaseClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
 
             // Act
             Response<bool> response = await blob.ExistsAsync();
