@@ -23,17 +23,17 @@ namespace Azure.Identity
         internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
         internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
+        private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
         private readonly Lazy<Task<IAccount>> _account;
-
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
         public SharedTokenCacheCredential()
-            : this(null, null, CredentialPipeline.GetInstance(null))
+            : this(null, null, CredentialPipeline.GetInstance(null), (TokenCredentialOptions)null)
         {
 
         }
@@ -43,7 +43,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(SharedTokenCacheCredentialOptions options)
-            : this(options?.TenantId, options?.Username, CredentialPipeline.GetInstance(options))
+            : this(options?.TenantId, options?.Username, CredentialPipeline.GetInstance(options), options)
         {
         }
 
@@ -53,12 +53,12 @@ namespace Azure.Identity
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
-            : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options))
+            : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options), options: options)
         {
         }
 
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline)
-            : this(tenantId: tenantId, username: username, pipeline: pipeline, client: pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, tenantId: tenantId, attachSharedCache: true))
+        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline, TokenCredentialOptions options)
+            : this(tenantId: tenantId, username: username, pipeline: pipeline, client: pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, tenantId: tenantId, cacheOptions: (options as ITokenCacheOptions) ?? s_DefaultCacheOptions))
         {
         }
 
