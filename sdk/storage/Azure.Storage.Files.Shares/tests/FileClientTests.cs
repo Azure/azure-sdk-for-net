@@ -2165,9 +2165,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2218,9 +2215,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_Lease()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2267,9 +2262,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_InvalidLease()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2317,9 +2310,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
-        // TODO: #7645
         public async Task UploadRangeFromUriAsync_NonAsciiSourceUri()
         {
             await using DisposingShare test = await GetTestShareAsync();
