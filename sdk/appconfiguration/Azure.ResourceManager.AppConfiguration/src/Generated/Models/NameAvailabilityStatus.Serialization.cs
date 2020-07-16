@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new NameAvailabilityStatus(nameAvailable.HasValue ? nameAvailable.Value : (bool?)null, message.HasValue ? message.Value : null, reason.HasValue ? reason.Value : null);
+            return new NameAvailabilityStatus(Optional.ToNullable(nameAvailable), message.Value, reason.Value);
         }
     }
 }

@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<OperationDefinition> array = new List<OperationDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OperationDefinition.DeserializeOperationDefinition(item));
-                        }
+                        array.Add(OperationDefinition.DeserializeOperationDefinition(item));
                     }
                     value = array;
                     continue;
@@ -42,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new OperationDefinitionListResult(new ChangeTrackingList<OperationDefinition>(value), nextLink.HasValue ? nextLink.Value : null);
+            return new OperationDefinitionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new OperationDefinitionDisplay(provider.HasValue ? provider.Value : null, resource.HasValue ? resource.Value : null, operation.HasValue ? operation.Value : null, description.HasValue ? description.Value : null);
+            return new OperationDefinitionDisplay(provider.Value, resource.Value, operation.Value, description.Value);
         }
     }
 }

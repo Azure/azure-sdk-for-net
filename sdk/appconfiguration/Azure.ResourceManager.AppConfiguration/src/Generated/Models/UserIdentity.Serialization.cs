@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId);
-            }
             writer.WriteEndObject();
         }
 
@@ -45,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new UserIdentity(principalId.HasValue ? principalId.Value : null, clientId.HasValue ? clientId.Value : null);
+            return new UserIdentity(principalId.Value, clientId.Value);
         }
     }
 }

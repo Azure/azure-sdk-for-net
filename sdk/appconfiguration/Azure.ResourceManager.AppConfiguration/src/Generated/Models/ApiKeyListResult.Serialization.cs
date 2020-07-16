@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<ApiKey> array = new List<ApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApiKey.DeserializeApiKey(item));
-                        }
+                        array.Add(ApiKey.DeserializeApiKey(item));
                     }
                     value = array;
                     continue;
@@ -42,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ApiKeyListResult(new ChangeTrackingList<ApiKey>(value), nextLink.HasValue ? nextLink.Value : null);
+            return new ApiKeyListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

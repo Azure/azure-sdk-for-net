@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
                 writer.WriteStartObject();
@@ -31,16 +31,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(PrincipalId))
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
             }
             writer.WriteEndObject();
         }
@@ -63,14 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -86,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ResourceIdentity(type.HasValue ? type.Value : (IdentityType?)null, new ChangeTrackingDictionary<string, UserIdentity>(userAssignedIdentities), principalId.HasValue ? principalId.Value : null, tenantId.HasValue ? tenantId.Value : null);
+            return new ResourceIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), principalId.Value, tenantId.Value);
         }
     }
 }

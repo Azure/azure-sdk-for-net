@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyIdentifier.HasValue ? keyIdentifier.Value : null, identityClientId.HasValue ? identityClientId.Value : null);
+            return new KeyVaultProperties(keyIdentifier.Value, identityClientId.Value);
         }
     }
 }

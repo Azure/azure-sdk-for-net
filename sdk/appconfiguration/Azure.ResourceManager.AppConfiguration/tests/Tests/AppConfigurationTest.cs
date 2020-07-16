@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task AppConfigurationListKeyValues()
         {
             var resourceGroup = Recording.GenerateAssetName(ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, AzureLocation, resourceGroup);
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroup, configurationStoreName,
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             var conListResult = await configListResponse.ToEnumerableAsync();
             Assert.True(conListResult.Count >= 1);
             //# ConfigurationStoresListKeys[post]
-            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters(conListResult.First().Id));
+            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters() { Id = conListResult.First().Id });
             Assert.IsNotNull(configRegenerateResponse.Value);
             //TODO need to use data sdk to create key value
             //create Key-Value
@@ -83,11 +82,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = "eastus",
-                AddressSpace =
+                AddressSpace = new AddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions =
+                DhcpOptions = new DhcpOptions()
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },

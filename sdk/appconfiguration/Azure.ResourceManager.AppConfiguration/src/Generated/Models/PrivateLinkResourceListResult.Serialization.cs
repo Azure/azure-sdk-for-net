@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<PrivateLinkResource> array = new List<PrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
-                        }
+                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
                     }
                     value = array;
                     continue;
@@ -42,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceListResult(new ChangeTrackingList<PrivateLinkResource>(value), nextLink.HasValue ? nextLink.Value : null);
+            return new PrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

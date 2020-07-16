@@ -24,24 +24,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Optional.IsDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,35 +39,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(CreationDate))
-            {
-                writer.WritePropertyName("creationDate");
-                writer.WriteStringValue(CreationDate.Value, "O");
-            }
-            if (Optional.IsDefined(Endpoint))
-            {
-                writer.WritePropertyName("endpoint");
-                writer.WriteStringValue(Endpoint);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
-            }
-            if (Optional.IsDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections");
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -145,14 +105,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -183,17 +136,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateEndpointConnections = null;
+                                continue;
+                            }
                             List<PrivateEndpointConnectionReference> array = new List<PrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PrivateEndpointConnectionReference.DeserializePrivateEndpointConnectionReference(item));
-                                }
+                                array.Add(PrivateEndpointConnectionReference.DeserializePrivateEndpointConnectionReference(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -207,7 +158,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationStore(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), identity.HasValue ? identity.Value : null, sku, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, creationDate.HasValue ? creationDate.Value : (DateTimeOffset?)null, endpoint.HasValue ? endpoint.Value : null, encryption.HasValue ? encryption.Value : null, new ChangeTrackingList<PrivateEndpointConnectionReference>(privateEndpointConnections), publicNetworkAccess.HasValue ? publicNetworkAccess.Value : (PublicNetworkAccess?)null);
+            return new ConfigurationStore(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

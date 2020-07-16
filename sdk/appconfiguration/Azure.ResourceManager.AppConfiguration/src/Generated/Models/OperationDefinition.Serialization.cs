@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new OperationDefinition(name.HasValue ? name.Value : null, display.HasValue ? display.Value : null);
+            return new OperationDefinition(name.Value, display.Value);
         }
     }
 }

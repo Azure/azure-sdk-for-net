@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ApiKey(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, value.HasValue ? value.Value : null, connectionString.HasValue ? connectionString.Value : null, lastModified.HasValue ? lastModified.Value : (DateTimeOffset?)null, readOnly.HasValue ? readOnly.Value : (bool?)null);
+            return new ApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
         }
     }
 }

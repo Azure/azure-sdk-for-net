@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionsRequired))
-            {
-                writer.WritePropertyName("actionsRequired");
-                writer.WriteStringValue(ActionsRequired.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -56,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(status.HasValue ? status.Value : (ConnectionStatus?)null, description.HasValue ? description.Value : null, actionsRequired.HasValue ? actionsRequired.Value : (ActionsRequired?)null);
+            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
         }
     }
 }

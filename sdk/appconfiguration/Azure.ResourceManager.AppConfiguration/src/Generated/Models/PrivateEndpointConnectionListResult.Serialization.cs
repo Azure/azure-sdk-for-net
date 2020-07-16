@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
-                        }
+                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item));
                     }
                     value = array;
                     continue;
@@ -42,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionListResult(new ChangeTrackingList<PrivateEndpointConnection>(value), nextLink.HasValue ? nextLink.Value : null);
+            return new PrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

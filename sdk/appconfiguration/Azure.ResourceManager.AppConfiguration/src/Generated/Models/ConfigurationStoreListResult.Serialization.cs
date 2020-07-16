@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<ConfigurationStore> array = new List<ConfigurationStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConfigurationStore.DeserializeConfigurationStore(item));
-                        }
+                        array.Add(ConfigurationStore.DeserializeConfigurationStore(item));
                     }
                     value = array;
                     continue;
@@ -42,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationStoreListResult(new ChangeTrackingList<ConfigurationStore>(value), nextLink.HasValue ? nextLink.Value : null);
+            return new ConfigurationStoreListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

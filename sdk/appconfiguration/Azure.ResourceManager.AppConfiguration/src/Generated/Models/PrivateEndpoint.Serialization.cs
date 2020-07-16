@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new PrivateEndpoint(id.HasValue ? id.Value : null);
+            return new PrivateEndpoint(id.Value);
         }
     }
 }

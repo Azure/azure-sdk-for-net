@@ -66,20 +66,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new KeyValue(key.HasValue ? key.Value : null, label.HasValue ? label.Value : null, value.HasValue ? value.Value : null, contentType.HasValue ? contentType.Value : null, eTag.HasValue ? eTag.Value : null, lastModified.HasValue ? lastModified.Value : (DateTimeOffset?)null, locked.HasValue ? locked.Value : (bool?)null, new ChangeTrackingDictionary<string, string>(tags));
+            return new KeyValue(key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
         }
     }
 }
