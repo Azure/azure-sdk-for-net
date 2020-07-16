@@ -2695,7 +2695,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            BlockBlobClient sasBlob = new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions());
+            BlockBlobClient sasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
 
             // Act
             Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
@@ -2736,7 +2736,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            BlockBlobClient identitySasBlob = new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions());
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
 
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
@@ -3022,7 +3022,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            BlockBlobClient identitySasBlob = (new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions())).WithSnapshot(snapshotResponse.Value.Snapshot);
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions())).WithSnapshot(snapshotResponse.Value.Snapshot);
 
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();

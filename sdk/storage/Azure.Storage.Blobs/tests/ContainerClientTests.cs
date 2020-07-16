@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasQueryParameters
             };
 
-            BlobContainerClient container = new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions());
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
             var pass = false;
 
             try
