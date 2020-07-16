@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.Hub.Service.Models;
 
 namespace Azure.Iot.Hub.Service
 {
@@ -56,15 +58,28 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> This method is used to retrieve feedback of a cloud-to-device message See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> ReceiveFeedbackNotificationAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<MessageFeedbackBatch>> ReceiveFeedbackNotificationAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateReceiveFeedbackNotificationRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        MessageFeedbackBatch value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = MessageFeedbackBatch.DeserializeMessageFeedbackBatch(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 204:
-                    return message.Response;
+                    return Response.FromValue<MessageFeedbackBatch>(null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -72,15 +87,28 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> This method is used to retrieve feedback of a cloud-to-device message See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response ReceiveFeedbackNotification(CancellationToken cancellationToken = default)
+        public Response<MessageFeedbackBatch> ReceiveFeedbackNotification(CancellationToken cancellationToken = default)
         {
             using var message = CreateReceiveFeedbackNotificationRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        MessageFeedbackBatch value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = MessageFeedbackBatch.DeserializeMessageFeedbackBatch(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 204:
-                    return message.Response;
+                    return Response.FromValue<MessageFeedbackBatch>(null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

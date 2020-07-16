@@ -1149,7 +1149,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The feedback response object"
+                        "description": "The feedback response object",
+                        "schema": {
+                            "$ref": "#/definitions/MessageFeedbackBatch"
+                        }
                     },
                     "204": {
                         "description": "No Content Sent if feedback queue is empty"
@@ -3174,6 +3177,70 @@
                     "additionalProperties": {
                         "type": "object"
                     }
+                }
+            }
+        },
+        "MessageFeedbackBatch": {
+            "description": "The feedback response containing details of the final state of sent messages.",
+            "type": "object",
+            "properties": {
+                "enqueuedTime": {
+                    "description": "A timestamp that indicates when the feedback message was received by the hub.",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "userId": {
+                    "description": "The IoT Hub name, from where the messages are sent.",
+                    "type": "string"
+                },
+                "lockToken": {
+                    "description": "The lock token obtained when the message feedback was received. It is used for completing/ abandoning a feedback batch.",
+                    "type": "string"
+                },
+                "messageResult": {
+                    "description": "List containing details of each message feedback result received.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MessageResult"
+                    }
+                }
+            }
+        },
+        "MessageResult": {
+            "description": "The details of each message feedback result received.",
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "description": "The MessageId of the cloud-to-device message to which this feedback information relates.",
+                    "type": "string"
+                },
+                "deviceId": {
+                    "description": "The DeviceId of the target device of the cloud-to-device message to which this piece of feedback relates.",
+                    "type": "string"
+                },
+                "enqueuedTimeUtc": {
+                    "description": "A timestamp that indicates when the outcome of the message happened (for example, the hub received the feedback message or the original message expired).",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "statusCode": {
+                    "description": "The various feedback status codes for a message sent to a device.",
+                    "enum": [
+                        "success",
+                        "expired",
+                        "deliveryCountExceeded",
+                        "rejected",
+                        "purged"
+                    ],
+                    "type": "string"
+                },
+                "status": {
+                    "description": "The string value for the status code.",
+                    "type": "string"
+                },
+                "deviceGenerationId": {
+                    "description": "The DeviceGenerationId of the target device of the cloud-to-device message to which this piece of feedback relates.",
+                    "type": "string"
                 }
             }
         }
