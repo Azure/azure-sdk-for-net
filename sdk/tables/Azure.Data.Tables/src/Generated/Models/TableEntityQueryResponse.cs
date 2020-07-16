@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
         internal TableEntityQueryResponse()
         {
+            Value = new ChangeTrackingList<IDictionary<string, object>>();
         }
 
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
