@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
 
 namespace Azure.Iot.Hub.Service.Tests
 {
@@ -11,7 +11,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public override string SanitizeVariable(string variableName, string environmentVariableValue) =>
             variableName switch
             {
-                TestsConstants.IOT_HUB_CONNECTION_STRING => SanitizeConnectionString(environmentVariableValue),
+                TestSettings.IotHubConnectionString => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
