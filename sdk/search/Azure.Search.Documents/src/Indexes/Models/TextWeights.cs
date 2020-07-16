@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class TextWeights
     {
         /// <summary> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IDictionary<string, double> Weights { get; }
     }
 }

@@ -23,14 +23,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(synonymMaps));
             }
 
-            SynonymMaps = synonymMaps.ToArray();
+            SynonymMaps = synonymMaps.ToList();
         }
 
         /// <summary> Initializes a new instance of ListSynonymMapsResult. </summary>
         /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
         internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> synonymMaps)
         {
-            SynonymMaps = synonymMaps ?? new List<SynonymMap>();
+            SynonymMaps = synonymMaps;
         }
 
         /// <summary> The synonym maps in the Search service. </summary>

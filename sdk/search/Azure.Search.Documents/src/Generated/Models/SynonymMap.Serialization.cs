@@ -21,12 +21,19 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms");
             writer.WriteStringValue(Synonyms);
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey");
-                writer.WriteObjectValue(EncryptionKey);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey");
+                    writer.WriteObjectValue(EncryptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey");
+                }
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
                 writer.WriteStringValue(_etag);
@@ -39,8 +46,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            SearchResourceEncryptionKey encryptionKey = default;
-            string odataEtag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -62,6 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        encryptionKey = null;
                         continue;
                     }
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
@@ -69,15 +77,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SynonymMap(name, format, synonyms, encryptionKey, odataEtag);
+            return new SynonymMap(name, format, synonyms, encryptionKey.Value, odataEtag.Value);
         }
     }
 }

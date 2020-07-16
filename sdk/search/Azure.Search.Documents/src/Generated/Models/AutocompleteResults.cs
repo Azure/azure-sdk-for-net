@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         internal AutocompleteResults(double? coverage, IReadOnlyList<AutocompleteItem> results)
         {
             Coverage = coverage;
-            Results = results ?? new List<AutocompleteItem>();
+            Results = results;
         }
 
         /// <summary> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </summary>

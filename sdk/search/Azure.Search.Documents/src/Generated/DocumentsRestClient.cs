@@ -161,14 +161,7 @@ namespace Azure.Search.Documents
                     {
                         SearchDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
-                        }
+                        value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,14 +187,7 @@ namespace Azure.Search.Documents
                     {
                         SearchDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
-                        }
+                        value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,26 +241,12 @@ namespace Azure.Search.Documents
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,26 +273,12 @@ namespace Azure.Search.Documents
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -371,14 +329,7 @@ namespace Azure.Search.Documents
                     {
                         SuggestDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
-                        }
+                        value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,14 +355,7 @@ namespace Azure.Search.Documents
                     {
                         SuggestDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
-                        }
+                        value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -463,14 +407,7 @@ namespace Azure.Search.Documents
                     {
                         IndexDocumentsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-                        }
+                        value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -497,14 +434,7 @@ namespace Azure.Search.Documents
                     {
                         IndexDocumentsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-                        }
+                        value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,14 +485,7 @@ namespace Azure.Search.Documents
                     {
                         AutocompleteResults value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
-                        }
+                        value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -588,14 +511,7 @@ namespace Azure.Search.Documents
                     {
                         AutocompleteResults value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
-                        }
+                        value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

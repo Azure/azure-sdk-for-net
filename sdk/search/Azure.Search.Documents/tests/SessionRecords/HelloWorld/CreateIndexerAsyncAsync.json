@@ -58,7 +58,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "gcwrdvqd",
         "fields": [
           {
             "name": "hotelId",

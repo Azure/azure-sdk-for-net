@@ -77,6 +77,77 @@ directive:
   transform: $["x-ms-enum"].name = "SuggesterMode";
 ```
 
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SynonymMap
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchField
+  transform: >
+    $.properties.indexAnalyzer["x-nullable"] = true;
+    $.properties.searchAnalyzer["x-nullable"] = true;
+    $.properties.analyzer["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ScoringProfile
+  transform: >
+    $.properties.text["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndex
+  transform: >
+    $.properties.encryptionKey["x-nullable"] = true;
+    $.properties.corsOptions["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.BM25Similarity
+  transform: >
+    $.properties.k1["x-nullable"] = true;
+    $.properties.b["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataChangeDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource
+  transform: >
+    $.properties.dataDeletionDetectionPolicy["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexer
+  transform: >
+    $.properties.disabled["x-nullable"] = true;
+```
+
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.

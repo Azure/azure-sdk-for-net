@@ -65,13 +65,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets the analyzers for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<LexicalAnalyzer> Analyzers { get; }
 
         /// <summary>
         /// Gets the character filters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<CharFilter> CharFilters { get; }
 
         /// <summary>
@@ -79,31 +77,26 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Use <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> for help defining valid indexes.
         /// Index fields have many constraints that are not validated with <see cref="SearchField"/> until the index is created on the server.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<SearchField> Fields { get; }
 
         /// <summary>
         /// Gets the scoring profiles for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<ScoringProfile> ScoringProfiles { get; }
 
         /// <summary>
         /// Gets the suggesters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<SearchSuggester> Suggesters { get; }
 
         /// <summary>
         /// Gets the token filters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<TokenFilter> TokenFilters { get; }
 
         /// <summary>
         /// Gets the tokenizers for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<LexicalTokenizer> Tokenizers { get; }
 
         /// <summary>
