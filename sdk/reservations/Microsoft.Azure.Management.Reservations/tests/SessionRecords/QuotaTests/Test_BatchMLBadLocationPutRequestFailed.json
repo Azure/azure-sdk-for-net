@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2000,\r\n    \"name\": {\r\n      \"value\": \"TotalLowPriorityCores\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6dbedb0d-b58c-452e-a42e-12147011442f"
+          "c0548156-79b3-40f8-8d9b-0e6591ae0913"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Jul 2020 08:42:43 GMT"
+          "Thu, 16 Jul 2020 08:44:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,16 +39,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "ca36eb86-7a58-42b4-a257-98e2c8a6e631"
+          "6ebd127f-bbcd-40a2-8d89-8a294685820a"
         ],
         "x-ms-correlation-request-id": [
-          "ca36eb86-7a58-42b4-a257-98e2c8a6e631"
+          "6ebd127f-bbcd-40a2-8d89-8a294685820a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200716T084243Z:ca36eb86-7a58-42b4-a257-98e2c8a6e631"
+          "WESTUS2:20200716T084417Z:6ebd127f-bbcd-40a2-8d89-8a294685820a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
