@@ -23,7 +23,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="userId"> The IoT Hub name, from where the messages are sent. </param>
         /// <param name="lockToken"> The lock token obtained when the message feedback was received. It is used for completing/ abandoning a feedback batch. </param>
         /// <param name="messageResult"> List containing details of each message feedback result received. </param>
-        internal MessageFeedbackBatch(DateTimeOffset? enqueuedTime, string userId, string lockToken, IReadOnlyList<MessageResult> messageResult)
+        internal MessageFeedbackBatch(DateTimeOffset? enqueuedTime, string userId, string lockToken, IReadOnlyList<CloudToDeviceMessageResult> messageResult)
         {
             EnqueuedTime = enqueuedTime;
             UserId = userId;
@@ -38,6 +38,6 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> The lock token obtained when the message feedback was received. It is used for completing/ abandoning a feedback batch. </summary>
         public string LockToken { get; }
         /// <summary> List containing details of each message feedback result received. </summary>
-        public IReadOnlyList<MessageResult> MessageResult { get; }
+        public IReadOnlyList<CloudToDeviceMessageResult> MessageResult { get; }
     }
 }

@@ -147,7 +147,8 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class CloudToDeviceMessage
     {
         public CloudToDeviceMessage() { }
-        public Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck? Ack { get { throw null; } set { } }
+        public Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment? Acknowledgment { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } set { } }
         public string ContentEncoding { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
@@ -157,26 +158,56 @@ namespace Azure.Iot.Hub.Service.Models
         public string MessageId { get { throw null; } set { } }
         public object MessagePayload { get { throw null; } set { } }
         public string MessageSchema { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CloudToDeviceMessageAck : System.IEquatable<Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck>
+    public readonly partial struct CloudToDeviceMessageAcknowledgment : System.IEquatable<Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CloudToDeviceMessageAck(string value) { throw null; }
-        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck Full { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck Negative { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck None { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck Positive { get { throw null; } }
-        public bool Equals(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck other) { throw null; }
+        public CloudToDeviceMessageAcknowledgment(string value) { throw null; }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment Full { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment Negative { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment None { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment Positive { get { throw null; } }
+        public bool Equals(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck right) { throw null; }
-        public static implicit operator Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck (string value) { throw null; }
-        public static bool operator !=(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAck right) { throw null; }
+        public static bool operator ==(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment right) { throw null; }
+        public static implicit operator Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment (string value) { throw null; }
+        public static bool operator !=(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageAcknowledgment right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CloudToDeviceMessageResult
+    {
+        internal CloudToDeviceMessageResult() { }
+        public string DeviceGenerationId { get { throw null; } }
+        public string DeviceId { get { throw null; } }
+        public System.DateTimeOffset? EnqueuedTimeUtc { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string Status { get { throw null; } }
+        public Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode? StatusCode { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CloudToDeviceMessageResultStatusCode : System.IEquatable<Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CloudToDeviceMessageResultStatusCode(string value) { throw null; }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode DeliveryCountExceeded { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode Expired { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode Purged { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode Rejected { get { throw null; } }
+        public static Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode Success { get { throw null; } }
+        public bool Equals(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode right) { throw null; }
+        public static implicit operator Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode (string value) { throw null; }
+        public static bool operator !=(Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode left, Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResultStatusCode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CloudToDeviceMethodRequest
@@ -856,39 +887,8 @@ namespace Azure.Iot.Hub.Service.Models
         internal MessageFeedbackBatch() { }
         public System.DateTimeOffset? EnqueuedTime { get { throw null; } }
         public string LockToken { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.MessageResult> MessageResult { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.CloudToDeviceMessageResult> MessageResult { get { throw null; } }
         public string UserId { get { throw null; } }
-    }
-    public partial class MessageResult
-    {
-        internal MessageResult() { }
-        public string DeviceGenerationId { get { throw null; } }
-        public string DeviceId { get { throw null; } }
-        public System.DateTimeOffset? EnqueuedTimeUtc { get { throw null; } }
-        public string MessageId { get { throw null; } }
-        public string Status { get { throw null; } }
-        public Azure.Iot.Hub.Service.Models.MessageResultStatusCode? StatusCode { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessageResultStatusCode : System.IEquatable<Azure.Iot.Hub.Service.Models.MessageResultStatusCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MessageResultStatusCode(string value) { throw null; }
-        public static Azure.Iot.Hub.Service.Models.MessageResultStatusCode DeliveryCountExceeded { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.MessageResultStatusCode Expired { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.MessageResultStatusCode Purged { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.MessageResultStatusCode Rejected { get { throw null; } }
-        public static Azure.Iot.Hub.Service.Models.MessageResultStatusCode Success { get { throw null; } }
-        public bool Equals(Azure.Iot.Hub.Service.Models.MessageResultStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Iot.Hub.Service.Models.MessageResultStatusCode left, Azure.Iot.Hub.Service.Models.MessageResultStatusCode right) { throw null; }
-        public static implicit operator Azure.Iot.Hub.Service.Models.MessageResultStatusCode (string value) { throw null; }
-        public static bool operator !=(Azure.Iot.Hub.Service.Models.MessageResultStatusCode left, Azure.Iot.Hub.Service.Models.MessageResultStatusCode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ModuleConnectionState : System.IEquatable<Azure.Iot.Hub.Service.Models.ModuleConnectionState>

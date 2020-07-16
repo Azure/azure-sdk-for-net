@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class MessageResult
+    public partial class CloudToDeviceMessageResult
     {
-        internal static MessageResult DeserializeMessageResult(JsonElement element)
+        internal static CloudToDeviceMessageResult DeserializeCloudToDeviceMessageResult(JsonElement element)
         {
             string messageId = default;
             string deviceId = default;
             DateTimeOffset? enqueuedTimeUtc = default;
-            MessageResultStatusCode? statusCode = default;
+            CloudToDeviceMessageResultStatusCode? statusCode = default;
             string status = default;
             string deviceGenerationId = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +56,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    statusCode = new MessageResultStatusCode(property.Value.GetString());
+                    statusCode = new CloudToDeviceMessageResultStatusCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -78,7 +78,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new MessageResult(messageId, deviceId, enqueuedTimeUtc, statusCode, status, deviceGenerationId);
+            return new CloudToDeviceMessageResult(messageId, deviceId, enqueuedTimeUtc, statusCode, status, deviceGenerationId);
         }
     }
 }

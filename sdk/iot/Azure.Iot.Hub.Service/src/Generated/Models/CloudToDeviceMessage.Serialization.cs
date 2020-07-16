@@ -60,16 +60,16 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("correlationId");
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Ack != null)
+            if (Acknowledgment != null)
             {
-                writer.WritePropertyName("ack");
-                writer.WriteStringValue(Ack.Value.ToString());
+                writer.WritePropertyName("acknowledgment");
+                writer.WriteStringValue(Acknowledgment.Value.ToString());
             }
-            if (Properties != null)
+            if (ApplicationProperties != null)
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("applicationProperties");
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in ApplicationProperties)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);

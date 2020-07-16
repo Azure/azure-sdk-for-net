@@ -28,9 +28,9 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="creationTimeUtc"> Custom date property set by the originator of the message. </param>
         /// <param name="expirationTimeUtc"> The time when this message is considered expired. </param>
         /// <param name="correlationId"> Used in message responses and feedback. </param>
-        /// <param name="ack"> Indicates whether consumption or expiration of the message should post data to the feedback queue. </param>
-        /// <param name="properties"> Collection of user-defined properties on the message. </param>
-        internal CloudToDeviceMessage(string messageId, string destination, object messagePayload, string messageSchema, string contentType, string contentEncoding, DateTimeOffset? creationTimeUtc, DateTimeOffset? expirationTimeUtc, string correlationId, CloudToDeviceMessageAck? ack, IDictionary<string, object> properties)
+        /// <param name="acknowledgment"> Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback. </param>
+        /// <param name="applicationProperties"> Collection of user-defined properties on the message. </param>
+        internal CloudToDeviceMessage(string messageId, string destination, object messagePayload, string messageSchema, string contentType, string contentEncoding, DateTimeOffset? creationTimeUtc, DateTimeOffset? expirationTimeUtc, string correlationId, CloudToDeviceMessageAcknowledgment? acknowledgment, IDictionary<string, object> applicationProperties)
         {
             MessageId = messageId;
             Destination = destination;
@@ -41,8 +41,8 @@ namespace Azure.Iot.Hub.Service.Models
             CreationTimeUtc = creationTimeUtc;
             ExpirationTimeUtc = expirationTimeUtc;
             CorrelationId = correlationId;
-            Ack = ack;
-            Properties = properties;
+            Acknowledgment = acknowledgment;
+            ApplicationProperties = applicationProperties;
         }
 
         /// <summary> Unique identifier for the C2D message being sent. </summary>
@@ -63,9 +63,9 @@ namespace Azure.Iot.Hub.Service.Models
         public DateTimeOffset? ExpirationTimeUtc { get; set; }
         /// <summary> Used in message responses and feedback. </summary>
         public string CorrelationId { get; set; }
-        /// <summary> Indicates whether consumption or expiration of the message should post data to the feedback queue. </summary>
-        public CloudToDeviceMessageAck? Ack { get; set; }
+        /// <summary> Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback. </summary>
+        public CloudToDeviceMessageAcknowledgment? Acknowledgment { get; set; }
         /// <summary> Collection of user-defined properties on the message. </summary>
-        public IDictionary<string, object> Properties { get; set; }
+        public IDictionary<string, object> ApplicationProperties { get; set; }
     }
 }

@@ -10,21 +10,21 @@ using System;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The details of each message feedback result received. </summary>
-    public partial class MessageResult
+    public partial class CloudToDeviceMessageResult
     {
-        /// <summary> Initializes a new instance of MessageResult. </summary>
-        internal MessageResult()
+        /// <summary> Initializes a new instance of CloudToDeviceMessageResult. </summary>
+        internal CloudToDeviceMessageResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageResult. </summary>
+        /// <summary> Initializes a new instance of CloudToDeviceMessageResult. </summary>
         /// <param name="messageId"> The MessageId of the cloud-to-device message to which this feedback information relates. </param>
         /// <param name="deviceId"> The DeviceId of the target device of the cloud-to-device message to which this piece of feedback relates. </param>
         /// <param name="enqueuedTimeUtc"> A timestamp that indicates when the outcome of the message happened (for example, the hub received the feedback message or the original message expired). </param>
         /// <param name="statusCode"> The various feedback status codes for a message sent to a device. </param>
         /// <param name="status"> The string value for the status code. </param>
         /// <param name="deviceGenerationId"> The DeviceGenerationId of the target device of the cloud-to-device message to which this piece of feedback relates. </param>
-        internal MessageResult(string messageId, string deviceId, DateTimeOffset? enqueuedTimeUtc, MessageResultStatusCode? statusCode, string status, string deviceGenerationId)
+        internal CloudToDeviceMessageResult(string messageId, string deviceId, DateTimeOffset? enqueuedTimeUtc, CloudToDeviceMessageResultStatusCode? statusCode, string status, string deviceGenerationId)
         {
             MessageId = messageId;
             DeviceId = deviceId;
@@ -41,7 +41,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> A timestamp that indicates when the outcome of the message happened (for example, the hub received the feedback message or the original message expired). </summary>
         public DateTimeOffset? EnqueuedTimeUtc { get; }
         /// <summary> The various feedback status codes for a message sent to a device. </summary>
-        public MessageResultStatusCode? StatusCode { get; }
+        public CloudToDeviceMessageResultStatusCode? StatusCode { get; }
         /// <summary> The string value for the status code. </summary>
         public string Status { get; }
         /// <summary> The DeviceGenerationId of the target device of the cloud-to-device message to which this piece of feedback relates. </summary>

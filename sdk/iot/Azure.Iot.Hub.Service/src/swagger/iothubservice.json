@@ -1768,11 +1768,11 @@
                 }
             }
         },
-        "/devices/{deviceId}/message": {
+        "/messages/devicebound/{deviceId}": {
             "post": {
                 "summary": "Send a cloud-to-device message to device.",
                 "description": "Send a cloud-to-device message to device. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d for more information.",
-                "operationId": "SendDeviceCommand",
+                "operationId": "HttpRuntime_SendDeviceMessage",
                 "consumes": [
                     "application/json"
                 ],
@@ -1783,12 +1783,14 @@
                     {
                         "name": "deviceId",
                         "in": "path",
+                        "description": "The unique identifier of the device.",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "messageRequest",
                         "in": "body",
+                        "description": "The Cloud to device message to be sent.",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/CloudToDeviceMessage"
@@ -3161,8 +3163,8 @@
                     "description": "Used in message responses and feedback.",
                     "type": "string"
                 },
-                "ack": {
-                    "description": "Indicates whether consumption or expiration of the message should post data to the feedback queue.",
+                "acknowledgment": {
+                    "description": "Indicates whether consumption or expiration of the message should post data to the feedback queue. For explanation on possible values, see https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-c2d#message-feedback",
                     "enum": [
                         "none",
                         "positive",
@@ -3171,7 +3173,7 @@
                     ],
                     "type": "string"
                 },
-                "properties": {
+                "applicationProperties": {
                     "description": "Collection of user-defined properties on the message.",
                     "type": "object",
                     "additionalProperties": {
@@ -3201,12 +3203,12 @@
                     "description": "List containing details of each message feedback result received.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MessageResult"
+                        "$ref": "#/definitions/CloudToDeviceMessageResult"
                     }
                 }
             }
         },
-        "MessageResult": {
+        "CloudToDeviceMessageResult": {
             "description": "The details of each message feedback result received.",
             "type": "object",
             "properties": {

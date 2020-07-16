@@ -19,7 +19,7 @@ namespace Azure.Iot.Hub.Service.Models
             DateTimeOffset? enqueuedTime = default;
             string userId = default;
             string lockToken = default;
-            IReadOnlyList<MessageResult> messageResult = default;
+            IReadOnlyList<CloudToDeviceMessageResult> messageResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enqueuedTime"))
@@ -55,7 +55,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    List<MessageResult> array = new List<MessageResult>();
+                    List<CloudToDeviceMessageResult> array = new List<CloudToDeviceMessageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -64,7 +64,7 @@ namespace Azure.Iot.Hub.Service.Models
                         }
                         else
                         {
-                            array.Add(Models.MessageResult.DeserializeMessageResult(item));
+                            array.Add(CloudToDeviceMessageResult.DeserializeCloudToDeviceMessageResult(item));
                         }
                     }
                     messageResult = array;

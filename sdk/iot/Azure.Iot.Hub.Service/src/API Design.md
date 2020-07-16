@@ -88,7 +88,10 @@ public class CloudToDeviceMessages
     /// Retrieve feedback notification for cloud to device messages.
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The message feedback batch, containing the details of the final state of sent messages.</returns>
+    /// <returns>
+    /// The message feedback batch, containing the details of the final state of sent messages. 
+    /// In order to receive feedback notification for cloud to device messages, make sure to set "acknowledgment" property appropriately on your "CloudToDeviceMessage".
+    ///</returns>
     public virtual async Task<Response<MessageFeedbackBatch>> GetMessageFeedbackAsync(CancellationToken cancellationToken = default) { }
 
     /// <summary>
