@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DiskList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
         internal DiskList(IReadOnlyList<Disk> value, string nextLink)
         {
-            Value = value ?? new List<Disk>();
+            Value = value;
             NextLink = nextLink;
         }
 

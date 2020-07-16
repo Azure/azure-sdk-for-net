@@ -233,11 +233,17 @@ namespace Azure.ResourceManager.Compute.Tests
             );
             VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
             inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
-            var virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0", "1" });
+            var virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs()
+            {
+                InstanceIds = { "0", "1" }
+            };
 
             var virtualMachineScaleSetRequ = new VirtualMachineScaleSetVMInstanceRequiredIDs(new List<string>() { "0", "1" });
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartStartAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs));
-            virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0" });
+            virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs()
+            {
+                InstanceIds = { "0", "1" }
+            };
             VirtualMachineScaleSetReimageParameters virtualMachineScaleSetReimageParameters = new VirtualMachineScaleSetReimageParameters
             {
                 InstanceIds = { "0", "1" }
@@ -275,7 +281,10 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
             inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             List<string> virtualMachineScaleSetInstanceIDs = new List<string> { "0", "1" };
-            var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0", "1" });
+            var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs()
+            {
+                InstanceIds = { "0", "1" }
+            };
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartRedeployAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceID));
             passed = true;
             Assert.True(passed);
@@ -305,7 +314,10 @@ namespace Azure.ResourceManager.Compute.Tests
                 vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
                 inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
                 List<string> virtualMachineScaleSetInstanceIDs = new List<string> { "0", "1" };
-                var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0", "1" });
+                var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs()
+                {
+                    InstanceIds = { "0", "1" }
+                };
                 await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartPerformMaintenanceAsync(rgName, vmScaleSet.Name,
                     virtualMachineScaleSetInstanceID));
 

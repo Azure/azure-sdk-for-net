@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Assert.AreEqual(diskEncryptionSetExpected.ActiveKey.SourceVault.Id, diskEncryptionSetActual.ActiveKey.SourceVault.Id);
             Assert.AreEqual(diskEncryptionSetExpected.ActiveKey.KeyUrl, diskEncryptionSetActual.ActiveKey.KeyUrl);
             Assert.NotNull(diskEncryptionSetActual.Identity);
-            Assert.AreEqual(ResourceIdentityType.SystemAssigned.ToString(), diskEncryptionSetActual.Identity.Type);
+            Assert.AreEqual(ResourceIdentityType.SystemAssigned, diskEncryptionSetActual.Identity.Type);
         }
 
         private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)

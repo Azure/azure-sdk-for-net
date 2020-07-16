@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS Skus. </param>
         internal VirtualMachineScaleSetListSkusResult(IReadOnlyList<VirtualMachineScaleSetSku> value, string nextLink)
         {
-            Value = value ?? new List<VirtualMachineScaleSetSku>();
+            Value = value;
             NextLink = nextLink;
         }
 

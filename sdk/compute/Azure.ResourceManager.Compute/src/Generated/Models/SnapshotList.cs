@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of SnapshotList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </param>
         internal SnapshotList(IReadOnlyList<Snapshot> value, string nextLink)
         {
-            Value = value ?? new List<Snapshot>();
+            Value = value;
             NextLink = nextLink;
         }
 
