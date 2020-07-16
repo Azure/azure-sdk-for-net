@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
+            Annotations = new ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>
@@ -35,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The description of the data flow. </summary>
         public string Description { get; set; }
         /// <summary> List of tags that can be used for describing the data flow. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
         public DataFlowFolder Folder { get; set; }
     }

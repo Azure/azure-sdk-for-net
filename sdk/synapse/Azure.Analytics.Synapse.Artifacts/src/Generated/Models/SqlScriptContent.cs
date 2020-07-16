@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Query = query;
             CurrentConnection = currentConnection;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlScriptContent. </summary>
@@ -43,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Query = query;
             CurrentConnection = currentConnection;
             Metadata = metadata;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> SQL query to execute. </summary>
