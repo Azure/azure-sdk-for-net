@@ -2388,9 +2388,9 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContentInfo> createResponse = await blob.CreateAsync();
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
-            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(
-                accountSasResourceTypes: AccountSasResourceTypes.All,
-                accountSasPermissions: AccountSasPermissions.All);
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+                resourceTypes: AccountSasResourceTypes.All,
+                permissions: AccountSasPermissions.All);
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -2719,11 +2719,17 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
-            BlockBlobClient sasBlob = InstrumentClient(
-                GetServiceClient_BlobServiceSas_Container(
-                    containerName: containerName)
-                .GetBlobContainerClient(containerName)
-                .GetBlockBlobClient(blobName));
+            BlobSasQueryParameters blobSasQueryParameters = GetContainerSas(
+                containerName: test.Container.Name,
+                permissions: BlobContainerSasPermissions.Read,
+                sasVersion: ToSasVersion(_serviceVersion));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlockBlobClient sasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
 
             // Act
             Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
@@ -2752,12 +2758,19 @@ namespace Azure.Storage.Blobs.Test
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            BlockBlobClient identitySasBlob = InstrumentClient(
-                GetServiceClient_BlobServiceIdentitySas_Container(
-                    containerName: containerName,
-                    userDelegationKey: userDelegationKey)
-                .GetBlobContainerClient(containerName)
-                .GetBlockBlobClient(blobName));
+            BlobSasQueryParameters blobSasQueryParameters = GetContainerIdentitySas(
+                containerName: test.Container.Name,
+                BlobContainerSasPermissions.Read,
+                userDelegationKey: userDelegationKey,
+                TestConfigOAuth.AccountName,
+                sasVersion: ToSasVersion(_serviceVersion));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
 
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
@@ -3029,13 +3042,21 @@ namespace Azure.Storage.Blobs.Test
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            BlockBlobClient identitySasBlob = InstrumentClient(
-                GetServiceClient_BlobServiceIdentitySas_Container(
-                    containerName: containerName,
-                    userDelegationKey: userDelegationKey)
-                .GetBlobContainerClient(containerName)
-                .GetBlockBlobClient(blobName)
-                .WithSnapshot(snapshotResponse.Value.Snapshot));
+            BlobSasQueryParameters blobSasQueryParameters = GetSnapshotIdentitySas(
+                containerName: test.Container.Name,
+                blobName: blob.Name,
+                snapshot: snapshotResponse.Value.Snapshot,
+                permissions: SnapshotSasPermissions.Read,
+                userDelegationKey: userDelegationKey,
+                accountName: TestConfigOAuth.AccountName,
+                sasVersion: ToSasVersion(_serviceVersion));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions())).WithSnapshot(snapshotResponse.Value.Snapshot);
 
             // Act
             Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
@@ -4884,7 +4905,7 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
-            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
