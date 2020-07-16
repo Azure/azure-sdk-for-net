@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TenantId != null)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (AccessPolicies != null)
+            if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies");
                 writer.WriteStartArray();
@@ -35,37 +35,37 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EnabledForDeployment != null)
+            if (Optional.IsDefined(EnabledForDeployment))
             {
                 writer.WritePropertyName("enabledForDeployment");
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
-            if (EnabledForDiskEncryption != null)
+            if (Optional.IsDefined(EnabledForDiskEncryption))
             {
                 writer.WritePropertyName("enabledForDiskEncryption");
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
-            if (EnabledForTemplateDeployment != null)
+            if (Optional.IsDefined(EnabledForTemplateDeployment))
             {
                 writer.WritePropertyName("enabledForTemplateDeployment");
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
-            if (EnableSoftDelete != null)
+            if (Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete");
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (CreateMode != null)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (EnablePurgeProtection != null)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls");
                 writer.WriteObjectValue(NetworkAcls);

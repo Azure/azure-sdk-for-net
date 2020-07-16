@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
@@ -38,6 +41,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Required member names of private link resource. </summary>
         public IList<string> RequiredMembers { get; }
         /// <summary> Required DNS zone names of the the private link resource. </summary>
-        public IList<string> RequiredZoneNames { get; set; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

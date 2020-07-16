@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new ArgumentNullException(nameof(properties));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 
