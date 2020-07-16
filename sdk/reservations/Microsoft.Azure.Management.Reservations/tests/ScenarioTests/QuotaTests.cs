@@ -1,28 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Reservations.Tests.Helpers;
-using Microsoft.Azure.Management.Reservations;
-using Microsoft.Azure.Management.Reservations.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using Xunit;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq.Expressions;
-using Microsoft.Rest.Azure;
-using Xunit.Sdk;
-
 namespace Reservations.Tests.ScenarioTests
 {
-    public class QuotaTests : TestBase
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Reflection;
+
+    using Reservations.Tests.Helpers;
+    using Microsoft.Azure.Management.Reservations;
+    using Microsoft.Azure.Management.Reservations.Models;
+    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using Xunit;
+    using Microsoft.Rest.Azure;
+    public class QotaTests : TestBase
     {
         // ##############
         //  SETUP
@@ -33,7 +28,7 @@ namespace Reservations.Tests.ScenarioTests
 
         // Note: Make sure whatever cert thumprint you used above is installed in you Cert *User* Store
 
-        #region TestVariables
+        #region Test consts
         public static readonly string QuotaSubscriptionId = "9f6cce51-6baf-4de5-a3c4-6f58b85315b9";
         private const string ComputeProviderId = "Microsoft.Compute";
         private const string BatchMLProviderId = "Microsoft.MachineLearningServices";
@@ -246,7 +241,7 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
                 Assert.Contains("BadRequest", ex.ToString());
             }
-            catch(ExceptionResponseException ex)
+            catch (ExceptionResponseException ex)
             {
                 Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
             }
@@ -377,14 +372,12 @@ namespace Reservations.Tests.ScenarioTests
         #endregion
 
         #region private Methods
-
         private static string GetSessionsDirectoryPath()
         {
             System.Type something = typeof(Reservations.Tests.ScenarioTests.ReservationTests);
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
-
         #endregion
     }
 }
