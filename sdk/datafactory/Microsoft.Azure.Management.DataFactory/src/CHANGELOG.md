@@ -5,6 +5,7 @@
 - Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
 - Added support of Message server connecting from SAP Open Hub
 - Enable Sql Sources (AzureSqlDatabase, SqlSever, Synapse, SqlMI) read in parallel, support partition by dynamic range and sql built-in partitions.
+
 ## Version 4.9.0
 ###  Feature Additions
 - Added support for specifying a linked service as a Data Flow source and sink type
