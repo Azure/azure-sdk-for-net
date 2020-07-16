@@ -11,23 +11,23 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoPoint"/>.
     /// </summary>
-    public sealed class GeoMultiPoint : Geometry, IReadOnlyList<GeoPoint>
+    public sealed class GeoPointCollection : GeoObject, IReadOnlyList<GeoPoint>
     {
         /// <summary>
-        /// Initializes new instance of <see cref="GeoMultiPoint"/>.
+        /// Initializes new instance of <see cref="GeoPointCollection"/>.
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
-        public GeoMultiPoint(IEnumerable<GeoPoint> points): this(points, null, DefaultProperties)
+        public GeoPointCollection(IEnumerable<GeoPoint> points): this(points, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="GeoMultiPoint"/>.
+        /// Initializes new instance of <see cref="GeoPointCollection"/>.
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public GeoMultiPoint(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(points, nameof(points));
 

@@ -10,13 +10,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a geometry that is composed of multiple geometries.
     /// </summary>
-    public sealed class GeoCollection : Geometry, IReadOnlyList<Geometry>
+    public sealed class GeoCollection : GeoObject, IReadOnlyList<GeoObject>
     {
         /// <summary>
         /// Initializes new instance of <see cref="GeoCollection"/>.
         /// </summary>
         /// <param name="geometries">The collection of inner geometries.</param>
-        public GeoCollection(IEnumerable<Geometry> geometries): this(geometries, null, DefaultProperties)
+        public GeoCollection(IEnumerable<GeoObject> geometries): this(geometries, null, DefaultProperties)
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="geometries">The collection of inner geometries.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
-        public GeoCollection(IEnumerable<Geometry> geometries, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        public GeoCollection(IEnumerable<GeoObject> geometries, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Argument.AssertNotNull(geometries, nameof(geometries));
 
@@ -34,12 +34,12 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        /// Gets the list of <see cref="Geometry"/> geometry is composed of.
+        /// Gets the list of <see cref="GeoObject"/> geometry is composed of.
         /// </summary>
-        internal IReadOnlyList<Geometry> Geometries { get; }
+        internal IReadOnlyList<GeoObject> Geometries { get; }
 
         /// <inheritdoc />
-        public IEnumerator<Geometry> GetEnumerator()
+        public IEnumerator<GeoObject> GetEnumerator()
         {
             return Geometries.GetEnumerator();
         }
@@ -53,6 +53,6 @@ namespace Azure.Core.Spatial
         public int Count => Geometries.Count;
 
         /// <inheritdoc />
-        public Geometry this[int index] => Geometries[index];
+        public GeoObject this[int index] => Geometries[index];
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.Core.Tests
         {
             var json = DynamicJson.Parse("{}");
             dynamic dynamicJson = json;
-            dynamicJson.a = DynamicJson.Serialize(new GeoPoint(new GeoCoordinate(1, 2)), new JsonSerializerOptions()
+            dynamicJson.a = DynamicJson.Serialize(new GeoPoint(new GeometryCoordinate(1, 2)), new JsonSerializerOptions()
             {
                 Converters = { new GeoJsonConverter() }
             });

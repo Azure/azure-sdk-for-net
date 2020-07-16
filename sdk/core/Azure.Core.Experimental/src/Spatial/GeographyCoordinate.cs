@@ -90,10 +90,10 @@ namespace Azure.Core.Spatial
         {
             if (Altitude == null)
             {
-                return $"[{Longitude:G17}, {Latitude:G17}]";
+                return $"Longitude: {Longitude:G}, Latitude: {Latitude:G}";
             }
 
-            return $"[{Longitude:G17}, {Latitude:G17}, {Altitude.Value:G17}]";
+            return $"Longitude: {Longitude:G}, Latitude: {Latitude:G}, Altitude: {Altitude.Value:G}";
         }
     }
 }
