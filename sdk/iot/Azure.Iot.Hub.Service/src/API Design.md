@@ -78,15 +78,18 @@ public class CloudToDeviceMessages
     /// <summary>
     /// Send cloud to device message for a device.
     /// </summary>
+    /// <param name="deviceId">The unique identifier of the device.</param>
+    /// <param name="message">The cloud to device message to be sent to the device. </param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The Http response.</returns>
-    public virtual async Task<Response> SendMessageAsync(CancellationToken cancellationToken = default) { }
+    public virtual async Task<Response> SendMessageAsync(String deviceId, CloudToDeviceMessage message, CancellationToken cancellationToken = default) { }
 
     /// <summary>
     /// Retrieve feedback notification for cloud to device messages.
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>TODO: Swagger defines the response as the Http response returned from the service (and not the feedback message).</returns>
-    public virtual async Task<Response> GetMessageFeedbackAsync(CancellationToken cancellationToken = default) { }
+    /// <returns>The message feedback batch, containing the details of the final state of sent messages.</returns>
+    public virtual async Task<Response<MessageFeedbackBatch>> GetMessageFeedbackAsync(CancellationToken cancellationToken = default) { }
 
     /// <summary>
     /// Complete a cloud to device feedback message. A completed message is deleted from the service's feedback queue.
@@ -111,7 +114,7 @@ public class CloudToDeviceMessages
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The result of the cloud to device message queue purge operation.</returns>
+    /// <returns>The result of the purge operation.</returns>
     public virtual async Task<Response<PurgeMessageQueueResult>> PurgeMessageQueueAsync(string deviceId, CancellationToken cancellationToken = default) { }
 }
 ```
