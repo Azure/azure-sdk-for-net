@@ -1852,7 +1852,8 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
-                cancellationToken);
+                async: false,
+                cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -1884,8 +1885,17 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => allowfileModifications ? OpenRead(position, bufferSize, new ShareFileRequestConditions(), cancellationToken)
-                : OpenRead(position, bufferSize, null, cancellationToken);
+                => allowfileModifications
+                ? OpenRead(
+                    position,
+                    bufferSize,
+                    new ShareFileRequestConditions(),
+                    cancellationToken)
+                : OpenRead(
+                    position,
+                    bufferSize,
+                    null,
+                    cancellationToken);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -1912,17 +1922,18 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Task<Stream> OpenReadAsync(
+        public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             long position = 0,
             int? bufferSize = default,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
-            => Task.FromResult(OpenReadInteral(
+            => await OpenReadInteral(
                 position,
                 bufferSize,
                 conditions,
-                cancellationToken));
+                async: true,
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -1948,14 +1959,23 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Task<Stream> OpenReadAsync(
+        public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool allowfileModifications,
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => allowfileModifications ? OpenReadAsync(position, bufferSize, new ShareFileRequestConditions(), cancellationToken)
-                : OpenReadAsync(position, bufferSize, null, cancellationToken);
+                => await (allowfileModifications
+                ? OpenReadAsync(
+                    position,
+                    bufferSize,
+                    new ShareFileRequestConditions(),
+                    cancellationToken)
+                : OpenReadAsync(
+                    position,
+                    bufferSize,
+                    null,
+                    cancellationToken)).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -1973,6 +1993,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
         /// the download of the file.
         /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1981,11 +2004,14 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-        internal Stream OpenReadInteral(
-            long position = 0,
-            int? bufferSize = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task<Stream> OpenReadInteral(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+            long position,
+            int? bufferSize,
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
@@ -1994,6 +2020,11 @@ namespace Azure.Storage.Files.Shares
 
                 // Have to use cancellationToken in body.
                 Debug.Assert(cancellationToken != null || cancellationToken == null);
+
+                // Have to use async in body.
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+                Debug.Assert(async || !async);
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
 
                 return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
                     async (HttpRange range,
