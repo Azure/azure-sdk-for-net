@@ -169,10 +169,10 @@ namespace Azure.Identity
     }
     public static partial class KnownAuthorityHosts
     {
-        public static readonly System.Uri AzureChinaCloud;
-        public static readonly System.Uri AzureCloud;
-        public static readonly System.Uri AzureGermanCloud;
-        public static readonly System.Uri AzureUSGovernment;
+        public static System.Uri AzureChinaCloud { get { throw null; } }
+        public static System.Uri AzureCloud { get { throw null; } }
+        public static System.Uri AzureGermanCloud { get { throw null; } }
+        public static System.Uri AzureUSGovernment { get { throw null; } }
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
