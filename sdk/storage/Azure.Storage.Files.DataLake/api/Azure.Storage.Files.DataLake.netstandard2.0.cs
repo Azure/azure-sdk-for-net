@@ -719,7 +719,6 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.DataLakeAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeSasPermissions permissions) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions) { }
         public void SetPermissions(string rawPermissions, bool normalize = false) { }
         public Azure.Storage.Sas.DataLakeSasQueryParameters ToSasQueryParameters(Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }

@@ -1384,7 +1384,6 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.BlobSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.BlobVersionSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.SnapshotSasPermissions permissions) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions) { }
         public void SetPermissions(string rawPermissions, bool normalize = false) { }
         public Azure.Storage.Sas.BlobSasQueryParameters ToSasQueryParameters(Azure.Storage.Blobs.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }

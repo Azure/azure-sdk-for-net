@@ -127,7 +127,6 @@ namespace Azure.Storage.Sas
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions)
         {
             Permissions = rawPermissions;

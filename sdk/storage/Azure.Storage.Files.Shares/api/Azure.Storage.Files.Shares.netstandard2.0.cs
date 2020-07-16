@@ -793,7 +793,6 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.ShareAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.ShareFileSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.ShareSasPermissions permissions) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPermissions(string rawPermissions) { }
         public void SetPermissions(string rawPermissions, bool normalize = false) { }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
