@@ -16,6 +16,7 @@ extends:
       
       # AzureUSGovernment
       - ServiceDirectory: search
+        TimeoutInMinutes: 120
         MaxParallel: 1
         ScenarioName: AzureUSGovernment
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
@@ -26,6 +27,7 @@ extends:
 
       # AzureChinaCloud
       - ServiceDirectory: search
+        TimeoutInMinutes: 120
         MaxParallel: 1
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
