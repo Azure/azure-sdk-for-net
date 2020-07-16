@@ -3,6 +3,8 @@
 ## Version 4.10.0
 ###  Feature Additions
 - Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
+- Added NewClusterLogDestination property to Azure Databricks linked service
+- Support expression (object) type for data flow staging folder path
 
 ## Version 4.9.0
 ###  Feature Additions
