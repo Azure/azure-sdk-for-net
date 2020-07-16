@@ -34,7 +34,7 @@ The `Receipt` class is composed of multiple `FormField<T>` properties. `FormFiel
 public Receipt(RecognizedForm recognizedForm)
 {
     // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://aka.ms/azsdk/python/formrecognizer/receiptfields
+    // https://aka.ms/formrecognizer/receiptfields
 
     ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
     MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
