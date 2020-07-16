@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> The resource location. </summary>
         public string Location { get; set; }
         /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> This property is reserved for future use, and will be ignored/omitted. </summary>
         public DigitalTwinsSkuInfo Sku { get; set; }
     }
