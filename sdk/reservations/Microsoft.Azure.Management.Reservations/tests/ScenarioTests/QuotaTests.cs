@@ -40,6 +40,7 @@ namespace Reservations.Tests.ScenarioTests
         #endregion
 
         #region Tests
+        #region Positive Test case
         [Fact]
         public void Test_ComputeSkusGetRequest()
         {
@@ -57,193 +58,6 @@ namespace Reservations.Tests.ScenarioTests
                     x.Properties.Name != null &&
                     x.Properties.CurrentValue != null
                 ));
-            }
-        }
-
-        [Fact]
-        public void Test_ComputeSkusPutRequestFailedDueToQuotaReduction()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var newQuotaLimit = new CurrentQuotaLimitBase()
-            {
-                Properties = new QuotaProperties()
-                {
-                    Limit = 2,
-                    Name = new ResourceName() { Value = SKUName }
-                }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
-                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
-            }
-        }
-
-        [Fact]
-        public void Test_ComputeSkusPatchRequestFailedDueToQuotaReduction()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var newQuotaLimit = new CurrentQuotaLimitBase()
-            {
-                Properties = new QuotaProperties()
-                {
-                    Limit = 2,
-                    Name = new ResourceName() { Value = SKUName }
-                }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
-                    var quotaResponse = reservationsClient.Quota.Update(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
-            }
-        }
-
-        [Fact]
-        public void Test_AQMPutRequestDisabled()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var newQAqi = new AutoQuotaIncreaseDetail()
-            {
-                Settings = new AqiSettings() { AutoQuotaIncreaseState = "Disabled" }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                    var response = reservationsClient.AutoQuotaIncrease.Create(QuotaSubscriptionId, newQAqi);
-
-                    Assert.True(response.Settings.AutoQuotaIncreaseState.ToString() == "Disabled");
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.False(false, $"Not excpected {ex.ToString()}");
-            }
-        }
-
-        [Fact]
-        public void Test_BatchMLTotalLowPriorityCoresPutRequestFailedDueToQuotaReduction()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var newQuotaLimit = new CurrentQuotaLimitBase()
-            {
-                Properties = new QuotaProperties()
-                {
-                    Limit = 2,
-                    Name = new ResourceName() { Value = "TotalLowPriorityCores" },
-                    ResourceType = "lowPriority"
-                }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
-                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.Contains("Quota reduction is not supported", ex.ToString());
-            }
-        }
-
-        [Fact]
-        public void Test_BatchMLBadLocationPutRequestFailed()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var badLocation = "badLocation";
-            var newQuotaLimit = new CurrentQuotaLimitBase()
-            {
-                Properties = new QuotaProperties()
-                {
-                    Limit = 2000,
-                    Name = new ResourceName() { Value = "TotalLowPriorityCores" },
-                    ResourceType = "lowPriority"
-                }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.BadRequest });
-                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, badLocation, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-                Assert.Contains("BadRequest", ex.ToString());
-            }
-            catch (ExceptionResponseException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-            }
-        }
-
-        [Fact]
-        public void Test_BatchMLBadResourceIdPutRequestFailed()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            var badResourceId = "badResId";
-            var newQuotaLimit = new CurrentQuotaLimitBase()
-            {
-                Properties = new QuotaProperties()
-                {
-                    Limit = 2000,
-                    Name = new ResourceName() { Value = badResourceId },
-                    ResourceType = "lowPriority"
-                }
-            };
-
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
-                        context,
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.BadRequest });
-                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
-                }
-            }
-            catch (CloudException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-                Assert.Contains("BadRequest", ex.ToString());
-            }
-            catch (ExceptionResponseException ex)
-            {
-                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
             }
         }
 
@@ -369,6 +183,198 @@ namespace Reservations.Tests.ScenarioTests
                 );
             }
         }
+
+        [Fact]
+        public void Test_AQMPutRequestDisabled()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var newQAqi = new AutoQuotaIncreaseDetail()
+            {
+                Settings = new AqiSettings() { AutoQuotaIncreaseState = "Disabled" }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                    var response = reservationsClient.AutoQuotaIncrease.Create(QuotaSubscriptionId, newQAqi);
+
+                    Assert.True(response.Settings.AutoQuotaIncreaseState.ToString() == "Disabled");
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.False(false, $"Not excpected {ex.ToString()}");
+            }
+        }
+
+        #endregion
+        #region Neagtive Test Cases
+        [Fact]
+        public void Test_ComputeSkusPutRequestFailedDueToQuotaReduction()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var newQuotaLimit = new CurrentQuotaLimitBase()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = 2,
+                    Name = new ResourceName() { Value = SKUName }
+                }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.Contains("Quota reduction is not supported", ex.ToString());
+            }
+        }
+        
+        [Fact]
+        public void Test_ComputeSkusPatchRequestFailedDueToQuotaReduction()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var newQuotaLimit = new CurrentQuotaLimitBase()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = 2,
+                    Name = new ResourceName() { Value = SKUName }
+                }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                    var quotaResponse = reservationsClient.Quota.Update(QuotaSubscriptionId, ComputeProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.Contains("Quota reduction is not supported", ex.ToString());
+            }
+        }
+
+        [Fact]
+        public void Test_BatchMLTotalLowPriorityCoresPutRequestFailedDueToQuotaReduction()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var newQuotaLimit = new CurrentQuotaLimitBase()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = 2,
+                    Name = new ResourceName() { Value = "TotalLowPriorityCores" },
+                    ResourceType = "lowPriority"
+                }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.Created });
+                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.Contains("Quota reduction is not supported", ex.ToString());
+            }
+        }
+
+        [Fact]
+        public void Test_BatchMLBadLocationPutRequestFailed()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var badLocation = "badLocation";
+            var newQuotaLimit = new CurrentQuotaLimitBase()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = 2000,
+                    Name = new ResourceName() { Value = "TotalLowPriorityCores" },
+                    ResourceType = "lowPriority"
+                }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.BadRequest });
+                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, badLocation, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+                Assert.Contains("BadRequest", ex.ToString());
+            }
+            catch (ExceptionResponseException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Fact]
+        public void Test_BatchMLBadResourceIdPutRequestFailed()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            var badResourceId = "badResId";
+            var newQuotaLimit = new CurrentQuotaLimitBase()
+            {
+                Properties = new QuotaProperties()
+                {
+                    Limit = 2000,
+                    Name = new ResourceName() { Value = badResourceId },
+                    ResourceType = "lowPriority"
+                }
+            };
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                        context,
+                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.BadRequest });
+                    var quotaResponse = reservationsClient.Quota.CreateOrUpdate(QuotaSubscriptionId, BatchMLProviderId, LocationWUS, newQuotaLimit.Properties.Name.Value, newQuotaLimit);
+                }
+            }
+            catch (CloudException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+                Assert.Contains("BadRequest", ex.ToString());
+            }
+            catch (ExceptionResponseException ex)
+            {
+                Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region private Methods
