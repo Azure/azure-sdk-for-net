@@ -117,11 +117,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("appId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appId = null;
+                        continue;
+                    }
                     appId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appInfo = null;
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -137,6 +147,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("log"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        log = null;
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
