@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/autoQuotaIncrease?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvYXV0b1F1b3RhSW5jcmVhc2U/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4e2068e8-1930-465f-98a9-3345f1dbcec6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 03:44:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "b1019649-079b-4ad4-baec-ea09ca86064b"
+        ],
+        "x-ms-correlation-request-id": [
+          "b1019649-079b-4ad4-baec-ea09ca86064b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T034444Z:b1019649-079b-4ad4-baec-ea09ca86064b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "749"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"settings\": {\r\n      \"AutoQuotaIncreaseState\": \"Disabled\"\r\n    },\r\n    \"onSuccess\": {\r\n      \"emailActions\": {\r\n        \"emailAddresses\": [\r\n          {\r\n            \"emailAddress\": \"abc@aaa.org\"\r\n          },\r\n          {\r\n            \"emailAddress\": \"abc@bbb.org\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"onFailure\": {\r\n      \"emailActions\": {\r\n        \"emailAddresses\": [\r\n          {\r\n            \"emailAddress\": \"abc@aaa.org\"\r\n          },\r\n          {\r\n            \"emailAddress\": \"abc@bbb.org\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"supportTicketAction\": {\r\n      \"Severity\": \"Moderate\",\r\n      \"FirstName\": \"FN\",\r\n      \"LastName\": \"LN\",\r\n      \"Country\": \"US\",\r\n      \"PhoneNumber\": \"425-000-0000\",\r\n      \"PrimaryEmailAddress\": \"abc@aaa.org\",\r\n      \"AlternateEmailAddresses\": [\r\n        \"bbb@bbb.org\",\r\n        \"aaa@abc.org\"\r\n      ],\r\n      \"SupportLanguage\": \"es-us\",\r\n      \"PreferredContactMethod\": \"Phone\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/autoQuotaIncrease\",\r\n  \"name\": \"Automatic Quota Increase\",\r\n  \"type\": \"Microsoft.Capacity/autoQuotaIncrease\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

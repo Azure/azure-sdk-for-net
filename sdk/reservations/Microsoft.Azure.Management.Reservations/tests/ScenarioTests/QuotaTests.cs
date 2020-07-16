@@ -1,0 +1,150 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Reservations.Tests.Helpers;
+using Microsoft.Azure.Management.Reservations;
+using Microsoft.Azure.Management.Reservations.Models;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using Xunit;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace Reservations.Tests.ScenarioTests
+{
+    public class QuotaTests : TestBase
+    {
+        // ##############
+        //  SETUP
+        // ##############
+        // 0- For recording data from localhost, change RunMe.cmd as follows:
+        // :Record
+        // set TEST_CONNECTION_STRING=ManagementCertificate=1D13973C7D99A2E6AD10561BB72E6C2661A96D9F;QuotaSubscriptionId=9f6cce51-6baf-4de5-a3c4-6f58b85315b9;BaseUri=http://localhost:443
+
+        // Note: Make sure whatever cert thumprint you used above is installed in you Cert *User* Store
+
+        /// <summary>
+        /// The subscriptionId
+        /// </summary>
+        public static readonly string QuotaSubscriptionId = "9f6cce51-6baf-4de5-a3c4-6f58b85315b9";
+
+        private const string ComputeProviderId = "Microsoft.Compute";
+        private const string LocationWUS = "westus";
+        private const string LocationEUS = "eastus";
+        private const string version = "2019-07-19-preview";
+        private const string SKUName = "standardFSv2Family";
+        private const string QuotaRequestId = "011e1463-c8d7-4a5e-ae35-f15c1f3226b4";
+
+        [Fact]
+        public void Test_ComputeSkusGetRequest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                    context, 
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var quotas = reservationsClient.Quota.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS);
+               
+                Assert.True(quotas.All(x =>
+                    x.Properties.Limit != null &&
+                    x.Properties.Name != null &&
+                    x.Properties.CurrentValue != null
+                ));
+            }
+        }
+
+        [Fact]
+        public void Test_ComputeOneSkusGetRequest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                    context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var quota = reservationsClient.Quota.Get(QuotaSubscriptionId, ComputeProviderId, LocationWUS, SKUName);
+
+                Assert.True(quota.Properties.Limit != null &&
+                    quota.Properties.Name != null &&
+                    quota.Properties.CurrentValue != null
+                );
+            }
+        }
+
+        [Fact]
+        public void Test_ComputeQuotaRequestsHistory()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                    context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var quotaRequests = reservationsClient.QuotaRequestStatus.List(QuotaSubscriptionId, ComputeProviderId, LocationWUS);
+
+                Assert.True(quotaRequests.All(x =>
+                    x.ProvisioningState!= null &&
+                    x.Name != null &&
+                    x.Id != null &&
+                    x.RequestSubmitTime != null 
+                ));
+            }
+        }
+
+        [Fact]
+        public void Test_ComputeQuotaRequestsById()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                    context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var quotaRequest = reservationsClient.QuotaRequestStatus.Get(QuotaSubscriptionId, ComputeProviderId, LocationWUS, QuotaRequestId);
+
+                Assert.True(quotaRequest.ProvisioningState != null &&
+                   quotaRequest.Name != null &&
+                   quotaRequest.Id != null &&
+                    quotaRequest.RequestSubmitTime != null
+                );
+            }
+        }
+
+        [Fact]
+        public void Test_GetAQMProperties()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(
+                    context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var aqiProperties = reservationsClient.AutoQuotaIncrease.GetProperties(QuotaSubscriptionId);
+
+                Assert.True(aqiProperties.Id != null &&
+                   aqiProperties.Name != null &&
+                   aqiProperties.Settings.AutoQuotaIncreaseState!= null 
+                );
+            }
+        }
+        private static string GetSessionsDirectoryPath()
+        {
+            System.Type something = typeof(Reservations.Tests.ScenarioTests.ReservationTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+        }
+    }
+}
