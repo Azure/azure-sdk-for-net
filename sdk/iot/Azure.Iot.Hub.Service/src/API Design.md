@@ -70,8 +70,50 @@ APIs for using IotHub v2 jobs
 </details>
 
 <details><summary><b>Messages</b></summary>
-Feedback messages, sending cloud to device messages (missing from current swagger), and purging cloud to device message queue
+Ssending cloud to device messages, receiving feedback messages, and purging cloud to device message queue
+
 ```csharp
+public class CloudToDeviceMessages
+{
+    /// <summary>
+    /// Send cloud to device message for a device.
+    /// </summary>
+    /// <returns>The Http response.</returns>
+    public virtual async Task<Response> SendMessageAsync(CancellationToken cancellationToken = default) { }
+
+    /// <summary>
+    /// Retrieve feedback notification for cloud to device messages.
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>TODO: Swagger defines the response as the Http response returned from the service (and not the feedback message).</returns>
+    public virtual async Task<Response> GetMessageFeedbackAsync(CancellationToken cancellationToken = default) { }
+
+    /// <summary>
+    /// Complete a cloud to device feedback message. A completed message is deleted from the service's feedback queue.
+    /// </summary>
+    /// <param name="lockToken">The lock token obtained when the cloud to device message was received, and provided to resolve race conditions when completing a feedback message.
+    /// TODO: lockToken is from the C2D message received on device or from message feedback received on service client?</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The Http response.</returns>
+    public virtual async Task<Response> CompleteMessageFeedbackAsync(string lockToken, CancellationToken cancellationToken = default) { }
+
+    /// <summary>
+    /// Abandon a cloud to device feedback message. An abandoned message is enqueued back to the service's feedback queue.
+    /// </summary>
+    /// <param name="lockToken">The lock token obtained when the cloud to device message was received, and provided to resolve race conditions when abandoning a feedback message.
+    /// TODO: lockToken is from the C2D message received on device or from message feedback received on service client?</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The Http response.</returns>
+    public virtual async Task<Response> AbandonMessageFeedbackAsync(string lockToken, CancellationToken cancellationToken = default) { }
+
+    /// <summary>
+    /// Purge the cloud to device message queue for a device.
+    /// </summary>
+    /// <param name="deviceId">The unique identifier of the device.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The result of the cloud to device message queue purge operation.</returns>
+    public virtual async Task<Response<PurgeMessageQueueResult>> PurgeMessageQueueAsync(string deviceId, CancellationToken cancellationToken = default) { }
+}
 ```
 </details>
 
