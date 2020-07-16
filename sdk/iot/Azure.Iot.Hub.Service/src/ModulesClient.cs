@@ -18,7 +18,7 @@ namespace Azure.Iot.Hub.Service
     public class ModulesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
-        private const string HubModuleQuery = "select * from modules";
+        private const string HubModuleQuery = "select * from devices.modules";
 
         private readonly RegistryManagerRestClient _registryManagerClient;
         private readonly TwinRestClient _twinClient;
