@@ -1,0 +1,266 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvc2VydmljZUxpbWl0cy9Ub3RhbExvd1ByaW9yaXR5Q29yZXM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"TotalLowPriorityCores\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "66bac39a-a615-4b77-92dc-fabc60a2c8d5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "143"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:35:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "8ef665e8-d446-42bd-98f3-61fe895038f0"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ef665e8-d446-42bd-98f3-61fe895038f0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T083549Z:8ef665e8-d446-42bd-98f3-61fe895038f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "595"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"requestSubmitTime\": \"2020-07-16T08:35:48.6207487Z\",\r\n    \"Message\": null,\r\n    \"provisioningState\": \"InProgress\",\r\n    \"currentValue\": 0,\r\n    \"unit\": null,\r\n    \"quotaPeriod\": null,\r\n    \"properties\": null,\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"totallowprioritycores\",\r\n      \"localizedValue\": null\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  },\r\n  \"id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"name\": \"f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"type\": \"Microsoft.Capacity/serviceLimitsRequests\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy9mNTNlNDM3YS01MWQwLTQ5ZjgtYWJiZS1kOTg5MmNkN2M0YWM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:36:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com:443/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "edd51dcc-b27c-4cac-823e-bd1d9881dd35"
+        ],
+        "x-ms-correlation-request-id": [
+          "edd51dcc-b27c-4cac-823e-bd1d9881dd35"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T083619Z:edd51dcc-b27c-4cac-823e-bd1d9881dd35"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "336"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"Name\": \"f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"status\": \"InProgress\",\r\n  \"StartTime\": \"2020-07-16T08:35:48.6363743Z\",\r\n  \"error\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvb3BlcmF0aW9uc1N0YXR1cy9mNTNlNDM3YS01MWQwLTQ5ZjgtYWJiZS1kOTg5MmNkN2M0YWM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:36:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimitsRequests/f53e437a-51d0-49f8-abbe-d9892cd7c4ac?api-version=2019-07-19-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "93601f10-4e9a-4905-b73b-5ce95d01acf4"
+        ],
+        "x-ms-correlation-request-id": [
+          "93601f10-4e9a-4905-b73b-5ce95d01acf4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T083650Z:93601f10-4e9a-4905-b73b-5ce95d01acf4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "335"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/operationsStatus/f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"Name\": \"f53e437a-51d0-49f8-abbe-d9892cd7c4ac\",\r\n  \"status\": \"Succeeded\",\r\n  \"StartTime\": \"2020-07-16T08:35:48.6363743Z\",\r\n  \"error\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores?api-version=2019-07-19-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzb3VyY2VQcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ1NlcnZpY2VzL2xvY2F0aW9ucy93ZXN0dXMvc2VydmljZUxpbWl0cy9Ub3RhbExvd1ByaW9yaXR5Q29yZXM/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2020 08:36:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "96c93e0e-f769-444b-b58b-0b7f8cd39fd7"
+        ],
+        "x-ms-correlation-request-id": [
+          "96c93e0e-f769-444b-b58b-0b7f8cd39fd7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200716T083650Z:96c93e0e-f769-444b-b58b-0b7f8cd39fd7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "492"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/resourceProviders/Microsoft.MachineLearningServices/locations/westus/serviceLimits/TotalLowPriorityCores\",\r\n  \"Type\": \"Microsoft.Capacity/ServiceLimits\",\r\n  \"name\": \"TotalLowPriorityCores\",\r\n  \"properties\": {\r\n    \"currentValue\": 0,\r\n    \"unit\": \"Count\",\r\n    \"quotaPeriod\": null,\r\n    \"properties\": null,\r\n    \"limit\": 2,\r\n    \"name\": {\r\n      \"value\": \"TotalLowPriorityCores\",\r\n      \"localizedValue\": \"Total Cluster Low Priority Regional vCPUs\"\r\n    },\r\n    \"resourceType\": \"lowPriority\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9f6cce51-6baf-4de5-a3c4-6f58b85315b9"
+  }
+}

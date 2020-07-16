@@ -3,11 +3,11 @@
     {
       "RequestUri": "/subscriptions/9f6cce51-6baf-4de5-a3c4-6f58b85315b9/providers/Microsoft.Capacity/autoQuotaIncrease?api-version=2019-07-19-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWY2Y2NlNTEtNmJhZi00ZGU1LWEzYzQtNmY1OGI4NTMxNWI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvYXV0b1F1b3RhSW5jcmVhc2U/YXBpLXZlcnNpb249MjAxOS0wNy0xOS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"settings\": {\r\n      \"autoQuotaIncreaseState\": \"Disabled\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "129998be-323e-425a-86df-0a70bb50fb20"
+          "5d98ea31-b390-4005-a3fa-3fb3d2061f62"
         ],
         "accept-language": [
           "en-US"
@@ -17,6 +17,12 @@
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
           "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.14.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Jul 2020 08:34:38 GMT"
+          "Thu, 16 Jul 2020 08:36:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -35,17 +41,17 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "9"
         ],
         "x-ms-request-id": [
-          "a9e254a2-0c03-4e54-a69e-f3ef1ba9b14f"
+          "0c5a8c27-2429-4caf-824b-cee6069a5909"
         ],
         "x-ms-correlation-request-id": [
-          "a9e254a2-0c03-4e54-a69e-f3ef1ba9b14f"
+          "0c5a8c27-2429-4caf-824b-cee6069a5909"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200716T083438Z:a9e254a2-0c03-4e54-a69e-f3ef1ba9b14f"
+          "WESTUS2:20200716T083654Z:0c5a8c27-2429-4caf-824b-cee6069a5909"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
