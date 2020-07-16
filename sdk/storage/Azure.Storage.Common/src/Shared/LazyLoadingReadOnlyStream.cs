@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
@@ -48,6 +49,11 @@ namespace Azure.Storage
         private int _bufferLength;
 
         /// <summary>
+        /// If we are allowing the blob to be modifed while we read it.
+        /// </summary>
+        private bool _allowBlobModifications;
+
+        /// <summary>
         /// Request conditions to send on the download requests.
         /// </summary>
         private TRequestConditions _requestConditions;
@@ -62,6 +68,9 @@ namespace Azure.Storage
         /// </summary>
         private readonly Func<ETag?, TRequestConditions> _createRequestConditionsFunc;
 
+        /// <summary>
+        /// Function to get properties.
+        /// </summary>
         private readonly Func<bool, CancellationToken, Task<Response<TProperties>>> _getPropertiesInternalFunc;
 
         public LazyLoadingReadOnlyStream(
@@ -82,6 +91,7 @@ namespace Azure.Storage
             _bufferLength = 0;
             _requestConditions = requestConditions;
             _length = -1;
+            _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -108,13 +118,21 @@ namespace Azure.Storage
 
             if (_position == _length)
             {
-                // In case the blob grow since our last download call.
-                _length = await GetBlobLengthInternal(async, cancellationToken).ConfigureAwait(false);
+                if (_allowBlobModifications)
+                {
+                    // In case the blob grow since our last download call.
+                    _length = await GetBlobLengthInternal(async, cancellationToken).ConfigureAwait(false);
 
-                if (_position == _length)
+                    if (_position == _length)
+                    {
+                        return 0;
+                    }
+                }
+                else
                 {
                     return 0;
                 }
+
             }
 
             if (_bufferPosition == 0 || _bufferPosition == _buffer.Length)
@@ -172,8 +190,8 @@ namespace Azure.Storage
             _bufferLength = copiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
 
-            // Set _requestConditions If-Match.
-            if (_requestConditions == null && _createRequestConditionsFunc != null)
+            // Set _requestConditions If-Match if we are not allowing the blob to be modified.
+            if (!_allowBlobModifications)
             {
                 _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
             }
@@ -224,7 +242,7 @@ namespace Azure.Storage
 
             if (lengthString == null)
             {
-                throw new ArgumentException("Content-Range header is mssing on get properties response.");
+                throw new ArgumentException($"{HttpHeader.Names.ContentLength} header is mssing on get properties response.");
             }
 
             return Convert.ToInt64(lengthString, CultureInfo.InvariantCulture);

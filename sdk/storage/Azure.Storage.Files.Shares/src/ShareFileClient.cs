@@ -1885,16 +1885,10 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => allowfileModifications
-                ? OpenRead(
+                => OpenRead(
                     position,
                     bufferSize,
-                    new ShareFileRequestConditions(),
-                    cancellationToken)
-                : OpenRead(
-                    position,
-                    bufferSize,
-                    null,
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
                     cancellationToken);
 
         /// <summary>
@@ -1965,17 +1959,11 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await (allowfileModifications
-                ? OpenReadAsync(
+                => await OpenReadAsync(
                     position,
                     bufferSize,
-                    new ShareFileRequestConditions(),
-                    cancellationToken)
-                : OpenReadAsync(
-                    position,
-                    bufferSize,
-                    null,
-                    cancellationToken)).ConfigureAwait(false);
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
+                    cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -2010,21 +1998,15 @@ namespace Azure.Storage.Files.Shares
             long position,
             int? bufferSize,
             ShareFileRequestConditions conditions,
+#pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
+#pragma warning restore CA1801
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
             try
             {
                 scope.Start();
-
-                // Have to use cancellationToken in body.
-                Debug.Assert(cancellationToken != null || cancellationToken == null);
-
-                // Have to use async in body.
-#pragma warning disable AZC0109 // Misuse of 'async' parameter.
-                Debug.Assert(async || !async);
-#pragma warning restore AZC0109 // Misuse of 'async' parameter.
 
                 return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
                     async (HttpRange range,
