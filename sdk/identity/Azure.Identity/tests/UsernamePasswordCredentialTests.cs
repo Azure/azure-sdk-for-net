@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
 
-            var credential = InstrumentClient(new UsernamePasswordCredential(username, password, CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new UsernamePasswordCredential(username, password, default, default, default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
