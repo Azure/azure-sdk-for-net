@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Internal.Avro;
 using Azure.Storage.Blobs.Models;
+using System.Buffers;
 
 namespace Azure.Storage.Blobs
 {
@@ -58,7 +59,6 @@ namespace Azure.Storage.Blobs
         {
             _avroStream = avroStream;
             _avroReader = new AvroReader(_avroStream);
-            _buffer = new byte[4 * Constants.MB];
             _bufferOffset = 0;
             _bufferLength = 0;
             _progressHandler = progressHandler;
@@ -131,6 +131,14 @@ namespace Azure.Storage.Blobs
                     case Constants.QuickQuery.DataRecordName:
                         record.TryGetValue(Constants.QuickQuery.Data, out object byteObject);
                         byte[] bytes = (byte[])byteObject;
+
+                        if (_buffer != null)
+                        {
+                            ArrayPool<byte>.Shared.Return(_buffer);
+                        }
+
+                        _buffer = ArrayPool<byte>.Shared.Rent(bytes.Length);
+
                         Array.Copy(
                             sourceArray: bytes,
                             sourceIndex: 0,
@@ -260,6 +268,11 @@ namespace Azure.Storage.Blobs
         protected override void Dispose(bool disposing)
         {
             _avroStream.Dispose();
+            if (_buffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(_buffer);
+                _buffer = null;
+            }
         }
     }
 }

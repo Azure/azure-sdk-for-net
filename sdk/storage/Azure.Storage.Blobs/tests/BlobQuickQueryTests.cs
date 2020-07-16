@@ -126,14 +126,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("Don't want to record 120 MB of data.")]
+        //[Ignore("Don't want to record 250 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task QueryAsync_Large()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            Stream stream = CreateDataStream(120 * Constants.MB);
+            Stream stream = CreateDataStream(250 * Constants.MB);
             await blockBlobClient.UploadAsync(stream);
             string query = @"SELECT * from BlobStorage";
 
@@ -157,6 +157,35 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // Check we got back the same content that we uploaded.
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public async Task Query_Big()
+        {
+            string bloburi = " https://weiestesteuap.blob.core.windows.net/weiqatest/testcsv.csv?sv=2019-12-12&se=2020-12-29T16%3A00%3A00Z&sr=b&sp=r&sig=1O6qMxBWlGd7I6s3j7KxH%2FB37lMlxLK%2FNR9uPieSywI%3D";
+            BlockBlobClient blob = new BlockBlobClient(new Uri(bloburi), new BlobClientOptions());
+
+            // prepare query Option
+            IProgress<long> progressHandler = new Progress<long>((finishedBytes) =>
+            {
+                Console.WriteLine(finishedBytes);
+            });
+            BlobQueryOptions queryOption = new BlobQueryOptions
+            {
+                InputTextConfiguration = new BlobQueryCsvTextConfiguration() { HasHeaders = true },
+                OutputTextConfiguration = new BlobQueryCsvTextConfiguration() { HasHeaders = true },
+                ProgressHandler = progressHandler
+            };
+
+            string query = "SELECT * FROM BlobStorage WHERE _1 LIKE '1%%'";
+
+            Response<BlobDownloadInfo> response = await blob.QueryAsync(query, queryOption);
+
+            var reader = response.Value.Content;
+            FileStream fs = File.Create(@"C:\temp\QA_result.csv");
+            await reader.CopyToAsync(fs);
+            fs.Close();
+            reader.Close();
         }
 
         [Test]
