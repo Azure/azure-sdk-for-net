@@ -6,8 +6,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Azure.Core
 {
@@ -22,7 +22,6 @@ namespace Azure.Core
         private static readonly Encoding UTF8NoBOM = new UTF8Encoding(false, true);
 
         private readonly JsonSerializer _serializer;
-        private readonly NamingStrategy? _namingStrategy;
 
         /// <summary>
         /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/> using <see cref="JsonConvert.DefaultSettings"/>.
@@ -36,19 +35,11 @@ namespace Azure.Core
         /// </summary>
         /// <param name="useDefaultSettings">Whether to use <see cref="JsonConvert.DefaultSettings"/> in combination with given <paramref name="settings"/>.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> instance to use when serializing/deserializing.</param>
-        /// <param name="namingStrategy">
-        /// Optional <see cref="NamingStrategy"/> to use for property names.
-        /// If null and the created <see cref="JsonSerializer.ContractResolver"/> is a <see cref="DefaultContractResolver"/>,
-        /// the <see cref="DefaultContractResolver.NamingStrategy"/> will be used.
-        /// </param>
-        public NewtonsoftJsonObjectSerializer(bool useDefaultSettings, JsonSerializerSettings? settings = null, NamingStrategy? namingStrategy = null)
+        public NewtonsoftJsonObjectSerializer(bool useDefaultSettings, JsonSerializerSettings? settings = null)
         {
             _serializer = useDefaultSettings ?
                 JsonSerializer.CreateDefault(settings) :
                 JsonSerializer.Create(settings);
-
-            _namingStrategy = namingStrategy ??
-                (_serializer.ContractResolver is DefaultContractResolver resolver ? resolver.NamingStrategy : null);
         }
 
         /// <inheritdoc/>
@@ -57,7 +48,7 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(type, nameof(type));
 
-            throw new NotImplementedException();
+            return new NewtonsoftJsonSerializableTypeInfo(_serializer.ContractResolver.ResolveContract(type));
         }
 
         /// <inheritdoc />

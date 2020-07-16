@@ -18,6 +18,11 @@ namespace Azure.Core
         public abstract Type Type { get; }
 
         /// <summary>
+        /// Gets the collection of properties to be serialized.
+        /// </summary>
+        public abstract IReadOnlyCollection<SerializablePropertyInfo> Properties { get; }
+
+        /// <summary>
         /// Gets a value indicating whether the <see cref="Type"/> represents a serialization primitive.
         /// </summary>
         public virtual bool IsPrimitive => Type.IsPrimitive;
@@ -38,11 +43,6 @@ namespace Azure.Core
         /// Gets all attributes declared on the type or inherited from base classes.
         /// </summary>
         /// <param name="inherit">Whether to return all attributes inherited from any base classes.</param>
-        public abstract IReadOnlyCollection<Attribute> GetAttributes(bool inherit);
-
-        /// <summary>
-        /// Gets the collection of properties to be serialized.
-        /// </summary>
-        public IReadOnlyCollection<SerializablePropertyInfo> Properties { get; } = new List<SerializablePropertyInfo>();
+        public virtual IReadOnlyCollection<object> GetAttributes(bool inherit) => Type.GetCustomAttributes(inherit);
     }
 }

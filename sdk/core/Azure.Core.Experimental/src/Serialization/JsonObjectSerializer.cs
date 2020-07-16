@@ -38,7 +38,7 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(type, nameof(type));
 
-            throw new NotImplementedException();
+            return new JsonSerializableTypeInfo(type, _options);
         }
 
         /// <inheritdoc />

@@ -30,12 +30,12 @@ namespace Azure.Core
         /// Gets a value indicating whether the property should be ignored.
         /// TODO: Consider whether ignored properties should just not be returned.
         /// </summary>
-        public bool ShouldIgnore { get; }
+        public abstract bool ShouldIgnore { get; }
 
         /// <summary>
         /// Gets all attributes declared on the property or inherited from base classes.
         /// </summary>
         /// <param name="inherit">Whether to return all attributes inherited from any base classes.</param>
-        public abstract IReadOnlyCollection<Attribute> GetAttributes(bool inherit);
+        public abstract IReadOnlyCollection<object> GetAttributes(bool inherit);
     }
 }

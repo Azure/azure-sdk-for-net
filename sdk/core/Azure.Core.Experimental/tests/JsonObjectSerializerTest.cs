@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -61,10 +63,68 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, model.B);
         }
 
+        [Test]
+        public void GetTypeInfo([Values] bool camelCase)
+        {
+            string Name(string name) => camelCase ? JsonNamingPolicy.CamelCase.ConvertName(name) : name;
+
+            JsonObjectSerializer serializer = new JsonObjectSerializer(new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = camelCase ? JsonNamingPolicy.CamelCase : null,
+            });
+
+            SerializableTypeInfo typeInfo = serializer.GetTypeInfo(typeof(ExtendedModel));
+            Assert.AreEqual(6, typeInfo.Properties.Count);
+
+            SerializablePropertyInfo a = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.A));
+            Assert.AreEqual(typeof(string), a.PropertyType);
+            Assert.AreEqual(Name("A"), a.SerializedName);
+            Assert.IsFalse(a.ShouldIgnore);
+
+            SerializablePropertyInfo b = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.B));
+            Assert.AreEqual(typeof(int), b.PropertyType);
+            Assert.AreEqual(Name("B"), b.SerializedName);
+            Assert.IsFalse(b.ShouldIgnore);
+
+            SerializablePropertyInfo c = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.C));
+            Assert.AreEqual(typeof(int), c.PropertyType);
+            Assert.AreEqual(Name("C"), c.SerializedName);
+            Assert.IsTrue(c.ShouldIgnore);
+
+            SerializablePropertyInfo d = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.D));
+            Assert.AreEqual(typeof(int), d.PropertyType);
+            Assert.AreEqual(Name("D"), d.SerializedName);
+            Assert.IsFalse(d.ShouldIgnore);
+
+            SerializablePropertyInfo e = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.NotE));
+            Assert.AreEqual(typeof(int), e.PropertyType);
+            Assert.AreEqual("e", e.SerializedName);
+            Assert.IsFalse(e.ShouldIgnore);
+
+            SerializablePropertyInfo f = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.F));
+            Assert.AreEqual(typeof(int), f.PropertyType);
+            Assert.AreEqual(Name("F"), f.SerializedName);
+            Assert.IsFalse(f.ShouldIgnore);
+        }
+
         public class Model
         {
             public string A { get; set; }
+
             public int B { get; set; }
+
+            [JsonIgnore]
+            public int C { get; set; }
+        }
+
+        public class ExtendedModel : Model
+        {
+            public int D { get; set; }
+
+            [JsonPropertyName("e")]
+            public int NotE { get; set; }
+
+            public int F { get; private set; }
         }
     }
 }
