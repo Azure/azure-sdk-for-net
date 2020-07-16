@@ -77,14 +77,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRouteCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
-                        }
+                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +103,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRouteCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
-                        }
+                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,14 +148,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRoute value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRoute.DeserializeEventRoute(document.RootElement);
-                        }
+                        value = EventRoute.DeserializeEventRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,14 +179,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRoute value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRoute.DeserializeEventRoute(document.RootElement);
-                        }
+                        value = EventRoute.DeserializeEventRoute(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -396,14 +368,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRouteCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
-                        }
+                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,14 +400,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         EventRouteCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
-                        }
+                        value = EventRouteCollection.DeserializeEventRouteCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

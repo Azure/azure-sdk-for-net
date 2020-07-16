@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,14 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +179,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,14 +215,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResource.DeserializeDigitalTwinsEndpointResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -471,14 +443,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -514,14 +479,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
