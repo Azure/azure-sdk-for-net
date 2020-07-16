@@ -132,12 +132,17 @@ namespace Azure.Storage.Blobs
                         record.TryGetValue(Constants.QuickQuery.Data, out object byteObject);
                         byte[] bytes = (byte[])byteObject;
 
-                        if (_buffer != null)
+                        // Return the buffer if it is not null and not big enough.
+                        if (_buffer != null && _buffer.Length < bytes.Length)
                         {
-                            ArrayPool<byte>.Shared.Return(_buffer);
+                            ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
                         }
 
-                        _buffer = ArrayPool<byte>.Shared.Rent(bytes.Length);
+                        // Rent a new buffer if it is null or not big enough.
+                        if (_buffer == null || _buffer.Length < bytes.Length)
+                        {
+                            _buffer = ArrayPool<byte>.Shared.Rent(Math.Max(4 * Constants.MB, bytes.Length));
+                        }
 
                         Array.Copy(
                             sourceArray: bytes,
@@ -270,7 +275,7 @@ namespace Azure.Storage.Blobs
             _avroStream.Dispose();
             if (_buffer != null)
             {
-                ArrayPool<byte>.Shared.Return(_buffer);
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
                 _buffer = null;
             }
         }
