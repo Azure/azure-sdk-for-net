@@ -446,19 +446,15 @@ namespace Azure.Storage.Test.Shared
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
-        private static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
+        public static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
         {
-            switch (serviceVersion)
+            return serviceVersion switch
             {
-                case BlobClientOptions.ServiceVersion.V2019_02_02:
-                    return "2019-02-02";
-                case BlobClientOptions.ServiceVersion.V2019_07_07:
-                    return "2019-07-07";
-                case BlobClientOptions.ServiceVersion.V2019_12_12:
-                    return "2019-12-12";
-                default:
-                    throw new ArgumentException("Invalid service version");
-            }
+                BlobClientOptions.ServiceVersion.V2019_02_02 => "2019-02-02",
+                BlobClientOptions.ServiceVersion.V2019_07_07 => "2019-07-07",
+                BlobClientOptions.ServiceVersion.V2019_12_12 => "2019-12-12",
+                _ => throw new ArgumentException("Invalid service version"),
+            };
         }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)

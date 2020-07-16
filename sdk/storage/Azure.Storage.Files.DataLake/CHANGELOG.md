@@ -2,6 +2,7 @@
 
 ## 12.3.0-preview.2 (Unreleased)
 - Fixed bug where DataLakeUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
+- Updated DataLakeSasBuilder to correctly order raw string permissions and make the permissions lowercase.
 
 ## 12.3.0-preview.1 (2020-07-03)
 - Added support for service version 2019-12-12.
