@@ -223,10 +223,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (callUpdateVM)
             {
-                VirtualMachineUpdate updateParams = new VirtualMachineUpdate()
-                {
-                    Tags = inputVM.Tags
-                };
+                VirtualMachineUpdate updateParams = new VirtualMachineUpdate();
+                updateParams.Tags.InitializeFrom(inputVM.Tags);
 
                 string updateKey = "UpdateTag";
                 updateParams.Tags.Add(updateKey, "UpdateTagValue");

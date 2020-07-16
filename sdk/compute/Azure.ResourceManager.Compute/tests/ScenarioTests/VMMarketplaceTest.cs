@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             Action<VirtualMachine> useVMMImage = vm =>
             {
-                vm.StorageProfile.DataDisks = null;
+                vm.StorageProfile.DataDisks.Clear();
                 vm.StorageProfile.ImageReference = new ImageReference
                 {
                     Publisher = vmmPublisherName,

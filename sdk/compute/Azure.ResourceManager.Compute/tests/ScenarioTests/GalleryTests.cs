@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
-                    TargetRegions = new List<TargetRegion> {
+                    TargetRegions = {
                         new TargetRegion(LocationEastUs2) {
                             RegionalReplicaCount = 1,
                             StorageAccountType = StorageAccountType.StandardLRS
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute.Tests
             inputVM = returnTwoVM.Item2;
             Image imageInput = new Image(m_location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                 {
                     {"RG", "rg"},
                     {"testTag", "1"},
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
-                    TargetRegions = new List<TargetRegion> {
+                    TargetRegions = {
                         new TargetRegion(DefaultLocation){ RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = Recording.UtcNow.AddDays(10)

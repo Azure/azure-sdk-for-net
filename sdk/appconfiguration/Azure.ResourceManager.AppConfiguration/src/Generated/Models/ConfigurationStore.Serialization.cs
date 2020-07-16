@@ -17,31 +17,31 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,27 +54,27 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (CreationDate != null)
+            if (Optional.IsDefined(CreationDate))
             {
                 writer.WritePropertyName("creationDate");
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint");
                 writer.WriteStringValue(Endpoint);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (PrivateEndpointConnections != null)
+            if (Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections");
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -95,27 +95,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static ConfigurationStore DeserializeConfigurationStore(JsonElement element)
         {
-            ResourceIdentity identity = default;
+            Optional<ResourceIdentity> identity = default;
             Sku sku = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            ProvisioningState? provisioningState = default;
-            DateTimeOffset? creationDate = default;
-            string endpoint = default;
-            EncryptionProperties encryption = default;
-            IList<PrivateEndpointConnectionReference> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<string> endpoint = default;
+            Optional<EncryptionProperties> encryption = default;
+            Optional<IList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
@@ -126,28 +122,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -158,10 +142,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -183,46 +163,26 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("endpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             endpoint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<PrivateEndpointConnectionReference> array = new List<PrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -240,10 +200,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
@@ -251,7 +207,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationStore(id, name, type, location, tags, identity, sku, provisioningState, creationDate, endpoint, encryption, privateEndpointConnections, publicNetworkAccess);
+            return new ConfigurationStore(id.HasValue ? id.Value : null, name.HasValue ? name.Value : null, type.HasValue ? type.Value : null, location, new ChangeTrackingDictionary<string, string>(tags), identity.HasValue ? identity.Value : null, sku, provisioningState.HasValue ? provisioningState.Value : (ProvisioningState?)null, creationDate.HasValue ? creationDate.Value : (DateTimeOffset?)null, endpoint.HasValue ? endpoint.Value : null, encryption.HasValue ? encryption.Value : null, new ChangeTrackingList<PrivateEndpointConnectionReference>(privateEndpointConnections), publicNetworkAccess.HasValue ? publicNetworkAccess.Value : (PublicNetworkAccess?)null);
         }
     }
 }

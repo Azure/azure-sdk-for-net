@@ -234,19 +234,19 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
             inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             var virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0", "1" });
-            var virtualMachineScaleSetInstanceID = new List<string>() { "0", "1" };
+
             var virtualMachineScaleSetRequ = new VirtualMachineScaleSetVMInstanceRequiredIDs(new List<string>() { "0", "1" });
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartStartAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs));
             virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs(new List<string>() { "0" });
             VirtualMachineScaleSetReimageParameters virtualMachineScaleSetReimageParameters = new VirtualMachineScaleSetReimageParameters
             {
-                InstanceIds = virtualMachineScaleSetInstanceID
+                InstanceIds = { "0", "1" }
             };
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartReimageAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetReimageParameters));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartReimageAllAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartPowerOffAsync(rgName, vmScaleSet.Name, null, virtualMachineScaleSetInstanceIDs));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartUpdateInstancesAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetRequ));
-            virtualMachineScaleSetInstanceID = new List<string>() { "1" };
+
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartRestartAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeallocateAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteInstancesAsync(rgName, vmScaleSet.Name, virtualMachineScaleSetRequ));

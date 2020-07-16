@@ -316,8 +316,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                {
+                Extensions = {
                     GetTestVMSSVMExtension(),
                 }
             };

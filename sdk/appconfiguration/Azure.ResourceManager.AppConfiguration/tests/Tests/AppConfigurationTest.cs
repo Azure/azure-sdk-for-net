@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = "eastus",
-                AddressSpace = new AddressSpace()
+                AddressSpace =
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
+                DhcpOptions =
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
+                Subnets = { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
             };
             var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 new Management.Network.Models.PrivateEndpoint()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
+                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
                                                                        configurationCreateResult.Value.Id,new List<string>{"configurationStores"},"Please approve my connection",null)},
                     Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 }));
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             //update ConfigurationStores_Update
             var configurationStoresBeginUpdateResult = await WaitForCompletionAsync(await ConfigurationStoresOperations.StartUpdateAsync(resourceGroupName, configurationStoreName, new ConfigurationStoreUpdateParameters()
             {
-                Tags = new Dictionary<string, string> { { "category", "Marketing" } },
+                Tags = { { "category", "Marketing" } },
                 Sku = new Sku("Standard")
             }));
             Assert.AreEqual(configurationStoresBeginUpdateResult.Value.ProvisioningState.ToString(), "Succeeded");

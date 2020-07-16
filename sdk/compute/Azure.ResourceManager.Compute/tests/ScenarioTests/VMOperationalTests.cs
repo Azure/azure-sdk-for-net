@@ -112,15 +112,14 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var runCommandImput = new RunCommandInput("RunPowerShellScript")
             {
-                Script = new List<string>() {
+                Script = {
                             "param(",
                             "    [string]$arg1,",
                             "    [string]$arg2",
                             ")",
                             "echo This is a sample script with parameters $arg1 $arg2"
                         },
-                Parameters = new List<RunCommandInputParameter>()
-                        {
+                Parameters = {
                             new RunCommandInputParameter("arg1","value1"),
                             new RunCommandInputParameter("arg2","value2"),
                         }

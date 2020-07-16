@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var inputAvailabilitySetName = Recording.GenerateAssetName("invalidfdud");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var inputAvailabilitySetName = Recording.GenerateAssetName("asdefaultvalues");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -180,10 +180,8 @@ namespace Azure.ResourceManager.Compute.Tests
             ValidateAvailabilitySet(inputAvailabilitySet, listResponseList.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
-            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate()
-            {
-                Tags = inputAvailabilitySet.Tags
-            };
+            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate();
+            updateParams.Tags.InitializeFrom(inputAvailabilitySet.Tags);
 
             string updateKey = "UpdateTag";
             updateParams.Tags.Add(updateKey, "updateValue");
@@ -208,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string inputAvailabilitySetName = Recording.GenerateAssetName("asnondefault");
             var inputAvailabilitySet = new AvailabilitySet(TestEnvironment.Location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
@@ -282,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Tests
             //{
                 AvailabilitySet inputAvailabilitySet1 = new AvailabilitySet(TestEnvironment.Location)
                 {
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                     {
                         {"RG1", "rg1"},
                         {"testTag", "1"},
@@ -297,12 +295,12 @@ namespace Azure.ResourceManager.Compute.Tests
                     resourceGroup2Name,
                     new ResourceGroup(TestEnvironment.Location)
                     {
-                        Tags = new Dictionary<string, string>() { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
+                        Tags ={ { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
                     })).Value;
 
                 AvailabilitySet inputAvailabilitySet2 = new AvailabilitySet(TestEnvironment.Location)
                 {
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                     {
                         {"RG2", "rg2"},
                         {"testTag", "2"},
@@ -321,12 +319,12 @@ namespace Azure.ResourceManager.Compute.Tests
                     if (availabilitySet.Name == availabilitySet1Name)
                     {
                         Assert.AreEqual(inputAvailabilitySet1.Location, availabilitySet.Location);
-                        Assert.Null(availabilitySet.VirtualMachines);
+                        Assert.IsEmpty(availabilitySet.VirtualMachines);
                     }
                     else if (availabilitySet.Name == availabilitySet2Name)
                     {
                         Assert.AreEqual(inputAvailabilitySet2.Location, availabilitySet.Location);
-                        Assert.Null(availabilitySet.VirtualMachines);
+                        Assert.IsEmpty(availabilitySet.VirtualMachines);
                     }
                 }
 
@@ -366,7 +364,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 resourceGroup1Name,
                 new ResourceGroup(TestEnvironment.Location)
                 {
-                    Tags = new Dictionary<string, string>() { { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
+                    Tags ={ { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });
         }
     }

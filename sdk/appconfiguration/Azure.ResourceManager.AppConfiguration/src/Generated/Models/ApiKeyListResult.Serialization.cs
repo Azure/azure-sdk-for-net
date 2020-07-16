@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static ApiKeyListResult DeserializeApiKeyListResult(JsonElement element)
         {
-            IReadOnlyList<ApiKey> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ApiKey>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ApiKey> array = new List<ApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,15 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApiKeyListResult(value, nextLink);
+            return new ApiKeyListResult(new ChangeTrackingList<ApiKey>(value), nextLink.HasValue ? nextLink.Value : null);
         }
     }
 }

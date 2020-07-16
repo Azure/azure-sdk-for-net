@@ -16,85 +16,53 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static KeyValue DeserializeKeyValue(JsonElement element)
         {
-            string key = default;
-            string label = default;
-            string value = default;
-            string contentType = default;
-            string eTag = default;
-            DateTimeOffset? lastModified = default;
-            bool? locked = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            Optional<string> key = default;
+            Optional<string> label = default;
+            Optional<string> value = default;
+            Optional<string> contentType = default;
+            Optional<string> eTag = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<bool> locked = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     key = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     label = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("locked"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     locked = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -111,7 +79,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new KeyValue(key, label, value, contentType, eTag, lastModified, locked, tags);
+            return new KeyValue(key.HasValue ? key.Value : null, label.HasValue ? label.Value : null, value.HasValue ? value.Value : null, contentType.HasValue ? contentType.Value : null, eTag.HasValue ? eTag.Value : null, lastModified.HasValue ? lastModified.Value : (DateTimeOffset?)null, locked.HasValue ? locked.Value : (bool?)null, new ChangeTrackingDictionary<string, string>(tags));
         }
     }
 }

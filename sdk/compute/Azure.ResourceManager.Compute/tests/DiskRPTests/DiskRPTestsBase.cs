@@ -81,8 +81,10 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             if (zones == null)
             {
                 const string tagKey = "tageKey";
-                var updatedisk = new DiskUpdate();
-                updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+                var updatedisk = new DiskUpdate()
+                {
+                    Tags = { { tagKey, "tagvalue" } }
+                };
                 diskOut = await WaitForCompletionAsync(await DisksOperations.StartUpdateAsync(rgName, diskName, updatedisk));
                 Validate(disk, diskOut, DiskRPLocation);
             }
@@ -151,10 +153,13 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             snapshotOut = (await SnapshotsOperations.GetAsync(rgName, snapshotName)).Value;
             Validate(snapshot, snapshotOut, incremental: incremental);
 
-            // Patch
-            var updatesnapshot = new SnapshotUpdate();
             const string tagKey = "tageKey";
-            updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+            // Patch
+            var updatesnapshot = new SnapshotUpdate()
+            {
+                Tags = {{tagKey, "tagvalue"}}
+            };
+
             snapshotOut = await WaitForCompletionAsync(await SnapshotsOperations.StartUpdateAsync(rgName, snapshotName, updatesnapshot));
             Validate(snapshot, snapshotOut, incremental: incremental);
 
@@ -202,8 +207,10 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
             // Patch DiskEncryptionSet
             const string tagKey = "tageKey";
-            var updateDes = new DiskEncryptionSetUpdate();
-            updateDes.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+            var updateDes = new DiskEncryptionSetUpdate()
+            {
+                Tags = { { tagKey, "tagvalue" } }
+            };
             desOut = await WaitForCompletionAsync(await DiskEncryptionSetsOperations.StartUpdateAsync(rgName, desName, updateDes));
             Validate(des, desOut, desName);
             Assert.AreEqual(1, desOut.Tags.Count);
@@ -473,16 +480,16 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
                 case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;
-                    disk.Zones = zones;
+                    disk.Zones.InitializeFrom(zones);
                     break;
                 case "Import":
                     disk = await GenerateImportDisk(diskCreateOption, rgName, location);
                     disk.DiskSizeGB = diskSizeGB;
-                    disk.Zones = zones;
+                    disk.Zones.InitializeFrom(zones);
                     break;
                 case "Copy":
                     disk = await GenerateCopyDisk(rgName, diskSizeGB ?? 10, location);
-                    disk.Zones = zones;
+                    disk.Zones.InitializeFrom(zones);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("diskCreateOption", diskCreateOption, "Unsupported option provided.");
@@ -549,12 +556,11 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         {
             string testVaultId = @"/subscriptions/" + TestEnvironment.SubscriptionId + "/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault";
             string encryptionKeyUri = @"https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c";
-            var des = new DiskEncryptionSet(
-                                            null, null, null, location, null,
-                                            new EncryptionSetIdentity
-                                            (ResourceIdentityType.SystemAssigned.ToString(), null, null),
-                                            new KeyVaultAndKeyReference
-                                            (new SourceVault(testVaultId), encryptionKeyUri), null, null);
+            var des = new DiskEncryptionSet(location)
+            {
+                Identity = new EncryptionSetIdentity(ResourceIdentityType.SystemAssigned.ToString(), null, null),
+                ActiveKey = new KeyVaultAndKeyReference(new SourceVault(testVaultId), encryptionKeyUri)
+            };
             return des;
         }
 
@@ -582,7 +588,10 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
         private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes, bool incremental = false)
         {
-            var snapshot = new Snapshot(null, null, null, DiskRPLocation, null, null, null, null, null, null, null, null, null, null, null, null, incremental, null);
+            var snapshot = new Snapshot(DiskRPLocation)
+            {
+                Incremental = incremental
+            };
             snapshot.Sku = new SnapshotSku()
             {
                 Name = snapshotStorageAccountTypes ?? SnapshotStorageAccountTypes.StandardLRS
