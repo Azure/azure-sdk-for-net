@@ -15,7 +15,7 @@ namespace Azure.Storage
     /// <summary>
     /// Used for Open Read APIs.
     /// </summary>
-    internal class LazyLoadingReadOnlyStream<TRequestConditions> : Stream
+    internal class LazyLoadingReadOnlyStream<TRequestConditions, TProperties> : Stream
     {
         /// <summary>
         /// The current position within the blob or file.
@@ -50,20 +50,31 @@ namespace Azure.Storage
         /// <summary>
         /// Request conditions to send on the download requests.
         /// </summary>
-        private readonly TRequestConditions _requestConditions;
+        private TRequestConditions _requestConditions;
 
         /// <summary>
         /// Download() function.
         /// </summary>
         private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> _downloadInternalFunc;
 
+        /// <summary>
+        /// Function to create RequestConditions.
+        /// </summary>
+        private readonly Func<ETag?, TRequestConditions> _createRequestConditionsFunc;
+
+        private readonly Func<bool, CancellationToken, Task<Response<TProperties>>> _getPropertiesInternalFunc;
+
         public LazyLoadingReadOnlyStream(
             Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
+            Func<ETag?, TRequestConditions> createRequestConditionsFunc,
+            Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
+            _createRequestConditionsFunc = createRequestConditionsFunc;
+            _getPropertiesInternalFunc = getPropertiesFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
@@ -97,7 +108,13 @@ namespace Azure.Storage
 
             if (_position == _length)
             {
-                return 0;
+                // In case the blob grow since our last download call.
+                _length = await GetBlobLengthInternal(async, cancellationToken).ConfigureAwait(false);
+
+                if (_position == _length)
+                {
+                    return 0;
+                }
             }
 
             if (_bufferPosition == 0 || _bufferPosition == _buffer.Length)
@@ -153,7 +170,13 @@ namespace Azure.Storage
 
             _bufferPosition = 0;
             _bufferLength = copiedBytes;
-            _length = GetBlobLength(response);
+            _length = GetBlobLengthFromResponse(response.GetRawResponse());
+
+            // Set _requestConditions If-Match.
+            if (_requestConditions == null && _createRequestConditionsFunc != null)
+            {
+                _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
+            }
 
             return response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
         }
@@ -191,9 +214,25 @@ namespace Azure.Storage
             }
         }
 
-        private static long GetBlobLength(Response<IDownloadedContent> response)
+        private async Task<long> GetBlobLengthInternal(bool async, CancellationToken cancellationToken)
         {
-            response.GetRawResponse().Headers.TryGetValue("Content-Range", out string lengthString);
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            Response<TProperties> response = await _getPropertiesInternalFunc(async, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+
+            response.GetRawResponse().Headers.TryGetValue("Content-Length", out string lengthString);
+
+            if (lengthString == null)
+            {
+                throw new ArgumentException("Content-Range header is mssing on get properties response.");
+            }
+
+            return Convert.ToInt64(lengthString, CultureInfo.InvariantCulture);
+        }
+
+        private static long GetBlobLengthFromResponse(Response response)
+        {
+            response.Headers.TryGetValue("Content-Range", out string lengthString);
 
             if (lengthString == null)
             {

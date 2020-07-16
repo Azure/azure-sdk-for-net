@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1311,22 +1312,59 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int? bufferSize = default,
-            BlobRequestConditions conditions = default)
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
             => OpenReadInternal(
                 position,
                 bufferSize,
-                conditions);
+                conditions,
+                cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="allowBlobModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowBlobModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => allowBlobModifications ? OpenRead(position, bufferSize, new BlobRequestConditions(), cancellationToken)
+                : OpenRead(position, bufferSize, null, cancellationToken);
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -1344,18 +1382,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int? bufferSize = default,
-            BlobRequestConditions conditions = default)
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
             => Task.FromResult(OpenReadInternal(
                 position,
                 bufferSize,
@@ -1365,6 +1406,39 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for reading from the blob.  The stream will only download
         /// the blob as the stream is read from.
         /// </summary>
+        /// <param name="allowBlobModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowBlobModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => allowBlobModifications ? OpenReadAsync(position, bufferSize, new BlobRequestConditions(), cancellationToken)
+                : OpenReadAsync(position, bufferSize, null, cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
         /// <param name="position">
         /// The position within the blob to begin the stream.
         /// Defaults to the beginning of the blob.
@@ -1377,6 +1451,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
         /// is read from.
@@ -1384,7 +1462,8 @@ namespace Azure.Storage.Blobs.Specialized
         internal Stream OpenReadInternal(
             long position = 0,
             int? bufferSize = default,
-            BlobRequestConditions conditions = default)
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -1399,7 +1478,11 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    return new LazyLoadingReadOnlyStream<BlobRequestConditions>(
+
+                    // Have to use cancellationToken in body.
+                    Debug.Assert(cancellationToken != null || cancellationToken == null);
+
+                    return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
                         async (HttpRange range,
                         BlobRequestConditions conditions,
                         bool rangeGetContentHash,
@@ -1417,6 +1500,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 (IDownloadedContent)response.Value,
                                 response.GetRawResponse());
                         },
+                        (ETag? eTag) => new BlobRequestConditions { IfMatch = eTag },
+                        async (bool async, CancellationToken cancellationToken)
+                            => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
                         position,
                         bufferSize,
                         conditions);

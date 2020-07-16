@@ -2737,6 +2737,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange

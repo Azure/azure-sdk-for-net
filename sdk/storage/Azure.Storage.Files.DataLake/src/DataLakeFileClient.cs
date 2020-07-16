@@ -3608,18 +3608,21 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// the download of this file.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int? bufferSize = default,
-            DataLakeRequestConditions conditions = default)
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
             try
@@ -3628,7 +3631,8 @@ namespace Azure.Storage.Files.DataLake
                 return _blockBlobClient.OpenRead(
                     position,
                     bufferSize,
-                    conditions.ToBlobRequestConditions());
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -3639,8 +3643,40 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => allowfileModifications ? OpenRead(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
+                : OpenRead(position, bufferSize, null, cancellationToken);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -3658,18 +3694,21 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// the download of the file.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int? bufferSize = default,
-            DataLakeRequestConditions conditions = default)
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
             try
@@ -3678,7 +3717,8 @@ namespace Azure.Storage.Files.DataLake
                 return await _blockBlobClient.OpenReadAsync(
                 position,
                 bufferSize,
-                conditions?.ToBlobRequestConditions()).ConfigureAwait(false);
+                conditions?.ToBlobRequestConditions(),
+                cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -3690,6 +3730,39 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => await (allowfileModifications ? OpenReadAsync(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
+                : OpenReadAsync(position, bufferSize, null, cancellationToken)).ConfigureAwait(false);
         #endregion OpenRead
 
         #region PartitionedUplaoder

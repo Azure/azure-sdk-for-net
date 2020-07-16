@@ -1071,6 +1071,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly] // "https://github.com/Azure/azure-sdk-for-net/issues/13510"
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -1104,6 +1105,84 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Modified()
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size / 2);
+
+            // Modify the blob.
+            stream.Position = 0;
+
+            string blockId = ToBase64(GetNewBlockName());
+            await blob.StageBlockAsync(
+                base64BlockId: blockId,
+                content: stream);
+
+            await blob.CommitBlockListAsync(new List<string>
+            {
+                blockId
+            });
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                outputStream.ReadAsync(outputBytes, size / 2, size / 2),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenReadAsync_ModifiedAllowBlobModifications()
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedData = new byte[2 * size];
+            Array.Copy(data0, 0, expectedData, 0, size);
+            Array.Copy(data1, 0, expectedData, size, size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream0 = new MemoryStream(data0);
+            string blockId0 = ToBase64(GetNewBlockName());
+
+            await blob.StageBlockAsync(
+                base64BlockId: blockId0,
+                content: stream0);
+
+            await blob.CommitBlockListAsync(new List<string> { blockId0 });
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync(
+                allowBlobModifications: true).ConfigureAwait(false);
+            byte[] outputBytes = new byte[2 * size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Modify the blob.
+            string blockId1 = ToBase64(GetNewBlockName());
+            using Stream stream1 = new MemoryStream(data1);
+            await blob.StageBlockAsync(
+                base64BlockId: blockId1,
+                content: stream1);
+
+            await blob.CommitBlockListAsync(new List<string> { blockId0, blockId1 });
+
+            await outputStream.ReadAsync(outputBytes, size, size);
+
+            // Assert
+            TestHelper.AssertSequenceEqual(expectedData, outputBytes);
         }
 
         [Test]

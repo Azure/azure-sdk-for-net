@@ -3601,6 +3601,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3635,6 +3636,69 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_Modified()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync();
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size / 2);
+
+            // Modify the file.
+            stream.Position = 0;
+            await file.AppendAsync(
+                content: stream,
+                offset: size);
+
+            await file.FlushAsync(2 * size);
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                outputStream.ReadAsync(outputBytes, size / 2, size / 2),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task OpenReadAsync_ModifiedAllowBlobModifications()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            int size = Constants.KB;
+            byte[] data0 = GetRandomBuffer(size);
+            byte[] data1 = GetRandomBuffer(size);
+            byte[] expectedData = new byte[2 * size];
+            Array.Copy(data0, 0, expectedData, 0, size);
+            Array.Copy(data1, 0, expectedData, size, size);
+            using Stream stream0 = new MemoryStream(data0);
+            await file.UploadAsync(stream0);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(allowfileModifications: true);
+            byte[] outputBytes = new byte[size * 2];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Modify the file.
+            using Stream stream1 = new MemoryStream(data1);
+            await file.AppendAsync(
+                content: stream1,
+                offset: size);
+
+            await file.FlushAsync(2 * size);
+
+            await outputStream.ReadAsync(outputBytes, size, size);
+
+            // Assert
+            TestHelper.AssertSequenceEqual(expectedData, outputBytes);
         }
 
         [Test]
