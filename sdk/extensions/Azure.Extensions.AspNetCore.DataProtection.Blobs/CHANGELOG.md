@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- Transient error in key refresh.
+- Transient error in key refresh (#12415).
 
 ## 1.0.0 (2020-06-04)
 
