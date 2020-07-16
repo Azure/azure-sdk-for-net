@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSkuInfo Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public string Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
