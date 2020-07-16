@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-            if (Topic != null)
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic");
                 writer.WriteStringValue(Topic);
@@ -30,11 +30,6 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStringValue(EventType);
             writer.WritePropertyName("eventTime");
             writer.WriteStringValue(EventTime, "O");
-            if (MetadataVersion != null)
-            {
-                writer.WritePropertyName("metadataVersion");
-                writer.WriteStringValue(MetadataVersion);
-            }
             writer.WritePropertyName("dataVersion");
             writer.WriteStringValue(DataVersion);
             writer.WriteEndObject();
