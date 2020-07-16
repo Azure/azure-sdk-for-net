@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -69,51 +71,56 @@ namespace Azure.Core.Tests
             Assert.AreEqual(ModelType.Two, model.Type);
         }
 
-
         [Test]
-        public void GetTypeInfo([Values] bool camelCase)
+        public void GetSerializedMemberName([Values] bool camelCase)
         {
+            DefaultContractResolver resolver = camelCase ? new CamelCasePropertyNamesContractResolver() : new DefaultContractResolver();
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                ContractResolver = camelCase ? new CamelCasePropertyNamesContractResolver() : new DefaultContractResolver(),
+                ContractResolver = resolver,
             };
 
             NewtonsoftJsonObjectSerializer serializer = new NewtonsoftJsonObjectSerializer(true, settings);
 
-            string Name(string name) => settings.ContractResolver is DefaultContractResolver resolver ? resolver.GetResolvedPropertyName(name) : name;
+            IEnumerable<MemberInfo> members = typeof(ExtendedModel)
+                .GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(member => (member.MemberType & (MemberTypes.Property | MemberTypes.Field)) != 0);
 
-            SerializableTypeInfo typeInfo = serializer.GetTypeInfo(typeof(ExtendedModel));
-            Assert.AreEqual(7, typeInfo.Properties.Count);
+            string Name(string name) => resolver.GetResolvedPropertyName(name);
+            foreach (MemberInfo member in members)
+            {
+                string propertyName = serializer.GetSerializedMemberName(member);
+                switch (member.Name)
+                {
+                    case nameof(ExtendedModel.A):
+                        Assert.AreEqual(Name("A"), propertyName);
+                        break;
 
-            SerializablePropertyInfo a = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.A));
-            Assert.AreEqual(typeof(string), a.PropertyType);
-            Assert.AreEqual(Name("A"), a.SerializedName);
-            Assert.IsFalse(a.ShouldIgnore);
+                    case nameof(ExtendedModel.ActuallyB):
+                        Assert.AreEqual("b", propertyName);
+                        break;
 
-            SerializablePropertyInfo b = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.ActuallyB));
-            Assert.AreEqual(typeof(int), b.PropertyType);
-            Assert.AreEqual("b", b.SerializedName);
-            Assert.IsFalse(b.ShouldIgnore);
+                    case nameof(ExtendedModel.Type):
+                        Assert.AreEqual(Name("Type"), propertyName);
+                        break;
 
-            SerializablePropertyInfo c = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.C));
-            Assert.AreEqual(typeof(int), c.PropertyType);
-            Assert.AreEqual(Name("C"), c.SerializedName);
-            Assert.IsTrue(c.ShouldIgnore);
+                    case nameof(ExtendedModel.ReadOnlyD):
+                        Assert.AreEqual("d", propertyName);
+                        break;
 
-            SerializablePropertyInfo d = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.D));
-            Assert.AreEqual(typeof(int), d.PropertyType);
-            Assert.AreEqual(Name("D"), d.SerializedName);
-            Assert.IsFalse(d.ShouldIgnore);
+                    case nameof(ExtendedModel.F):
+                        Assert.AreEqual(Name("F"), propertyName);
+                        break;
 
-            SerializablePropertyInfo e = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.NotE));
-            Assert.AreEqual(typeof(int), e.PropertyType);
-            Assert.AreEqual("e", e.SerializedName);
-            Assert.IsFalse(e.ShouldIgnore);
+                    case "H":
+                        Assert.AreEqual("h", propertyName);
+                        break;
 
-            SerializablePropertyInfo f = typeInfo.Properties.Single(property => property.PropertyName == nameof(ExtendedModel.F));
-            Assert.AreEqual(typeof(int), f.PropertyType);
-            Assert.AreEqual(Name("F"), f.SerializedName);
-            Assert.IsFalse(f.ShouldIgnore);
+                    default:
+                        Assert.IsNull(propertyName, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
+                        break;
+                }
+            }
         }
 
         public class Model
@@ -131,12 +138,21 @@ namespace Azure.Core.Tests
 
         public class ExtendedModel : Model
         {
-            public int D { get; set; }
+            [JsonProperty("d")]
+            public int ReadOnlyD { get; }
 
-            [JsonProperty("e")]
-            public int NotE { get; set; }
+            internal int IgnoredE { get; set; }
 
-            public int F { get; private set; }
+            public int F;
+
+#pragma warning disable CS0649 // Field 'NewtonsoftJsonObjectSerializerTest.ExtendedModel.G' is never assigned to, and will always have its default value 0
+            internal int G;
+#pragma warning restore CS0649
+
+#pragma warning disable CS0169 // The field 'NewtonsoftJsonObjectSerializerTest.ExtendedModel.H' is never used
+            [JsonProperty("h")]
+            private int H;
+#pragma warning restore CS0169
         }
 
         public enum ModelType

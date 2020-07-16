@@ -3,18 +3,19 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Azure.Core
 {
     /// <summary>
     /// A <see cref="NewtonsoftJsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
     /// </summary>
-    public class NewtonsoftJsonObjectSerializer : ObjectSerializer
+    public class NewtonsoftJsonObjectSerializer : ObjectSerializer, ISerializedMemberNameProvider
     {
         private const int DefaultBufferSize = 1024;
 
@@ -33,22 +34,13 @@ namespace Azure.Core
         /// <summary>
         /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/>.
         /// </summary>
-        /// <param name="useDefaultSettings">Whether to use <see cref="JsonConvert.DefaultSettings"/> in combination with given <paramref name="settings"/>.</param>
-        /// <param name="settings">The <see cref="JsonSerializerSettings"/> instance to use when serializing/deserializing.</param>
-        public NewtonsoftJsonObjectSerializer(bool useDefaultSettings, JsonSerializerSettings? settings = null)
+        /// <param name="useDefaultSettings">Whether to use <see cref="JsonConvert.DefaultSettings"/> unless overridden with any given <paramref name="settingsOverrides"/>.</param>
+        /// <param name="settingsOverrides">The <see cref="JsonSerializerSettings"/> instance to use when serializing/deserializing.</param>
+        public NewtonsoftJsonObjectSerializer(bool useDefaultSettings, JsonSerializerSettings? settingsOverrides = null)
         {
             _serializer = useDefaultSettings ?
-                JsonSerializer.CreateDefault(settings) :
-                JsonSerializer.Create(settings);
-        }
-
-        /// <inheritdoc/>
-        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public override SerializableTypeInfo GetTypeInfo(Type type)
-        {
-            Argument.AssertNotNull(type, nameof(type));
-
-            return new NewtonsoftJsonSerializableTypeInfo(_serializer.ContractResolver.ResolveContract(type));
+                JsonSerializer.CreateDefault(settingsOverrides) :
+                JsonSerializer.Create(settingsOverrides);
         }
 
         /// <inheritdoc />
@@ -84,6 +76,27 @@ namespace Azure.Core
         {
             Serialize(stream, value, inputType, cancellationToken);
             return new ValueTask();
+        }
+
+        /// <inheritdoc/>
+        public string? GetSerializedMemberName(MemberInfo memberInfo)
+        {
+            Argument.AssertNotNull(memberInfo, nameof(memberInfo));
+
+            if (_serializer.ContractResolver.ResolveContract(memberInfo.ReflectedType) is JsonObjectContract contract)
+            {
+                foreach (JsonProperty property in contract.Properties)
+                {
+                    if (!property.Ignored &&
+                        string.Equals(property.UnderlyingName, memberInfo.Name, StringComparison.Ordinal) &&
+                        property.DeclaringType == memberInfo.DeclaringType)
+                    {
+                        return property.PropertyName;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
