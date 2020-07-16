@@ -92,14 +92,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceItems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceItems.DeserializeBlobServiceItems(document.RootElement);
-                        }
+                        value = BlobServiceItems.DeserializeBlobServiceItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,14 +123,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceItems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceItems.DeserializeBlobServiceItems(document.RootElement);
-                        }
+                        value = BlobServiceItems.DeserializeBlobServiceItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,14 +183,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
-                        }
+                        value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -240,14 +219,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
-                        }
+                        value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,14 +270,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
-                        }
+                        value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -336,14 +301,7 @@ namespace Azure.Management.Storage
                     {
                         BlobServiceProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
-                        }
+                        value = BlobServiceProperties.DeserializeBlobServiceProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

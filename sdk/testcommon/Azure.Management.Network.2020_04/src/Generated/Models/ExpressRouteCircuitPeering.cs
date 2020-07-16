@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeering. </summary>
         public ExpressRouteCircuitPeering()
         {
+            Connections = new ChangeTrackingList<ExpressRouteCircuitConnection>();
+            PeeredConnections = new ChangeTrackingList<PeerExpressRouteCircuitConnection>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeering. </summary>
@@ -112,7 +115,7 @@ namespace Azure.Management.Network.Models
         /// <summary> The ExpressRoute connection. </summary>
         public ExpressRouteConnectionId ExpressRouteConnection { get; set; }
         /// <summary> The list of circuit connections associated with Azure Private Peering for this circuit. </summary>
-        public IList<ExpressRouteCircuitConnection> Connections { get; set; }
+        public IList<ExpressRouteCircuitConnection> Connections { get; }
         /// <summary> The list of peered circuit connections associated with Azure Private Peering for this circuit. </summary>
         public IList<PeerExpressRouteCircuitConnection> PeeredConnections { get; }
     }

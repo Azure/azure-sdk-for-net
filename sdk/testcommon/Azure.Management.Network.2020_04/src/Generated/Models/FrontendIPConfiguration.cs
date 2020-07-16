@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
         public FrontendIPConfiguration()
         {
+            Zones = new ChangeTrackingList<string>();
+            InboundNatRules = new ChangeTrackingList<SubResource>();
+            InboundNatPools = new ChangeTrackingList<SubResource>();
+            OutboundRules = new ChangeTrackingList<SubResource>();
+            LoadBalancingRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
@@ -60,7 +66,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> An array of references to inbound rules that use this frontend IP. </summary>
         public IList<SubResource> InboundNatRules { get; }
         /// <summary> An array of references to inbound pools that use this frontend IP. </summary>

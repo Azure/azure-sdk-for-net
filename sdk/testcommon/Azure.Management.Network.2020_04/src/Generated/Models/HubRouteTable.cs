@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of HubRouteTable. </summary>
         public HubRouteTable()
         {
+            Routes = new ChangeTrackingList<HubRoute>();
+            Labels = new ChangeTrackingList<string>();
+            AssociatedConnections = new ChangeTrackingList<SubResource>();
+            PropagatingConnections = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of HubRouteTable. </summary>
@@ -46,9 +51,9 @@ namespace Azure.Management.Network.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> List of all routes. </summary>
-        public IList<HubRoute> Routes { get; set; }
+        public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>
-        public IList<string> Labels { get; set; }
+        public IList<string> Labels { get; }
         /// <summary> List of all connections associated with this route table. </summary>
         public IList<SubResource> AssociatedConnections { get; }
         /// <summary> List of all connections that advertise to this route table. </summary>

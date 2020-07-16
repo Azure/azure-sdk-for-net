@@ -75,14 +75,7 @@ namespace Azure.Management.Compute
                     {
                         ResourceSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
-                        }
+                        value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,14 +96,7 @@ namespace Azure.Management.Compute
                     {
                         ResourceSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
-                        }
+                        value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -149,14 +135,7 @@ namespace Azure.Management.Compute
                     {
                         ResourceSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
-                        }
+                        value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,14 +162,7 @@ namespace Azure.Management.Compute
                     {
                         ResourceSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
-                        }
+                        value = ResourceSkusResult.DeserializeResourceSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

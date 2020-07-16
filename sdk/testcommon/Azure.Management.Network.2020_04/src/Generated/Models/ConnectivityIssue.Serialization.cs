@@ -15,74 +15,44 @@ namespace Azure.Management.Network.Models
     {
         internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
         {
-            Origin? origin = default;
-            Severity? severity = default;
-            IssueType? type = default;
-            IReadOnlyList<IDictionary<string, string>> context = default;
+            Optional<Origin> origin = default;
+            Optional<Severity> severity = default;
+            Optional<IssueType> type = default;
+            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     origin = new Origin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = new IssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                        foreach (var property0 in item.EnumerateObject())
                         {
-                            array.Add(null);
+                            dictionary.Add(property0.Name, property0.Value.GetString());
                         }
-                        else
-                        {
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property0 in item.EnumerateObject())
-                            {
-                                if (property0.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property0.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property0.Name, property0.Value.GetString());
-                                }
-                            }
-                            array.Add(dictionary);
-                        }
+                        array.Add(dictionary);
                     }
                     context = array;
                     continue;
                 }
             }
-            return new ConnectivityIssue(origin, severity, type, context);
+            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
         }
     }
 }

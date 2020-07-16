@@ -94,14 +94,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,14 +131,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -203,14 +189,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,14 +225,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -377,14 +349,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -416,14 +381,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
-                        }
+                        value = ProximityPlacementGroup.DeserializeProximityPlacementGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -458,14 +416,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,14 +436,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -535,14 +479,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,14 +505,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -613,14 +543,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -646,14 +569,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -696,14 +612,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -734,14 +643,7 @@ namespace Azure.Management.Compute
                     {
                         ProximityPlacementGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
-                        }
+                        value = ProximityPlacementGroupListResult.DeserializeProximityPlacementGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

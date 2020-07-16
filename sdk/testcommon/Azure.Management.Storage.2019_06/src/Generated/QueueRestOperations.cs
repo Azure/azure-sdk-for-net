@@ -107,14 +107,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -155,14 +148,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,14 +213,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,14 +254,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -338,14 +310,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -381,14 +346,7 @@ namespace Azure.Management.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -530,14 +488,7 @@ namespace Azure.Management.Storage
                     {
                         ListQueueResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -570,14 +521,7 @@ namespace Azure.Management.Storage
                     {
                         ListQueueResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,14 +571,7 @@ namespace Azure.Management.Storage
                     {
                         ListQueueResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,14 +609,7 @@ namespace Azure.Management.Storage
                     {
                         ListQueueResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -14,40 +14,28 @@ namespace Azure.Management.Compute.Models
     {
         internal static UpgradeOperationHistoricalStatusInfo DeserializeUpgradeOperationHistoricalStatusInfo(JsonElement element)
         {
-            UpgradeOperationHistoricalStatusInfoProperties properties = default;
-            string type = default;
-            string location = default;
+            Optional<UpgradeOperationHistoricalStatusInfoProperties> properties = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = UpgradeOperationHistoricalStatusInfoProperties.DeserializeUpgradeOperationHistoricalStatusInfoProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfo(properties, type, location);
+            return new UpgradeOperationHistoricalStatusInfo(properties.Value, type.Value, location.Value);
         }
     }
 }

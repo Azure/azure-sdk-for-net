@@ -85,14 +85,7 @@ namespace Azure.Management.Network
                     {
                         LoadBalancerProbeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
-                        }
+                        value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,14 +116,7 @@ namespace Azure.Management.Network
                     {
                         LoadBalancerProbeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
-                        }
+                        value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,14 +172,7 @@ namespace Azure.Management.Network
                     {
                         Probe value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Probe.DeserializeProbe(document.RootElement);
-                        }
+                        value = Probe.DeserializeProbe(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,14 +208,7 @@ namespace Azure.Management.Network
                     {
                         Probe value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Probe.DeserializeProbe(document.RootElement);
-                        }
+                        value = Probe.DeserializeProbe(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -284,14 +256,7 @@ namespace Azure.Management.Network
                     {
                         LoadBalancerProbeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
-                        }
+                        value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -327,14 +292,7 @@ namespace Azure.Management.Network
                     {
                         LoadBalancerProbeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
-                        }
+                        value = LoadBalancerProbeListResult.DeserializeLoadBalancerProbeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

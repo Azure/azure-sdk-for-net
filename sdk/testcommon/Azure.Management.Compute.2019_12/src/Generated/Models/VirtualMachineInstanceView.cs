@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
         public VirtualMachineInstanceView()
         {
+            Disks = new ChangeTrackingList<DiskInstanceView>();
+            Extensions = new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
@@ -67,12 +71,12 @@ namespace Azure.Management.Compute.Models
         /// <summary> The Maintenance Operation status on the virtual machine. </summary>
         public MaintenanceRedeployStatus MaintenanceRedeployStatus { get; set; }
         /// <summary> The virtual machine disk information. </summary>
-        public IList<DiskInstanceView> Disks { get; set; }
+        public IList<DiskInstanceView> Disks { get; }
         /// <summary> The extensions information. </summary>
-        public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
+        public IList<VirtualMachineExtensionInstanceView> Extensions { get; }
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        public IList<InstanceViewStatus> Statuses { get; }
     }
 }

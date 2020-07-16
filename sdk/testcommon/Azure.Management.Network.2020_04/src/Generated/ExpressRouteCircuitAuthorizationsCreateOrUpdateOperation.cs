@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ExpressRouteCircuitAuthorization IOperationSource<ExpressRouteCircuitAuthorization>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
-            }
+            return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCircuitAuthorization> IOperationSource<ExpressRouteCircuitAuthorization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
-            }
+            return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
         }
     }
 }

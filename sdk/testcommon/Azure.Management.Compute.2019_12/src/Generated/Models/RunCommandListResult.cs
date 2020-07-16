@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RunCommandListResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </param>
         internal RunCommandListResult(IReadOnlyList<RunCommandDocumentBase> value, string nextLink)
         {
-            Value = value ?? new List<RunCommandDocumentBase>();
+            Value = value;
             NextLink = nextLink;
         }
 

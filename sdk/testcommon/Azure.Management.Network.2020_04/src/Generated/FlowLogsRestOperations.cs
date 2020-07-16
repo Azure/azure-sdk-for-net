@@ -189,14 +189,7 @@ namespace Azure.Management.Network
                     {
                         FlowLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLog.DeserializeFlowLog(document.RootElement);
-                        }
+                        value = FlowLog.DeserializeFlowLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,14 +225,7 @@ namespace Azure.Management.Network
                     {
                         FlowLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLog.DeserializeFlowLog(document.RootElement);
-                        }
+                        value = FlowLog.DeserializeFlowLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,14 +359,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -411,14 +390,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -466,14 +438,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,14 +474,7 @@ namespace Azure.Management.Network
                     {
                         FlowLogListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
-                        }
+                        value = FlowLogListResult.DeserializeFlowLogListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

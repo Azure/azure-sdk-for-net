@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ExpressRoutePort. </summary>
         public ExpressRoutePort()
         {
+            Links = new ChangeTrackingList<ExpressRouteLink>();
+            Circuits = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePort. </summary>
@@ -72,7 +75,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Date of the physical port allocation to be used in Letter of Authorization. </summary>
         public string AllocationDate { get; }
         /// <summary> The set of physical links of the ExpressRoutePort resource. </summary>
-        public IList<ExpressRouteLink> Links { get; set; }
+        public IList<ExpressRouteLink> Links { get; }
         /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </summary>
         public IList<SubResource> Circuits { get; }
         /// <summary> The provisioning state of the express route port resource. </summary>

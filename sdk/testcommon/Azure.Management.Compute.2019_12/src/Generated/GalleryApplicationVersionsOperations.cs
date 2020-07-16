@@ -42,14 +42,15 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionsOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -63,14 +64,15 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionsOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, cancellationToken);
+                return RestClient.Get(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand, cancellationToken);
             }
             catch (Exception e)
             {

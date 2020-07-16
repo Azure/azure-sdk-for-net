@@ -189,14 +189,7 @@ namespace Azure.Management.Network
                     {
                         HubRouteTable value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = HubRouteTable.DeserializeHubRouteTable(document.RootElement);
-                        }
+                        value = HubRouteTable.DeserializeHubRouteTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,14 +225,7 @@ namespace Azure.Management.Network
                     {
                         HubRouteTable value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = HubRouteTable.DeserializeHubRouteTable(document.RootElement);
-                        }
+                        value = HubRouteTable.DeserializeHubRouteTable(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,14 +361,7 @@ namespace Azure.Management.Network
                     {
                         ListHubRouteTablesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
-                        }
+                        value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,14 +392,7 @@ namespace Azure.Management.Network
                     {
                         ListHubRouteTablesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
-                        }
+                        value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,14 +440,7 @@ namespace Azure.Management.Network
                     {
                         ListHubRouteTablesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
-                        }
+                        value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -511,14 +476,7 @@ namespace Azure.Management.Network
                     {
                         ListHubRouteTablesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
-                        }
+                        value = ListHubRouteTablesResult.DeserializeListHubRouteTablesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

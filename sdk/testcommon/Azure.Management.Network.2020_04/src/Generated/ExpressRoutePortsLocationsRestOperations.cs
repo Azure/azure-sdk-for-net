@@ -70,14 +70,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,14 +132,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,14 +158,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -224,14 +196,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -257,14 +222,7 @@ namespace Azure.Management.Network
                     {
                         ExpressRoutePortsLocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
-                        }
+                        value = ExpressRoutePortsLocationListResult.DeserializeExpressRoutePortsLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
