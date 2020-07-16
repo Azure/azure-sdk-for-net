@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of NetworkVirtualAppliance. </summary>
         public NetworkVirtualAppliance()
         {
+            BootStrapConfigurationBlob = new ChangeTrackingList<string>();
+            CloudInitConfigurationBlob = new ChangeTrackingList<string>();
+            VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualAppliance. </summary>
@@ -52,11 +56,11 @@ namespace Azure.Management.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> BootStrapConfigurationBlob storage URLs. </summary>
-        public IList<string> BootStrapConfigurationBlob { get; set; }
+        public IList<string> BootStrapConfigurationBlob { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
         public SubResource VirtualHub { get; set; }
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
-        public IList<string> CloudInitConfigurationBlob { get; set; }
+        public IList<string> CloudInitConfigurationBlob { get; }
         /// <summary> VirtualAppliance ASN. </summary>
         public long? VirtualApplianceAsn { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>

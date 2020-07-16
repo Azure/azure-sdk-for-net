@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             Identity = identity;
             Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Kind = new ScriptType("DeploymentScript");
         }
 
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location of the ACI and the storage account for the deployment script. </summary>
         public string Location { get; set; }
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Type of the script. </summary>
         internal ScriptType Kind { get; set; }
         /// <summary> The system metadata related to this resource. </summary>

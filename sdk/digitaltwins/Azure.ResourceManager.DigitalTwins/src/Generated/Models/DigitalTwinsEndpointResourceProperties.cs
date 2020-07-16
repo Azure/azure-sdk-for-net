@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
         public DigitalTwinsEndpointResourceProperties()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceProperties. </summary>
@@ -38,6 +40,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Time when the Endpoint was added to DigitalTwinsInstance. </summary>
         public DateTimeOffset? CreatedTime { get; }
         /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

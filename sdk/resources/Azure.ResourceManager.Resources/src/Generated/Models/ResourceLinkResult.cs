@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ResourceLinkResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ResourceLinkResult(IReadOnlyList<ResourceLink> value, string nextLink)
         {
-            Value = value ?? new List<ResourceLink>();
+            Value = value;
             NextLink = nextLink;
         }
 

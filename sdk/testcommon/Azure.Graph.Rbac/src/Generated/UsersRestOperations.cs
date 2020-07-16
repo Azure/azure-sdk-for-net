@@ -87,14 +87,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,14 +113,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,14 +153,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,14 +174,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,14 +216,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,14 +242,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -466,14 +424,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserGetMemberGroupsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserGetMemberGroupsResult.DeserializeUserGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = UserGetMemberGroupsResult.DeserializeUserGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -504,14 +455,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserGetMemberGroupsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserGetMemberGroupsResult.DeserializeUserGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = UserGetMemberGroupsResult.DeserializeUserGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -553,14 +497,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -586,14 +523,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -631,14 +561,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -664,14 +587,7 @@ namespace Azure.Graph.Rbac
                     {
                         UserListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        }
+                        value = UserListResult.DeserializeUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

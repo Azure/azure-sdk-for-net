@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
 
             Code = code;
             Message = message;
+            Details = new ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>

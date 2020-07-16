@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of RouteTable. </summary>
         public RouteTable()
         {
+            Routes = new ChangeTrackingList<Route>();
+            Subnets = new ChangeTrackingList<Subnet>();
         }
 
         /// <summary> Initializes a new instance of RouteTable. </summary>
@@ -40,7 +43,7 @@ namespace Azure.Management.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
-        public IList<Route> Routes { get; set; }
+        public IList<Route> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>
         public IList<Subnet> Subnets { get; }
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>

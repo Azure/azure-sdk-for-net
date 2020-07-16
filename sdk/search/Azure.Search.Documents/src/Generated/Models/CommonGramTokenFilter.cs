@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="useQueryMode"> A value that indicates whether the token filter is in query mode. When in query mode, the token filter generates bigrams and then removes common words and single terms followed by a common word. Default is false. </param>
         internal CommonGramTokenFilter(string oDataType, string name, IList<string> commonWords, bool? ignoreCase, bool? useQueryMode) : base(oDataType, name)
         {
-            CommonWords = commonWords ?? new List<string>();
+            CommonWords = commonWords;
             IgnoreCase = ignoreCase;
             UseQueryMode = useQueryMode;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CommonGramTokenFilter";

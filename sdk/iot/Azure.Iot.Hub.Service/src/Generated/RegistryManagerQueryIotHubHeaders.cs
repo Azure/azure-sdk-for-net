@@ -17,7 +17,9 @@ namespace Azure.Iot.Hub.Service
         {
             _response = response;
         }
+        /// <summary> Type of the list of items. </summary>
         public string XMsItemType => _response.Headers.TryGetValue("x-ms-item-type", out string value) ? value : null;
+        /// <summary> Continuation token. </summary>
         public string XMsContinuation => _response.Headers.TryGetValue("x-ms-continuation", out string value) ? value : null;
     }
 }

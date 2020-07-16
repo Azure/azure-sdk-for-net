@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         Disk IOperationSource<Disk>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Disk.DeserializeDisk(document.RootElement);
-            }
+            return Disk.DeserializeDisk(document.RootElement);
         }
 
         async ValueTask<Disk> IOperationSource<Disk>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Disk.DeserializeDisk(document.RootElement);
-            }
+            return Disk.DeserializeDisk(document.RootElement);
         }
     }
 }

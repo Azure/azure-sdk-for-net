@@ -163,14 +163,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +195,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -353,14 +339,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -396,14 +375,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -438,14 +410,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,14 +430,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,14 +473,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,14 +499,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,14 +549,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,14 +580,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -721,14 +651,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -774,14 +697,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -863,14 +779,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -922,14 +831,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddress value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        }
+                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -967,14 +869,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1000,14 +895,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1050,14 +938,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1088,14 +969,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1143,14 +1017,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1186,14 +1053,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1256,14 +1116,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1314,14 +1167,7 @@ namespace Azure.Management.Network
                     {
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        }
+                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -335,14 +335,7 @@ namespace Azure.Management.Compute
                     {
                         Image value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Image.DeserializeImage(document.RootElement);
-                        }
+                        value = Image.DeserializeImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -374,14 +367,7 @@ namespace Azure.Management.Compute
                     {
                         Image value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Image.DeserializeImage(document.RootElement);
-                        }
+                        value = Image.DeserializeImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,14 +410,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,14 +436,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -499,14 +471,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,14 +491,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -576,14 +534,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -614,14 +565,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -659,14 +603,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -692,14 +629,7 @@ namespace Azure.Management.Compute
                     {
                         ImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ImageListResult.DeserializeImageListResult(document.RootElement);
-                        }
+                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

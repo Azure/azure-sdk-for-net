@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -25,6 +26,9 @@ namespace Azure.Management.Network.Models
 
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             ConnectionType = connectionType;
+            TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
+            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnection. </summary>
@@ -120,9 +124,9 @@ namespace Azure.Management.Network.Models
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; set; }
+        public IList<IpsecPolicy> IpsecPolicies { get; }
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
-        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; set; }
+        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
         /// <summary> The resource GUID property of the virtual network gateway connection resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway connection resource. </summary>

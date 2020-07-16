@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllocatableVMs != null)
+            if (Optional.IsCollectionDefined(AllocatableVMs))
             {
                 writer.WritePropertyName("allocatableVMs");
                 writer.WriteStartArray();
@@ -31,32 +31,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            IList<DedicatedHostAllocatableVM> allocatableVMs = default;
+            Optional<IList<DedicatedHostAllocatableVM>> allocatableVMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item));
-                        }
+                        array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item));
                     }
                     allocatableVMs = array;
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(allocatableVMs);
+            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVMs));
         }
     }
 }

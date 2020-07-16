@@ -84,14 +84,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
-                        }
+                        value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -124,14 +117,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
-                        }
+                        value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -336,14 +322,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
-                        }
+                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,14 +348,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
-                        }
+                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -416,14 +388,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
-                        }
+                        value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -451,14 +416,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
-                        }
+                        value = ApplicationDefinition.DeserializeApplicationDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -635,14 +593,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
-                        }
+                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -673,14 +624,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
-                        }
+                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

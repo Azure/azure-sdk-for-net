@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of OSProfile. </summary>
         public OSProfile()
         {
+            Secrets = new ChangeTrackingList<VaultSecretGroup>();
         }
 
         /// <summary> Initializes a new instance of OSProfile. </summary>
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json) &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see [Information for Non-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json). </summary>
         public LinuxConfiguration LinuxConfiguration { get; set; }
         /// <summary> Specifies set of certificates that should be installed onto the virtual machine. </summary>
-        public IList<VaultSecretGroup> Secrets { get; set; }
+        public IList<VaultSecretGroup> Secrets { get; }
         /// <summary> Specifies whether extension operations should be allowed on the virtual machine. &lt;br&gt;&lt;br&gt;This may only be set to False when no extensions are present on the virtual machine. </summary>
         public bool? AllowExtensionOperations { get; set; }
         /// <summary> Specifies whether the guest provision signal is required to infer provision success of the virtual machine. </summary>

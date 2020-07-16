@@ -268,14 +268,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionShareableLinkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-                        }
+                        value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -311,14 +304,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionShareableLinkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-                        }
+                        value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,14 +436,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionSessionDeleteResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
-                        }
+                        value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +472,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionSessionDeleteResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
-                        }
+                        value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,14 +521,7 @@ namespace Azure.ResourceManager.Network
                     {
                         DnsNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
-                        }
+                        value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,14 +552,7 @@ namespace Azure.ResourceManager.Network
                     {
                         DnsNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
-                        }
+                        value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,14 +602,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualWanSecurityProviders value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
-                        }
+                        value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -682,14 +633,7 @@ namespace Azure.ResourceManager.Network
                     {
                         VirtualWanSecurityProviders value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
-                        }
+                        value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -915,14 +859,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionShareableLinkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-                        }
+                        value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -963,14 +900,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionShareableLinkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
-                        }
+                        value = BastionShareableLinkListResult.DeserializeBastionShareableLinkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1098,14 +1028,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionSessionDeleteResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
-                        }
+                        value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1146,14 +1069,7 @@ namespace Azure.ResourceManager.Network
                     {
                         BastionSessionDeleteResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
-                        }
+                        value = BastionSessionDeleteResult.DeserializeBastionSessionDeleteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

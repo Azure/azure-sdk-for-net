@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         public ApplicationGatewayBackendAddressPool()
         {
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            BackendAddresses = new ChangeTrackingList<ApplicationGatewayBackendAddress>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
@@ -44,7 +47,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
         public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; }
         /// <summary> Backend addresses. </summary>
-        public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
+        public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

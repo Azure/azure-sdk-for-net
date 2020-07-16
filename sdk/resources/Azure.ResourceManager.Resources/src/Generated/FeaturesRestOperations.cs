@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,14 +133,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,14 +159,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,14 +208,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -274,14 +239,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,14 +289,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,14 +320,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -426,14 +370,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,14 +401,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,14 +439,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,14 +465,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -592,14 +508,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -630,14 +539,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

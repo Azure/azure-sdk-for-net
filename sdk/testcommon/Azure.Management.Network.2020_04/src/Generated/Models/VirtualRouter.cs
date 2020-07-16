@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of VirtualRouter. </summary>
         public VirtualRouter()
         {
+            VirtualRouterIps = new ChangeTrackingList<string>();
+            Peerings = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouter. </summary>
@@ -46,7 +49,7 @@ namespace Azure.Management.Network.Models
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
-        public IList<string> VirtualRouterIps { get; set; }
+        public IList<string> VirtualRouterIps { get; }
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
         public SubResource HostedSubnet { get; set; }
         /// <summary> The Gateway on which VirtualRouter is hosted. </summary>

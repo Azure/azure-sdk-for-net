@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of proximity placement groups. </param>
         internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroup> value, string nextLink)
         {
-            Value = value ?? new List<ProximityPlacementGroup>();
+            Value = value;
             NextLink = nextLink;
         }
 

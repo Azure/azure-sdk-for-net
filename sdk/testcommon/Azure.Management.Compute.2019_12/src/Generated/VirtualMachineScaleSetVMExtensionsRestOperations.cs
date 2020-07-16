@@ -419,14 +419,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtension value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-                        }
+                        value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,14 +461,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtension value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-                        }
+                        value = VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,14 +523,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtensionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -581,14 +560,7 @@ namespace Azure.Management.Compute
                     {
                         VirtualMachineExtensionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

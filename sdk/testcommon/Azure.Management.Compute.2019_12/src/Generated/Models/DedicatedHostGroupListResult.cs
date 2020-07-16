@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of Dedicated Host Groups. Call ListNext() with this URI to fetch the next page of Dedicated Host Groups. </param>
         internal DedicatedHostGroupListResult(IReadOnlyList<DedicatedHostGroup> value, string nextLink)
         {
-            Value = value ?? new List<DedicatedHostGroup>();
+            Value = value;
             NextLink = nextLink;
         }
 

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -28,17 +28,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container");
             writer.WriteObjectValue(Container);
-            if (DataChangeDetectionPolicy != null)
+            if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 writer.WritePropertyName("dataChangeDetectionPolicy");
                 writer.WriteObjectValue(DataChangeDetectionPolicy);
             }
-            if (DataDeletionDetectionPolicy != null)
+            if (Optional.IsDefined(DataDeletionDetectionPolicy))
             {
                 writer.WritePropertyName("dataDeletionDetectionPolicy");
                 writer.WriteObjectValue(DataDeletionDetectionPolicy);
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
                 writer.WriteStringValue(_etag);
@@ -49,13 +49,13 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SearchIndexerDataSourceConnection DeserializeSearchIndexerDataSourceConnection(JsonElement element)
         {
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
-            DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
-            string odataEtag = default;
+            Optional<DataChangeDetectionPolicy> dataChangeDetectionPolicy = default;
+            Optional<DataDeletionDetectionPolicy> dataDeletionDetectionPolicy = default;
+            Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -65,10 +65,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -89,33 +85,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("dataChangeDetectionPolicy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dataChangeDetectionPolicy = DataChangeDetectionPolicy.DeserializeDataChangeDetectionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDeletionDetectionPolicy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dataDeletionDetectionPolicy = DataDeletionDetectionPolicy.DeserializeDataDeletionDetectionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndexerDataSourceConnection(name, description, type, credentials, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, odataEtag);
+            return new SearchIndexerDataSourceConnection(name, description.Value, type, credentials, container, dataChangeDetectionPolicy.Value, dataDeletionDetectionPolicy.Value, odataEtag.Value);
         }
     }
 }

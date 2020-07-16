@@ -23,7 +23,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of GalleryList. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </param>
         internal GalleryList(IReadOnlyList<Gallery> value, string nextLink)
         {
-            Value = value ?? new List<Gallery>();
+            Value = value;
             NextLink = nextLink;
         }
 

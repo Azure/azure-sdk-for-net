@@ -99,14 +99,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineExtensionImage value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,14 +140,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineExtensionImage value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
-                        }
+                        value = VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,26 +190,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineExtensionImage> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,26 +226,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineExtensionImage> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -345,26 +303,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineExtensionImage> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -403,26 +347,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         IReadOnlyList<VirtualMachineExtensionImage> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
                         }
-                        else
-                        {
-                            List<VirtualMachineExtensionImage> array = new List<VirtualMachineExtensionImage>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualMachineExtensionImage.DeserializeVirtualMachineExtensionImage(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:

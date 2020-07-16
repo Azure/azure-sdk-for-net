@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             Sku = sku;
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionReference>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationStore. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -29,6 +30,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Domain = domain;
             AccessToken = accessToken;
+            NewClusterSparkConf = new ChangeTrackingDictionary<string, object>();
+            NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, object>();
+            NewClusterCustomTags = new ChangeTrackingDictionary<string, object>();
             Type = "AzureDatabricks";
         }
 
@@ -87,11 +91,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId is specified, this property is ignored. Type: string (or Expression with resultType string). </summary>
         public object NewClusterNodeType { get; set; }
         /// <summary> A set of optional, user-specified Spark configuration key-value pairs. </summary>
-        public IDictionary<string, object> NewClusterSparkConf { get; set; }
+        public IDictionary<string, object> NewClusterSparkConf { get; }
         /// <summary> A set of optional, user-specified Spark environment variables key-value pairs. </summary>
-        public IDictionary<string, object> NewClusterSparkEnvVars { get; set; }
+        public IDictionary<string, object> NewClusterSparkEnvVars { get; }
         /// <summary> Additional tags for cluster resources. This property is ignored in instance pool configurations. </summary>
-        public IDictionary<string, object> NewClusterCustomTags { get; set; }
+        public IDictionary<string, object> NewClusterCustomTags { get; }
         /// <summary> The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType string). </summary>
         public object NewClusterDriverNodeType { get; set; }
         /// <summary> User-defined initialization scripts for the new cluster. Type: array of strings (or Expression with resultType array of strings). </summary>

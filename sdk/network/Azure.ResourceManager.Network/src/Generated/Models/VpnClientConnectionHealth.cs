@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
         public VpnClientConnectionHealth()
         {
+            AllocatedIpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </summary>
         public int? VpnClientConnectionsCount { get; set; }
         /// <summary> List of allocated ip addresses to the connected p2s vpn clients. </summary>
-        public IList<string> AllocatedIpAddresses { get; set; }
+        public IList<string> AllocatedIpAddresses { get; }
     }
 }

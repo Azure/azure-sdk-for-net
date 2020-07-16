@@ -157,14 +157,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagValue.DeserializeTagValue(document.RootElement);
-                        }
+                        value = TagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,14 +189,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagValue.DeserializeTagValue(document.RootElement);
-                        }
+                        value = TagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,14 +232,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagDetails.DeserializeTagDetails(document.RootElement);
-                        }
+                        value = TagDetails.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -280,14 +259,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagDetails.DeserializeTagDetails(document.RootElement);
-                        }
+                        value = TagDetails.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -382,14 +354,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,14 +374,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -466,14 +424,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -504,14 +455,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -561,14 +505,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -599,14 +536,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,14 +577,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,14 +603,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsResource.DeserializeTagsResource(document.RootElement);
-                        }
+                        value = TagsResource.DeserializeTagsResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -782,14 +698,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -815,14 +724,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         TagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TagsListResult.DeserializeTagsListResult(document.RootElement);
-                        }
+                        value = TagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

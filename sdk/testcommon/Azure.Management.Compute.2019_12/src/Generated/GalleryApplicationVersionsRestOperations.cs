@@ -263,7 +263,7 @@ namespace Azure.Management.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,7 +280,10 @@ namespace Azure.Management.Compute
             uri.AppendPath(galleryApplicationName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryApplicationVersionName, true);
-            uri.AppendQuery("$expand", "ReplicationStatus", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             return message;
@@ -291,8 +294,9 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -311,7 +315,7 @@ namespace Azure.Management.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -319,14 +323,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersion value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
-                        }
+                        value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,8 +336,9 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition resides. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition in which the Application Version resides. </param>
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
+        public Response<GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -359,7 +357,7 @@ namespace Azure.Management.Compute
                 throw new ArgumentNullException(nameof(galleryApplicationVersionName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,14 +365,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersion value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
-                        }
+                        value = GalleryApplicationVersion.DeserializeGalleryApplicationVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -529,14 +520,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
-                        }
+                        value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -572,14 +556,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
-                        }
+                        value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -632,14 +609,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
-                        }
+                        value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,14 +650,7 @@ namespace Azure.Management.Compute
                     {
                         GalleryApplicationVersionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
-                        }
+                        value = GalleryApplicationVersionList.DeserializeGalleryApplicationVersionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RecordSet. </summary>
         public RecordSet()
         {
+            IpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecordSet. </summary>
@@ -45,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Recordset time to live. </summary>
         public int? Ttl { get; set; }
         /// <summary> The private ip address of the private endpoint. </summary>
-        public IList<string> IpAddresses { get; set; }
+        public IList<string> IpAddresses { get; }
     }
 }

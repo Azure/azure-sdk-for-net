@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -33,6 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             FirewallMode = firewallMode;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            DisabledRuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>();
+            Exclusions = new ChangeTrackingList<ApplicationGatewayFirewallExclusion>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The version of the rule set type. </summary>
         public string RuleSetVersion { get; set; }
         /// <summary> The disabled rule groups. </summary>
-        public IList<ApplicationGatewayFirewallDisabledRuleGroup> DisabledRuleGroups { get; set; }
+        public IList<ApplicationGatewayFirewallDisabledRuleGroup> DisabledRuleGroups { get; }
         /// <summary> Whether allow WAF to check request Body. </summary>
         public bool? RequestBodyCheck { get; set; }
         /// <summary> Maximum request body size for WAF. </summary>
@@ -79,6 +82,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
         public int? FileUploadLimitInMb { get; set; }
         /// <summary> The exclusion list. </summary>
-        public IList<ApplicationGatewayFirewallExclusion> Exclusions { get; set; }
+        public IList<ApplicationGatewayFirewallExclusion> Exclusions { get; }
     }
 }

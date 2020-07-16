@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Compute
         DedicatedHost IOperationSource<DedicatedHost>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
-            }
+            return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
         }
 
         async ValueTask<DedicatedHost> IOperationSource<DedicatedHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
-            }
+            return DedicatedHost.DeserializeDedicatedHost(document.RootElement);
         }
     }
 }

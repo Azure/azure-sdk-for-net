@@ -15,22 +15,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId");
                 writer.WriteStringValue(SessionId);
             }
-            if (DataFlowName != null)
+            if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName");
                 writer.WriteStringValue(DataFlowName);
             }
-            if (CommandName != null)
+            if (Optional.IsDefined(CommandName))
             {
                 writer.WritePropertyName("commandName");
                 writer.WriteStringValue(CommandName);
             }
-            if (CommandPayload != null)
+            if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload");
                 writer.WriteObjectValue(CommandPayload);

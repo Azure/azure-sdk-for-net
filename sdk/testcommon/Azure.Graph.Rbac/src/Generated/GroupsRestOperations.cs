@@ -87,14 +87,7 @@ namespace Azure.Graph.Rbac
                     {
                         CheckGroupMembershipResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
-                        }
+                        value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -120,14 +113,7 @@ namespace Azure.Graph.Rbac
                     {
                         CheckGroupMembershipResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
-                        }
+                        value = CheckGroupMembershipResult.DeserializeCheckGroupMembershipResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -315,14 +301,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,14 +327,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,14 +367,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -423,14 +388,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,14 +431,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -506,14 +457,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,14 +499,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -588,14 +525,7 @@ namespace Azure.Graph.Rbac
                     {
                         ADGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ADGroup.DeserializeADGroup(document.RootElement);
-                        }
+                        value = ADGroup.DeserializeADGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -705,14 +635,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupGetMemberGroupsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -743,14 +666,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupGetMemberGroupsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
-                        }
+                        value = GroupGetMemberGroupsResult.DeserializeGroupGetMemberGroupsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -793,14 +709,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -826,14 +735,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1018,14 +920,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1051,14 +946,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1100,14 +988,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1133,14 +1014,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1183,14 +1057,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1221,14 +1088,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1266,14 +1126,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1299,14 +1152,7 @@ namespace Azure.Graph.Rbac
                     {
                         GroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = GroupListResult.DeserializeGroupListResult(document.RootElement);
-                        }
+                        value = GroupListResult.DeserializeGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1344,14 +1190,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1377,14 +1216,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

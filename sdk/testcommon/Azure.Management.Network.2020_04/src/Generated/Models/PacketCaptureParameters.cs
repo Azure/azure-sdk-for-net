@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.Management.Network.Models
 
             Target = target;
             StorageLocation = storageLocation;
+            Filters = new ChangeTrackingList<PacketCaptureFilter>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureParameters. </summary>
@@ -59,6 +61,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The storage location for a packet capture session. </summary>
         public PacketCaptureStorageLocation StorageLocation { get; set; }
         /// <summary> A list of packet capture filters. </summary>
-        public IList<PacketCaptureFilter> Filters { get; set; }
+        public IList<PacketCaptureFilter> Filters { get; }
     }
 }

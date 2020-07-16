@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,14 +123,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +179,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResource.DeserializePrivateLinkResource(document.RootElement);
-                        }
+                        value = PrivateLinkResource.DeserializePrivateLinkResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,14 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResource.DeserializePrivateLinkResource(document.RootElement);
-                        }
+                        value = PrivateLinkResource.DeserializePrivateLinkResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -291,14 +263,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -334,14 +299,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

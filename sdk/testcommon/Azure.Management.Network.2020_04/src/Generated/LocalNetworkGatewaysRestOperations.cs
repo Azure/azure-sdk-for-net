@@ -170,14 +170,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
-                        }
+                        value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,14 +201,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
-                        }
+                        value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,14 +333,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
-                        }
+                        value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,14 +369,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
-                        }
+                        value = LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +412,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,14 +438,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -523,14 +481,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -561,14 +512,7 @@ namespace Azure.Management.Network
                     {
                         LocalNetworkGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
-                        }
+                        value = LocalNetworkGatewayListResult.DeserializeLocalNetworkGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

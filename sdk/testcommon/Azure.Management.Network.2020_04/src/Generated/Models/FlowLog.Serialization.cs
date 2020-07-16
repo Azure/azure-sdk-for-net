@@ -16,32 +16,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,45 +39,35 @@ namespace Azure.Management.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId");
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (TargetResourceGuid != null)
-            {
-                writer.WritePropertyName("targetResourceGuid");
-                writer.WriteStringValue(TargetResourceGuid);
-            }
-            if (StorageId != null)
+            if (Optional.IsDefined(StorageId))
             {
                 writer.WritePropertyName("storageId");
                 writer.WriteStringValue(StorageId);
             }
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy");
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format");
                 writer.WriteObjectValue(Format);
             }
-            if (FlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration");
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -100,84 +75,53 @@ namespace Azure.Management.Network.Models
 
         internal static FlowLog DeserializeFlowLog(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string targetResourceId = default;
-            string targetResourceGuid = default;
-            string storageId = default;
-            bool? enabled = default;
-            RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
-            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> targetResourceId = default;
+            Optional<string> targetResourceGuid = default;
+            Optional<string> storageId = default;
+            Optional<bool> enabled = default;
+            Optional<RetentionPolicyParameters> retentionPolicy = default;
+            Optional<FlowLogFormatParameters> format = default;
+            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -188,73 +132,41 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("targetResourceId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             targetResourceId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("targetResourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             targetResourceGuid = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("storageId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             storageId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enabled"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("retentionPolicy"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("format"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("flowAnalyticsConfiguration"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -262,7 +174,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new FlowLog(id, name, type, location, tags, etag, targetResourceId, targetResourceGuid, storageId, enabled, retentionPolicy, format, flowAnalyticsConfiguration, provisioningState);
+            return new FlowLog(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, targetResourceId.Value, targetResourceGuid.Value, storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

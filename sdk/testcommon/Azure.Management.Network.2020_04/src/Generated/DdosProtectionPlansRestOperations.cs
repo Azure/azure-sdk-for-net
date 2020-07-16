@@ -158,14 +158,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlan value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
-                        }
+                        value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,14 +189,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlan value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
-                        }
+                        value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,14 +333,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlan value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
-                        }
+                        value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,14 +369,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlan value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
-                        }
+                        value = DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -432,14 +404,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,14 +424,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,14 +467,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,14 +493,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,14 +531,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -620,14 +557,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -670,14 +600,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -708,14 +631,7 @@ namespace Azure.Management.Network
                     {
                         DdosProtectionPlanListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
-                        }
+                        value = DdosProtectionPlanListResult.DeserializeDdosProtectionPlanListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

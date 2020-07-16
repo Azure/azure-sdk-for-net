@@ -15,30 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VmUri != null)
-            {
-                writer.WritePropertyName("vmUri");
-                writer.WriteStringValue(VmUri);
-            }
             writer.WriteEndObject();
         }
 
         internal static ShareInfoElement DeserializeShareInfoElement(JsonElement element)
         {
-            string vmUri = default;
+            Optional<string> vmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vmUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new ShareInfoElement(vmUri);
+            return new ShareInfoElement(vmUri.Value);
         }
     }
 }

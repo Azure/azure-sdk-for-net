@@ -25,15 +25,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Type = "Microsoft.DigitalTwins/digitalTwinsInstances";
         }
 
-        /// <summary> Initializes a new instance of CheckNameRequest. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
-        internal CheckNameRequest(string name, string type)
-        {
-            Name = name;
-            Type = type;
-        }
-
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </summary>

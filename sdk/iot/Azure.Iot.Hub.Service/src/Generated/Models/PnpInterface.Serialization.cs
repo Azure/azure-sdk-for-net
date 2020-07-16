@@ -15,42 +15,27 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static PnpInterface DeserializePnpInterface(JsonElement element)
         {
-            string name = default;
-            IReadOnlyDictionary<string, PnpProperty> properties = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyDictionary<string, PnpProperty>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, PnpProperty> dictionary = new Dictionary<string, PnpProperty>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, PnpProperty.DeserializePnpProperty(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, PnpProperty.DeserializePnpProperty(property0.Value));
                     }
                     properties = dictionary;
                     continue;
                 }
             }
-            return new PnpInterface(name, properties);
+            return new PnpInterface(name.Value, Optional.ToDictionary(properties));
         }
     }
 }

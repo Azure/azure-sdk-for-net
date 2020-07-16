@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.Management.Network.Models
             }
 
             RuleGroupName = ruleGroupName;
+            Rules = new ChangeTrackingList<ManagedRuleOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
@@ -37,6 +39,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The managed rule group to override. </summary>
         public string RuleGroupName { get; set; }
         /// <summary> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </summary>
-        public IList<ManagedRuleOverride> Rules { get; set; }
+        public IList<ManagedRuleOverride> Rules { get; }
     }
 }

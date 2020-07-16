@@ -178,14 +178,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,14 +210,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,14 +259,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -311,14 +290,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScript value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
-                        }
+                        value = DeploymentScript.DeserializeDeploymentScript(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,14 +397,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,14 +417,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,14 +467,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLogsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
-                        }
+                        value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -547,14 +498,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLogsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
-                        }
+                        value = ScriptLogsList.DeserializeScriptLogsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -609,14 +553,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLog.DeserializeScriptLog(document.RootElement);
-                        }
+                        value = ScriptLog.DeserializeScriptLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -648,14 +585,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ScriptLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ScriptLog.DeserializeScriptLog(document.RootElement);
-                        }
+                        value = ScriptLog.DeserializeScriptLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -698,14 +628,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -731,14 +654,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -776,14 +692,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -809,14 +718,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -859,14 +761,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -897,14 +792,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentScriptListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
-                        }
+                        value = DeploymentScriptListResult.DeserializeDeploymentScriptListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

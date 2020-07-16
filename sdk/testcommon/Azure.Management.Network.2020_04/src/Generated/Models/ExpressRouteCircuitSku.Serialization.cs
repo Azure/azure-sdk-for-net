@@ -15,17 +15,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family");
                 writer.WriteStringValue(Family.Value.ToString());
@@ -35,40 +35,28 @@ namespace Azure.Management.Network.Models
 
         internal static ExpressRouteCircuitSku DeserializeExpressRouteCircuitSku(JsonElement element)
         {
-            string name = default;
-            ExpressRouteCircuitSkuTier? tier = default;
-            ExpressRouteCircuitSkuFamily? family = default;
+            Optional<string> name = default;
+            Optional<ExpressRouteCircuitSkuTier> tier = default;
+            Optional<ExpressRouteCircuitSkuFamily> family = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = new ExpressRouteCircuitSkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     family = new ExpressRouteCircuitSkuFamily(property.Value.GetString());
                     continue;
                 }
             }
-            return new ExpressRouteCircuitSku(name, tier, family);
+            return new ExpressRouteCircuitSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family));
         }
     }
 }

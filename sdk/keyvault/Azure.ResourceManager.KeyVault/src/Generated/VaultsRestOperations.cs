@@ -187,14 +187,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         Vault value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Vault.DeserializeVault(document.RootElement);
-                        }
+                        value = Vault.DeserializeVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -231,14 +224,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         Vault value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Vault.DeserializeVault(document.RootElement);
-                        }
+                        value = Vault.DeserializeVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -357,14 +343,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         Vault value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Vault.DeserializeVault(document.RootElement);
-                        }
+                        value = Vault.DeserializeVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,14 +374,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         Vault value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Vault.DeserializeVault(document.RootElement);
-                        }
+                        value = Vault.DeserializeVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,14 +436,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultAccessPolicyParameters value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
-                        }
+                        value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,14 +474,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultAccessPolicyParameters value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
-                        }
+                        value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -564,14 +522,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -598,14 +549,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -645,14 +589,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -673,14 +610,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -715,14 +645,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
-                        }
+                        value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -742,14 +665,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
-                        }
+                        value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -798,14 +714,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVault value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVault.DeserializeDeletedVault(document.RootElement);
-                        }
+                        value = DeletedVault.DeserializeDeletedVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -836,14 +745,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVault value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVault.DeserializeDeletedVault(document.RootElement);
-                        }
+                        value = DeletedVault.DeserializeDeletedVault(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -957,14 +859,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -985,14 +880,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1037,14 +925,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1070,14 +951,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1121,14 +995,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1160,14 +1027,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1206,14 +1066,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1240,14 +1093,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         VaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VaultListResult.DeserializeVaultListResult(document.RootElement);
-                        }
+                        value = VaultListResult.DeserializeVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1285,14 +1131,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVaultListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
-                        }
+                        value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1318,14 +1157,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         DeletedVaultListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
-                        }
+                        value = DeletedVaultListResult.DeserializeDeletedVaultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1364,14 +1196,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         ResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1398,14 +1223,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         ResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
-                        }
+                        value = ResourceListResult.DeserializeResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

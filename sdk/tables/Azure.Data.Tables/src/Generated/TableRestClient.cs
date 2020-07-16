@@ -101,14 +101,7 @@ namespace Azure.Data.Tables
                     {
                         TableQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        }
+                        value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -132,14 +125,7 @@ namespace Azure.Data.Tables
                     {
                         TableQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        }
+                        value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -199,14 +185,7 @@ namespace Azure.Data.Tables
                     {
                         TableResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        }
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -238,14 +217,7 @@ namespace Azure.Data.Tables
                     {
                         TableResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        }
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -373,14 +345,7 @@ namespace Azure.Data.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -412,14 +377,7 @@ namespace Azure.Data.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -499,14 +457,7 @@ namespace Azure.Data.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -546,14 +497,7 @@ namespace Azure.Data.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -988,26 +932,12 @@ namespace Azure.Data.Tables
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -1041,26 +971,12 @@ namespace Azure.Data.Tables
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:

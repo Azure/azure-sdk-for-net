@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
+            Value = new ChangeTrackingList<TenantIdDescription>();
             NextLink = nextLink;
         }
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Management.Compute.Models
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>
         public DiskInstanceView()
         {
+            EncryptionSettings = new ChangeTrackingList<DiskEncryptionSettings>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>
@@ -31,8 +34,8 @@ namespace Azure.Management.Compute.Models
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
-        public IList<DiskEncryptionSettings> EncryptionSettings { get; set; }
+        public IList<DiskEncryptionSettings> EncryptionSettings { get; }
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        public IList<InstanceViewStatus> Statuses { get; }
     }
 }

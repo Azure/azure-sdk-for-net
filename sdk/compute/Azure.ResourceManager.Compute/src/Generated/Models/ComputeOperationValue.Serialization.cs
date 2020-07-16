@@ -14,29 +14,21 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeOperationValue DeserializeComputeOperationValue(JsonElement element)
         {
-            string origin = default;
-            string name = default;
-            string operation = default;
-            string resource = default;
-            string description = default;
-            string provider = default;
+            Optional<string> origin = default;
+            Optional<string> name = default;
+            Optional<string> operation = default;
+            Optional<string> resource = default;
+            Optional<string> description = default;
+            Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     origin = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -46,37 +38,21 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         if (property0.NameEquals("operation"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             operation = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("resource"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resource = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("description"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             description = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provider"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provider = property0.Value.GetString();
                             continue;
                         }
@@ -84,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeOperationValue(origin, name, operation, resource, description, provider);
+            return new ComputeOperationValue(origin.Value, name.Value, operation.Value, resource.Value, description.Value, provider.Value);
         }
     }
 }

@@ -29,7 +29,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Server = server;
             Database = database;
-            AuthenticationType = "Basic";
             Type = "Db2";
         }
 
@@ -48,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packageCollection"> Under where packages are created when querying database. Type: string (or Expression with resultType string). </param>
         /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal Db2LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object database, string authenticationType, object username, SecretBase password, object packageCollection, object certificateCommonName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal Db2LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object database, Db2AuthenticationType? authenticationType, object username, SecretBase password, object packageCollection, object certificateCommonName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Database = database;
@@ -66,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
         public object Database { get; set; }
         /// <summary> AuthenticationType to be used for connection. </summary>
-        public string AuthenticationType { get; set; }
+        public Db2AuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public object Username { get; set; }
         /// <summary> Password for authentication. </summary>

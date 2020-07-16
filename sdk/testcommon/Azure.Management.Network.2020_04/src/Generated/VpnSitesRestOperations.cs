@@ -84,14 +84,7 @@ namespace Azure.Management.Network
                     {
                         VpnSite value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSite.DeserializeVpnSite(document.RootElement);
-                        }
+                        value = VpnSite.DeserializeVpnSite(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,14 +115,7 @@ namespace Azure.Management.Network
                     {
                         VpnSite value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSite.DeserializeVpnSite(document.RootElement);
-                        }
+                        value = VpnSite.DeserializeVpnSite(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,14 +259,7 @@ namespace Azure.Management.Network
                     {
                         VpnSite value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSite.DeserializeVpnSite(document.RootElement);
-                        }
+                        value = VpnSite.DeserializeVpnSite(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -316,14 +295,7 @@ namespace Azure.Management.Network
                     {
                         VpnSite value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VpnSite.DeserializeVpnSite(document.RootElement);
-                        }
+                        value = VpnSite.DeserializeVpnSite(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +412,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,14 +438,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,14 +473,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,14 +493,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -592,14 +536,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -630,14 +567,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -675,14 +605,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -708,14 +631,7 @@ namespace Azure.Management.Network
                     {
                         ListVpnSitesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
-                        }
+                        value = ListVpnSitesResult.DeserializeListVpnSitesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

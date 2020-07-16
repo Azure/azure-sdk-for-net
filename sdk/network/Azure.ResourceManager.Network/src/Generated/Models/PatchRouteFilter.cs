@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
         public PatchRouteFilter()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Rules = new ChangeTrackingList<RouteFilterRule>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeering>();
+            Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeering>();
         }
 
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
@@ -46,9 +51,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
-        public IList<RouteFilterRule> Rules { get; set; }
+        public IList<RouteFilterRule> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
         public IList<ExpressRouteCircuitPeering> Peerings { get; }
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>

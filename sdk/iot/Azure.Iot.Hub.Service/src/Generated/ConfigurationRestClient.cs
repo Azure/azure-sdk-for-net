@@ -76,14 +76,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         TwinConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
-                        }
+                        value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,14 +102,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         TwinConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
-                        }
+                        value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,14 +157,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         TwinConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
-                        }
+                        value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -211,14 +190,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         TwinConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
-                        }
+                        value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,26 +290,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<TwinConfiguration> array = new List<TwinConfiguration>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
                         }
-                        else
-                        {
-                            List<TwinConfiguration> array = new List<TwinConfiguration>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,26 +316,12 @@ namespace Azure.Iot.Hub.Service
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<TwinConfiguration> array = new List<TwinConfiguration>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
                         }
-                        else
-                        {
-                            List<TwinConfiguration> array = new List<TwinConfiguration>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -420,14 +364,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ConfigurationQueriesTestResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
-                        }
+                        value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -453,14 +390,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         ConfigurationQueriesTestResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
-                        }
+                        value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -510,14 +440,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -550,14 +473,7 @@ namespace Azure.Iot.Hub.Service
                     {
                         object value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetObject();
-                        }
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
