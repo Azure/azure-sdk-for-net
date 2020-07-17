@@ -23,7 +23,7 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -153,7 +153,7 @@ namespace Azure.Data.Tables.Tests
 
                 // Get the table list.
 
-                var tableResponses = (await service.GetTablesAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                var tableResponses = (await service.GetTablesAsync(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));

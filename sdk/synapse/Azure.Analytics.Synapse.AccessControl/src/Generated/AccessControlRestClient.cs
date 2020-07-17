@@ -82,14 +82,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RoleAssignmentDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
-                        }
+                        value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,14 +108,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RoleAssignmentDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
-                        }
+                        value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,26 +157,12 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         IReadOnlyList<RoleAssignmentDetails> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<RoleAssignmentDetails> array = new List<RoleAssignmentDetails>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(RoleAssignmentDetails.DeserializeRoleAssignmentDetails(item));
                         }
-                        else
-                        {
-                            List<RoleAssignmentDetails> array = new List<RoleAssignmentDetails>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(RoleAssignmentDetails.DeserializeRoleAssignmentDetails(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -214,26 +186,12 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         IReadOnlyList<RoleAssignmentDetails> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<RoleAssignmentDetails> array = new List<RoleAssignmentDetails>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(RoleAssignmentDetails.DeserializeRoleAssignmentDetails(item));
                         }
-                        else
-                        {
-                            List<RoleAssignmentDetails> array = new List<RoleAssignmentDetails>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(RoleAssignmentDetails.DeserializeRoleAssignmentDetails(item));
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -273,14 +231,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RoleAssignmentDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
-                        }
+                        value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -306,14 +257,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RoleAssignmentDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
-                        }
+                        value = RoleAssignmentDetails.DeserializeRoleAssignmentDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,26 +348,12 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         IReadOnlyList<string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -443,26 +373,12 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         IReadOnlyList<string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -495,14 +411,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RolesListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
-                        }
+                        value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -522,14 +431,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RolesListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
-                        }
+                        value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -569,14 +471,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         SynapseRole value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynapseRole.DeserializeSynapseRole(document.RootElement);
-                        }
+                        value = SynapseRole.DeserializeSynapseRole(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -602,14 +497,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         SynapseRole value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynapseRole.DeserializeSynapseRole(document.RootElement);
-                        }
+                        value = SynapseRole.DeserializeSynapseRole(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,14 +535,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RolesListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
-                        }
+                        value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,14 +561,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                     {
                         RolesListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
-                        }
+                        value = RolesListResponse.DeserializeRolesListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

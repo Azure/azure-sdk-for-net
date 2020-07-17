@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService");
                 writer.WriteObjectValue(LinkedService);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
                 writer.WriteStringValue(FolderPath);
@@ -30,30 +30,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
-            LinkedServiceReference linkedService = default;
-            string folderPath = default;
+            Optional<LinkedServiceReference> linkedService = default;
+            Optional<string> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folderPath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     folderPath = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataFlowStagingInfo(linkedService, folderPath);
+            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
         }
     }
 }

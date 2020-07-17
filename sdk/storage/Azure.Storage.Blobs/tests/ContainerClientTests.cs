@@ -380,7 +380,23 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = GetNewContainerName();
-            BlobServiceClient service = GetServiceClient_AccountSas();
+
+            AccountSasPermissions permissions = AccountSasPermissions.Read
+                | AccountSasPermissions.Write
+                | AccountSasPermissions.Delete
+                | AccountSasPermissions.List
+                | AccountSasPermissions.Add
+                | AccountSasPermissions.Create
+                | AccountSasPermissions.Update
+                | AccountSasPermissions.Process;
+
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+                permissions: permissions);
+
+            BlobServiceClient service = new BlobServiceClient(
+                new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasQueryParameters}"),
+                GetOptions());
+
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try
@@ -403,7 +419,25 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var containerName = GetNewContainerName();
             BlobServiceClient service = GetServiceClient_BlobServiceSas_Container(containerName);
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read
+                | BlobContainerSasPermissions.Add
+                | BlobContainerSasPermissions.Create
+                | BlobContainerSasPermissions.Write
+                | BlobContainerSasPermissions.Delete
+                | BlobContainerSasPermissions.List;
+
+            BlobSasQueryParameters sasQueryParameters = GetContainerSas(
+                containerName: containerName,
+                permissions: permissions,
+                sasVersion: ToSasVersion(_serviceVersion));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(service.GetBlobContainerClient(containerName).Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
             var pass = false;
 
             try
@@ -681,7 +715,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DeleteIfExistsAsync_Exists()
+        public async Task DeleteIfExistsAsync_NotExists()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -2186,16 +2220,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task DeleteBlobIfExistsAsync_ContainerNotExists()
+        {
+            var name = GetNewBlobName();
+
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(name));
+
+            // Act
+            Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
+
+            // Assert
+            Assert.IsFalse(response.Value);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.GetPropertiesAsync());
+        }
+
+        [Test]
         public async Task DeleteBlobIfExistsAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient unauthorizedContainerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.DeleteBlobIfExistsAsync(GetNewBlobName()),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                unauthorizedContainerClient.DeleteBlobIfExistsAsync(GetNewBlobName()),
+                e => { });
         }
 
         [Test]

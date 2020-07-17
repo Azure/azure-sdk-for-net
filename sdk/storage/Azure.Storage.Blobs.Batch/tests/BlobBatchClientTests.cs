@@ -573,6 +573,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Snapshot()
         {
@@ -595,6 +596,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Version()
         {

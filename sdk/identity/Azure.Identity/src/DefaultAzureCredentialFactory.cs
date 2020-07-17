@@ -26,12 +26,12 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
-            return new SharedTokenCacheCredential(tenantId, username, Pipeline);
+            return new SharedTokenCacheCredential(tenantId, username, Pipeline, (TokenCredentialOptions)null);
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline, true);
+            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline, new InteractiveBrowserCredentialOptions { EnablePersistentCache = true });
         }
 
         public virtual TokenCredential CreateAzureCliCredential()

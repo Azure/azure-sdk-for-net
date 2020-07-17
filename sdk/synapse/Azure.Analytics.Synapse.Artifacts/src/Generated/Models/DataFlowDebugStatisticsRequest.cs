@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
         internal DataFlowDebugStatisticsRequest()
         {
+            Columns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>

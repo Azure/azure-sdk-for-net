@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientQueryableLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -200,7 +200,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 10);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 10);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 5);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 5);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {

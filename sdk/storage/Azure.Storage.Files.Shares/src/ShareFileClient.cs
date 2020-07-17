@@ -779,7 +779,8 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -903,7 +904,8 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -1815,6 +1817,235 @@ namespace Azure.Storage.Files.Shares
             return (response, stream);
         }
         #endregion Download
+
+        #region OpenRead
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => OpenReadInteral(
+                position,
+                bufferSize,
+                conditions,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => OpenRead(
+                    position,
+                    bufferSize,
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
+                    cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await OpenReadInteral(
+                position,
+                bufferSize,
+                conditions,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => await OpenReadAsync(
+                    position,
+                    bufferSize,
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
+                    cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task<Stream> OpenReadInteral(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+            long position,
+            int? bufferSize,
+            ShareFileRequestConditions conditions,
+#pragma warning disable CA1801
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CA1801
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+
+                return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
+                    async (HttpRange range,
+                    ShareFileRequestConditions conditions,
+                    bool rangeGetContentHash,
+                    bool async,
+                    CancellationToken cancellationToken) =>
+                    {
+                        Response<ShareFileDownloadInfo> response = await DownloadInternal(
+                            range,
+                            rangeGetContentHash,
+                            conditions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+
+                        return Response.FromValue(
+                            (IDownloadedContent)response.Value,
+                            response.GetRawResponse());
+                    },
+                    createRequestConditionsFunc: null,
+                    async (bool async, CancellationToken cancellationToken)
+                        => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    position,
+                    bufferSize,
+                    conditions);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenRead
 
         #region Delete
         /// <summary>

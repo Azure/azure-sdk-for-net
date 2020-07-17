@@ -134,14 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,14 +154,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -211,14 +197,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         AddDataFlowToDebugSessionResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
-                        }
+                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,14 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         AddDataFlowToDebugSessionResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
-                        }
+                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -411,14 +383,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -444,14 +409,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

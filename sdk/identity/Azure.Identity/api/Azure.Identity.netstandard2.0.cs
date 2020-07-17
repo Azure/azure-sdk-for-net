@@ -169,10 +169,10 @@ namespace Azure.Identity
     }
     public static partial class KnownAuthorityHosts
     {
-        public static readonly System.Uri AzureChinaCloud;
-        public static readonly System.Uri AzureCloud;
-        public static readonly System.Uri AzureGermanCloud;
-        public static readonly System.Uri AzureUSGovernment;
+        public static System.Uri AzureChinaCloud { get { throw null; } }
+        public static System.Uri AzureCloud { get { throw null; } }
+        public static System.Uri AzureGermanCloud { get { throw null; } }
+        public static System.Uri AzureUSGovernment { get { throw null; } }
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
@@ -211,6 +211,11 @@ namespace Azure.Identity
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public UsernamePasswordCredentialOptions() { }
+        public bool EnablePersistentCache { get { throw null; } set { } }
     }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
     {

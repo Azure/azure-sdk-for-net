@@ -781,7 +781,8 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -885,7 +886,8 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

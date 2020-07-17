@@ -14,50 +14,34 @@ namespace Azure.DigitalTwins.Core
     {
         internal static IncomingRelationship DeserializeIncomingRelationship(JsonElement element)
         {
-            string relationshipId = default;
-            string sourceId = default;
-            string relationshipName = default;
-            string relationshipLink = default;
+            Optional<string> relationshipId = default;
+            Optional<string> sourceId = default;
+            Optional<string> relationshipName = default;
+            Optional<string> relationshipLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$relationshipId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     relationshipId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("$sourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("$relationshipName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     relationshipName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("$relationshipLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     relationshipLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
+            return new IncomingRelationship(relationshipId.Value, sourceId.Value, relationshipName.Value, relationshipLink.Value);
         }
     }
 }

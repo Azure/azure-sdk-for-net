@@ -17,103 +17,63 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (CreatedTime != null)
-            {
-                writer.WritePropertyName("createdTime");
-                writer.WriteStringValue(CreatedTime.Value, "O");
-            }
-            if (LastUpdatedTime != null)
-            {
-                writer.WritePropertyName("lastUpdatedTime");
-                writer.WriteStringValue(LastUpdatedTime.Value, "O");
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (HostName != null)
-            {
-                writer.WritePropertyName("hostName");
-                writer.WriteStringValue(HostName);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DigitalTwinsDescription DeserializeDigitalTwinsDescription(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            DigitalTwinsSkuInfo sku = default;
-            DateTimeOffset? createdTime = default;
-            DateTimeOffset? lastUpdatedTime = default;
-            ProvisioningState? provisioningState = default;
-            string hostName = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<DigitalTwinsSkuInfo> sku = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -126,29 +86,19 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = DigitalTwinsSkuInfo.DeserializeDigitalTwinsSkuInfo(property.Value);
                     continue;
                 }
@@ -158,37 +108,21 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         if (property0.NameEquals("createdTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastUpdatedTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostName = property0.Value.GetString();
                             continue;
                         }
@@ -196,7 +130,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsDescription(id, name, type, location, tags, sku, createdTime, lastUpdatedTime, provisioningState, hostName);
+            return new DigitalTwinsDescription(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value);
         }
     }
 }

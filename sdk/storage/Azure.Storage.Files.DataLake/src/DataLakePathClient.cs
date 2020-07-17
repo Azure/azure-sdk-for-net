@@ -1387,7 +1387,8 @@ namespace Azure.Storage.Files.DataLake
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException ex)
-            when (ex.ErrorCode == "PathNotFound")
+            when (ex.ErrorCode == Constants.DataLake.PathNotFound
+                || ex.ErrorCode == Constants.DataLake.FilesystemNotFound)
             {
                 return Response.FromValue(false, default);
             }

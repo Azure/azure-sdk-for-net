@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Dataset = dataset;
+            FieldList = new ChangeTrackingList<object>();
             Type = "GetMetadata";
         }
 
@@ -52,6 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>
-        public IList<object> FieldList { get; set; }
+        public IList<object> FieldList { get; }
     }
 }

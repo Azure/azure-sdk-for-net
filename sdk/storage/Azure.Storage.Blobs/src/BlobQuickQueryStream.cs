@@ -59,7 +59,6 @@ namespace Azure.Storage.Blobs
         {
             _avroStream = avroStream;
             _avroReader = new AvroReader(_avroStream);
-            _buffer = ArrayPool<byte>.Shared.Rent(Constants.Blob.QuickQueryDownloadSize);
             _bufferOffset = 0;
             _bufferLength = 0;
             _progressHandler = progressHandler;
@@ -137,6 +136,19 @@ namespace Azure.Storage.Blobs
                         }
 
                         byte[] bytes = (byte[])byteObject;
+
+                        // Return the buffer if it is not null and not big enough.
+                        if (_buffer != null && _buffer.Length < bytes.Length)
+                        {
+                            ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                        }
+
+                        // Rent a new buffer if it is null or not big enough.
+                        if (_buffer == null || _buffer.Length < bytes.Length)
+                        {
+                            _buffer = ArrayPool<byte>.Shared.Rent(Math.Max(4 * Constants.MB, bytes.Length));
+                        }
+
                         Array.Copy(
                             sourceArray: bytes,
                             sourceIndex: 0,
@@ -305,6 +317,11 @@ namespace Azure.Storage.Blobs
             }
 
             _avroStream.Dispose();
+            if (_buffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                _buffer = null;
+            }
         }
     }
 }

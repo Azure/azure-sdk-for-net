@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BigDataPoolReference DeserializeBigDataPoolReference(JsonElement element)
         {
-            string type = default;
+            BigDataPoolReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new BigDataPoolReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
