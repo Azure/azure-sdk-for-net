@@ -2,13 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Azure.Data.Tables
 {
 
-    public class TableEntityDictionary
+    public class TableEntityDictionary : IDictionary<string, object>
     {
+        private IDictionary<string, object> _properties;
+
         /// <summary>
         /// The partition key is a unique identifier for the partition within a given table and forms the first part of an entity's primary key.
         /// </summary>
@@ -51,7 +54,13 @@ namespace Azure.Data.Tables
             set { _properties[TableConstants.PropertyNames.Etag] = value; }
         }
 
-        private Dictionary<string, object> _properties;
+        public ICollection<string> Keys => _properties.Keys;
+
+        public ICollection<object> Values => _properties.Values;
+
+        public int Count => _properties.Count;
+
+        public bool IsReadOnly => _properties.IsReadOnly;
 
         /// <summary>
         /// Constructs an instance of a <see cref="TableEntity" />.
@@ -80,6 +89,61 @@ namespace Azure.Data.Tables
         {
             get { return _properties[key]; }
             set { _properties[key] = value; }
+        }
+
+        public void Add(string key, object value)
+        {
+            _properties.Add(key, value);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return _properties.ContainsKey(key);
+        }
+
+        public bool Remove(string key)
+        {
+            return _properties.Remove(key);
+        }
+
+        public bool TryGetValue(string key, out object value)
+        {
+            return _properties.TryGetValue(key, out value);
+        }
+
+        public void Add(KeyValuePair<string, object> item)
+        {
+            _properties.Add(item);
+        }
+
+        public void Clear()
+        {
+            _properties.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, object> item)
+        {
+            return _properties.Contains(item);
+        }
+
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            _properties.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(KeyValuePair<string, object> item)
+        {
+            return _properties.Remove(item);
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            return _properties.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)_properties).GetEnumerator();
         }
     }
 }
