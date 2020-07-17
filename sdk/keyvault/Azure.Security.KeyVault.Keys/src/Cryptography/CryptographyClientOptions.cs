@@ -55,6 +55,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public CryptographyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+
+            this.ConfigureLogging();
         }
 
         internal string GetVersionString()
