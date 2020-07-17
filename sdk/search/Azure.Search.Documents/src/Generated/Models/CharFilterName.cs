@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all character filters supported by Azure Cognitive Search. </summary>
-    public readonly partial struct CharFilterName : IEquatable<CharFilterName>
+    internal readonly partial struct CharFilterName : IEquatable<CharFilterName>
     {
         private readonly string _value;
 

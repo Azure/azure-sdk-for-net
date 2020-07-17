@@ -240,23 +240,6 @@ namespace Azure.Search.Documents.Indexes.Models
         internal CharFilter() { }
         public string Name { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CharFilterName : System.IEquatable<Azure.Search.Documents.Indexes.Models.CharFilterName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CharFilterName(string value) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.CharFilterName HtmlStrip { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Indexes.Models.CharFilterName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Indexes.Models.CharFilterName left, Azure.Search.Documents.Indexes.Models.CharFilterName right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Indexes.Models.CharFilterName (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Indexes.Models.CharFilterName left, Azure.Search.Documents.Indexes.Models.CharFilterName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CjkBigramTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
         public CjkBigramTokenFilter(string name) { }
