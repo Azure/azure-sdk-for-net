@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
@@ -79,6 +80,65 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(memoryStream.Length, 1000);
                 extractedStream.Dispose();
             }
+        }
+
+
+        [Test]
+        public async Task NonBufferedFailedResponsesAreDisposedOf()
+        {
+            byte[] buffer = { 0 };
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions()
+            {
+                Retry =
+                {
+                    Delay = TimeSpan.FromMilliseconds(2),
+                    NetworkTimeout = TimeSpan.FromSeconds(5)
+                },
+            });
+
+            int bodySize = 1000;
+            int reqNum = 0;
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    if (Interlocked.Increment(ref reqNum) % 2 == 0)
+                    {
+                        // Respond with 503 to every other request to force a retry
+                        context.Response.StatusCode = 503;
+                    }
+
+                    for (int i = 0; i < bodySize; i++)
+                    {
+                        await context.Response.Body.WriteAsync(buffer, 0, 1);
+                    }
+                });
+
+            // Make sure we dispose things correctly and not exhaust the connection pool
+            var requestCount = 100;
+            for (int i = 0; i < requestCount; i++)
+            {
+                Stream extractedStream;
+                using (HttpMessage message = httpPipeline.CreateMessage())
+                {
+                    message.Request.Uri.Reset(testServer.Address);
+                    message.BufferResponse = false;
+
+                    await httpPipeline.SendAsync(message, CancellationToken.None);
+
+                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+
+                    extractedStream = message.ExtractResponseContent();
+                }
+
+                var memoryStream = new MemoryStream();
+                await extractedStream.CopyToAsync(memoryStream);
+                Assert.AreEqual(memoryStream.Length, bodySize);
+                extractedStream.Dispose();
+            }
+
+            Assert.Greater(reqNum, requestCount);
         }
 
         [Test]

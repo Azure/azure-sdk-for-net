@@ -14,7 +14,10 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="DataLakeSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for a Data Lake file system or path
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Constructing a Service SAS</see>.
     /// </summary>
     public class DataLakeSasBuilder
     {

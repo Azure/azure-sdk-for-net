@@ -375,7 +375,10 @@ namespace Azure.Iot.Hub.Service
 
             async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var querySpecification = new QuerySpecification();
+                var querySpecification = new QuerySpecification()
+                {
+                    Query = HubDeviceQuery
+                };
                 Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
                     querySpecification,
                     nextLink,
@@ -417,7 +420,10 @@ namespace Azure.Iot.Hub.Service
 
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var querySpecification = new QuerySpecification();
+                var querySpecification = new QuerySpecification()
+                {
+                    Query = HubDeviceQuery
+                };
                 Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
                     querySpecification,
                     nextLink,

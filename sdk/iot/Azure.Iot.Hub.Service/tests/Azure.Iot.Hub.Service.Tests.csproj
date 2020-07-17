@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <!--Temporarily using a track 1 library for testing this track 2 service client. Once
+    the device client is track 2 as well, remove this dependency-->
+    <PackageReference Include="Microsoft.Azure.Devices.Client" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />

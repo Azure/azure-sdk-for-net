@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Expression = expression;
             Timeout = timeout;
-            Activities = activities ?? new List<Activity>();
+            Activities = activities;
             Type = type ?? "Until";
         }
 

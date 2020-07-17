@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
+            Parameters = new ChangeTrackingDictionary<string, object>();
             Type = "DataLakeAnalyticsU-SQL";
         }
 
@@ -74,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
         public object Priority { get; set; }
         /// <summary> Parameters for U-SQL job request. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
         /// <summary> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </summary>
         public object RuntimeVersion { get; set; }
         /// <summary> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </summary>

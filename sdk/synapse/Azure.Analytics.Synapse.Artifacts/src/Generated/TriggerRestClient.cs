@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,14 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,14 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,14 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -286,14 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -453,14 +411,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerSubscriptionOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
-                        }
+                        value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,14 +437,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerSubscriptionOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
-                        }
+                        value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -704,14 +648,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -737,14 +674,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -2648,6 +2648,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string SapOpenHubWithMessageServerLinkedService = @"
+{
+    ""name"": ""SapBwOpenHubLinkedService"",
+    ""properties"": {
+        ""type"": ""SapOpenHub"",
+        ""typeProperties"": {
+            ""messageServer"": ""fakeserver"",
+            ""messageServerService"": ""00"",
+            ""systemId"": ""ecc"",
+            ""logonGroup"": ""fakegp"",
+            ""clientId"": ""800"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string RestLinkedService = @"
 {
     ""name"": ""RESTLinkedService"",

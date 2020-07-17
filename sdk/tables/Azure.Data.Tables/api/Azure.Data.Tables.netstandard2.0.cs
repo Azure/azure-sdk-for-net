@@ -221,7 +221,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableServiceProperties
     {
         public TableServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } }
         public Azure.Data.Tables.Models.TableMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Data.Tables.Models.LoggingSettings Logging { get { throw null; } set { } }
         public Azure.Data.Tables.Models.TableMetrics MinuteMetrics { get { throw null; } set { } }
