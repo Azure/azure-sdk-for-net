@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1301,6 +1302,249 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Parallel Download
+
+        #region OpenRead
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the download of the blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => OpenReadInternal(
+                position,
+                bufferSize,
+                conditions,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="allowBlobModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowBlobModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => OpenRead(
+                    position,
+                    bufferSize,
+                    allowBlobModifications ? new BlobRequestConditions() : null,
+                    cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the download of the blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await OpenReadInternal(
+                position,
+                bufferSize,
+                conditions,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="allowBlobModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowBlobModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => await OpenReadAsync(
+                    position,
+                    bufferSize,
+                    allowBlobModifications ? new BlobRequestConditions() : null,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the blob.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the download of the blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task<Stream> OpenReadInternal(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+            long position,
+            int? bufferSize,
+            BlobRequestConditions conditions,
+#pragma warning disable CA1801
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CA1801
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                Pipeline.LogMethodEnter(
+                nameof(BlobBaseClient),
+                message:
+                $"{nameof(position)}: {position}\n" +
+                $"{nameof(bufferSize)}: {bufferSize}\n" +
+                $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
+                try
+                {
+                    scope.Start();
+
+                    return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
+                        async (HttpRange range,
+                        BlobRequestConditions conditions,
+                        bool rangeGetContentHash,
+                        bool async,
+                        CancellationToken cancellationToken) =>
+                        {
+                            Response<BlobDownloadInfo> response = await DownloadInternal(
+                                range,
+                                conditions,
+                                rangeGetContentHash,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+
+                            return Response.FromValue(
+                                (IDownloadedContent)response.Value,
+                                response.GetRawResponse());
+                        },
+                        (ETag? eTag) => new BlobRequestConditions { IfMatch = eTag },
+                        async (bool async, CancellationToken cancellationToken)
+                            => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                        position,
+                        bufferSize,
+                        conditions);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    scope.Dispose();
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+
+        #endregion OpenRead
 
         #region StartCopyFromUri
         /// <summary>

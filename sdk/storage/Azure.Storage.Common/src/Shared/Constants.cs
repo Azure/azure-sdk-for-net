@@ -42,6 +42,11 @@ namespace Azure.Storage
         public const int LargeUploadThreshold = 100 * Constants.MB;
 
         /// <summary>
+        /// The minimum number of bytes to download in Open Read.
+        /// </summary>
+        public const int DefaultStreamingDownloadSize = 4 * Constants.MB;
+
+        /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>
         /// and it's overloads. This is the default for .NET Core to be applied everywhere for test consistency.
         /// </summary>
