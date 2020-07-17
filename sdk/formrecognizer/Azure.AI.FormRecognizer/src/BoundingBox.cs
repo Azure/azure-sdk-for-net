@@ -18,6 +18,12 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
+            if (boundingBox.Count == 0)
+            {
+                Points = null;
+                return;
+            }
+
             int count = boundingBox.Count / 2;
 
             Points = new PointF[count];
