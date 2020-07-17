@@ -12,7 +12,8 @@ namespace Azure.Storage.Sas
     /// <see cref="AccountSasBuilder"/> is used to generate an account level
     /// Shared Access Signature (SAS) for Azure Storage services.
     /// For more information, see
-    /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas">
+    /// Create an account SAS</see>.
     /// </summary>
     public class AccountSasBuilder
     {

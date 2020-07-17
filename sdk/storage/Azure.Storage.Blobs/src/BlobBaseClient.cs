@@ -170,7 +170,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this blob.
@@ -192,7 +194,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this blob.
@@ -371,7 +375,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
@@ -481,7 +487,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Download()"/> operation downloads a blob from
         /// the service, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/> describing the
@@ -499,7 +507,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="DownloadAsync()"/> operation downloads a blob from
         /// the service, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/> describing the
@@ -517,7 +527,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Download(CancellationToken)"/> operation downloads
         /// a blob from the service, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -543,7 +555,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// downloads a blob from the service, including its metadata and
         /// properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -570,7 +584,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
         /// If provided, only download the bytes of the blob in the specified
@@ -619,7 +635,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// operation downloads a blob from the service, including its metadata
         /// and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
         /// If provided, only download the bytes of the blob in the specified
@@ -667,7 +685,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="DownloadInternal"/> operation downloads a blob
         /// from the service, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
+        /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
         /// If provided, only download the bytes of the blob in the specified
@@ -1554,7 +1574,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="GetProperties"/> to determine if the
         /// copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1617,7 +1639,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="GetProperties"/> to determine if the
         /// copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1701,7 +1725,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="GetPropertiesAsync"/> to determine if
         /// the copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1764,7 +1790,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the <see cref="GetPropertiesAsync"/> to determine if
         /// the copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1848,7 +1876,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// returned from the<see cref="GetPropertiesAsync"/> to determine if
         /// the copy has completed.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
@@ -1975,7 +2005,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="CopyFromUriOperation"/>, and leaves a this
         /// blob with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob">
+        /// Abort Copy Blob</see>.
         /// </summary>
         /// <param name="copyId">
         /// ID of the copy operation to abort.
@@ -2011,7 +2043,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="CopyFromUriOperation"/>, and leaves a this
         /// blob with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob">
+        /// Abort Copy Blob</see>.
         /// </summary>
         /// <param name="copyId">
         /// ID of the copy operation to abort.
@@ -2047,7 +2081,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="CopyFromUriOperation"/>, and leaves a this
         /// blob with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob">
+        /// Abort Copy Blob</see>.
         /// </summary>
         /// <param name="copyId">
         /// ID of the copy operation to abort.
@@ -2120,7 +2156,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// The size of the source blob can be a maximum length of up to 256 MB.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
@@ -2169,7 +2207,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// The size of the source blob can be a maximum length of up to 256 MB.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
@@ -2218,7 +2258,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// The size of the source blob can be a maximum length of up to 256 MB.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
@@ -2336,7 +2378,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2376,7 +2420,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2416,7 +2462,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2456,7 +2504,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2496,7 +2546,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2572,7 +2624,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
         /// </summary>
         /// <param name="snapshotsOption">
         /// Specifies options for deleting blob snapshots.
@@ -2760,7 +2814,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// and metadata of a soft deleted blob and any associated soft
         /// deleted snapshots.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob">
+        /// Undelete Blob</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2785,7 +2841,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// and metadata of a soft deleted blob and any associated soft
         /// deleted snapshots.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob">
+        /// Undelete Blob</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2810,7 +2868,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// and metadata of a soft deleted blob and any associated soft
         /// deleted snapshots.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob">
+        /// Undelete Blob</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2865,7 +2925,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// properties for the blob. It does not return the content of the
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -2898,7 +2960,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// properties for the blob. It does not return the content of the
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -2931,7 +2995,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// properties for the blob. It does not return the content of the
         /// blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
@@ -3007,10 +3073,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetHttpHeaders"/> operation sets system
         /// properties on the blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
-        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// Optional. The standard HTTP header system properties to set.
+        /// If not specified, existing values will be cleared.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
@@ -3043,7 +3112,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
         /// properties on the blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
@@ -3079,7 +3150,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetHttpHeadersInternal"/> operation sets system
         /// properties on the blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
@@ -3167,7 +3240,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetMetadata"/> operation sets user-defined
         /// metadata for the specified blob as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Blob Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
@@ -3203,7 +3278,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
         /// metadata for the specified blob as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Blob Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
@@ -3239,7 +3316,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="SetMetadataInternal"/> operation sets user-defined
         /// metadata for the specified blob as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Blob Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this blob.
@@ -3325,7 +3404,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshot"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob">
+        /// Snapshot Blob</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -3361,7 +3442,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob">
+        /// Snapshot Blob</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -3397,7 +3480,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotInternal"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob">
+        /// Snapshot Blob</see>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -3481,10 +3566,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// bandwidth of the blob.  A block blob's tier determines
         /// Hot/Cool/Archive storage type.  This operation does not update the
         /// blob's ETag.  For detailed information about block blob level
-        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />
+        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         ///
         /// For more information about setting the tier, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
@@ -3531,10 +3618,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// bandwidth of the blob.  A block blob's tier determines
         /// Hot/Cool/Archive storage type.  This operation does not update the
         /// blob's ETag.  For detailed information about block blob level
-        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />
+        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         ///
         /// For more information about setting the tier, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
@@ -3581,10 +3670,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// bandwidth of the blob.  A block blob's tier determines
         /// Hot/Cool/Archive storage type.  This operation does not update the
         /// blob's ETag.  For detailed information about block blob level
-        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />
+        /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         ///
         /// For more information about setting the tier, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="accessTier">
         /// Indicates the tier to be set on the blob.
