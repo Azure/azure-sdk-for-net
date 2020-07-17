@@ -183,6 +183,10 @@ namespace Azure.Core.Pipeline
                 pendingTcs?.SetException(exception);
             }
 
+            /// <summary>
+            /// Returns stored headerValue (if any), task that can be used to await for headerValue (if GetTokenAsync is in progress),
+            /// and if token should be refreshed in background.
+            /// </summary>
             private (string? headerValue, Task<string>? pendingTask, bool refreshTokenInBackground) GetHeaderValue()
             {
                 lock (_syncObj)
