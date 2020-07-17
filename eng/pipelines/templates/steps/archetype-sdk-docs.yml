@@ -22,10 +22,6 @@ steps:
     - pwsh: |
         $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1 -ArtifactName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' `
         -ArtifactsDirectoryName '${{artifact.directoryName}}' `
-        -LibType '${{parameters.LibType}}' -RepoRoot $(Build.SourcesDirectory) -BinDirectory $(Build.BinariesDirectory) -DocGenDir ${{parameters.DocGenerationDir}} -verbose
+        -LibType '${{parameters.LibType}}' -RepoRoot $(Build.SourcesDirectory) -BinDirectory $(Build.BinariesDirectory) -DocGenDir ${{parameters.DocGenerationDir}} `
+        -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)' -verbose
       displayName: Build DocFx Documenttion Site for ${{artifact.name}}
-    - task: PublishPipelineArtifact@0
-      condition: succeeded()
-      inputs:
-        artifactName: Docs.${{artifact.name}}
-        targetPath: $(PublishTargetPath)

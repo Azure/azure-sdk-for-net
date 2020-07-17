@@ -42,17 +42,20 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: PublishPipelineArtifact@1
-        condition: succeeded()
-        inputs:
-          artifactName: packages
-          path: $(Build.ArtifactStagingDirectory)
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
+      - template: ../steps/arrange-artifacts.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+      - task: PublishPipelineArtifact@1
+        condition: succeeded()
+        inputs:
+          artifactName: packages
+          path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
     condition: ne(variables['Skip.Analyze'], true)
     variables:
