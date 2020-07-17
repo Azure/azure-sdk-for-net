@@ -64,12 +64,12 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            (string? headerValue, bool refreshTokenInBackground) = await _accessTokenCache.GetHeaderValueAsync(async, message.CancellationToken);
+            (string? headerValue, bool accessTokenAboutToExpire) = await _accessTokenCache.GetHeaderValueAsync(async, message.CancellationToken);
             if (headerValue == null)
             {
                 headerValue = await GetHeaderValueFromCredentialAsync(message, async);
             }
-            else if (refreshTokenInBackground)
+            else if (accessTokenAboutToExpire)
             {
                 _ = Task.Run(() => GetHeaderValueFromCredentialAsync(message, async));
             }
@@ -122,12 +122,12 @@ namespace Azure.Core.Pipeline
                 _tokenRefreshRetryTimeout = tokenRefreshRetryTimeout;
             }
 
-            public async ValueTask<(string? headerValue, bool refreshTokenInBackground)> GetHeaderValueAsync(bool async, CancellationToken cancellationToken)
+            public async ValueTask<(string? headerValue, bool refreshTokenAboutToExpire)> GetHeaderValueAsync(bool async, CancellationToken cancellationToken)
             {
-                (string? headerValue, Task<string>? pendingTask, bool refreshTokenInBackground) = GetHeaderValue();
+                (string? headerValue, Task<string>? pendingTask, bool accessTokenAboutToExpire) = GetHeaderValue();
                 if (pendingTask == null)
                 {
-                    return (headerValue, refreshTokenInBackground);
+                    return (headerValue, accessTokenAboutToExpire);
                 }
 
                 if (async)
@@ -187,7 +187,7 @@ namespace Azure.Core.Pipeline
             /// Returns stored headerValue (if any), task that can be used to await for headerValue (if GetTokenAsync is in progress),
             /// and if token should be refreshed in background.
             /// </summary>
-            private (string? headerValue, Task<string>? pendingTask, bool refreshTokenInBackground) GetHeaderValue()
+            private (string? headerValue, Task<string>? pendingTask, bool refreshTokenAboutToExpire) GetHeaderValue()
             {
                 lock (_syncObj)
                 {
