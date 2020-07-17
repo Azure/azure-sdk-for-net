@@ -1848,6 +1848,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Query"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
         /// <param name="querySqlExpression">
         /// The query.
@@ -1880,6 +1884,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="QueryAsync"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
         /// <param name="querySqlExpression">
         /// The query.
@@ -1912,6 +1920,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="QueryInternal"/> API returns the
         /// result of a query against the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/query-blob-contents">
+        /// Query Blob Contents</see>.
         /// </summary>
         /// <param name="querySqlExpression">
         /// The query.

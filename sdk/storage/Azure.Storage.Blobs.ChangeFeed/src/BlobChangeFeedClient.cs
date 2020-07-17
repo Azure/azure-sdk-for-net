@@ -13,6 +13,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedClient.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed?tabs=azure-portal">
+    /// Change Feed</see>.
     /// </summary>
     public class BlobChangeFeedClient
     {

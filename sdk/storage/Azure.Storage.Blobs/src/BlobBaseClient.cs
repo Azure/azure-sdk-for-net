@@ -3749,6 +3749,10 @@ namespace Azure.Storage.Blobs.Specialized
         #region GetTags
         /// <summary>
         /// Gets the tags associated with the underlying blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-tags">
+        /// Get Blob Tags</see>
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
@@ -3777,6 +3781,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Gets the tags associated with the underlying blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-tags">
+        /// Get Blob Tags</see>
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
@@ -3805,6 +3813,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Gets the tags associated with the underlying blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-tags">
+        /// Get Blob Tags</see>
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3873,6 +3885,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// A blob can have up to 10 tags.  Tag keys must be between 1 and 128 characters.  Tag values must be between 0 and 256 characters.
         /// Valid tag key and value characters include lower and upper case letters, digits (0-9),
         /// space (' '), plus ('+'), minus ('-'), period ('.'), foward slash ('/'), colon (':'), equals ('='), and underscore ('_').
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-tags">
+        /// Set Blob Tags</see>.
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
@@ -3909,6 +3925,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// A blob can have up to 10 tags.  Tag keys must be between 1 and 128 characters.  Tag values must be between 0 and 256 characters.
         /// Valid tag key and value characters include lower and upper case letters, digits (0-9),
         /// space (' '), plus ('+'), minus ('-'), period ('.'), foward slash ('/'), colon (':'), equals ('='), and underscore ('_').
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-tags">
+        /// Set Blob Tags</see>.
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
@@ -3944,7 +3964,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Sets tags on the underlying blob.
         /// A blob can have up to 10 tags.  Tag keys must be between 1 and 128 characters.  Tag values must be between 0 and 256 characters.
         /// Valid tag key and value characters include lower and upper case letters, digits (0-9),
-        /// space (' '), plus ('+'), minus ('-'), period ('.'), foward slash ('/'), colon (':'), equals ('='), and underscore ('_')
+        /// space (' '), plus ('+'), minus ('-'), period ('.'), foward slash ('/'), colon (':'), equals ('='), and underscore ('_').
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-tags">
+        /// Set Blob Tags</see>.
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
