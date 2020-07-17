@@ -45,7 +45,8 @@ Param (
     $RepoRoot = "${PSScriptRoot}/../..",
     [Parameter(Mandatory = $True)]
     $BinDirectory,
-    $DocGenDir = "${PSScriptRoot}"
+    $DocGenDir = "${PSScriptRoot}",
+    $ArtifactStagingDirectory
 )
 
 Write-Verbose "Name Reccuring paths with variable names"
@@ -139,5 +140,5 @@ Write-Verbose "Build Doc Content"
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
 
-Write-Verbose "Set variable for publish pipeline step"
-echo "##vso[task.setvariable variable=PublishTargetPath]${DocOutHtmlDir}"
+Write-Verbose "Compress and copy HTML into the staging Area"
+Compress-Archive -Path "${DocOutHtmlDir}" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
