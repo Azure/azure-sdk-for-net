@@ -124,18 +124,29 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
         public virtual RecognizeContentOperation StartRecognizeContent(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-            Response response =  ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContent)}");
+            scope.Start();
 
-            return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
+
+                Response response = ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -146,18 +157,29 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-            Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, form, cancellationToken).ConfigureAwait(false);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContent)}");
+            scope.Start();
 
-            return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            try
+            {
+                FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
+
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, form, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -168,16 +190,26 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
         public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(formUri, nameof(formUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
-            Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContentFromUri)}");
+            scope.Start();
 
-            return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
+                Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -188,16 +220,26 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(formUri, nameof(formUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
-            Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeContentFromUri)}");
+            scope.Start();
 
-            return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            try
+            {
+                SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
