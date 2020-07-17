@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
 {
@@ -12,7 +11,7 @@ namespace Azure.Core.TestFramework
 
         public static RecordedTestMode GetModeFromEnvironment()
         {
-            string modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
+            string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 
             RecordedTestMode mode = RecordedTestMode.Playback;
             if (!string.IsNullOrEmpty(modeString))
