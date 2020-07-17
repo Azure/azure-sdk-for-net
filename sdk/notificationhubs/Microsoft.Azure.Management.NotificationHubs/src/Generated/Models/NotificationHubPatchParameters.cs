@@ -101,37 +101,37 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Gets or sets the ApnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.apnsCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.apnsCredential")]
         public ApnsCredential ApnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the WnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.wnsCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.wnsCredential")]
         public WnsCredential WnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the GcmCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gcmCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.gcmCredential")]
         public GcmCredential GcmCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the MpnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.mpnsCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.mpnsCredential")]
         public MpnsCredential MpnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the AdmCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.admCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.admCredential")]
         public AdmCredential AdmCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the BaiduCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "properties.baiduCredential", NullValueHandling = NullValueHandling.Include)]
+        [JsonProperty(PropertyName = "properties.baiduCredential")]
         public BaiduCredential BaiduCredential { get; set; }
 
         /// <summary>
