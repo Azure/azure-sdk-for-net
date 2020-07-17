@@ -210,25 +210,36 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
-                Response<CopyOperationResult> update = async
-                    ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CopyModelOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                _response = update.GetRawResponse();
-
-                if (update.Value.Status == OperationStatus.Succeeded)
+                try
                 {
-                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Ready);
-                    _hasCompleted = true;
+                    Response<CopyOperationResult> update = async
+                        ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.Status == OperationStatus.Succeeded)
+                    {
+                        // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                        _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Ready);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == OperationStatus.Failed)
+                    {
+                        _requestFailedException = await ClientCommon
+                            .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.CopyResult.Errors)
+                            .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.Status == OperationStatus.Failed)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon
-                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.CopyResult.Errors)
-                        .ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 
