@@ -173,7 +173,10 @@ namespace Azure.AI.FormRecognizer
         {
             Argument.AssertNotNull(formUri, nameof(formUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal()
+            {
+                Source = formUri.AbsoluteUri
+            };
             Response response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -193,7 +196,7 @@ namespace Azure.AI.FormRecognizer
         {
             Argument.AssertNotNull(formUri, nameof(formUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formUri.AbsoluteUri };
             Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -263,7 +266,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
             Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -285,7 +288,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptUri.AbsoluteUri };
             Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -341,7 +344,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
             Response response = ServiceClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
@@ -393,7 +396,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.AbsoluteUri };
             Response response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeFieldElements, sourcePath, cancellationToken).ConfigureAwait(false);
             string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 

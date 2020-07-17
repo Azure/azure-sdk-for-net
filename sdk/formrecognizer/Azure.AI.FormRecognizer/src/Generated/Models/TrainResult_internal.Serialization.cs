@@ -17,9 +17,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal static TrainResult_internal DeserializeTrainResult_internal(JsonElement element)
         {
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            IReadOnlyList<CustomFormModelField> fields = default;
-            float? averageModelAccuracy = default;
-            IReadOnlyList<FormRecognizerError> errors = default;
+            Optional<IReadOnlyList<CustomFormModelField>> fields = default;
+            Optional<float> averageModelAccuracy = default;
+            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"))
@@ -27,71 +27,38 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
-                        }
+                        array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
                     }
                     trainingDocuments = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<CustomFormModelField> array = new List<CustomFormModelField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(CustomFormModelField.DeserializeCustomFormModelField(item));
-                        }
+                        array.Add(CustomFormModelField.DeserializeCustomFormModelField(item));
                     }
                     fields = array;
                     continue;
                 }
                 if (property.NameEquals("averageModelAccuracy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
-                        }
+                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
                     errors = array;
                     continue;
                 }
             }
-            return new TrainResult_internal(trainingDocuments, fields, averageModelAccuracy, errors);
+            return new TrainResult_internal(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToList(errors));
         }
     }
 }
