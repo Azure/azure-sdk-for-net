@@ -16,7 +16,7 @@ namespace Azure.Core
     /// <summary>
     /// A <see cref="JsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
     /// </summary>
-    public class JsonObjectSerializer : ObjectSerializer, ISerializedMemberNameProvider
+    public class JsonObjectSerializer : ObjectSerializer, ISerializedNameProvider
     {
         private readonly Dictionary<Type, MemberInfo[]> _cache;
         private readonly JsonSerializerOptions _options;
@@ -69,7 +69,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc/>
-        public string? GetSerializedMemberName(MemberInfo memberInfo)
+        string? ISerializedNameProvider.GetSerializedName(MemberInfo memberInfo)
         {
             Argument.AssertNotNull(memberInfo, nameof(memberInfo));
 

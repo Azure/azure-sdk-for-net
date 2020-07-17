@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,86 +15,151 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [TestFixture(false)]
+    [TestFixture(true)]
     public class NewtonsoftJsonObjectSerializerTest
     {
-        private static readonly NewtonsoftJsonObjectSerializer JsonObjectSerializer = new NewtonsoftJsonObjectSerializer(true, new JsonSerializerSettings()
+        private readonly NewtonsoftJsonObjectSerializer _jsonObjectSerializer;
+        private readonly DefaultContractResolver _resolver;
+
+        public NewtonsoftJsonObjectSerializerTest(bool camelCase)
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            Converters = new[]
+            // Use contract resolvers that sort the serialized properties case-insensitively for deterministic assertions.
+            _resolver = camelCase ? (DefaultContractResolver)new SortedCamelCasePropertyNamesContractResolver() : new SortedDefaultContractResolver();
+
+            _jsonObjectSerializer = new NewtonsoftJsonObjectSerializer(true, new JsonSerializerSettings
             {
-                new StringEnumConverter(true),
-            },
-        });
+                ContractResolver = _resolver,
+                Converters = new[]
+                {
+                    new StringEnumConverter(true),
+                },
+            });
+
+            IsCamelCase = camelCase;
+        }
+
+        public bool IsCamelCase { get; }
+
+        private string SerializedName(string name) => _resolver.GetResolvedPropertyName(name);
+
 
         [Test]
         public void CanSerializeAnObject()
         {
             using var memoryStream = new MemoryStream();
-            var o = new Model {A = "1", ActuallyB = 2, Type = ModelType.One};
+            var o = new ExtendedModel(4, 8)
+            {
+                A = "1",
+                ActuallyB = 2,
+                C = 3,
+                Type = ModelType.One,
+                IgnoredE = 5,
+                F = 6,
+                G = 7,
+            };
 
-            JsonObjectSerializer.Serialize(memoryStream, o, o.GetType(), default);
+            _jsonObjectSerializer.Serialize(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual("{\"a\":\"1\",\"b\":2,\"type\":\"one\"}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.AreEqual($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
 
         [Test]
         public async Task CanSerializeAnObjectAsync()
         {
             using var memoryStream = new MemoryStream();
-            var o = new Model {A = "1", ActuallyB = 2, Type = ModelType.One};
+            var o = new ExtendedModel(4, 8)
+            {
+                A = "1",
+                ActuallyB = 2,
+                C = 3,
+                Type = ModelType.One,
+                IgnoredE = 5,
+                F = 6,
+                G = 7,
+            };
 
-            await JsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType(), default);
+            await _jsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual("{\"a\":\"1\",\"b\":2,\"type\":\"one\"}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.AreEqual($"{{\"{SerializedName("A")}\":\"1\",\"b\":2,\"d\":4,\"{SerializedName("F")}\":6,\"h\":8,\"{SerializedName("Type")}\":\"one\"}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
 
         [Test]
         public void CanDeserializeAnObject()
         {
-            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"a\":\"1\",\"b\":2,\"type\":\"two\"}"));
+            var json = $@"{{
+    ""{SerializedName("A")}"": ""1"",
+    ""b"": 2,
+    ""{SerializedName("C")}"": 3,
+    ""{SerializedName("Type")}"": ""one"",
+    ""d"": 4,
+    ""{SerializedName("IgnoredE")}"": 5,
+    ""{SerializedName("F")}"": 6,
+    ""{SerializedName("G")}"": 7,
+    ""h"": 8
+}}";
+            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
 
-            var model = (Model)JsonObjectSerializer.Deserialize(memoryStream, typeof(Model), default);
+            var model = (ExtendedModel)_jsonObjectSerializer.Deserialize(memoryStream, typeof(ExtendedModel), default);
 
             Assert.AreEqual("1", model.A);
             Assert.AreEqual(2, model.ActuallyB);
-            Assert.AreEqual(ModelType.Two, model.Type);
+            Assert.AreEqual(0, model.C);
+            Assert.AreEqual(ModelType.One, model.Type);
+            Assert.AreEqual(0, model.ReadOnlyD);
+            Assert.AreEqual(0, model.IgnoredE);
+            Assert.AreEqual(6, model.F);
+            Assert.AreEqual(0, model.G);
+            Assert.AreEqual(8, model.GetH());
         }
 
         [Test]
         public async Task CanDeserializeAnObjectAsync()
         {
-            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"a\":\"1\",\"b\":2,\"type\":\"two\"}"));
+            var json = $@"{{
+    ""{SerializedName("A")}"": ""1"",
+    ""b"": 2,
+    ""{SerializedName("C")}"": 3,
+    ""{SerializedName("Type")}"": ""one"",
+    ""d"": 4,
+    ""{SerializedName("IgnoredE")}"": 5,
+    ""{SerializedName("F")}"": 6,
+    ""{SerializedName("G")}"": 7,
+    ""h"": 8
+}}";
+            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
 
-            var model = (Model)await JsonObjectSerializer.DeserializeAsync(memoryStream, typeof(Model), default).ConfigureAwait(false);
+            var model = (ExtendedModel)await _jsonObjectSerializer.DeserializeAsync(memoryStream, typeof(ExtendedModel), default).ConfigureAwait(false);
 
             Assert.AreEqual("1", model.A);
             Assert.AreEqual(2, model.ActuallyB);
-            Assert.AreEqual(ModelType.Two, model.Type);
+            Assert.AreEqual(0, model.C);
+            Assert.AreEqual(ModelType.One, model.Type);
+            Assert.AreEqual(0, model.ReadOnlyD);
+            Assert.AreEqual(0, model.IgnoredE);
+            Assert.AreEqual(6, model.F);
+            Assert.AreEqual(0, model.G);
+            Assert.AreEqual(8, model.GetH());
         }
 
         [Test]
-        public void GetSerializedMemberName([Values] bool camelCase)
+        public void GetSerializedMemberName()
         {
-            DefaultContractResolver resolver = camelCase ? new CamelCasePropertyNamesContractResolver() : new DefaultContractResolver();
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                ContractResolver = resolver,
-            };
-
-            NewtonsoftJsonObjectSerializer serializer = new NewtonsoftJsonObjectSerializer(true, settings);
-
             IEnumerable<MemberInfo> members = typeof(ExtendedModel)
                 .GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .Where(member => (member.MemberType & (MemberTypes.Property | MemberTypes.Field)) != 0);
 
-            string Name(string name) => resolver.GetResolvedPropertyName(name);
+            ISerializedNameProvider provider = _jsonObjectSerializer;
+
             foreach (MemberInfo member in members)
             {
-                string propertyName = serializer.GetSerializedMemberName(member);
+                string propertyName = provider.GetSerializedName(member);
+
+                // The following should be null for any property that does not serialized (compare to assertions above).
                 switch (member.Name)
                 {
                     case nameof(ExtendedModel.A):
-                        Assert.AreEqual(Name("A"), propertyName);
+                        Assert.AreEqual(SerializedName("A"), propertyName);
                         break;
 
                     case nameof(ExtendedModel.ActuallyB):
@@ -101,7 +167,7 @@ namespace Azure.Core.Tests
                         break;
 
                     case nameof(ExtendedModel.Type):
-                        Assert.AreEqual(Name("Type"), propertyName);
+                        Assert.AreEqual(SerializedName("Type"), propertyName);
                         break;
 
                     case nameof(ExtendedModel.ReadOnlyD):
@@ -109,7 +175,7 @@ namespace Azure.Core.Tests
                         break;
 
                     case nameof(ExtendedModel.F):
-                        Assert.AreEqual(Name("F"), propertyName);
+                        Assert.AreEqual(SerializedName("F"), propertyName);
                         break;
 
                     case "H":
@@ -138,6 +204,16 @@ namespace Azure.Core.Tests
 
         public class ExtendedModel : Model
         {
+            public ExtendedModel()
+            {
+            }
+
+            internal ExtendedModel(int readOnlyD, int h)
+            {
+                ReadOnlyD = readOnlyD;
+                H = h;
+            }
+
             [JsonProperty("d")]
             public int ReadOnlyD { get; }
 
@@ -153,6 +229,8 @@ namespace Azure.Core.Tests
             [JsonProperty("h")]
             private int H;
 #pragma warning restore CS0169
+
+            internal int GetH() => H;
         }
 
         public enum ModelType
@@ -160,6 +238,24 @@ namespace Azure.Core.Tests
             Unknown = 0,
             One = 1,
             Two = 2,
+        }
+
+        private class SortedCamelCasePropertyNamesContractResolver : CamelCasePropertyNamesContractResolver
+        {
+            // Make sure all properties and fields are sorted case-insensitively for deterministic assertions.
+            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization) =>
+                base.CreateProperties(type, memberSerialization)
+                    .OrderBy(property => property.PropertyName, StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+        }
+
+        private class SortedDefaultContractResolver : DefaultContractResolver
+        {
+            // Make sure all properties and fields are sorted case-insensitively for deterministic assertions.
+            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization) =>
+                base.CreateProperties(type, memberSerialization)
+                    .OrderBy(property => property.PropertyName, StringComparer.OrdinalIgnoreCase)
+                    .ToList();
         }
     }
 }
