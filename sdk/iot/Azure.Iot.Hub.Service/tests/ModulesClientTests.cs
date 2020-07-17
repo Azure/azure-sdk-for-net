@@ -731,7 +731,14 @@ namespace Azure.Iot.Hub.Service.Tests
 
             foreach (ModuleIdentity module in modules)
             {
-                modulesAndTwins.Add(module, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+                var twinProperties = new TwinProperties();
+
+                foreach (var desiredProperty in desiredProperties)
+                {
+                    twinProperties.Desired.Add(desiredProperty);
+                }
+
+                modulesAndTwins.Add(module, new TwinData { Properties = twinProperties });
             }
 
             return modulesAndTwins;
