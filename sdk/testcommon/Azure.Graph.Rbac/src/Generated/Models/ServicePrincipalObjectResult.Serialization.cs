@@ -14,30 +14,22 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static ServicePrincipalObjectResult DeserializeServicePrincipalObjectResult(JsonElement element)
         {
-            string value = default;
-            string odataMetadata = default;
+            Optional<string> value = default;
+            Optional<string> odataMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("odata.metadata"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataMetadata = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServicePrincipalObjectResult(value, odataMetadata);
+            return new ServicePrincipalObjectResult(value.Value, odataMetadata.Value);
         }
     }
 }

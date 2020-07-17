@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Id = id;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ResourceAccess. </summary>
@@ -35,7 +36,7 @@ namespace Azure.Graph.Rbac.Models
         {
             Id = id;
             Type = type;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The unique identifier for one of the OAuth2Permission or AppRole instances that the resource application exposes. </summary>

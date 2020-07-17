@@ -82,14 +82,7 @@ namespace Azure.Graph.Rbac
                     {
                         DomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DomainListResult.DeserializeDomainListResult(document.RootElement);
-                        }
+                        value = DomainListResult.DeserializeDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +103,7 @@ namespace Azure.Graph.Rbac
                     {
                         DomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DomainListResult.DeserializeDomainListResult(document.RootElement);
-                        }
+                        value = DomainListResult.DeserializeDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,14 +145,7 @@ namespace Azure.Graph.Rbac
                     {
                         Domain value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Domain.DeserializeDomain(document.RootElement);
-                        }
+                        value = Domain.DeserializeDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,14 +171,7 @@ namespace Azure.Graph.Rbac
                     {
                         Domain value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Domain.DeserializeDomain(document.RootElement);
-                        }
+                        value = Domain.DeserializeDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
