@@ -4,13 +4,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Azure.Core;
 
 namespace Azure.Data.Tables
 {
 
     public class TableEntityDictionary : IDictionary<string, object>
     {
-        private IDictionary<string, object> _properties;
+        private readonly IDictionary<string, object> _properties;
 
         /// <summary>
         /// The partition key is a unique identifier for the partition within a given table and forms the first part of an entity's primary key.
@@ -80,6 +82,22 @@ namespace Azure.Data.Tables
             RowKey = rowKey;
         }
 
+        public string GetString(string key) => GetValue<string>(key);
+
+        public byte[] GetBinary(string key) => GetValue<byte[]>(key);
+
+        public bool GetBoolean(string key) => GetValue<bool>(key);
+
+        public DateTime GetDateTime(string key) => GetValue<DateTime>(key);
+
+        public double GetDouble(string key) => GetValue<double>(key);
+
+        public Guid GetGuid(string key) => GetValue<Guid>(key);
+
+        public int GetInt32(string key) => GetValue<int>(key);
+
+        public long GetInt64(string key) => GetValue<long>(key);
+
         /// <summary>
         /// Gets or sets the entity's property, given the name of the property.
         /// </summary>
@@ -87,13 +105,13 @@ namespace Azure.Data.Tables
         /// <returns>An object.</returns>
         public object this[string key]
         {
-            get { return _properties[key]; }
-            set { _properties[key] = value; }
+            get { return GetValue(key); }
+            set { SetValue(key, value); }
         }
 
         public void Add(string key, object value)
         {
-            _properties.Add(key, value);
+            SetValue(key, value);
         }
 
         public bool ContainsKey(string key)
@@ -113,7 +131,7 @@ namespace Azure.Data.Tables
 
         public void Add(KeyValuePair<string, object> item)
         {
-            _properties.Add(item);
+            SetValue(item.Key, item.Value);
         }
 
         public void Clear()
@@ -144,6 +162,70 @@ namespace Azure.Data.Tables
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable)_properties).GetEnumerator();
+        }
+
+        /// <summary>
+        /// Set a document property.
+        /// </summary>
+        /// <param name="key">The property name.</param>
+        /// <param name="value">The property value.</param>
+        private protected void SetValue(string key, object value)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            if (_properties.TryGetValue(key, out object existingValue))
+            {
+                EnforceType(existingValue.GetType(), value.GetType());
+            }
+            _properties[key] = value;
+        }
+
+        /// <summary>
+        /// Get an entity property.
+        /// </summary>
+        /// <typeparam name="T">The expected type of the property value.</typeparam>
+        /// <param name="key">The property name.</param>
+        /// <returns>The value of the property.</returns>
+        private protected T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
+
+        /// <summary>
+        /// Get an entity property.
+        /// </summary>
+        /// <param name="key">The property name.</param>
+        /// <param name="type">The expected type of the property value.</param>
+        /// <returns>The value of the property.</returns>
+        private protected object GetValue(string key, Type type = null)
+        {
+            if (!_properties.TryGetValue(key, out object value))
+            {
+                KeyNotFoundException exception = new KeyNotFoundException(
+                    "Could not find a member called '" + key + "' in the document.");
+                exception.Data["MissingName"] = key;
+                throw exception;
+            }
+
+            if (type != null)
+            {
+                EnforceType(type, value.GetType());
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Ensures that the given type matches the type of the existing
+        /// property; throws an exception if the types do not match.
+        /// </summary>
+        private void EnforceType(Type requestedType, Type givenType)
+        {
+            if (givenType != requestedType)
+            {
+                throw new InvalidOperationException(string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Cannot return {0} type for a {1} typed property.",
+                    requestedType,
+                    givenType));
+            }
         }
     }
 }
