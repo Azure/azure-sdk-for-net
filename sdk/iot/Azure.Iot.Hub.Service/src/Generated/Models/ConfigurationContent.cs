@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
         public ConfigurationContent()
         {
+            DeviceContent = new ChangeTrackingDictionary<string, object>();
+            ModulesContent = new ChangeTrackingDictionary<string, object>();
+            ModuleContent = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
@@ -29,10 +33,10 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Gets or sets device Configurations. </summary>
-        public IDictionary<string, object> DeviceContent { get; set; }
+        public IDictionary<string, object> DeviceContent { get; }
         /// <summary> Gets or sets Modules Configurations. </summary>
-        public IDictionary<string, object> ModulesContent { get; set; }
+        public IDictionary<string, object> ModulesContent { get; }
         /// <summary> Gets or sets Module Configurations. </summary>
-        public IDictionary<string, object> ModuleContent { get; set; }
+        public IDictionary<string, object> ModuleContent { get; }
     }
 }
