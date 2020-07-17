@@ -127,6 +127,9 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
+                // Dispose the content stream to free up a connection if the request has any
+                message.Response.ContentStream?.Dispose();
+
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, elapsed);
             }
         }
