@@ -15,15 +15,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
         }
 
-        /// <summary> Initializes a new instance of SparkStatementOptions. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="kind"> . </param>
-        internal SparkStatementOptions(string code, SparkStatementLanguageType? kind)
-        {
-            Code = code;
-            Kind = kind;
-        }
-
         public string Code { get; set; }
         public SparkStatementLanguageType? Kind { get; set; }
     }

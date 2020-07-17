@@ -123,22 +123,22 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkBatchJobOptions
     {
         public SparkBatchJobOptions(string name, string file) { }
-        public System.Collections.Generic.IList<string> Archives { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Arguments { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Archives { get { throw null; } }
+        public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string ArtifactId { get { throw null; } set { } }
         public string ClassName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Configuration { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Configuration { get { throw null; } }
         public int? DriverCores { get { throw null; } set { } }
         public string DriverMemory { get { throw null; } set { } }
         public int? ExecutorCores { get { throw null; } set { } }
         public int? ExecutorCount { get { throw null; } set { } }
         public string ExecutorMemory { get { throw null; } set { } }
         public string File { get { throw null; } }
-        public System.Collections.Generic.IList<string> Files { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Jars { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Files { get { throw null; } }
+        public System.Collections.Generic.IList<string> Jars { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkBatchJobResultType : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType>
@@ -287,22 +287,22 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkSessionOptions
     {
         public SparkSessionOptions(string name) { }
-        public System.Collections.Generic.IList<string> Archives { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Arguments { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Archives { get { throw null; } }
+        public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string ArtifactId { get { throw null; } set { } }
         public string ClassName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Configuration { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Configuration { get { throw null; } }
         public int? DriverCores { get { throw null; } set { } }
         public string DriverMemory { get { throw null; } set { } }
         public int? ExecutorCores { get { throw null; } set { } }
         public int? ExecutorCount { get { throw null; } set { } }
         public string ExecutorMemory { get { throw null; } set { } }
         public string File { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Files { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Jars { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Files { get { throw null; } }
+        public System.Collections.Generic.IList<string> Jars { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PythonFiles { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SparkSessionResultType : System.IEquatable<Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType>

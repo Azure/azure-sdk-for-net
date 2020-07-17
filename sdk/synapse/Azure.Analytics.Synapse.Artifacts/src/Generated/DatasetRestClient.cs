@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,14 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,14 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,14 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -286,14 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -391,14 +349,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,14 +375,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
