@@ -18,18 +18,20 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     [Rest.Serialization.JsonTransformation]
-    public partial class AppWhitelistingGroup
+    public partial class AdaptiveApplicationControlGroup
     {
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroup class.
+        /// Initializes a new instance of the AdaptiveApplicationControlGroup
+        /// class.
         /// </summary>
-        public AppWhitelistingGroup()
+        public AdaptiveApplicationControlGroup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroup class.
+        /// Initializes a new instance of the AdaptiveApplicationControlGroup
+        /// class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="sourceSystem">Possible values include:
         /// 'Azure_AppLocker', 'Azure_AuditD', 'NonAzure_AppLocker',
         /// 'NonAzure_AuditD', 'None'</param>
-        public AppWhitelistingGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string enforcementMode = default(string), ProtectionMode protectionMode = default(ProtectionMode), string configurationStatus = default(string), string recommendationStatus = default(string), IList<AppWhitelistingIssueSummary> issues = default(IList<AppWhitelistingIssueSummary>), string sourceSystem = default(string), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
+        public AdaptiveApplicationControlGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string enforcementMode = default(string), ProtectionMode protectionMode = default(ProtectionMode), string configurationStatus = default(string), string recommendationStatus = default(string), IList<AdaptiveApplicationControlIssueSummary> issues = default(IList<AdaptiveApplicationControlIssueSummary>), string sourceSystem = default(string), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
         {
             Id = id;
             Name = name;
@@ -120,7 +122,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.issues")]
-        public IList<AppWhitelistingIssueSummary> Issues { get; private set; }
+        public IList<AdaptiveApplicationControlIssueSummary> Issues { get; private set; }
 
         /// <summary>
         /// Gets possible values include: 'Azure_AppLocker', 'Azure_AuditD',
