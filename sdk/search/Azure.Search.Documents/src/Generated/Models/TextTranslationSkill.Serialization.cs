@@ -25,8 +25,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(SuggestedFrom))
             {
-                writer.WritePropertyName("suggestedFrom");
-                writer.WriteStringValue(SuggestedFrom.Value.ToString());
+                if (SuggestedFrom != null)
+                {
+                    writer.WritePropertyName("suggestedFrom");
+                    writer.WriteStringValue(SuggestedFrom.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("suggestedFrom");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -66,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             TextTranslationSkillLanguage defaultToLanguageCode = default;
             Optional<TextTranslationSkillLanguage> defaultFromLanguageCode = default;
-            Optional<TextTranslationSkillLanguage> suggestedFrom = default;
+            Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -87,6 +94,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("suggestedFrom"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        suggestedFrom = null;
+                        continue;
+                    }
                     suggestedFrom = new TextTranslationSkillLanguage(property.Value.GetString());
                     continue;
                 }

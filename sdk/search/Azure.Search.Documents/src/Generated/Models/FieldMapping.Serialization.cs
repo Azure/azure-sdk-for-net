@@ -24,8 +24,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(MappingFunction))
             {
-                writer.WritePropertyName("mappingFunction");
-                writer.WriteObjectValue(MappingFunction);
+                if (MappingFunction != null)
+                {
+                    writer.WritePropertyName("mappingFunction");
+                    writer.WriteObjectValue(MappingFunction);
+                }
+                else
+                {
+                    writer.WriteNull("mappingFunction");
+                }
             }
             writer.WriteEndObject();
         }
@@ -49,6 +56,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("mappingFunction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mappingFunction = null;
+                        continue;
+                    }
                     mappingFunction = FieldMappingFunction.DeserializeFieldMappingFunction(property.Value);
                     continue;
                 }

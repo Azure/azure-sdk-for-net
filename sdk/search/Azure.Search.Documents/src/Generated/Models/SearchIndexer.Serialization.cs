@@ -34,13 +34,27 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(TargetIndexName);
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
-                writer.WriteObjectValue(Schedule);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule");
+                    writer.WriteObjectValue(Schedule);
+                }
+                else
+                {
+                    writer.WriteNull("schedule");
+                }
             }
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters");
+                    writer.WriteObjectValue(Parameters);
+                }
+                else
+                {
+                    writer.WriteNull("parameters");
+                }
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {
@@ -124,11 +138,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("schedule"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        schedule = null;
+                        continue;
+                    }
                     schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        parameters = null;
+                        continue;
+                    }
                     parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
                     continue;
                 }

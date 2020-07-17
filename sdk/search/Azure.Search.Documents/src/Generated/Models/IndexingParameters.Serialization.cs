@@ -18,18 +18,39 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
-                writer.WriteNumberValue(BatchSize.Value);
+                if (BatchSize != null)
+                {
+                    writer.WritePropertyName("batchSize");
+                    writer.WriteNumberValue(BatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("batchSize");
+                }
             }
             if (Optional.IsDefined(MaxFailedItems))
             {
-                writer.WritePropertyName("maxFailedItems");
-                writer.WriteNumberValue(MaxFailedItems.Value);
+                if (MaxFailedItems != null)
+                {
+                    writer.WritePropertyName("maxFailedItems");
+                    writer.WriteNumberValue(MaxFailedItems.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItems");
+                }
             }
             if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
-                writer.WritePropertyName("maxFailedItemsPerBatch");
-                writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                if (MaxFailedItemsPerBatch != null)
+                {
+                    writer.WritePropertyName("maxFailedItemsPerBatch");
+                    writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFailedItemsPerBatch");
+                }
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
@@ -47,24 +68,39 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
-            Optional<int> batchSize = default;
-            Optional<int> maxFailedItems = default;
-            Optional<int> maxFailedItemsPerBatch = default;
+            Optional<int?> batchSize = default;
+            Optional<int?> maxFailedItems = default;
+            Optional<int?> maxFailedItemsPerBatch = default;
             Optional<IDictionary<string, object>> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        batchSize = null;
+                        continue;
+                    }
                     batchSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItems"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxFailedItems = null;
+                        continue;
+                    }
                     maxFailedItems = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItemsPerBatch"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxFailedItemsPerBatch = null;
+                        continue;
+                    }
                     maxFailedItemsPerBatch = property.Value.GetInt32();
                     continue;
                 }

@@ -146,6 +146,34 @@ directive:
   where: $.definitions.SearchIndexer
   transform: >
     $.properties.disabled["x-nullable"] = true;
+    $.properties.schedule["x-nullable"] = true;
+    $.properties.parameters["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.suggestedFrom["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IndexingParameters
+  transform: >
+    $.properties.batchSize["x-nullable"] = true;
+    $.properties.maxFailedItems["x-nullable"] = true;
+    $.properties.maxFailedItemsPerBatch["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.FieldMapping
+  transform: >
+    $.properties.mappingFunction["x-nullable"] = true;
 ```
 
 ## C# Customizations

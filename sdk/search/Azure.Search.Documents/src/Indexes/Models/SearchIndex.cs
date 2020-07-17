@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -24,13 +25,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            Analyzers = new List<LexicalAnalyzer>();
-            CharFilters = new List<CharFilter>();
-            Fields = new List<SearchField>();
-            ScoringProfiles = new List<ScoringProfile>();
-            Suggesters = new List<SearchSuggester>();
-            TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<LexicalTokenizer>();
+            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
+            CharFilters = new ChangeTrackingList<CharFilter>();
+            Fields = new ChangeTrackingList<SearchField>();
+            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
+            Suggesters = new ChangeTrackingList<SearchSuggester>();
+            TokenFilters = new ChangeTrackingList<TokenFilter>();
+            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -47,13 +48,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            Analyzers = new List<LexicalAnalyzer>();
-            CharFilters = new List<CharFilter>();
-            Fields = new List<SearchField>(fields);
-            ScoringProfiles = new List<ScoringProfile>();
-            Suggesters = new List<SearchSuggester>();
-            TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<LexicalTokenizer>();
+            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
+            CharFilters = new ChangeTrackingList<CharFilter>();
+            Fields = new ChangeTrackingList<SearchField>((Optional<IList<SearchField>>)fields.ToArray());
+            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
+            Suggesters = new ChangeTrackingList<SearchSuggester>();
+            TokenFilters = new ChangeTrackingList<TokenFilter>();
+            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
         }
 
         /// <summary>
