@@ -1424,7 +1424,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 var options = new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentSessions = 10,
+                    MaxConcurrentSessions = maxConcurrentSessions,
                     MaxConcurrentCallsPerSession = 1,
                 };
 
