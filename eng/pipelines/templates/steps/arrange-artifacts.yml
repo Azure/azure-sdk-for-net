@@ -1,0 +1,11 @@
+steps:
+  - pwsh: |
+      Write-Host "Artifactnames " $env:ARTIFACT_NAMES
+      $Artifacts = $env:ARTIFACT_NAMES -split ";"
+      foreach ($artifact in $Artifacts)
+      {
+        Write-Host $artifact
+      }
+    displayName: Arrange Artifacts
+    env:
+      ARTIFACT_NAMES: ${{ join(';', parameters.Artifacts ) }}
