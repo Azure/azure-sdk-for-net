@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -28,7 +28,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             /// <summary>
             /// The Key Vault API version 7.0.
             /// </summary>
-            V7_0 = 0
+            V7_0 = 0,
+
+            /// <summary>
+            /// They Key Vault API version 7.1.
+            /// </summary>
+            V7_1 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -47,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public CryptographyClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public CryptographyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
         }
@@ -57,8 +62,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-
-                _ => throw new NotSupportedException($"The service version {Version} is not supported."),
+                ServiceVersion.V7_1 => "7.1",
+                _ => throw new ArgumentException(Version.ToString()),
             };
         }
     }
