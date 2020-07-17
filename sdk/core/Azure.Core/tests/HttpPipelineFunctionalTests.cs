@@ -97,6 +97,7 @@ namespace Azure.Core.Tests
                 },
             });
 
+            int bodySize = 1000;
             int reqNum = 0;
 
             using TestServer testServer = new TestServer(
@@ -108,14 +109,15 @@ namespace Azure.Core.Tests
                         context.Response.StatusCode = 503;
                     }
 
-                    for (int i = 0; i < 1000; i++)
+                    for (int i = 0; i < bodySize; i++)
                     {
                         await context.Response.Body.WriteAsync(buffer, 0, 1);
                     }
                 });
 
             // Make sure we dispose things correctly and not exhaust the connection pool
-            for (int i = 0; i < 100; i++)
+            var requestCount = 100;
+            for (int i = 0; i < requestCount; i++)
             {
                 Stream extractedStream;
                 using (HttpMessage message = httpPipeline.CreateMessage())
@@ -132,11 +134,11 @@ namespace Azure.Core.Tests
 
                 var memoryStream = new MemoryStream();
                 await extractedStream.CopyToAsync(memoryStream);
-                Assert.AreEqual(memoryStream.Length, 1000);
+                Assert.AreEqual(memoryStream.Length, bodySize);
                 extractedStream.Dispose();
             }
 
-            Assert.Greater(reqNum, 100);
+            Assert.Greater(reqNum, requestCount);
         }
 
         [Test]
