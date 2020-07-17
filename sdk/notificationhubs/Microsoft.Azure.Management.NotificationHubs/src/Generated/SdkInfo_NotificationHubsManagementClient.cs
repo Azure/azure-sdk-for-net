@@ -19,9 +19,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NotificationHubs", "Namespaces", "2017-04-01"),
-                new Tuple<string, string, string>("NotificationHubs", "NotificationHubs", "2017-04-01"),
-                new Tuple<string, string, string>("NotificationHubs", "Operations", "2017-04-01"),
+
               }.AsEnumerable();
           }
       }
