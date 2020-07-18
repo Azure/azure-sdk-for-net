@@ -162,6 +162,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
         }
 
+        [Test]
+        public void ProcessorOptionsValidation()
+        {
+            var options = new ServiceBusSessionProcessorOptions();
+            Assert.That(
+                () => options.PrefetchCount = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentSessions = 0,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentCallsPerSession = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(0),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            // should not throw
+            options.PrefetchCount = 0;
+            options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
+            options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+        }
 
         [Test]
         public async Task UserSettledPropertySetCorrectly()

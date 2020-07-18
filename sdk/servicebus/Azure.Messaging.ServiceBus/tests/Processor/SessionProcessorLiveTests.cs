@@ -1399,10 +1399,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        [TestCase(10, 10)]
-        [TestCase(10, 5)]
-        [TestCase(10, 20)]
-        public async Task MaxCallsPerSessionRespected(int numSessions, int maxConcurrentSessions)
+        [TestCase(10, 10, 1)]
+        [TestCase(10, 5, 2)]
+        [TestCase(10, 20, 5)]
+        public async Task MaxCallsPerSessionRespected(int numSessions, int maxConcurrentSessions, int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -1431,7 +1431,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
-                ConcurrentDictionary<string, byte> sessionDict = new ConcurrentDictionary<string, byte>();
+                ConcurrentDictionary<string, int> sessionDict = new ConcurrentDictionary<string, int>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -1442,13 +1442,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     var sessionId = args.SessionId;
                     try
                     {
-                        Assert.IsFalse(sessionDict.ContainsKey(sessionId));
-                        sessionDict.TryAdd(sessionId, default);
+                        sessionDict.AddOrUpdate(
+                            sessionId,
+                            1,
+                            (key, value) => value + 1);
+                        Assert.LessOrEqual(sessionDict[sessionId], maxCallsPerSession);
                         // add a small delay to help verify that no other threads
                         // will be processing this session concurrently.
                         await Task.Delay(TimeSpan.FromSeconds(2));
                         await args.CompleteMessageAsync(args.Message);
-
                     }
                     finally
                     {
@@ -1457,7 +1459,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         {
                             tcs.SetResult(true);
                         }
-                        sessionDict.TryRemove(sessionId, out _);
+                        sessionDict[sessionId]--;
                     }
                 }
                 await tcs.Task;
