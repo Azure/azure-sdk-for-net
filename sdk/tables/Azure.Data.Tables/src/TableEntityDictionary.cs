@@ -82,6 +82,13 @@ namespace Azure.Data.Tables
             RowKey = rowKey;
         }
 
+        public TableEntityDictionary(Dictionary<string, object> values)
+        {
+            _properties = values != null ?
+                new Dictionary<string, object>(values) :
+                new Dictionary<string, object>();
+        }
+
         public string GetString(string key) => GetValue<string>(key);
 
         public byte[] GetBinary(string key) => GetValue<byte[]>(key);
@@ -216,7 +223,7 @@ namespace Azure.Data.Tables
         /// Ensures that the given type matches the type of the existing
         /// property; throws an exception if the types do not match.
         /// </summary>
-        private void EnforceType(Type requestedType, Type givenType)
+        private static void EnforceType(Type requestedType, Type givenType)
         {
             if (givenType != requestedType)
             {
