@@ -54,40 +54,40 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the count of the event.
+        /// Gets the count of the event.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
+        public int? Count { get; private set; }
 
         /// <summary>
-        /// Gets or sets the date-time of the earliest logged event.
+        /// Gets the date-time of the earliest logged event.
         /// </summary>
         [JsonProperty(PropertyName = "firstTimestamp")]
-        public System.DateTime? FirstTimestamp { get; set; }
+        public System.DateTime? FirstTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets the date-time of the latest logged event.
+        /// Gets the date-time of the latest logged event.
         /// </summary>
         [JsonProperty(PropertyName = "lastTimestamp")]
-        public System.DateTime? LastTimestamp { get; set; }
+        public System.DateTime? LastTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets the event name.
+        /// Gets the event name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the event message.
+        /// Gets the event message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets the event type.
+        /// Gets the event type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
     }
 }

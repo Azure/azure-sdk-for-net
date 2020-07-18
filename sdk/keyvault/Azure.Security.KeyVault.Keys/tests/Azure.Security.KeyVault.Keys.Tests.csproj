@@ -5,7 +5,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
   <Import Project="..\..\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
@@ -19,11 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Keys.csproj" />
     <ProjectReference Include="..\..\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj" />
-  </ItemGroup>
- 
-  <ItemGroup>
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>

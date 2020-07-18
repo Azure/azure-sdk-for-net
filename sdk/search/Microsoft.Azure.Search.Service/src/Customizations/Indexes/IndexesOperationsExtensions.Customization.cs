@@ -13,13 +13,13 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing indexes.
-    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Index-operations" />
+    /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/index-operations">Index operations</see>.
     /// </summary>
     public static partial class IndexesOperationsExtensions
     {
         /// <summary>
         /// Creates a new search index or updates an index if it already exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/update-index">Update Index</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new search index or updates an index if it already exists.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/update-index">Update Index</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/list-indexes">List Indexes</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes"/>
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/searchservice/list-indexes">List Indexes</see>.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

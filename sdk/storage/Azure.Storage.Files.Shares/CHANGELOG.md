@@ -1,7 +1,26 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
+## 12.3.0-preview.2 (Unreleased)
+- Fixed bug where ShareUriBuilder would return LastDirectoryOrFileName and DirectoryOrFilePath URL-encoded.
+- Updated ShareSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Added ShareFileClient.OpenRead().
 
+## 12.3.0-preview.1 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Large Files.
+- Added support for File Soft Delete.
+- Fixed bug where ShareDirectoryClient and ShareFileClient.Name and .Path were sometimes URL-encoded.
+- Fixed bug where ShareClient.WithSnapshot(), ShareDirectoryClient.WithSnapshot(), and ShareFileClient.WithSnapshot() were not functioning correctly.
+
+## 12.2.3 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.2.2 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
+## 12.2.1 (2020-05)
+- Fixed bug where blob, file and directory names were not URL encoded.
 
 ## 12.2.0 (2020-03)
 - Added Exists() and DeleteIfExists() to ShareClient, ShareDirectoryClient, and ShareFileClient.

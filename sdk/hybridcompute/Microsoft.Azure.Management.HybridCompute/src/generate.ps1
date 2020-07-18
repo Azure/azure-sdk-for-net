@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "hybridcompute/resource-manager" -AutoRestVersion "latest" -SpecsRepoName azure-rest-api-specs
+Start-AutoRestCodeGeneration -ResourceProvider "hybridcompute/resource-manager" -AutoRestVersion "v2" -SpecsRepoName azure-rest-api-specs

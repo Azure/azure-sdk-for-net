@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="actionGroupId">the id of the action group to
         /// use.</param>
-        /// <param name="webhookProperties">The properties of a webhook
+        /// <param name="webHookProperties">The properties of a webhook
         /// object.</param>
-        public MetricAlertAction(string actionGroupId = default(string), IDictionary<string, string> webhookProperties = default(IDictionary<string, string>))
+        public MetricAlertAction(string actionGroupId = default(string), IDictionary<string, string> webHookProperties = default(IDictionary<string, string>))
         {
             ActionGroupId = actionGroupId;
-            WebhookProperties = webhookProperties;
+            WebHookProperties = webHookProperties;
             CustomInit();
         }
 
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the properties of a webhook object.
         /// </summary>
-        [JsonProperty(PropertyName = "webhookProperties")]
-        public IDictionary<string, string> WebhookProperties { get; set; }
+        [JsonProperty(PropertyName = "webHookProperties")]
+        public IDictionary<string, string> WebHookProperties { get; set; }
 
     }
 }

@@ -39,7 +39,7 @@ Azure SDK client libraries typically expose one or more _service client_ types t
 are the main starting points for calling corresponding Azure services. 
 You can easily find these client types as their names end with the word _Client_. 
 For example, ```BlockBlobClient``` can be used to call blob storage service, 
-and ```KeyClient``` can be used to access KeyVault service cryptographic keys. 
+and ```KeyClient``` can be used to access Key Vault service cryptographic keys. 
 
 These client types can be instantiated by calling a simple constructor, 
 or its overload that takes various configuration options. 
@@ -114,12 +114,12 @@ More on logging in [diagnostics samples](samples/Diagnostics.md)
 
 ### Reporting Errors ```RequestFailedException```
 
-When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code and an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try
 {
-    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
 }
 // handle exception with status code 404
 catch (RequestFailedException e) when (e.Status == 404)
@@ -138,9 +138,9 @@ You can iterate over `AsyncPageable` directly or in pages.
 
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
-AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-await foreach (SecretProperties secretProperties in response)
+await foreach (SecretProperties secretProperties in allSecretProperties)
 {
     Console.WriteLine(secretProperties.Name);
 }
@@ -159,7 +159,7 @@ The `WaitForCompletionAsync` method is an easy way to wait for operation complet
 SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
 // Start the operation
-DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
 Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
 DeletedSecret value = response.Value;
@@ -205,7 +205,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](Diagnostics.md#Distributed-tracing)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 
@@ -217,11 +217,12 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
 
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/
+[docs]: https://azure.github.io/azure-sdk-for-net/core.html
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

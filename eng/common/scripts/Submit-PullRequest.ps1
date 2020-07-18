@@ -41,19 +41,28 @@ param(
   $PRBody = $PRTitle
 )
 
+$headers = @{
+  Authorization = "bearer $AuthToken"
+}
+
 $query = "state=open&head=${PROwner}:${PRBranch}&base=${BaseBranch}"
 
-$resp = Invoke-RestMethod "https://api.github.com/repos/$RepoOwner/$RepoName/pulls?$query"
+try {
+  $resp = Invoke-RestMethod -Headers $headers "https://api.github.com/repos/$RepoOwner/$RepoName/pulls?$query"
+}
+catch { 
+  Write-Error "Invoke-RestMethod [https://api.github.com/repos/$RepoOwner/$RepoName/pulls?$query] failed with exception:`n$_"
+  exit 1
+}
 $resp | Write-Verbose
 
 if ($resp.Count -gt 0) {
     Write-Host -f green "Pull request already exists $($resp[0].html_url)"
+
+    # setting variable to reference the pull request by number
+    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp[0].number)"
 }
 else {
-  $headers = @{
-    Authorization = "bearer $AuthToken"
-  }
-
   $data = @{
     title                 = $PRTitle
     head                  = "${PROwner}:${PRBranch}"
@@ -62,9 +71,19 @@ else {
     maintainer_can_modify = $true
   }
 
-  $resp = Invoke-RestMethod -Method POST -Headers $headers `
-                            https://api.github.com/repos/$RepoOwner/$RepoName/pulls `
-                            -Body ($data | ConvertTo-Json)
+  try {
+    $resp = Invoke-RestMethod -Method POST -Headers $headers `
+                              "https://api.github.com/repos/$RepoOwner/$RepoName/pulls" `
+                              -Body ($data | ConvertTo-Json)
+  }
+  catch {
+    Write-Error "Invoke-RestMethod [https://api.github.com/repos/$RepoOwner/$RepoName/pulls] failed with exception:`n$_"
+    exit 1
+  }
+
   $resp | Write-Verbose
   Write-Host -f green "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
+
+  # setting variable to reference the pull request by number
+  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 }

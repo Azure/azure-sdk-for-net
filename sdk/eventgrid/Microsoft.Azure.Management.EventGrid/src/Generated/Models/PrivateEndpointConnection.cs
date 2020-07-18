@@ -17,9 +17,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// PrivateEndpointConnection resource information.
-    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PrivateEndpointConnection : Resource
     {
@@ -36,8 +33,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="privateEndpoint">The Private Endpoint resource for
         /// this Connection.</param>
         /// <param name="groupIds">GroupIds from the private link service

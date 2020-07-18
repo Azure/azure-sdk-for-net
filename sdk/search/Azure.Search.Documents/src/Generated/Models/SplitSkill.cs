@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill to split a string into chunks of text. </summary>
-    public partial class SplitSkill : Skill
+    public partial class SplitSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of SplitSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

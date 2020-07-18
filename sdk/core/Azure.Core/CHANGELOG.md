@@ -1,6 +1,29 @@
 # Release History
 
-## 1.2.0-preview.1 (Unreleased)
+## 1.4.0-preview.1 (Unreleased)
+
+### Fixed
+- Connection leak for retried non-buffered requests on .NET Framework.
+
+## 1.3.0 (2020-07-02)
+
+### Added
+- `HttpPipeline.CreateClientRequestIdScope` method to allow setting client request id on outgoing requests.
+
+## 1.2.2 (2020-06-04)
+
+### Bugfix
+- Retry server timeouts on .NET Framework.
+
+## 1.2.1  (2020-04-30)
+
+### Changed
+- Read client request ID value used for logging and tracing off the initial request object if available.
+
+### Bugfix
+- Fixed a bug when using Azure.Core based libraries in Blazor WebAssembly apps.
+
+## 1.2.0 (2020-04-03)
 
 ### Added
 - `AzureKeyCredential` and its respective policy.

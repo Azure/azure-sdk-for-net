@@ -70,29 +70,24 @@ namespace Microsoft.Azure.Management.Subscription
         public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the ITenantsOperations.
+        /// </summary>
+        public virtual ITenantsOperations Tenants { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionOperations.
+        /// </summary>
+        public virtual ISubscriptionOperations Subscription { get; private set; }
+
+        /// <summary>
         /// Gets the ISubscriptionOperationOperations.
         /// </summary>
         public virtual ISubscriptionOperationOperations SubscriptionOperation { get; private set; }
 
         /// <summary>
-        /// Gets the ISubscriptionFactoryOperations.
-        /// </summary>
-        public virtual ISubscriptionFactoryOperations SubscriptionFactory { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubscriptionOperations.
-        /// </summary>
-        public virtual ISubscriptionOperations SubscriptionOperations { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the ITenantsOperations.
-        /// </summary>
-        public virtual ITenantsOperations Tenants { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SubscriptionClient class.
@@ -336,11 +331,10 @@ namespace Microsoft.Azure.Management.Subscription
         private void Initialize()
         {
             Subscriptions = new SubscriptionsOperations(this);
-            SubscriptionOperation = new SubscriptionOperationOperations(this);
-            SubscriptionFactory = new SubscriptionFactoryOperations(this);
-            SubscriptionOperations = new SubscriptionOperations(this);
-            Operations = new Operations(this);
             Tenants = new TenantsOperations(this);
+            Subscription = new SubscriptionOperations(this);
+            SubscriptionOperation = new SubscriptionOperationOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

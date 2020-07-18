@@ -165,17 +165,11 @@
   <data name="NotSupportedPropertyType" xml:space="preserve">
     <value>'{0}' is not a supported type.</value>
   </data>
-  <data name="SqlFilterStatmentTooLong" xml:space="preserve">
+  <data name="SqlRuleFilterStatmentTooLong" xml:space="preserve">
     <value>The length of the filter statement is {0}, which exceeds the maximum length of {1}</value>
-  </data>
-  <data name="SqlFilterActionStatmentTooLong" xml:space="preserve">
-    <value>The length of the filter action statement is {0}, which exceeds the maximum length of {1}.</value>
   </data>
   <data name="CharacterReservedForUriScheme" xml:space="preserve">
     <value>'{0}' contains character '{1}' which is not allowed because it is reserved in the Uri scheme.</value>
-  </data>
-  <data name="EntityNameLengthExceedsLimit" xml:space="preserve">
-    <value>The entity path/name '{0}' exceeds the '{1}' character limit.</value>
   </data>
   <data name="InvalidCharacterInEntityName" xml:space="preserve">
     <value>The entity name or path contains an invalid character '{0}'. The supplied value is '{1}'.</value>
@@ -184,10 +178,7 @@
     <value>Provided rule filter {0} is not supported. Supported values are: {1}, {2}</value>
   </data>
   <data name="PeekLockModeRequired" xml:space="preserve">
-    <value>This operation is only supported for a message receiver in 'PeekLock' receive mode.</value>
-  </data>
-  <data name="MaxConcurrentCallsMustBeGreaterThanZero" xml:space="preserve">
-    <value>The specified value '{0}' is invalid. "maxConcurrentCalls" must be greater than zero.</value>
+    <value>This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled.</value>
   </data>
   <data name="MessageHandlerAlreadyRegistered" xml:space="preserve">
     <value>A message handler has already been registered.</value>
@@ -293,5 +284,14 @@
   </data>
   <data name="UnsupportedTransportEventType" xml:space="preserve">
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
+  </data>
+  <data name="MessageBatchIsLocked" xml:space="preserve">
+    <value>The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete.</value>
+  </data>
+  <data name="SettlementOperationNotSupported" xml:space="preserve">
+    <value>The operation is not supported for peeked message. Only received message can be settled.</value>
+  </data>
+  <data name="SendViaCannotBeUsedWithEntityInConnectionString" xml:space="preserve">
+    <value>When sending via a different entity, an entity path is not allowed to specified in the connection string.</value>
   </data>
 </root>

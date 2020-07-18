@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         MicrosoftBatch,
         /// <summary>
         /// The encryption keys used to protect the account data are stored in
-        /// an external key vault.
+        /// an external key vault. If this is set then the Batch Account
+        /// identity must be set to `SystemAssigned` and a valid Key Identifier
+        /// must also be supplied under the keyVaultProperties.
         /// </summary>
         [EnumMember(Value = "Microsoft.KeyVault")]
         MicrosoftKeyVault

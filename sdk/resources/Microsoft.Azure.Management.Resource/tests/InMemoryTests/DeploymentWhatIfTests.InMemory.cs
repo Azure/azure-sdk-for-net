@@ -296,7 +296,7 @@ namespace ResourceGroups.Tests
             'contentVersion': '1.0.0.0',
             'parameters': {
                 'roleDefName': {
-                    'value': 'myCustomRole'
+                   'value': 'myCustomRole'
                 }
             }
         }")]

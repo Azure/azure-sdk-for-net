@@ -364,5 +364,647 @@ namespace Microsoft.Azure.HDInsight.Job
                 }
             }
 
+            /// <summary>
+            /// List all spark batch jobs
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            public static SparkBatchJobCollection ListSparkBatchJob(this IJobOperations operations, int? fromParameter = default(int?), int? size = default(int?))
+            {
+                return operations.ListSparkBatchJobAsync(fromParameter, size).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all spark batch jobs
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkBatchJobCollection> ListSparkBatchJobAsync(this IJobOperations operations, int? fromParameter = default(int?), int? size = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSparkBatchJobWithHttpMessagesAsync(fromParameter, size, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a new spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sparkBatchJobRequest'>
+            /// Livy compatible batch job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkBatchJob SubmitSparkBatchJob(this IJobOperations operations, SparkBatchJobRequest sparkBatchJobRequest, string requestedBy = "ambari")
+            {
+                return operations.SubmitSparkBatchJobAsync(sparkBatchJobRequest, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sparkBatchJobRequest'>
+            /// Livy compatible batch job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkBatchJob> SubmitSparkBatchJobAsync(this IJobOperations operations, SparkBatchJobRequest sparkBatchJobRequest, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SubmitSparkBatchJobWithHttpMessagesAsync(sparkBatchJobRequest, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            public static SparkBatchJob GetSparkBatchJob(this IJobOperations operations, int batchId)
+            {
+                return operations.GetSparkBatchJobAsync(batchId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkBatchJob> GetSparkBatchJobAsync(this IJobOperations operations, int batchId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkBatchJobWithHttpMessagesAsync(batchId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Cancels a running spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkJobDeletedResult DeleteSparkBatchJob(this IJobOperations operations, int batchId, string requestedBy = "ambari")
+            {
+                return operations.DeleteSparkBatchJobAsync(batchId, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels a running spark batch job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobDeletedResult> DeleteSparkBatchJobAsync(this IJobOperations operations, int batchId, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteSparkBatchJobWithHttpMessagesAsync(batchId, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark batch job logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            public static SparkJobLog GetSparkBatchLog(this IJobOperations operations, int batchId, int? fromParameter = default(int?), int? size = default(int?))
+            {
+                return operations.GetSparkBatchLogAsync(batchId, fromParameter, size).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark batch job logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobLog> GetSparkBatchLogAsync(this IJobOperations operations, int batchId, int? fromParameter = default(int?), int? size = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkBatchLogWithHttpMessagesAsync(batchId, fromParameter, size, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark batch state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            public static SparkJobState GetSparkBatchState(this IJobOperations operations, int batchId)
+            {
+                return operations.GetSparkBatchStateAsync(batchId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark batch state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='batchId'>
+            /// Identifier for the batch job.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobState> GetSparkBatchStateAsync(this IJobOperations operations, int batchId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkBatchStateWithHttpMessagesAsync(batchId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all spark sessions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            public static SparkSessionCollection ListSparkSessionJob(this IJobOperations operations, int? fromParameter = default(int?), int? size = default(int?))
+            {
+                return operations.ListSparkSessionJobAsync(fromParameter, size).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all spark sessions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkSessionCollection> ListSparkSessionJobAsync(this IJobOperations operations, int? fromParameter = default(int?), int? size = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSparkSessionJobWithHttpMessagesAsync(fromParameter, size, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a new spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sparkSessionJobRequest'>
+            /// Livy compatible session job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkSessionJob SubmitSparkSessionJob(this IJobOperations operations, SparkSessionJobRequest sparkSessionJobRequest, string requestedBy = "ambari")
+            {
+                return operations.SubmitSparkSessionJobAsync(sparkSessionJobRequest, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sparkSessionJobRequest'>
+            /// Livy compatible session job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkSessionJob> SubmitSparkSessionJobAsync(this IJobOperations operations, SparkSessionJobRequest sparkSessionJobRequest, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SubmitSparkSessionJobWithHttpMessagesAsync(sparkSessionJobRequest, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            public static SparkSessionJob GetSparkSessionJob(this IJobOperations operations, int sessionId)
+            {
+                return operations.GetSparkSessionJobAsync(sessionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkSessionJob> GetSparkSessionJobAsync(this IJobOperations operations, int sessionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkSessionJobWithHttpMessagesAsync(sessionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Cancels a running spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkJobDeletedResult DeleteSparkSessionJob(this IJobOperations operations, int sessionId, string requestedBy = "ambari")
+            {
+                return operations.DeleteSparkSessionJobAsync(sessionId, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels a running spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobDeletedResult> DeleteSparkSessionJobAsync(this IJobOperations operations, int sessionId, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteSparkSessionJobWithHttpMessagesAsync(sessionId, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark session job logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session job.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            public static SparkJobLog GetSparkSessionLog(this IJobOperations operations, int sessionId, int? fromParameter = default(int?), int? size = default(int?))
+            {
+                return operations.GetSparkSessionLogAsync(sessionId, fromParameter, size).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark session job logs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session job.
+            /// </param>
+            /// <param name='fromParameter'>
+            /// Optional param specifying which index the list should begin from.
+            /// </param>
+            /// <param name='size'>
+            /// Optional param specifying the size of the returned list.
+            /// By default it is 20 and that is the maximum.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobLog> GetSparkSessionLogAsync(this IJobOperations operations, int sessionId, int? fromParameter = default(int?), int? size = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkSessionLogWithHttpMessagesAsync(sessionId, fromParameter, size, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single spark session job state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session job.
+            /// </param>
+            public static SparkJobState GetSparkSessionState(this IJobOperations operations, int sessionId)
+            {
+                return operations.GetSparkSessionStateAsync(sessionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single spark session job state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session job.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkJobState> GetSparkSessionStateAsync(this IJobOperations operations, int sessionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkSessionStateWithHttpMessagesAsync(sessionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of statements within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            public static SparkStatementCollection ListSparkStatementJob(this IJobOperations operations, int sessionId)
+            {
+                return operations.ListSparkStatementJobAsync(sessionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of statements within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkStatementCollection> ListSparkStatementJobAsync(this IJobOperations operations, int sessionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSparkStatementJobWithHttpMessagesAsync(sessionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a statement within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='sparkStatementRequest'>
+            /// Livy compatible batch job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkStatement SubmitSparkStatementJob(this IJobOperations operations, int sessionId, SparkStatementRequest sparkStatementRequest, string requestedBy = "ambari")
+            {
+                return operations.SubmitSparkStatementJobAsync(sessionId, sparkStatementRequest, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a statement within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='sparkStatementRequest'>
+            /// Livy compatible batch job request payload.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkStatement> SubmitSparkStatementJobAsync(this IJobOperations operations, int sessionId, SparkStatementRequest sparkStatementRequest, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SubmitSparkStatementJobWithHttpMessagesAsync(sessionId, sparkStatementRequest, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a single statement within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='statementId'>
+            /// Identifier for the statement.
+            /// </param>
+            public static SparkStatement GetSparkStatementJob(this IJobOperations operations, int sessionId, int statementId)
+            {
+                return operations.GetSparkStatementJobAsync(sessionId, statementId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a single statement within a spark session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='statementId'>
+            /// Identifier for the statement.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkStatement> GetSparkStatementJobAsync(this IJobOperations operations, int sessionId, int statementId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSparkStatementJobWithHttpMessagesAsync(sessionId, statementId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Kill a statement within a session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='statementId'>
+            /// Identifier for the statement.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            public static SparkStatementCancellationResult DeleteSparkStatementJob(this IJobOperations operations, int sessionId, int statementId, string requestedBy = "ambari")
+            {
+                return operations.DeleteSparkStatementJobAsync(sessionId, statementId, requestedBy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Kill a statement within a session.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sessionId'>
+            /// Identifier for the session.
+            /// </param>
+            /// <param name='statementId'>
+            /// Identifier for the statement.
+            /// </param>
+            /// <param name='requestedBy'>
+            /// Add default value for X-Requested-By in header.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SparkStatementCancellationResult> DeleteSparkStatementJobAsync(this IJobOperations operations, int sessionId, int statementId, string requestedBy = "ambari", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteSparkStatementJobWithHttpMessagesAsync(sessionId, statementId, requestedBy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

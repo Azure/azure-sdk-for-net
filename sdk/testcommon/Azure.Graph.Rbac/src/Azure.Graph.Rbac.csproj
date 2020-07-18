@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.Graph.Rbac</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.ResourceGraph</Description>
+    <PackageTags>azure;management;resourcegraph</PackageTags>
+    <!--Need explicitly specify IsMgmtClientLibrary  
+    as this project doesn't start with Azure.Management-->
+    <IsMgmtClientLibrary>true</IsMgmtClientLibrary>
+    <NoWarn>$(NoWarn);AZC0001;AZC0008;AZC0012;CS1591</NoWarn>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
+  </PropertyGroup>
+</Project>

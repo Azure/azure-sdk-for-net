@@ -8,6 +8,8 @@
 .vs/
 *.lock.json
 developer/
+launch.json
+launchSettings.json
 
 # Build results
 binaries/
@@ -60,6 +62,9 @@ ipch/
 # Visual Studio profiler
 *.psess
 *.vsp
+
+# VS Code
+.vscode/
 
 # Code analysis
 *.CodeAnalysisLog.xml
@@ -117,10 +122,11 @@ tools/*.dll
 
 # Sensitive files
 *.keys
-!Azure.AspNetCore.DataProtection.Keys
+!Azure.Extensions.AspNetCore.DataProtection.Keys
 !Azure.Security.KeyVault.Keys
 *.pfx
 TestConfigurations.xml
+*.json.env
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -156,3 +162,6 @@ node_modules/
 
 # MSBuild binary log files
 msbuild.binlog
+
+# BenchmarkDotNet 
+BenchmarkDotNet.Artifacts

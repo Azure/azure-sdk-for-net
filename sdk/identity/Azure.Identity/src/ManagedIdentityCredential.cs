@@ -91,15 +91,9 @@ namespace Azure.Identity
 
                 return scope.Succeeded(result);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-               throw scope.FailAndWrap(e);
+               throw scope.FailWrapAndThrow(e);
             }
         }
     }

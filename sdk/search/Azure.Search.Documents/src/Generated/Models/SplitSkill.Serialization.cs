@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SplitSkill : IUtf8JsonSerializable
     {
@@ -24,7 +25,7 @@ namespace Azure.Search.Documents.Models
             if (TextSplitMode != null)
             {
                 writer.WritePropertyName("textSplitMode");
-                writer.WriteStringValue(TextSplitMode.Value.ToSerialString());
+                writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
             if (MaximumPageLength != null)
             {
@@ -48,20 +49,34 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            else
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteNull("inputs");
             }
-            writer.WriteEndArray();
+            if (Outputs.Any())
+            {
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            else
+            {
+                writer.WriteNull("outputs");
+            }
             writer.WriteEndObject();
         }
 
@@ -70,7 +85,7 @@ namespace Azure.Search.Documents.Models
             SplitSkillLanguage? defaultLanguageCode = default;
             TextSplitMode? textSplitMode = default;
             int? maximumPageLength = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
@@ -93,7 +108,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    textSplitMode = property.Value.GetString().ToTextSplitMode();
+                    textSplitMode = new TextSplitMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maximumPageLength"))
@@ -107,7 +122,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -142,7 +157,14 @@ namespace Azure.Search.Documents.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        }
                     }
                     inputs = array;
                     continue;
@@ -152,13 +174,20 @@ namespace Azure.Search.Documents.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        }
                     }
                     outputs = array;
                     continue;
                 }
             }
-            return new SplitSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode, textSplitMode, maximumPageLength);
+            return new SplitSkill(odataType, name, description, context, inputs, outputs, defaultLanguageCode, textSplitMode, maximumPageLength);
         }
     }
 }

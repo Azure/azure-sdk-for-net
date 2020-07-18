@@ -49,7 +49,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                         {
-                            GetTestVMSSVMExtension(),
+                            GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                         }
                     };
 
@@ -381,7 +381,7 @@ namespace Compute.Tests
                     // Windows VM image
                     ImageReference imageRef = GetPlatformVMImage(true);
                     imageRef.Version = "latest";
-                    var extension = GetTestVMSSVMExtension();
+                    var extension = GetTestVMSSVMExtension(autoUpdateMinorVersion:false);
                     VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()

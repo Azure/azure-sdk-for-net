@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a?api-version=2019-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWZlOGY4MDMtNzE5MC00OGUzLWI0MWEtYmM0NTRlOGFhZDFhP2FwaS12ZXJzaW9uPTIwMTktMTEtMDE=",
+      "RequestUri": "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWZlOGY4MDMtNzE5MC00OGUzLWI0MWEtYmM0NTRlOGFhZDFhP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b756b22-90b2-43c1-a718-407c63ec9bc8"
+          "7859bf3d-ac40-442e-a395-b8e06dabc4e4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28325.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.3.0.0"
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.7.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "331dddbf-bb14-4fab-837d-b4d42abf8200"
+          "88459f8e-5788-4f18-9ee2-73066270a157"
         ],
         "x-ms-correlation-request-id": [
-          "331dddbf-bb14-4fab-837d-b4d42abf8200"
+          "88459f8e-5788-4f18-9ee2-73066270a157"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200218T185616Z:331dddbf-bb14-4fab-837d-b4d42abf8200"
+          "WESTUS:20200526T214256Z:88459f8e-5788-4f18-9ee2-73066270a157"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 18 Feb 2020 18:56:16 GMT"
+          "Tue, 26 May 2020 21:42:56 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -54,10 +54,10 @@
           "-1"
         ],
         "Content-Length": [
-          "452"
+          "463"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a\",\r\n  \"authorizationSource\": \"RoleBased\",\r\n  \"managedByTenants\": [],\r\n  \"tags\": {\r\n    \"sdkTagsTest\": \"sdkTagsTestValue\"\r\n  },\r\n  \"subscriptionId\": \"afe8f803-7190-48e3-b41a-bc454e8aad1a\",\r\n  \"tenantId\": \"fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n  \"displayName\": \"Visual Studio Enterprise Subscription\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a\",\r\n  \"authorizationSource\": \"RoleBased\",\r\n  \"managedByTenants\": [],\r\n  \"tags\": {\r\n    \"tagKey1\": \"tagValue1\",\r\n    \"tagKey2\": \"tagValue2\"\r\n  },\r\n  \"subscriptionId\": \"afe8f803-7190-48e3-b41a-bc454e8aad1a\",\r\n  \"tenantId\": \"fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n  \"displayName\": \"Visual Studio Enterprise Subscription\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

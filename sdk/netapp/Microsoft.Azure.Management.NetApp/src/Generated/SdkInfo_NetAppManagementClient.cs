@@ -19,23 +19,22 @@ namespace Microsoft.Azure.Management.NetApp
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NetApp", "Accounts", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "MountTargets", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "NetAppResource", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "Operations", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "Pools", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-10-01"),
-                new Tuple<string, string, string>("NetApp", "Volumes", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "Accounts", "2019-11-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResource", "2019-11-01"),
+                new Tuple<string, string, string>("NetApp", "Operations", "2019-11-01"),
+                new Tuple<string, string, string>("NetApp", "Pools", "2019-11-01"),
+                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-11-01"),
+                new Tuple<string, string, string>("NetApp", "Volumes", "2019-11-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/netapp/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\audunn\\source\\repos\\audunn\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "06b9412319ada8678c0ce07016cac1bf66258b1d";
+      public static readonly String GithubCommidId = "cd04d9812450aa5bb0e9b9deb51340fa5d0dcbea";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

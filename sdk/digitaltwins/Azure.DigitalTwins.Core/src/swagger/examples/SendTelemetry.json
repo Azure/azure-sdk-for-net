@@ -1,0 +1,14 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview",
+    "id": "myTwinId",
+    "dt-id": "e5ca50dd-ca31-4fae-8d84-3af5a72b10c5",
+    "dt-timestamp": "1985-04-12T23:20:50.52Z",
+    "telemetry": {
+      "temperature": 1
+    }
+  },
+  "responses": {
+    "204": {}
+  }
+}

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         public const string Policy = "Policy";
         public const string Technical = "Technical";
         public const string Service = "Service";
+        public const string Escalation = "Escalation";
         public const string Other = "Other";
     }
 }

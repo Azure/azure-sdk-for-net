@@ -1,6 +1,5 @@
 jobs:
   - job: Build
-
     pool:
       vmImage: windows-2019
     steps:
@@ -9,7 +8,9 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - script: "dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+      - script: |
+          if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
+          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -39,20 +40,15 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
         Windows:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
         MacOs:
-          OSName: "MacOS"
           OSVmImage: "macOS-10.15"
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
@@ -88,6 +84,15 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+      - task: PowerShell@2
+        inputs:
+          targetType: "inline"
+          script: |
+            if (Test-Path "src/SDKs/_metadata/") {
+                Write-Error "'src/SDKs/_metadata/' is not empty. This might be caused by outdated build tools. Please follow this guide to update them and make sure the metadata txt file is generated in 'eng/mgmt/mgmtmetadata': https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md#updating-build-tools"
+            }
+          failOnStderr: true
+          pwsh: true

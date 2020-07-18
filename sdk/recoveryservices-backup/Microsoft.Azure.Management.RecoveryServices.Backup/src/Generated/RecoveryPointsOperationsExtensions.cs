@@ -161,6 +161,74 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
+            /// Returns the Access token for communication between BMS and Protection
+            /// service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the container.
+            /// </param>
+            /// <param name='containerName'>
+            /// Name of the container.
+            /// </param>
+            /// <param name='protectedItemName'>
+            /// Name of the Protected Item.
+            /// </param>
+            /// <param name='recoveryPointId'>
+            /// Recovery Point Id
+            /// </param>
+            public static CrrAccessTokenResource GetAccessToken(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
+            {
+                return operations.GetAccessTokenAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the Access token for communication between BMS and Protection
+            /// service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the container.
+            /// </param>
+            /// <param name='containerName'>
+            /// Name of the container.
+            /// </param>
+            /// <param name='protectedItemName'>
+            /// Name of the Protected Item.
+            /// </param>
+            /// <param name='recoveryPointId'>
+            /// Recovery Point Id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CrrAccessTokenResource> GetAccessTokenAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the backup copies for the backed up item.
             /// </summary>
             /// <param name='operations'>

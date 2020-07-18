@@ -31,14 +31,25 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
+        public static EventHubsEventSource Log { get; } = new EventHubsEventSource(EventSourceName);
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        protected EventHubsEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected EventHubsEventSource()
+        {
+        }
+
+        /// <summary>
+        ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
+        ///   outside the scope of the <see cref="Log" /> instance.
+        /// </summary>
+        ///
+        /// <param name="eventSourceName">The name to assign to the event source.</param>
+        ///
+        private EventHubsEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
@@ -82,16 +93,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         ///
-        [Event(3, Level = EventLevel.Informational, Message = "Publishing events for Event Hub: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
+        [Event(3, Level = EventLevel.Informational, Message = "Publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.")]
         public virtual void EventPublishStart(string eventHubName,
                                               string partitionIdOrKey,
-                                              string eventHash)
+                                              string operationId)
         {
             if (IsEnabled())
             {
-                WriteEvent(3, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
+                WriteEvent(3, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty);
             }
         }
 
@@ -101,16 +112,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="retryCount">The number of retries that were used for service communication.</param>
         ///
-        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
+        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'.  Service Retry Count: {3}.")]
         public virtual void EventPublishComplete(string eventHubName,
                                                  string partitionIdOrKey,
-                                                 string eventHash)
+                                                 string operationId,
+                                                 int retryCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
+                WriteEvent(4, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, retryCount);
             }
         }
 
@@ -120,18 +133,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(5, Level = EventLevel.Error, Message = "An exception occurred while publishing events for Event Hub: {0} (Partition Id/Key: '{1}', Event Hash: '{2}'). Error Message: '{3}'")]
+        [Event(5, Level = EventLevel.Error, Message = "An exception occurred while publishing events for Event Hub: {0} (Partition Id/Key: '{1}'), Operation Id: '{2}'. Error Message: '{3}'")]
         public virtual void EventPublishError(string eventHubName,
                                               string partitionIdOrKey,
-                                              string eventHash,
+                                              string operationId,
                                               string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(5, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(5, eventHubName ?? string.Empty, partitionIdOrKey ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -142,15 +155,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').")]
+        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.")]
         public virtual void EventReceiveStart(string eventHubName,
                                               string consumerGroup,
-                                              string partitionId)
+                                              string partitionId,
+                                              string operationId)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(6, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty);
             }
         }
 
@@ -161,17 +176,21 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="retryCount">The number of retries that were used for service communication.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').  Event Count: '{3}'")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
+                                                 string operationId,
+                                                 int retryCount,
                                                  int eventCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, eventCount);
+                WriteEvent(7, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, retryCount, eventCount);
             }
         }
 
@@ -182,17 +201,19 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being received from.</param>
         /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'). Error Message: '{3}'")]
+        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'. Error Message: '{4}'")]
         public virtual void EventReceiveError(string eventHubName,
                                               string consumerGroup,
                                               string partitionId,
+                                              string operationId,
                                               string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(8, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -201,18 +222,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
         [Event(9, Level = EventLevel.Verbose, Message = "Closing an {0} (EventHub '{1}'; Identifier '{2}').")]
-        public virtual void ClientCloseStart(Type clientType,
+        public virtual void ClientCloseStart(string clientTypeName,
                                              string eventHubName,
                                              string clientId)
         {
             if (IsEnabled())
             {
-                WriteEvent(9, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(9, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -221,18 +242,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
         [Event(10, Level = EventLevel.Verbose, Message = "An {0} has been closed (EventHub '{1}'; Identifier '{2}').")]
-        public virtual void ClientCloseComplete(Type clientType,
+        public virtual void ClientCloseComplete(string clientTypeName,
                                                 string eventHubName,
                                                 string clientId)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(10, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -241,20 +262,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(11, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (EventHub '{1}'; Identifier '{2}'). Error Message: '{3}'")]
-        public virtual void ClientCloseError(Type clientType,
+        public virtual void ClientCloseError(string clientTypeName,
                                              string eventHubName,
                                              string clientId,
                                              string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(11, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(11, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -754,16 +775,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="eventPosition">The description of the <see cref="EventPosition" /> used as the starting point for processing.</param>
         ///
-        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Starting at position: {4}.")]
         public virtual void EventProcessorPartitionProcessingStartComplete(string partitionId,
                                                                            string identifier,
                                                                            string eventHubName,
-                                                                           string consumerGroup)
+                                                                           string consumerGroup,
+                                                                           string eventPosition)
         {
             if (IsEnabled())
             {
-                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, eventPosition ?? string.Empty);
             }
         }
 

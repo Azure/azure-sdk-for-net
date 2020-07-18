@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A character filter that replaces characters in the input string. It uses a regular expression to identify character sequences to preserve and a replacement pattern to identify characters to replace. For example, given the input text &quot;aa bb aa bb&quot;, pattern &quot;(aa)\s+(bb)&quot;, and replacement &quot;$1#$2&quot;, the result would be &quot;aa#bb aa#bb&quot;. This character filter is implemented using Apache Lucene. </summary>
     public partial class PatternReplaceCharFilter : CharFilter
@@ -49,8 +49,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A regular expression pattern. </summary>
-        public string Pattern { get; }
+        public string Pattern { get; set; }
         /// <summary> The replacement text. </summary>
-        public string Replacement { get; }
+        public string Replacement { get; set; }
     }
 }

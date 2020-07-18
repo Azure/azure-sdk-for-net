@@ -1,29 +1,132 @@
 # Live Test Resource Management
 
-Live test runs require pre-existing resources in Azure. This set of PowerShell
-commands automates creation and teardown of live test resources for Desktop and
-CI scenarios.
+Running and recording live tests often requires first creating some resources
+in Azure. Service directories that include a test-resources.json file require
+running [New-TestResources.ps1][] to create these resources and output
+environment variables you must set.
 
-* [New-TestResources.ps1](./New-TestResources.ps1.md) - Create new test resources
-for the given service.
-* [Remove-TestResources.ps1](./New-TestResources.ps1.md) - Deletes resources
+The following scripts can be used both in on your desktop for developer
+scenarios as well as on hosted agents for continuous integration testing.
+
+* [New-TestResources.ps1][] - Creates new test resources for a given service.
+* [Remove-TestResources.ps1][] - Deletes previously created resources.
+
+## Prerequisites
+
+1. Install [PowerShell][] version 7.0 or newer.
+2. Install the [Azure PowerShell][PowerShellAz].
 
 ## On the Desktop
 
-Run `New-TestResources.ps1` on your desktop to create live test resources for a
-given service (e.g. Storage, Key Vault, etc.). The command will output
-environment variables that need to be set when running the live tests.
+To set up your Azure account to run live tests, you'll need to log into Azure,
+create a service principal, and set up your resources defined in
+test-resources.json as shown in the following example using Azure Search.
 
-See examples for how to create the needed Service Principals and execute live
-tests.
+Note that `-Subscription` is an optional parameter but recommended if your account
+is a member of multiple subscriptions.
+
+```powershell
+Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
+$sp = New-AzADServicePrincipal -Role Owner
+eng\common\TestResources\New-TestResources.ps1 `
+  -BaseName 'myusername' `
+  -ServiceDirectory 'search' `
+  -TestApplicationId $sp.ApplicationId `
+  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
+```
+
+If you are running this for a .NET project on Windows, the recommended method is to 
+add the `-OutFile` switch to the above command. This will save test environment settings 
+into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI. 
+The environment file would be scoped to the current repository directory and avoids the need to 
+set environment variables or restart your IDE to recognize them.
+
+Along with some log messages, this will output environment variables based on
+your current shell like in the following example:
+
+```powershell
+$env:AZURE_TENANT_ID = '<<secret>>'
+$env:AZURE_CLIENT_ID = '<<secret>>'
+$env:AZURE_CLIENT_SECRET = '<<secret>>'
+$env:AZURE_SUBSCRIPTION_ID = 'YOUR SUBSCRIPTION ID'
+$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
+$env:AZURE_LOCATION = 'westus2'
+$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
+$env:AZURE_SEARCH_STORAGE_KEY = '<<secret>>'
+```
+
+For security reasons we do not set these environment variables automatically
+for either the current process or persistently for future sessions. You must
+do that yourself based on your current platform and shell.
+
+If your current shell was detected properly, you should be able to copy and
+paste the output directly in your terminal and add to your profile script.
+For example, in PowerShell on Windows you can copy the output above and paste
+it back into the terminal to set those environment variables for the current
+process. To persist these variables for future terminal sessions or for
+applications started outside the terminal, you could copy and paste the
+following commands:
+
+```powershell
+setx AZURE_TENANT_ID $env:AZURE_TENANT_ID
+setx AZURE_CLIENT_ID $env:AZURE_CLIENT_ID
+setx AZURE_CLIENT_SECRET $env:AZURE_CLIENT_SECRET
+setx AZURE_SUBSCRIPTION_ID $env:AZURE_SUBSCRIPTION_ID
+setx AZURE_RESOURCE_GROUP $env:AZURE_RESOURCE_GROUP
+setx AZURE_LOCATION $env:AZURE_LOCATION
+setx AZURE_SEARCH_STORAGE_NAME $env:AZURE_SEARCH_STORAGE_NAME
+setx AZURE_SEARCH_STORAGE_KEY $env:AZURE_SEARCH_STORAGE_KEY
+```
+
+After running or recording live tests, if you do not plan on further testing
+you can remove the test resources you created above by running:
+[Remove-TestResources.ps1][]:
+
+```powershell
+Remove-TestResources.ps1 -BaseName 'myusername' -Force
+```
+
+If you created a new service principal as shown above, you might also remove it:
+
+```powershell
+Remove-AzADServicePrincipal -ApplicationId $sp.ApplicationId -Force
+
+```
+
+If you persisted environment variables, you should also remove those as well.
 
 ## In CI
 
-The `New-TestResources.ps1` script is invoked on each test job to create an
-isolated environment for live tests. Test resource isolation makes it easier to
-parallelize test runs.
+Test pipelines should include deploy-test-resources.yml and
+remove-test-resources.yml like in the following examples:
 
-## Other
+```yml
+- template: /eng/common/TestResources/deploy-test-resources.yml
+  parameters:
+    ServiceDirectory: '${{ parameters.ServiceDirectory }}'
 
-PowerShell markdown documentation created with
-[PlatyPS](https://github.com/PowerShell/platyPS)
+# Run tests
+
+- template: /eng/common/TestResources/remove-test-resources.yml
+```
+
+Be sure to link the **Secrets for Resource Provisioner** variable group
+into the test pipeline for these scripts to work.
+
+## Documentation
+
+To regenerate documentation for scripts within this directory, you can install
+[platyPS][] and run it like in the following example:
+
+```powershell
+Install-Module platyPS -Scope CurrentUser -Force
+New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
+```
+
+PowerShell markdown documentation created with [platyPS][].
+
+  [New-TestResources.ps1]: ./New-TestResources.ps1.md
+  [Remove-TestResources.ps1]: ./Remove-TestResources.ps1.md
+  [PowerShell]: https://github.com/PowerShell/PowerShell
+  [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
+  [platyPS]: https://github.com/PowerShell/platyPS

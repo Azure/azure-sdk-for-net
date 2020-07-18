@@ -8,13 +8,13 @@ using Azure.Core;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SuggestAsync"/> that
+    /// Options for <see cref="SearchClient.SuggestAsync"/> that
     /// allow specifying filtering, sorting, and other suggestions query
     /// behaviors.
     /// </summary>
     [CodeGenModel("SuggestRequest")]
     [CodeGenSuppress(nameof(SuggestOptions), typeof(string), typeof(string))]
-    public partial class SuggestOptions : SearchRequestOptions
+    public partial class SuggestOptions
     {
         /// <summary>
         /// Initializes new instance of <see cref="SuggestOptions"/>
@@ -112,5 +112,25 @@ namespace Azure.Search.Documents
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822
+
+        /// <summary>
+        /// Creates a shallow copy of the SuggestOptions.
+        /// </summary>
+        /// <returns>The cloned SuggestOptions.</returns>
+        internal SuggestOptions Clone() =>
+            new SuggestOptions
+            {
+                SearchText = SearchText,
+                SuggesterName = SuggesterName,
+                Filter = Filter,
+                SearchFields = SearchFields,
+                Select = Select,
+                Size = Size,
+                OrderBy = OrderBy,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                UseFuzzyMatching = UseFuzzyMatching,
+            };
     }
 }

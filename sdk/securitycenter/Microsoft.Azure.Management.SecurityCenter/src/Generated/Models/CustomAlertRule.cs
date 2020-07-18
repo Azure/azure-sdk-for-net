@@ -10,13 +10,13 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A custom alert rule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CustomAlertRule")]
     public partial class CustomAlertRule
     {
         /// <summary>
@@ -31,17 +31,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the CustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
-        public CustomAlertRule(bool isEnabled, string ruleType, string displayName = default(string), string description = default(string))
+        public CustomAlertRule(bool isEnabled, string displayName = default(string), string description = default(string))
         {
             DisplayName = displayName;
             Description = description;
             IsEnabled = isEnabled;
-            RuleType = ruleType;
             CustomInit();
         }
 
@@ -69,23 +67,14 @@ namespace Microsoft.Azure.Management.Security.Models
         public bool IsEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the custom alert rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "ruleType")]
-        public string RuleType { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (RuleType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RuleType");
-            }
+            //Nothing to validate
         }
     }
 }

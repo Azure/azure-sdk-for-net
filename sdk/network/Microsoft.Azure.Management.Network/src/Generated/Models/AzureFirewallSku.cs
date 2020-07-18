@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="name">Name of an Azure Firewall SKU. Possible values
         /// include: 'AZFW_VNet', 'AZFW_Hub'</param>
         /// <param name="tier">Tier of an Azure Firewall. Possible values
-        /// include: 'Standard'</param>
+        /// include: 'Standard', 'Premium'</param>
         public AzureFirewallSku(string name = default(string), string tier = default(string))
         {
             Name = name;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets tier of an Azure Firewall. Possible values include:
-        /// 'Standard'
+        /// 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

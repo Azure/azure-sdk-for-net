@@ -1,7 +1,49 @@
 # Release History
 
-## 12.5.0-preview.1 (Unreleased)
+## 12.5.0-preview.6 (Unreleased)
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
+- Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
 
+## 12.5.0-preview.5 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Blob Tags.
+- Added support for Blob Version.
+- Added support for Object Replication Service.
+- Added support for Append Seal.
+- Added support for Jumbo Blobs.
+- Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
+- Added RehydratePriority to BlobProperties and BlobItemProperties.
+- Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
+- Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
+- Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
+
+## 12.5.0-preview.4 (2020-06)
+- This preview contains bug fixes to improve quality.
+
+## 12.5.0-preview.1 (2020-06)
+- This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
+
+## 12.4.4 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.4.3 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
+## 12.4.2 (2020-05)
+- Fixed bug where blob, file and directory names were not URL encoded.
+- Fixed bug where BlobBaseClient.DownloadAsync() could download data incorrectly if intermittent network failure occurs.
+
+## 12.4.1 (2020-04)
+- Fixed bug where BlobContainerClient.DeleteIfExistsAsync() would throw an exception if hierarchical namespace was enabled, and the underlying container didn't exist.
+- Fixed bug where BlobBaseClient.DownloadAsync() would throw an exception when download an empty Blob.
+- Fixed bug where BlockBlobClient.CommitBlockListAsync() would throw an exception when commiting previously committed blocks.
 
 ## 12.4.0 (2020-03)
 - Fixed bug in BlobBaseClient.Download() and BlobClient.Upload() where TransferOptions.MaximumTransferLength was ignored.

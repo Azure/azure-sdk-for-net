@@ -1,11 +1,16 @@
 <#
 .DESCRIPTION
-Parses a semver version string into its components and supports operations around it.
+Parses a semver version string into its components and supports operations around it that we use for versioning our packages.
+
+See https://azure.github.io/azure-sdk/policies_releases.html#package-versioning
+
 Example: 1.2.3-preview.4
 Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber
+
+Note: A builtin Powershell version of SemVer exists in 'System.Management.Automation'. At this time, it does not parsing of PrereleaseNumber. It's name is also type accelerated to 'SemVer'.
 #>
 
-class SemVer {
+class AzureEngSemanticVersion {
     [int] $Major
     [int] $Minor
     [int] $Patch
@@ -13,14 +18,21 @@ class SemVer {
     [int] $PrereleaseNumber
     [bool] $IsPrerelease
     [string] $RawVersion
+    # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+    static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*)))?"
 
-    SemVer(
-        [string] $versionString
-    ){
-        # Regex inspired but simplifie from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-        $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*)))?$"
-        
-        if ($versionString -match $SEMVER_REGEX) {
+    static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
+    {
+        try {
+            return [AzureEngSemanticVersion]::new($versionString)
+        }
+        catch {
+            return $null
+        }
+    }
+    
+    AzureEngSemanticVersion([string] $versionString){
+        if ($versionString -match "^$([AzureEngSemanticVersion]::SEMVER_REGEX)$") {
             if ($null -eq $matches['prelabel']) {
                 # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
                 $prelabel = "zzz"
@@ -33,7 +45,6 @@ class SemVer {
                 $isPre = $true;
             }
 
-            
             $this.Major = [int]$matches.Major
             $this.Minor = [int]$matches.Minor
             $this.Patch = [int]$matches.Patch
@@ -44,8 +55,25 @@ class SemVer {
         }      
         else
         {
-            throw "Invalid version string: $versionString"
+            throw "Invalid version string: '$versionString'"
         }
+    }
+
+    # If a prerelease label exists, it must be 'preview', and similar semantics used in our release guidelines
+    # See https://azure.github.io/azure-sdk/policies_releases.html#package-versioning
+    [bool] HasValidPrereleaseLabel(){
+        if ($this.IsPrerelease -eq $true) {
+            if ($this.PrereleaseLabel -ne 'preview') {
+                Write-Error "Unexpected pre-release identifier '$this.PrereleaseLabel', should be 'preview'"
+                return $false;
+            }
+            if ($this.PrereleaseNumber -lt 1)
+            {
+                Write-Error "Unexpected pre-release version '$this.PrereleaseNumber', should be >= '1'"
+                return $false;
+            }
+        }
+        return $true;
     }
 
     [string] ToString(){
@@ -59,7 +87,6 @@ class SemVer {
         }
         return $versionString;
     }    
-
     
     [void] IncrementAndSetToPrerelease(){
         if  ($this.IsPrerelease -eq $false)

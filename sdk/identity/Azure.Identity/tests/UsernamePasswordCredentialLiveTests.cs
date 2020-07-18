@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
@@ -24,9 +25,9 @@ namespace Azure.Identity.Tests
     //   team members can use the azuresdkplayground.onmicrosoft.com tenant
     //   (c54fac88-3dd3-461f-a7c4-8a368e0340b3)
     // - Set the environment variables
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID
+    //    AZURE_IDENTITY_TEST_USERNAME
+    //    AZURE_IDENTITY_TEST_PASSWORD
+    //    AZURE_IDENTITY_TEST_TENANTID
     //   to the corresponding values of the newly created temp account.
     // - Run the tests in "Record" mode and copy the updated recordings into the
     //   .\SessionRecords folder.
@@ -37,7 +38,7 @@ namespace Azure.Identity.Tests
     //   "AADSTS50034: The user account {EmailHidden} does not exist in the
     //   <tenantId> directory."
     //
-    public class UsernamePasswordCredentialLiveTests : RecordedTestBase
+    public class UsernamePasswordCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
@@ -55,11 +56,8 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void ClearDiscoveryCache()
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.StaticMetadataProvider", true);
-
-            var staticMetadataProvider = Activator.CreateInstance(staticMetadataProviderType);
-
-            staticMetadataProvider.GetType().GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance).Invoke(staticMetadataProvider, null);
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         // !!!!!! WARNING !!!!!
@@ -71,13 +69,11 @@ namespace Azure.Identity.Tests
         // or fork. To re-record these tests the following steps MUST be COMPLETELY
         // followed before pushing any updates. See class comment for instructions
         [Test]
-        public async Task AuthenticateUsernamePasswordLive()
+        public async Task GetToken()
         {
-            var username = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME");
-
-            var password = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD") ?? "SANITIZED";
-
-            var tenantId = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
@@ -86,6 +82,44 @@ namespace Azure.Identity.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(token.Token);
+        }
+
+        [Test]
+        public async Task AuthenticateNoContext()
+        {
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
+
+            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+
+            var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
+
+            AuthenticationRecord record = await cred.AuthenticateAsync();
+
+            Assert.IsNotNull(record);
+
+            Assert.AreEqual(username, record.Username);
+            Assert.AreEqual(tenantId, record.TenantId);
+        }
+
+        [Test]
+        public async Task AuthenticateWithContext()
+        {
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
+
+            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+
+            var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
+
+            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }));
+
+            Assert.IsNotNull(record);
+
+            Assert.AreEqual(username, record.Username);
+            Assert.AreEqual(tenantId, record.TenantId);
         }
     }
 }

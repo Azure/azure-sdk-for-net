@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input by ImageAnalysisSkill. </summary>
     public readonly partial struct ImageAnalysisSkillLanguage : IEquatable<ImageAnalysisSkillLanguage>
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageAnalysisSkillLanguage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ImageAnalysisSkillLanguage other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(ImageAnalysisSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

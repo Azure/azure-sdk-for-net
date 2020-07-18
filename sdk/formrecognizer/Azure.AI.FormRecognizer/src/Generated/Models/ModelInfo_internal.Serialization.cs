@@ -9,14 +9,14 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class ModelInfo_internal
     {
         internal static ModelInfo_internal DeserializeModelInfo_internal(JsonElement element)
         {
             Guid modelId = default;
-            ModelStatus status = default;
+            CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             foreach (var property in element.EnumerateObject())
@@ -28,17 +28,17 @@ namespace Azure.AI.FormRecognizer.Custom
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString().ToModelStatus();
+                    status = property.Value.GetString().ToCustomFormModelStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
                 {
-                    createdDateTime = property.Value.GetDateTimeOffset("S");
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

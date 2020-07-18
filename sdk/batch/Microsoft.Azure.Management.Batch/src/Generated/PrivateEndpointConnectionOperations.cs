@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -327,9 +327,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (privateEndpointConnectionName == null)
@@ -338,17 +338,17 @@ namespace Microsoft.Azure.Management.Batch
             }
             if (privateEndpointConnectionName != null)
             {
-                if (privateEndpointConnectionName.Length > 64)
+                if (privateEndpointConnectionName.Length > 101)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "privateEndpointConnectionName", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "privateEndpointConnectionName", 101);
                 }
                 if (privateEndpointConnectionName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "privateEndpointConnectionName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(privateEndpointConnectionName, "^[a-zA-Z0-9_-]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(privateEndpointConnectionName, "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "privateEndpointConnectionName", "^[a-zA-Z0-9_-]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "privateEndpointConnectionName", "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -528,6 +528,41 @@ namespace Microsoft.Azure.Management.Batch
         /// value can be omitted or set to "*" to apply the operation unconditionally.
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the properties of an existing private endpoint connection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the Batch account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Batch account.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The private endpoint connection name. This must be unique within the
+        /// account.
+        /// </param>
+        /// <param name='parameters'>
+        /// PrivateEndpointConnection properties that should be updated. Properties
+        /// that are supplied will be updated, any property not supplied will be
+        /// unchanged.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// The state (ETag) version of the private endpoint connection to update. This
+        /// value can be omitted or set to "*" to apply the operation unconditionally.
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -548,7 +583,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -572,9 +607,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (privateEndpointConnectionName == null)
@@ -583,17 +618,17 @@ namespace Microsoft.Azure.Management.Batch
             }
             if (privateEndpointConnectionName != null)
             {
-                if (privateEndpointConnectionName.Length > 64)
+                if (privateEndpointConnectionName.Length > 101)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "privateEndpointConnectionName", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "privateEndpointConnectionName", 101);
                 }
                 if (privateEndpointConnectionName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "privateEndpointConnectionName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(privateEndpointConnectionName, "^[a-zA-Z0-9_-]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(privateEndpointConnectionName, "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "privateEndpointConnectionName", "^[a-zA-Z0-9_-]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "privateEndpointConnectionName", "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -617,7 +652,7 @@ namespace Microsoft.Azure.Management.Batch
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -703,7 +738,7 @@ namespace Microsoft.Azure.Management.Batch
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

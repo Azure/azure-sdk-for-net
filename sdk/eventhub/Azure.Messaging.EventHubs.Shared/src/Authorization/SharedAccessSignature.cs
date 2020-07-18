@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                     }
                     else if (string.Compare(SignedExpiryToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        if (!long.TryParse(WebUtility.UrlDecode(value), out var unixTime))
+                        if (!long.TryParse(WebUtility.UrlDecode(value), NumberStyles.Integer, CultureInfo.InvariantCulture, out var unixTime))
                         {
                             throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                         }

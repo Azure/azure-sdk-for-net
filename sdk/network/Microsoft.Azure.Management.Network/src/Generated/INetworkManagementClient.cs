@@ -81,6 +81,16 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
         /// <summary>
+        /// Gets the IApplicationGatewayPrivateLinkResourcesOperations.
+        /// </summary>
+        IApplicationGatewayPrivateLinkResourcesOperations ApplicationGatewayPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGatewayPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IApplicationGatewayPrivateEndpointConnectionsOperations ApplicationGatewayPrivateEndpointConnections { get; }
+
+        /// <summary>
         /// Gets the IApplicationSecurityGroupsOperations.
         /// </summary>
         IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
@@ -171,16 +181,6 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; }
 
         /// <summary>
-        /// Gets the IExpressRouteGatewaysOperations.
-        /// </summary>
-        IExpressRouteGatewaysOperations ExpressRouteGateways { get; }
-
-        /// <summary>
-        /// Gets the IExpressRouteConnectionsOperations.
-        /// </summary>
-        IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
-
-        /// <summary>
         /// Gets the IExpressRoutePortsLocationsOperations.
         /// </summary>
         IExpressRoutePortsLocationsOperations ExpressRoutePortsLocations { get; }
@@ -201,9 +201,14 @@ namespace Microsoft.Azure.Management.Network
         IFirewallPoliciesOperations FirewallPolicies { get; }
 
         /// <summary>
-        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// Gets the IFirewallPolicyRuleCollectionGroupsOperations.
         /// </summary>
-        IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
+        IFirewallPolicyRuleCollectionGroupsOperations FirewallPolicyRuleCollectionGroups { get; }
+
+        /// <summary>
+        /// Gets the IIpAllocationsOperations.
+        /// </summary>
+        IIpAllocationsOperations IpAllocations { get; }
 
         /// <summary>
         /// Gets the IIpGroupsOperations.
@@ -301,6 +306,16 @@ namespace Microsoft.Azure.Management.Network
         INetworkVirtualAppliancesOperations NetworkVirtualAppliances { get; }
 
         /// <summary>
+        /// Gets the IVirtualApplianceSitesOperations.
+        /// </summary>
+        IVirtualApplianceSitesOperations VirtualApplianceSites { get; }
+
+        /// <summary>
+        /// Gets the IVirtualApplianceSkusOperations.
+        /// </summary>
+        IVirtualApplianceSkusOperations VirtualApplianceSkus { get; }
+
+        /// <summary>
         /// Gets the INetworkWatchersOperations.
         /// </summary>
         INetworkWatchersOperations NetworkWatchers { get; }
@@ -336,6 +351,11 @@ namespace Microsoft.Azure.Management.Network
         IAvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes { get; }
 
         /// <summary>
+        /// Gets the IPrivateDnsZoneGroupsOperations.
+        /// </summary>
+        IPrivateDnsZoneGroupsOperations PrivateDnsZoneGroups { get; }
+
+        /// <summary>
         /// Gets the IPrivateLinkServicesOperations.
         /// </summary>
         IPrivateLinkServicesOperations PrivateLinkServices { get; }
@@ -369,6 +389,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IRoutesOperations.
         /// </summary>
         IRoutesOperations Routes { get; }
+
+        /// <summary>
+        /// Gets the ISecurityPartnerProvidersOperations.
+        /// </summary>
+        ISecurityPartnerProvidersOperations SecurityPartnerProviders { get; }
 
         /// <summary>
         /// Gets the IBgpServiceCommunitiesOperations.
@@ -519,6 +544,36 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualHubRouteTableV2sOperations.
         /// </summary>
         IVirtualHubRouteTableV2sOperations VirtualHubRouteTableV2s { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteGatewaysOperations.
+        /// </summary>
+        IExpressRouteGatewaysOperations ExpressRouteGateways { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteConnectionsOperations.
+        /// </summary>
+        IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubBgpConnectionOperations.
+        /// </summary>
+        IVirtualHubBgpConnectionOperations VirtualHubBgpConnection { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubBgpConnectionsOperations.
+        /// </summary>
+        IVirtualHubBgpConnectionsOperations VirtualHubBgpConnections { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubIpConfigurationOperations.
+        /// </summary>
+        IVirtualHubIpConfigurationOperations VirtualHubIpConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IHubRouteTablesOperations.
+        /// </summary>
+        IHubRouteTablesOperations HubRouteTables { get; }
 
         /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.

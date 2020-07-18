@@ -4,8 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -23,7 +26,6 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
-    [JsonConverter(typeof(SearchResultConverterFactory))]
     public class SearchResult<T>
     {
         /// <summary>
@@ -48,119 +50,116 @@ namespace Azure.Search.Documents.Models
         /// Initializes a new instance of the SearchResult class.
         /// </summary>
         internal SearchResult() { }
-    }
 
-    /// <summary>
-    /// JsonConverterFactory to create closed instances of
-    /// <see cref="SuggestResultsConverter{T}"/>.
-    /// </summary>
-    internal class SearchResultConverterFactory : ModelConverterFactory
-    {
-        protected override Type GenericType => typeof(SearchResult<>);
-        protected override Type GenericConverterType => typeof(SuggestResultConverter<>);
-    }
-
-    /// <summary>
-    /// Convert from JSON to <see cref="SearchResult{T}"/>.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The .NET type that maps to the index schema. Instances of this type can
-    /// be retrieved as documents from the index.
-    /// </typeparam>
-    internal class SuggestResultConverter<T> : JsonConverter<SearchResult<T>>
-    {
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
-        /// Serializing SearchResult isn't supported as it's an output only
-        /// model type.  This always fails.
+        /// Deserialize a SearchResult and its model.
         /// </summary>
-        /// <param name="writer">The JSON writer.</param>
-        /// <param name="value">The search result.</param>
-        /// <param name="options">Serialization options.</param>
-        public override void Write(Utf8JsonWriter writer, SearchResult<T> value, JsonSerializerOptions options) =>
-            throw new NotSupportedException($"{nameof(SearchResult<T>)} cannot be serialized to JSON.");
-
-        /// <summary>
-        /// Parse a SearchResult and its model.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="typeToConvert">The type to parse into.</param>
-        /// <param name="options">Serialization options.</param>
-        /// <returns>The deserialized search result.</returns>
-        public override SearchResult<T> Read(
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions options)
+        /// <param name="element">A JSON element.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResult<T>> DeserializeAsync(
+            JsonElement element,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
+            JsonSerializerOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1572
         {
             Debug.Assert(options != null);
             SearchResult<T> result = new SearchResult<T>();
-
-            // Clone the reader so we can get the search text property without
-            // advancing the reader over any properties needed to deserialize
-            // the user's model type.
-            Utf8JsonReader clone = reader;
-
-            // Keep track of the properties we've found so we can stop reading
-            // through the cloned object
-            bool parsedScore = false;
-            bool parsedHighlights = false;
-
-            clone.Expects(JsonTokenType.StartObject);
-            while (
-                (!parsedScore || !parsedHighlights) &&
-                clone.Read() &&
-                clone.TokenType != JsonTokenType.EndObject)
+            foreach (JsonProperty prop in element.EnumerateObject())
             {
-                string name = clone.ExpectsPropertyName();
-                if (name == Constants.SearchScoreKey)
+                if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    parsedScore = true;
-                    result.Score = clone.ExpectsNullableDouble();
+                    result.Score = prop.Value.GetDouble();
                 }
-                else if (name == Constants.SearchHighlightsKey)
+                else if (prop.NameEquals(Constants.SearchHighlightsKeyJson.EncodedUtf8Bytes))
                 {
-                    parsedHighlights = true;
-                    ReadHighlights(ref clone, result);
-                }
-                else
-                {
-                    // Skip the rest of the next property's value
-                    clone.Skip();
+                    result.Highlights = new Dictionary<string, IList<string>>();
+                    foreach (JsonProperty highlight in prop.Value.EnumerateObject())
+                    {
+                        // Add the highlight values
+                        List<string> values = new List<string>();
+                        result.Highlights[highlight.Name] = values;
+                        foreach (JsonElement highlightValue in highlight.Value.EnumerateArray())
+                        {
+                            values.Add(highlightValue.GetString());
+                        }
+                    }
                 }
             }
 
             // Deserialize the model
-            T document = JsonSerializer.Deserialize<T>(ref reader, options);
-            result.Document = document;
+#if EXPERIMENTAL_SERIALIZER
+            if (serializer != null)
+            {
+                using Stream stream = element.ToStream();
+                T document = async ?
+                    (T)await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T));
+                result.Document = document;
+            }
+            else
+            {
+#endif
+                T document;
+                if (async)
+                {
+                    using Stream stream = element.ToStream();
+                    document = await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), options);
+                }
+                result.Document = document;
+#if EXPERIMENTAL_SERIALIZER
+            }
+#endif
 
             return result;
         }
+    }
 
-        /// <summary>
-        /// Read the @search.highlights property value.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="result">The SearchResult to add the highlights to.</param>
-        private static void ReadHighlights(ref Utf8JsonReader reader, SearchResult<T> result)
-        {
-            Debug.Assert(result != null);
-            result.Highlights = new Dictionary<string, IList<string>>();
-            reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+    public static partial class SearchModelFactory
+    {
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document found by the search query.</param>
+        /// <param name="score">
+        /// The relevance score of the document compared to other documents
+        /// returned by the query.
+        /// </param>
+        /// <param name="highlights">
+        /// Text fragments from the document that indicate the matching search
+        /// terms, organized by each applicable field; null if hit highlighting
+        /// was not enabled for the query.
+        /// </param>
+        /// <returns>A new SearchResult instance for mocking.</returns>
+        public static SearchResult<T> SearchResult<T>(
+            T document,
+            double? score,
+            IDictionary<string, IList<string>> highlights) =>
+            new SearchResult<T>()
             {
-                // Get the highlight field name
-                string name = reader.ExpectsPropertyName();
-
-                // Get the highlight values
-                List<string> values = new List<string>();
-                reader.Expects(JsonTokenType.StartArray);
-                while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
-                {
-                    values.Add(reader.ExpectsString());
-                }
-
-                // Add the highlight
-                result.Highlights[name] = values;
-            }
-        }
+                Score = score,
+                Highlights = highlights,
+                Document = document };
     }
 }

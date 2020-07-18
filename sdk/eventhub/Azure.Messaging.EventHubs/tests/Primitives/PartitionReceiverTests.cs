@@ -611,7 +611,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesDelegatesToTheConnection()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -637,7 +637,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesUsesTheRetryPolicy()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
@@ -665,7 +665,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesUsesTheCancellationToken()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockConnection = new Mock<EventHubConnection>();
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
@@ -691,7 +691,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionPropertiesFailsWhenPartitionReceiverIsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -715,7 +715,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveBatchAsyncValidatesTheMaximumEventCount(int maximumEventCount)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -736,7 +736,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveBatchAsyncValidatesTheMaximumWaitTime(int waitTimeSeconds)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -754,7 +754,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveBatchAsyncFailsWhenPartitionReceiverIsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -791,7 +791,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveBatchAsyncDelegatesToTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedMaximumCount = 50;
             var expectedWaitTime = TimeSpan.FromMilliseconds(23);
@@ -835,7 +835,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveBatchAsyncUsesTheDefaultMaximumReceiveWaitTimeWhenNoWaitTimeIsSpecified()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedMaximumCount = 50;
             var expectedWaitTime = TimeSpan.FromMilliseconds(23);
@@ -880,7 +880,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveBatchAsyncRespectsTheDefaultMaximumWaitTimeBeingUnset()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedMaximumCount = 50;
             var options = new PartitionReceiverOptions { DefaultMaximumReceiveWaitTime = default };
@@ -924,7 +924,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncMarksTheClientAsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -946,7 +946,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var mockConsumer = new Mock<TransportConsumer>();
@@ -985,7 +985,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseAsyncSurfacesExceptionsForTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -1024,7 +1024,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheConnectionWhenOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -1046,7 +1046,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDoesNotCloseTheConnectionWhenNotOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var connection = new EventHubConnection(connectionString);
@@ -1085,7 +1085,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncLogsNormalClose()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var eventHubName = "somehub";
@@ -1114,14 +1114,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
@@ -1136,7 +1136,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncLogsErrorDuringClose()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
@@ -1178,14 +1178,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseError(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>(),
                     expectedException.Message),
@@ -1193,7 +1193,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);

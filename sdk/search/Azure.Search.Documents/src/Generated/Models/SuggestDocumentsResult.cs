@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
         internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage)
         {
-            Results = results;
+            Results = results ?? new List<SuggestResult>();
             Coverage = coverage;
         }
 

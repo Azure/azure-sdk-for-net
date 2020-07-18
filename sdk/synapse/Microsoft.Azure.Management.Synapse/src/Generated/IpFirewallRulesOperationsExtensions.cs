@@ -160,6 +160,52 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Get a firewall rule
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='ruleName'>
+            /// The IP firewall rule name
+            /// </param>
+            public static IpFirewallRuleInfo Get(this IIpFirewallRulesOperations operations, string resourceGroupName, string workspaceName, string ruleName)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, ruleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a firewall rule
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='ruleName'>
+            /// The IP firewall rule name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IpFirewallRuleInfo> GetAsync(this IIpFirewallRulesOperations operations, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, ruleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Replaces firewall rules
             /// </summary>
             /// <param name='operations'>

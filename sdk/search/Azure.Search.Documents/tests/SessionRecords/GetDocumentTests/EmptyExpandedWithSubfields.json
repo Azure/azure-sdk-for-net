@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-jxlhdehv.search.windows.net/indexes(\u0027fwryonvg\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027nmfcwijl\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "153",
         "Content-Type": "application/json",
-        "traceparent": "00-ff2fcdf159284c4a940fa912e8012ecb-9b90a8ec2bc92a48-00",
+        "traceparent": "00-a392f54011740a4bab80ae6d28f296cc-89e2901f0c52944b-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "3cd4b4d13a707d1c9a15802c84f31845",
         "x-ms-return-client-request-id": "true"
@@ -36,19 +37,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "234",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 00:38:59 GMT",
-        "elapsed-time": "187",
+        "client-request-id": "3cd4b4d1-3a70-7d1c-9a15-802c84f31845",
+        "Content-Length": "74",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 26 Jun 2020 05:57:11 GMT",
+        "elapsed-time": "109",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "3cd4b4d1-3a70-7d1c-9a15-802c84f31845",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "3cd4b4d1-3a70-7d1c-9a15-802c84f31845"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-jxlhdehv.search.windows.net/indexes(\u0027fwryonvg\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
         "value": [
           {
             "key": "1",
@@ -60,14 +62,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-jxlhdehv.search.windows.net/indexes(\u0027fwryonvg\u0027)/docs(\u00271\u0027)?$select=hotelId%2Crooms\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027nmfcwijl\u0027)/docs(\u00271\u0027)?$select=hotelId%2Crooms\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-7422db4c50a5fd4eaa004a86c77c2a4d-79e460f1097ac441-00",
+        "traceparent": "00-500c881a6b55f74a8fc7ac710b174c83-bef56ace26764749-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "25023fe79da338161865932bea9979d1",
         "x-ms-return-client-request-id": "true"
@@ -76,19 +79,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "412",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Thu, 12 Mar 2020 00:39:01 GMT",
-        "elapsed-time": "11",
+        "client-request-id": "25023fe7-9da3-3816-1865-932bea9979d1",
+        "Content-Length": "303",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 26 Jun 2020 05:57:13 GMT",
+        "elapsed-time": "9",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "25023fe7-9da3-3816-1865-932bea9979d1",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "25023fe7-9da3-3816-1865-932bea9979d1"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-jxlhdehv.search.windows.net/indexes(\u0027fwryonvg\u0027)/$metadata#docs(*)/$entity",
         "hotelId": "1",
         "rooms": [
           {
@@ -113,11 +117,42 @@
           }
         ]
       }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027nmfcwijl\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-a7b9a0e346d52043a16ed1a7a96dd7cd-92f336a883d47242-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "f2cd1d7126755cd2e3778f1baba129ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "f2cd1d71-2675-5cd2-e377-8f1baba129ae",
+        "Date": "Fri, 26 Jun 2020 05:57:15 GMT",
+        "elapsed-time": "213",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "f2cd1d71-2675-5cd2-e377-8f1baba129ae",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "f2cd1d71-2675-5cd2-e377-8f1baba129ae"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "315955367",
-    "SearchIndexName": "fwryonvg",
-    "SearchServiceName": "azs-net-jxlhdehv"
+    "SearchIndexName": "nmfcwijl",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

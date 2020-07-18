@@ -23,7 +23,7 @@ New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestAppli
 ### Provisioner
 ```
 New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
- [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String>
+ [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>]
  [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
  [-Confirm] [<CommonParameters>]
@@ -53,11 +53,10 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ### EXAMPLE 1
 ```
-$subscriptionId = "REPLACE_WITH_SUBSCRIPTION_ID"
-Connect-AzAccount -Subscription $subscriptionId
+Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-.\eng\common\LiveTestResources\New-TestResources.ps1 `
-    -BaseName 'myalias' `
+New-TestResources.ps1 `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -71,7 +70,7 @@ the SecureString to plaintext by another means.
 
 ### EXAMPLE 2
 ```
-eng/New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
@@ -214,6 +213,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner.
+You can also use Set-AzContext if not provisioning.
+
+```yaml
+Type: String
+Parameter Sets: Provisioner
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is
 specified.
@@ -283,8 +299,12 @@ Accept wildcard characters: False
 
 ### -Location
 Optional location where resources should be created.
-By default this is
-'westus2'.
+If left empty, the default
+is based on the cloud to which the template is being deployed:
+
+* AzureCloud -\> 'westus2'
+* AzureUSGovernment -\> 'usgovvirginia'
+* AzureChinaCloud -\> 'chinaeast2'
 
 ```yaml
 Type: String
@@ -293,7 +313,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: Westus2
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -392,19 +412,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutFile
+save test environment settings into a test-resources.json.env file next to test-resources.json. 
+The file is protected via DPAPI. The environment file would be scoped to the current repository directory.
+Note: Supported only on Windows.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+## INPUTS
+
 ## OUTPUTS
 
-### Entries from the ARM templates' "output" section in environment variable syntax
-### (e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-### live tests.
-### If run in -CI mode the environment variables will be output in syntax that Azure
-### DevOps can consume.
 ## NOTES
 
 ## RELATED LINKS
 
-[Remove-TestResources.ps1](./New-TestResources.ps1.md)
-
+[Remove-TestResources.ps1](./Remove-TestResources.ps1.md)

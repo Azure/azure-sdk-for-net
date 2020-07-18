@@ -2,15 +2,17 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-        <Version>1.4.0</Version>
+        <Version>1.6.0</Version>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
         <PackageTags>Azure Authentication AppAuthentication</PackageTags>
 	    <PackageReleaseNotes>
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			Updating ADAL to 5.x
-			VisualStudioTokenProvider bug fix
+			Support for new App Services managed identity API
+			Key vault client updates
+			Enabling CRL checks
+			Bug fixes
 		]]>
 		</PackageReleaseNotes>
     </PropertyGroup>

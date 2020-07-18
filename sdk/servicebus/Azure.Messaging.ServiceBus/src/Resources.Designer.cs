@@ -214,15 +214,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The entity path/name &apos;{0}&apos; exceeds the &apos;{1}&apos; character limit..
-        /// </summary>
-        internal static string EntityNameLengthExceedsLimit {
-            get {
-                return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
         /// </summary>
         internal static string ExponentialRetryBackoffRange {
@@ -331,20 +322,20 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
-        /// </summary>
-        internal static string MaxConcurrentCallsMustBeGreaterThanZero {
-            get {
-                return ResourceManager.GetString("MaxConcurrentCallsMustBeGreaterThanZero", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The maximum permitted length of {0} was exceeded..
         /// </summary>
         internal static string MaxPermittedLengthExceeded {
             get {
                 return ResourceManager.GetString("MaxPermittedLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete..
+        /// </summary>
+        internal static string MessageBatchIsLocked {
+            get {
+                return ResourceManager.GetString("MessageBatchIsLocked", resourceCulture);
             }
         }
         
@@ -412,7 +403,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        ///   Looks up a localized string similar to This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled..
         /// </summary>
         internal static string PeekLockModeRequired {
             get {
@@ -457,6 +448,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When sending via a different entity, an entity path is not allowed to specified in the connection string..
+        /// </summary>
+        internal static string SendViaCannotBeUsedWithEntityInConnectionString {
+            get {
+                return ResourceManager.GetString("SendViaCannotBeUsedWithEntityInConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to retreive session filter from broker. Please retry..
         /// </summary>
         internal static string SessionFilterMissing {
@@ -484,6 +484,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
+        /// </summary>
+        internal static string SettlementOperationNotSupported {
+            get {
+                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
         internal static string SharedAccessKeyIsRequired {
@@ -502,20 +511,11 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
-        /// </summary>
-        internal static string SqlFilterActionStatmentTooLong {
-            get {
-                return ResourceManager.GetString("SqlFilterActionStatmentTooLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The length of the filter statement is {0}, which exceeds the maximum length of {1}.
         /// </summary>
-        internal static string SqlFilterStatmentTooLong {
+        internal static string SqlRuleFilterStatmentTooLong {
             get {
-                return ResourceManager.GetString("SqlFilterStatmentTooLong", resourceCulture);
+                return ResourceManager.GetString("SqlRuleFilterStatmentTooLong", resourceCulture);
             }
         }
         

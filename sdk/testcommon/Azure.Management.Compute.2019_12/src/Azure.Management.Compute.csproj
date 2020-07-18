@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.Management.Compute</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.Compute</Description>
+    <PackageTags>azure;management;compute</PackageTags>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion><!-- https://github.com/Azure/azure-sdk-for-net/issues/13506 -->
+  </PropertyGroup>
+
+    <PropertyGroup>
+    <!-- TODO: Temp workaround. Should be fixed prio release  -->
+    <NoWarn>$(NoWarn);AZC0100;AZC0008;CS1591</NoWarn>
+  </PropertyGroup>
+</Project>
