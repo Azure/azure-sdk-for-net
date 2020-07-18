@@ -993,20 +993,7 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal ExpressionParser GetExpressionParser()
-        {
-            if (_isPremiumEndpoint)
-            {
-                //TODO: Port TableExtensionExpressionParser
-                throw new NotImplementedException();
-            }
-            else
-            {
-                return new ExpressionParser();
-            }
-        }
-
-        internal string Bind(Expression expression)
+        internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
@@ -1019,7 +1006,7 @@ namespace Azure.Data.Tables
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
             // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
-            ExpressionParser parser = GetExpressionParser();
+            ExpressionParser parser = new ExpressionParser();
             parser.Translate(normalizedExpression);
 
             // Return the FilterString.

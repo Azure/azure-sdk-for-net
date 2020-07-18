@@ -16,6 +16,6 @@ namespace Azure.Data.Tables.Queryable
         /// <param name="client">The <see cref="TableClient"/>.</param>
         /// <param name="filter">A filter expresssion.</param>
         /// <returns>The string representation of the filter expression.</returns>
-        public static string CreateFilter<T>(this TableClient client, Expression<Func<T, bool>> filter) => client.Bind(filter);
+        public static string CreateFilter<T>(this TableClient client, Expression<Func<T, bool>> filter) => TableClient.Bind(filter);
     }
 }
