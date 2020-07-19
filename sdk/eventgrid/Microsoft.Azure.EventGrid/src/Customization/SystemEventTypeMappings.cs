@@ -102,6 +102,7 @@ namespace Microsoft.Azure.EventGrid
             { EventTypes.StorageDirectoryCreatedEvent, typeof(StorageDirectoryCreatedEventData) },
             { EventTypes.StorageDirectoryDeletedEvent, typeof(StorageDirectoryDeletedEventData) },
             { EventTypes.StorageDirectoryRenamedEvent, typeof(StorageDirectoryRenamedEventData) },
+            { EventTypes.StorageLifecyclePolicyCompletedEvent, typeof(StorageLifecyclePolicyCompletedEventData) },
 
             // App Service
             { EventTypes.WebAppUpdated, typeof(WebAppUpdatedEventData) },
