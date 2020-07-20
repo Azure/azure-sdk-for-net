@@ -87,14 +87,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -126,14 +119,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,14 +221,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -268,14 +247,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -315,14 +287,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,14 +313,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,14 +348,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,14 +368,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,14 +401,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,14 +421,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,14 +478,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -592,14 +515,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -716,14 +632,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -754,14 +663,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -802,14 +704,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -835,14 +730,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -880,14 +768,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -913,14 +794,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -958,14 +832,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -991,14 +858,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1041,14 +901,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1079,14 +932,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Provider. </summary>
         internal Provider()
         {
+            ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }
 
         /// <summary> Initializes a new instance of Provider. </summary>

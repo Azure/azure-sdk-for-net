@@ -68,14 +68,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         LocationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocationListResult.DeserializeLocationListResult(document.RootElement);
-                        }
+                        value = LocationListResult.DeserializeLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,14 +94,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         LocationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = LocationListResult.DeserializeLocationListResult(document.RootElement);
-                        }
+                        value = LocationListResult.DeserializeLocationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -148,14 +134,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Subscription value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Subscription.DeserializeSubscription(document.RootElement);
-                        }
+                        value = Subscription.DeserializeSubscription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,14 +160,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Subscription value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Subscription.DeserializeSubscription(document.RootElement);
-                        }
+                        value = Subscription.DeserializeSubscription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -221,14 +193,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         SubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
-                        }
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -248,14 +213,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         SubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
-                        }
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -293,14 +251,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         SubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
-                        }
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,14 +277,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         SubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
-                        }
+                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
