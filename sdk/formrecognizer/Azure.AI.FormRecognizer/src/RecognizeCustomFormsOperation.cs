@@ -156,7 +156,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationId}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationId);
+                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", nameof(operationId));
             }
 
             _resultId = substrs.Last();

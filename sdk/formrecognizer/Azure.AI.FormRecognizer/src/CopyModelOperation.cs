@@ -82,8 +82,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
-        /// <param name="client">The client used to check for completion.</param>
         /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
+        /// <param name="client">The client used to check for completion.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
             _serviceClient = client.ServiceClient;
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationId}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationId);
+                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/copyresults/{{resultId}}'.", nameof(operationId));
             }
 
             _resultId = substrs.Last();
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationLocation}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationLocation);
+                throw new ArgumentException($"Invalid '{nameof(operationLocation)}'. It should be formatted as: '{{prefix}}/{{modelId}}/copyresults/{{resultId}}'.", nameof(operationLocation));
             }
 
             _resultId = substrs[substrs.Length - 1];
