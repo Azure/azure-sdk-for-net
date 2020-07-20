@@ -6,7 +6,7 @@ namespace Azure.Data.Tables
         public DynamicTableEntity(System.Collections.Generic.IDictionary<string, object> values) { }
         public DynamicTableEntity(string partitionKey, string rowKey) { }
         public int Count { get { throw null; } }
-        public string ETag { get { throw null; } }
+        public string ETag { get { throw null; } set { } }
         public bool IsReadOnly { get { throw null; } }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }

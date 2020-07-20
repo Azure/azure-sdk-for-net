@@ -52,6 +52,7 @@ namespace Azure.Data.Tables
         public string ETag
         {
             get { return _properties.TryGetValue(TableConstants.PropertyNames.Etag, out object value) ? (string)value : default; }
+            set { _properties[TableConstants.PropertyNames.Etag] = value; }
         }
 
         /// <summary>
