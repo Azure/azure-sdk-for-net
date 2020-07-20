@@ -50,7 +50,6 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        /// <inheritdoc />
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
@@ -73,6 +72,7 @@ namespace Azure.Core.Pipeline
 
         private class AccessTokenCache
         {
+            private static readonly Task<string> _emptyTask = Task.FromResult(string.Empty);
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
             private readonly string[] _scopes;
@@ -95,33 +95,36 @@ namespace Azure.Core.Pipeline
 
             public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, bool async)
             {
-                (string? headerValue, Task<string>? pendingTask, bool accessTokenAboutToExpire) = GetHeaderValue();
+                (CacheState cacheState, string headerValue, Task<string> pendingTask) = GetHeaderValue();
 
-                if (headerValue != null)
+                switch (cacheState)
                 {
-                    if (accessTokenAboutToExpire)
-                    {
+                    case CacheState.NoHeaderValueCached:
+                        return await GetHeaderValueFromCredentialAsync(message, async).ConfigureAwait(false);
+
+                    case CacheState.UpdatingHeaderValueInProgress:
+                        return await WaitForHeaderValueAsync(pendingTask, async, message.CancellationToken);
+
+                    case CacheState.HasHeaderValue:
+                        return headerValue;
+
+                    case CacheState.HeaderValueIsAboutToExpire:
                         _ = Task.Run(() => GetHeaderValueFromCredentialAsync(message, async));
-                    }
+                        return headerValue;
 
-                    return headerValue;
+                    default:
+                        throw new InvalidOperationException("Unexpected value");
+                }
+            }
+
+            private static async Task<string> WaitForHeaderValueAsync(Task<string> pendingTask, bool async, CancellationToken cancellationToken) {
+                if (async) {
+                    return await pendingTask.AwaitWithCancellation(cancellationToken);
                 }
 
-                if (pendingTask == null)
-                {
-                    return await GetHeaderValueFromCredentialAsync(message, async).ConfigureAwait(false);
-                }
-
-                if (async)
-                {
-                    return await pendingTask.AwaitWithCancellation(message.CancellationToken);
-                }
-
-                try
-                {
-                    pendingTask.Wait(message.CancellationToken);
-                }
-                catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+                try {
+                    pendingTask.Wait(cancellationToken);
+                } catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
 
                 return pendingTask.EnsureCompleted();
             }
@@ -171,7 +174,7 @@ namespace Azure.Core.Pipeline
                         pendingTcs = UpdateHeaderValue(_headerValue, now + _tokenRefreshRetryTimeout, _expiresOn);
                         if (pendingTcs != default)
                         {
-                            exception = new InvalidOperationException($"{nameof(GetHeaderValueAsync)} shouldn't wait in {TokenState.AboutToExpire} state.", exception);
+                            exception = new InvalidOperationException($"{nameof(GetHeaderValueAsync)} shouldn't wait in {CacheState.HeaderValueIsAboutToExpire} state.", exception);
                         }
                     }
                 }
@@ -184,43 +187,48 @@ namespace Azure.Core.Pipeline
             /// Returns stored headerValue (if any), task that can be used to await for headerValue (if GetTokenAsync is in progress),
             /// and if token should be refreshed in background.
             /// </summary>
-            private (string? headerValue, Task<string>? pendingTask, bool refreshTokenAboutToExpire) GetHeaderValue()
+            private (CacheState cacheState, string headerValue, Task<string> pendingTask) GetHeaderValue()
             {
                 lock (_syncObj)
                 {
-                    switch (GetTokenState(_expiresOn, _refreshOn, _isGettingToken))
+                    CacheState cacheState = GetCacheState(_expiresOn, _refreshOn, _isGettingToken);
+                    switch (cacheState)
                     {
-                        case TokenState.Invalid:
+                        case CacheState.NoHeaderValueCached:
                             _headerValue = default;
                             _isGettingToken = true;
-                            return (default, default, false);
-                        case TokenState.Pending:
+                            return (cacheState, string.Empty, _emptyTask);
+
+                        case CacheState.UpdatingHeaderValueInProgress:
                             _pendingTcs ??= new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-                            return (default, _pendingTcs.Task, false);
-                        case TokenState.Valid:
-                            return (_headerValue, default, false);
-                        case TokenState.AboutToExpire:
+                            return (cacheState, string.Empty, _pendingTcs.Task);
+
+                        case CacheState.HasHeaderValue:
+                            return (cacheState, _headerValue ?? throw new NullReferenceException($"{_headerValue} can't be null"), _emptyTask);
+
+                        case CacheState.HeaderValueIsAboutToExpire:
                             _isGettingToken = true;
-                            return (_headerValue, default, true);
+                            return (cacheState, _headerValue ?? throw new NullReferenceException($"{_headerValue} can't be null"), _emptyTask);
+
                         default:
                             throw new InvalidOperationException("Unexpected value");
                     }
                 }
 
-                static TokenState GetTokenState(DateTimeOffset expiresOn, DateTimeOffset refreshOn, bool isGettingToken)
+                static CacheState GetCacheState(DateTimeOffset expiresOn, DateTimeOffset refreshOn, bool isGettingToken)
                 {
                     DateTimeOffset now = DateTimeOffset.UtcNow;
                     if (now >= expiresOn)
                     {
-                        return isGettingToken ? TokenState.Pending : TokenState.Invalid;
+                        return isGettingToken ? CacheState.UpdatingHeaderValueInProgress : CacheState.NoHeaderValueCached;
                     }
 
                     if (now >= refreshOn)
                     {
-                        return isGettingToken ? TokenState.Valid : TokenState.AboutToExpire;
+                        return isGettingToken ? CacheState.HasHeaderValue : CacheState.HeaderValueIsAboutToExpire;
                     }
 
-                    return TokenState.Valid;
+                    return CacheState.HasHeaderValue;
                 }
             }
 
@@ -239,12 +247,12 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private enum TokenState
+            private enum CacheState
             {
-                Invalid,
-                Pending,
-                Valid,
-                AboutToExpire,
+                NoHeaderValueCached,
+                UpdatingHeaderValueInProgress,
+                HasHeaderValue,
+                HeaderValueIsAboutToExpire,
             }
         }
     }
