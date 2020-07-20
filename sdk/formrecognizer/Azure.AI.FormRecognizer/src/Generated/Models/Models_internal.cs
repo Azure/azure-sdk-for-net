@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -15,6 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary> Initializes a new instance of Models_internal. </summary>
         internal Models_internal()
         {
+            ModelList = new ChangeTrackingList<ModelInfo_internal>();
         }
 
         /// <summary> Initializes a new instance of Models_internal. </summary>

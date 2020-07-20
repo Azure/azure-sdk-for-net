@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal static KeyValueElement_internal DeserializeKeyValueElement_internal(JsonElement element)
         {
             string text = default;
-            IReadOnlyList<float> boundingBox = default;
-            IReadOnlyList<string> elements = default;
+            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<IReadOnlyList<string>> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -29,6 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        boundingBox = null;
                         continue;
                     }
                     List<float> array = new List<float>();
@@ -43,25 +44,19 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        elements = null;
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     elements = array;
                     continue;
                 }
             }
-            return new KeyValueElement_internal(text, boundingBox, elements);
+            return new KeyValueElement_internal(text, Optional.ToList(boundingBox), Optional.ToList(elements));
         }
     }
 }
