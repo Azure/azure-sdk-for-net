@@ -15,52 +15,33 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static ErrorDefinition DeserializeErrorDefinition(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            IReadOnlyList<ErrorDefinition> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<ErrorDefinition>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorDefinition> array = new List<ErrorDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeErrorDefinition(item));
-                        }
+                        array.Add(DeserializeErrorDefinition(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new ErrorDefinition(code, message, details);
+            return new ErrorDefinition(code.Value, message.Value, Optional.ToList(details));
         }
     }
 }

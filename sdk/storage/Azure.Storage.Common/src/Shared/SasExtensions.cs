@@ -288,5 +288,44 @@ namespace Azure.Storage.Sas
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));
             }
         }
+
+        internal static string ValidateAndSanitizeRawPermissions(string permissions,
+            List<char> validPermissionsInOrder)
+        {
+            if (permissions == null)
+            {
+                return null;
+            }
+
+            // Convert permissions string to lower case.
+            permissions = permissions.ToLowerInvariant();
+
+            HashSet<char> validPermissionsSet = new HashSet<char>(validPermissionsInOrder);
+            HashSet<char> permissionsSet = new HashSet<char>();
+
+            foreach (char permission in permissions)
+            {
+                // Check that each permission is a real SAS permission.
+                if (!validPermissionsSet.Contains(permission))
+                {
+                    throw new ArgumentException($"{permission} is not a valid SAS permission");
+                }
+
+                // Add permission to permissionsSet for re-ordering.
+                permissionsSet.Add(permission);
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char permission in validPermissionsInOrder)
+            {
+                if (permissionsSet.Contains(permission))
+                {
+                    stringBuilder.Append(permission);
+                }
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

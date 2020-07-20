@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Command = command;
+            ExtendedProperties = new ChangeTrackingDictionary<string, object>();
             Type = "Custom";
         }
 
@@ -66,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Reference objects. </summary>
         public CustomActivityReferenceObject ReferenceObjects { get; set; }
         /// <summary> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </summary>
-        public IDictionary<string, object> ExtendedProperties { get; set; }
+        public IDictionary<string, object> ExtendedProperties { get; }
         /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
         public object RetentionTimeInDays { get; set; }
     }

@@ -143,14 +143,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         FullBackupDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
+                        value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,14 +174,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         FullBackupDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
+                        value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,14 +286,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RestoreDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
-                        }
+                        value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -338,14 +317,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         RestoreDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
-                        }
+                        value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

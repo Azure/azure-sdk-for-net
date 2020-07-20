@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,14 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,14 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,14 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        }
+                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,14 +230,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        }
+                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,14 +275,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        }
+                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -353,14 +304,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        }
+                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -458,14 +402,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,14 +428,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,14 +466,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -569,14 +492,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         NotebookListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
-                        }
+                        value = NotebookListResponse.DeserializeNotebookListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             StoredProcedureName = storedProcedureName;
+            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlServerStoredProcedure";
         }
 
@@ -52,6 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }
+        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
     }
 }

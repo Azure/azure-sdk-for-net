@@ -39,9 +39,9 @@ namespace Azure.Identity
             return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
         }
 
-        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
+        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, ITokenCacheOptions cacheOptions = default)
         {
-            return new MsalPublicClient(HttpPipeline, AuthorityHost, clientId, tenantId, redirectUrl, attachSharedCache);
+            return new MsalPublicClient(HttpPipeline, AuthorityHost, clientId, tenantId, redirectUrl, cacheOptions);
         }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)

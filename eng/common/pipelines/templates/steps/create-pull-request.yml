@@ -12,6 +12,8 @@ parameters:
   WorkingDirectory: $(System.DefaultWorkingDirectory)
   PRTitle: not-specified
   ScriptDirectory: eng/common/scripts
+  GHReviewersVariable: '' 
+  GHTeamReviewersVariable: ''
 
 steps:
 
@@ -63,3 +65,18 @@ steps:
       -PRBranch "${{ parameters.PRBranchName }}"
       -AuthToken "$(azuresdk-github-pat)"
       -PRTitle "${{ parameters.PRTitle }}"
+
+- task: PowerShell@2
+  displayName: Tag a Reviewer on PR
+  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  inputs:
+    pwsh: true
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+    filePath: ${{ parameters.ScriptDirectory }}/add-pullrequest-reviewers.ps1
+    arguments: >
+      -RepoOwner "${{ parameters.RepoOwner }}"
+      -RepoName "${{ parameters.RepoName }}"
+      -AuthToken "$(azuresdk-github-pat)"
+      -GitHubUsers "$(${{ parameters.GHReviewersVariable }})"
+      -GitHubTeams "$(${{ parameters.GHTeamReviewersVariable }})"
+      -PRNumber "$(Submitted.PullRequest.Number)"

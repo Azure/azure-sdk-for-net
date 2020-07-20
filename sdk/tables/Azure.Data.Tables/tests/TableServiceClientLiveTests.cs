@@ -153,7 +153,7 @@ namespace Azure.Data.Tables.Tests
 
                 // Get the table list.
 
-                var tableResponses = (await service.GetTablesAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                var tableResponses = (await service.GetTablesAsync(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));

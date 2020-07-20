@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             return new SparkBatchJobOptions(name, file)
             {
                 ClassName = "WordCount",
-                Arguments = new List<string>
+                Arguments =
                 {
                     string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt", test.TestEnvironment.StorageFileSystemName, test.TestEnvironment.StorageAccountName),
                     string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/result/", test.TestEnvironment.StorageFileSystemName, test.TestEnvironment.StorageAccountName),

@@ -613,7 +613,7 @@ namespace Azure.Storage.Blobs.Test
             await Delay(2000);
 
             // Act
-            SasQueryParameters sasQueryParameters = GetNewAccountSasCredentials(accountSasPermissions: accountSasPermissions);
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(permissions: accountSasPermissions);
             BlobServiceClient sasServiceClient = new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions());
             List<BlobTagItem> blobs = new List<BlobTagItem>();
             await foreach (Page<BlobTagItem> page in sasServiceClient.FindBlobsByTagsAsync(expression).AsPages())

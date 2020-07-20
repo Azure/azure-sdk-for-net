@@ -358,14 +358,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         RelationshipCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        }
+                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,14 +391,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         RelationshipCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        }
+                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,14 +438,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         IncomingRelationshipCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
-                        }
+                        value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,14 +470,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         IncomingRelationshipCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
-                        }
+                        value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -646,14 +618,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         RelationshipCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        }
+                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -691,14 +656,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         RelationshipCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        }
+                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -747,14 +705,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         IncomingRelationshipCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
-                        }
+                        value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -791,14 +742,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         IncomingRelationshipCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
-                        }
+                        value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
