@@ -49,7 +49,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret)
-            : this(tenantId, clientId, clientSecret, (TokenCredentialOptions)null)
+            : this(tenantId, clientId, clientSecret, null, null, null)
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Identity
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
-            : this(tenantId, clientId, clientSecret, (TokenCredentialOptions)options)
+            : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }
 
@@ -73,37 +73,21 @@ namespace Azure.Identity
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
-            : this(new MsalConfidentialClientOptions(tenantId: tenantId ?? throw new ArgumentNullException(nameof(tenantId)),
-                                                     clientId: clientId ?? throw new ArgumentNullException(nameof(clientId)),
-                                                     secret: clientSecret ?? throw new ArgumentNullException(nameof(clientSecret)),
-                                                     options: options))
+            : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }
 
-        internal ClientSecretCredential(MsalConfidentialClientOptions clientOptions)
+        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
-            TenantId = clientOptions.TenantId;
+            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
-            ClientId = clientOptions.ClientId;
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            ClientSecret = clientOptions.Secret;
+            ClientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
 
-            _pipeline = clientOptions.Pipeline;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = new MsalConfidentialClient(clientOptions);
-        }
-
-        internal ClientSecretCredential(string tenantId, string clientId, string secret, CredentialPipeline pipeline, MsalConfidentialClient client)
-        {
-            TenantId = tenantId;
-
-            ClientId = clientId;
-
-            ClientSecret = secret;
-
-            _pipeline = pipeline;
-
-            _client = client;
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
 
 
