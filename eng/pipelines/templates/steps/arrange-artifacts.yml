@@ -1,11 +1,23 @@
 steps:
   - pwsh: |
-      Write-Host "Artifactnames " $env:ARTIFACT_NAMES
-      $Artifacts = $env:ARTIFACT_NAMES -split ";"
-      foreach ($artifact in $Artifacts)
+      $artifactNames = @()
+      $EnVars = [Environment]::GetEnvironmentVariables()
+      $artifactNames = $EnVars.GetEnumerator() | Where-Object { $_.Key -like "XYZ*" }
+      $dirContent = Get-ChildItem -Path '${{ parameters.ArtifactsDirectory }}'
+
+      foreach ($artifactName in $artifactNames.Values)
       {
-        Write-Host $artifact
+        Write-Host "Create Directory " $artifactName
+        New-Item -Path '${{ parameters.ArtifactsDirectory }}' -Name $artifactName -ItemType directory
+        $correspondingArtifacts = $dirContent | Where-Object { $_.Name.startswith($artifactName) }
+
+        foreach ($artifact in $correspondingArtifacts)
+        {
+          Write-Host "Moving " $artifact.Name
+          Move-Item -Path $artifact.FullName -Destination (Join-Path '${{ parameters.ArtifactsDirectory }}' $artifactName ) -Recurse -Force
+        }
       }
     displayName: Arrange Artifacts
     env:
-      ARTIFACT_NAMES: ${{ join(';', parameters.Artifacts ) }}
+      ${{ each artifact in parameters.Artifacts }}:
+        ${{ format('XYZ{0}', artifact.safeName) }}: ${{ artifact.name }}
