@@ -35,6 +35,7 @@ namespace Azure.Data.Tables.Tests
 
         protected TableServiceClient service { get; private set; }
         protected TableClient client { get; private set; }
+
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
         protected const string PartitionKeyValue2 = "somPartition2";
@@ -47,6 +48,9 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
         protected readonly TableEndpointType _endpointType;
+        protected string ServiceUri;
+        protected string AccountName;
+        protected string AccountKey;
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -60,23 +64,46 @@ namespace Azure.Data.Tables.Tests
 
                 TableEndpointType.Storage => InstrumentClient(new TableServiceClient(
                     new Uri(TestEnvironment.StorageUri),
-                    new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
+                    new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey),
                     Recording.InstrumentClientOptions(new TableClientOptions()))),
 
-                //TODO: Replace this with a Cosmos endpoint constructed client
                 TableEndpointType.CosmosTable => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.StorageUri),
-                    new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
+                    new Uri(TestEnvironment.CosmosUri),
+                    new TableSharedKeyCredential(TestEnvironment.CosmosAccountName, TestEnvironment.PrimaryCosmosAccountKey),
                     Recording.InstrumentClientOptions(new TableClientOptions()))),
 
                 _ => throw new NotSupportedException("Unknown endpoint type")
 
             };
 
+            ServiceUri ??= _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.StorageUri,
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
+            AccountName ??= _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.StorageAccountName,
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
+            AccountKey ??= _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
+                TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            await service.CreateTableAsync(tableName).ConfigureAwait(false);
+
+            await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
+
             client = service.GetTableClient(tableName);
         }
+
 
         [TearDown]
         public async Task TablesTeardown()
@@ -110,7 +137,7 @@ namespace Azure.Data.Tables.Tests
                         {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
-                        {DoubleTypePropertyName, (double)n},
+                        {DoubleTypePropertyName, double.Parse($"{number}.0")},
                         {DoubleDecimalTypePropertyName, n + 0.1},
                         {IntTypePropertyName, n},
                     };
@@ -140,7 +167,7 @@ namespace Azure.Data.Tables.Tests
                     GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                     Int64TypeProperty = long.Parse(number),
-                    DoubleTypeProperty = (double)n,
+                    DoubleTypeProperty = double.Parse($"{number}.0"),
                     IntTypeProperty = n,
                 };
             }).ToList();
@@ -171,7 +198,7 @@ namespace Azure.Data.Tables.Tests
                     DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     Double = n + ((double)n / 100),
-                    DoubleInteger = (double)n,
+                    DoubleInteger = double.Parse($"{n.ToString()}.0"),
                     DoubleN = n + ((double)n / 100),
                     DoublePrimitive = n + ((double)n / 100),
                     DoublePrimitiveN = n + ((double)n / 100),
@@ -188,11 +215,34 @@ namespace Azure.Data.Tables.Tests
             }).ToList();
         }
 
+        // This is needed to prevent Live nightly test runs from failing due to 429 response failures.
+        // TODO: Remove after addressing https://github.com/Azure/azure-sdk-for-net/issues/13554
+        protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
+        {
+            int retryCount = 0;
+            while (true)
+            {
+                try
+                {
+                    return await action().ConfigureAwait(false);
+                }
+                // Disable retry throttling in Playback mode.
+                catch (RequestFailedException ex) when (ex.Status == 429 && Mode != RecordedTestMode.Playback)
+                {
+                    if (++retryCount > 3)
+                    {
+                        throw;
+                    }
+                    await Task.Delay(750);
+                }
+            }
+        }
+
         protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : TableEntity, new()
         {
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync(entity).ConfigureAwait(false));
             }
         }
 
@@ -200,7 +250,23 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync(entity).ConfigureAwait(false));
+            }
+        }
+
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, UpdateMode updateMode) where T : TableEntity, new()
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.UpsertEntityAsync(entity, updateMode).ConfigureAwait(false));
+            }
+        }
+
+        protected async Task UpsertTestEntities(List<Dictionary<string, object>> entitiesToCreate, UpdateMode updateMode)
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.UpsertEntityAsync(entity, updateMode).ConfigureAwait(false));
             }
         }
 
