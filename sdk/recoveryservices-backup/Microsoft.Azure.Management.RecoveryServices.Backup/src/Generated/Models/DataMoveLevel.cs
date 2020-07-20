@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
 
     /// <summary>
-    /// Defines values for HealthStatus.
+    /// Defines values for DataMoveLevel.
     /// </summary>
-    public static class HealthStatus
+    public static class DataMoveLevel
     {
-        public const string Passed = "Passed";
-        public const string ActionRequired = "ActionRequired";
-        public const string ActionSuggested = "ActionSuggested";
         public const string Invalid = "Invalid";
+        public const string Vault = "Vault";
+        public const string Container = "Container";
     }
 }
