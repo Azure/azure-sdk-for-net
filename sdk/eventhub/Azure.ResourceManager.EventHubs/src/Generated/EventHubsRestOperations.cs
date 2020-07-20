@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,14 +128,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,14 +200,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -267,14 +246,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,14 +309,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -385,14 +350,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -552,14 +510,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -600,14 +551,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -680,14 +624,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -733,14 +670,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -800,14 +730,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -840,14 +763,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -912,14 +828,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -960,14 +869,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1107,14 +1009,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1150,14 +1045,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1210,14 +1098,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1258,14 +1139,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1315,14 +1189,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1360,14 +1227,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -85,14 +85,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        }
+                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,14 +116,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        }
+                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,14 +181,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
-                        }
+                        value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -243,14 +222,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
-                        }
+                        value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,14 +362,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
-                        }
+                        value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,14 +398,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
-                        }
+                        value = IpFilterRule.DeserializeIpFilterRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,14 +433,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -502,14 +453,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -552,14 +496,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -585,14 +522,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -804,14 +734,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespace value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespace.DeserializeEHNamespace(document.RootElement);
-                        }
+                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -843,14 +766,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespace value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespace.DeserializeEHNamespace(document.RootElement);
-                        }
+                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -909,14 +825,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespace value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespace.DeserializeEHNamespace(document.RootElement);
-                        }
+                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -955,14 +864,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespace value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespace.DeserializeEHNamespace(document.RootElement);
-                        }
+                        value = EHNamespace.DeserializeEHNamespace(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -1014,14 +916,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,14 +947,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1124,14 +1012,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
-                        }
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1172,14 +1053,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
-                        }
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1319,14 +1193,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
-                        }
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1362,14 +1229,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
-                        }
+                        value = VirtualNetworkRule.DeserializeVirtualNetworkRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1428,14 +1288,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         NetworkRuleSet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
-                        }
+                        value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1471,14 +1324,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         NetworkRuleSet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
-                        }
+                        value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1528,14 +1374,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         NetworkRuleSet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
-                        }
+                        value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1566,14 +1405,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         NetworkRuleSet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
-                        }
+                        value = NetworkRuleSet.DeserializeNetworkRuleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1623,14 +1455,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1661,14 +1486,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1733,14 +1551,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1781,14 +1592,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1928,14 +1732,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1971,14 +1768,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2035,14 +1825,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2078,14 +1861,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2151,14 +1927,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2199,14 +1968,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2251,14 +2013,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2284,14 +2039,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2339,14 +2087,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        }
+                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2382,14 +2123,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         IpFilterRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
-                        }
+                        value = IpFilterRuleListResult.DeserializeIpFilterRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2427,14 +2161,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2460,14 +2187,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2510,14 +2230,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2548,14 +2261,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EHNamespaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
-                        }
+                        value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2603,14 +2309,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2646,14 +2345,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         VirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
-                        }
+                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2701,14 +2393,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2744,14 +2429,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

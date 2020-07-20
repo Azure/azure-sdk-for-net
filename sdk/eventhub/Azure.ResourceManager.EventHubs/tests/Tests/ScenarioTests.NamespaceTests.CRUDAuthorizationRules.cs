@@ -27,7 +27,7 @@ namespace Azure.Management.EventHub.Tests
                 {
                     Location = location.Result,
                     //Sku = new Sku("as")
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -51,7 +51,7 @@ namespace Azure.Management.EventHub.Tests
             string createPrimaryKey = Recording.GetVariable("authorizaRuNa", Helper.GenerateRandomKey());
             var createAutorizationRuleParameter = new AuthorizationRule()
             {
-                Rights = new List<AccessRights>() { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRights.Listen, AccessRights.Send }
             };
             var createNamespaceAuthorizationRuleResponse = await NamespacesOperations.CreateOrUpdateAuthorizationRuleAsync(resourceGroup, namespaceName,
                 authorizationRuleName, createAutorizationRuleParameter);
@@ -97,7 +97,7 @@ namespace Azure.Management.EventHub.Tests
             // Update namespace authorizationRule
             string updatePrimaryKey = Recording.GetVariable("UpdatePrimaryKey", Helper.GenerateRandomKey());
             AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
-            updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights>() { AccessRights.Listen };
+            updateNamespaceAuthorizationRuleParameter.Rights.Add(AccessRights.Listen);
             var updateNamespaceAuthorizationRuleResponse =await NamespacesOperations.CreateOrUpdateAuthorizationRuleAsync(resourceGroup,
                 namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
             Assert.NotNull(updateNamespaceAuthorizationRuleResponse);
