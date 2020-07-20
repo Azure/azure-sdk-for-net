@@ -5,6 +5,21 @@
     "title": "Schema of Azure EventHub events published to Azure Event Grid",
     "description": "Describes the schema of the Azure EventHub events published to Azure Event Grid. This corresponds to the Data property of an EventGridEvent."
   },
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{topicHostname}",
+    "useSchemePrefix": true,
+    "positionInOperation": "first",
+    "parameters": [
+      {
+        "name": "topicHostname",
+        "description": "The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net",
+        "required": true,
+        "type": "string",
+        "in": "path",
+        "x-ms-skip-url-encoding": true
+      }
+    ]
+  },
   "schemes": [
     "https"
   ],
