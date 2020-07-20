@@ -391,6 +391,58 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Checks that the data connection parameters are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
+            /// </param>
+            public static DataConnectionValidationListResult BeginDataConnectionValidationMethod(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters)
+            {
+                return operations.BeginDataConnectionValidationMethodAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the data connection parameters are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataConnectionValidationListResult> BeginDataConnectionValidationMethodAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDataConnectionValidationMethodWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a data connection.
             /// </summary>
             /// <param name='operations'>

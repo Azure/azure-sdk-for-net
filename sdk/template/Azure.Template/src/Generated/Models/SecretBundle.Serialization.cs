@@ -15,82 +15,51 @@ namespace Azure.Template.Models
     {
         internal static SecretBundle DeserializeSecretBundle(JsonElement element)
         {
-            string value = default;
-            string id = default;
-            string contentType = default;
-            IReadOnlyDictionary<string, string> tags = default;
-            string kid = default;
-            bool? managed = default;
+            Optional<string> value = default;
+            Optional<string> id = default;
+            Optional<string> contentType = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<string> kid = default;
+            Optional<bool> managed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     contentType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("kid"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     kid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("managed"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     managed = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new SecretBundle(value, id, contentType, tags, kid, managed);
+            return new SecretBundle(value.Value, id.Value, contentType.Value, Optional.ToDictionary(tags), kid.Value, Optional.ToNullable(managed));
         }
     }
 }

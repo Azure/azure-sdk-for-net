@@ -15,6 +15,9 @@ namespace Azure.Iot.Hub.Service.Tests
     /// </summary>
     public class TestSettings
     {
+        public const string IotHubEnvironmentVariablesPrefix = "IOT";
+        public const string IotHubConnectionString = "IOT_HUB_CONNECTION_STRING";
+
         public static TestSettings Instance { get; private set; }
 
         public RecordedTestMode TestMode { get; set; }
@@ -23,16 +26,6 @@ namespace Azure.Iot.Hub.Service.Tests
         /// The working directory of the tests.
         /// </summary>
         public string WorkingDirectory { get; private set; }
-
-        /// <summary>
-        /// The IoT Hub instance connection string.
-        /// </summary>
-        public string IotHubConnectionString { get; set; }
-
-        /// <summary>
-        /// The IoT Hub instance hostName.
-        /// </summary>
-        public string IotHubHostName { get; set; }
 
         static TestSettings()
         {
@@ -65,34 +58,6 @@ namespace Azure.Iot.Hub.Service.Tests
             // This will set the values from the above config files into the TestSettings Instance.
             Instance = config.Get<TestSettings>();
             Instance.WorkingDirectory = workingDirectory;
-
-            // We will override settings if they can be found in the environment variables.
-            OverrideFromEnvVariables();
-        }
-
-        // These environment variables are required to be set to run tests against the CI pipeline.
-        private static void OverrideFromEnvVariables()
-        {
-            string iotHubConnectionString = Environment.GetEnvironmentVariable(TestsConstants.IOT_HUB_CONNECTION_STRING);
-            if (!string.IsNullOrWhiteSpace(iotHubConnectionString))
-            {
-                Instance.IotHubConnectionString = iotHubConnectionString;
-            }
-            else
-            {
-                Environment.SetEnvironmentVariable(TestsConstants.IOT_HUB_CONNECTION_STRING, Instance.IotHubConnectionString);
-            }
-
-            string testMode = Environment.GetEnvironmentVariable(TestsConstants.IOT_HUB_TESTMODE);
-            if (!string.IsNullOrWhiteSpace(testMode))
-            {
-                // Enum.Parse<type>(value) cannot be used in net461 so using the type casting syntax.
-                Instance.TestMode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), testMode);
-            }
-            else
-            {
-                Environment.SetEnvironmentVariable(TestsConstants.IOT_HUB_TESTMODE, Instance.TestMode.ToString());
-            }
         }
     }
 }

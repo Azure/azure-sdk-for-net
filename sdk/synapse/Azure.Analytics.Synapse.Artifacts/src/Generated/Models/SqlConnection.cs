@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             Name = name;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlConnection. </summary>
@@ -37,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Type = type;
             Name = name;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The type of the connection. </summary>

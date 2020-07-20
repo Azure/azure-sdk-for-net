@@ -15,13 +15,6 @@ namespace Azure.AI.FormRecognizer.Models
         {
         }
 
-        /// <summary> Initializes a new instance of SourcePath_internal. </summary>
-        /// <param name="source"> File source path. </param>
-        internal SourcePath_internal(string source)
-        {
-            Source = source;
-        }
-
         /// <summary> File source path. </summary>
         public string Source { get; set; }
     }

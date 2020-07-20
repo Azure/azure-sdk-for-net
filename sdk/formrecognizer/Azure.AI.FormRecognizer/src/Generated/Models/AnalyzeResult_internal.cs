@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -23,6 +24,10 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Version = version;
+            ReadResults = new ChangeTrackingList<ReadResult_internal>();
+            PageResults = new ChangeTrackingList<PageResult_internal>();
+            DocumentResults = new ChangeTrackingList<DocumentResult_internal>();
+            Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>

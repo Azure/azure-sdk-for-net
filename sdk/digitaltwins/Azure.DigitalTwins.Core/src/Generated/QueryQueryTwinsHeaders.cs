@@ -17,6 +17,7 @@ namespace Azure.DigitalTwins.Core
         {
             _response = response;
         }
+        /// <summary> The query charge. </summary>
         public float? QueryCharge => _response.Headers.TryGetValue("query-charge", out float? value) ? value : null;
     }
 }

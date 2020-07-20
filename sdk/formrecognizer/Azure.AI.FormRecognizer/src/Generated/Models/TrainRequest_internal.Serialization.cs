@@ -17,12 +17,12 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStartObject();
             writer.WritePropertyName("source");
             writer.WriteStringValue(Source);
-            if (SourceFilter != null)
+            if (Optional.IsDefined(SourceFilter))
             {
                 writer.WritePropertyName("sourceFilter");
                 writer.WriteObjectValue(SourceFilter);
             }
-            if (UseLabelFile != null)
+            if (Optional.IsDefined(UseLabelFile))
             {
                 writer.WritePropertyName("useLabelFile");
                 writer.WriteBooleanValue(UseLabelFile.Value);

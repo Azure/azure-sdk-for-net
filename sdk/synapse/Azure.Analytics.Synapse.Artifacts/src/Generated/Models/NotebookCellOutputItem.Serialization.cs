@@ -15,29 +15,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (ExecutionCount != null)
+            if (Optional.IsDefined(ExecutionCount))
             {
                 writer.WritePropertyName("execution_count");
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
             writer.WritePropertyName("output_type");
             writer.WriteStringValue(OutputType.ToString());
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text");
                 writer.WriteObjectValue(Text);
             }
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
                 writer.WriteObjectValue(Data);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteObjectValue(Metadata);
@@ -47,29 +47,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookCellOutputItem DeserializeNotebookCellOutputItem(JsonElement element)
         {
-            string name = default;
-            int? executionCount = default;
+            Optional<string> name = default;
+            Optional<int> executionCount = default;
             CellOutputType outputType = default;
-            object text = default;
-            object data = default;
-            object metadata = default;
+            Optional<object> text = default;
+            Optional<object> data = default;
+            Optional<object> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("execution_count"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     executionCount = property.Value.GetInt32();
                     continue;
                 }
@@ -80,33 +72,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("text"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     text = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("data"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     data = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     metadata = property.Value.GetObject();
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name, executionCount, outputType, text, data, metadata);
+            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
         }
     }
 }

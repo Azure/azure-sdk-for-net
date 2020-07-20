@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName");
             writer.WriteObjectValue(SecretName);
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion");
                 writer.WriteObjectValue(SecretVersion);
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LinkedServiceReference store = default;
             object secretName = default;
-            object secretVersion = default;
+            Optional<object> secretVersion = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,10 +49,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("secretVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secretVersion = property.Value.GetObject();
                     continue;
                 }
@@ -62,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion);
+            return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion.Value);
         }
     }
 }

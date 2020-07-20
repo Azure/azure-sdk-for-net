@@ -59,24 +59,33 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
-            : this(username, password, tenantId, clientId, CredentialPipeline.GetInstance(options))
+            : this(username, password, tenantId, clientId, options, null, null)
         {
         }
 
-        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, CredentialPipeline pipeline)
-            : this(username, password, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId))
+        /// <summary>
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// and password.
+        /// </summary>
+        /// <param name="username">The user account's user name, UPN.</param>
+        /// <param name="password">The user account's password.</param>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
+        /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, UsernamePasswordCredentialOptions options)
+            : this(username, password, tenantId, clientId, options, null, null)
         {
         }
 
-        internal UsernamePasswordCredential(string username, string password, CredentialPipeline pipeline, MsalPublicClient client)
+        internal UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _username = username ?? throw new ArgumentNullException(nameof(username));
 
             _password = (password != null) ? password.ToSecureString() : throw new ArgumentNullException(nameof(password));
 
-            _pipeline = pipeline;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client;
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
         }
 
         /// <summary>

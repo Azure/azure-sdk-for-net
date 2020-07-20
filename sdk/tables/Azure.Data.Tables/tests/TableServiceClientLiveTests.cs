@@ -31,7 +31,7 @@ namespace Azure.Data.Tables.Tests
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
 
-            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+            var credential = new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey);
 
             // Build a shared access signature with only Delete permissions and access to all service resource types.
 
@@ -79,7 +79,7 @@ namespace Azure.Data.Tables.Tests
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
 
-            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+            var credential = new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey);
 
             // Build a shared access signature with all permissions and access to only Service resource types.
 
@@ -147,13 +147,13 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await service.CreateTableAsync(table).ConfigureAwait(false);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
                 }
 
                 // Get the table list.
 
-                var tableResponses = (await service.GetTablesAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                var tableResponses = (await service.GetTablesAsync(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
@@ -182,7 +182,7 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await service.CreateTableAsync(table).ConfigureAwait(false);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
                 }
 
@@ -205,6 +205,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task GetPropertiesReturnsProperties()
         {
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("GetProperties is currently not supported by Cosmos endpoints.");
+            }
+
             // Get current properties
 
             TableServiceProperties responseToChange = await service.GetPropertiesAsync().ConfigureAwait(false);
@@ -237,6 +242,11 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task GetTableServiceStatsReturnsStats()
         {
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("GetProperties is currently not supported by Cosmos endpoints.");
+            }
+
             // Get statistics
 
             TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);

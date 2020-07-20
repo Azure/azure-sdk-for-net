@@ -119,7 +119,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var filter = client.CreateFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
+            var filter = TableClient.CreateFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
             var results = await client.QueryAsync<ComplexEntity>(filter).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (ComplexEntity ent in results)
@@ -200,7 +200,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 10);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 10);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 5);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 5);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {

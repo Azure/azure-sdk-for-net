@@ -71,14 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,14 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,14 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,14 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -286,14 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -391,14 +349,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -424,14 +375,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
