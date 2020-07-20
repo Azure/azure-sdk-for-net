@@ -81,14 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRunsQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
-                        }
+                        value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,14 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRunsQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
-                        }
+                        value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,14 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRun value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRun.DeserializePipelineRun(document.RootElement);
-                        }
+                        value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,14 +173,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRun value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRun.DeserializePipelineRun(document.RootElement);
-                        }
+                        value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,14 +230,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         ActivityRunsQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
-                        }
+                        value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,14 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         ActivityRunsQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
-                        }
+                        value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

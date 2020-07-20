@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -37,12 +38,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             File = file;
+            Args = new ChangeTrackingList<string>();
+            Jars = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
             DriverMemory = driverMemory;
             DriverCores = driverCores;
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             NumExecutors = numExecutors;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SparkJobProperties. </summary>
@@ -75,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             NumExecutors = numExecutors;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The name of the job. </summary>
@@ -87,13 +92,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Spark configuration properties. </summary>
         public object Conf { get; set; }
         /// <summary> Command line arguments for the application. </summary>
-        public IList<string> Args { get; set; }
+        public IList<string> Args { get; }
         /// <summary> Jars to be used in this job. </summary>
-        public IList<string> Jars { get; set; }
+        public IList<string> Jars { get; }
         /// <summary> files to be used in this job. </summary>
-        public IList<string> Files { get; set; }
+        public IList<string> Files { get; }
         /// <summary> Archives to be used in this job. </summary>
-        public IList<string> Archives { get; set; }
+        public IList<string> Archives { get; }
         /// <summary> Amount of memory to use for the driver process. </summary>
         public string DriverMemory { get; set; }
         /// <summary> Number of cores to use for the driver. </summary>

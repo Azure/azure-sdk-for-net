@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.KeyVault
         Vault IOperationSource<Vault>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Vault.DeserializeVault(document.RootElement);
-            }
+            return Vault.DeserializeVault(document.RootElement);
         }
 
         async ValueTask<Vault> IOperationSource<Vault>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Vault.DeserializeVault(document.RootElement);
-            }
+            return Vault.DeserializeVault(document.RootElement);
         }
     }
 }

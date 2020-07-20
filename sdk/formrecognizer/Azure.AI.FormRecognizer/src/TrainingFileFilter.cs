@@ -12,7 +12,10 @@ namespace Azure.AI.FormRecognizer.Training
     [CodeGenModel("TrainSourceFilter")]
     public partial class TrainingFileFilter
     {
-        internal TrainingFileFilter()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrainingFileFilter"/> class.
+        /// </summary>
+        public TrainingFileFilter()
         {
         }
 

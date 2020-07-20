@@ -26,6 +26,9 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <summary>
         /// Gets the list of available private stores
         /// </summary>
+        /// <param name='useCache'>
+        /// Determines if to use cache or DB for serving this request
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,7 +44,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PrivateStore>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateStore>>> ListWithHttpMessagesAsync(string useCache = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get information about the private store
         /// </summary>

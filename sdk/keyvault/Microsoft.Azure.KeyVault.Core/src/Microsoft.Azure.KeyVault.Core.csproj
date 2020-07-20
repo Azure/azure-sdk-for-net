@@ -18,5 +18,7 @@ It is recommended that you move to the new package.</Description>
         Added recommendation to use new libraries listed in the package description.
       ]]>
     </PackageReleaseNotes>
+    <Version>3.0.5</Version>
+    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
   </PropertyGroup>
 </Project>

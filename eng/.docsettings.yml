@@ -65,6 +65,7 @@ known_presence_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Cryptography','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.Extensions','#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault.WebKey','#5499']
+  - ["sdk/mediaservices/Microsoft.Azure.Media.LiveVideoAnalytics.Edge", "#5499"]
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Common','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Data','#5499']

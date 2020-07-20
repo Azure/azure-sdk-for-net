@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescription value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescription.DeserializeDigitalTwinsDescription(document.RootElement);
-                        }
+                        value = DigitalTwinsDescription.DeserializeDigitalTwinsDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,14 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescription value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescription.DeserializeDigitalTwinsDescription(document.RootElement);
-                        }
+                        value = DigitalTwinsDescription.DeserializeDigitalTwinsDescription(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,7 +233,12 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var model = new DigitalTwinsPatchDescription(tags);
+            DigitalTwinsPatchDescription digitalTwinsPatchDescription = new DigitalTwinsPatchDescription();
+            foreach (var value in tags)
+            {
+                digitalTwinsPatchDescription.Tags.Add(value);
+            }
+            var model = digitalTwinsPatchDescription;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -411,14 +402,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -438,14 +422,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,14 +465,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,14 +491,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,7 +499,7 @@ namespace Azure.ResourceManager.DigitalTwins
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string location, string name, string type)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string location, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -551,7 +514,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CheckNameRequest(name, type);
+            var model = new CheckNameRequest(name);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -561,9 +524,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Check if a DigitalTwinsInstance name is available. </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -573,12 +535,8 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
 
-            using var message = CreateCheckNameAvailabilityRequest(location, name, type);
+            using var message = CreateCheckNameAvailabilityRequest(location, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -586,14 +544,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         CheckNameResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
-                        }
+                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -604,9 +555,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <summary> Check if a DigitalTwinsInstance name is available. </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CheckNameResult> CheckNameAvailability(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", CancellationToken cancellationToken = default)
+        public Response<CheckNameResult> CheckNameAvailability(string location, string name, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -616,12 +566,8 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
 
-            using var message = CreateCheckNameAvailabilityRequest(location, name, type);
+            using var message = CreateCheckNameAvailabilityRequest(location, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -629,14 +575,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         CheckNameResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
-                        }
+                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -674,14 +613,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -707,14 +639,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -757,14 +682,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -795,14 +713,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         DigitalTwinsDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
-                        }
+                        value = DigitalTwinsDescriptionListResult.DeserializeDigitalTwinsDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

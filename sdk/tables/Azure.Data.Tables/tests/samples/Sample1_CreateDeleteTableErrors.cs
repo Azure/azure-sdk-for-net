@@ -15,7 +15,7 @@ namespace Azure.Data.Tables.Samples
         public void TableCreateError()
         {
             string storageUri = StorageUri;
-            string accountName = AccountName;
+            string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies2";
 

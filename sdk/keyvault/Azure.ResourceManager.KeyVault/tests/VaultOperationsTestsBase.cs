@@ -87,27 +87,30 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             var permissions = new Permissions
             {
-                Keys = new KeyPermissions[] { new KeyPermissions("all") },
-                Secrets = new SecretPermissions[] { new SecretPermissions("all") },
-                Certificates = new CertificatePermissions[] { new CertificatePermissions("all") },
-                Storage = new StoragePermissions[] { new StoragePermissions("all") },
+                Keys = { new KeyPermissions("all") },
+                Secrets = { new SecretPermissions("all") },
+                Certificates = { new CertificatePermissions("all") },
+                Storage = { new StoragePermissions("all") },
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            IList<IPRule> ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule("1.2.3.4/32"));
-            ipRules.Add(new IPRule("1.0.0.0/25"));
-
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard));
-
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.VaultUri = "";
-            VaultProperties.NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null };
-            VaultProperties.AccessPolicies = new[] { AccessPolicy };
+            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+                Bypass = "AzureServices",
+                DefaultAction = "Allow",
+                IpRules =
+                {
+                    new IPRule("1.2.3.4/32"),
+                    new IPRule("1.0.0.0/25")
+                }
+            };
+            VaultProperties.AccessPolicies.Add(AccessPolicy);
         }
 
         internal KeyVaultManagementClient GetKeyVaultManagementClient()

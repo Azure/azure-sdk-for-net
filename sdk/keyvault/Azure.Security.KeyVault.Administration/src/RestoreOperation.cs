@@ -45,7 +45,25 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore(Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync(Uri, string, string, CancellationToken)"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullRestoreOperationHeaders> response)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(response, nameof(response));
+
+            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
+            _client = client;
+            _response = response.GetRawResponse();
+            _retryAfterSeconds = response.Headers.RetryAfter;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of a RestoreOperation.
+        /// </summary>
+        /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartSelectiveRestore(string, Uri, string, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync(string, Uri, string, string, CancellationToken)"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
+        internal RestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders> response)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(response, nameof(response));
@@ -62,6 +80,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
         internal RestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));

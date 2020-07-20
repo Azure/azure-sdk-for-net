@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -27,6 +26,7 @@ namespace Azure.Messaging.EventGrid
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
         private string _apiVersion;
+        private ObjectSerializer _serializer;
 
         /// <summary>Initalizes an instance of EventGridClient</summary>
         protected EventGridClient()
@@ -57,6 +57,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridClientOptions();
+            _serializer = options.Serializer ?? new JsonObjectSerializer();
             _apiVersion = options.GetVersionString();
             _endpoint = endpoint;
             _key = credential;
@@ -75,6 +76,7 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridClientOptions();
+            _serializer = options.Serializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new SharedAccessSignatureCredentialPolicy(credential));
             _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
@@ -85,32 +87,57 @@ namespace Azure.Messaging.EventGrid
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishEvents)}");
-            scope.Start();
-
-            try
-            {
-                return await _serviceRestClient.PublishEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await PublishEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
+            => PublishEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+
+        /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="async">Whether to invoke the operation asynchronously</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async Task<Response> PublishEventsInternal(IEnumerable<EventGridEvent> events, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishEvents)}");
             scope.Start();
 
             try
             {
-                return _serviceRestClient.PublishEvents(_hostName, events, cancellationToken);
+                List<EventGridEvent> eventsWithSerializedPayloads = new List<EventGridEvent>();
+                foreach (EventGridEvent egEvent in events)
+                {
+                    EventGridEvent newEGEvent = new EventGridEvent(
+                            egEvent.Id,
+                            egEvent.Subject,
+                            new EventGridSerializer(
+                                egEvent.Data,
+                                _serializer,
+                                cancellationToken),
+                            egEvent.EventType,
+                            egEvent.EventTime,
+                            egEvent.DataVersion);
+                    newEGEvent.Topic = egEvent.Topic;
+
+                    eventsWithSerializedPayloads.Add(newEGEvent);
+                }
+                if (async)
+                {
+                    // Publish asynchronously if called via an async path
+                    return await _serviceRestClient.PublishEventsAsync(
+                        _hostName,
+                        eventsWithSerializedPayloads,
+                        cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return _serviceRestClient.PublishEvents(
+                        _hostName,
+                        eventsWithSerializedPayloads,
+                        cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -120,35 +147,71 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCloudEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCloudEvents)}");
-            scope.Start();
-
-            try
-            {
-                return await _serviceRestClient.PublishCloudEventEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await PublishCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCloudEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+            => PublishCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+
+        /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="async">Whether to invoke the operation asynchronously</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async Task<Response> PublishCloudEventsInternal(IEnumerable<CloudEvent> events, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCloudEvents)}");
             scope.Start();
 
             try
             {
-                return _serviceRestClient.PublishCloudEventEvents(_hostName, events, cancellationToken);
+                List<CloudEvent> eventsWithSerializedPayloads = new List<CloudEvent>();
+                foreach (CloudEvent cloudEvent in events)
+                {
+                    // The 'Data' field is optional for the CloudEvent spec
+                    if (cloudEvent.Data != null)
+                    {
+                        eventsWithSerializedPayloads.Add(
+                            new CloudEvent(
+                                cloudEvent.Id,
+                                cloudEvent.Source,
+                                cloudEvent.Type,
+                                cloudEvent.Specversion)
+                            {
+                                Data = new EventGridSerializer(
+                                    cloudEvent.Data,
+                                    _serializer,
+                                    cancellationToken),
+                                Time = cloudEvent.Time,
+                                Datacontenttype = cloudEvent.Datacontenttype,
+                                Dataschema = cloudEvent.Dataschema,
+                                Subject = cloudEvent.Subject
+                            });
+                    }
+                    else
+                    {
+                        eventsWithSerializedPayloads.Add(cloudEvent);
+                    }
+                }
+                if (async)
+                {
+                    // Publish asynchronously if called via an async path
+                    return await _serviceRestClient.PublishCloudEventEventsAsync(
+                        _hostName,
+                        eventsWithSerializedPayloads,
+                        cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return _serviceRestClient.PublishCloudEventEvents(
+                        _hostName,
+                        eventsWithSerializedPayloads,
+                        cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -157,37 +220,48 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PublishCustomEventsAsync(IEnumerable<object> events, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCustomEvents)}");
-            scope.Start();
-
-            try
-            {
-                return await _serviceRestClient.PublishCustomEventEventsAsync(_hostName, events, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await PublishCustomEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
-        /// /// <param name="events"> An array of events to be published to Event Grid. </param>
+        /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PublishCustomEvents(IEnumerable<object> events, CancellationToken cancellationToken = default)
+            => PublishCustomEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+
+        private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridClient)}.{nameof(PublishCustomEvents)}");
             scope.Start();
 
             try
             {
-                return _serviceRestClient.PublishCustomEventEvents(_hostName, events, cancellationToken);
+                List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
+                foreach (object customEvent in events)
+                {
+                    serializedEvents.Add(
+                        new EventGridSerializer(
+                            customEvent,
+                            _serializer,
+                            cancellationToken));
+                }
+                if (async)
+                {
+                    return await _serviceRestClient.PublishCustomEventEventsAsync(
+                    _hostName,
+                    serializedEvents,
+                    cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return _serviceRestClient.PublishCustomEventEvents(
+                    _hostName,
+                    serializedEvents,
+                    cancellationToken);
+                }
             }
             catch (Exception e)
             {

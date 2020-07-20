@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -123,7 +124,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (pageNumber >= PageRange.FirstPageNumber && pageNumber <= PageRange.LastPageNumber)
                 {
-                    pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults, i));
+                    pages.Add(new FormPage(pageResults.Any() ? pageResults[i] : null, readResults, i));
                 }
             }
 
