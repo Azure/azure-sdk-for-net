@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
         // Cosmos Tables
         public const string PrimaryCosmosKeyEnvironmentVariableName = "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY";
         private const string CosmosUriFormat = "https://{0}.table.cosmos.azure.com";
-        public string PrimaryCosmosAccountKey => GetOptionalVariable(PrimaryCosmosKeyEnvironmentVariableName);
+        public string PrimaryCosmosAccountKey => GetRecordedVariable(PrimaryCosmosKeyEnvironmentVariableName);
         public string CosmosAccountName => GetRecordedVariable("TABLES_COSMOS_ACCOUNT_NAME");
         public string CosmosUri => string.Format(CosmosUriFormat, CosmosAccountName);
     }
