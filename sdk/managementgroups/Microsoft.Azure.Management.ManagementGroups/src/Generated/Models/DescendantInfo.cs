@@ -11,49 +11,45 @@
 namespace Microsoft.Azure.Management.ManagementGroups.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The management group details for the hierarchy view.
+    /// The descendant.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class EntityHierarchyItem : IResource
+    public partial class DescendantInfo
     {
         /// <summary>
-        /// Initializes a new instance of the EntityHierarchyItem class.
+        /// Initializes a new instance of the DescendantInfo class.
         /// </summary>
-        public EntityHierarchyItem()
+        public DescendantInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EntityHierarchyItem class.
+        /// Initializes a new instance of the DescendantInfo class.
         /// </summary>
-        /// <param name="id">The fully qualified ID for the management group.
-        /// For example,
-        /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
-        /// <param name="type">The type of the resource.  For example,
-        /// Microsoft.Management/managementGroups</param>
-        /// <param name="name">The name of the management group. For example,
+        /// <param name="id">The fully qualified ID for the descendant.  For
+        /// example,
+        /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// or /subscriptions/0000000-0000-0000-0000-000000000000</param>
+        /// <param name="type">The type of the resource. For example,
+        /// Microsoft.Management/managementGroups or /subscriptions</param>
+        /// <param name="name">The name of the descendant. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="displayName">The friendly name of the management
         /// group.</param>
-        /// <param name="permissions">Permissions</param>
-        /// <param name="children">The list of children.</param>
-        public EntityHierarchyItem(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string permissions = default(string), IList<EntityHierarchyItem> children = default(IList<EntityHierarchyItem>))
+        /// <param name="parent">Parent</param>
+        public DescendantInfo(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), DescendantParentGroupInfo parent = default(DescendantParentGroupInfo))
         {
             Id = id;
             Type = type;
             Name = name;
             DisplayName = displayName;
-            Permissions = permissions;
-            Children = children;
+            Parent = parent;
             CustomInit();
         }
 
@@ -63,21 +59,22 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the fully qualified ID for the management group.  For example,
+        /// Gets the fully qualified ID for the descendant.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
+        /// or /subscriptions/0000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource.  For example,
-        /// Microsoft.Management/managementGroups
+        /// Gets the type of the resource. For example,
+        /// Microsoft.Management/managementGroups or /subscriptions
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the name of the management group. For example,
+        /// Gets the name of the descendant. For example,
         /// 00000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "name")]
@@ -90,19 +87,10 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets permissions
+        /// Gets or sets parent
         /// </summary>
-        /// <remarks>
-        /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.permissions")]
-        public string Permissions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of children.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.children")]
-        public IList<EntityHierarchyItem> Children { get; set; }
+        [JsonProperty(PropertyName = "properties.parent")]
+        public DescendantParentGroupInfo Parent { get; set; }
 
     }
 }

@@ -53,21 +53,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <summary>
         /// List all entities (Management Groups, Subscriptions, etc.) for the
         /// authenticated user.
+        ///
         /// </summary>
-        /// <param name='skiptoken'>
-        /// Page continuation token is only used if a previous operation returned a
-        /// partial result. If a previous response contains a nextLink element, the
-        /// value of the nextLink element will include a token parameter that specifies
-        /// a starting point to use for subsequent calls.
-        /// </param>
-        /// <param name='skip'>
-        /// Number of entities to skip over when retrieving results. Passing this in
-        /// will override $skipToken.
-        /// </param>
-        /// <param name='top'>
-        /// Number of elements to return when retrieving results. Passing this in will
-        /// override $skipToken.
-        /// </param>
         /// <param name='select'>
         /// This parameter specifies the fields to include in the response. Can include
         /// any combination of
@@ -77,15 +64,23 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// </param>
         /// <param name='search'>
         /// The $search parameter is used in conjunction with the $filter parameter to
-        /// return three different outputs depending on the parameter passed in. With
-        /// $search=AllowedParents the API will return the entity info of all groups
-        /// that the requested entity will be able to reparent to as determined by the
-        /// user's permissions. With $search=AllowedChildren the API will return the
-        /// entity info of all entities that can be added as children of the requested
-        /// entity. With $search=ParentAndFirstLevelChildren the API will return the
-        /// parent and  first level of children that the user has either direct access
-        /// to or indirect access via one of their descendants. Possible values
-        /// include: 'AllowedParents', 'AllowedChildren', 'ParentAndFirstLevelChildren'
+        /// return three different outputs depending on the parameter passed in.
+        /// With $search=AllowedParents the API will return the entity info of all
+        /// groups that the requested entity will be able to reparent to as determined
+        /// by the user's permissions.
+        /// With $search=AllowedChildren the API will return the entity info of all
+        /// entities that can be added as children of the requested entity.
+        /// With $search=ParentAndFirstLevelChildren the API will return the parent and
+        /// first level of children that the user has either direct access to or
+        /// indirect access via one of their descendants.
+        /// With $search=ParentOnly the API will return only the group if the user has
+        /// access to at least one of the descendants of the group.
+        /// With $search=ChildrenOnly the API will return only the first level of
+        /// children of the group entity info specified in $filter.  The user must have
+        /// direct access to the children entities or one of it's descendants for it to
+        /// show up in the results. Possible values include: 'AllowedParents',
+        /// 'AllowedChildren', 'ParentAndFirstLevelChildren', 'ParentOnly',
+        /// 'ChildrenOnly'
         /// </param>
         /// <param name='filter'>
         /// The filter parameter allows you to filter on the the name or display name
@@ -128,7 +123,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EntityInfo>>> ListWithHttpMessagesAsync(string skiptoken = default(string), int? skip = default(int?), int? top = default(int?), string select = default(string), string search = default(string), string filter = default(string), string view = default(string), string groupName = default(string), string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EntityInfo>>> ListWithHttpMessagesAsync(string select = default(string), string search = default(string), string filter = default(string), string view = default(string), string groupName = default(string), string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -141,9 +136,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("skiptoken", skiptoken);
-                tracingParameters.Add("skip", skip);
-                tracingParameters.Add("top", top);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("search", search);
                 tracingParameters.Add("filter", filter);
@@ -161,17 +153,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (skiptoken != null)
+            if (Client.Skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(Client.Skiptoken)));
             }
-            if (skip != null)
+            if (Client.Skip != null)
             {
-                _queryParameters.Add(string.Format("$skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Skip, Client.SerializationSettings).Trim('"'))));
             }
-            if (top != null)
+            if (Client.Top != null)
             {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Top, Client.SerializationSettings).Trim('"'))));
             }
             if (select != null)
             {
@@ -179,7 +171,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
             if (search != null)
             {
-                _queryParameters.Add(string.Format("$search={0}", System.Uri.EscapeDataString(search)));
+                _queryParameters.Add(string.Format("$search={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(search, Client.SerializationSettings).Trim('"'))));
             }
             if (filter != null)
             {
@@ -187,7 +179,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
             if (view != null)
             {
-                _queryParameters.Add(string.Format("$view={0}", System.Uri.EscapeDataString(view)));
+                _queryParameters.Add(string.Format("$view={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(view, Client.SerializationSettings).Trim('"'))));
             }
             if (groupName != null)
             {
@@ -324,6 +316,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <summary>
         /// List all entities (Management Groups, Subscriptions, etc.) for the
         /// authenticated user.
+        ///
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

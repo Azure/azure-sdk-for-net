@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
     {
             /// <summary>
             /// Associates existing subscription with the management group.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,13 +37,14 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <param name='cacheControl'>
             /// Indicates that the request shouldn't utilize any caches.
             /// </param>
-            public static void Create(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache")
+            public static SubscriptionUnderManagementGroup Create(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache")
             {
-                operations.CreateAsync(groupId, subscriptionId, cacheControl).GetAwaiter().GetResult();
+                return operations.CreateAsync(groupId, subscriptionId, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Associates existing subscription with the management group.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,13 +61,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionUnderManagementGroup> CreateAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CreateWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
             /// De-associates subscription from the management group.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,6 +92,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// De-associates subscription from the management group.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -105,6 +112,132 @@ namespace Microsoft.Azure.Management.ManagementGroups
             public static async Task DeleteAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieves details about given subscription which is associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static SubscriptionUnderManagementGroup GetSubscription(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache")
+            {
+                return operations.GetSubscriptionAsync(groupId, subscriptionId, cacheControl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves details about given subscription which is associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionUnderManagementGroup> GetSubscriptionAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves details about all subscriptions which are associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            public static IPage<SubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroup(this IManagementGroupSubscriptionsOperations operations, string groupId)
+            {
+                return operations.GetSubscriptionsUnderManagementGroupAsync(groupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves details about all subscriptions which are associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionsUnderManagementGroupWithHttpMessagesAsync(groupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves details about all subscriptions which are associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroupNext(this IManagementGroupSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.GetSubscriptionsUnderManagementGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves details about all subscriptions which are associated with the
+            /// management group.
+            ///
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupNextAsync(this IManagementGroupSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionsUnderManagementGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

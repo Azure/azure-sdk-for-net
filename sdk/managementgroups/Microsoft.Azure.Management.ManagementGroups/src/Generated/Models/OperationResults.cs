@@ -36,16 +36,21 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
         /// <param name="type">The type of the resource.  For example,
-        /// /providers/Microsoft.Management/managementGroups</param>
+        /// Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
-        /// <param name="provisioningState">Provisioning State</param>
-        public OperationResults(string id = default(string), string type = default(string), string name = default(string), string provisioningState = default(string))
+        /// <param name="tenantId">The AAD Tenant ID associated with the
+        /// management group. For example,
+        /// 00000000-0000-0000-0000-000000000000</param>
+        /// <param name="displayName">The friendly name of the management
+        /// group.</param>
+        public OperationResults(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string))
         {
             Id = id;
             Type = type;
             Name = name;
-            ProvisioningState = provisioningState;
+            TenantId = tenantId;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -63,7 +68,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
 
         /// <summary>
         /// Gets the type of the resource.  For example,
-        /// /providers/Microsoft.Management/managementGroups
+        /// Microsoft.Management/managementGroups
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
@@ -76,13 +81,17 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets provisioning State
+        /// Gets or sets the AAD Tenant ID associated with the management
+        /// group. For example, 00000000-0000-0000-0000-000000000000
         /// </summary>
-        /// <remarks>
-        /// Possible values include: 'Updating'
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the friendly name of the management group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
 
     }
 }
