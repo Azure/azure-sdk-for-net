@@ -187,7 +187,13 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>
             /// An entity with the same name exists under the same namespace.
             /// </summary>
-            MessagingEntityAlreadyExists
+            MessagingEntityAlreadyExists,
+
+            /// <summary>
+            /// The resource that is being updated has been updated on the server since the
+            /// last time the Get operation was performed.
+            /// </summary>
+            ResourceNotUpToDate
         }
     }
 }
