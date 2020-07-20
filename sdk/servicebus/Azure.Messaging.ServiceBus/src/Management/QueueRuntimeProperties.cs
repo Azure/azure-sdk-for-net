@@ -23,12 +23,32 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// The total number of messages in the queue.
         /// </summary>
-        public long MessageCount { get; internal set; }
+        public long TotalMessageCount { get; internal set; }
 
         /// <summary>
-        /// Message count details of the sub-queues of the entity.
+        /// The number of active messages in the entity.
         /// </summary>
-        public MessageCountDetails CountDetails { get; internal set; }
+        public long ActiveMessageCount { get; internal set; }
+
+        /// <summary>
+        /// The number of dead-lettered messages in the entity.
+        /// </summary>
+        public long DeadLetterMessageCount { get; internal set; }
+
+        /// <summary>
+        /// The number of messages which are yet to be scheduled.
+        /// </summary>
+        public long ScheduledMessageCount { get; internal set; }
+
+        /// <summary>
+        /// The number of messages which are yet to be transferred/forwarded to destination entity.
+        /// </summary>
+        public long TransferMessageCount { get; internal set; }
+
+        /// <summary>
+        /// The number of messages transfer-messages which are dead-lettered into transfer-dead-letter sub-queue.
+        /// </summary>
+        public long TransferDeadLetterMessageCount { get; internal set; }
 
         /// <summary>
         /// Current size of the entity in bytes.

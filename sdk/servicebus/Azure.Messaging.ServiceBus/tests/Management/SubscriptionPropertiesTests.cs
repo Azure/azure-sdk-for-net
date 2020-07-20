@@ -6,7 +6,7 @@ using System.Linq;
 using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Administration
+namespace Azure.Messaging.ServiceBus.Tests.Management
 {
     public class SubscriptionPropertiesTests
     {

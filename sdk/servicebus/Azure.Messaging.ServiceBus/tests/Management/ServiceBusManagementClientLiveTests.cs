@@ -10,7 +10,7 @@ using Azure.Messaging.ServiceBus.Management;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Administration
+namespace Azure.Messaging.ServiceBus.Tests.Management
 {
     public class ServiceBusManagementClientLiveTests : ServiceBusLiveTestBase
     {
@@ -333,10 +333,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             Assert.AreEqual(queueName, runtimeInfo.Name);
             Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
             Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
-            Assert.AreEqual(1, runtimeInfo.CountDetails.ActiveMessageCount);
-            Assert.AreEqual(1, runtimeInfo.CountDetails.DeadLetterMessageCount);
-            Assert.AreEqual(1, runtimeInfo.CountDetails.ScheduledMessageCount);
-            Assert.AreEqual(3, runtimeInfo.MessageCount);
+            Assert.AreEqual(1, runtimeInfo.ActiveMessageCount);
+            Assert.AreEqual(1, runtimeInfo.DeadLetterMessageCount);
+            Assert.AreEqual(1, runtimeInfo.ScheduledMessageCount);
+            Assert.AreEqual(3, runtimeInfo.TotalMessageCount);
             Assert.True(runtimeInfo.SizeInBytes > 0);
 
             QueueRuntimeProperties singleRuntimeInfo = await mgmtClient.GetQueueRuntimeInfoAsync(runtimeInfo.Name);
@@ -344,10 +344,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
             Assert.AreEqual(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
             Assert.AreEqual(runtimeInfo.UpdatedAt, singleRuntimeInfo.UpdatedAt);
-            Assert.AreEqual(runtimeInfo.MessageCount, singleRuntimeInfo.MessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.ActiveMessageCount, singleRuntimeInfo.CountDetails.ActiveMessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.DeadLetterMessageCount, singleRuntimeInfo.CountDetails.DeadLetterMessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.ScheduledMessageCount, singleRuntimeInfo.CountDetails.ScheduledMessageCount);
+            Assert.AreEqual(runtimeInfo.TotalMessageCount, singleRuntimeInfo.TotalMessageCount);
+            Assert.AreEqual(runtimeInfo.ActiveMessageCount, singleRuntimeInfo.ActiveMessageCount);
+            Assert.AreEqual(runtimeInfo.DeadLetterMessageCount, singleRuntimeInfo.DeadLetterMessageCount);
+            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleRuntimeInfo.ScheduledMessageCount);
             Assert.AreEqual(runtimeInfo.SizeInBytes, singleRuntimeInfo.SizeInBytes);
 
             await mgmtClient.DeleteQueueAsync(queueName);
@@ -403,10 +403,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
             Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
 
-            Assert.AreEqual(1, runtimeInfo.CountDetails.ActiveMessageCount);
-            Assert.AreEqual(1, runtimeInfo.CountDetails.DeadLetterMessageCount);
-            Assert.AreEqual(0, runtimeInfo.CountDetails.ScheduledMessageCount);
-            Assert.AreEqual(2, runtimeInfo.MessageCount);
+            Assert.AreEqual(1, runtimeInfo.ActiveMessageCount);
+            Assert.AreEqual(1, runtimeInfo.DeadLetterMessageCount);
+            Assert.AreEqual(0, runtimeInfo.ScheduledMessageCount);
+            Assert.AreEqual(2, runtimeInfo.TotalMessageCount);
 
             SubscriptionRuntimeProperties singleRuntimeInfo = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
 
@@ -414,10 +414,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             Assert.AreEqual(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
             Assert.AreEqual(runtimeInfo.UpdatedAt, singleRuntimeInfo.UpdatedAt);
             Assert.AreEqual(runtimeInfo.SubscriptionName, singleRuntimeInfo.SubscriptionName);
-            Assert.AreEqual(runtimeInfo.MessageCount, singleRuntimeInfo.MessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.ActiveMessageCount, singleRuntimeInfo.CountDetails.ActiveMessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.DeadLetterMessageCount, singleRuntimeInfo.CountDetails.DeadLetterMessageCount);
-            Assert.AreEqual(runtimeInfo.CountDetails.ScheduledMessageCount, singleRuntimeInfo.CountDetails.ScheduledMessageCount);
+            Assert.AreEqual(runtimeInfo.TotalMessageCount, singleRuntimeInfo.TotalMessageCount);
+            Assert.AreEqual(runtimeInfo.ActiveMessageCount, singleRuntimeInfo.ActiveMessageCount);
+            Assert.AreEqual(runtimeInfo.DeadLetterMessageCount, singleRuntimeInfo.DeadLetterMessageCount);
+            Assert.AreEqual(runtimeInfo.ScheduledMessageCount, singleRuntimeInfo.ScheduledMessageCount);
             Assert.AreEqual(runtimeInfo.TopicName, singleRuntimeInfo.TopicName);
 
             await client.DeleteTopicAsync(topicName);

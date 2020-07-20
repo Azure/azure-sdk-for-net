@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         qRuntime.CreatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "MessageCount":
-                        qRuntime.MessageCount = long.Parse(element.Value, CultureInfo.InvariantCulture);
+                        qRuntime.TotalMessageCount = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "SizeInBytes":
                         qRuntime.SizeInBytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
@@ -64,25 +64,24 @@ namespace Azure.Messaging.ServiceBus.Management
                         qRuntime.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
-                        qRuntime.CountDetails = new MessageCountDetails();
                         foreach (var countElement in element.Elements())
                         {
                             switch (countElement.Name.LocalName)
                             {
                                 case "ActiveMessageCount":
-                                    qRuntime.CountDetails.ActiveMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    qRuntime.ActiveMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "DeadLetterMessageCount":
-                                    qRuntime.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    qRuntime.DeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "ScheduledMessageCount":
-                                    qRuntime.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    qRuntime.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferMessageCount":
-                                    qRuntime.CountDetails.TransferMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    qRuntime.TransferMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferDeadLetterMessageCount":
-                                    qRuntime.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    qRuntime.TransferDeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                             }
                         }
