@@ -1,0 +1,86 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2018-01-01",
+    "title": "Schema of Azure EventHub events published to Azure Event Grid",
+    "description": "Describes the schema of the Azure EventHub events published to Azure Event Grid. This corresponds to the Data property of an EventGridEvent."
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/events": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "EventHubCaptureFileCreatedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/EventHubCaptureFileCreatedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EventHubCaptureFileCreatedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.EventHub.CaptureFileCreated event.",
+      "type": "object",
+      "properties": {
+        "fileurl": {
+          "description": "The path to the capture file.",
+          "type": "string"
+        },
+        "fileType": {
+          "description": "The file type of the capture file.",
+          "type": "string"
+        },
+        "partitionId": {
+          "description": "The shard ID.",
+          "type": "string"
+        },
+        "sizeInBytes": {
+          "description": "The file size.",
+          "type": "integer"
+        },
+        "eventCount": {
+          "description": "The number of events in the file.",
+          "type": "integer"
+        },
+        "firstSequenceNumber": {
+          "description": "The smallest sequence number from the queue.",
+          "type": "integer"
+        },
+        "lastSequenceNumber": {
+          "description": "The last sequence number from the queue.",
+          "type": "integer"
+        },
+        "firstEnqueueTime": {
+          "description": "The first time from the queue.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastEnqueueTime": {
+          "description": "The last time from the queue.",
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

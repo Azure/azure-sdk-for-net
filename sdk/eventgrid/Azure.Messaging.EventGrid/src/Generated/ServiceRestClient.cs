@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,6 +20,7 @@ namespace Azure.Messaging.EventGrid
     internal partial class ServiceRestClient
     {
         private string apiVersion;
+        private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -26,15 +28,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01", Uri endpoint = null)
         {
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
             }
+            endpoint ??= new Uri("");
 
             this.apiVersion = apiVersion;
+            this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -259,6 +264,1062 @@ namespace Azure.Messaging.EventGrid
             {
                 case 200:
                     return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageBlobCreatedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageBlobCreatedEventData>> StorageBlobCreatedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobCreatedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobCreatedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageBlobCreatedEventData> StorageBlobCreatedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobCreatedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobCreatedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageBlobDeletedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events1", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageBlobDeletedEventData>> StorageBlobDeletedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobDeletedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobDeletedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobDeletedEventData.DeserializeStorageBlobDeletedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageBlobDeletedEventData> StorageBlobDeletedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobDeletedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobDeletedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobDeletedEventData.DeserializeStorageBlobDeletedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageDirectoryCreatedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events2", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageDirectoryCreatedEventData>> StorageDirectoryCreatedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryCreatedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryCreatedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageDirectoryCreatedEventData> StorageDirectoryCreatedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryCreatedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryCreatedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageDirectoryDeletedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events3", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageDirectoryDeletedEventData>> StorageDirectoryDeletedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryDeletedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryDeletedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageDirectoryDeletedEventData> StorageDirectoryDeletedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryDeletedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryDeletedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageBlobRenamedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events4", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageBlobRenamedEventData>> StorageBlobRenamedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobRenamedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobRenamedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobRenamedEventData.DeserializeStorageBlobRenamedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageBlobRenamedEventData> StorageBlobRenamedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageBlobRenamedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageBlobRenamedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageBlobRenamedEventData.DeserializeStorageBlobRenamedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStorageDirectoryRenamedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events5", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<StorageDirectoryRenamedEventData>> StorageDirectoryRenamedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryRenamedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryRenamedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<StorageDirectoryRenamedEventData> StorageDirectoryRenamedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateStorageDirectoryRenamedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageDirectoryRenamedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateEventHubCaptureFileCreatedTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<EventHubCaptureFileCreatedEventData>> EventHubCaptureFileCreatedTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateEventHubCaptureFileCreatedTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubCaptureFileCreatedEventData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = EventHubCaptureFileCreatedEventData.DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<EventHubCaptureFileCreatedEventData> EventHubCaptureFileCreatedTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateEventHubCaptureFileCreatedTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubCaptureFileCreatedEventData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = EventHubCaptureFileCreatedEventData.DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceWriteSuccessDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceWriteSuccessData>> ResourceWriteSuccessDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteSuccessDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteSuccessData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteSuccessData.DeserializeResourceWriteSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceWriteSuccessData> ResourceWriteSuccessDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteSuccessDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteSuccessData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteSuccessData.DeserializeResourceWriteSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceWriteFailureDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events1", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceWriteFailureData>> ResourceWriteFailureDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteFailureDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteFailureData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteFailureData.DeserializeResourceWriteFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceWriteFailureData> ResourceWriteFailureDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteFailureDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteFailureData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteFailureData.DeserializeResourceWriteFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceWriteCancelDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events2", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceWriteCancelData>> ResourceWriteCancelDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteCancelDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteCancelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteCancelData.DeserializeResourceWriteCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceWriteCancelData> ResourceWriteCancelDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceWriteCancelDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceWriteCancelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceWriteCancelData.DeserializeResourceWriteCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceDeleteSuccessDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events3", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceDeleteSuccessData>> ResourceDeleteSuccessDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteSuccessDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteSuccessData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteSuccessData.DeserializeResourceDeleteSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceDeleteSuccessData> ResourceDeleteSuccessDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteSuccessDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteSuccessData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteSuccessData.DeserializeResourceDeleteSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceDeleteFailureDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events4", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceDeleteFailureData>> ResourceDeleteFailureDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteFailureDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteFailureData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteFailureData.DeserializeResourceDeleteFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceDeleteFailureData> ResourceDeleteFailureDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteFailureDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteFailureData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteFailureData.DeserializeResourceDeleteFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceDeleteCancelDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events5", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceDeleteCancelData>> ResourceDeleteCancelDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteCancelDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteCancelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteCancelData.DeserializeResourceDeleteCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceDeleteCancelData> ResourceDeleteCancelDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceDeleteCancelDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceDeleteCancelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceDeleteCancelData.DeserializeResourceDeleteCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceActionSuccessDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events6", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceActionSuccessData>> ResourceActionSuccessDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionSuccessDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionSuccessData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionSuccessData.DeserializeResourceActionSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceActionSuccessData> ResourceActionSuccessDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionSuccessDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionSuccessData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionSuccessData.DeserializeResourceActionSuccessData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceActionFailureDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events7", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceActionFailureData>> ResourceActionFailureDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionFailureDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionFailureData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionFailureData.DeserializeResourceActionFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceActionFailureData> ResourceActionFailureDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionFailureDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionFailureData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionFailureData.DeserializeResourceActionFailureData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResourceActionCancelDataTestRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/events8", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ResourceActionCancelData>> ResourceActionCancelDataTestAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionCancelDataTestRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionCancelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionCancelData.DeserializeResourceActionCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Test method to generate a deserialization method. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ResourceActionCancelData> ResourceActionCancelDataTest(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateResourceActionCancelDataTestRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceActionCancelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = ResourceActionCancelData.DeserializeResourceActionCancelData(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

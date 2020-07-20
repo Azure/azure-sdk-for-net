@@ -1,0 +1,397 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2018-01-01",
+    "title": "Schema of Azure Storage events published to Azure Event Grid",
+    "description": "Describes the schema of the Azure Storage events published to Azure Event Grid. This corresponds to the Data property of an EventGridEvent."
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/events": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageBlobCreatedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageBlobCreatedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }
+        }
+      }
+    },
+    "/api/events1": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageBlobDeletedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageBlobDeletedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }
+        }
+      }
+    },
+    "/api/events2": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageDirectoryCreatedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageDirectoryCreatedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }        
+        }       
+      }
+    },
+    "/api/events3": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageDirectoryDeletedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageDirectoryDeletedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }        
+        }
+      }
+    },
+    "/api/events4": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageBlobRenamedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageBlobRenamedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }        
+        }
+      }
+    },
+    "/api/events5": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Test method to generate a deserialization method.",
+        "operationId": "StorageDirectoryRenamedTest",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "$ref": "#/definitions/StorageDirectoryRenamedEventData"
+            }
+          },
+          "default": {
+            "description": "*** Error Responses: ***\n\n * 400 Bad Request.\n\n * 500 Internal Server Error.\n\n * 429 Too Many Events\n\n * 404 Not Found."
+          }        
+        }       
+      }
+    }
+  },
+  "definitions": {
+    "StorageBlobCreatedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobCreated event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the Storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "eTag": {
+          "description": "The etag of the blob at the time this event was triggered.",
+          "type": "string"
+        },
+        "contentType": {
+          "description": "The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob.",
+          "type": "string"
+        },
+        "contentLength": {
+          "description": "The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "contentOffset": {
+          "description": "The offset of the blob in bytes.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "blobType": {
+          "description": "The type of blob.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The path to the blob.",
+          "type": "string"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    },
+     "StorageBlobDeletedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobDeleted event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the Storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "contentType": {
+          "description": "The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob.",
+          "type": "string"
+        },
+        "blobType": {
+          "description": "The type of blob.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The path to the blob.",
+          "type": "string"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    },
+    "StorageDirectoryCreatedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryCreated event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "eTag": {
+          "description": "The etag of the directory at the time this event was triggered.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The path to the directory.",
+          "type": "string"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    },
+    "StorageDirectoryDeletedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryDeleted event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "url": {
+          "description": "The path to the deleted directory.",
+          "type": "string"
+        },
+        "recursive": {
+          "description": "Is this event for a recursive delete operation.",
+          "type": "boolean"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    },
+    "StorageBlobRenamedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobRenamed event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "sourceUrl": {
+          "description": "The path to the blob that was renamed.",
+          "type": "string"
+        },
+        "destinationUrl": {
+          "description": "The new path to the blob after the rename operation.",
+          "type": "string"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    },
+    "StorageDirectoryRenamedEventData": {
+      "description": "Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryRenamed event.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "description": "The name of the API/operation that triggered this event.",
+          "type": "string"
+        },
+        "clientRequestId": {
+          "description": "A request id provided by the client of the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "requestId": {
+          "description": "The request id generated by the storage service for the storage API operation that triggered this event.",
+          "type": "string"
+        },
+        "sourceUrl": {
+          "description": "The path to the directory that was renamed.",
+          "type": "string"
+        },
+        "destinationUrl": {
+          "description": "The new path to the directory after the rename operation.",
+          "type": "string"
+        },
+        "sequencer": {
+          "description": "An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name.",
+          "type": "string"
+        },
+        "identity": {
+          "description": "The identity of the requester that triggered this event.",
+          "type": "string"
+        },
+        "storageDiagnostics": {
+          "description": "For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.",
+          "type": "object"
+        }
+      }
+    }
+  }
+}
