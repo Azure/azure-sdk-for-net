@@ -1,23 +1,36 @@
+parameters:
+  ServiceDirectory: 'not-specified'
+  Artifacts: []
+  ArtifactsDirectory: 'not-specified'
+
 steps:
   - pwsh: |
       $artifactNames = @()
-      $EnVars = [Environment]::GetEnvironmentVariables()
-      $artifactNames = $EnVars.GetEnumerator() | Where-Object { $_.Key -like "XYZ*" }
-      $dirContent = Get-ChildItem -Path '${{ parameters.ArtifactsDirectory }}'
+      $artifactsDir = '${{ parameters.ArtifactsDirectory }}'
+      $enVars = [Environment]::GetEnvironmentVariables()
+      $artifactNames = $enVars.GetEnumerator() | Where-Object { $_.Key -like 'KGXZY_*' }
+      $artifactsDirContent = Get-ChildItem -Path $artifactsDir
 
-      foreach ($artifactName in $artifactNames.Values)
+      foreach ($artifact in $artifactNames)
       {
-        Write-Host "Create Directory " $artifactName
-        New-Item -Path '${{ parameters.ArtifactsDirectory }}' -Name $artifactName -ItemType directory
-        $correspondingArtifacts = $dirContent | Where-Object { $_.Name.startswith($artifactName) }
+        $artifactName = $artifact.Value
+        Write-Host "Create Directory "$artifactName
+        New-Item -Path $artifactsDir -Name $artifactName -ItemType directory
 
+        $artifactNameRegex = [regex]::escape($artifactName) + '\.((([0-9]+\.[0-9]+\.[0-9]+.*.nupkg)|docs.zip?))'
+        $correspondingArtifacts = $artifactsDirContent | Where-Object { $_.Name -match $artifactNameRegex }
+
+        $dest = Join-Path $artifactsDir $artifactName
         foreach ($artifact in $correspondingArtifacts)
         {
-          Write-Host "Moving " $artifact.Name
-          Move-Item -Path $artifact.FullName -Destination (Join-Path '${{ parameters.ArtifactsDirectory }}' $artifactName ) -Recurse -Force
+          if (Test-Path $artifact.FullName)
+          {
+            Write-Host "Moving " $artifact.Name
+            Move-Item -Path $artifact.FullName -Destination $dest -Force
+          }
         }
       }
     displayName: Arrange Artifacts
     env:
       ${{ each artifact in parameters.Artifacts }}:
-        ${{ format('XYZ{0}', artifact.safeName) }}: ${{ artifact.name }}
+        ${{ format('KGXZY_{0}', artifact.safeName) }}: ${{ artifact.name }}
