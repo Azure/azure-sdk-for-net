@@ -120,7 +120,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DynamicTableEntity>> CreateEntityAsync(DynamicTableEntity entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
@@ -135,7 +135,7 @@ namespace Azure.Data.Tables
                 var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
                 dict.CastAndRemoveAnnotations();
 
-                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -151,7 +151,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<ReadOnlyDictionary<string, object>> CreateEntity(TableEntityDictionary entity, CancellationToken cancellationToken = default)
+        public virtual Response<DynamicTableEntity> CreateEntity(DynamicTableEntity entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
@@ -166,7 +166,7 @@ namespace Azure.Data.Tables
                 var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
                 dict.CastAndRemoveAnnotations();
 
-                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new DynamicTableEntity(dict), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -182,7 +182,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The created Table entity.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(TableEntityDictionary entity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReadOnlyDictionary<string, object>>> CreateEntityAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");

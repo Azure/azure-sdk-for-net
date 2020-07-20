@@ -93,7 +93,7 @@ namespace Azure.Data.Tables.Tests
         public async Task CreatedDictionaryEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
-            List<TableEntityDictionary> entitiesToCreate = CreateDictionaryTableEntities(PartitionKeyValue, 20);
+            List<DynamicTableEntity> entitiesToCreate = CreateDictionaryTableEntities(PartitionKeyValue, 20);
 
             // Create the new entities.
 

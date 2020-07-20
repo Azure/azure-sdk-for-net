@@ -150,14 +150,14 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntityDictionary> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        protected static List<DynamicTableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
 
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
                 string number = n.ToString();
-                return new TableEntityDictionary(new Dictionary<string, object>
+                return new DynamicTableEntity(new Dictionary<string, object>
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},

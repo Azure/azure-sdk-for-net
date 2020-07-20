@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Data.Tables
 {
 
-    public class TableEntityDictionary : IDictionary<string, object>
+    public partial class DynamicTableEntity
     {
         private readonly IDictionary<string, object> _properties;
 
@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
         /// <value>A string containing the partition key for the entity.</value>
         public string PartitionKey
         {
-            get { return (string)_properties[TableConstants.PropertyNames.PartitionKey]; }
+            get { return _properties.TryGetValue(TableConstants.PropertyNames.PartitionKey, out object value) ? (string)value : default; }
             set { _properties[TableConstants.PropertyNames.PartitionKey] = value; }
         }
 
@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
         /// <value>A string containing the row key for the entity.</value>
         public string RowKey
         {
-            get { return (string)_properties[TableConstants.PropertyNames.RowKey]; }
+            get { return _properties.TryGetValue(TableConstants.PropertyNames.RowKey, out object value) ? (string)value : default; }
             set { _properties[TableConstants.PropertyNames.RowKey] = value; }
         }
 
@@ -42,8 +42,7 @@ namespace Azure.Data.Tables
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
         public DateTimeOffset Timestamp
         {
-            get { return (DateTimeOffset)_properties[TableConstants.PropertyNames.TimeStamp]; }
-            set { _properties[TableConstants.PropertyNames.TimeStamp] = value; }
+            get { return _properties.TryGetValue(TableConstants.PropertyNames.TimeStamp, out object value) ? (DateTimeOffset)value : default; }
         }
 
         /// <summary>
@@ -52,124 +51,109 @@ namespace Azure.Data.Tables
         /// <value>A string containing the ETag value for the entity.</value>
         public string ETag
         {
-            get { return (string)_properties[TableConstants.PropertyNames.Etag]; }
-            set { _properties[TableConstants.PropertyNames.Etag] = value; }
+            get { return _properties.TryGetValue(TableConstants.PropertyNames.Etag, out object value) ? (string)value : default; }
         }
-
-        public ICollection<string> Keys => _properties.Keys;
-
-        public ICollection<object> Values => _properties.Values;
-
-        public int Count => _properties.Count;
-
-        public bool IsReadOnly => _properties.IsReadOnly;
 
         /// <summary>
         /// Constructs an instance of a <see cref="TableEntity" />.
         /// </summary>
-        public TableEntityDictionary()
+        public DynamicTableEntity()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableEntity"/> class with the specified partition key and row key.
+        /// Initializes a new instance of the <see cref="DynamicTableEntity"/> class with the specified partition key and row key.
         /// </summary>
-        /// <param name="partitionKey">A string containing the partition key of the <see cref="TableEntity"/> to be initialized.</param>
-        /// <param name="rowKey">A string containing the row key of the <see cref="TableEntity"/> to be initialized.</param>
-        public TableEntityDictionary(string partitionKey, string rowKey)
+        /// <param name="partitionKey">A string containing the partition key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
+        /// <param name="rowKey">A string containing the row key of the <see cref="DynamicTableEntity"/> to be initialized.</param>
+        public DynamicTableEntity(string partitionKey, string rowKey)
         {
             PartitionKey = partitionKey;
             RowKey = rowKey;
         }
 
-        public TableEntityDictionary(Dictionary<string, object> values)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DynamicTableEntity"/> class with properties in the <see cref="IDictionary"/>.
+        /// </summary>
+        /// <param name="values">A <see cref="IDictionary"/> containing the initial values of the entity.</param>
+        public DynamicTableEntity(IDictionary<string, object> values)
         {
             _properties = values != null ?
                 new Dictionary<string, object>(values) :
                 new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="String"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public string GetString(string key) => GetValue<string>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="byte"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public byte[] GetBinary(string key) => GetValue<byte[]>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="String"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public bool GetBoolean(string key) => GetValue<bool>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="DateTime"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public DateTime GetDateTime(string key) => GetValue<DateTime>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="Double"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public double GetDouble(string key) => GetValue<double>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="Guid"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public Guid GetGuid(string key) => GetValue<Guid>(key);
 
+        /// <summary>
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="Int32"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
         public int GetInt32(string key) => GetValue<int>(key);
 
-        public long GetInt64(string key) => GetValue<long>(key);
-
         /// <summary>
-        /// Gets or sets the entity's property, given the name of the property.
+        /// Get the value of a <see cref="DynamicTableEntity"/>'s
+        /// <see cref="Int64"/> property called
+        /// <paramref name="key"/>.
         /// </summary>
-        /// <param name="key">A string containing the name of the property.</param>
-        /// <returns>An object.</returns>
-        public object this[string key]
-        {
-            get { return GetValue(key); }
-            set { SetValue(key, value); }
-        }
-
-        public void Add(string key, object value)
-        {
-            SetValue(key, value);
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return _properties.ContainsKey(key);
-        }
-
-        public bool Remove(string key)
-        {
-            return _properties.Remove(key);
-        }
-
-        public bool TryGetValue(string key, out object value)
-        {
-            return _properties.TryGetValue(key, out value);
-        }
-
-        public void Add(KeyValuePair<string, object> item)
-        {
-            SetValue(item.Key, item.Value);
-        }
-
-        public void Clear()
-        {
-            _properties.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, object> item)
-        {
-            return _properties.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-        {
-            _properties.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<string, object> item)
-        {
-            return _properties.Remove(item);
-        }
-
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            return _properties.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable)_properties).GetEnumerator();
-        }
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        public long GetInt64(string key) => GetValue<long>(key);
 
         /// <summary>
         /// Set a document property.
@@ -229,9 +213,7 @@ namespace Azure.Data.Tables
             {
                 throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
-                    "Cannot return {0} type for a {1} typed property.",
-                    requestedType,
-                    givenType));
+                    $"Cannot return {requestedType} type for a {givenType} typed property."));
             }
         }
     }
