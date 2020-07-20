@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
         public VirtualHubRouteTable()
         {
+            Routes = new ChangeTrackingList<VirtualHubRoute>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of all routes. </summary>
-        public IList<VirtualHubRoute> Routes { get; set; }
+        public IList<VirtualHubRoute> Routes { get; }
     }
 }

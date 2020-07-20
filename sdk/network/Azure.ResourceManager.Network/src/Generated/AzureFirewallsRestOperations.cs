@@ -158,14 +158,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewall value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewall.DeserializeAzureFirewall(document.RootElement);
-                        }
+                        value = AzureFirewall.DeserializeAzureFirewall(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,14 +189,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewall value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewall.DeserializeAzureFirewall(document.RootElement);
-                        }
+                        value = AzureFirewall.DeserializeAzureFirewall(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,14 +404,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,14 +430,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +465,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -520,14 +485,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -570,14 +528,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,14 +559,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -653,14 +597,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -686,14 +623,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AzureFirewallListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
-                        }
+                        value = AzureFirewallListResult.DeserializeAzureFirewallListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

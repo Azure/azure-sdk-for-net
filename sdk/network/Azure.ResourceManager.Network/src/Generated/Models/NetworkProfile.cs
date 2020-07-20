@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
+            ContainerNetworkInterfaces = new ChangeTrackingList<ContainerNetworkInterface>();
+            ContainerNetworkInterfaceConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of child container network interfaces. </summary>
         public IList<ContainerNetworkInterface> ContainerNetworkInterfaces { get; }
         /// <summary> List of chid container network interface configurations. </summary>
-        public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; set; }
+        public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the network profile resource. </summary>

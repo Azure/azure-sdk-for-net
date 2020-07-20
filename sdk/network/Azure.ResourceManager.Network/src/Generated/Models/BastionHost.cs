@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionHost. </summary>
         public BastionHost()
         {
+            IpConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of BastionHost. </summary>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> IP configuration of the Bastion Host resource. </summary>
-        public IList<BastionHostIPConfiguration> IpConfigurations { get; set; }
+        public IList<BastionHostIPConfiguration> IpConfigurations { get; }
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
         public string DnsName { get; set; }
         /// <summary> The provisioning state of the bastion host resource. </summary>

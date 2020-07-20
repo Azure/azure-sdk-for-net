@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateLinkService. </summary>
         public PrivateLinkService()
         {
+            LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfiguration>();
+            IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIpConfiguration>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkService. </summary>
@@ -52,9 +58,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> An array of references to the load balancer IP configurations. </summary>
-        public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; set; }
+        public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; }
         /// <summary> An array of private link service IP configurations. </summary>
-        public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; set; }
+        public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
         public IList<NetworkInterface> NetworkInterfaces { get; }
         /// <summary> The provisioning state of the private link service resource. </summary>
@@ -66,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The auto-approval list of the private link service. </summary>
         public ResourceSet AutoApproval { get; set; }
         /// <summary> The list of Fqdn. </summary>
-        public IList<string> Fqdns { get; set; }
+        public IList<string> Fqdns { get; }
         /// <summary> The alias of the private link service. </summary>
         public string Alias { get; }
         /// <summary> Whether the private link service is enabled for proxy protocol or not. </summary>

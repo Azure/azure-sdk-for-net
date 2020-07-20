@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Etag = etag;
             Priority = priority;
             RuleType = ruleType;
-            MatchConditions = matchConditions ?? new List<MatchCondition>();
+            MatchConditions = matchConditions;
             Action = action;
         }
 
