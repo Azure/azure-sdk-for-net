@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <summary>
         /// Gets the list of available private stores
         /// </summary>
+        /// <param name='useCache'>
+        /// Determines if to use cache or DB for serving this request
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,7 +77,7 @@ namespace Microsoft.Azure.Management.Marketplace
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PrivateStore>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PrivateStore>>> ListWithHttpMessagesAsync(string useCache = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -87,6 +90,7 @@ namespace Microsoft.Azure.Management.Marketplace
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("useCache", useCache);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -97,6 +101,10 @@ namespace Microsoft.Azure.Management.Marketplace
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (useCache != null)
+            {
+                _queryParameters.Add(string.Format("use-cache={0}", System.Uri.EscapeDataString(useCache)));
             }
             if (_queryParameters.Count > 0)
             {

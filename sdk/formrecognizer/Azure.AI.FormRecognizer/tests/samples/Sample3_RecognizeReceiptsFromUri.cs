@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Samples
             RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
 
             // To see the list of the supported fields returned by service and its corresponding types, consult:
-            // https://aka.ms/azsdk/python/formrecognizer/receiptfields
+            // https://aka.ms/formrecognizer/receiptfields
 
             foreach (RecognizedForm receipt in receipts)
             {

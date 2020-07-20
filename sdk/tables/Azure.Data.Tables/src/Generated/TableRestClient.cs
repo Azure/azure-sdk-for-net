@@ -227,6 +227,25 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal HttpMessage CreateDeleteRequest(string table, string requestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/Tables('", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("')", false);
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (requestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", requestId);
+            }
+            return message;
+        }
+
         /// <summary> Operation permanently deletes the specified table. </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>

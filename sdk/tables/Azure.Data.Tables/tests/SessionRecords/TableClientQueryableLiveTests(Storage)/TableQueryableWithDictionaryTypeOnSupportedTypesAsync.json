@@ -4,17 +4,18 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-1657eca07339864d8e5416f47acf4704-764311ac2035b443-00",
+        "traceparent": "00-5ba1b1df1da83b47b2a5dcec76d7aa57-71356906bfb4124a-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e052f598b055ff5644cc72fb27b25a33",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,7 +26,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:24 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
         "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtablei2hltmnh\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -34,7 +35,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "e052f598b055ff5644cc72fb27b25a33",
-        "x-ms-request-id": "20754843-b002-001b-3721-5aea7a000000",
+        "x-ms-request-id": "9b332a44-4002-002c-6f86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -49,17 +50,18 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1739",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-b7d3d339d32fca44a7dea2c198b63709-470911f4ba10cb43-00",
+        "traceparent": "00-690c137e18207f48a27e2e1903896d2b-4a369b71e33a3c45-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "8ef3e86e930b62a1d34d8d17f403833d",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -130,8 +132,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.2842864Z\u0027\u0022",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.5745953Z\u0027\u0022",
         "Location": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -140,19 +142,19 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "8ef3e86e930b62a1d34d8d17f403833d",
-        "x-ms-request-id": "2075484e-b002-001b-4121-5aea7a000000",
+        "x-ms-request-id": "9b332a51-4002-002c-7986-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtablei2hltmnh/@Element",
         "odata.type": "chrissscratch.testtablei2hltmnh",
         "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.2842864Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.5745953Z\u0027\u0022",
         "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-07-14T20:57:25.2842864Z",
+        "Timestamp": "2020-07-17T22:09:25.5745953Z",
         "DateTimeOffsetN@odata.type": "Edm.DateTime",
         "DateTimeOffsetN": "2020-01-01T01:02:00Z",
         "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -198,17 +200,18 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1737",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-ad1c042a213d2d41ae3697104a103490-c7e79e5d7ac93342-00",
+        "traceparent": "00-c7158f7776a0344e899195dfd74ef18c-b7814b3522e99247-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e0b6f030e10451f1007d7e498d865bd6",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -279,8 +282,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3263205Z\u0027\u0022",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6196336Z\u0027\u0022",
         "Location": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -289,19 +292,19 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "e0b6f030e10451f1007d7e498d865bd6",
-        "x-ms-request-id": "20754859-b002-001b-4c21-5aea7a000000",
+        "x-ms-request-id": "9b332a5d-4002-002c-0586-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtablei2hltmnh/@Element",
         "odata.type": "chrissscratch.testtablei2hltmnh",
         "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3263205Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6196336Z\u0027\u0022",
         "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-07-14T20:57:25.3263205Z",
+        "Timestamp": "2020-07-17T22:09:25.6196336Z",
         "DateTimeOffsetN@odata.type": "Edm.DateTime",
         "DateTimeOffsetN": "2020-01-01T01:03:00Z",
         "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -347,17 +350,18 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1795",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-9eff07116e0fbc498ed1a73f67586e9a-726c56617c993143-00",
+        "traceparent": "00-adf3fcf430f3f44383d94bc7cb15da9e-580097a1146a104d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "917a3c07ae66048754f00d08233e0b41",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -428,8 +432,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
         "Location": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -438,19 +442,19 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "917a3c07ae66048754f00d08233e0b41",
-        "x-ms-request-id": "20754862-b002-001b-5521-5aea7a000000",
+        "x-ms-request-id": "9b332a66-4002-002c-0e86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtablei2hltmnh/@Element",
         "odata.type": "chrissscratch.testtablei2hltmnh",
         "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
         "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-07-14T20:57:25.3683558Z",
+        "Timestamp": "2020-07-17T22:09:25.6646706Z",
         "DateTimeOffsetN@odata.type": "Edm.DateTime",
         "DateTimeOffsetN": "2020-01-01T01:04:00Z",
         "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -496,17 +500,18 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1737",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-82c204ee8d4984478b189d898717c8fa-19f421e46930e349-00",
+        "traceparent": "00-d04df456422ddb4cb1b8f451bf4b6d1e-ab8aaf5c925db648-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "36ca34497afc8d2ff6a28d8d1457d44c",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -577,8 +582,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
+        "ETag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
         "Location": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
@@ -587,19 +592,19 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "36ca34497afc8d2ff6a28d8d1457d44c",
-        "x-ms-request-id": "20754873-b002-001b-6621-5aea7a000000",
+        "x-ms-request-id": "9b332a70-4002-002c-1886-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtablei2hltmnh/@Element",
         "odata.type": "chrissscratch.testtablei2hltmnh",
         "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+        "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
         "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-07-14T20:57:25.4153949Z",
+        "Timestamp": "2020-07-17T22:09:25.7107089Z",
         "DateTimeOffsetN@odata.type": "Edm.DateTime",
         "DateTimeOffsetN": "2020-01-01T01:05:00Z",
         "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -645,14 +650,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=String%20ge%20%270003%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b810b6f1f28882d669b18b14d4e82dc2",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -661,7 +667,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:24 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -669,7 +675,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "b810b6f1f28882d669b18b14d4e82dc2",
-        "x-ms-request-id": "2075487f-b002-001b-7221-5aea7a000000",
+        "x-ms-request-id": "9b332a77-4002-002c-1f86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -678,12 +684,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -727,12 +733,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -780,14 +786,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Guid%20eq%20guid%270d391d16-97f1-4b9a-be68-4cc871f90003%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "59003d7224bb8dd90ced9ac421f9f0fd",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -796,7 +803,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -804,7 +811,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "59003d7224bb8dd90ced9ac421f9f0fd",
-        "x-ms-request-id": "2075488f-b002-001b-0221-5aea7a000000",
+        "x-ms-request-id": "9b332a8a-4002-002c-3186-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -813,12 +820,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -866,14 +873,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Int64%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6d17c01b532e57b85e48cd4bee1bb80e",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -882,7 +890,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -890,7 +898,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "6d17c01b532e57b85e48cd4bee1bb80e",
-        "x-ms-request-id": "20754894-b002-001b-0721-5aea7a000000",
+        "x-ms-request-id": "9b332a97-4002-002c-3e86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -899,12 +907,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -948,12 +956,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1001,14 +1009,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=LongPrimitive%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d61acb747b56cd90dc83ab9a5711606f",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1017,7 +1026,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1025,7 +1034,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d61acb747b56cd90dc83ab9a5711606f",
-        "x-ms-request-id": "207548af-b002-001b-2121-5aea7a000000",
+        "x-ms-request-id": "9b332abf-4002-002c-6386-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1034,12 +1043,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1083,12 +1092,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1136,14 +1145,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=LongPrimitiveN%20ge%202147483650L",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "13f88dc0c0d11f9385a9fa73578e9ef0",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1152,7 +1162,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1160,7 +1170,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "13f88dc0c0d11f9385a9fa73578e9ef0",
-        "x-ms-request-id": "207548cc-b002-001b-3e21-5aea7a000000",
+        "x-ms-request-id": "9b332adc-4002-002c-7f86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1169,12 +1179,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1218,12 +1228,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1271,14 +1281,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Double%20ge%203.03",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "554f8b3419de9fa72f4990aaa71dff4c",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1287,7 +1298,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1295,7 +1306,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "554f8b3419de9fa72f4990aaa71dff4c",
-        "x-ms-request-id": "207548ef-b002-001b-6021-5aea7a000000",
+        "x-ms-request-id": "9b332b09-4002-002c-2c86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1304,12 +1315,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1353,12 +1364,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1406,14 +1417,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=DoublePrimitive%20ge%203.03",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "618b5de7a422b43d37fb51ad801d764e",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1422,7 +1434,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1430,7 +1442,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "618b5de7a422b43d37fb51ad801d764e",
-        "x-ms-request-id": "20754909-b002-001b-7921-5aea7a000000",
+        "x-ms-request-id": "9b332b25-4002-002c-4786-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1439,12 +1451,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1488,12 +1500,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1541,14 +1553,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Int32%20ge%203",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cc66bae40bc2a690e658e4872fe87867",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1557,7 +1570,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:25 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1565,7 +1578,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "cc66bae40bc2a690e658e4872fe87867",
-        "x-ms-request-id": "20754920-b002-001b-1021-5aea7a000000",
+        "x-ms-request-id": "9b332b47-4002-002c-6886-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1574,12 +1587,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1623,12 +1636,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1676,14 +1689,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Int32N%20ge%203",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f98baea93d0390cd4e9a1de3c8f91f12",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1692,7 +1706,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1700,7 +1714,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "f98baea93d0390cd4e9a1de3c8f91f12",
-        "x-ms-request-id": "2075493f-b002-001b-2c21-5aea7a000000",
+        "x-ms-request-id": "9b332b51-4002-002c-7286-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1709,12 +1723,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1758,12 +1772,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1811,14 +1825,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ecc541d333b7dc8acce47acac0b6844e",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1827,7 +1842,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1835,7 +1850,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "ecc541d333b7dc8acce47acac0b6844e",
-        "x-ms-request-id": "2075494a-b002-001b-3721-5aea7a000000",
+        "x-ms-request-id": "9b332b61-4002-002c-0186-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1844,12 +1859,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1893,12 +1908,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -1946,14 +1961,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=DateTimeOffset%20lt%20datetime%272020-01-01T01%3A04%3A00Z%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d203ea837c92a74becd57d27edaddeed",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1962,7 +1978,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:25 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -1970,7 +1986,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d203ea837c92a74becd57d27edaddeed",
-        "x-ms-request-id": "20754979-b002-001b-6221-5aea7a000000",
+        "x-ms-request-id": "9b332b8a-4002-002c-2986-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -1979,12 +1995,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.2842864Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.5745953Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.2842864Z",
+            "Timestamp": "2020-07-17T22:09:25.5745953Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2028,12 +2044,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3263205Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6196336Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270002\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0002",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3263205Z",
+            "Timestamp": "2020-07-17T22:09:25.6196336Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:03:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2081,14 +2097,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Bool%20eq%20false",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "eeb3d1398b2375af24ae2d1ec203cf98",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2097,7 +2114,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -2105,7 +2122,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "eeb3d1398b2375af24ae2d1ec203cf98",
-        "x-ms-request-id": "2075499e-b002-001b-0721-5aea7a000000",
+        "x-ms-request-id": "9b332ba0-4002-002c-3e86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -2114,12 +2131,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.2842864Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.5745953Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.2842864Z",
+            "Timestamp": "2020-07-17T22:09:25.5745953Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2163,12 +2180,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2216,14 +2233,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=BoolPrimitive%20eq%20false",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "dd5fcf154df55780f51effe1b562ee1f",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:27 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2232,7 +2250,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -2240,7 +2258,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "dd5fcf154df55780f51effe1b562ee1f",
-        "x-ms-request-id": "207549be-b002-001b-2721-5aea7a000000",
+        "x-ms-request-id": "9b332bb5-4002-002c-5086-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -2249,12 +2267,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.2842864Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.5745953Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270001\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0001",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.2842864Z",
+            "Timestamp": "2020-07-17T22:09:25.5745953Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:02:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2298,12 +2316,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2351,14 +2369,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=Binary%20eq%20X%27010203%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ef908d069602f72b3a8eade34f2de4e9",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:27 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2367,7 +2386,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -2375,7 +2394,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "ef908d069602f72b3a8eade34f2de4e9",
-        "x-ms-request-id": "207549da-b002-001b-4321-5aea7a000000",
+        "x-ms-request-id": "9b332bd8-4002-002c-6c86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -2384,12 +2403,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2437,14 +2456,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=BinaryPrimitive%20eq%20X%27010203%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1e11e506004decf7505bf8048ccebfc1",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:27 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2453,7 +2473,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -2461,7 +2481,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "1e11e506004decf7505bf8048ccebfc1",
-        "x-ms-request-id": "207549e5-b002-001b-4e21-5aea7a000000",
+        "x-ms-request-id": "9b332be4-4002-002c-7886-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -2470,12 +2490,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2523,14 +2543,15 @@
       "RequestUri": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=%28%28%28%28%28%28%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28String%20ge%20%270003%27%29%29%20and%20%28Int64%20ge%202147483650L%29%29%20and%20%28LongPrimitive%20ge%202147483650L%29%29%20and%20%28LongPrimitiveN%20ge%202147483650L%29%29%20and%20%28Int32%20ge%203%29%29%20and%20%28Int32N%20ge%203%29%29%20and%20%28DateTimeOffset%20ge%20datetime%272020-01-01T01%3A04%3A00Z%27%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "35180dbfe0737f95a368a3679f9d08c8",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:27 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2539,7 +2560,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -2547,7 +2568,7 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "35180dbfe0737f95a368a3679f9d08c8",
-        "x-ms-request-id": "207549f1-b002-001b-5a21-5aea7a000000",
+        "x-ms-request-id": "9b332bf8-4002-002c-0c86-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -2556,12 +2577,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.3683558Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.6646706Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270003\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0003",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.3683558Z",
+            "Timestamp": "2020-07-17T22:09:25.6646706Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:04:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2605,12 +2626,12 @@
           {
             "odata.type": "chrissscratch.testtablei2hltmnh",
             "odata.id": "https://chrissscratch.table.core.windows.net/testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-07-14T20%3A57%3A25.4153949Z\u0027\u0022",
+            "odata.etag": "W/\u0022datetime\u00272020-07-17T22%3A09%3A25.7107089Z\u0027\u0022",
             "odata.editLink": "testtablei2hltmnh(PartitionKey=\u0027somPartition\u0027,RowKey=\u00270004\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "0004",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-07-14T20:57:25.4153949Z",
+            "Timestamp": "2020-07-17T22:09:25.7107089Z",
             "DateTimeOffsetN@odata.type": "Edm.DateTime",
             "DateTimeOffsetN": "2020-01-01T01:05:00Z",
             "DateTimeOffset@odata.type": "Edm.DateTime",
@@ -2660,13 +2681,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c1d0ed97a31bd84fb0c8a325b5ba4cd8-009f9ff6c20f1a42-00",
+        "traceparent": "00-72377f379d1175468f99f28e6c6b6fd3-725191563162e641-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200713.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200717.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d0db1639d05105d195a39ea79e276b6b",
-        "x-ms-date": "Tue, 14 Jul 2020 20:57:27 GMT",
+        "x-ms-date": "Fri, 17 Jul 2020 22:09:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -2675,14 +2696,14 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 14 Jul 2020 20:57:26 GMT",
+        "Date": "Fri, 17 Jul 2020 22:09:26 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "d0db1639d05105d195a39ea79e276b6b",
-        "x-ms-request-id": "20754a0a-b002-001b-7321-5aea7a000000",
+        "x-ms-request-id": "9b332c11-4002-002c-2486-5c46d5000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []

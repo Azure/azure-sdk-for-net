@@ -15,7 +15,8 @@ namespace Azure.Data.Tables.Tests
         {
             return variableName switch
             {
-                TablesTestEnvironment.PrimaryKeyEnvironmentVariableName => string.Empty,
+                TablesTestEnvironment.PrimaryStorageKeyEnvironmentVariableName => string.Empty,
+                TablesTestEnvironment.PrimaryCosmosKeyEnvironmentVariableName => string.Empty,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

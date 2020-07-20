@@ -20,6 +20,11 @@ namespace Azure.Identity
         /// </summary>
         public string TenantId { get; set; }
 
+        /// <summary>
+        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
+        /// </summary>
+        public bool AllowUnencryptedCache { get; set; }
+
         bool ITokenCacheOptions.EnablePersistentCache => true;
     }
 }

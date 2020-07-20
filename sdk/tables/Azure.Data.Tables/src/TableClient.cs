@@ -996,20 +996,15 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal ExpressionParser GetExpressionParser()
-        {
-            if (_isPremiumEndpoint)
-            {
-                //TODO: Port TableExtensionExpressionParser
-                throw new NotImplementedException();
-            }
-            else
-            {
-                return new ExpressionParser();
-            }
-        }
+        /// <summary>
+        /// Creates an Odata filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="TableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expresssion.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
-        internal string Bind(Expression expression)
+        internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
@@ -1022,7 +1017,7 @@ namespace Azure.Data.Tables
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
             // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
-            ExpressionParser parser = GetExpressionParser();
+            ExpressionParser parser = new ExpressionParser();
             parser.Translate(normalizedExpression);
 
             // Return the FilterString.

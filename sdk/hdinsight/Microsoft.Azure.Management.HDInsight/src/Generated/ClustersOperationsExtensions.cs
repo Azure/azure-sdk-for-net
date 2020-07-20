@@ -268,6 +268,49 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
+            /// Updates the Autoscale Configuration for HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the update autoscale configuration operation.
+            /// </param>
+            public static void UpdateAutoScaleConfiguration(this IClustersOperations operations, string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters)
+            {
+                operations.UpdateAutoScaleConfigurationAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Autoscale Configuration for HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the update autoscale configuration operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateAutoScaleConfigurationAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateAutoScaleConfigurationWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all the HDInsight clusters under the subscription.
             /// </summary>
             /// <param name='operations'>
@@ -588,6 +631,49 @@ namespace Microsoft.Azure.Management.HDInsight
             public static async Task BeginResizeAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginResizeWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Updates the Autoscale Configuration for HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the update autoscale configuration operation.
+            /// </param>
+            public static void BeginUpdateAutoScaleConfiguration(this IClustersOperations operations, string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters)
+            {
+                operations.BeginUpdateAutoScaleConfigurationAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Autoscale Configuration for HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the update autoscale configuration operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUpdateAutoScaleConfigurationAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, AutoscaleConfigurationUpdateParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUpdateAutoScaleConfigurationWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
