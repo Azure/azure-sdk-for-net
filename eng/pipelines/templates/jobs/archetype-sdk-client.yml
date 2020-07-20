@@ -47,6 +47,7 @@ jobs:
       - template: ../steps/arrange-artifacts.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
+          ArtifactsDirectory: $(Build.ArtifactStagingDirectory)
       - task: PublishPipelineArtifact@1
         condition: succeeded()
         inputs:
