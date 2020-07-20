@@ -50,6 +50,7 @@ jobs:
           LibType: 'client'
       - template: ../steps/arrange-artifacts.yml
         parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
           Artifacts: ${{ parameters.Artifacts }}
           ArtifactsDirectory: $(Build.ArtifactStagingDirectory)
       - task: PublishPipelineArtifact@1
