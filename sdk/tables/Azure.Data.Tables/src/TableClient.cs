@@ -993,6 +993,14 @@ namespace Azure.Data.Tables
             }
         }
 
+        /// <summary>
+        /// Creates an Odata filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="TableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expresssion.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
+
         internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
