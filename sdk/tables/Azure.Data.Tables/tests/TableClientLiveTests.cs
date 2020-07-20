@@ -90,7 +90,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task CreatedDictionaryEntitiesCanBeQueriedWithFilters()
+        public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults;
             List<DynamicTableEntity> entitiesToCreate = CreateDictionaryTableEntities(PartitionKeyValue, 20);
