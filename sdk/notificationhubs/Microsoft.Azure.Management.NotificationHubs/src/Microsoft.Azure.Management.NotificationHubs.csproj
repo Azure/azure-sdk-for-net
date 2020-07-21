@@ -12,9 +12,8 @@
         <PackageReleaseNotes>
             <![CDATA[
                 Updating the Notification Hubs Management SDK with:   
-					1) Adding support for authorization rules for both namespaces and notification hubs
-					2) Fixing bugs in CheckNamespaceAvailability
-					3) Adding more documentation for existing operations
+					1) Adding Patch operation support for Hubs
+					2) Adding documentation for existing operations
             ]]>
         </PackageReleaseNotes>
 	</PropertyGroup>
