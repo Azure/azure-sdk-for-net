@@ -183,7 +183,7 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         /// <param name="client">The <see cref="SearchIndexerClient"/> to use for requests.</param>
         /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
-        /// <param name="timeout">The amount of time before being canceled. The default is 1 minute.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 10 minutes.</param>
         /// <returns>A <see cref="Task"/> to await.</returns>
         protected async Task WaitForIndexingAsync(
             SearchIndexerClient client,
@@ -191,7 +191,9 @@ namespace Azure.Search.Documents.Tests
             TimeSpan? timeout = null)
         {
             TimeSpan delay = TimeSpan.FromSeconds(10);
-            timeout ??= TimeSpan.FromMinutes(5);
+            TimeSpan maxDelay = TimeSpan.FromMinutes(1);
+
+            timeout ??= TimeSpan.FromMinutes(10);
 
             using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
 
@@ -231,6 +233,9 @@ namespace Azure.Search.Documents.Tests
 
                     Assert.Fail(sb.ToString());
                 }
+
+                // Exponentially increase the delay to mitigate server throttling.
+                delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
             }
         }
     }
