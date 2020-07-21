@@ -74,9 +74,8 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     // response.RequestMessage.Headers.IfMatch.Count > 0 is true for UpdateEntity scenario
                     throw new ServiceBusException(
-                        false,
-                        "The passed in entity was not up to date. Call the relevant Get method before again before attempting to update the entity.",
-                        reason: ServiceBusException.FailureReason.ResourceNotUpToDate,
+                        true,
+                        ex.Message,
                         innerException: ex);
                 }
 

@@ -143,7 +143,6 @@ namespace Azure.Messaging.ServiceBus
             SessionLockLost = 11,
             Unauthorized = 12,
             MessagingEntityAlreadyExists = 13,
-            ResourceNotUpToDate = 14,
         }
     }
     public partial class ServiceBusMessage
@@ -700,23 +699,13 @@ namespace Azure.Messaging.ServiceBus.Management
         public static bool operator ==(Azure.Messaging.ServiceBus.Management.RuleProperties left, Azure.Messaging.ServiceBus.Management.RuleProperties right) { throw null; }
         public static bool operator !=(Azure.Messaging.ServiceBus.Management.RuleProperties left, Azure.Messaging.ServiceBus.Management.RuleProperties right) { throw null; }
     }
-    public partial class ServiceBusAdministrationClientOptions : Azure.Core.ClientOptions
-    {
-        public ServiceBusAdministrationClientOptions() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
-    }
     public partial class ServiceBusManagementClient
     {
         protected ServiceBusManagementClient() { }
         public ServiceBusManagementClient(string connectionString) { }
         public ServiceBusManagementClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
-        public ServiceBusManagementClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.Management.ServiceBusAdministrationClientOptions options) { }
-        public ServiceBusManagementClient(string connectionString, Azure.Messaging.ServiceBus.Management.ServiceBusAdministrationClientOptions options) { }
+        public ServiceBusManagementClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.Management.ServiceBusManagementClientOptions options) { }
+        public ServiceBusManagementClient(string connectionString, Azure.Messaging.ServiceBus.Management.ServiceBusManagementClientOptions options) { }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.QueueProperties>> CreateQueueAsync(Azure.Messaging.ServiceBus.Management.CreateQueueOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.QueueProperties>> CreateQueueAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.RuleProperties>> CreateRuleAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.Management.CreateRuleOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -752,6 +741,16 @@ namespace Azure.Messaging.ServiceBus.Management
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.RuleProperties>> UpdateRuleAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.Management.RuleProperties rule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.SubscriptionProperties>> UpdateSubscriptionAsync(Azure.Messaging.ServiceBus.Management.SubscriptionProperties subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Management.TopicProperties>> UpdateTopicAsync(Azure.Messaging.ServiceBus.Management.TopicProperties topic, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ServiceBusManagementClientOptions : Azure.Core.ClientOptions
+    {
+        public ServiceBusManagementClientOptions() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public partial class SharedAccessAuthorizationRule : Azure.Messaging.ServiceBus.Management.AuthorizationRule
     {
