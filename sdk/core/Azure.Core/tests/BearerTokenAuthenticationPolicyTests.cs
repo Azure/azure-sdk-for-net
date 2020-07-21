@@ -183,7 +183,14 @@ namespace Azure.Core.Tests
             await Task.WhenAll(firstRequestTask, secondRequestTask);
             await Task.Delay(100);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/failed")));
+            responseMre.Reset();
+            requestMre.Reset();
+
+            var failedTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/failed"));
+            requestMre.Wait();
+            responseMre.Set();
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await failedTask);
 
             responseMre.Reset();
             requestMre.Reset();
@@ -281,7 +288,9 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/AlmostExpired"));
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AlmostExpired"));
 
+            requestMre.Reset();
             responseMre.Set();
+            requestMre.Wait();
 
             Assert.AreEqual(2, callCount);
 
@@ -448,7 +457,7 @@ namespace Azure.Core.Tests
                 if (callCount > 0)
                 {
                     credentialMre.Set();
-                    getTokenRequestTimes.Add(DateTimeOffset.Now);
+                    getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
                     throw new InvalidOperationException("Error");
                 }
 

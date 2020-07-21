@@ -140,32 +140,38 @@ namespace Azure.Core.Pipeline
             {
                 lock (_syncObj)
                 {
-                    CacheState cacheState = GetCacheState(_infoTcs, _backgroundUpdateTcs);
-                    switch (cacheState)
+                    if (_infoTcs == null)
                     {
-                        case CacheState.NoValueCached:
-                            _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
-                            _backgroundUpdateTcs = default;
-                            return (_infoTcs, _backgroundUpdateTcs, true);
-
-                        case CacheState.ValueUpdateInProgress:
-                            _backgroundUpdateTcs = default;
-                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.ValueUpdateInProgress} state"), _backgroundUpdateTcs, false);
-
-                        case CacheState.HasValue:
-                            if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion) {
-                                _infoTcs = _backgroundUpdateTcs;
-                                _backgroundUpdateTcs = default;
-                            }
-                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.HasValue} state"), _backgroundUpdateTcs, false);
-
-                        case CacheState.ValueIsAboutToExpire:
-                            _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
-                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.ValueIsAboutToExpire} state"), _backgroundUpdateTcs, true);
-
-                        default:
-                            throw new InvalidOperationException("Unexpected value");
+                        _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
+                        return (_infoTcs, default, true);
                     }
+
+                    if (!_infoTcs.Task.IsCompleted)
+                    {
+                        _backgroundUpdateTcs = default;
+                        return (_infoTcs, _backgroundUpdateTcs, false);
+                    }
+
+                    DateTimeOffset now = DateTimeOffset.UtcNow;
+                    if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
+                    {
+                        _infoTcs = _backgroundUpdateTcs;
+                        _backgroundUpdateTcs = default;
+                    }
+
+                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
+                    {
+                        _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
+                        return (_infoTcs, default, true);
+                    }
+
+                    if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
+                    {
+                        _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
+                        return (_infoTcs, _backgroundUpdateTcs, true);
+                    }
+
+                    return (_infoTcs, default, false);
                 }
             }
 
@@ -192,40 +198,6 @@ namespace Azure.Core.Pipeline
                 return new HeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
             }
 
-            private static CacheState GetCacheState(in TaskCompletionSource<HeaderValueInfo>? valueTcs, in TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs)
-            {
-                if (backgroundUpdateTcs != null)
-                {
-                    return backgroundUpdateTcs.Task.IsCompleted
-                        ? GetCacheStateFromHeaderValueInfo(backgroundUpdateTcs.Task.Result)
-                        : CacheState.HasValue;
-                }
-
-                if (valueTcs == null)
-                {
-                    return CacheState.NoValueCached;
-                }
-
-                if (!valueTcs.Task.IsCompleted)
-                {
-                    return CacheState.ValueUpdateInProgress;
-                }
-
-                return valueTcs.Task.Status == TaskStatus.RanToCompletion
-                    ? GetCacheStateFromHeaderValueInfo(valueTcs.Task.Result)
-                    : CacheState.NoValueCached;
-            }
-
-            private static CacheState GetCacheStateFromHeaderValueInfo(HeaderValueInfo info)
-            {
-                DateTimeOffset now = DateTimeOffset.UtcNow;
-                return now >= info.ExpiresOn
-                    ? CacheState.NoValueCached
-                    : now >= info.RefreshOn
-                        ? CacheState.ValueIsAboutToExpire
-                        : CacheState.HasValue;
-            }
-
             private readonly struct HeaderValueInfo
             {
                 public string HeaderValue { get; }
@@ -238,14 +210,6 @@ namespace Azure.Core.Pipeline
                     ExpiresOn = expiresOn;
                     RefreshOn = refreshOn;
                 }
-            }
-
-            private enum CacheState
-            {
-                NoValueCached,
-                ValueUpdateInProgress,
-                HasValue,
-                ValueIsAboutToExpire,
             }
         }
     }
