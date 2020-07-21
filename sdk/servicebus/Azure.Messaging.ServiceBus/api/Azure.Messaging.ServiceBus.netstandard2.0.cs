@@ -601,15 +601,6 @@ namespace Azure.Messaging.ServiceBus.Management
         public static bool operator !=(Azure.Messaging.ServiceBus.Management.FalseRuleFilter left, Azure.Messaging.ServiceBus.Management.FalseRuleFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MessageCountDetails
-    {
-        public MessageCountDetails() { }
-        public long ActiveMessageCount { get { throw null; } }
-        public long DeadLetterMessageCount { get { throw null; } }
-        public long ScheduledMessageCount { get { throw null; } }
-        public long TransferDeadLetterMessageCount { get { throw null; } }
-        public long TransferMessageCount { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessagingSku : System.IEquatable<Azure.Messaging.ServiceBus.Management.MessagingSku>
     {
@@ -669,11 +660,15 @@ namespace Azure.Messaging.ServiceBus.Management
     {
         internal QueueRuntimeProperties() { }
         public System.DateTimeOffset AccessedAt { get { throw null; } }
-        public Azure.Messaging.ServiceBus.Management.MessageCountDetails CountDetails { get { throw null; } }
+        public long ActiveMessageCount { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
-        public long MessageCount { get { throw null; } }
+        public long DeadLetterMessageCount { get { throw null; } }
         public string Name { get { throw null; } }
+        public long ScheduledMessageCount { get { throw null; } }
         public long SizeInBytes { get { throw null; } }
+        public long TotalMessageCount { get { throw null; } }
+        public long TransferDeadLetterMessageCount { get { throw null; } }
+        public long TransferMessageCount { get { throw null; } }
         public System.DateTimeOffset UpdatedAt { get { throw null; } }
     }
     public abstract partial class RuleAction : System.IEquatable<Azure.Messaging.ServiceBus.Management.RuleAction>
@@ -825,11 +820,15 @@ namespace Azure.Messaging.ServiceBus.Management
     {
         internal SubscriptionRuntimeProperties() { }
         public System.DateTimeOffset AccessedAt { get { throw null; } }
-        public Azure.Messaging.ServiceBus.Management.MessageCountDetails CountDetails { get { throw null; } }
+        public long ActiveMessageCount { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
-        public long MessageCount { get { throw null; } }
+        public long DeadLetterMessageCount { get { throw null; } }
+        public long ScheduledMessageCount { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public string TopicName { get { throw null; } }
+        public long TotalMessageCount { get { throw null; } }
+        public long TransferDeadLetterMessageCount { get { throw null; } }
+        public long TransferMessageCount { get { throw null; } }
         public System.DateTimeOffset UpdatedAt { get { throw null; } }
     }
     public partial class TopicProperties : System.IEquatable<Azure.Messaging.ServiceBus.Management.TopicProperties>
