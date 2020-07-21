@@ -197,7 +197,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
     RecognizedFormCollection receipts = await client.StartRecognizeReceiptsAsync(stream).WaitForCompletionAsync();
 
     // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+    // https://aka.ms/formrecognizer/receiptfields
 
     foreach (RecognizedForm receipt in receipts)
     {
@@ -481,7 +481,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [formreco_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src
 [formreco_docs]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/
-[formreco_refdocs]: https://aka.ms/azsdk-net-formrecognizer-ref-docs
+[formreco_refdocs]: https://aka.ms/azsdk/net/docs/ref/formrecognizer
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview

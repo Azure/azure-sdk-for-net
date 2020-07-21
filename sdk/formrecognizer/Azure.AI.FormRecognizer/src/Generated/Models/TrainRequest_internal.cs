@@ -25,17 +25,6 @@ namespace Azure.AI.FormRecognizer.Models
             Source = source;
         }
 
-        /// <summary> Initializes a new instance of TrainRequest_internal. </summary>
-        /// <param name="source"> Source path containing the training documents. </param>
-        /// <param name="sourceFilter"> Filter to apply to the documents in the source path for training. </param>
-        /// <param name="useLabelFile"> Use label file for training a model. </param>
-        internal TrainRequest_internal(string source, TrainingFileFilter sourceFilter, bool? useLabelFile)
-        {
-            Source = source;
-            SourceFilter = sourceFilter;
-            UseLabelFile = useLabelFile;
-        }
-
         /// <summary> Source path containing the training documents. </summary>
         public string Source { get; }
         /// <summary> Filter to apply to the documents in the source path for training. </summary>

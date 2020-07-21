@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal TriggerRunsQueryResponse(IReadOnlyList<TriggerRun> value, string continuationToken)
         {
-            Value = value ?? new List<TriggerRun>();
+            Value = value;
             ContinuationToken = continuationToken;
         }
 

@@ -203,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 Assert.True(plugin.WasCalled);
                 var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentCalls = 1
+                    MaxConcurrentSessions = 1
                 });
                 processor.ProcessErrorAsync += ExceptionHandler;
                 var tcs = new TaskCompletionSource<bool>();

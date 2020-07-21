@@ -17,22 +17,22 @@ namespace Azure.Identity
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure Public Cloud.
         /// </summary>
-        public static readonly Uri AzureCloud = new Uri(AzureCloudHostUrl);
+        public static Uri AzureCloud { get; } = new Uri(AzureCloudHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure China Cloud.
         /// </summary>
-        public static readonly Uri AzureChinaCloud = new Uri(AzureChinaCloudHostUrl);
+        public static Uri AzureChinaCloud { get; } = new Uri(AzureChinaCloudHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure German Cloud.
         /// </summary>
-        public static readonly Uri AzureGermanCloud = new Uri(AzureGermanCloudHostUrl);
+        public static Uri AzureGermanCloud { get; } = new Uri(AzureGermanCloudHostUrl);
 
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure US Government Cloud.
         /// </summary>
-        public static readonly Uri AzureUSGovernment = new Uri(AzureUSGovernmentHostUrl);
+        public static Uri AzureUSGovernment { get; } = new Uri(AzureUSGovernmentHostUrl);
 
         internal static Uri GetDefault()
         {

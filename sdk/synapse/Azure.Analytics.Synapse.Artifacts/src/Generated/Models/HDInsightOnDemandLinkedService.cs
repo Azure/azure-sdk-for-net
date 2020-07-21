@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -59,6 +60,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             HostSubscriptionId = hostSubscriptionId;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
+            AdditionalLinkedServiceNames = new ChangeTrackingList<LinkedServiceReference>();
+            ScriptActions = new ChangeTrackingList<ScriptAction>();
             Type = "HDInsightOnDemand";
         }
 
@@ -169,7 +172,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The password to SSH remotely connect cluster’s node (for Linux). </summary>
         public SecretBase ClusterSshPassword { get; set; }
         /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
-        public IList<LinkedServiceReference> AdditionalLinkedServiceNames { get; set; }
+        public IList<LinkedServiceReference> AdditionalLinkedServiceNames { get; }
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
         public LinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
@@ -201,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </summary>
         public object ZookeeperNodeSize { get; set; }
         /// <summary> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
-        public IList<ScriptAction> ScriptActions { get; set; }
+        public IList<ScriptAction> ScriptActions { get; }
         /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
         public object VirtualNetworkId { get; set; }
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>

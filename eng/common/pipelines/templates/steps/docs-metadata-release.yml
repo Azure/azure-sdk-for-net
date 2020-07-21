@@ -12,6 +12,8 @@ parameters:
   ArtifactName: ''
   Language: ''
   DocRepoDestinationPath: '' #usually docs-ref-services/
+  GHReviewersVariable: '' 
+  GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
 
 steps:
 - pwsh: |
@@ -56,3 +58,5 @@ steps:
     BaseBranchName: smoke-test
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+    GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
+    GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 

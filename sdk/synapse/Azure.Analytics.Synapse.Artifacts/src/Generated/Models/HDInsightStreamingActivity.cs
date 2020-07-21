@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -48,11 +49,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(filePaths));
             }
 
+            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            Arguments = new ChangeTrackingList<object>();
             Mapper = mapper;
             Reducer = reducer;
             Input = input;
             Output = output;
             FilePaths = filePaths.ToList();
+            CommandEnvironment = new ChangeTrackingList<object>();
+            Defines = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightStreaming";
         }
 
@@ -86,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Reducer = reducer;
             Input = input;
             Output = output;
-            FilePaths = filePaths ?? new List<object>();
+            FilePaths = filePaths;
             FileLinkedService = fileLinkedService;
             Combiner = combiner;
             CommandEnvironment = commandEnvironment;
@@ -95,9 +100,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; set; }
+        public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>
-        public IList<object> Arguments { get; set; }
+        public IList<object> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
         /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
@@ -115,8 +120,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
         public object Combiner { get; set; }
         /// <summary> Command line environment values. </summary>
-        public IList<object> CommandEnvironment { get; set; }
+        public IList<object> CommandEnvironment { get; }
         /// <summary> Allows user to specify defines for streaming job request. </summary>
-        public IDictionary<string, object> Defines { get; set; }
+        public IDictionary<string, object> Defines { get; }
     }
 }

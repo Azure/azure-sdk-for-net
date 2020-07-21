@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -28,6 +29,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Expression = expression;
+            IfTrueActivities = new ChangeTrackingList<Activity>();
+            IfFalseActivities = new ChangeTrackingList<Activity>();
             Type = "IfCondition";
         }
 
@@ -52,8 +55,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </summary>
         public Expression Expression { get; set; }
         /// <summary> List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any action. </summary>
-        public IList<Activity> IfTrueActivities { get; set; }
+        public IList<Activity> IfTrueActivities { get; }
         /// <summary> List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any action. </summary>
-        public IList<Activity> IfFalseActivities { get; set; }
+        public IList<Activity> IfFalseActivities { get; }
     }
 }

@@ -132,7 +132,7 @@ namespace Azure.Core.TestFramework
                         throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");
                     }
 
-                    _credential = (TokenCredential) Activator.CreateInstance(
+                    _credential = (TokenCredential)Activator.CreateInstance(
                         type,
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
@@ -173,8 +173,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Returns an environment variable value.
-        /// Throws when variable is not found.
+        /// Returns an environment variable value or null when variable is not found.
         /// </summary>
         protected string GetOptionalVariable(string name)
         {

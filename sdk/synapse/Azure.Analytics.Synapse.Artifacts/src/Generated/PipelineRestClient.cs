@@ -72,14 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
-                        }
+                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,14 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
-                        }
+                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,14 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        }
+                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -199,14 +178,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        }
+                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -251,14 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        }
+                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -287,14 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineResource.DeserializePipelineResource(document.RootElement);
-                        }
+                        value = PipelineResource.DeserializePipelineResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -424,14 +382,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         CreateRunResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
-                        }
+                        value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -461,14 +412,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         CreateRunResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
-                        }
+                        value = CreateRunResponse.DeserializeCreateRunResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -506,14 +450,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
-                        }
+                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -539,14 +476,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
-                        }
+                        value = PipelineListResponse.DeserializePipelineListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

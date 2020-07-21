@@ -34,8 +34,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
-            BoundingBox = boundingBox.ToArray();
-            Words = words.ToArray();
+            BoundingBox = boundingBox.ToList();
+            Words = words.ToList();
         }
 
         /// <summary> Initializes a new instance of TextLine_internal. </summary>
@@ -46,9 +46,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal TextLine_internal(string text, IReadOnlyList<float> boundingBox, Language_internal? language, IReadOnlyList<TextWord_internal> words)
         {
             Text = text;
-            BoundingBox = boundingBox ?? new List<float>();
+            BoundingBox = boundingBox;
             Language = language;
-            Words = words ?? new List<TextWord_internal>();
+            Words = words;
         }
 
         /// <summary> The text content of the line. </summary>
