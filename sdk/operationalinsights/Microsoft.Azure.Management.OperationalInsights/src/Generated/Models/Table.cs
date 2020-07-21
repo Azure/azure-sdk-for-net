@@ -13,28 +13,24 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Linked storage accounts top level resource container.
+    /// Workspace data table definition.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class LinkedStorageAccountsResource : ProxyResource
+    public partial class Table : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the LinkedStorageAccountsResource
-        /// class.
+        /// Initializes a new instance of the Table class.
         /// </summary>
-        public LinkedStorageAccountsResource()
+        public Table()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LinkedStorageAccountsResource
-        /// class.
+        /// Initializes a new instance of the Table class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -42,16 +38,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="dataSourceType">Linked storage accounts type. Possible
-        /// values include: 'CustomLogs', 'AzureWatson', 'Query', 'Ingestion',
-        /// 'Alerts'</param>
-        /// <param name="storageAccountIds">Linked storage accounts resources
-        /// ids.</param>
-        public LinkedStorageAccountsResource(string id = default(string), string name = default(string), string type = default(string), DataSourceType? dataSourceType = default(DataSourceType?), IList<string> storageAccountIds = default(IList<string>))
+        /// <param name="retentionInDays">The data table data retention in
+        /// days, between 30 and 730. Setting this property to null will
+        /// default to the workspace retention.</param>
+        public Table(string id = default(string), string name = default(string), string type = default(string), int? retentionInDays = default(int?))
             : base(id, name, type)
         {
-            DataSourceType = dataSourceType;
-            StorageAccountIds = storageAccountIds;
+            RetentionInDays = retentionInDays;
             CustomInit();
         }
 
@@ -61,17 +54,29 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets linked storage accounts type. Possible values include:
-        /// 'CustomLogs', 'AzureWatson', 'Query', 'Ingestion', 'Alerts'
+        /// Gets or sets the data table data retention in days, between 30 and
+        /// 730. Setting this property to null will default to the workspace
+        /// retention.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dataSourceType")]
-        public DataSourceType? DataSourceType { get; private set; }
+        [JsonProperty(PropertyName = "properties.retentionInDays")]
+        public int? RetentionInDays { get; set; }
 
         /// <summary>
-        /// Gets or sets linked storage accounts resources ids.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountIds")]
-        public IList<string> StorageAccountIds { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RetentionInDays > 730)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RetentionInDays", 730);
+            }
+            if (RetentionInDays < 30)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RetentionInDays", 30);
+            }
+        }
     }
 }

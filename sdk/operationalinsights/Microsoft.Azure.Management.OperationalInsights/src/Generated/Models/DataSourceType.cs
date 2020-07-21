@@ -24,7 +24,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         [EnumMember(Value = "CustomLogs")]
         CustomLogs,
         [EnumMember(Value = "AzureWatson")]
-        AzureWatson
+        AzureWatson,
+        [EnumMember(Value = "Query")]
+        Query,
+        [EnumMember(Value = "Ingestion")]
+        Ingestion,
+        [EnumMember(Value = "Alerts")]
+        Alerts
     }
     internal static class DataSourceTypeEnumExtension
     {
@@ -41,6 +47,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
                     return "CustomLogs";
                 case DataSourceType.AzureWatson:
                     return "AzureWatson";
+                case DataSourceType.Query:
+                    return "Query";
+                case DataSourceType.Ingestion:
+                    return "Ingestion";
+                case DataSourceType.Alerts:
+                    return "Alerts";
             }
             return null;
         }
@@ -53,6 +65,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
                     return DataSourceType.CustomLogs;
                 case "AzureWatson":
                     return DataSourceType.AzureWatson;
+                case "Query":
+                    return DataSourceType.Query;
+                case "Ingestion":
+                    return DataSourceType.Ingestion;
+                case "Alerts":
+                    return DataSourceType.Alerts;
             }
             return null;
         }
