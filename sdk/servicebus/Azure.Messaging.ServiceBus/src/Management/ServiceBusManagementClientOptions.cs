@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Management
     ///   The set of options that can be specified when creating an <see cref="ServiceBusManagementClient" />
     ///   to configure its behavior.
     /// </summary>
-    public class ServiceBusAdministrationClientOptions : ClientOptions
+    public class ServiceBusManagementClientOptions : ClientOptions
     {
         /// <summary>
         ///   Determines whether the specified <see cref="object" /> is equal to this instance.

@@ -54,8 +54,6 @@ namespace Azure.Messaging.ServiceBus.Management
             }
         }
 
-        internal string Etag { get; set; }
-
         /// <summary>
         /// Name of the queue relative to the namespace base address.
         /// </summary>

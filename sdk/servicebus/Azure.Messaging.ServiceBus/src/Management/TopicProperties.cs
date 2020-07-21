@@ -45,8 +45,6 @@ namespace Azure.Messaging.ServiceBus.Management
             }
         }
 
-        internal string Etag { get; set; }
-
         /// <summary>
         /// The default time to live value for the messages. This is the duration after which the message expires, starting from when
         /// the message is sent to Service Bus. </summary>

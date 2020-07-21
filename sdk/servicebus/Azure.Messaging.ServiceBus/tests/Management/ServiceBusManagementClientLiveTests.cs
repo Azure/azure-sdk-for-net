@@ -488,17 +488,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Assert.That(
                   async () =>
-                  await client.UpdateQueueAsync(new QueueProperties("NonExistingPath") { Etag = "*" }),
+                  await client.UpdateQueueAsync(new QueueProperties("NonExistingPath")),
                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
-                await client.UpdateTopicAsync(new TopicProperties("NonExistingPath") { Etag = "*" }),
+                await client.UpdateTopicAsync(new TopicProperties("NonExistingPath")),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
 
             Assert.That(
                 async () =>
-                await client.UpdateSubscriptionAsync(new SubscriptionProperties("NonExistingTopic", "NonExistingPath") { Etag = "*" }),
+                await client.UpdateSubscriptionAsync(new SubscriptionProperties("NonExistingTopic", "NonExistingPath")),
                 Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
 
             Assert.That(
@@ -703,59 +703,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);
-        }
-
-        [Test]
-        public async Task GetRequiredBeforeUpdateQueue()
-        {
-            var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
-            await client.CreateQueueAsync(queueName);
-            QueueProperties firstGet = await client.GetQueueAsync(queueName);
-            firstGet.EnableBatchedOperations = false;
-            firstGet.Status = EntityStatus.ReceiveDisabled;
-            firstGet.MaxDeliveryCount = 20;
-            QueueProperties firstUpdate = await client.UpdateQueueAsync(firstGet);
-            Assert.AreEqual(firstGet, firstUpdate);
-            firstUpdate.EnableBatchedOperations = true;
-            Assert.That(
-                async () => await client.UpdateQueueAsync(firstUpdate),
-                Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(
-                async () => await client.UpdateQueueAsync(firstGet),
-                Throws.InstanceOf<ServiceBusException>().And
-                .Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ResourceNotUpToDate));
-            QueueProperties secondGet = await client.GetQueueAsync(queueName);
-            secondGet.EnableBatchedOperations = true;
-            secondGet.LockDuration = secondGet.LockDuration.Add(TimeSpan.FromMinutes(1));
-            QueueProperties secondUpdate = await client.UpdateQueueAsync(secondGet);
-            Assert.AreEqual(secondGet, secondUpdate);
-        }
-
-        [Test]
-        public async Task GetRequiredBeforeUpdateTopic()
-        {
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
-            await client.CreateTopicAsync(topicName);
-            TopicProperties firstGet = await client.GetTopicAsync(topicName);
-            firstGet.EnableBatchedOperations = false;
-            firstGet.Status = EntityStatus.Disabled;
-            TopicProperties firstUpdate = await client.UpdateTopicAsync(firstGet);
-            Assert.AreEqual(firstGet, firstUpdate);
-            firstUpdate.EnableBatchedOperations = true;
-            Assert.That(
-                async () => await client.UpdateTopicAsync(firstUpdate),
-                Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(
-                async () => await client.UpdateTopicAsync(firstGet),
-                Throws.InstanceOf<ServiceBusException>().And
-                .Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ResourceNotUpToDate));
-            TopicProperties secondGet = await client.GetTopicAsync(topicName);
-            secondGet.EnableBatchedOperations = true;
-            secondGet.DefaultMessageTimeToLive = TimeSpan.FromMinutes(1);
-            TopicProperties secondUpdate = await client.UpdateTopicAsync(secondGet);
-            Assert.AreEqual(secondGet, secondUpdate);
         }
     }
 }

@@ -56,8 +56,6 @@ namespace Azure.Messaging.ServiceBus.Management
             Name = options.Name;
         }
 
-        internal string Etag { get; set; }
-
         /// <summary>
         /// Gets or sets the filter expression used to match messages.
         /// </summary>

@@ -195,8 +195,7 @@ namespace Azure.Messaging.ServiceBus.Management
             bool isUpdate,
             string forwardTo,
             string fwdDeadLetterTo,
-            CancellationToken cancellationToken,
-            string etag = default)
+            CancellationToken cancellationToken)
         {
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
@@ -216,7 +215,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             if (isUpdate)
             {
-                request.Headers.Add("If-Match", etag);
+                request.Headers.Add("If-Match", "*");
             }
 
             var credential = (ServiceBusTokenCredential)_tokenCredential;

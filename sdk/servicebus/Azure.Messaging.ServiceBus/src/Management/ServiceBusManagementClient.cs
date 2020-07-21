@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Management
         ///
         /// <param name="connectionString">Namespace connection string.</param>
         public ServiceBusManagementClient(string connectionString)
-            : this(connectionString, new ServiceBusAdministrationClientOptions())
+            : this(connectionString, new ServiceBusManagementClientOptions())
         {
         }
 
@@ -70,10 +70,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <param name="options"></param>
         public ServiceBusManagementClient(
             string connectionString,
-            ServiceBusAdministrationClientOptions options)
+            ServiceBusManagementClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            options ??= new ServiceBusAdministrationClientOptions();
+            options ??= new ServiceBusManagementClientOptions();
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public ServiceBusManagementClient(
             string fullyQualifiedNamespace,
             TokenCredential credential)
-            : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
+            : this(fullyQualifiedNamespace, credential, new ServiceBusManagementClientOptions())
         {
         }
 
@@ -128,12 +128,12 @@ namespace Azure.Messaging.ServiceBus.Management
         public ServiceBusManagementClient(
             string fullyQualifiedNamespace,
             TokenCredential credential,
-            ServiceBusAdministrationClientOptions options)
+            ServiceBusManagementClientOptions options)
         {
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new ServiceBusAdministrationClientOptions();
+            options ??= new ServiceBusManagementClientOptions();
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
 
             switch (credential)
@@ -310,8 +310,7 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             QueueProperties properties = QueuePropertiesExtensions.ParseFromContent(result);
-            response.Headers.TryGetValue("Etag", out string etag);
-            properties.Etag = etag;
+
             return Response.FromValue(properties, response);
         }
 
@@ -339,8 +338,7 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             TopicProperties properties = TopicPropertiesExtensions.ParseFromContent(result);
-            response.Headers.TryGetValue("Etag", out string etag);
-            properties.Etag = etag;
+
             return Response.FromValue(properties, response);
         }
 
@@ -371,8 +369,7 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             SubscriptionProperties properties = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
-            response.Headers.TryGetValue("Etag", out string etag);
-            properties.Etag = etag;
+
             return Response.FromValue(properties, response);
         }
 
@@ -408,8 +405,7 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             RuleProperties rule = RuleDescriptionExtensions.ParseFromContent(result);
-            response.Headers.TryGetValue("Etag", out string etag);
-            rule.Etag = etag;
+
             return Response.FromValue(rule, response);
         }
 
@@ -958,10 +954,7 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             queue = queue ?? throw new ArgumentNullException(nameof(queue));
-            if (queue.Etag == null)
-            {
-                throw new InvalidOperationException("Call GetQueueAsync before attempting to update the queue.");
-            }
+
             queue.NormalizeDescription(_fullyQualifiedNamespace);
             var atomRequest = queue.Serialize().ToString();
 
@@ -971,8 +964,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 true,
                 queue.ForwardTo,
                 queue.ForwardDeadLetteredMessagesTo,
-                cancellationToken,
-                queue.Etag).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
 
@@ -999,10 +991,7 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             topic = topic ?? throw new ArgumentNullException(nameof(topic));
-            if (topic.Etag == null)
-            {
-                throw new InvalidOperationException("Call GetTopicAsync before attempting to update the subscription.");
-            }
+
             var atomRequest = topic.Serialize().ToString();
 
             Response response = await _httpRequestAndResponse.PutEntityAsync(
@@ -1011,8 +1000,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 true,
                 forwardTo: null,
                 fwdDeadLetterTo: null,
-                cancellationToken,
-                topic.Etag).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
 
@@ -1048,9 +1036,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 true,
                 subscription.ForwardTo,
                 subscription.ForwardDeadLetteredMessagesTo,
-                cancellationToken,
-                // etag not currently supported by service for subscriptions
-                "*").ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
 
@@ -1091,9 +1077,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 true,
                 null,
                 null,
-                cancellationToken,
-                // etag not currently supported by service for rules
-                "*").ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
 
