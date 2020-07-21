@@ -11,7 +11,7 @@ namespace Azure.Data.Tables.Performance
     [MemoryDiagnoser]
     public class GenericTableEntityCreationBenchmark
     {
-        public const int ItemCount = 1000;
+        public const int ItemCount = 10000;
         private readonly List<Dictionary<string, object>> _items = new List<Dictionary<string, object>>(ItemCount);
 
         [GlobalSetup]
