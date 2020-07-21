@@ -115,8 +115,12 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
         {
-            PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public));
-            var result = new List<T>();
+            PropertyInfo[] properties = s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
+
+            var result = new List<T>(entityList.Count);
 
             foreach (var entity in entityList)
             {
@@ -133,7 +137,11 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
         {
-            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public));
+            properties ??= s_propertyInfoCache.GetOrAdd(typeof(T), (type) =>
+            {
+                return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            });
+
             var result = new T();
 
             // Iterate through each property of the entity and set them as the correct type.
