@@ -252,7 +252,6 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a minimal cdn waf policy should succeed
                 var policyName = TestUtilities.GenerateName("policy");
-                cdnMgmtClient.ApiVersion1 = "";
                 var policy = cdnMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, new CdnWebApplicationFirewallPolicy
                 {
                     Sku = new Sku(SkuName.StandardMicrosoft),
