@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
@@ -182,9 +183,10 @@ namespace Azure.Core.Pipeline
                     HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryTimeout));
+                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(httpMessage.Request.ClientRequestId, e.ToString());
                 }
             }
 
