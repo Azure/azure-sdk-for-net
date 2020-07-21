@@ -9,7 +9,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// Represents a line geometry that consists of multiple coordinates.
     /// </summary>
-    public sealed class GeoLine : GeoObject
+    public sealed class GeoLine : Geometry
     {
         /// <summary>
         /// Initializes new instance of <see cref="GeoLine"/>.
@@ -24,7 +24,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
         public GeoLine(IEnumerable<GeometryCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(ConvertCoordinates(coordinates), boundingBox, additionalProperties)
         {
         }
@@ -42,7 +42,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
         public GeoLine(IEnumerable<GeographyCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): this(ConvertCoordinates(coordinates), boundingBox, additionalProperties)
         {
         }
@@ -52,7 +52,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoCoordinate"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
-        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
+        /// <param name="additionalProperties">The set of additional properties associated with the <see cref="Geometry"/>.</param>
         internal GeoLine(IReadOnlyList<GeoCoordinate> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> additionalProperties): base(boundingBox, additionalProperties)
         {
             Coordinates = coordinates;

@@ -35,24 +35,14 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtrip<GeoPoint>(input);
             Assert.AreEqual(P(0), point.Coordinate);
-            Assert.AreEqual(P(1).AsGeographyCoordinate().Longitude, point.BoundingBox.Value.AsGeographyBoundingBox().West);
-            Assert.AreEqual(P(1).AsGeographyCoordinate().Latitude, point.BoundingBox.Value.AsGeographyBoundingBox().South);
+            Assert.AreEqual(P(1).Longitude, point.BoundingBox.Value.West);
+            Assert.AreEqual(P(1).Latitude, point.BoundingBox.Value.South);
 
-            Assert.AreEqual(P(2).AsGeographyCoordinate().Longitude, point.BoundingBox.Value.AsGeographyBoundingBox().East);
-            Assert.AreEqual(P(2).AsGeographyCoordinate().Latitude, point.BoundingBox.Value.AsGeographyBoundingBox().North);
+            Assert.AreEqual(P(2).Longitude, point.BoundingBox.Value.East);
+            Assert.AreEqual(P(2).Latitude, point.BoundingBox.Value.North);
 
-            Assert.AreEqual(P(1).AsGeographyCoordinate().Altitude, point.BoundingBox.Value.AsGeographyBoundingBox().MinAltitude);
-            Assert.AreEqual(P(2).AsGeographyCoordinate().Altitude, point.BoundingBox.Value.AsGeographyBoundingBox().MaxAltitude);
-
-
-            Assert.AreEqual(P(1).AsGeometryCoordinate().X, point.BoundingBox.Value.AsGeometryBoundingBox().MinX);
-            Assert.AreEqual(P(1).AsGeometryCoordinate().Y, point.BoundingBox.Value.AsGeometryBoundingBox().MinY);
-
-            Assert.AreEqual(P(2).AsGeometryCoordinate().X, point.BoundingBox.Value.AsGeometryBoundingBox().MaxX);
-            Assert.AreEqual(P(2).AsGeometryCoordinate().Y, point.BoundingBox.Value.AsGeometryBoundingBox().MaxY);
-
-            Assert.AreEqual(P(1).AsGeometryCoordinate().Z, point.BoundingBox.Value.AsGeometryBoundingBox().MinZ);
-            Assert.AreEqual(P(2).AsGeometryCoordinate().Z, point.BoundingBox.Value.AsGeometryBoundingBox().MaxZ);
+            Assert.AreEqual(P(1).Altitude, point.BoundingBox.Value.MinAltitude);
+            Assert.AreEqual(P(2).Altitude, point.BoundingBox.Value.MaxAltitude);
         }
 
         [Test]
@@ -132,7 +122,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
-            var multipoint = AssertRoundtrip<GeoPointCollection>(input);
+            var multipoint = AssertRoundtrip<GeoMultiPoint>(input);
             Assert.AreEqual(2, multipoint.Points.Count);
 
             Assert.AreEqual(P(0), multipoint.Points[0].Coordinate);
@@ -144,7 +134,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeoLineCollection>(input);
+            var polygon = AssertRoundtrip<GeoMultiLine>(input);
             Assert.AreEqual(2, polygon.Lines.Count);
 
             CollectionAssert.AreEqual(new[]
@@ -223,27 +213,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, collection.Geometries.Count);
         }
 
-        [Test]
-        public void GeoCoordinateFormatsToString()
-        {
-            Assert.AreEqual("[1, 2]", new GeoCoordinate(1, 2, null).ToString());
-            Assert.AreEqual("[1, 2, 3]", new GeoCoordinate(1, 2, 3).ToString());
-        }
-
-        [Test]
-        public void GeometryCoordinateFormatsToString()
-        {
-            Assert.AreEqual("X: 1, Y: 2", new GeometryCoordinate(1, 2).ToString());
-            Assert.AreEqual("X: 1, Y: 2, Z: 3", new GeometryCoordinate(1, 2, 3).ToString());
-        }
-
-        [Test]
-        public void GeographyCoordinateFormatsToString()
-        {
-            Assert.AreEqual("Longitude: 1, Latitude: 2", new GeographyCoordinate(1, 2).ToString());
-            Assert.AreEqual("Longitude: 1, Latitude: 2, Altitude: 3", new GeographyCoordinate(1, 2, 3).ToString());
-        }
-
         private string PS(int number)
         {
             if (_points == 2)
@@ -264,7 +233,7 @@ namespace Azure.Core.Tests
             return new GeoCoordinate(new GeographyCoordinate(1.1 * number, 2.2 * number, 3.3 * number));
         }
 
-        private T AssertRoundtrip<T>(string json) where T: GeoObject
+        private T AssertRoundtrip<T>(string json) where T: Geometry
         {
             var element = JsonDocument.Parse(json).RootElement;
             var geometry = GeoJsonConverter.Read(element);
@@ -284,8 +253,8 @@ namespace Azure.Core.Tests
             };
 
             // Serialize and deserialize as a base class
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(GeoObject), options);
-            var geometry3 = JsonSerializer.Deserialize<GeoObject>(bytes, options);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(Geometry), options);
+            var geometry3 = JsonSerializer.Deserialize<Geometry>(bytes, options);
 
             // Serialize and deserialize as a concrete class
             var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3, options);

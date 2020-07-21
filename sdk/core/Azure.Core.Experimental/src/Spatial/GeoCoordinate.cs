@@ -35,14 +35,14 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes a new instance of <see cref="GeoCoordinate"/>.
         /// </summary>
-        public GeoCoordinate(GeometryCoordinate coordinate) : this(coordinate.X, coordinate.Y, coordinate.Z)
+        public GeoCoordinate(GeometryCoordinate geometryCoordinate) : this(geometryCoordinate.X, geometryCoordinate.Y, geometryCoordinate.Z)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="GeoCoordinate"/>.
         /// </summary>
-        public GeoCoordinate(GeographyCoordinate coordinate) : this(coordinate.Longitude, coordinate.Latitude, coordinate.Altitude)
+        public GeoCoordinate(GeographyCoordinate geometryCoordinate) : this(geometryCoordinate.Latitude, geometryCoordinate.Longitude, geometryCoordinate.Altitude)
         {
         }
 
@@ -109,10 +109,10 @@ namespace Azure.Core.Spatial
         {
             if (C3 == null)
             {
-                return $"[{C1:G}, {C2:G}]";
+                return $"[{C1:G17}, {C2:G17}]";
             }
 
-            return $"[{C1:G}, {C2:G}, {C3.Value:G}]";
+            return $"[{C1:G17}, {C2:G17}, {C3.Value:G17}]";
         }
     }
 }

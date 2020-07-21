@@ -47,6 +47,7 @@ namespace Azure.Core.Spatial
             Z = z;
         }
 
+
         /// <inheritdoc />
         public bool Equals(GeometryCoordinate other)
         {
@@ -89,10 +90,10 @@ namespace Azure.Core.Spatial
         {
             if (Z == null)
             {
-                return $"X: {X:G}, Y: {Y:G}";
+                return $"[{X:G17}, {Y:G17}]";
             }
 
-            return $"X: {X:G}, Y: {Y:G}, Z: {Z.Value:G}";
+            return $"[{X:G17}, {Y:G17}, {Z.Value:G17}]";
         }
     }
 }
