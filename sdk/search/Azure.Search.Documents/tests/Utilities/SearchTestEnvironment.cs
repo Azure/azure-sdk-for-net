@@ -68,6 +68,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
 
         /// <summary>
+        /// Gets the search service suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => GetOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
+
+        /// <summary>
         /// Gets the storage account suffix for external data sources.
         /// </summary>
         public string StorageEndpointSuffix => GetOptionalVariable("STORAGE_ENDPOINT_SUFFIX") ?? "core.windows.net";

@@ -11,27 +11,25 @@ extends:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         EnvVars:
           AZURE_SEARCH_TEST_MODE: Live
-          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+          SEARCH_ENDPOINT_SUFFIX: search.windows.net
           STORAGE_ENDPOINT_SUFFIX: core.windows.net
       
       # AzureUSGovernment
       - ServiceDirectory: search
-        TimeoutInMinutes: 120
         MaxParallel: 1
         ScenarioName: AzureUSGovernment
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         EnvVars:
           AZURE_SEARCH_TEST_MODE: Live
-          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+          SEARCH_ENDPOINT_SUFFIX: search.azure.us
           STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
 
       # AzureChinaCloud
       - ServiceDirectory: search
-        TimeoutInMinutes: 120
         MaxParallel: 1
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         EnvVars:
           AZURE_SEARCH_TEST_MODE: Live
-          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+          SEARCH_ENDPOINT_SUFFIX: search.azure.cn
           STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn

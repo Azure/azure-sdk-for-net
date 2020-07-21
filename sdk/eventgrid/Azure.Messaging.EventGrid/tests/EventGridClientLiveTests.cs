@@ -33,6 +33,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     new AzureKeyCredential(TestEnvironment.TopicKey),
                     options));
             await client.PublishEventsAsync(GetEventsList());
+            Assert.AreEqual($"Tets:{TestEnvironment.TopicHost}", TestEnvironment.TopicHost);
         }
 
         [Test]

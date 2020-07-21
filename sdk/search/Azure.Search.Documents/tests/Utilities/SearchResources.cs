@@ -96,9 +96,14 @@ namespace Azure.Search.Documents.Tests
         private string _indexName = null;
 
         /// <summary>
+        /// The search endpoint suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => TestFixture.TestEnvironment.SearchEndpointSuffix;
+
+        /// <summary>
         /// The URI of the Search service.
         /// </summary>
-        public Uri Endpoint => new Uri($"https://{SearchServiceName}.search.windows.net");
+        public Uri Endpoint => new Uri($"https://{SearchServiceName}.{SearchEndpointSuffix}");
 
         /// <summary>
         /// The Primary or Admin API key to authenticate requests to the
