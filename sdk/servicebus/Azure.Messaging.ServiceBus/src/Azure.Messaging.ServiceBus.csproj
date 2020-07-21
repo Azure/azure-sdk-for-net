@@ -33,6 +33,8 @@
 
   </ItemGroup>
   <ItemGroup>
+    <!-- Azure.Core project reference is required to use Azure.Core.Experimental -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +51,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>
