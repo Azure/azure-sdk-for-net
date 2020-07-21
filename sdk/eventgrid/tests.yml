@@ -7,6 +7,7 @@ extends:
       # Azure Cloud
       - ServiceDirectory: eventgrid
         ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         EnvVars:
           AZURE_EVENTGRID_TEST_MODE: Live
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
@@ -14,6 +15,7 @@ extends:
       # AzureUSGovernment
       - ServiceDirectory: eventgrid
         ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
         EnvVars:
           AZURE_EVENTGRID_TEST_MODE: Live
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
@@ -21,6 +23,7 @@ extends:
       # AzureChinaCloud
       - ServiceDirectory: eventgrid
         ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
         EnvVars:
           AZURE_EVENTGRID_TEST_MODE: Live
           AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
