@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.WebJobs.Host.TestCommon\Azure.WebJobs.Host.TestCommon.csproj" />
+  </ItemGroup>
+
 </Project>

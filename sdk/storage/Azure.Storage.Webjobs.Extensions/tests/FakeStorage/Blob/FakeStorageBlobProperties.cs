@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace FakeStorage
 {

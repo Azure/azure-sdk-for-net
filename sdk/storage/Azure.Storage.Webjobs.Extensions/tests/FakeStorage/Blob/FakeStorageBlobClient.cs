@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Shared.Protocol;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace FakeStorage
 {

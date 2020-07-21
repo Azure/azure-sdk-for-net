@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Storage.Queue.Protocol;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace FakeStorage
 {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Core.Util;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace FakeStorage
 {
