@@ -136,7 +136,7 @@ namespace Azure.Core.Pipeline
                 return headerValueTcs.Task.EnsureCompleted().HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool callGgetTokenFromCredentialetToken) GetTaskCompletionSources()
+            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources()
             {
                 lock (_syncObj)
                 {
