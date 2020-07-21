@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
         internal KeywordMarkerTokenFilter(string oDataType, string name, IList<string> keywords, bool? ignoreCase) : base(oDataType, name)
         {
-            Keywords = keywords ?? new List<string>();
+            Keywords = keywords;
             IgnoreCase = ignoreCase;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
         }
