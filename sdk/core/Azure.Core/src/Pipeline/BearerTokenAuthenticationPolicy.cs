@@ -72,19 +72,14 @@ namespace Azure.Core.Pipeline
 
         private class AccessTokenCache
         {
-            private static readonly Task<string> _emptyTask = Task.FromResult(string.Empty);
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
             private readonly string[] _scopes;
             private readonly TimeSpan _tokenRefreshOffset;
             private readonly TimeSpan _tokenRefreshRetryTimeout;
 
-            private bool _isGettingToken;
-            private string? _headerValue;
-            private TaskCompletionSource<string>? _pendingTcs;
-            private DateTimeOffset _refreshOn;
-            private DateTimeOffset _expiresOn;
-
+            private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
+            private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
             public AccessTokenCache(TokenCredential credential, string[] scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryTimeout)
             {
                 _credential = credential;
@@ -95,164 +90,162 @@ namespace Azure.Core.Pipeline
 
             public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, bool async)
             {
-                (CacheState cacheState, string headerValue, Task<string> pendingTask) = GetHeaderValue();
+                bool getTokenFromCredential;
+                TaskCompletionSource<HeaderValueInfo> headerValueTcs;
+                TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
+                (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources();
 
-                switch (cacheState)
+                if (getTokenFromCredential)
                 {
-                    case CacheState.NoHeaderValueCached:
-                        return await GetHeaderValueFromCredentialAsync(message, async).ConfigureAwait(false);
-
-                    case CacheState.UpdatingHeaderValueInProgress:
-                        return await WaitForHeaderValueAsync(pendingTask, async, message.CancellationToken);
-
-                    case CacheState.HasHeaderValue:
-                        return headerValue;
-
-                    case CacheState.HeaderValueIsAboutToExpire:
-                        _ = Task.Run(() => GetHeaderValueFromCredentialAsync(message, async));
-                        return headerValue;
-
-                    default:
-                        throw new InvalidOperationException("Unexpected value");
-                }
-            }
-
-            private static async Task<string> WaitForHeaderValueAsync(Task<string> pendingTask, bool async, CancellationToken cancellationToken) {
-                if (async) {
-                    return await pendingTask.AwaitWithCancellation(cancellationToken);
-                }
-
-                try {
-                    pendingTask.Wait(cancellationToken);
-                } catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
-
-                return pendingTask.EnsureCompleted();
-            }
-
-            private async ValueTask<string> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async)
-            {
-                try
-                {
-                    var requestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
-                    AccessToken token = async
-                        ? await _credential.GetTokenAsync(requestContext, message.CancellationToken).ConfigureAwait(false)
-                        : _credential.GetToken(requestContext, message.CancellationToken);
-                    return SaveToken(token);
-                }
-                catch (Exception e)
-                {
-                    throw ResetTokenIfExpired(e);
-                }
-            }
-
-            private string SaveToken(AccessToken token)
-            {
-                if (string.IsNullOrEmpty(token.Token))
-                {
-                    throw new InvalidOperationException($"{nameof(TokenCredential)}.{nameof(TokenCredential.GetToken)} has failed with unknown error.");
-                }
-
-                string headerValue = "Bearer " + token.Token;
-                TaskCompletionSource<string>? pendingTcs = UpdateHeaderValue(headerValue, token.ExpiresOn - _tokenRefreshOffset, token.ExpiresOn);
-                pendingTcs?.SetResult(headerValue);
-                return headerValue;
-            }
-
-            private Exception ResetTokenIfExpired(Exception exception)
-            {
-                DateTimeOffset now = DateTimeOffset.UtcNow;
-                TaskCompletionSource<string>? pendingTcs;
-
-                lock (_syncObj)
-                {
-                    if (now >= _expiresOn)
+                    if (backgroundUpdateTcs != null)
                     {
-                        pendingTcs = UpdateHeaderValue(default, default, default);
+                        HeaderValueInfo info = headerValueTcs.Task.EnsureCompleted();
+                        _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, message, async));
+                        return info.HeaderValue;
+                    }
+
+                    try
+                    {
+                        HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async);
+                        headerValueTcs.SetResult(info);
+                    }
+                    catch (Exception exception)
+                    {
+                        headerValueTcs.SetException(exception);
+                        throw;
+                    }
+                }
+
+                var headerValueTask = headerValueTcs.Task;
+                if (!headerValueTask.IsCompleted)
+                {
+                    if (async)
+                    {
+                        await headerValueTask.AwaitWithCancellation(message.CancellationToken);
                     }
                     else
                     {
-                        pendingTcs = UpdateHeaderValue(_headerValue, now + _tokenRefreshRetryTimeout, _expiresOn);
-                        if (pendingTcs != default)
+                        try
                         {
-                            exception = new InvalidOperationException($"{nameof(GetHeaderValueAsync)} shouldn't wait in {CacheState.HeaderValueIsAboutToExpire} state.", exception);
+                            headerValueTask.Wait(message.CancellationToken);
                         }
+                        catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
                     }
                 }
 
-                pendingTcs?.SetException(exception);
-                return exception;
+                return headerValueTcs.Task.EnsureCompleted().HeaderValue;
             }
 
-            /// <summary>
-            /// Returns stored headerValue (if any), task that can be used to await for headerValue (if GetTokenAsync is in progress),
-            /// and if token should be refreshed in background.
-            /// </summary>
-            private (CacheState cacheState, string headerValue, Task<string> pendingTask) GetHeaderValue()
+            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool callGgetTokenFromCredentialetToken) GetTaskCompletionSources()
             {
                 lock (_syncObj)
                 {
-                    CacheState cacheState = GetCacheState(_expiresOn, _refreshOn, _isGettingToken);
+                    CacheState cacheState = GetCacheState(_infoTcs, _backgroundUpdateTcs);
                     switch (cacheState)
                     {
-                        case CacheState.NoHeaderValueCached:
-                            _headerValue = default;
-                            _isGettingToken = true;
-                            return (cacheState, string.Empty, _emptyTask);
+                        case CacheState.NoValueCached:
+                            _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
+                            _backgroundUpdateTcs = default;
+                            return (_infoTcs, _backgroundUpdateTcs, true);
 
-                        case CacheState.UpdatingHeaderValueInProgress:
-                            _pendingTcs ??= new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-                            return (cacheState, string.Empty, _pendingTcs.Task);
+                        case CacheState.ValueUpdateInProgress:
+                            _backgroundUpdateTcs = default;
+                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.ValueUpdateInProgress} state"), _backgroundUpdateTcs, false);
 
-                        case CacheState.HasHeaderValue:
-                            return (cacheState, _headerValue ?? throw new NullReferenceException($"{_headerValue} can't be null"), _emptyTask);
+                        case CacheState.HasValue:
+                            if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion) {
+                                _infoTcs = _backgroundUpdateTcs;
+                                _backgroundUpdateTcs = default;
+                            }
+                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.HasValue} state"), _backgroundUpdateTcs, false);
 
-                        case CacheState.HeaderValueIsAboutToExpire:
-                            _isGettingToken = true;
-                            return (cacheState, _headerValue ?? throw new NullReferenceException($"{_headerValue} can't be null"), _emptyTask);
+                        case CacheState.ValueIsAboutToExpire:
+                            _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
+                            return (_infoTcs ?? throw new InvalidOperationException($"{nameof(_infoTcs)} can't be null in {CacheState.ValueIsAboutToExpire} state"), _backgroundUpdateTcs, true);
 
                         default:
                             throw new InvalidOperationException("Unexpected value");
                     }
                 }
+            }
 
-                static CacheState GetCacheState(DateTimeOffset expiresOn, DateTimeOffset refreshOn, bool isGettingToken)
+            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, HttpMessage httpMessage, bool async)
+            {
+                try
                 {
-                    DateTimeOffset now = DateTimeOffset.UtcNow;
-                    if (now >= expiresOn)
-                    {
-                        return isGettingToken ? CacheState.UpdatingHeaderValueInProgress : CacheState.NoHeaderValueCached;
-                    }
-
-                    if (now >= refreshOn)
-                    {
-                        return isGettingToken ? CacheState.HasHeaderValue : CacheState.HeaderValueIsAboutToExpire;
-                    }
-
-                    return CacheState.HasHeaderValue;
+                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async);
+                    backgroundUpdateTcs.SetResult(newInfo);
+                }
+                catch (Exception)
+                {
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryTimeout));
                 }
             }
 
-            private TaskCompletionSource<string>? UpdateHeaderValue(string? headerValue, DateTimeOffset refreshOn, DateTimeOffset expiresOn)
+            private async ValueTask<HeaderValueInfo> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async)
             {
-                lock (_syncObj)
-                {
-                    _headerValue = headerValue;
-                    _refreshOn = refreshOn;
-                    _expiresOn = expiresOn;
-                    _isGettingToken = false;
+                var requestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+                AccessToken token = async
+                    ? await _credential.GetTokenAsync(requestContext, message.CancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(requestContext, message.CancellationToken);
 
-                    TaskCompletionSource<string>? pendingTcs = _pendingTcs;
-                    _pendingTcs = null;
-                    return pendingTcs;
+                return new HeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
+            }
+
+            private static CacheState GetCacheState(in TaskCompletionSource<HeaderValueInfo>? valueTcs, in TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs)
+            {
+                if (backgroundUpdateTcs != null)
+                {
+                    return backgroundUpdateTcs.Task.IsCompleted
+                        ? GetCacheStateFromHeaderValueInfo(backgroundUpdateTcs.Task.Result)
+                        : CacheState.HasValue;
+                }
+
+                if (valueTcs == null)
+                {
+                    return CacheState.NoValueCached;
+                }
+
+                if (!valueTcs.Task.IsCompleted)
+                {
+                    return CacheState.ValueUpdateInProgress;
+                }
+
+                return valueTcs.Task.Status == TaskStatus.RanToCompletion
+                    ? GetCacheStateFromHeaderValueInfo(valueTcs.Task.Result)
+                    : CacheState.NoValueCached;
+            }
+
+            private static CacheState GetCacheStateFromHeaderValueInfo(HeaderValueInfo info)
+            {
+                DateTimeOffset now = DateTimeOffset.UtcNow;
+                return now >= info.ExpiresOn
+                    ? CacheState.NoValueCached
+                    : now >= info.RefreshOn
+                        ? CacheState.ValueIsAboutToExpire
+                        : CacheState.HasValue;
+            }
+
+            private readonly struct HeaderValueInfo
+            {
+                public string HeaderValue { get; }
+                public DateTimeOffset ExpiresOn { get; }
+                public DateTimeOffset RefreshOn { get; }
+
+                public HeaderValueInfo(string headerValue, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
+                {
+                    HeaderValue = headerValue;
+                    ExpiresOn = expiresOn;
+                    RefreshOn = refreshOn;
                 }
             }
 
             private enum CacheState
             {
-                NoHeaderValueCached,
-                UpdatingHeaderValueInProgress,
-                HasHeaderValue,
-                HeaderValueIsAboutToExpire,
+                NoValueCached,
+                ValueUpdateInProgress,
+                HasValue,
+                ValueIsAboutToExpire,
             }
         }
     }
