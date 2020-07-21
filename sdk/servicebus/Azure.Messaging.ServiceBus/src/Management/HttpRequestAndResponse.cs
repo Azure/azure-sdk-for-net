@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus.Management
         private static async Task<string> ReadAsString(Response response)
         {
             string exceptionMessage;
-            StreamReader reader = new StreamReader(response.ContentStream);
+            using StreamReader reader = new StreamReader(response.ContentStream);
             exceptionMessage = await reader.ReadToEndAsync().ConfigureAwait(false);
             return exceptionMessage;
         }
